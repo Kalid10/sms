@@ -3,9 +3,9 @@
 
 ## Getting Started
 
-Clone the repository:
+Fork and clone the repository:
 ```
-git clone https://github.com/username/project-name.git
+git clone https://github.com/user-name/rigel.git
 ```
 
 Install composer packages:
