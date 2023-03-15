@@ -14,6 +14,9 @@ module.exports = {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            minHeight: {
+                '10': '2.5rem',
+            }
         },
     },
 
