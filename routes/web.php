@@ -18,3 +18,19 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome');
 });
+
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login');
+
+Route::get('/forgot-password', function () {
+    return Inertia::render('Auth/ForgotPassword');
+})->name('password.request');
+
+Route::get('/subject', function () {
+    return Inertia::render('Subject/Index');
+})->name('subject.index');
+
+Route::get('/subject-add', function () {
+    return Inertia::render('Subject/Add');
+})->name('subject-add');
