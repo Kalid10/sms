@@ -38,6 +38,7 @@ class CreateAdmin extends Command
                     'name' => $this->argument('name'),
                     'email' => $this->argument('email'),
                     'password' => Hash::make('secret'),
+                    'type' => User::TYPE_ADMIN,
                 ]);
 
                 // Attach new User to Admin, assign `manage-roles` Role

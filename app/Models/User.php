@@ -13,10 +13,13 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const TYPE_ADMIN = 'admin';
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'type',
     ];
 
     protected $hidden = [
