@@ -1,5 +1,7 @@
 <template>
 
+    <div id="top-view"></div>
+
     <div class="relative flex h-screen w-full flex-col">
         <Header @open-drawer="drawerVisible = true"/>
         <Drawer v-model:visible="drawerVisible"/>
