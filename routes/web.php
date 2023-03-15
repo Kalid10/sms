@@ -20,3 +20,7 @@ Route::get('/', function () {
 });
 
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::get('/users', function () {
+    return Inertia::render('Users/Index');
+});
