@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AssignRoleRequest;
+use App\Http\Requests\Roles\AssignRoleRequest;
+use App\Http\Requests\Roles\RemoveRoleRequest;
 use App\Models\UserRole;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -24,7 +25,27 @@ class RoleController extends Controller
             return redirect()->back()->with('success', 'Role assigned successfully.');
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            redirect()->back()->with('error', 'Something went wrong. Please try again.');
+
+            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        }
+    }
+
+    public function removeRole(RemoveRoleRequest $request)
+    {
+        // Get validated data
+        $validated = $request->validated();
+
+        try {
+            // Delete user role
+            UserRole::where('role_name', $validated['role_name'])
+                ->where('user_id', $validated['user_id'])
+                ->delete();
+
+            return redirect()->back()->with('success', $validated['role_name'].' deleted successfully.');
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+
+            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 }
