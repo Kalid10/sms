@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,9 +19,13 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
-Route::get('/login', function () {
-    return Inertia::render('Auth/Login');
-})->name('login');
+Route::get('/login', [LoginController::class, 'create'])->name('login');
+
+Route::post('/login', [LoginController::class, 'login']);
+
+//Route::get('/login', function () {
+//    return Inertia::render('Auth/Login');
+//})->name('login');
 
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');

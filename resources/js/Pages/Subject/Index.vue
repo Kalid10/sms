@@ -10,29 +10,30 @@
                             class="flex flex-col rounded-2xl p-3 text-gray-100 md:flex-row lg:flex-row lg:justify-around"
                         >
                             <h2
-                                class="flex w-5/12 justify-center font-medium tracking-tight text-black"
+                                class="flex w-5/12 justify-center font-bold tracking-tight text-black"
                             >
                                 Subjects
                             </h2>
-                            <div class="flex flex-row items-center">
+
+                        </div>
+                        <div class="flex flex-row items-center">
                             <!--            Search input-->
-                                <input
+                            <input
                                 type="text"
                                 placeholder="Search for subject"
-                                class=" w-8/12 rounded-md pl-2 text-[0.6rem] font-light" />
-                                <div class="flex w-8/12 justify-center">
-                                    <button
-                                        class="text-dark-50 my-4 mt-6 h-9 w-8/12 rounded-md bg-gray-300 font-light"
-                                    >
-                                        <a href="/subject-add">
-                                            Add Subject
-                                        </a>
-                                    </button>
-                                </div>
+                                class="w-11/12 rounded-md pl-2 text-[0.6rem] font-light" />
+                            <div class="flex w-8/12 justify-center">
+                                <button
+                                    class="my-4 mt-6 h-9 w-8/12 rounded-md bg-gray-300 font-light text-black"
+                                >
+                                    <a href="/subject-add">
+                                        Add
+                                    </a>
+                                </button>
                             </div>
                         </div>
                         <table
-                                class="text-sm text-gray-100"
+                                class="w-full table-auto text-sm text-black"
                         >
                             <thead
                                 class="bg-dark-150 items-center text-xs dark:bg-zinc-800"

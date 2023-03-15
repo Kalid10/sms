@@ -12,28 +12,32 @@
                 welcome back, please login to your account
             </div>
 
-            <!--        Username input section-->
+            <!--        email or phone input section-->
             <div class="mt-4 w-11/12">
                 <div class="flex items-center justify-center">
                     <input
-                        type="text"
+                        v-model="form.emailOrPhone"
+                        class="h-8 w-full rounded-md pl-2 text-[0.6rem] font-light"
                         placeholder="Email or Phone"
-                        class="h-8 w-full rounded-md pl-2 text-[0.6rem] font-light" />
+                        type="text"/>
                 </div>
                 <div
+
                     class="text-dark-50 mt-1 ml-1 text-[0.55rem]"
                 >
                     Email or Phone
                 </div>
+
             </div>
 
             <!--      Password input section-->
             <div class="mt-4 w-11/12">
                 <div class="flex items-center justify-center">
                     <input
-                        type="password"
+                        v-model="form.password"
+                        class="h-8 w-full rounded-md pl-2 text-[0.6rem] font-light"
                         placeholder="Password"
-                        class="h-8 w-full rounded-md pl-2 text-[0.6rem] font-light" />
+                        type="password"/>
                 </div>
                 <div
                     class="text-dark-50 ml-1 text-[0.55rem]"
@@ -49,8 +53,8 @@
                 <div class="mr-2 flex items-center">
                     <input
                         id="remember-me"
-                        type="checkbox"
                         class="mr-1 rounded focus:ring-0"
+                        type="checkbox"
                     />
                     <label for="remember-me">Remember Me</label>
                 </div>
@@ -62,12 +66,13 @@
                     >
                         Forgot Password?
                     </a>
-                    </div>
+                </div>
             </div>
 
             <!--      Login and signup button section-->
             <button
                 class="text-dark-50 my-4 mt-6 h-9 w-11/12 rounded-md bg-gray-300 font-light"
+                @click="submit"
             >
                 LOGIN
             </button>
@@ -75,7 +80,6 @@
                 Don't have an account?
                 <a
                     class="text-dark-50 font-bold"
-                    href="/register"
                 >
                     Sign up
                 </a>
@@ -85,7 +89,25 @@
 </template>
 
 <script setup>
+import {useForm} from "@inertiajs/vue3";
 
+const form = useForm({
+    emailOrPhone: "bini@gmail.com",
+    password: "secret",
+});
+const submit = () => {
+    form.post(route("login"), {
+        onFinish: () => {
+            console.log("Login finished")
+        },
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: () => {
+            console.log("Error")
+        }
+    });
+};
 </script>
 
 <style scoped></style>

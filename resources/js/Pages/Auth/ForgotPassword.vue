@@ -13,23 +13,18 @@
                         <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your email or phone</label>
                         <input id="email" type="email" name="email" class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm" placeholder="name@company.com / 0911..." required="">
                     </div>
-                    <label for="email" class="mb-1 block text-sm font-medium text-gray-900 dark:text-white">send confirmation message via:  </label>
+                    <div class="mr-2 flex flex-col">
+                        <label for="email" class="mb-1 block text-sm font-medium text-gray-900 dark:text-white">Send confirmation message via:  </label>
 
-                    <div class="mr-2 flex items-center">
-                        <input
-                            id="remember-me"
-                            type="checkbox"
-                            class="mr-1 rounded focus:ring-0"
-                        />
-                        <label for="remember-me">email</label>
-                    </div>
-                    <div class="mr-2 flex items-center">
-                        <input
-                            id="remember-me"
-                            type="checkbox"
-                            class="mr-1 rounded focus:ring-0"
-                        />
-                        <label class="grow" for="remember-me">phone number</label>
+                        <div class="mb-4 flex items-center">
+                            <input id="default-radio-1" type="radio" value="" name="default-radio" class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600">
+                            <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">email</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="default-radio-2" checked type="radio" value="" name="default-radio" class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600">
+                            <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">phone number</label>
+                        </div>
+
                         <button class="mt-2 rounded border border-black py-1 px-4 text-black">
                             Send
                         </button>
