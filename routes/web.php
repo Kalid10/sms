@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,4 +20,5 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/assign-role', [RoleController::class, 'assignRole'])->name('assign-role');
