@@ -28,7 +28,7 @@
                         <Checkbox v-model="selectAll"/>
                     </th>
                     <th
-                        v-for="(key, index) in (columnsConfig.length > 0 ? columnsConfig.map(item => item.name) : Object.keys(data[0]))"
+                        v-for="(key, index) in (columns.length > 0 ? columns.map(item => item.name) : Object.keys(data[0]))"
                         :key="index"
                         class="h-10 whitespace-nowrap border-y bg-neutral-50 px-3 text-sm font-semibold text-neutral-700">
                         {{ key }}
@@ -41,12 +41,12 @@
                         <Checkbox v-model="items[index].selected"/>
                     </th>
                     <td
-                        v-for="(key, i) in (columnsConfig.length > 0 ? columnsConfig.map(i => i.key) : Object.keys(item))"
+                        v-for="(key, i) in (columns.length > 0 ? columns.map(i => i.key) : Object.keys(item))"
                         :key="i"
-                        :class="[columnsConfig.length > 0 && !! columnsConfig[i]?.link ? 'cursor-pointer hover:underline hover:underline-offset-2' : '']"
+                        :class="[columns.length > 0 && !! columns[i]?.link ? 'cursor-pointer hover:underline hover:underline-offset-2' : '']"
                         class="h-10 whitespace-nowrap px-3 text-center text-sm"
                     >
-                        <Link v-if="!! columnsConfig[i]?.link" :href="getLink(columnsConfig[i]?.link, index)">
+                        <Link v-if="!! columns[i]?.link" :href="getLink(columns[i]?.link, index)">
                             {{ item[key] }}
                         </Link>
                         <template v-else>
