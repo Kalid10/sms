@@ -3,3 +3,4 @@
 npx lint-staged
 ./vendor/bin/pint
 ./vendor/bin/phpunit
+php artisan migrate:fresh --seed
