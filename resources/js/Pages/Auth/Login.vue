@@ -5,19 +5,19 @@
         <div
             class="mx-2 mt-[5rem] flex h-fit w-full flex-col items-center py-4 sm:w-9/12 md:w-7/12 lg:w-5/12 xl:w-4/12"
         >
-            <!--            <div class="text-3xl font-light italic">-->
-            <!--                School Management System-->
-            <!--            </div>-->
-            <img alt="place holder" src="/assets/school.png"/>
-            <div class="my-3 mb-6 text-xs font-light">
-                welcome back, please login to your account.
+            <div class="text-3xl font-light italic ">
+                Welcome Back :)
             </div>
 
-            <!--        email or phone input section-->
+            <div class="my-3 mb-6 text-xs font-light">
+                Hello! Please enter details.
+            </div>
+
+            <!--        User input section-->
             <div class="mt-4 w-11/12">
                 <div class="flex items-center justify-center">
                     <div
-                        class="bg-dark-50 dark:bg-dark-100 flex h-9 items-center rounded-l-md px-2"
+                        class="mt-5 flex h-9 items-center rounded-l-md px-1"
                     >
                         <svg
                             class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -29,20 +29,26 @@
                         </svg>
 
                     </div>
-                    <input
+                    <login-text-input
                         v-model="form.emailOrPhone"
-                        class="h-8 w-full rounded-md pl-2 text-[0.6rem] font-light"
+                        class="w-full rounded-md pl-2 text-[0.6rem] font-light"
+                        label="Email or Phone"
                         placeholder="Email or Phone"
-                        type="text"/>
+                        required/>
                 </div>
-
+                <div
+                    v-if="form.errors.emailOrPhone"
+                    class="ml-16 mt-2 text-[0.55rem] text-red-600"
+                >
+                    *{{ form.errors.emailOrPhone }}
+                </div>
             </div>
 
             <!--      Password input section-->
             <div class="mt-4 w-11/12">
                 <div class="flex items-center justify-center">
                     <div
-                        class="bg-dark-50 dark:bg-dark-100 flex h-9 items-center rounded-l-md px-2"
+                        class="mt-10 flex h-9 items-center rounded-l-md px-1"
                     >
                         <svg
                             class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -53,18 +59,26 @@
                                 stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <input
+                    <login-text-input
                         v-model="form.password"
                         class="h-8 w-full rounded-md pl-2 text-[0.6rem] font-light"
-                        placeholder="Password"
+                        label="Password"
+                        placeholder="*********"
+                        required
                         type="password"/>
+                    <div
+                        v-if="form.errors.password"
+                        class="text-lightText-200 text-[0.55rem]"
+                    >
+                        *{{ form.errors.password }}
+                    </div>
                 </div>
 
             </div>
 
             <!--      Remember me and forgot password section-->
             <div
-                class="text-dark-50 mt-6 flex w-full justify-around text-xs font-light"
+                class="mt-9 flex w-full justify-around text-xs font-light text-black"
             >
                 <div class="mr-2 flex items-center">
                     <input
@@ -77,7 +91,7 @@
                 <div class="ml-2 underline">
 
                     <a
-                        class="text-dark-50 font-bold"
+                        class="font-bold"
                         href="/forgot-password"
                     >
                         Forgot Password?
@@ -86,33 +100,30 @@
             </div>
 
             <!--      Login and signup button section-->
-            <button
-                class="text-dark-50 my-4 mt-6 h-9 w-11/12 rounded-md bg-gray-300 font-light"
-                @click="submit"
-            >
-                LOGIN
-            </button>
+            <login-primary-button :click="submit" class="my-4 w-8/12" title="Login"/>
             <div class="text-xs font-light">
                 Don't have an account?
                 <a
-                    class="text-dark-50 font-bold"
+                    class="text-dark-50 cursor-pointer font-bold "
                 >
                     Sign up
                 </a>
             </div>
         </div>
-        <div class="lg:my-18 mb-6 md:mb-0 md:w-8/12 lg:mr-5 lg:w-5/12">
-            <img alt="place holder" class="ml-36 w-8/12" src="/assets/Allura.png    "/>
+        <div class="mb-6 hidden items-center justify-center lg:my-6 lg:mr-4 lg:flex xl:mr-1">
+            <img alt="place holder" src="/assets/back-to-school.svg"/>
         </div>
     </div>
 </template>
 
 <script setup>
 import {useForm} from "@inertiajs/vue3";
+import LoginTextInput from "@/Components/TextInput.vue";
+import LoginPrimaryButton from "@/Components/PrimaryButton.vue";
 
 const form = useForm({
-    emailOrPhone: "bini@gmail.com",
-    password: "secret",
+    emailOrPhone: "",
+    password: "",
 });
 const submit = () => {
     form.post(route("login"), {
