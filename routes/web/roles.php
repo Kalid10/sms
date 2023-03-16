@@ -7,4 +7,5 @@ Route::prefix('roles/')->middleware(['checkUserType:admin', 'checkUserRole:manag
     Route::post('assign', [RoleController::class, 'assign'])->name('assign');
     Route::post('remove', [RoleController::class, 'remove'])->name('remove');
     Route::get('users', [RoleController::class, 'users'])->name('users');
+    Route::get('activities', [RoleController::class, 'activities'])->name('activities');
 });
