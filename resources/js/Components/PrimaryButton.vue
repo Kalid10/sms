@@ -1,6 +1,6 @@
 <template>
 
-    <button :type="type" class="rounded-md bg-black py-1.5 px-4 text-sm text-white" @click="click">
+    <button :type="type" class="rounded-md border border-black bg-black py-1.5 px-4 text-sm text-white" @click="click">
         {{ title }}
     </button>
 
