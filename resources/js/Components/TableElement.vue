@@ -9,7 +9,7 @@
             </h5>
         </div>
 
-        <slot name="all-actions">
+        <slot v-if="actionable" name="all-actions">
             <PrimaryButton v-if="! anySelected" :click="() => {}" class="mx-4" title="Download CSV"/>
             <div v-else class="mx-4 flex items-center gap-2">
                 <slot name="selected-actions">
@@ -28,8 +28,9 @@
                         <Checkbox v-model="selectAll"/>
                     </th>
                     <th
-                        v-for="(key, index) in Object.keys(data[0])" :key="index"
-                        class="h-10 border-y bg-neutral-50 px-3 text-sm font-semibold text-neutral-700">
+                        v-for="(key, index) in (columnsConfig.length > 0 ? columnsConfig.map(item => item.name) : Object.keys(data[0]))"
+                        :key="index"
+                        class="h-10 whitespace-nowrap border-y bg-neutral-50 px-3 text-sm font-semibold text-neutral-700">
                         {{ key }}
                     </th>
                 </tr>
@@ -40,9 +41,17 @@
                         <Checkbox v-model="items[index].selected"/>
                     </th>
                     <td
-                        v-for="(key, i) in Object.keys(item)" :key="i"
-                        class="h-10 whitespace-nowrap px-3 text-center text-sm">
-                        {{ item[key] }}
+                        v-for="(key, i) in (columnsConfig.length > 0 ? columnsConfig.map(i => i.key) : Object.keys(item))"
+                        :key="i"
+                        :class="[columnsConfig.length > 0 && !! columnsConfig[i]?.link ? 'cursor-pointer hover:underline hover:underline-offset-2' : '']"
+                        class="h-10 whitespace-nowrap px-3 text-center text-sm"
+                    >
+                        <Link v-if="!! columnsConfig[i]?.link" :href="getLink(columnsConfig[i]?.link, index)">
+                            {{ item[key] }}
+                        </Link>
+                        <template v-else>
+                            {{ item[key] }}
+                        </template>
                     </td>
                 </tr>
             </table>
@@ -59,6 +68,7 @@
 
 <script setup>
 import {ref, watch, computed} from "vue"
+import {Link} from '@inertiajs/vue3'
 import Checkbox from "@/Components/Checkbox.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
@@ -79,6 +89,14 @@ const props = defineProps({
     selectable: {
         type: Boolean,
         default: true,
+    },
+    actionable: {
+        type: Boolean,
+        default: false
+    },
+    columnsConfig: {
+        type: Array,
+        default: () => []
     }
 })
 
@@ -91,6 +109,16 @@ const items = ref(props.data.map((item, index) => {
         selected: false
     }
 }))
+
+function getLink(link, index) {
+    const matches = link.match(/{(.*?)}/g) || []
+    let newLink = link
+    matches.forEach((match) => {
+        const key = match.replace('{', '').replace('}', '')
+        newLink = newLink.replace(match, props.data[index][key])
+    })
+    return newLink
+}
 
 watch(selectAll, (value) => {
     if (selectAll.value) {

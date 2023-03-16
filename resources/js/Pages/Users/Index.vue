@@ -1,12 +1,15 @@
 <template>
 
     <TableElement
-        :data="users"
+        :columns-config="columnConfigs" :data="users"
+        actionable
+        selectable
         subtitle="List of personnel registered on your system, with user types and contact information"
         title="Users List"
     />
 
-    <FormElement>
+    <FormElement
+        subtitle="Fill in the information required about the new user" title="Register new User">
 
         <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
         <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
@@ -40,7 +43,38 @@ const roleOptions = [
     {value: 'student', label: 'Student'},
 ];
 
-const showRegisterUser = ref(false)
+const columnConfigs = [
+    {
+        name: 'Full Name',
+        key: 'name',
+        link: '/users/{id}',
+    },
+    {
+        name: 'Email',
+        key: 'email',
+        link: 'mailto:{email}'
+    },
+    {
+        name: 'Phone Number',
+        key: 'phone',
+    },
+    {
+        name: 'User Type',
+        key: 'type',
+        link: '/users/{id}/edit'
+    },
+    {
+        name: 'User Roles',
+        key: 'roles',
+        link: 'https://google.com'
+    },
+    {
+        name: 'Status',
+        key: 'active',
+    },
+]
+
+const showRegisterUser = ref(true)
 const showModal = ref(false)
 </script>
 
