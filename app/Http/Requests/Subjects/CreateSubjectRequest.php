@@ -22,7 +22,8 @@ class CreateSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:subjects,name',
+            'full_name' => 'required|unique:subjects,full_name',
+            'short_name' => 'required|unique:subjects,short_name',
         ];
     }
 
@@ -30,8 +31,10 @@ class CreateSubjectRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Subject name is required',
-            'name.unique' => $this->name.' has already been added!',
+            'full_name.required' => 'Full name is required',
+            'full_name.unique' => $this->full_name.' has already been added!',
+            'short_name.required' => 'Short name is required',
+            'short_name.unique' => $this->short_name.' has already been added!',
         ];
     }
 }

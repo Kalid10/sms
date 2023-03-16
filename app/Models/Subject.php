@@ -12,7 +12,8 @@ class Subject extends Model
     use HasFactory,LogsActivity;
 
     protected $fillable = [
-        'name',
+        'full_name',
+        'short_name',
     ];
 
     public function getActivitylogOptions(): LogOptions
