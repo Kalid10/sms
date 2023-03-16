@@ -1,7 +1,7 @@
 <template>
 
     <TableElement
-        :columns-config="columnConfigs" :data="users"
+        :columns="config" :data="users"
         actionable
         selectable
         subtitle="List of personnel registered on your system, with user types and contact information"
@@ -43,7 +43,7 @@ const roleOptions = [
     {value: 'student', label: 'Student'},
 ];
 
-const columnConfigs = [
+const config = [
     {
         name: 'Full Name',
         key: 'name',

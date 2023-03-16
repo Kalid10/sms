@@ -94,7 +94,7 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    columnsConfig: {
+    columns: {
         type: Array, // Array of objects of type { name: String, key: String, link: String }. opt: link
         default: () => []
     }
