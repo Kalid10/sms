@@ -16,11 +16,16 @@ class RoleController extends Controller
             // Get validated data
             $validatedData = $request->validated();
 
-            // Create or restore user role
-            UserRole::withTrashed()
-                ->where('role_name', $validatedData['role_name'])
-                ->where('user_id', $validatedData['user_id'])
-                ->firstOrCreate($validatedData);
+            // Create or restore user roles
+            foreach ($validatedData['roles'] as $role) {
+                UserRole::withTrashed()
+                    ->where('role_name', $role)
+                    ->where('user_id', $validatedData['user_id'])
+                    ->firstOrCreate([
+                        'role_name' => $role,
+                        'user_id' => $validatedData['user_id'],
+                    ]);
+            }
 
             return redirect()->back()->with('success', 'Role assigned successfully.');
         } catch (Exception $exception) {
@@ -36,10 +41,12 @@ class RoleController extends Controller
         $validated = $request->validated();
 
         try {
-            // Delete user role
-            UserRole::where('role_name', $validated['role_name'])
-                ->where('user_id', $validated['user_id'])
-                ->delete();
+            // Delete user roles
+            foreach ($validated['roles'] as $role) {
+                UserRole::where('role_name', $role)
+                    ->where('user_id', $validated['user_id'])
+                    ->delete();
+            }
 
             return redirect()->back()->with('success', $validated['role_name'].' deleted successfully.');
         } catch (Exception $exception) {

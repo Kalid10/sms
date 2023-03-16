@@ -24,5 +24,5 @@ Route::get('/users', function () {
 });
 
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login');
-Route::post('/assign-role', [RoleController::class, 'assignRole'])->middleware(['checkUserRole:manage-roles', 'checkUserType:admin'])->name('assign-role');
-Route::post('/remove-role', [RoleController::class, 'removeRole'])->middleware(['checkUserRole:manage-roles', 'checkUserType:admin'])->name('remove-role');
+Route::post('/assign-roles', [RoleController::class, 'assignRole'])->middleware(['checkUserRole:manage-roles', 'checkUserType:admin'])->name('assign-role');
+Route::post('/remove-roles', [RoleController::class, 'removeRole'])->middleware(['checkUserRole:manage-roles', 'checkUserType:admin'])->name('remove-role');
