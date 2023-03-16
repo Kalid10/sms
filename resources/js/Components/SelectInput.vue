@@ -4,7 +4,7 @@
             <span class="pl-2 text-sm font-medium text-gray-500">{{ label }}</span>
             <span v-if="required" class="pl-1 text-red-600">*</span>
         </label>
-        <div class="relative flex h-10 w-full rounded-md border border-gray-200" @click="toggleList">
+        <div class="relative flex h-10 w-full rounded-md border border-gray-200" tabindex="0" @click="toggleList">
             <span
                 :aria-placeholder="placeholder"
                 :class="[ !! selectedLabel ? 'text-black' : 'text-gray-500' ]"
