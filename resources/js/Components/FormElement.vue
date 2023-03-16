@@ -2,14 +2,15 @@
 
     <form
         v-if="! modal || (modal && showModal)"
-        :class="[ modal ? 'fixed top-0 left-0 z-50 animate-slide-down rounded-b-md shadow-md' : 'rounded-md shadow-sm' ]"
+        :class="[ modal ? 'container fixed inset-x-0 top-0 z-50 mx-auto max-w-3xl animate-slide-down rounded-b-md shadow-md' : 'rounded-md shadow-sm' ]"
         class="flex min-h-10 w-full flex-col border bg-white">
 
         <div class="flex flex-col gap-3 p-4">
             <div class="">
-                <h3 class="">Register New User</h3>
-                <h5 class="text-sm text-gray-500">Fill information of the new user to be registered, including
-                    profile and user type</h5>
+                <h3 class="">{{ title }}</h3>
+                <h5 class="text-sm text-gray-500">
+                    {{ subtitle }}
+                </h5>
             </div>
 
             <hr>
@@ -41,6 +42,14 @@ defineProps({
     showModal: {
         type: Boolean,
         default: false
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    subtitle: {
+        type: String,
+        required: true
     }
 })
 
