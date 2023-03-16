@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,10 +17,3 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome');
 });
-Route::get('/users', function () {
-    return Inertia::render('Users/Index');
-});
-
-Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login');
-Route::post('/assign-roles', [RoleController::class, 'assignRole'])->middleware(['checkUserRole:manage-roles', 'checkUserType:admin'])->name('assign-role');
-Route::post('/remove-roles', [RoleController::class, 'removeRole'])->middleware(['checkUserRole:manage-roles', 'checkUserType:admin'])->name('remove-role');
