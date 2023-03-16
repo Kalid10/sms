@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Roles\AssignRoleRequest;
 use App\Http\Requests\Roles\RemoveRoleRequest;
+use App\Models\User;
 use App\Models\UserRole;
 use Exception;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class RoleController extends Controller
 {
-    public function assignRole(AssignRoleRequest $request)
+    public function assign(AssignRoleRequest $request): RedirectResponse
     {
         try {
             // Get validated data
@@ -35,7 +40,7 @@ class RoleController extends Controller
         }
     }
 
-    public function removeRole(RemoveRoleRequest $request)
+    public function remove(RemoveRoleRequest $request): RedirectResponse
     {
         // Get validated data
         $validated = $request->validated();
@@ -54,5 +59,23 @@ class RoleController extends Controller
 
             return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
+    }
+
+    public function users(Request $request): Response
+    {
+        // Get search query
+        $search = $request->get('search');
+
+        // Get users filtered by name or email and,
+        // feel free to increase the pagination
+        $users = User::with('roles')
+            ->where('name', 'like', '%'.$search.'%')
+            ->orWhere('email', 'like', '%'.$search.'%')
+            ->paginate(10);
+
+        // TODO: Change this route to the correct view
+        return Inertia::render('Welcome', [
+            'users' => $users,
+        ]);
     }
 }

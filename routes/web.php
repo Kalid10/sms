@@ -17,3 +17,8 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome');
 });
+
+// Add routes from web folder
+foreach (glob(__DIR__.'/web/*.php') as $file) {
+    require $file;
+}
