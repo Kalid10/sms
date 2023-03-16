@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Roles;
 
+use App\Models\Role;
 use App\Models\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -18,7 +19,7 @@ class AssignRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role_name' => 'required|exists:roles,name',
+            'roles' => 'required|array',
             'user_id' => 'required|exists:users,id',
         ];
     }
@@ -26,9 +27,18 @@ class AssignRoleRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            // Check if role is already assigned
-            if (UserRole::where('role_name', $this->get('role_name'))->where('user_id', $this->get('user_id'))->exists()) {
-                $validator->errors()->add('role_name', 'Role is already assigned to the user.');
+            // Check if role exists
+            foreach ($this->get('roles') as $role) {
+                if (! Role::where('name', $role)->first()) {
+                    $validator->errors()->add('roles', 'Role '.$role.' does not exist.');
+                }
+            }
+
+            // Check if any role is already assigned to the user from the roles array
+            foreach ($this->get('roles') as $role) {
+                if (UserRole::where('role_name', $role)->where('user_id', $this->get('user_id'))->exists()) {
+                    $validator->errors()->add('roles', 'Role '.$role.' is already assigned to this user.');
+                }
             }
         });
     }
@@ -37,7 +47,6 @@ class AssignRoleRequest extends FormRequest
     {
         return [
             'user_id.exists' => 'This user does not exist.',
-            'role_name.exists' => 'This role does not exist.',
         ];
     }
 }
