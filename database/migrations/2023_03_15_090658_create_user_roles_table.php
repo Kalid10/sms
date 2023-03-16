@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_roles', function (Blueprint $table) {
+            $table->id();
             $table->string('role_name', 50);
             $table->foreign('role_name')->references('name')->on('roles');
             $table->foreignId('user_id')->constrained();
-            $table->primary(['role_name', 'user_id']);
+            $table->unique(['role_name', 'user_id']);
             $table->timestamps();
             $table->softDeletes();
         });

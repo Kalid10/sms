@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Activitylog\Models\Activity;
 
 class RoleController extends Controller
 {
@@ -76,6 +77,28 @@ class RoleController extends Controller
         // TODO: Change this route to the correct view
         return Inertia::render('Welcome', [
             'users' => $users,
+        ]);
+    }
+
+    // Function to get all role activities from activity log from the spatie activity log package
+    public function activities(): Response
+    {
+        // Get user role activities from activity log with log name,description, properties,causer,created at and get the user from user_id on the properties
+        $activities = Activity::where('log_name', 'user_role')
+            ->with('causer')
+            ->get()
+            ->map(function ($activity) {
+                return [
+                    'description' => $activity->description,
+                    'causer' => $activity->causer,
+                    'created_at' => $activity->created_at,
+                    'user' => User::where('id', $activity->properties['attributes']['user_id'])->first(),
+                    'role' => $activity->properties['attributes']['role_name'],
+                ];
+            });
+
+        return Inertia::render('Welcome', [
+            'activities' => $activities,
         ]);
     }
 }
