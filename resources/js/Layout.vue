@@ -2,11 +2,13 @@
 
     <div id="top-view"></div>
 
-    <div class="relative flex min-h-screen w-full flex-col">
+    <div class="relative flex h-screen w-full flex-col">
         <Header @open-drawer="drawerVisible = true"/>
         <Drawer v-model:visible="drawerVisible"/>
-        <div class="flex grow flex-col gap-4 overflow-y-auto bg-neutral-50 p-2">
-            <slot/>
+        <div class="grow overflow-y-auto bg-neutral-50 p-2 md:p-6">
+            <div class="container flex w-full max-w-3xl flex-col gap-4 lg:ml-64 lg:w-[calc(100%-16rem)]">
+                <slot/>
+            </div>
         </div>
     </div>
 
