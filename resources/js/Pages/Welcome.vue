@@ -5,9 +5,9 @@
 <script setup>
 import {router} from "@inertiajs/vue3";
 function login() {
-    router.post('/login', {
-        emailOrPhone: "test@gmail.com",
-        password: "secret"
+    router.get('/roles/activities', {
+        roles: ["manage-roles"],
+        user_id: 3
     }, {
         onFinish: () => {
             console.log("Login finished")
