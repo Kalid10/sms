@@ -48,7 +48,7 @@ class CreateRequest extends FormRequest
 
                 // Check if there is already a semester with the same name on the same school year
                 if (Semester::where('name', $semester['name'])->where('school_year_id', SchoolYear::where('end_date', null)->first()->id)->exists()) {
-                    $validator->errors()->add('semesters', $semester['name'].' is already a semester with the same name on the same school year.');
+                    $validator->errors()->add('semesters', $semester['name'].' is already a semester registered on the same school year.');
                 }
             }
 

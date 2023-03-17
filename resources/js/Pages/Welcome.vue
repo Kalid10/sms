@@ -10,6 +10,7 @@
     <button class="bg-red-400 p-1" @click="deleteSubject">Test Delete Subject</button>
     <button class="bg-red-400 p-1" @click="addSchoolYear">Test Add School Year</button>
     <button class="bg-red-400 p-1" @click="addSemesters">Test Create Semester</button>
+    <button class="bg-red-400 p-1" @click="updateSemester">Test Update Semester</button>
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
@@ -155,6 +156,24 @@ function addSemesters() {
                 end_date: "2024-12-31"
             }
         ]
+    }, {
+        onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function updateSemester() {
+    router.post('/semester/update', {
+        id: 1,
+        name: "Second Updated Semester",
+        start_date: "2024-01-01",
+        end_date: "2024-06-30"
+
     }, {
         onSuccess: () =>{
             console.log("Success")
