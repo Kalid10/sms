@@ -1,6 +1,7 @@
 <template>
     <div class="">Welcome</div>
     <button class="bg-red-400 p-1" @click="login">Test Login</button>
+    <button class="bg-red-400 p-1" @click="logout">Test Logout</button>
     <button class="bg-red-400 p-1" @click="assignRoles">Test Assign Role</button>
     <button class="bg-red-400 p-1" @click="removeRoles">Test Remove Role</button>
     <button class="bg-red-400 p-1" @click="showAllRoles">Get Roles</button>
@@ -31,6 +32,18 @@ function login() {
     })
 }
 
+function logout() {
+    router.post('/logout', {
+    }, {
+        onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
 function assignRoles() {
     router.post('/roles/assign', {
         user_id: 2,
@@ -45,6 +58,7 @@ function assignRoles() {
         }
     })
 }
+
 function removeRoles() {
     router.post('/roles/remove', {
         user_id: 2,
