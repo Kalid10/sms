@@ -13,12 +13,15 @@ defineProps({
     type: {
         type: String,
         default: "button"
-    },
-    click: {
-        type: Function,
-        required: true
     }
 })
+
+const emits = defineEmits(['click'])
+
+function click(e) {
+    e.preventDefault()
+    emits('click', e)
+}
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
     <label>
-            <span class="">
+            <span v-if="label" class="">
                 <span class="pl-2 text-sm font-medium text-gray-500">{{ label }}</span>
                 <span v-if="required" class="pl-1 text-red-600">*</span>
             </span>
@@ -16,7 +16,7 @@
 const props = defineProps({
     label: {
         type: String,
-        required: true
+        default: null
     },
     required: {
         type: Boolean,

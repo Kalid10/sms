@@ -1,43 +1,50 @@
 <template>
 
-    <div class="flex w-full flex-col gap-3 rounded-t-md border bg-white shadow-sm">
+    <div class="flex w-full flex-col rounded-t-md border bg-white shadow-sm">
 
-        <div class="px-4 pt-4">
-            <h3 :class="{ 'font-semibold': ! subtitle }" class="capitalize">{{ title }}</h3>
-            <h5 v-if="subtitle" class="text-sm text-gray-500">
-                {{ subtitle }}
-            </h5>
-        </div>
+        <div v-if="titleHeader" class="flex flex-col sm:flex-row sm:items-center">
+            <div class="flex flex-col justify-center p-4 sm:grow">
+                <h3 :class="{ 'font-semibold': ! subtitle }" class="capitalize">{{ title }}</h3>
+                <h5 v-if="subtitle" class="text-sm text-gray-500">
+                    {{ subtitle }}
+                </h5>
+            </div>
 
-        <slot v-if="actionable" name="all-actions">
-            <PrimaryButton v-if="! anySelected" :click="() => {}" class="mx-4" title="Download CSV"/>
-            <div v-else class="mx-4 flex items-center gap-2">
-                <slot name="selected-actions">
-                    <TertiaryButton :click="() => {}" class="w-full" title="Update Users"/>
-                    <PrimaryButton :click="() => {}" class="w-full" title="Delete Users"/>
+            <div class="mx-4 mb-4 min-w-fit sm:mb-0">
+                <slot v-if="actionable" :selected="{ selected: anySelected, items: selectedItems }" name="action">
+                    <PrimaryButton v-if="! anySelected" :click="() => {}" class="w-full" title="Download CSV"/>
+                    <div v-else class="flex items-center gap-2">
+                        <TertiaryButton :click="() => {}" class="w-full whitespace-nowrap" title="Update Users"/>
+                        <PrimaryButton :click="() => {}" class="w-full whitespace-nowrap" title="Delete Users"/>
+                    </div>
                 </slot>
             </div>
-        </slot>
+        </div>
 
         <div class="w-full overflow-x-auto">
             <table class="w-full">
                 <tr>
                     <th
                         v-if="selectable"
-                        class="h-10 border-y bg-neutral-50 px-3 text-sm font-semibold">
+                        class="h-10 w-[1%] border-y bg-neutral-50 px-3">
                         <Checkbox v-model="selectAll"/>
                     </th>
                     <th
                         v-for="(key, index) in (columns.length > 0 ? columns.map(item => item.name) : Object.keys(data[0]))"
                         :key="index"
-                        class="h-10 whitespace-nowrap border-y bg-neutral-50 px-3 text-sm font-semibold text-neutral-700">
+                        class="h-10 whitespace-nowrap border-y bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
                         {{ key }}
+                    </th>
+                    <th
+                        v-if="rowActionable"
+                        class="h-10 w-fit whitespace-nowrap border-y bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
+                        Actions
                     </th>
                 </tr>
                 <tr v-for="(item, index) in data" :key="index" class="border-b">
                     <th
                         v-if="selectable"
-                        class="h-10 border-y px-3 text-sm font-semibold">
+                        class="h-10 w-[1%] border-y border-l bg-white px-3">
                         <Checkbox v-model="items[index].selected"/>
                     </th>
                     <td
@@ -53,11 +60,20 @@
                             {{ item[key] }}
                         </template>
                     </td>
+                    <td
+                        v-if="rowActionable"
+                        class="flex h-10 min-w-fit items-center justify-center gap-2 text-center text-sm [&>*]:mr-3 [&>*]:text-xs [&>:nth-child(1)]:ml-3">
+                        <slot :row="item" name="row-actions">
+                            <Link :href="'/' + item.id" class="">View</Link>
+                            <Link :href="'update/' + item.id" class="">Update</Link>
+                            <Link :href="'delete/' + item.id" class="">Delete</Link>
+                        </slot>
+                    </td>
                 </tr>
             </table>
         </div>
 
-        <div class="-mt-3 flex gap-3 bg-neutral-50 p-4">
+        <div class="flex gap-3 bg-neutral-50 p-4">
             <TertiaryButton :click="() => {}" class="w-full" title="Previous"/>
             <TertiaryButton :click="() => {}" class="w-full" title="Next"/>
         </div>
@@ -80,7 +96,7 @@ const props = defineProps({
     },
     title: {
         type: String,
-        required: true
+        default: null
     },
     subtitle: {
         type: String,
@@ -94,15 +110,20 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    rowActionable: {
+        type: Boolean,
+        default: false
+    },
     columns: {
         type: Array, // Array of objects of type { name: String, key: String, link: String }. opt: link
         default: () => []
     }
 })
 
-
+const titleHeader = computed(() => props.title || props.subtitle)
 const selectAll = ref(false)
 const anySelected = computed(() => items.value.some((item) => item.selected))
+const selectedItems = computed(() => items.value.filter((item) => item.selected).map((item) => props.data[item.id]))
 const items = ref(props.data.map((item, index) => {
     return {
         id: index,
