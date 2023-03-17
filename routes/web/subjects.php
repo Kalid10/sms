@@ -7,4 +7,5 @@ Route::prefix('subject/')->middleware(['checkUserRole:manage-subjects'])->name('
     Route::get('/', [SubjectController::class, 'index'])->name('index');
     Route::post('create', [SubjectController::class, 'create'])->name('create');
     Route::post('update', [SubjectController::class, 'update'])->name('update');
+    Route::delete('delete/{id}', [SubjectController::class, 'delete'])->name('delete');
 });

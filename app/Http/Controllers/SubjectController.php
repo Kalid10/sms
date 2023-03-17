@@ -59,4 +59,25 @@ class SubjectController extends Controller
             return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
+
+    public function delete($id): RedirectResponse
+    {
+        try {
+            // Check if subject exists
+            $subject = Subject::find($id);
+
+            if (! $subject) {
+                return redirect()->back()->with('error', 'Subject not found.');
+            }
+
+            // Delete subject
+            $subject->delete();
+
+            return redirect()->back()->with('success', 'Subject deleted successfully');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        }
+    }
 }
