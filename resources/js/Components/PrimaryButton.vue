@@ -1,7 +1,9 @@
 <template>
 
     <button :type="type" class="rounded-md border border-black bg-black py-1.5 px-4 text-sm text-white" @click="click">
-        {{ title }}
+        <slot>
+            {{ title }}
+        </slot>
     </button>
 
 </template>
@@ -10,17 +12,20 @@
 defineProps({
     title: {
         type: String,
-        required: true
+        default: null
     },
     type: {
         type: String,
         default: "button"
-    },
-    click: {
-        type: Function,
-        required: true
     }
 })
+
+const emits = defineEmits(['click'])
+
+function click(e) {
+    e.preventDefault()
+    emits('click', e)
+}
 </script>
 
 <style scoped>
