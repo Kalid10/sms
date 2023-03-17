@@ -6,12 +6,16 @@ use App\Http\Requests\Semesters\CreateRequest;
 use App\Http\Requests\Semesters\UpdateRequest;
 use App\Models\SchoolYear;
 use App\Models\Semester;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class SemesterController extends Controller
 {
-    public function create(CreateRequest $request)
+    public function create(CreateRequest $request): RedirectResponse
     {
         try {
             DB::beginTransaction();
@@ -25,7 +29,7 @@ class SemesterController extends Controller
             DB::commit();
 
             return redirect()->back()->with('success', 'Semesters created successfully.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
 
@@ -33,7 +37,7 @@ class SemesterController extends Controller
         }
     }
 
-    public function update(UpdateRequest $request)
+    public function update(UpdateRequest $request): RedirectResponse
     {
         try {
             DB::beginTransaction();
@@ -43,11 +47,34 @@ class SemesterController extends Controller
             DB::commit();
 
             return redirect()->back()->with('success', 'Semester updated successfully.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
 
             return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
+    }
+
+    public function list(): Response
+    {
+        // Get all semesters
+        $semesters = Semester::all();
+
+        // Get active school year semesters
+        $schoolYearSemesters = $semesters->filter(function ($semester) {
+            return $semester->schoolYear->end_date === null;
+        });
+
+        // Get active semester
+        $activeSemester = $semesters->filter(function ($semester) {
+            return $semester->status === Semester::STATUS_ACTIVE;
+        });
+
+        // TODO: Change to the correct component
+        return Inertia::render('Semesters/Index', [
+            'semesters' => $semesters,
+            'activeSemester' => $activeSemester,
+            'schoolYearSemesters' => $schoolYearSemesters,
+        ]);
     }
 }
