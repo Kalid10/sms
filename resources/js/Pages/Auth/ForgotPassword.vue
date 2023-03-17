@@ -129,6 +129,7 @@ const form = useForm({
 const confirmationForm = useForm({
     confirmationCode: null,
 });
+
 const resetForm = useForm({
     password: null,
     password_confirmation: null,

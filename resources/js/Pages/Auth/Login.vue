@@ -125,6 +125,8 @@ const form = useForm({
     emailOrPhone: "",
     password: "",
 });
+
+// submit form
 const submit = () => {
     form.post(route("login"), {
         onFinish: () => {

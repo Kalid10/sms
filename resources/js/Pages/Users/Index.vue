@@ -1,6 +1,6 @@
 <template>
 
-    <TableElement
+    <table-element
         :columns="config" :data="users"
         actionable
         selectable
@@ -8,18 +8,17 @@
         title="Users List"
     />
 
-    <FormElement
+    <form-element
         subtitle="Fill in the information required about the new user" title="Register new User">
-
-        <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
-        <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
-        <SelectInput
+        <text-input v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
+        <text-input v-model="formData.position" label="Position" placeholder="Position of user"/>
+        <select-input
             v-model="formData.role"
             :options="roleOptions" label="Role" placeholder="placeholder"
             required
         />
+    </form-element>
 
-    </FormElement>
 
 </template>
 
