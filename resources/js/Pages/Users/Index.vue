@@ -3,13 +3,55 @@
     <TableElement
         :columns="config" :data="users"
         actionable
+        row-actionable
         selectable
         subtitle="List of personnel registered on your system, with user types and contact information"
         title="Users List"
-    />
+    >
+
+        <template #action="{ selected }">
+            <div v-if="selected.selected" class="flex items-center gap-2">
+                <TertiaryButton
+                    title="Move Items"
+                    @click="moveItems(selected.items)"
+                />
+                <PrimaryButton
+                    title="Update Items"
+                    @click="updateItems(selected.items)"
+                />
+            </div>
+            <PrimaryButton v-else title="Download" @click="()=>{ alert('Handle model wide action') }">
+                <span class="flex items-center gap-2">
+                    <CloudArrowDownIcon class="h-4 w-4 stroke-white stroke-2"/>
+                    <span>
+                        Download
+                        <span class="font-mono">CSV</span>
+                    </span>
+                </span>
+            </PrimaryButton>
+        </template>
+
+        <template #row-actions="{ row }">
+            <Link :href="'/users/' + row.id" class="flex flex-col items-center gap-1">
+                <EyeIcon class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"/>
+            </Link>
+            <Link :href="'/users/' + row.id + '/edit'" class="flex flex-col items-center gap-1">
+                <ArrowPathIcon
+                    class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"/>
+            </Link>
+            <Link :href="'/users/' + row.id + '/delete'" class="flex flex-col items-center gap-1">
+                <ArchiveBoxXMarkIcon
+                    class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"/>
+            </Link>
+        </template>
+
+    </TableElement>
 
     <FormElement
-        subtitle="Fill in the information required about the new user" title="Register new User">
+        v-model:show-modal="showRegisterUser"
+        modal
+        subtitle="Fill in the information required about the new user"
+        title="Register new User" @cancel="showRegisterUser = false">
 
         <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
         <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
@@ -25,11 +67,15 @@
 
 <script setup>
 import {ref} from "vue"
+import {EyeIcon, ArrowPathIcon, ArchiveBoxXMarkIcon, CloudArrowDownIcon} from "@heroicons/vue/24/outline"
 import {users} from "@/fake";
+import {Link} from '@inertiajs/vue3'
 import FormElement from "@/Components/FormElement.vue"
 import TextInput from "@/Components/TextInput.vue"
 import SelectInput from "@/Components/SelectInput.vue"
 import TableElement from "@/Components/TableElement.vue"
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TertiaryButton from "@/Components/TertiaryButton.vue";
 
 const formData = ref({
     name: '',
@@ -42,6 +88,14 @@ const roleOptions = [
     {value: 'teacher', label: 'Teacher'},
     {value: 'student', label: 'Student'},
 ];
+
+function updateItems(items) {
+    console.log(`Items to update are `, items.map((item) => item.id))
+}
+
+function moveItems(items) {
+    console.log(`Items to move are `, items.map((item) => item.id))
+}
 
 const config = [
     {
@@ -75,7 +129,6 @@ const config = [
 ]
 
 const showRegisterUser = ref(true)
-const showModal = ref(false)
 </script>
 
 <style scoped>
