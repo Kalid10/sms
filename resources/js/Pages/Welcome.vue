@@ -1,5 +1,5 @@
 <template>
-  <div class="">Welcome</div>
+    <div class="">Welcome</div>
     <button class="bg-red-400 p-1" @click="login">Test Login</button>
     <button class="bg-red-400 p-1" @click="assignRoles">Test Assign Role</button>
     <button class="bg-red-400 p-1" @click="removeRoles">Test Remove Role</button>
@@ -7,7 +7,9 @@
     <button class="bg-red-400 p-1" @click="userRoles">User Roles</button>
     <button class="bg-red-400 p-1" @click="roleActivities">Test Role Activities</button>
     <button class="bg-red-400 p-1" @click="addSubject">Test Add Subject</button>
-<button class="bg-red-400 p-1" @click="deleteSubject">Test Delete Subject</button>
+    <button class="bg-red-400 p-1" @click="deleteSubject">Test Delete Subject</button>
+    <button class="bg-red-400 p-1" @click="addSchoolYear">Test Add School Year</button>
+    <button class="bg-red-400 p-1" @click="addSemesters">Test Create Semester</button>
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
@@ -121,6 +123,49 @@ function deleteSubject(){
         }
     })
 }
+
+// To close a school year, set the end_date
+function addSchoolYear() {
+    router.post('/school-year/create', {
+        start_date: "2024-01-01",
+        end_date: null
+    }, {
+        onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+// Before creating a semester, you must have an active school year
+function addSemesters() {
+    router.post('/semester/create', {
+        semesters:[
+            {
+                name: "First Semester",
+                start_date: "2024-01-01",
+                end_date: "2024-06-30"
+            },
+            {
+                name: "Second Semester",
+                start_date: "2024-07-01",
+                end_date: "2024-12-31"
+            }
+        ]
+    }, {
+        onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
 </script>
 
 <style>
