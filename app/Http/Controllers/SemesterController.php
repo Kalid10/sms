@@ -55,26 +55,58 @@ class SemesterController extends Controller
         }
     }
 
-    public function list(): Response
+    public function list(): RedirectResponse|Response
     {
-        // Get all semesters
-        $semesters = Semester::all();
+        try {
+            // Get all semesters
+            $semesters = Semester::all();
 
-        // Get active school year semesters
-        $schoolYearSemesters = $semesters->filter(function ($semester) {
-            return $semester->schoolYear->end_date === null;
-        });
+            // Get active school year semesters
+            $schoolYearSemesters = $semesters->filter(function ($semester) {
+                return $semester->schoolYear->end_date === null;
+            });
 
-        // Get active semester
-        $activeSemester = $semesters->filter(function ($semester) {
-            return $semester->status === Semester::STATUS_ACTIVE;
-        });
+            // Get active semester
+            $activeSemester = $semesters->filter(function ($semester) {
+                return $semester->status === Semester::STATUS_ACTIVE;
+            });
 
-        // TODO: Change to the correct component
-        return Inertia::render('Semesters/Index', [
-            'semesters' => $semesters,
-            'activeSemester' => $activeSemester,
-            'schoolYearSemesters' => $schoolYearSemesters,
-        ]);
+            // TODO: Change to the correct component
+            return Inertia::render('Semesters/Index', [
+                'semesters' => $semesters,
+                'activeSemester' => $activeSemester,
+                'schoolYearSemesters' => $schoolYearSemesters,
+            ]);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            // Check if semester exists
+            $semester = Semester::find($id);
+
+            if (! $semester) {
+                return redirect()->back()->with('error', 'Semester not found.');
+            }
+
+            // Check if semester is upcoming
+            if ($semester->status !== Semester::STATUS_UPCOMING) {
+                return redirect()->back()->with('error', 'Can only delete upcoming semesters.');
+            }
+
+            // Delete semester
+            $semester->delete();
+
+            redirect()->back()->with('success', 'Semester deleted successfully');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        }
     }
 }

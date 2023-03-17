@@ -12,6 +12,7 @@
     <button class="bg-red-400 p-1" @click="addSemesters">Test Create Semester</button>
     <button class="bg-red-400 p-1" @click="updateSemester">Test Update Semester</button>
     <button class="bg-red-400 p-1" @click="listSemesters">Test List Semester</button>
+    <button class="bg-red-400 p-1" @click="deleteSemester">Test Delete Semester</button>
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
@@ -188,6 +189,19 @@ function updateSemester() {
 
 function listSemesters() {
     router.get('/semester/list', {
+    }, {
+        onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function deleteSemester() {
+    router.delete('/semester/delete/'+ 1, {
     }, {
         onSuccess: () =>{
             console.log("Success")

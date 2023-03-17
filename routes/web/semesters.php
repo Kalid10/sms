@@ -7,4 +7,5 @@ Route::prefix('semester/')->middleware(['checkUserRole:manage-semesters'])->name
     Route::post('create', [SemesterController::class, 'create'])->name('create');
     Route::post('update', [SemesterController::class, 'update'])->name('update');
     Route::get('list', [SemesterController::class, 'list'])->name('list');
+    Route::delete('delete/{id}', [SemesterController::class, 'delete'])->name('delete');
 });
