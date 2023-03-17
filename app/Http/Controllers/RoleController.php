@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Roles\AssignRoleRequest;
 use App\Http\Requests\Roles\RemoveRoleRequest;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
 use Exception;
@@ -100,5 +101,36 @@ class RoleController extends Controller
         return Inertia::render('Welcome', [
             'activities' => $activities,
         ]);
+    }
+
+    public function list(): Response
+    {
+        // Get all roles
+        $roles = Role::all();
+
+        // TODO: Change this route to the correct view
+        return Inertia::render('Welcome', [
+            'roles' => $roles,
+        ]);
+    }
+
+    // Add function to get user roles
+    public function userRoles(Request $request): Response|RedirectResponse
+    {
+        $request->validate([
+            'user_id' => 'required|integer|exists:users,id',
+        ]);
+        try {
+            $user = User::find($request->user_id);
+
+            // TODO: Change this route to the correct view
+            return Inertia::render('Welcome', [
+                'user_roles' => $user->roles,
+            ]);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+
+            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        }
     }
 }
