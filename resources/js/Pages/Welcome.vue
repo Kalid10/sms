@@ -4,6 +4,7 @@
     <button class="bg-red-400 p-1" @click="assignRoles">Test Assign Role</button>
     <button class="bg-red-400 p-1" @click="removeRoles">Test Remove Role</button>
     <button class="bg-red-400 p-1" @click="showAllRoles">Get Roles</button>
+    <button class="bg-red-400 p-1" @click="userRoles">User Roles</button>
     <button class="bg-red-400 p-1" @click="roleActivities">Test Role Activities</button>
     <button class="bg-red-400 p-1" @click="addSubject">Test Add Subject</button>
 <button class="bg-red-400 p-1" @click="deleteSubject">Test Delete Subject</button>
@@ -66,6 +67,19 @@ function showAllRoles() {
     })
 }
 
+function userRoles(){
+    router.get('/roles/user', {
+        user_id: 2
+    }, {
+        onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
 function roleActivities() {
     router.get('/roles/activities', {
         roles: ["manage-roles"],
