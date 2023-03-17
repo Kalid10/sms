@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Roles\AssignRoleRequest;
 use App\Http\Requests\Roles\RemoveRoleRequest;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
 use Exception;
@@ -99,6 +100,16 @@ class RoleController extends Controller
 
         return Inertia::render('Welcome', [
             'activities' => $activities,
+        ]);
+    }
+
+    public function list(): Response
+    {
+        // Get all roles
+        $roles = Role::all();
+
+        return Inertia::render('Welcome', [
+            'roles' => $roles,
         ]);
     }
 }
