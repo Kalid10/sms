@@ -21,8 +21,8 @@
 
         <div class="flex min-h-10 w-full items-center justify-end gap-2 bg-neutral-100 py-2 px-4">
 
-            <SecondaryButton :click="cancel" :title="modal ? 'Close' : 'Clear'"/>
-            <PrimaryButton :click="submit" title="Submit"/>
+            <SecondaryButton :title="modal ? 'Close' : 'Clear'" @click="cancel"/>
+            <PrimaryButton title="Submit" @click="submit"/>
 
         </div>
 
@@ -62,7 +62,7 @@ function cancel() {
 
 function submit() {
     // TODO: implement Inertia form handling
-    emits('cancel')
+    emits('submit')
     emits('update:showModal', false)
 }
 
