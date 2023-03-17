@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests\Roles;
 
-use App\Models\Role;
 use App\Models\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AssignRoleRequest extends FormRequest
+class RemoveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,17 +26,10 @@ class AssignRoleRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            // Check if role exists
+            // Check if role is not assigned to user from the roles array
             foreach ($this->get('roles') as $role) {
-                if (! Role::where('name', $role)->first()) {
-                    $validator->errors()->add('roles', 'Role '.$role.' does not exist.');
-                }
-            }
-
-            // Check if any role is already assigned to the user from the roles array
-            foreach ($this->get('roles') as $role) {
-                if (UserRole::where('role_name', $role)->where('user_id', $this->get('user_id'))->exists()) {
-                    $validator->errors()->add('roles', 'Role '.$role.' is already assigned to this user.');
+                if (! UserRole::where('role_name', $role)->where('user_id', $this->get('user_id'))->exists()) {
+                    $validator->errors()->add('roles', 'Role '.$role.' is not assigned to this user.');
                 }
             }
         });

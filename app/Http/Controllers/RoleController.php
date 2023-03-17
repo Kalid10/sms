@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Roles\AssignRoleRequest;
-use App\Http\Requests\Roles\RemoveRoleRequest;
+use App\Http\Requests\Roles\AssignRequest;
+use App\Http\Requests\Roles\RemoveRequest;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
@@ -17,7 +17,7 @@ use Spatie\Activitylog\Models\Activity;
 
 class RoleController extends Controller
 {
-    public function assign(AssignRoleRequest $request): RedirectResponse
+    public function assign(AssignRequest $request): RedirectResponse
     {
         try {
             // Get validated data
@@ -42,7 +42,7 @@ class RoleController extends Controller
         }
     }
 
-    public function remove(RemoveRoleRequest $request): RedirectResponse
+    public function remove(RemoveRequest $request): RedirectResponse
     {
         // Get validated data
         $validated = $request->validated();
