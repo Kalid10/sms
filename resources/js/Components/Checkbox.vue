@@ -1,7 +1,7 @@
 <template>
     <input
         :checked="modelValue"
-        class="h-3.5 w-3.5 rounded-sm"
+        class="h-3.5 w-3.5 rounded-sm border border-neutral-300 bg-gray-100 text-black ring-offset-2 focus:ring-black"
         type="checkbox" @input="input"
     >
 </template>
