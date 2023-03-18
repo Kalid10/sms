@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Subjects\CreateSubjectRequest;
-use App\Http\Requests\Subjects\UpdateSubjectRequest;
+use App\Http\Requests\Subjects\CreateRequest;
+use App\Http\Requests\Subjects\UpdateRequest;
 use App\Models\Subject;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class SubjectController extends Controller
 {
-    public function create(CreateSubjectRequest $request): RedirectResponse
+    public function create(CreateRequest $request): RedirectResponse
     {
         try {
             Subject::create([
@@ -27,7 +27,7 @@ class SubjectController extends Controller
         }
     }
 
-    public function update(UpdateSubjectRequest $request): RedirectResponse
+    public function update(UpdateRequest $request): RedirectResponse
     {
         try {
             Subject::find($request->id)->update([

@@ -25,12 +25,18 @@ class CreateRoles extends Command
     private $roles = [
         'manage-roles',
         'manage-subjects',
+        'manage-levels',
+        'manage-semesters',
+        'manage-school-years',
     ];
 
     // Description for each user role
     private $roleDescriptions = [
         'Manage Roles',
         'Manage Subjects',
+        'Manage Levels',
+        'Manage Semesters',
+        'Manage School Years',
     ];
 
     /**

@@ -42,7 +42,7 @@ class CreateAdmin extends Command
                 ]);
 
                 // Attach new User to Admin, assign `manage-roles` Role
-                $user->roles()->attach(['manage-roles', 'manage-subjects']);
+                $user->roles()->attach(['manage-roles', 'manage-subjects', 'manage-levels', 'manage-semesters', 'manage-school-years']);
 
                 DB::commit();
                 $this->info('Admin registration succeeded.');
