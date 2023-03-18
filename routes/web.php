@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,12 +23,8 @@ Route::get('/', function () {
 foreach (glob(__DIR__.'/web/*.php') as $file) {
     require $file;
 }
-Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login');
 Route::post('/assign-role', [RoleController::class, 'assignRole'])->middleware(['checkUserRole:manage-roles', 'checkUserType:admin'])->name('assign-role');
 Route::post('/remove-role', [RoleController::class, 'removeRole'])->middleware(['checkUserRole:manage-roles', 'checkUserType:admin'])->name('remove-role');
-Route::get('/login', [LoginController::class, 'create'])->name('login');
-
-Route::post('/login', [LoginController::class, 'login']);
 
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');

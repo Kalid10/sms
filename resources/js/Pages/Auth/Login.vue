@@ -17,19 +17,11 @@
             <div class="mt-4 w-11/12">
                 <div class="flex items-center justify-center">
                     <div
-                        class="mt-5 flex h-9 items-center rounded-l-md px-1"
+                        class="mt-5 flex items-center rounded-l-md "
                     >
-                        <svg
-                            class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"/>
-                        </svg>
-
+                        <UserIcon class="h-6 w-6"/>
                     </div>
-                    <login-text-input
+                    <LoginTextInput
                         v-model="form.emailOrPhone"
                         class="w-full rounded-md pl-2 text-[0.6rem] font-light"
                         label="Email or Phone"
@@ -48,18 +40,11 @@
             <div class="mt-4 w-11/12">
                 <div class="flex items-center justify-center">
                     <div
-                        class="mt-10 flex h-9 items-center rounded-l-md px-1"
+                        class="mt-10 flex items-center rounded-l-md"
                     >
-                        <svg
-                            class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"/>
-                        </svg>
+                        <KeyIcon class="h-6 w-6"/>
                     </div>
-                    <login-text-input
+                    <LoginTextInput
                         v-model="form.password"
                         class="h-8 w-full rounded-md pl-2 text-[0.6rem] font-light"
                         label="Password"
@@ -100,7 +85,7 @@
             </div>
 
             <!--      Login and signup button section-->
-            <login-primary-button :click="submit" class="my-4 w-8/12" title="Login"/>
+            <LoginPrimaryButton class="my-4 w-8/12" title="Login" @click="submit"/>
             <div class="text-xs font-light">
                 Don't have an account?
                 <a
@@ -110,8 +95,8 @@
                 </a>
             </div>
         </div>
-        <div class="mb-6 hidden items-center justify-center lg:my-6 lg:mr-4 lg:flex xl:mr-1">
-            <img alt="place holder" src="/assets/back-to-school.svg"/>
+        <div class="mb-6 hidden items-center justify-center lg:my-0 lg:mr-4 lg:flex xl:mr-1">
+            <img alt="place holder" src="/assets/educator.svg"/>
         </div>
     </div>
 </template>
@@ -120,6 +105,7 @@
 import {useForm} from "@inertiajs/vue3";
 import LoginTextInput from "@/Components/TextInput.vue";
 import LoginPrimaryButton from "@/Components/PrimaryButton.vue";
+import {KeyIcon, UserIcon} from "@heroicons/vue/24/outline"
 
 const form = useForm({
     emailOrPhone: "",
@@ -128,7 +114,7 @@ const form = useForm({
 
 // submit form
 const submit = () => {
-    form.post(route("login"), {
+    form.post("/login", {
         onFinish: () => {
             console.log("Login finished")
         },

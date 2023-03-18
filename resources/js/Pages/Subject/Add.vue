@@ -1,12 +1,13 @@
 <template>
-    <add-modal v-model:view="isOpen">
-        <add-form-element
+    <AddModal v-model:view="isOpen">
+        <AddFormElement
             title="Add Subject"
+            @cancel="clear"
             @submit="submit">
-            <add-text-input v-model="form.full_name" label="Full Name" placeholder="full name" required/>
-            <add-text-input v-model="form.short_name" label="Short Name" placeholder="short name" required/>
-        </add-form-element>
-    </add-modal>
+            <AddTextInput v-model="form.full_name" label="Full Name" placeholder="full name" required/>
+            <AddTextInput v-model="form.short_name" label="Short Name" placeholder="short name" required/>
+        </AddFormElement>
+    </AddModal>
 </template>
 <script setup>
 import {ref} from "vue";
@@ -36,5 +37,11 @@ const submit = () => {
             isOpen.value = false
         }
     })
+}
+
+// Clear form input
+const clear = () => {
+    form.full_name = '',
+        form.short_name = ''
 }
 </script>

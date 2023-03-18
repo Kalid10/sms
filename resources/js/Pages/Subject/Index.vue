@@ -1,29 +1,45 @@
 <template>
-    <subject-table-element
-        :columns="config" :data="subjects" :selectable=false actionable
+    <SubjectTableElement
+        :data="subjects" :selectable=false actionable row-actionable
         subtitle="list of all subjects" title="Subject">
-        <template #all-actions>
+        <template #action>
             <div class="flex flex-row space-x-4">
-                <subject-text-input
-                    v-model="searchKey" class="w-1/2" placeholder="Search for a subject"
-                    @keyup="search"/>
-                <subject-primary-button :click="toggleAddModal" class="w-1/2" title="Add"/>
+                <SubjectTextInput
+                    v-model="searchKey"
+                    :selectable=false
+                    actionable data="subjects" placeholder="Search for subject"
+                    subtitle="list of all subjects"
+                    title="Subject" @keyup="search"/>
+
+                <SubjectPrimaryButton title="Add Subject" @click="toggleAddModal"/>
             </div>
         </template>
-    </subject-table-element>
+        <template #row-actions="{row}">
+            <SubjectPrimaryButton @click="selectSubject(row)">
+                <PencilSquareIcon class="h-6 w-6"/>
+            </SubjectPrimaryButton>
+            <SubjectPrimaryButton @click="removeSubject(row.id)">
+                <TrashIcon class="h-6 w-6"/>
+            </SubjectPrimaryButton>
+        </template>
+    </SubjectTableElement>
 
-    <subject-add v-if="isAddModalOpen" :toggle="isAddModalOpen"/>
-    <subject-update v-if="isUpdateModalOpen" :subjects="subjects" :toggle="isUpdateModalOpen"/>
+    <SubjectAdd v-if="isAddModalOpen" :toggle="isAddModalOpen"/>
+
+    <SubjectUpdate
+        v-if="isUpdateModalOpen" :subject="selectedSubject"
+        :toggle="isUpdateModalOpen"/>
 </template>
 <script setup>
 import {computed, ref} from "vue";
 import SubjectAdd from "@/Pages/Subject/Add.vue";
 import {router, usePage} from "@inertiajs/vue3";
 import {debounce} from "lodash";
+import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/outline"
 import SubjectTableElement from "@/Components/TableElement.vue";
-import SubjectTextInput from "@/Components/TextInput.vue";
-import SubjectPrimaryButton from "@/Components/PrimaryButton.vue";
 import SubjectUpdate from "@/Pages/Subject/Update.vue";
+import SubjectPrimaryButton from "@/Components/PrimaryButton.vue";
+import SubjectTextInput from "@/Components/TextInput.vue";
 
 const isAddModalOpen = ref(false);
 
@@ -54,31 +70,17 @@ const search = debounce(() => {
 
 // Remove Subject
 const removeSubject = (id) => {
-    Inertia.delete(`/subject/${id}`);
-}
+    router.delete("/subject/delete/" + id);
+};
 
-const config = [
-    {
-        name: 'ID',
-        key: 'id',
-    },
-    {
-        name: 'Full Name',
-        key: 'full_name',
-    },
-    {
-        name: 'Short Name',
-        key: 'short_name',
-    },
-    {
-        name: 'Update',
-        key: 'update',
-        link: `subject/update/ ${subjects.value.id || 'id'}`,
-    },
-    {
-        name: 'Delete',
-        key: 'delete',
-        link: `subject/delete/ ${subjects.value.id || 'id'}`,
-    },
-]
+const selectedSubject = ref();
+
+function selectSubject(subject) {
+    selectedSubject.value = subject;
+    toggleUpdateModal();
+    if (!subject) {
+        return (selectedSubject.value = null);
+        toggleUpdateModal();
+    }
+}
 </script>

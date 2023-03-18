@@ -5,22 +5,22 @@
                 <div class="rounded bg-white px-8 py-6 shadow-md">
                     <h2 class="mb-4 text-lg font-medium">Forgot Password</h2>
                     <div class="mb-4">
-                        <text-input
+                        <ForgotTextInput
                             v-model="form.emailOrPhone"
                             label="Email or Phone"
                             placeholder="jon@gmail.com / 0911.."
                         />
                     </div>
                     <div class="flex items-center justify-between">
-                        <primary-button
-                            :click="confirmCode"
+                        <ForgotPrimaryButton
                             title="Submit"
+                            @click="confirmCode"
                         >
                             Submit
-                        </primary-button>
-                        <secondary-button
-                            :click="loginUrl"
-                            title="Back to Login"/>
+                        </ForgotPrimaryButton>
+                        <ForgotSecondaryButton
+                            title="Back to Login"
+                            @click="loginUrl"/>
                     </div>
                 </div>
             </div>
@@ -29,21 +29,21 @@
                     <h2 class="mb-4 text-lg font-medium">Account recovery</h2>
                     <p>Confirm the phone number you provided in your security settings: ••• ••• ••74</p>
                     <div class="mb-4">
-                        <text-input
+                        <ForgotTextInput
                             v-model="confirmationForm.confirmationCode"
                             label="Confirmation Code"
                             placeholder="****"/>
                     </div>
                     <div class="flex items-center justify-between">
-                        <primary-button
-                            :click="forgotPassword"
+                        <ForgotPrimaryButton
                             title="Submit"
+                            @click="forgotPassword"
                         >
                             Submit
-                        </primary-button>
-                        <!--                        <secondary-button-->
-                        <!--                            title="Back to Login"-->
-                        <!--                            @click="loginUrl"/>-->
+                        </ForgotPrimaryButton>
+                        <ForgotSecondaryButton
+                            title="Back to Login"
+                            @click="loginUrl"/>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <div class="rounded bg-white px-8 py-6 shadow-md">
                     <h2 class="mb-4 text-lg font-medium">Reset Password</h2>
                     <div class="mb-4">
-                        <text-input
+                        <ForgotTextInput
                             v-model="resetForm.password"
                             label="Password"
                             placeholder="*********"
@@ -59,20 +59,20 @@
                         />
                     </div>
                     <div class="mb-4">
-                        <text-input
+                        <ForgotTextInput
                             v-model="resetForm.password_confirmation"
                             label="Confirm Password"
                             placeholder="*********"
                             required/>
                     </div>
                     <div class="flex items-center justify-between">
-                        <primary-button
-                            :click="loginUrl"
+                        <ForgotPrimaryButton
                             title="Reset Password"
+                            @click="loginUrl"
                         />
-                        <secondary-button
-                            :click="resetPassword"
+                        <ForgotSecondaryButton
                             title="Cancel"
+                            @click="resetPassword"
                         />
                     </div>
                 </div>
@@ -83,11 +83,10 @@
 
 <script setup>
 import {ref} from 'vue';
-import TextInput from "@/Components/TextInput.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
-import {Inertia} from "@inertiajs/inertia";
-import {useForm} from "@inertiajs/vue3";
+import ForgotTextInput from "@/Components/TextInput.vue";
+import ForgotSecondaryButton from "@/Components/SecondaryButton.vue";
+import ForgotPrimaryButton from "@/Components/PrimaryButton.vue";
+import {router, useForm} from "@inertiajs/vue3";
 
 const showForgotPassword = ref(true);
 const showResetPassword = ref(false);
@@ -117,8 +116,8 @@ function forgotPassword() {
     showConfirmCode.value = false;
 }
 
-function loginUrl() {
-    return Inertia.get('/login');
+const loginUrl = () => {
+    return router.get('/login');
 }
 
 const form = useForm({

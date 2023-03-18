@@ -21,7 +21,7 @@ class SubjectController extends Controller
         Log::info('Search key: '.$searchKey);
 
         // Get subjects
-        $subjects = Subject::select('full_name', 'short_name', 'id')->where('full_name', 'like', '%'.$searchKey.'%')->paginate(10);
+        $subjects = Subject::select('id', 'full_name', 'short_name')->where('full_name', 'like', '%'.$searchKey.'%')->paginate(10);
 
         return Inertia::render('Subject/Index', [
             'subjects' => $subjects,
@@ -77,7 +77,7 @@ class SubjectController extends Controller
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 }
