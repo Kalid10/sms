@@ -100,4 +100,75 @@ class RolesTest extends TestCase
             'role_name' => $roleNames[1],
         ]);
     }
+
+    public function test_remove_role_with_manage_roles()
+    {
+        // Create a user with the manage-roles role
+        $remover = User::factory()->create();
+        $remover->roles()->attach(['manage-roles']);
+
+        // Create a user to remove roles from
+        $user = User::factory()->create();
+
+        // Assign roles to the user
+        $user->roles()->attach(['manage-levels', 'manage-subjects']);
+
+        // Authenticate the remover
+        $this->actingAs($remover);
+
+        // Create the request data
+        $data = [
+            'user_id' => $user->id,
+            'roles' => ['manage-levels'],
+        ];
+
+        // Call the remove method of the controller
+        $response = $this->post(route('roles.remove'), $data);
+
+        // Check the response
+        $response->assertRedirect();
+        $this->assertSoftDeleted('user_roles', [
+            'user_id' => $user->id,
+            'role_name' => 'manage-levels',
+        ]);
+        $this->assertDatabaseHas('user_roles', [
+            'user_id' => $user->id,
+            'role_name' => 'manage-subjects',
+        ]);
+    }
+
+    public function test_remove_role_without_manage_roles()
+    {
+        // Create a user to remove roles from
+        $user = User::factory()->create();
+
+        // Create another user to remove roles from
+        $otherUser = User::factory()->create();
+
+        // Assign roles to the other user
+        $otherUser->roles()->attach(['manage-levels', 'manage-subjects']);
+
+        // Authenticate the user
+        $this->actingAs($user);
+
+        // Create the request data
+        $data = [
+            'user_id' => $otherUser->id,
+            'roles' => ['manage-levels'],
+        ];
+
+        // Call the remove method of the controller
+        $response = $this->post(route('roles.remove'), $data);
+
+        // Check the response
+        $response->assertForbidden();
+        $this->assertDatabaseHas('user_roles', [
+            'user_id' => $otherUser->id,
+            'role_name' => 'manage-levels',
+        ]);
+        $this->assertDatabaseHas('user_roles', [
+            'user_id' => $otherUser->id,
+            'role_name' => 'manage-subjects',
+        ]);
+    }
 }

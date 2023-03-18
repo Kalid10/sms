@@ -50,12 +50,19 @@ class RoleController extends Controller
         try {
             // Delete user roles
             foreach ($validated['roles'] as $role) {
-                UserRole::where('role_name', $role)
+                $userRole = UserRole::where('role_name', $role)
                     ->where('user_id', $validated['user_id'])
-                    ->delete();
+                    ->first();
+
+                $userRole->delete();
+                Log::error($userRole);
+
+                Log::error('Role: '.$role.' User: '.$validated['user_id']);
+
+                Log::error($userRole);
             }
 
-            return redirect()->back()->with('success', $validated['role_name'].' deleted successfully.');
+            return redirect()->back()->with('success', 'Roles deleted successfully.');
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
 
