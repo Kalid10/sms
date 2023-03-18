@@ -4,16 +4,20 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     public function index()
     {
         return Inertia::render('Auth/Login');
     }
 
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse|Response
     {
         // Authenticate user
         $request->authenticate();
@@ -38,5 +42,30 @@ class LoginController extends Controller
                 'user' => auth()->user(),
                 'token' => $token->plainTextToken,
             ]);
+    }
+
+    public function logout(Request $request): JsonResponse|RedirectResponse
+    {
+        // Revoke all tokens
+        auth()->user()->tokens()->delete();
+
+        // Logout user
+        auth('web')->logout();
+
+        // Regenerate session
+        $request->session()->invalidate();
+
+        // Regenerate CSRF token
+        $request->session()->regenerateToken();
+
+        // Handle request from InertiaJS
+        if ($request->header('X-Inertia')) {
+            return redirect()->back()->with('success', 'You have successfully logged out.');
+        }
+
+        // Return response from API
+        return response()->json([
+            'message' => 'You have successfully logged out.',
+        ]);
     }
 }

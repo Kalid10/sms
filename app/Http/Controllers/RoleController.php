@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Roles\AssignRoleRequest;
-use App\Http\Requests\Roles\RemoveRoleRequest;
+use App\Http\Requests\Roles\AssignRequest;
+use App\Http\Requests\Roles\RemoveRequest;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
@@ -17,7 +17,7 @@ use Spatie\Activitylog\Models\Activity;
 
 class RoleController extends Controller
 {
-    public function assign(AssignRoleRequest $request): RedirectResponse
+    public function assign(AssignRequest $request): RedirectResponse
     {
         try {
             // Get validated data
@@ -42,7 +42,7 @@ class RoleController extends Controller
         }
     }
 
-    public function remove(RemoveRoleRequest $request): RedirectResponse
+    public function remove(RemoveRequest $request): RedirectResponse
     {
         // Get validated data
         $validated = $request->validated();
@@ -50,12 +50,19 @@ class RoleController extends Controller
         try {
             // Delete user roles
             foreach ($validated['roles'] as $role) {
-                UserRole::where('role_name', $role)
+                $userRole = UserRole::where('role_name', $role)
                     ->where('user_id', $validated['user_id'])
-                    ->delete();
+                    ->first();
+
+                $userRole->delete();
+                Log::error($userRole);
+
+                Log::error('Role: '.$role.' User: '.$validated['user_id']);
+
+                Log::error($userRole);
             }
 
-            return redirect()->back()->with('success', $validated['role_name'].' deleted successfully.');
+            return redirect()->back()->with('success', 'Roles deleted successfully.');
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
 

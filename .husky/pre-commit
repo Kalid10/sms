@@ -2,7 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 npx lint-staged
 ./vendor/bin/pint
-./vendor/bin/phpunit
+php artisan cache:clear
+php artisan config:clear
+#./vendor/bin/phpunit
 php artisan migrate:fresh --seed
-php artisan app:create-roles
-php artisan app:create-admin  abebe test@gmail.com

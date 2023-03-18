@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Subjects\CreateSubjectRequest;
-use App\Http\Requests\Subjects\UpdateSubjectRequest;
+use App\Http\Requests\Subjects\CreateRequest;
+use App\Http\Requests\Subjects\UpdateRequest;
 use App\Models\Subject;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -18,8 +18,6 @@ class SubjectController extends Controller
         // Get search key
         $searchKey = $request->input('search');
 
-        Log::info('Search key: '.$searchKey);
-
         // Get subjects
         $subjects = Subject::select('id', 'full_name', 'short_name')->where('full_name', 'like', '%'.$searchKey.'%')->paginate(10);
 
@@ -28,7 +26,7 @@ class SubjectController extends Controller
         ]);
     }
 
-    public function create(CreateSubjectRequest $request): RedirectResponse
+    public function create(CreateRequest $request): RedirectResponse
     {
         try {
             Subject::create([
@@ -36,7 +34,7 @@ class SubjectController extends Controller
                 'short_name' => $request->short_name,
             ]);
 
-            return redirect()->back()->with('success', $request->full_name.' added successfully');
+            return  redirect()->back()->with('success', $request->full_name.' added successfully');
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
@@ -44,7 +42,7 @@ class SubjectController extends Controller
         }
     }
 
-    public function update(UpdateSubjectRequest $request): RedirectResponse
+    public function update(UpdateRequest $request): RedirectResponse
     {
         try {
             Subject::find($request->id)->update([
