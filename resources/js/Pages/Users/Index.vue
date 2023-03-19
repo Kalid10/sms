@@ -1,5 +1,15 @@
 <template>
 
+    <UsersStatistics/>
+
+    <Card icon subtitle="Teenage Ninja Mutant Spiders" title="Kylian Mbappe">
+
+        <template #icon>
+            <BugAntIcon/>
+        </template>
+
+    </Card>
+
     <TableElement
         :columns="config" :data="users"
         actionable
@@ -20,7 +30,7 @@
                     @click="updateItems(selected.items)"
                 />
             </div>
-            <PrimaryButton v-else title="Download" @click="()=>{ alert('Handle model wide action') }">
+            <PrimaryButton v-else title="Create New User" @click="createUserForm">
                 <span class="flex items-center gap-2">
                     <CloudArrowDownIcon class="h-4 w-4 stroke-white stroke-2"/>
                     <span>
@@ -47,35 +57,59 @@
 
     </TableElement>
 
-    <FormElement
-        v-model:show-modal="showRegisterUser"
-        modal
-        subtitle="Fill in the information required about the new user"
-        title="Register new User" @cancel="showRegisterUser = false">
+    <Modal v-model:view="showModal">
+        <FormElement
+            v-model:show-modal="showModal" modal subtitle="Update the selected user"
+            title="Update user"
+        >
+            <TextInput v-model="formData.name" label="Name" placeholder="Update user name" required/>
+            <TextInput v-model="formData.role" label="Role" placeholder="Update user role"/>
+            <TextInput v-model="formData.position" label="Position" placeholder="Update user position"/>
 
-        <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
-        <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
-        <SelectInput
-            v-model="formData.role"
-            :options="roleOptions" label="Role" placeholder="placeholder"
-            required
-        />
+        </FormElement>
+    </Modal>
 
-    </FormElement>
+    <Modal v-model:view="showRegisterUser">
+        <FormElement
+            v-model:show-modal="showRegisterUser"
+            modal
+            subtitle="Fill in the information required about the new user"
+            title="Register new User" @cancel="showRegisterUser = false"
+        >
+
+            <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
+            <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
+            <SelectInput
+                v-model="formData.role"
+                :options="roleOptions" label="Role" placeholder="placeholder"
+                required
+            />
+
+        </FormElement>
+    </Modal>
 
 </template>
 
 <script setup>
 import {ref} from "vue"
-import {EyeIcon, ArrowPathIcon, ArchiveBoxXMarkIcon, CloudArrowDownIcon} from "@heroicons/vue/24/outline"
+import {
+    BugAntIcon,
+    EyeIcon,
+    ArrowPathIcon,
+    ArchiveBoxXMarkIcon,
+    CloudArrowDownIcon
+} from "@heroicons/vue/24/outline"
 import {users} from "@/fake";
 import {Link} from '@inertiajs/vue3'
+import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue"
 import TextInput from "@/Components/TextInput.vue"
 import SelectInput from "@/Components/SelectInput.vue"
 import TableElement from "@/Components/TableElement.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
+import Card from "@/Components/Card.vue"
+import UsersStatistics from "@/Views/UsersStatistics.vue";
 
 const formData = ref({
     name: '',
@@ -128,7 +162,12 @@ const config = [
     },
 ]
 
-const showRegisterUser = ref(true)
+const showRegisterUser = ref(false)
+const showModal = ref(false)
+
+function createUserForm() {
+    showRegisterUser.value = true
+}
 </script>
 
 <style scoped>
