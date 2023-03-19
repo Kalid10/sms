@@ -1,83 +1,76 @@
 <template>
-    <div class="flex h-full items-center justify-center">
-        <div class="h-4/6 w-5/12">
-            <div v-if="showForgotPassword">
-                <div class="rounded bg-white px-8 py-6 shadow-md">
-                    <h2 class="mb-4 text-lg font-medium">Forgot Password</h2>
-                    <div class="mb-4">
-                        <ForgotTextInput
-                            v-model="form.emailOrPhone"
-                            label="Email or Phone"
-                            placeholder="jon@gmail.com / 0911.."
-                        />
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <ForgotPrimaryButton
-                            title="Submit"
-                            @click="confirmCode"
-                        >
-                            Submit
-                        </ForgotPrimaryButton>
-                        <ForgotSecondaryButton
-                            title="Back to Login"
-                            @click="loginUrl"/>
-                    </div>
-                </div>
+    <div class="mt-20 flex h-full items-center justify-center">
+        <ForgotCard v-if="showForgotPassword" title="Forgot Password" subtitle="" class="w-full md:w-full">
+            <ForgotTextInput
+                v-model="form.emailOrPhone"
+                label="Email or Phone"
+                placeholder="jon@gmail.com / 0911.."
+            />
+            <div class="flex items-center justify-between">
+                <ForgotPrimaryButton
+                    title="Submit"
+                    @click="confirmCode"
+                >
+                    Submit
+                </ForgotPrimaryButton>
+                <ForgotSecondaryButton
+                    title="Back to Login"
+                    @click="loginUrl"/>
             </div>
-            <div v-if="showConfirmCode">
-                <div class="rounded bg-white px-8 py-6 shadow-md">
-                    <h2 class="mb-4 text-lg font-medium">Account recovery</h2>
-                    <p>Confirm the phone number you provided in your security settings: ••• ••• ••74</p>
-                    <div class="mb-4">
-                        <ForgotTextInput
-                            v-model="confirmationForm.confirmationCode"
-                            label="Confirmation Code"
-                            placeholder="****"/>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <ForgotPrimaryButton
-                            title="Submit"
-                            @click="forgotPassword"
-                        >
-                            Submit
-                        </ForgotPrimaryButton>
-                        <ForgotSecondaryButton
-                            title="Back to Login"
-                            @click="loginUrl"/>
-                    </div>
-                </div>
+        </ForgotCard>
+
+
+        <ForgotCard
+            v-if="showConfirmCode"
+            title="Account recovery"
+            subtitle="Confirm the phone number you provided in your security settings: ••• ••• ••74"
+            class="w-full md:w-full">
+            <ForgotTextInput
+                v-model="confirmationForm.confirmationCode"
+                label="Confirmation Code"
+                placeholder="****"/>
+            <div class="flex items-center justify-between">
+                <ForgotPrimaryButton
+                    title="Submit"
+                    @click="forgotPassword"
+                >
+                    Submit
+                </ForgotPrimaryButton>
+                <ForgotSecondaryButton
+                    title="Back to Login"
+                    @click="loginUrl"/>
             </div>
-            <div v-if="showResetPassword">
-                <div class="rounded bg-white px-8 py-6 shadow-md">
-                    <h2 class="mb-4 text-lg font-medium">Reset Password</h2>
-                    <div class="mb-4">
-                        <ForgotTextInput
-                            v-model="resetForm.password"
-                            label="Password"
-                            placeholder="*********"
-                            required
-                        />
-                    </div>
-                    <div class="mb-4">
-                        <ForgotTextInput
-                            v-model="resetForm.password_confirmation"
-                            label="Confirm Password"
-                            placeholder="*********"
-                            required/>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <ForgotPrimaryButton
-                            title="Reset Password"
-                            @click="loginUrl"
-                        />
-                        <ForgotSecondaryButton
-                            title="Cancel"
-                            @click="resetPassword"
-                        />
-                    </div>
-                </div>
+        </ForgotCard>
+
+
+        <ForgotCard v-if="showResetPassword" title="Reset Password" subtitle="" class="w-full md:w-full">
+            <div class="mb-4">
+                <ForgotTextInput
+                    v-model="resetForm.password"
+                    label="Password"
+                    placeholder="*********"
+                    required
+                />
             </div>
-        </div>
+            <div class="mb-4">
+                <ForgotTextInput
+                    v-model="resetForm.password_confirmation"
+                    label="Confirm Password"
+                    placeholder="*********"
+                    required/>
+            </div>
+            <div class="flex items-center justify-between">
+                <ForgotPrimaryButton
+                    title="Reset Password"
+                    @click="loginUrl"
+                />
+                <ForgotSecondaryButton
+                    title="Cancel"
+                    @click="resetPassword"
+                />
+            </div>
+        </ForgotCard>
+
     </div>
 </template>
 
@@ -87,6 +80,7 @@ import ForgotTextInput from "@/Components/TextInput.vue";
 import ForgotSecondaryButton from "@/Components/SecondaryButton.vue";
 import ForgotPrimaryButton from "@/Components/PrimaryButton.vue";
 import {router, useForm} from "@inertiajs/vue3";
+import ForgotCard from "@/Components/Card.vue";
 
 const showForgotPassword = ref(true);
 const showResetPassword = ref(false);

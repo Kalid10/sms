@@ -1,13 +1,17 @@
 <template>
-    <div class="flex min-h-screen justify-center py-2">
-        <div
-            class="mx-2 mt-[5rem] flex h-fit w-full flex-col items-center py-4 sm:w-9/12 md:w-7/12 lg:w-5/12 xl:w-4/12"
-        >
-            <div class="text-3xl font-light italic">Welcome Back :)</div>
+    <div class="flex min-h-screen justify-center py-10">
+        <LoginCard
+            title="Welcome Back :)" subtitle="Hello! Please enter details."
+            class="mx-2 mt-[5rem] flex h-fit w-full flex-col items-center py-20 sm:w-9/12 md:w-7/12 lg:w-5/12 xl:w-4/12">
+            <!--        <div-->
+            <!--            class="mx-2 mt-[5rem] flex h-fit w-full flex-col items-center py-4 sm:w-9/12 md:w-7/12 lg:w-5/12 xl:w-4/12"-->
+            <!--        >-->
+            <!--            <div class="text-3xl font-light italic">Welcome Back :)</div>-->
 
-            <div class="my-3 mb-6 text-xs font-light">
-                Hello! Please enter details.
-            </div>
+            <!--            <div class="my-3 mb-6 text-xs font-light">-->
+            <!--                Hello! Please enter details.-->
+            <!--            </div>-->
+
 
             <!--        User input section-->
             <div class="mt-4 w-11/12">
@@ -52,38 +56,38 @@
                         *{{ form.errors.password }}
                     </div>
                 </div>
-            </div>
 
-            <!--      Remember me and forgot password section-->
-            <div
-                class="mt-9 flex w-full justify-around text-xs font-light text-black"
-            >
-                <div class="mr-2 flex items-center">
-                    <input
-                        id="remember-me"
-                        class="mr-1 rounded focus:ring-0"
-                        type="checkbox"
-                    />
-                    <label for="remember-me">Remember Me</label>
+                <!--      Remember me and forgot password section-->
+                <div
+                    class="mt-9 flex w-full justify-around text-xs font-light text-black"
+                >
+                    <div class="mr-2 flex items-center">
+                        <input
+                            id="remember-me"
+                            class="mr-1 rounded focus:ring-0"
+                            type="checkbox"
+                        />
+                        <label for="remember-me">Remember Me</label>
+                    </div>
+                    <div class="ml-2 underline">
+                        <a class="font-bold" href="/forgot-password">
+                            Forgot Password?
+                        </a>
+                    </div>
                 </div>
-                <div class="ml-2 underline">
-                    <a class="font-bold" href="/forgot-password">
-                        Forgot Password?
-                    </a>
-                </div>
-            </div>
 
-            <!--      Login and signup button section-->
-            <LoginPrimaryButton
-                class="my-4 w-8/12"
-                title="Login"
-                @click="submit"
-            />
-            <div class="text-xs font-light">
-                Don't have an account?
-                <a class="text-dark-50 cursor-pointer font-bold"> Sign up </a>
+                <!--      Login and signup button section-->
+                <LoginPrimaryButton
+                    class="my-4 w-full"
+                    title="Login"
+                    @click="submit"
+                />
+                <div class="text-xs font-light">
+                    Don't have an account?
+                    <a class="text-dark-50 cursor-pointer font-bold"> Sign up </a>
+                </div>
             </div>
-        </div>
+        </LoginCard>
         <div
             class="mb-6 hidden items-center justify-center lg:my-0 lg:mr-4 lg:flex xl:mr-1"
         >
@@ -102,6 +106,7 @@ import {useForm} from "@inertiajs/vue3";
 import LoginTextInput from "@/Components/TextInput.vue";
 import LoginPrimaryButton from "@/Components/PrimaryButton.vue";
 import {KeyIcon, UserIcon} from "@heroicons/vue/24/outline";
+import LoginCard from "@/Components/Card.vue";
 
 const form = useForm({
     emailOrPhone: "",
