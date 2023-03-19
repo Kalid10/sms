@@ -14,8 +14,8 @@
                 <slot v-if="actionable" :selected="{ selected: anySelected, items: selectedItems }" name="action">
                     <PrimaryButton v-if="! anySelected" :click="() => {}" class="w-full" title="Download CSV"/>
                     <div v-else class="flex items-center gap-2">
-                        <TertiaryButton :click="() => {}" class="w-full whitespace-nowrap" title="Update Users"/>
-                        <PrimaryButton :click="() => {}" class="w-full whitespace-nowrap" title="Delete Users"/>
+                        <TertiaryButton class="w-full whitespace-nowrap" title="Update Users" @click="() => {}"/>
+                        <PrimaryButton class="w-full whitespace-nowrap" title="Delete Users" @click="() => {}"/>
                     </div>
                 </slot>
             </div>
