@@ -32,7 +32,7 @@ const form = useForm({
 
 // Add Subject
 const submit = () => {
-    form.post(route('subject.create'), {
+    form.post(route('subjects.create'), {
         onSuccess: () => {
             isOpen.value = false
         }

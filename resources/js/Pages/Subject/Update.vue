@@ -42,7 +42,7 @@ const form = useForm({
 
 // Update Subject
 const update = () => {
-    form.post(route('subject.update'), {
+    form.post(route('subjects.update'), {
         onSuccess: () => {
             isOpen.value = false
         }
