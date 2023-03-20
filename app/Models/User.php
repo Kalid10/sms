@@ -15,6 +15,12 @@ class User extends Authenticatable
 
     const TYPE_ADMIN = 'admin';
 
+    const TYPE_TEACHER = 'teacher';
+
+    const TYPE_STUDENT = 'student';
+
+    const TYPE_GUARDIAN = 'guardian';
+
     protected $fillable = [
         'name',
         'email',
