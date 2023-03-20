@@ -11,7 +11,7 @@
     </Card>
 
     <TableElement
-        :columns="config" :data="users"
+        :data="users"
         actionable
         row-actionable
         selectable
@@ -20,17 +20,28 @@
     >
 
         <template #action="{ selected }">
-            <div v-if="selected.selected" class="flex items-center gap-2">
-                <TertiaryButton
-                    title="Move Items"
-                    @click="moveItems(selected.items)"
+            <div class="flex flex-row space-x-4">
+                <SearchTextInput
+                    v-model="searchKey"
+                    :selectable="false"
+                    actionable
+                    data="subjects"
+                    placeholder="Search for subject"
+                    subtitle="list of all subjects"
+                    title="Subject"
+                    @keyup="search"
                 />
-                <PrimaryButton
-                    title="Update Items"
-                    @click="updateItems(selected.items)"
-                />
-            </div>
-            <PrimaryButton v-else title="Create New User" @click="createUserForm">
+                <div v-if="selected.selected" class="flex items-center gap-2">
+                    <TertiaryButton
+                        title="Move Items"
+                        @click="moveItems(selected.items)"
+                    />
+                    <PrimaryButton
+                        title="Update Items"
+                        @click="updateItems(selected.items)"
+                    />
+                </div>
+                <PrimaryButton v-else title="Create New User" @click="createUserForm">
                 <span class="flex items-center gap-2">
                     <CloudArrowDownIcon class="h-4 w-4 stroke-white stroke-2"/>
                     <span>
@@ -38,7 +49,8 @@
                         <span class="font-mono">CSV</span>
                     </span>
                 </span>
-            </PrimaryButton>
+                </PrimaryButton>
+            </div>
         </template>
 
         <template #row-actions="{ row }">
@@ -91,25 +103,20 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
-import {
-    BugAntIcon,
-    EyeIcon,
-    ArrowPathIcon,
-    ArchiveBoxXMarkIcon,
-    CloudArrowDownIcon
-} from "@heroicons/vue/24/outline"
-import {users} from "@/fake";
-import {Link} from '@inertiajs/vue3'
+import {computed, ref} from "vue"
+import {ArchiveBoxXMarkIcon, ArrowPathIcon, BugAntIcon, CloudArrowDownIcon, EyeIcon} from "@heroicons/vue/24/outline"
+import {Link, router, usePage} from '@inertiajs/vue3'
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue"
 import TextInput from "@/Components/TextInput.vue"
+import SearchTextInput from "@/Components/TextInput.vue"
 import SelectInput from "@/Components/SelectInput.vue"
 import TableElement from "@/Components/TableElement.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import Card from "@/Components/Card.vue"
 import UsersStatistics from "@/Views/UsersStatistics.vue";
+import {debounce} from "lodash";
 
 const formData = ref({
     name: '',
@@ -131,36 +138,10 @@ function moveItems(items) {
     console.log(`Items to move are `, items.map((item) => item.id))
 }
 
-const config = [
-    {
-        name: 'Full Name',
-        key: 'name',
-        link: '/users/{id}',
-    },
-    {
-        name: 'Email',
-        key: 'email',
-        link: 'mailto:{email}'
-    },
-    {
-        name: 'Phone Number',
-        key: 'phone',
-    },
-    {
-        name: 'User Type',
-        key: 'type',
-        link: '/users/{id}/edit'
-    },
-    {
-        name: 'User Roles',
-        key: 'roles',
-        link: 'https://google.com'
-    },
-    {
-        name: 'Status',
-        key: 'active',
-    },
-]
+// Get all users
+const users = computed(() => {
+    return usePage().props.users.data;
+});
 
 const showRegisterUser = ref(false)
 const showModal = ref(false)
@@ -168,6 +149,18 @@ const showModal = ref(false)
 function createUserForm() {
     showRegisterUser.value = true
 }
+
+
+const searchKey = ref(usePage().props.searchKey);
+
+const search = debounce(() => {
+    router.get(
+        "/users",
+        {search: searchKey.value},
+        {preserveState: true, replace: true}
+    );
+}, 300);
+
 </script>
 
 <style scoped>

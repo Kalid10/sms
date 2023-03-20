@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/users', function () {
-    return Inertia::render('Users/Index');
+Route::prefix('users/')->middleware('web')->name('subjects.')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
 });
