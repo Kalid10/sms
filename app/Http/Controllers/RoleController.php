@@ -83,7 +83,7 @@ class RoleController extends Controller
             ->paginate(10);
 
         // TODO: Change this route to the correct view
-        return Inertia::render('Welcome', [
+        return Inertia::render('Roles/Index', [
             'users' => $users,
         ]);
     }
