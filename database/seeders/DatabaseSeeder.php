@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -23,6 +22,9 @@ class DatabaseSeeder extends Seeder
 
         // Populate roles
         Artisan::call('app:create-roles');
+
+        // Populate levels
+        Artisan::call('app:create-levels');
 
         // Assign all roles to the user
         $user->roles()->attach(Role::all());
