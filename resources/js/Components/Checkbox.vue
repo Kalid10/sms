@@ -11,6 +11,9 @@ defineProps({
     modelValue: {
         type: Boolean,
         required: true
+    },
+    label:{
+        type:String,
     }
 })
 
