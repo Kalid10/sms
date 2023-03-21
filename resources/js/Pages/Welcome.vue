@@ -1,5 +1,9 @@
 <template>
     <div class="">Welcome</div>
+    <button class="bg-red-400 p-1" @click="registerAdmin">Register Admin</button>
+    <button class="bg-red-400 p-1" @click="registerGuardian">Register Guardian</button>
+    <button class="bg-red-400 p-1" @click="registerStudent">Register Student</button>
+    <button class="bg-red-400 p-1" @click="registerTeacher">Register Teacher</button>
     <button class="bg-red-400 p-1" @click="login">Test Login</button>
     <button class="bg-red-400 p-1" @click="logout">Test Logout</button>
     <button class="bg-red-400 p-1" @click="assignRoles">Test Assign Role</button>
@@ -17,10 +21,79 @@
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
+
+// Register admin
+function registerAdmin() {
+    router.post('/register', {
+        name: "Biniyam Lemma",
+        email: "admin@gmaill.com",
+        position: "Principal",
+        type:"admin"
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    });
+}
+
+function registerGuardian() {
+    router.post('/register', {
+        name: "Kalid Abdu",
+        email: "kalid@gmaill.com",
+        type: "guardian"
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    });
+}
+function registerStudent() {
+    router.post('/register', {
+        name: "Kidist Andarge",
+        email: "Kidist@gmail.com",
+        type: "student",
+        level_id: 1,
+        guardian_id: 1,
+    },{
+    onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    });
+}
+
+// Register teacher
+function registerTeacher(){
+    router.post('/register', {
+        name: "Yoseph Seboka",
+        phone_number: "0943104396",
+        type: "teacher",
+    },{
+        onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    });
+}
+
 function login() {
     router.post('/login', {
-        emailOrPhone: "test@gmail.com",
-        password: "secret"
+        emailOrPhone: "test@example.com",
+        password: "password"
     }, {
         onSuccess: () =>{
             console.log("Success")
