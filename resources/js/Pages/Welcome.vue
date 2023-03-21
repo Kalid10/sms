@@ -160,7 +160,7 @@ function showAllRoles() {
 }
 
 function userRoles(){
-    router.get('/roles/user', {
+    router.get('/roles/user/details', {
         user_id: 2
     }, {
         onSuccess: () =>{
