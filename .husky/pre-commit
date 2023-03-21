@@ -5,4 +5,4 @@ npx lint-staged
 php artisan migrate:fresh --seed
 php artisan cache:clear
 php artisan config:clear
-./vendor/bin/phpunit
+./vendor/bin/pest
