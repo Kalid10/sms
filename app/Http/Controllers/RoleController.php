@@ -131,7 +131,7 @@ class RoleController extends Controller
             $user = User::find($request->user_id);
 
             // TODO: Change this route to the correct view
-            return Inertia::render('Welcome', [
+            return Inertia::render('Roles/Detail', [
                 'user_roles' => $user->roles,
             ]);
         } catch (Exception $exception) {
