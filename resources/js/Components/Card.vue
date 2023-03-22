@@ -47,11 +47,11 @@ const header = computed(() => {
 const props = defineProps({
     title: {
         type: String,
-        default: 'Title of the card'
+        default: null
     },
     subtitle: {
         type: String,
-        default: 'Subtitle of the card with detailed explanation'
+        default: null
     },
     icon: {
         type: Boolean,
