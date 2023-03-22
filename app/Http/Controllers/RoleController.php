@@ -122,7 +122,7 @@ class RoleController extends Controller
     }
 
     // Add function to get user roles
-    public function userRoles(Request $request): Response|RedirectResponse
+    public function details(Request $request): Response|RedirectResponse
     {
         $request->validate([
             'user_id' => 'required|integer|exists:users,id',
@@ -130,9 +130,24 @@ class RoleController extends Controller
         try {
             $user = User::find($request->user_id);
 
+            $activities = Activity::where('log_name', 'user_role')
+                ->where('properties->attributes->user_id', $request->user_id)
+                ->with('causer')
+                ->get()
+                ->map(function ($activity) {
+                    return [
+                        'description' => $activity->description,
+                        'causer' => $activity->causer,
+                        'created_at' => $activity->created_at,
+                        'user' => User::where('id', $activity->properties['attributes']['user_id'])->first(),
+                        'role' => $activity->properties['attributes']['role_name'],
+                    ];
+                });
+
             // TODO: Change this route to the correct view
             return Inertia::render('Welcome', [
-                'user_roles' => $user->roles,
+                'roles' => $user->roles,
+                'activities' => $activities,
             ]);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
