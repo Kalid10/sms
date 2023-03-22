@@ -20,6 +20,8 @@
     <button class="bg-red-400 p-1" @click="deleteSemester">Test Delete Semester</button>
     <button class="bg-red-400 p-1" @click="addBatch">Test Add Batch</button>
     <button class="bg-red-400 p-1" @click="addBatches">Test Add Batches</button>
+    <button class="bg-red-400 p-1" @click="getBatches">Test Get Batches</button>
+
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
@@ -344,6 +346,21 @@ function addBatches() {
                 console.log(error)
             }
         })
+}
+
+// If there is no school year id, it will return all batches
+function getBatches() {
+    router.get('/batches', {
+        school_year_id: 1
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
 }
 
 </script>

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Batches\CreateBulkRequest;
 use App\Http\Requests\Batches\CreateRequest;
 use App\Models\Batch;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class BatchController extends Controller
 {
-    // Create batch for school year with section for levels
-    public function create(CreateRequest $request)
+    public function create(CreateRequest $request): Response
     {
         // Get the validated data
         $validated = $request->validated();
@@ -24,7 +25,7 @@ class BatchController extends Controller
         ]);
     }
 
-    public function createBulk(CreateBulkRequest $request)
+    public function createBulk(CreateBulkRequest $request): Response
     {
         // Get the validated data
         $validated = $request->validated();
@@ -46,6 +47,27 @@ class BatchController extends Controller
 
         return Inertia::render('Welcome', [
             'batches' => Batch::with('level', 'schoolYear')->get(),
+        ]);
+    }
+
+    // Add get batches for school year
+    public function list(Request $request): Response
+    {
+        $schoolYearId = $request->input('school_year_id');
+
+        if (! $schoolYearId) {
+            $batches = Batch::with('level', 'schoolYear')->get();
+
+            return Inertia::render('Welcome', [
+                'batches' => $batches,
+            ]);
+        }
+        $batches = Batch::with('level', 'schoolYear')
+            ->where('school_year_id', $schoolYearId)
+            ->get();
+
+        return Inertia::render('Welcome', [
+            'batches' => $batches,
         ]);
     }
 }
