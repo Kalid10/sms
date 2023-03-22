@@ -26,6 +26,8 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
+        'phone_number',
+        'username',
     ];
 
     protected $hidden = [
@@ -45,5 +47,10 @@ class User extends Authenticatable
             'user_id',
             'role_name'
         )->withTimestamps();
+    }
+
+    public function hasRole($roleName)
+    {
+        return $this->roles()->where('name', $roleName)->exists();
     }
 }
