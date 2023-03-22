@@ -16,7 +16,6 @@ class SchoolYearSeeder extends Seeder
     {
         $currentYear = Carbon::now()->year;
         $previousYear = $currentYear - 1;
-//        $nextYear = $currentYear + 1;
 
         // Create completed semesters for previous years
         for ($year = $previousYear; $year < $currentYear; $year++) {
@@ -54,7 +53,7 @@ class SchoolYearSeeder extends Seeder
             'name' => 'Semester 2',
             'status' => Semester::STATUS_ACTIVE,
             'start_date' => Carbon::createFromDate($currentYear, 5, 1),
-            'end_date' => null,
+            'end_date' => Carbon::createFromDate($currentYear, 8, 31),
             'school_year_id' => $schoolYear->id,
         ]);
 
@@ -62,7 +61,7 @@ class SchoolYearSeeder extends Seeder
             'name' => 'Semester 3',
             'status' => Semester::STATUS_UPCOMING,
             'start_date' => Carbon::createFromDate($currentYear, 9, 1),
-            'end_date' => null,
+            'end_date' => Carbon::createFromDate($currentYear, 12, 31),
             'school_year_id' => $schoolYear->id,
         ]);
     }
