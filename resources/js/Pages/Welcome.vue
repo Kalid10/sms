@@ -18,7 +18,8 @@
     <button class="bg-red-400 p-1" @click="updateSemester">Test Update Semester</button>
     <button class="bg-red-400 p-1" @click="listSemesters">Test List Semester</button>
     <button class="bg-red-400 p-1" @click="deleteSemester">Test Delete Semester</button>
-<button class="bg-red-400 p-1" @click="addBatch">Test Add Batch</button>
+    <button class="bg-red-400 p-1" @click="addBatch">Test Add Batch</button>
+    <button class="bg-red-400 p-1" @click="addBatches">Test Add Batches</button>
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
@@ -29,7 +30,7 @@ function registerAdmin() {
         name: "Biniyam Lemma",
         email: "admin@gmaill.com",
         position: "Principal",
-        type:"admin"
+        type: "admin"
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -56,6 +57,7 @@ function registerGuardian() {
         }
     });
 }
+
 function registerStudent() {
     router.post('/register', {
         name: "Kidist Andarge",
@@ -63,11 +65,11 @@ function registerStudent() {
         type: "student",
         level_id: 1,
         guardian_id: 1,
-    },{
-    onSuccess: () =>{
+    }, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -75,16 +77,16 @@ function registerStudent() {
 }
 
 // Register teacher
-function registerTeacher(){
+function registerTeacher() {
     router.post('/register', {
         name: "Yoseph Seboka",
         phone_number: "0943104396",
         type: "teacher",
-    },{
-        onSuccess: () =>{
+    }, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -96,10 +98,10 @@ function login() {
         emailOrPhone: "test@example.com",
         password: "password"
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -107,26 +109,26 @@ function login() {
 }
 
 function logout() {
-    router.post('/logout', {
-    }, {
-        onSuccess: () =>{
+    router.post('/logout', {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
+
 function assignRoles() {
     router.post('/roles/assign', {
         user_id: 2,
         roles: ["manage-roles", "manage-subjects"]
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -138,77 +140,79 @@ function removeRoles() {
         user_id: 2,
         roles: ["manage-roles", "manage-subjects"]
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
-            console.log("Error")
-            console.log(error)
-        }
-    })
-}
-function showAllRoles() {
-    router.get('/roles', {
-    }, {
-        onSuccess: () =>{
-            console.log("Success")
-        },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
 
-function userRoles(){
-    router.get('/roles/user/details', {
-        user_id: 2
-    }, {
-        onSuccess: () =>{
+function showAllRoles() {
+    router.get('/roles', {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
+
+function userRoles() {
+    router.get('/roles/user/details', {
+        user_id: 2
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
 function roleActivities() {
     router.get('/roles/activities', {
         roles: ["manage-roles"],
         user_id: 3
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
+
 function addSubject() {
     router.post('/subject/create', {
         full_name: "Test Subject",
         short_name: "TS",
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
+
 // Change the id to the id of the subject you want to delete
-function deleteSubject(){
-    router.delete('/subject/delete/'+ 2, {
-    }, {
-        onSuccess: () =>{
+function deleteSubject() {
+    router.delete('/subject/delete/' + 2, {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -221,10 +225,10 @@ function addSchoolYear() {
         start_date: "2024-01-01",
         end_date: null
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -234,7 +238,7 @@ function addSchoolYear() {
 // Before creating a semester, you must have an active school year
 function addSemesters() {
     router.post('/semester/create', {
-        semesters:[
+        semesters: [
             {
                 name: "First Semester",
                 start_date: "2024-01-01",
@@ -247,10 +251,10 @@ function addSemesters() {
             }
         ]
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -265,10 +269,10 @@ function updateSemester() {
         end_date: "2024-06-30"
 
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -276,12 +280,11 @@ function updateSemester() {
 }
 
 function listSemesters() {
-    router.get('/semester/list', {
-    }, {
-        onSuccess: () =>{
+    router.get('/semester/list', {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -289,12 +292,11 @@ function listSemesters() {
 }
 
 function deleteSemester() {
-    router.delete('/semester/delete/'+ 1, {
-    }, {
-        onSuccess: () =>{
+    router.delete('/semester/delete/' + 1, {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -307,14 +309,41 @@ function addBatch() {
         section: "A",
         school_year_id: 1,
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
+}
+
+function addBatches() {
+    router.post('/batches/create_bulk', {
+            batches: {
+                school_year_id: 1,
+                grade: [
+                    {
+                        level_id: 1,
+                        sections: ["A", "B"]
+                    },
+                    {
+                        level_id: 2,
+                        sections: ["A", "B"]
+                    }
+                ]
+            }
+        },
+        {
+            onSuccess: () => {
+                console.log("Success")
+            },
+            onError: (error) => {
+                console.log("Error")
+                console.log(error)
+            }
+        })
 }
 
 </script>
