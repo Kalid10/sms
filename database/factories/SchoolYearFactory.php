@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SchoolYear>
@@ -17,8 +18,8 @@ class SchoolYearFactory extends Factory
     public function definition(): array
     {
         return [
-            'start_date' => $this->faker->date,
-            'end_date' => $this->faker->date,
+            'start_date' => Carbon::now(),
+            'end_date' => null,
         ];
     }
 }

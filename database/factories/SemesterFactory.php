@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\SchoolYear;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +21,6 @@ class SemesterFactory extends Factory
             'status' => $this->faker->word,
             'start_date' => $this->faker->date,
             'end_date' => $this->faker->date,
-            'school_year_id' => SchoolYear::factory()->create()->id,
         ];
     }
 }
