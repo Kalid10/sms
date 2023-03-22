@@ -18,6 +18,7 @@
     <button class="bg-red-400 p-1" @click="updateSemester">Test Update Semester</button>
     <button class="bg-red-400 p-1" @click="listSemesters">Test List Semester</button>
     <button class="bg-red-400 p-1" @click="deleteSemester">Test Delete Semester</button>
+<button class="bg-red-400 p-1" @click="addBatch">Test Add Batch</button>
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
@@ -289,6 +290,22 @@ function listSemesters() {
 
 function deleteSemester() {
     router.delete('/semester/delete/'+ 1, {
+    }, {
+        onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addBatch() {
+    router.post('/batches/create', {
+        level_id: 1,
+        section: "A",
+        school_year_id: 1,
     }, {
         onSuccess: () =>{
             console.log("Success")

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('status')->default('upcoming');
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
-            $table->foreignId('school_year_id')->constrained('school_years')->onDelete('cascade');
+            $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
