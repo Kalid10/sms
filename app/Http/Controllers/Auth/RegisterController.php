@@ -10,36 +10,50 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class RegisterController extends Controller
 {
-    public function __construct(Request $request)
+    public function checkRole($type)
     {
-        // Check type and apply middleware
-        switch ($request->get('type')) {
-            case User::TYPE_ADMIN:
-                $this->middleware('checkUserRole:manage-admins');
-                break;
-            case User::TYPE_TEACHER:
-                $this->middleware('checkUserRole:manage-teachers');
-                break;
-            case User::TYPE_STUDENT:
-                $this->middleware('checkUserRole:manage-students');
-                break;
-            case User::TYPE_GUARDIAN:
-                $this->middleware('checkUserRole:manage-guardians');
-                break;
-            default:
-                abort(422, 'Type unknown!');
+        if (auth()->user()->hasRole('manage-users')) {
+            return;
+        } else {
+            // Check type and apply middleware
+            switch ($type) {
+                case User::TYPE_ADMIN:
+                    if (! auth()->user()->hasRole('manage-admins')) {
+                        abort(403, 'You are not authorized to perform this action!');
+                    }
+                    break;
+                case User::TYPE_TEACHER:
+                    if (! auth()->user()->hasRole('manage-teachers')) {
+                        abort(403, 'You are not authorized to perform this action!');
+                    }
+                    break;
+                case User::TYPE_STUDENT:
+                    if (! auth()->user()->hasRole('manage-students')) {
+                        abort(403, 'You are not authorized to perform this action!');
+                    }
+                    break;
+                case User::TYPE_GUARDIAN:
+                    if (! auth()->user()->hasRole('manage-guardians')) {
+                        abort(403, 'You are not authorized to perform this action!');
+                    }
+                    break;
+                default:
+                    abort(422, 'Type unknown!');
+            }
         }
     }
 
     public function register(RegisterRequest $request)
     {
+        // Check role
+        $this->checkRole($request->get('type'));
+
         try {
             // Start transaction
             DB::beginTransaction();

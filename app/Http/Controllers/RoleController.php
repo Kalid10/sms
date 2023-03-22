@@ -23,22 +23,17 @@ class RoleController extends Controller
             // Get validated data
             $validatedData = $request->validated();
 
-            // Create or restore user roles
-            foreach ($validatedData['roles'] as $role) {
-                UserRole::withTrashed()
-                    ->where('role_name', $role)
-                    ->where('user_id', $validatedData['user_id'])
-                    ->firstOrCreate([
-                        'role_name' => $role,
-                        'user_id' => $validatedData['user_id'],
-                    ]);
-            }
+            // Get user
+            $user = User::find($validatedData['user_id']);
+
+            // Sync roles
+            $user->roles()->sync($validatedData['roles']);
 
             return redirect()->back()->with('success', 'Role assigned successfully.');
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 
@@ -66,7 +61,7 @@ class RoleController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 
@@ -152,7 +147,7 @@ class RoleController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 }
