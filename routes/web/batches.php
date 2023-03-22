@@ -7,4 +7,5 @@ Route::prefix('batches/')->middleware(['checkUserRole:manage-batches'])->name('b
     Route::post('create', [BatchController::class, 'create'])->name('create');
     Route::post('create_bulk', [BatchController::class, 'createBulk'])->name('create');
     Route::get('', [BatchController::class, 'list'])->name('list');
+    Route::get('active', [BatchController::class, 'active'])->name('active');
 });

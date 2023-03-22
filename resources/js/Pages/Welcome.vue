@@ -21,6 +21,7 @@
     <button class="bg-red-400 p-1" @click="addBatch">Test Add Batch</button>
     <button class="bg-red-400 p-1" @click="addBatches">Test Add Batches</button>
     <button class="bg-red-400 p-1" @click="getBatches">Test Get Batches</button>
+    <button class="bg-red-400 p-1" @click="activeBatches">Test Get Active Batches</button>
 
 </template>
 <script setup>
@@ -363,6 +364,17 @@ function getBatches() {
     })
 }
 
+function activeBatches() {
+    router.get('/batches/active', {}, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
 </script>
 
 <style>
