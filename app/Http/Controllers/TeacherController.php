@@ -17,4 +17,16 @@ class TeacherController extends Controller
 
         return redirect()->back()->with('success', 'Homeroom teacher assigned successfully.');
     }
+
+    public function removeHomeroomTeacher($id): RedirectResponse
+    {
+        // Find the homeroom teacher by ID or fail
+        $homeroomTeacher = HomeroomTeacher::findOrFail($id);
+
+        // Delete the homeroom teacher
+        $homeroomTeacher->delete();
+
+        // Redirect back with success message
+        return redirect()->back()->with('success', 'Homeroom teacher removed successfully.');
+    }
 }

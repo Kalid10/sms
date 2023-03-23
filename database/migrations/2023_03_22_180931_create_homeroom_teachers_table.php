@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
             $table->foreignId('batch_id')->constrained('batches')->cascadeOnDelete();
             $table->timestamps();
+            $table->unique(['teacher_id', 'batch_id']);
         });
     }
 

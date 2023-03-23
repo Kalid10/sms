@@ -23,6 +23,7 @@
     <button class="bg-red-400 p-1" @click="getBatches">Test Get Batches</button>
     <button class="bg-red-400 p-1" @click="activeBatches">Test Get Active Batches</button>
     <button class="bg-red-400 p-1" @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
+    <button class="bg-red-400 p-1" @click="removeHomeRoomTeacher">Test Remove Homeroom Teacher</button>
 
 </template>
 <script setup>
@@ -84,7 +85,7 @@ function registerStudent() {
 function registerTeacher() {
     router.post('/register', {
         name: "Yoseph Seboka",
-        phone_number: "0943104336",
+        phone_number: "0943104326",
         type: "teacher",
     }, {
         onSuccess: () => {
@@ -379,9 +380,21 @@ function activeBatches() {
 
 function assignHomeRoomTeacher() {
     router.post('/teachers/assign/homeroom', {
-        batch_id: 13,
-        teacher_id: 2
+        batch_id: 2,
+        teacher_id: 1
     }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function removeHomeRoomTeacher() {
+    router.delete('/teachers/remove/homeroom/' + 1, {
         onSuccess: () => {
             console.log("Success")
         },
