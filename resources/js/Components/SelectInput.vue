@@ -62,7 +62,7 @@ const props = defineProps({
         required: true
     },
     modelValue: {
-        type: String,
+        type: [String, Number],
         required: true,
     },
     direction: {
