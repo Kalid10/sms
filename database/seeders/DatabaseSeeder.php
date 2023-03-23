@@ -38,5 +38,10 @@ class DatabaseSeeder extends Seeder
         Teacher::factory(50)->create();
         Guardian::factory(500)->create();
         Student::factory(500)->create();
+
+        $this->call([
+            SchoolYearSeeder::class,
+            BatchSeeder::class,
+        ]);
     }
 }
