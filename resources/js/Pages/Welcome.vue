@@ -1,5 +1,9 @@
 <template>
     <div class="">Welcome</div>
+    <button class="bg-red-400 p-1" @click="registerAdmin">Register Admin</button>
+    <button class="bg-red-400 p-1" @click="registerGuardian">Register Guardian</button>
+    <button class="bg-red-400 p-1" @click="registerStudent">Register Student</button>
+    <button class="bg-red-400 p-1" @click="registerTeacher">Register Teacher</button>
     <button class="bg-red-400 p-1" @click="login">Test Login</button>
     <button class="bg-red-400 p-1" @click="logout">Test Logout</button>
     <button class="bg-red-400 p-1" @click="assignRoles">Test Assign Role</button>
@@ -14,18 +18,93 @@
     <button class="bg-red-400 p-1" @click="updateSemester">Test Update Semester</button>
     <button class="bg-red-400 p-1" @click="listSemesters">Test List Semester</button>
     <button class="bg-red-400 p-1" @click="deleteSemester">Test Delete Semester</button>
+    <button class="bg-red-400 p-1" @click="addBatch">Test Add Batch</button>
+    <button class="bg-red-400 p-1" @click="addBatches">Test Add Batches</button>
+    <button class="bg-red-400 p-1" @click="getBatches">Test Get Batches</button>
+    <button class="bg-red-400 p-1" @click="activeBatches">Test Get Active Batches</button>
+
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
-function login() {
-    router.post('/login', {
-        emailOrPhone: "jontra@rigel.com",
-        password: "secret"
+
+// Register admin
+function registerAdmin() {
+    router.post('/register', {
+        name: "Biniyam Lemma",
+        email: "admin@gmaill.com",
+        position: "Principal",
+        type: "admin"
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    });
+}
+
+function registerGuardian() {
+    router.post('/register', {
+        name: "Kalid Abdu",
+        email: "kalid@gmaill.com",
+        type: "guardian"
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    });
+}
+
+function registerStudent() {
+    router.post('/register', {
+        name: "Kidist Andarge",
+        email: "Kidist@gmail.com",
+        type: "student",
+        level_id: 1,
+        guardian_id: 1,
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    });
+}
+
+// Register teacher
+function registerTeacher() {
+    router.post('/register', {
+        name: "Yoseph Seboka",
+        phone_number: "0943104396",
+        type: "teacher",
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    });
+}
+
+function login() {
+    router.post('/login', {
+        emailOrPhone: "test@example.com",
+        password: "password"
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -33,26 +112,26 @@ function login() {
 }
 
 function logout() {
-    router.post('/logout', {
-    }, {
-        onSuccess: () =>{
+    router.post('/logout', {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
+
 function assignRoles() {
     router.post('/roles/assign', {
         user_id: 2,
         roles: ["manage-roles", "manage-subjects"]
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -64,77 +143,79 @@ function removeRoles() {
         user_id: 2,
         roles: ["manage-roles", "manage-subjects"]
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
-            console.log("Error")
-            console.log(error)
-        }
-    })
-}
-function showAllRoles() {
-    router.get('/roles', {
-    }, {
-        onSuccess: () =>{
-            console.log("Success")
-        },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
 
-function userRoles(){
-    router.get('/roles/user', {
-        user_id: 2
-    }, {
-        onSuccess: () =>{
+function showAllRoles() {
+    router.get('/roles', {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
+
+function userRoles() {
+    router.get('/roles/user/details', {
+        user_id: 2
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
 function roleActivities() {
     router.get('/roles/activities', {
         roles: ["manage-roles"],
         user_id: 3
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
+
 function addSubject() {
     router.post('/subject/create', {
         full_name: "Test Subject",
         short_name: "TS",
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
+
 // Change the id to the id of the subject you want to delete
-function deleteSubject(){
-    router.delete('/subject/delete/'+ 2, {
-    }, {
-        onSuccess: () =>{
+function deleteSubject() {
+    router.delete('/subject/delete/' + 2, {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -147,10 +228,10 @@ function addSchoolYear() {
         start_date: "2024-01-01",
         end_date: null
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -160,7 +241,7 @@ function addSchoolYear() {
 // Before creating a semester, you must have an active school year
 function addSemesters() {
     router.post('/semester/create', {
-        semesters:[
+        semesters: [
             {
                 name: "First Semester",
                 start_date: "2024-01-01",
@@ -173,10 +254,10 @@ function addSemesters() {
             }
         ]
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -191,10 +272,10 @@ function updateSemester() {
         end_date: "2024-06-30"
 
     }, {
-        onSuccess: () =>{
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -202,12 +283,11 @@ function updateSemester() {
 }
 
 function listSemesters() {
-    router.get('/semester/list', {
-    }, {
-        onSuccess: () =>{
+    router.get('/semester/list', {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
@@ -215,18 +295,86 @@ function listSemesters() {
 }
 
 function deleteSemester() {
-    router.delete('/semester/delete/'+ 1, {
-    }, {
-        onSuccess: () =>{
+    router.delete('/semester/delete/' + 1, {}, {
+        onSuccess: () => {
             console.log("Success")
         },
-        onError: (error) =>{
+        onError: (error) => {
             console.log("Error")
             console.log(error)
         }
     })
 }
 
+function addBatch() {
+    router.post('/batches/create', {
+        level_id: 1,
+        section: "A",
+        school_year_id: 1,
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addBatches() {
+    router.post('/batches/create_bulk', {
+            batches: {
+                school_year_id: 1,
+                grade: [
+                    {
+                        level_id: 1,
+                        sections: ["A", "B"]
+                    },
+                    {
+                        level_id: 2,
+                        sections: ["A", "B"]
+                    }
+                ]
+            }
+        },
+        {
+            onSuccess: () => {
+                console.log("Success")
+            },
+            onError: (error) => {
+                console.log("Error")
+                console.log(error)
+            }
+        })
+}
+
+// If there is no school year id, it will return all batches
+function getBatches() {
+    router.get('/batches', {
+        school_year_id: 1
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function activeBatches() {
+    router.get('/batches/active', {}, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
 </script>
 
 <style>

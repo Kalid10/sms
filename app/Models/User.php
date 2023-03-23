@@ -15,11 +15,19 @@ class User extends Authenticatable
 
     const TYPE_ADMIN = 'admin';
 
+    const TYPE_TEACHER = 'teacher';
+
+    const TYPE_STUDENT = 'student';
+
+    const TYPE_GUARDIAN = 'guardian';
+
     protected $fillable = [
         'name',
         'email',
         'password',
         'type',
+        'phone_number',
+        'username',
     ];
 
     protected $hidden = [
@@ -39,5 +47,10 @@ class User extends Authenticatable
             'user_id',
             'role_name'
         )->withTimestamps();
+    }
+
+    public function hasRole($roleName)
+    {
+        return $this->roles()->where('name', $roleName)->exists();
     }
 }
