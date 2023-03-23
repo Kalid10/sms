@@ -381,7 +381,8 @@ function activeBatches() {
 function assignHomeRoomTeacher() {
     router.post('/teachers/assign/homeroom', {
         batch_id: 2,
-        teacher_id: 1
+        teacher_id: 2,
+        replace: false
     }, {
         onSuccess: () => {
             console.log("Success")
