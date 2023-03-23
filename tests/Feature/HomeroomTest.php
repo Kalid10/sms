@@ -4,17 +4,24 @@ use App\Models\Batch;
 use App\Models\HomeroomTeacher;
 use App\Models\Role;
 use App\Models\Teacher;
+use Database\Seeders\SchoolYearSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    // populate levels
+    // populate levels and roles
     Artisan::call('app:create-levels');
     Artisan::call('app:create-roles');
+
+    // create teacher
     $this->teacher = Teacher::factory()->create();
-    $this->teacher->user->roles()->attach(Role::all());
+    // attach manage-teachers role to the teacher
+    $this->teacher->user->roles()->attach(Role::where('name', 'manage-teachers')->first());
+
+    // populate school years and batches
+    $this->seed(SchoolYearSeeder::class);
     $this->batch = Batch::factory()->create();
 });
 
