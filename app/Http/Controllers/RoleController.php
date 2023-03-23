@@ -105,15 +105,12 @@ class RoleController extends Controller
         ]);
     }
 
-    public function list(): Response
+    public function list(): RedirectResponse
     {
         // Get all roles
         $roles = Role::all();
 
-        // TODO: Change this route to the correct view
-        return Inertia::render('Welcome', [
-            'roles' => $roles,
-        ]);
+        return redirect()->back()->with('roles', $roles);
     }
 
     // Add function to get user roles
