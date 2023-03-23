@@ -414,4 +414,44 @@ const statuses = [
     }
 ]
 
-export {users, semesters, school_years, statuses};
+// create a list of level objects with attributes id, name, sections, last_updated
+const levels = [
+    {
+        id: 1,
+        name: 'Level 1',
+        sections: ['A', 'B', 'C'],
+        last_updated: '2020-02-22'
+    },
+    {
+        id: 2,
+        name: 'Level 2',
+        sections: ['A', 'B', 'C'],
+        last_updated: '2021-03-31'
+    },
+    {
+        id: 3,
+        name: 'Level 3',
+        sections: ['A', 'B'],
+        last_updated: '2020-03-31'
+    },
+    {
+        id: 4,
+        name: 'Level 4',
+        sections: ['A', 'B'],
+        last_updated: '2019-01-31'
+    },
+    {
+        id: 5,
+        name: 'Level 5',
+        sections: ['A', 'B'],
+        last_updated: '2020-01-28'
+    },
+    {
+        id: 6,
+        name: 'Level 6',
+        sections: ['A', 'B', 'C'],
+        last_updated: '2019-11-29'
+    },
+]
+
+export {users, semesters, levels, school_years, statuses};
