@@ -24,7 +24,7 @@
         </div>
     </Card>
 
-<!--        <p>{{ newUserRoles }}</p>-->
+        <p>{{ newUserRoles }}</p>
 
         <!-- list of roles   -->
         <div class=" md:p-2 lg:w-full">
@@ -39,52 +39,16 @@
                     <div class="flex items-center justify-between border-b border-l-4 border-slate-200 border-l-transparent bg-gradient-to-r  from-transparent to-transparent py-3 px-2 transition duration-150 ease-linear hover:from-slate-100">
                         <div class="inline-flex items-center space-x-2">
                             <div>
-                                <input v-model="newUserRoles" type="checkbox" :value="role.name" class="h-5 w-5 text-blue-600 transition duration-150 ease-in-out">
+                                <input v-model="newUserRoles" type="checkbox" :value="role" class="h-5 w-5 text-blue-600 transition duration-150 ease-in-out">
                             </div>
                             <div>{{ role.name }}</div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
-
-
-<!--    assign new role -->
-    <div class=" mt-2 h-fit  md:w-2/5 ">
-<!--        <div class="">-->
-<!--            <PrimaryButton class="inline-flex items-center justify-between px-4 py-3 text-center text-sm font-medium text-white"  type="button" @click="showRolesDropdown=!showRolesDropdown">Assign new Role-->
-<!--                <svg class="ml-2 h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>-->
-<!--            </PrimaryButton>-->
-
-
-<!--            &lt;!&ndash; Dropdown menu &ndash;&gt;-->
-<!--            <div v-if="showRolesDropdown" class="z-10 w-full bg-white">-->
-<!--                <div class="p-3">-->
-<!--                        <SearchRoleTextInput type="text" class="block w-full text-sm text-gray-900 " placeholder="Search roles"></SearchRoleTextInput>-->
-<!--                </div>-->
-<!--                <ul class="h-48 overflow-y-auto px-3 pb-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownSearchButton">-->
-<!--                    <li>-->
-<!--                        <div class="flex items-center rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">-->
-<!--                            <input id="checkbox-item-11" type="checkbox" value="" class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:ring-offset-gray-700 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-700">-->
-<!--                            <label for="checkbox-item-11" class="ml-2 w-full rounded text-sm font-medium text-gray-900 dark:text-gray-300">Admin</label>-->
-<!--                        </div>-->
-<!--                    </li>-->
-<!--                    <li>-->
-<!--                        <div class="flex items-center rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">-->
-<!--                            <input id="checkbox-item-12" checked type="checkbox" value="" class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:ring-offset-gray-700 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-700">-->
-<!--                            <label for="checkbox-item-12" class="ml-2 w-full rounded text-sm font-medium text-gray-900 dark:text-gray-300">Manage Teachers</label>-->
-<!--                        </div>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--                <div class="flex justify-end">-->
-<!--                    <PrimaryButton title="Add" class="m-4" @click="showDialog = true"></PrimaryButton>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-        </div>
     </div>
+
 
 
     <DialogBox
@@ -123,12 +87,12 @@
             </li>
         </ul>
     </div>
+
 </template>
 
 <script setup>
 import {computed, onMounted,ref} from "vue";
 import {router, usePage} from "@inertiajs/vue3";
-
 import PrimaryButton from "@/Components/PrimaryButton.vue"
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import SearchRoleTextInput from "@/Components/TextInput.vue"
@@ -137,10 +101,6 @@ import Card from "@/Components/Card.vue"
 import {now} from "@vueuse/core";
 
 const showDialog = ref(false)
-const updatedRoles = ref([])
-
-
-
 
 onMounted(() =>{
     showAllRoles()
@@ -160,7 +120,6 @@ function showAllRoles() {
         }
     })
 }
-
 
 function roleActivities(row) {
     alert("Role activity")
@@ -188,12 +147,13 @@ const all_roles = computed(() =>{
     return usePage().props.roles;
 });
 
+
 const activities = computed(()=>{
     return usePage().props.activities;
 });
 
-
-
+// initialize newUserRoles with user_roles
+const newUserRoles = ref([...user_roles.value]);
 
 
 
@@ -202,11 +162,6 @@ function handleConfirm(confirmationType) {
     showDialog.value = false
 
 }
-
-
-const newUserRoles = ref([...user_roles.value]);
-// alert(newUserRoles.value);
-
     function deleteRole(role){
         const index = newUserRoles.value.indexOf(role);
         if (index > -1) {
