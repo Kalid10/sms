@@ -24,7 +24,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'type' => 'required|string',
+            'type' => 'required|string|in:admin,student,guardian,teacher',
             'email' => 'required_without_all:phone_number,username|required_if:type,admin|email|unique:users',
             'phone_number' => 'required_without_all:email,username|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users',
             'username' => 'required_without_all:email,phone_number|exclude_unless:type,student|string|min:6|unique:users',

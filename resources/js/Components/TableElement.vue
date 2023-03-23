@@ -10,7 +10,7 @@
                 </h5>
             </div>
 
-            <div class="mx-4 mb-4 min-w-fit sm:mb-0">
+            <div class="mb-4 min-w-fit px-4 sm:mb-0">
                 <slot v-if="actionable" :selected="{ selected: anySelected, items: selectedItems }" name="action">
                     <PrimaryButton v-if="! anySelected" :click="() => {}" class="w-full" title="Download CSV"/>
                     <div v-else class="flex items-center gap-2">
@@ -19,6 +19,10 @@
                     </div>
                 </slot>
             </div>
+        </div>
+
+        <div class="mb-4 flex flex-col gap-4 px-4">
+            <TextInput v-model="query" placeholder="Search for [... attributes]"/>
         </div>
 
         <div class="w-full overflow-x-auto">
@@ -47,19 +51,20 @@
                         class="h-10 w-[1%] border-y border-l bg-white px-3">
                         <Checkbox v-model="items[index].selected"/>
                     </th>
-                    <td
+                    <template
                         v-for="(key, i) in (columns.length > 0 ? columns.map(i => i.key) : Object.keys(item))"
                         :key="i"
-                        :class="[columns.length > 0 && !! columns[i]?.link ? 'cursor-pointer hover:underline hover:underline-offset-2' : '']"
-                        class="h-10 whitespace-nowrap px-3 text-center text-sm"
                     >
-                        <Link v-if="!! columns[i]?.link" :href="getLink(columns[i]?.link, index)">
-                            {{ item[key] }}
-                        </Link>
-                        <template v-else>
-                            {{ item[key] }}
-                        </template>
-                    </td>
+                        <td
+                            :class="[columns.length > 0 && !! columns[i]?.link ? 'cursor-pointer hover:underline hover:underline-offset-2' : '']"
+                            class="h-10 whitespace-nowrap px-3 text-center text-sm"
+                        >
+                            <component
+                                :is="cell(i, index).component" :value="item[key]"
+                                v-bind="{ ...cell(i, index).props }"
+                            />
+                        </td>
+                    </template>
                     <td
                         v-if="rowActionable"
                         class="flex h-10 min-w-fit items-center justify-center gap-2 text-center text-sm [&>*]:mr-3 [&>*]:text-xs [&>:nth-child(1)]:ml-3">
@@ -83,11 +88,12 @@
 </template>
 
 <script setup>
-import {computed, ref, watch} from "vue"
-import {Link} from '@inertiajs/vue3'
+import {ref, watch, computed, defineAsyncComponent} from "vue"
 import Checkbox from "@/Components/Checkbox.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import {Link} from '@inertiajs/vue3'
 
 const props = defineProps({
     data: {
@@ -132,7 +138,7 @@ const items = ref(props.data.map((item, index) => {
 }))
 
 function getLink(link, index) {
-    const matches = link.match(/{(.*?)}/g) || []
+    const matches = link?.match(/{(.*?)}/g) || []
     let newLink = link
     matches.forEach((match) => {
         const key = match.replace('{', '').replace('}', '')
@@ -158,6 +164,43 @@ watch(selectAll, (value) => {
         })
     }
 })
+
+function cell(columnIndex, rowIndex) {
+
+    if (!!props.columns[columnIndex]?.link) {
+        return {
+            component: defineAsyncComponent(() => import('@/Components/LinkCell.vue')),
+            props: {
+                href: getLink(props.columns[columnIndex]?.link, rowIndex)
+            }
+        }
+    }
+
+    switch (props.columns[columnIndex]?.type) {
+
+        case Boolean:
+            return {
+                component: defineAsyncComponent(() => import('@/Components/BooleanCell.vue')),
+            };
+
+        case 'enum':
+            return {
+                component: defineAsyncComponent(() => import('@/Components/EnumCell.vue')),
+                props: {
+                    options: props.columns[columnIndex]?.options
+                }
+            }
+
+        default:
+            return {
+                component: defineAsyncComponent(() => import('@/Components/TextCell.vue')),
+            }
+
+    }
+}
+
+const query = ref('')
+const perPage = ref(5)
 </script>
 
 <style scoped>

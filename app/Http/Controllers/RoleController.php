@@ -23,22 +23,17 @@ class RoleController extends Controller
             // Get validated data
             $validatedData = $request->validated();
 
-            // Create or restore user roles
-            foreach ($validatedData['roles'] as $role) {
-                UserRole::withTrashed()
-                    ->where('role_name', $role)
-                    ->where('user_id', $validatedData['user_id'])
-                    ->firstOrCreate([
-                        'role_name' => $role,
-                        'user_id' => $validatedData['user_id'],
-                    ]);
-            }
+            // Get user
+            $user = User::find($validatedData['user_id']);
+
+            // Sync roles
+            $user->roles()->sync($validatedData['roles']);
 
             return redirect()->back()->with('success', 'Role assigned successfully.');
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 
@@ -66,7 +61,7 @@ class RoleController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 
@@ -122,7 +117,7 @@ class RoleController extends Controller
     }
 
     // Add function to get user roles
-    public function userRoles(Request $request): Response|RedirectResponse
+    public function details(Request $request): Response|RedirectResponse
     {
         $request->validate([
             'user_id' => 'required|integer|exists:users,id',
@@ -130,14 +125,29 @@ class RoleController extends Controller
         try {
             $user = User::find($request->user_id);
 
+            $activities = Activity::where('log_name', 'user_role')
+                ->where('properties->attributes->user_id', $request->user_id)
+                ->with('causer')
+                ->get()
+                ->map(function ($activity) {
+                    return [
+                        'description' => $activity->description,
+                        'causer' => $activity->causer,
+                        'created_at' => $activity->created_at,
+                        'user' => User::where('id', $activity->properties['attributes']['user_id'])->first(),
+                        'role' => $activity->properties['attributes']['role_name'],
+                    ];
+                });
+
             // TODO: Change this route to the correct view
             return Inertia::render('Welcome', [
-                'user_roles' => $user->roles,
+                'roles' => $user->roles,
+                'activities' => $activities,
             ]);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 }

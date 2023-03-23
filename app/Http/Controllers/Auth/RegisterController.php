@@ -16,8 +16,44 @@ use Inertia\Inertia;
 
 class RegisterController extends Controller
 {
+    public function checkRole($type)
+    {
+        if (auth()->user()->hasRole('manage-users')) {
+            return;
+        } else {
+            // Check type and apply middleware
+            switch ($type) {
+                case User::TYPE_ADMIN:
+                    if (! auth()->user()->hasRole('manage-admins')) {
+                        abort(403, 'You are not authorized to perform this action!');
+                    }
+                    break;
+                case User::TYPE_TEACHER:
+                    if (! auth()->user()->hasRole('manage-teachers')) {
+                        abort(403, 'You are not authorized to perform this action!');
+                    }
+                    break;
+                case User::TYPE_STUDENT:
+                    if (! auth()->user()->hasRole('manage-students')) {
+                        abort(403, 'You are not authorized to perform this action!');
+                    }
+                    break;
+                case User::TYPE_GUARDIAN:
+                    if (! auth()->user()->hasRole('manage-guardians')) {
+                        abort(403, 'You are not authorized to perform this action!');
+                    }
+                    break;
+                default:
+                    abort(422, 'Type unknown!');
+            }
+        }
+    }
+
     public function register(RegisterRequest $request)
     {
+        // Check role
+        $this->checkRole($request->get('type'));
+
         try {
             // Start transaction
             DB::beginTransaction();
