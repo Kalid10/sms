@@ -4,15 +4,15 @@
             :data="users" :selectable=false :columns="config" actionable :row-actionable="true"  class="broder w-full "
             subtitle="list of all Users" title="Users">
             <template #action>
-                <UserSearchTextInput
-                    v-model="searchKey"
-                    title="search"
-                    actionable
-                    :selectable="false"
-                    placeholder="Name or Email"
-                    class="w-10"
-                    @keyup="search"
-                ></UserSearchTextInput>
+<!--                <UserSearchTextInput-->
+<!--                    v-model="searchKey"-->
+<!--                    title="search"-->
+<!--                    actionable-->
+<!--                    :selectable="false"-->
+<!--                    placeholder="Name or Email"-->
+<!--                    class="w-10"-->
+<!--                    @keyup="search"-->
+<!--                ></UserSearchTextInput>-->
 
             </template>
             <template #all-actions>
@@ -57,7 +57,7 @@ const users = computed(() => {
 const isTrue = ref(false)
 
 const userDetail = (row) => {
-    router.get('/roles/user', {
+    router.get('/roles/user/details', {
         user_id: row.id
     },{
         onSuccess: () =>{
