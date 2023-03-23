@@ -9,7 +9,7 @@
     <button class="bg-red-400 p-1" @click="assignRoles">Test Assign Role</button>
     <button class="bg-red-400 p-1" @click="removeRoles">Test Remove Role</button>
     <button class="bg-red-400 p-1" @click="showAllRoles">Get Roles</button>
-    <button class="bg-red-400 p-1" @click="userRoles">User Roles</button>
+    <button class="bg-red-400 p-1" @click="userDetails">User Details</button>
     <button class="bg-red-400 p-1" @click="roleActivities">Test Role Activities</button>
     <button class="bg-red-400 p-1" @click="addSubject">Test Add Subject</button>
     <button class="bg-red-400 p-1" @click="deleteSubject">Test Delete Subject</button>
@@ -22,6 +22,8 @@
     <button class="bg-red-400 p-1" @click="addBatches">Test Add Batches</button>
     <button class="bg-red-400 p-1" @click="getBatches">Test Get Batches</button>
     <button class="bg-red-400 p-1" @click="activeBatches">Test Get Active Batches</button>
+    <button class="bg-red-400 p-1" @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
+    <button class="bg-red-400 p-1" @click="removeHomeRoomTeacher">Test Remove Homeroom Teacher</button>
 
 </template>
 <script setup>
@@ -83,7 +85,7 @@ function registerStudent() {
 function registerTeacher() {
     router.post('/register', {
         name: "Yoseph Seboka",
-        phone_number: "0943104396",
+        phone_number: "0943104326",
         type: "teacher",
     }, {
         onSuccess: () => {
@@ -165,9 +167,9 @@ function showAllRoles() {
     })
 }
 
-function userRoles() {
+function userDetails() {
     router.get('/roles/user/details', {
-        user_id: 2
+        user_id: 1
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -366,6 +368,34 @@ function getBatches() {
 
 function activeBatches() {
     router.get('/batches/active', {}, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function assignHomeRoomTeacher() {
+    router.post('/teachers/assign/homeroom', {
+        batch_id: 2,
+        teacher_id: 2,
+        replace: false
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function removeHomeRoomTeacher() {
+    router.delete('/teachers/remove/homeroom/' + 1, {
         onSuccess: () => {
             console.log("Success")
         },
