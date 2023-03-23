@@ -105,7 +105,7 @@ class RoleController extends Controller
                 ];
             });
 
-        return Inertia::render('Welcome', [
+        return Inertia::render('Roles/Detail', [
             'activities' => $activities,
         ]);
     }
@@ -116,7 +116,7 @@ class RoleController extends Controller
         $roles = Role::all();
 
         // TODO: Change this route to the correct view
-        return Inertia::render('Welcome', [
+        return Inertia::render('Roles/Detail', [
             'roles' => $roles,
         ]);
     }
