@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Teacher;
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TeacherFactory extends Factory
+class AdminFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Teacher::class;
+    protected $model = Admin::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,9 @@ class TeacherFactory extends Factory
     public function definition()
     {
         return [
+            'position' => $this->faker->jobTitle,
             'user_id' => User::factory()->create([
-                'type' => User::TYPE_TEACHER,
+                'type' => 'admin',
             ])->id,
         ];
     }

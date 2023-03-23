@@ -2,18 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\Teacher;
+use App\Models\Guardian;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TeacherFactory extends Factory
+class StudentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Teacher::class;
+    protected $model = Student::class;
 
     /**
      * Define the model's default state.
@@ -24,8 +25,9 @@ class TeacherFactory extends Factory
     {
         return [
             'user_id' => User::factory()->create([
-                'type' => User::TYPE_TEACHER,
+                'type' => 'student',
             ])->id,
+            'guardian_id' => Guardian::factory(),
         ];
     }
 }
