@@ -22,6 +22,7 @@
     <button class="bg-red-400 p-1" @click="addBatches">Test Add Batches</button>
     <button class="bg-red-400 p-1" @click="getBatches">Test Get Batches</button>
     <button class="bg-red-400 p-1" @click="activeBatches">Test Get Active Batches</button>
+    <button class="bg-red-400 p-1" @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
 
 </template>
 <script setup>
@@ -83,7 +84,7 @@ function registerStudent() {
 function registerTeacher() {
     router.post('/register', {
         name: "Yoseph Seboka",
-        phone_number: "0943104396",
+        phone_number: "0943104336",
         type: "teacher",
     }, {
         onSuccess: () => {
@@ -366,6 +367,21 @@ function getBatches() {
 
 function activeBatches() {
     router.get('/batches/active', {}, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function assignHomeRoomTeacher() {
+    router.post('/teachers/assign/homeroom', {
+        batch_id: 13,
+        teacher_id: 2
+    }, {
         onSuccess: () => {
             console.log("Success")
         },
