@@ -35,7 +35,7 @@
                 <p class="text-slate-500">List of roles available</p>
                 <SearchRoleTextInput placeholder="Search role"></SearchRoleTextInput>
 
-                <div v-for="role in all_roles" :key="role.id" class="my-3 ">
+                <div v-for="role in availableRoles" :key="role.id" class="my-3 ">
                     <div class="flex items-center justify-between border-b border-l-4 border-slate-200 border-l-transparent bg-gradient-to-r  from-transparent to-transparent py-3 px-2 transition duration-150 ease-linear hover:from-slate-100">
                         <div class="inline-flex items-center space-x-2">
                             <div>
@@ -49,17 +49,11 @@
         </div>
     </div>
 
-
-
     <DialogBox
         v-if="showDialog"
         @confirm="handleConfirm"
         @close="showDialog= false">
     </DialogBox>
-
-
-
-
 
 <!-- previous role logs -->
     <div class="rounded-xl bg-white p-8 md:pt-14 ">
@@ -91,7 +85,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted,ref} from "vue";
+import {computed, onMounted,ref,watchEffect} from "vue";
 import {router, usePage} from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue"
 import TertiaryButton from "@/Components/TertiaryButton.vue";
@@ -143,9 +137,27 @@ const user_roles = computed(() => {
     return usePage().props.user_roles;
 });
 
-const all_roles = computed(() =>{
-    return usePage().props.roles;
+// const all_roles = computed(() =>{
+//     return usePage().props.roles;
+// });
+//
+// const available_roles = computed(() => {
+//     return all_roles.value.filter(role => !user_roles.value.includes(role));
+// });
+
+const availableRoles = ref([]);
+
+watchEffect(() => {
+    const userRoles = usePage().props.user_roles;
+    const allRoles = usePage().props.roles;
+
+    if (userRoles && allRoles) {
+        availableRoles.value = allRoles.filter(role => !userRoles.includes(role));
+    } else {
+        availableRoles.value = [];
+    }
 });
+
 
 
 const activities = computed(()=>{
@@ -154,7 +166,6 @@ const activities = computed(()=>{
 
 // initialize newUserRoles with user_roles
 const newUserRoles = ref([...user_roles.value]);
-
 
 
 function handleConfirm(confirmationType) {
