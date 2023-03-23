@@ -1,15 +1,15 @@
 <template>
-    <div class="flex w-full flex-col space-x-2 bg-green-300 p-4 md:flex-row">
+    <div class="flex w-full flex-col space-x-2 p-4 md:flex-row">
 
 <!--    Assigned rols -->
-    <Card title="Assigned roles:" subtitle="" class="mb-2 border border-black md:w-3/5 ">
+    <Card title="Assigned roles:" subtitle="" class="mb-2  md:w-3/5 ">
         <div class="">
-            <div class="border border-pink-400">
+            <div>
             <div class="">
                 <ul>
                     <li v-for="role in newUserRoles" :key="role.id" class="m-2 flex flex-row justify-between p-1 hover:bg-gray-100">
                        <div>
-                           <p :class="[deleted, { 'line-through': role.deleted }]">{{role.name}}</p>
+                           <p>{{role.name}}</p>
                        </div>
                         <div>
                             <TertiaryButton title="Remove" @click="deleteRole(role)"></TertiaryButton>
@@ -24,20 +24,18 @@
         </div>
     </Card>
 
-
-
+<!--        <p>{{ newUserRoles }}</p>-->
 
         <!-- list of roles   -->
-        <div class="border border-red-400 md:p-2 lg:w-full">
+        <div class=" md:p-2 lg:w-full">
             <div class="mx-auto my-10 max-w-2xl rounded-xl bg-white p-8 shadow shadow-slate-300">
                 <div class="flex flex-row items-center justify-between space-x-reverse">
                     <h1 class="text-2xl font-semibold text-slate-700">Roles</h1>
                 </div>
                 <p class="text-slate-500">List of roles available</p>
-                <p>{{ updatedRoles }}</p>
                 <SearchRoleTextInput placeholder="Search role"></SearchRoleTextInput>
 
-                <div v-for="role in user_roles" :key="role.id" class="my-3 ">
+                <div v-for="role in all_roles" :key="role.id" class="my-3 ">
                     <div class="flex items-center justify-between border-b border-l-4 border-slate-200 border-l-transparent bg-gradient-to-r  from-transparent to-transparent py-3 px-2 transition duration-150 ease-linear hover:from-slate-100">
                         <div class="inline-flex items-center space-x-2">
                             <div>
@@ -96,7 +94,6 @@
     </DialogBox>
 
 
-    <p>{{activities}} activity logs </p>
 
 
 
@@ -128,11 +125,6 @@
     </div>
 </template>
 
-
-
-
-
-
 <script setup>
 import {computed, onMounted,ref} from "vue";
 import {router, usePage} from "@inertiajs/vue3";
@@ -146,43 +138,29 @@ import {now} from "@vueuse/core";
 
 const showDialog = ref(false)
 const updatedRoles = ref([])
-function handleConfirm(confirmationType) {
-    assignRoles();
-    showDialog.value = false
-
-}
 
 
-const user_roles = computed(() => {
-    return usePage().props.user_roles;
-});
-
-const all_roles = computed(() =>{
-    return usePage().props.roles;
-})
-
-
-const newUserRoles = ref([...user_roles.value]);
-// alert(newUserRoles.value);
-
-    function deleteRole(role){
-        const index = newUserRoles.value.indexOf(role);
-        if (index > -1) {
-            newUserRoles.value.splice(index, 1);
-        }
-        role.deleted_at = now();
-        updatedRoles.value.push(role);
-
-    }
 
 
 onMounted(() =>{
+    showAllRoles()
     // roleActivities();
 })
 
-const activities = computed(()=>{
-    return usePage().props.activities;
-})
+function showAllRoles() {
+    router.get('/roles', {
+    }, {
+        preserveState: true,
+        onSuccess: () =>{
+            console.log("Success")
+        },
+        onError: (error) =>{
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
 
 function roleActivities(row) {
     alert("Role activity")
@@ -200,10 +178,49 @@ function roleActivities(row) {
         }
     })
 }
+
+
+const user_roles = computed(() => {
+    return usePage().props.user_roles;
+});
+
+const all_roles = computed(() =>{
+    return usePage().props.roles;
+});
+
+const activities = computed(()=>{
+    return usePage().props.activities;
+});
+
+
+
+
+
+
+function handleConfirm(confirmationType) {
+    assignRoles();
+    showDialog.value = false
+
+}
+
+
+const newUserRoles = ref([...user_roles.value]);
+// alert(newUserRoles.value);
+
+    function deleteRole(role){
+        const index = newUserRoles.value.indexOf(role);
+        if (index > -1) {
+            newUserRoles.value.splice(index, 1);
+        }
+        role.deleted_at = now();
+        updatedRoles.value.pop(role);
+    }
+
+
 function assignRoles() {
     router.post('/roles/assign', {
         user_id: 2,
-        roles: ["manage-roles", "manage-subjects"]
+        roles: newUserRoles.value
     }, {
         onSuccess: () =>{
             console.log("Success")
