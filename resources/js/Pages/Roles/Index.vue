@@ -11,7 +11,6 @@
                     :selectable="false"
                     placeholder="Name or Email"
                     class="w-10"
-                    @keyup.enter="search"
                     @keyup="search"
                 ></UserSearchTextInput>
 
@@ -36,10 +35,9 @@
 import UserSearchTextInput from "@/Components/TextInput.vue";
 import UserTableElement from  "@/Components/TableElement.vue";
 import ViewTertiaryButton from "@/Components/TertiaryButton.vue";
-import RolesCheckbox from "@/Components/Checkbox.vue";
 import {debounce} from "lodash";
 import {router, usePage} from "@inertiajs/vue3";
-import { computed , onMounted, ref} from "vue";
+import { computed , ref} from "vue";
 
 
 const searchKey = ref(usePage().props.searchKey);
@@ -71,9 +69,6 @@ const userDetail = (row) => {
         }
     });
 }
-
-
-
 
 const config =[
     {
