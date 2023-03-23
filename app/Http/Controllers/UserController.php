@@ -20,4 +20,19 @@ class UserController extends Controller
             'users' => $users,
         ]);
     }
+
+    public function createStudent(): \Inertia\Response
+    {
+        return Inertia::render('Users/Create/Student');
+    }
+
+    public function createTeacher(): \Inertia\Response
+    {
+        return Inertia::render('Users/Create/Teacher');
+    }
+
+    public function createGuardian(): \Inertia\Response
+    {
+        return Inertia::render('Users/Create/Guardian');
+    }
 }

@@ -10,6 +10,7 @@
 
     </Card>
 
+
     <TableElement
         :data="users"
         actionable
@@ -50,6 +51,9 @@
                     </span>
                 </span>
                 </PrimaryButton>
+                <PrimaryButton @click="openRegisterOptions">
+                    Add User
+                </PrimaryButton>
             </div>
         </template>
 
@@ -68,6 +72,8 @@
         </template>
 
     </TableElement>
+
+    <Register v-if="showRegisterOptions" :toggle="showRegisterOptions"></Register>
 
     <Modal v-model:view="showModal">
         <FormElement
@@ -117,6 +123,13 @@ import TertiaryButton from "@/Components/TertiaryButton.vue";
 import Card from "@/Components/Card.vue"
 import UsersStatistics from "@/Views/UsersStatistics.vue";
 import {debounce} from "lodash";
+import Register from "@/Views/RegisterUser.vue";
+
+const showRegisterOptions = ref(false);
+
+function openRegisterOptions() {
+    showRegisterOptions.value = !showRegisterOptions.value;
+}
 
 const formData = ref({
     name: '',
