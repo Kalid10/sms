@@ -1,33 +1,36 @@
 <template>
 
-    <div class="flex w-full flex-col rounded-t-md border bg-white shadow-sm">
+    <div class="flex w-full flex-col overflow-hidden rounded-t-md border bg-white shadow-sm">
 
-        <div v-if="titleHeader" class="flex flex-col sm:flex-row sm:items-center">
-            <div class="flex flex-col justify-center p-4 sm:grow">
-                <h3 :class="{ 'font-semibold': ! subtitle }" class="capitalize">{{ title }}</h3>
-                <h5 v-if="subtitle" class="text-sm text-gray-500">
-                    {{ subtitle }}
-                </h5>
+        <slot name="table-header">
+            <div v-if="titleHeader" class="flex flex-col sm:flex-row sm:items-center">
+                <div class="flex flex-col justify-center p-4 sm:grow">
+                    <h3 class="font-semibold capitalize">{{ title }}</h3>
+                    <h5 v-if="subtitle" class="text-sm text-gray-500">
+                        {{ subtitle }}
+                    </h5>
+                </div>
+
+                <div v-if="actionable" class="mb-4 min-w-fit px-4 sm:mb-0">
+                    <slot :selected="{ selected: anySelected, items: selectedItems }" name="action">
+                        <PrimaryButton v-if="! anySelected" :click="() => {}" class="w-full" title="Download CSV"/>
+                        <div v-else class="flex items-center gap-2">
+                            <TertiaryButton class="w-full whitespace-nowrap" title="Update Users" @click="() => {}"/>
+                            <PrimaryButton class="w-full whitespace-nowrap" title="Delete Users" @click="() => {}"/>
+                        </div>
+                    </slot>
+                </div>
             </div>
+        </slot>
+        <div v-if="! titleHeader" class="w-full py-2"></div>
 
-            <div class="mb-4 min-w-fit px-4 sm:mb-0">
-                <slot v-if="actionable" :selected="{ selected: anySelected, items: selectedItems }" name="action">
-                    <PrimaryButton v-if="! anySelected" :click="() => {}" class="w-full" title="Download CSV"/>
-                    <div v-else class="flex items-center gap-2">
-                        <TertiaryButton class="w-full whitespace-nowrap" title="Update Users" @click="() => {}"/>
-                        <PrimaryButton class="w-full whitespace-nowrap" title="Delete Users" @click="() => {}"/>
-                    </div>
-                </slot>
-            </div>
-        </div>
-
-        <div class="mb-4 flex flex-col gap-4 px-4">
+        <div v-if="filterable" class="mb-4 flex flex-col gap-4 px-4">
             <TextInput v-model="query" placeholder="Search for [... attributes]"/>
         </div>
 
         <div class="w-full overflow-x-auto">
             <table class="w-full">
-                <tr>
+                <tr v-if="header">
                     <th
                         v-if="selectable"
                         class="h-10 w-[1%] border-y bg-neutral-50 px-3">
@@ -45,10 +48,10 @@
                         Actions
                     </th>
                 </tr>
-                <tr v-for="(item, index) in data" :key="index" class="border-b">
+                <tr v-for="(item, index) in data" :key="index" class="border-b" :class="{ 'first:border-t': ! header }">
                     <th
                         v-if="selectable"
-                        class="h-10 w-[1%] border-y border-l bg-white px-3">
+                        class="h-10 w-[1%] bg-white px-3">
                         <Checkbox v-model="items[index].selected"/>
                     </th>
                     <template
@@ -60,9 +63,13 @@
                             class="h-10 whitespace-nowrap px-3 text-center text-sm"
                         >
                             <component
-                                :is="cell(i, index).component" :value="item[key]"
+                                :is="cell(i, index).component"
+                                v-if="cell(i, index).component !== 'custom'" :value="item[key]"
                                 v-bind="{ ...cell(i, index).props }"
                             />
+                            <template v-else>
+                                <slot :data="item[key]" :name="`${key}-column`" />
+                            </template>
                         </td>
                     </template>
                     <td
@@ -123,6 +130,14 @@ const props = defineProps({
     columns: {
         type: Array, // Array of objects of type { name: String, key: String, link: String }. opt: link
         default: () => []
+    },
+    header: {
+        type: Boolean,
+        default: true
+    },
+    filterable: {
+        type: Boolean,
+        default: true
     }
 })
 
@@ -189,6 +204,11 @@ function cell(columnIndex, rowIndex) {
                 props: {
                     options: props.columns[columnIndex]?.options
                 }
+            }
+
+        case 'custom':
+            return {
+                component: 'custom'
             }
 
         default:
