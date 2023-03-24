@@ -15,7 +15,18 @@ module.exports = {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
                 basic: ['Inter'],
             },
+            colors: {
+                positive: {
+                    50: "#84CC16",
+                    100: "#51A928",
+                },
+                negative: {
+                    50: "#DC2626",
+                    100: "#FC0000",
+                },
+            },
             minHeight: {
+                '8': '2rem',
                 '10': '2.5rem',
             },
             animation: {

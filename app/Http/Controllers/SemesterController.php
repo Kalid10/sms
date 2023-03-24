@@ -15,6 +15,11 @@ use Inertia\Response;
 
 class SemesterController extends Controller
 {
+    public function index(): Response
+    {
+        return Inertia::render('Semesters/Index');
+    }
+
     public function create(CreateRequest $request): RedirectResponse
     {
         try {
