@@ -24,6 +24,7 @@
     <button class="bg-red-400 p-1" @click="activeBatches">Test Get Active Batches</button>
     <button class="bg-red-400 p-1" @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
     <button class="bg-red-400 p-1" @click="removeHomeRoomTeacher">Test Remove Homeroom Teacher</button>
+    <button class="bg-red-400 p-1" @click="getHomeRoomTeachers">Test Get Homeroom Teachers</button>
 
 </template>
 <script setup>
@@ -228,7 +229,8 @@ function deleteSubject() {
 function addSchoolYear() {
     router.post('/school-year/create', {
         start_date: "2024-01-01",
-        end_date: null
+        end_date: null,
+        name: "2023-2024"
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -396,6 +398,20 @@ function assignHomeRoomTeacher() {
 
 function removeHomeRoomTeacher() {
     router.delete('/teachers/remove/homeroom/' + 1, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function getHomeRoomTeachers() {
+    router.get('/teachers/homerooms', {
+        teacher_id: 1
+    }, {
         onSuccess: () => {
             console.log("Success")
         },
