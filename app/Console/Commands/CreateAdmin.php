@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Console\Command;
@@ -41,8 +42,8 @@ class CreateAdmin extends Command
                     'type' => User::TYPE_ADMIN,
                 ]);
 
-                // Attach new User to Admin, assign `manage-roles` Role
-                $user->roles()->attach(['manage-roles', 'manage-subjects', 'manage-levels', 'manage-semesters', 'manage-school-years']);
+                // Get all roles and attach them to the user
+                $user->roles()->attach(Role::all()->pluck('name')->toArray());
 
                 DB::commit();
                 $this->info('Admin registration succeeded.');

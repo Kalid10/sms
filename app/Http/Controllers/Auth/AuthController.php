@@ -41,22 +41,22 @@ class AuthController extends Controller
 
     public function logout(Request $request): JsonResponse|RedirectResponse
     {
-        // Revoke all tokens
-        auth()->user()->tokens()->delete();
-
-        // Logout user
-        auth('web')->logout();
-
-        // Regenerate session
-        $request->session()->invalidate();
-
-        // Regenerate CSRF token
-        $request->session()->regenerateToken();
-
         // Handle request from InertiaJS
         if ($request->header('X-Inertia')) {
+            // Logout user
+            auth('web')->logout();
+
+            // Regenerate session
+            $request->session()->invalidate();
+
+            // Regenerate CSRF token
+            $request->session()->regenerateToken();
+
             return redirect()->back()->with('success', 'You have successfully logged out.');
         }
+
+        // Revoke all tokens
+        auth()->user()->tokens()->delete();
 
         // Return response from API
         return response()->json([

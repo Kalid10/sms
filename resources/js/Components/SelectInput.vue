@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col">
-        <label class="">
+        <label v-if="!! label" class="">
             <span class="pl-2 text-sm font-medium text-gray-500">{{ label }}</span>
             <span v-if="required" class="pl-1 text-red-600">*</span>
         </label>
@@ -35,15 +35,15 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
+import {ref, computed} from "vue"
 import {onClickOutside} from "@vueuse/core";
 import {ChevronDownIcon} from "@heroicons/vue/24/outline"
 import {CheckCircleIcon} from "@heroicons/vue/24/solid"
 
-defineProps({
+const props = defineProps({
     label: {
         type: String,
-        required: true
+        default: null
     },
     placeholder: {
         type: String,
@@ -62,7 +62,7 @@ defineProps({
         required: true
     },
     modelValue: {
-        type: String,
+        type: [String, Number],
         required: true,
     },
     direction: {
@@ -74,7 +74,7 @@ defineProps({
 const emits = defineEmits(['update:modelValue'])
 
 const displayList = ref(false)
-const selectedLabel = ref(null)
+const selectedLabel = computed(() => props.options.find(option => option.value === props.modelValue)?.label ?? null)
 const list = ref(null)
 
 function selectOption(option) {

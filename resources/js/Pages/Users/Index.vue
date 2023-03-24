@@ -149,7 +149,8 @@ const config = [
     {
         name: 'User Type',
         key: 'type',
-        link: '/users/{id}/edit'
+        type: 'enum',
+        options: ['admin', 'teacher', 'student']
     },
     {
         name: 'User Roles',
@@ -157,8 +158,9 @@ const config = [
         link: 'https://google.com'
     },
     {
-        name: 'Status',
+        name: 'Active',
         key: 'active',
+        type: Boolean
     },
 ]
 

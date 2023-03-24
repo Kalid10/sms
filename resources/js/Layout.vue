@@ -8,7 +8,7 @@
         <div
             class="grow overflow-y-auto bg-neutral-50 p-2 md:p-6 lg:ml-64 lg:w-[calc(100%-16rem)]">
             <div
-                class="container mx-auto flex flex-col gap-4">
+                class="container mx-auto flex flex-col gap-12">
                 <slot/>
             </div>
         </div>

@@ -9,5 +9,5 @@ Route::prefix('roles/')->middleware(['checkUserType:admin', 'checkUserRole:manag
     Route::get('users', [RoleController::class, 'users'])->name('users');
     Route::get('activities', [RoleController::class, 'activities'])->name('activities');
     Route::get('', [RoleController::class, 'list'])->name('list');
-    Route::get('user', [RoleController::class, 'userRoles'])->name('user.roles');
+    Route::get('user/details', [RoleController::class, 'details'])->name('user.details');
 });

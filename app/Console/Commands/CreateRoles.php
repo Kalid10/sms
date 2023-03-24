@@ -28,6 +28,12 @@ class CreateRoles extends Command
         'manage-levels',
         'manage-semesters',
         'manage-school-years',
+        'manage-users',
+        'manage-batches',
+        'manage-teachers',
+        'manage-students',
+        'manage-guardians',
+        'manage-admins',
     ];
 
     // Description for each user role
@@ -37,6 +43,12 @@ class CreateRoles extends Command
         'Manage Levels',
         'Manage Semesters',
         'Manage School Years',
+        'Manage Users',
+        'Manage Batches',
+        'Manage Teachers',
+        'Manage Students',
+        'Manage Guardians',
+        'Manage Admins',
     ];
 
     /**
