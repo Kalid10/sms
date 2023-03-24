@@ -3,7 +3,7 @@
         <UserTableElement
             :data="users" :selectable=false :columns="config" actionable :row-actionable="true"  class="broder w-full "
             subtitle="list of all Users" title="Users">
-            <template #action>
+<!--            <template #action>-->
 <!--                <UserSearchTextInput-->
 <!--                    v-model="searchKey"-->
 <!--                    title="search"-->
@@ -14,7 +14,7 @@
 <!--                    @keyup="search"-->
 <!--                ></UserSearchTextInput>-->
 
-            </template>
+<!--            </template>-->
             <template #all-actions>
                 <div class="flex flex-row justify-end pr-6">
                     <UserSearchTextInput class="w-1/3" placeholder="search" model-value=""/>
@@ -29,12 +29,20 @@
 
     </div>
 
+
+
 </template>
 
 <script setup>
 import UserSearchTextInput from "@/Components/TextInput.vue";
 import UserTableElement from  "@/Components/TableElement.vue";
 import ViewTertiaryButton from "@/Components/TertiaryButton.vue";
+
+// test component
+import DialogBox from "@/Components/DialogBox.vue";
+
+
+
 import {debounce} from "lodash";
 import {router, usePage} from "@inertiajs/vue3";
 import { computed , ref} from "vue";
