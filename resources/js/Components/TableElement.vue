@@ -22,7 +22,7 @@
                 </div>
             </div>
         </slot>
-        <div v-if="! titleHeader" class="w-full py-2"></div>
+        <div v-if="! titleHeader && actionable" class="w-full py-2"></div>
 
         <div v-if="filterable" class="mb-4 flex flex-col gap-4 px-4">
             <TextInput v-model="query" placeholder="Search for [... attributes]"/>
@@ -48,7 +48,7 @@
                         Actions
                     </th>
                 </tr>
-                <tr v-for="(item, index) in data" :key="index" class="border-b" :class="{ 'first:border-t': ! header }">
+                <tr v-for="(item, index) in data" :key="index" :class="{ 'first:border-t': ! header }" class="border-b">
                     <th
                         v-if="selectable"
                         class="h-10 w-[1%] bg-white px-3">
@@ -68,7 +68,7 @@
                                 v-bind="{ ...cell(i, index).props }"
                             />
                             <template v-else>
-                                <slot :data="item[key]" :name="`${key}-column`" />
+                                <slot :data="item[key]" :name="`${key}-column`"/>
                             </template>
                         </td>
                     </template>
@@ -85,9 +85,11 @@
             </table>
         </div>
 
-        <div class="flex gap-3 bg-neutral-50 p-4">
-            <TertiaryButton :click="() => {}" class="w-full" title="Previous"/>
-            <TertiaryButton :click="() => {}" class="w-full" title="Next"/>
+        <div v-if="footer" class="flex gap-3 bg-neutral-50 p-4">
+            <slot name="footer">
+                <TertiaryButton :click="() => {}" class="w-full" title="Previous"/>
+                <TertiaryButton :click="() => {}" class="w-full" title="Next"/>
+            </slot>
         </div>
 
     </div>
@@ -134,6 +136,10 @@ const props = defineProps({
     header: {
         type: Boolean,
         default: true
+    },
+    footer: {
+        type: Boolean,
+        default: true,
     },
     filterable: {
         type: Boolean,
