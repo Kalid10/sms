@@ -1,7 +1,7 @@
 <template>
     <div>
         <DialogBoxModal :view="confirmModal">
-            <div class="relative max-w-md rounded-lg bg-white shadow dark:bg-gray-700">
+            <div class="relative max-w-md rounded-lg bg-white shadow dark:bg-gray-700 ">
                 <div class="flex flex-col justify-center p-4">
                     <div v-if="type === 'confirmation'" class="flex justify-center">
                         <ShieldCheckIcon class="h-10 w-10" />
@@ -18,7 +18,6 @@
                         </slot>
                     </div>
                 </div>
-
                 <div class="mt-5 flex justify-center space-x-4 p-2">
                     <PrimaryButton :title="confirmText" @click="$emit('confirm')"></PrimaryButton>
                     <PrimaryButton :title="cancelText" @click="$emit('close')"></PrimaryButton>
@@ -34,8 +33,9 @@ import DialogBoxModal from './Modal.vue';
 import PrimaryButton from './PrimaryButton.vue';
 import { TrashIcon, ShieldCheckIcon } from '@heroicons/vue/24/outline';
 
-const confirmModal = ref(true);
+defineEmits(['confirm', 'close'])
 
+const confirmModal = ref(true);
 defineProps({
     type: {
         type: String,

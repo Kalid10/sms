@@ -14,6 +14,7 @@ defineProps({
     },
     label:{
         type:String,
+        default:null
     }
 })
 
