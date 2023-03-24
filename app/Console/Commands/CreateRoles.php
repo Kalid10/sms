@@ -33,6 +33,7 @@ class CreateRoles extends Command
         'manage-teachers',
         'manage-students',
         'manage-guardians',
+        'manage-admins',
     ];
 
     // Description for each user role
@@ -47,6 +48,7 @@ class CreateRoles extends Command
         'Manage Teachers',
         'Manage Students',
         'Manage Guardians',
+        'Manage Admins',
     ];
 
     /**

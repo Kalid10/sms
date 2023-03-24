@@ -267,6 +267,151 @@ const users = [{
         "type": "admin",
         "roles": "manage-teachers",
         "active": true
-    }]
+    }
+]
 
-export {users};
+// create a list of semester objects with attributes id, name, start_date, end_date, school_year, status, last_updated
+const semesters = [
+    {
+        "id": 1,
+        "name": "Fall 2019",
+        "start_date": "2019-08-26",
+        "end_date": "2019-12-13",
+        "school_year": "2019/2020",
+        "status": "completed",
+        "last_updated": "2019-12-31",
+    },
+    {
+        "id": 2,
+        "name": "Spring 2020",
+        "start_date": "2020-01-06",
+        "end_date": "2020-05-15",
+        "school_year": "2019/2020",
+        "status": "completed",
+        "last_updated": "2020-05-31",
+    },
+    {
+        "id": 3,
+        "name": "Summer 2020",
+        "start_date": "2020-05-18",
+        "end_date": "2020-08-21",
+        "school_year": "2019/2020",
+        "status": "completed",
+        "last_updated": "2020-08-31",
+    },
+    {
+        "id": 4,
+        "name": "Fall 2020",
+        "start_date": "2020-08-24",
+        "end_date": "2020-12-11",
+        "school_year": "2020/2021",
+        "status": "completed",
+        "last_updated": "2020-12-31",
+    },
+    {
+        "id": 5,
+        "name": "Spring 2021",
+        "start_date": "2021-01-04",
+        "end_date": "2021-05-21",
+        "school_year": "2020/2021",
+        "status": "completed",
+        "last_updated": "2021-05-31",
+    },
+    {
+        "id": 6,
+        "name": "Summer 2021",
+        "start_date": "2021-05-24",
+        "end_date": "2021-08-20",
+        "school_year": "2020/2021",
+        "status": "completed",
+        "last_updated": "2021-08-31",
+    },
+    {
+        "id": 7,
+        "name": "Fall 2021",
+        "start_date": "2021-08-23",
+        "end_date": "2021-12-10",
+        "school_year": "2021/2022",
+        "status": "completed",
+        "last_updated": "2021-12-31",
+    },
+    {
+        "id": 8,
+        "name": "Spring 2022",
+        "start_date": "2022-01-03",
+        "end_date": "2022-05-20",
+        "school_year": "2021/2022",
+        "status": "completed",
+        "last_updated": "2022-05-31",
+    },
+    {
+        "id": 9,
+        "name": "Summer 2022",
+        "start_date": "2022-05-23",
+        "end_date": "2022-08-19",
+        "school_year": "2021/2022",
+        "status": "completed",
+        "last_updated": "2022-08-31",
+    },
+    {
+        "id": 10,
+        "name": "Fall 2022",
+        "start_date": "2022-08-22",
+        "end_date": "2022-12-09",
+        "school_year": "2022/2023",
+        "status": "completed",
+        "last_updated": "2022-12-31",
+    },
+    {
+        "id": 11,
+        "name": "Spring 2023",
+        "start_date": "2023-01-02",
+        "school_year": "2022/2023",
+        "status": "active",
+        "last_updated": "2023-01-31",
+    },
+    {
+        "id": 12,
+        "name": "Summer 2023",
+        "start_date": "2023-05-22",
+        "school_year": "2022/2023",
+        "status": "upcoming",
+        "last_updated": "2023-01-31",
+    }
+]
+
+const school_years = [
+    {
+        value: 0,
+        label: 'All years'
+    },
+    {
+        value: 1,
+        label: '2022/2023'
+    },
+    {
+        value: 2,
+        label: '2021/2022'
+    },
+    {
+        value: 3,
+        label: '2020/2021'
+    }
+]
+
+const statuses = [
+    {
+        value: 'upcoming',
+        label: 'Upcoming'
+    },
+    {
+        value: 'active',
+        label: 'Active'
+    },
+    {
+        value: 'completed',
+        label: 'Completed'
+    }
+]
+
+export {users, semesters, school_years, statuses};

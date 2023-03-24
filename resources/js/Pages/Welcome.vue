@@ -24,6 +24,7 @@
     <button class="bg-red-400 p-1" @click="activeBatches">Test Get Active Batches</button>
     <button class="bg-red-400 p-1" @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
     <button class="bg-red-400 p-1" @click="removeHomeRoomTeacher">Test Remove Homeroom Teacher</button>
+    <button class="bg-red-400 p-1" @click="getHomeRoomTeachers">Test Get Homeroom Teachers</button>
 
 </template>
 <script setup>
@@ -396,6 +397,20 @@ function assignHomeRoomTeacher() {
 
 function removeHomeRoomTeacher() {
     router.delete('/teachers/remove/homeroom/' + 1, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function getHomeRoomTeachers() {
+    router.get('/teachers/homerooms', {
+        teacher_id: 1
+    }, {
         onSuccess: () => {
             console.log("Success")
         },
