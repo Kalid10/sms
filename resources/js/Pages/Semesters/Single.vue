@@ -1,15 +1,20 @@
 <template>
 
-    <TableElement :columns="config" :filterable="false" :header="false" :selectable="false" subtitle="List of batches enrolled in semester of  Spring 2023" title="Batches of Spring 2023" :data="levels">
-        <template #sections-column>
+    <TableElement
+        :columns="config"
+        :data="levels" :filterable="false" :footer="false" :header="false"
+        :selectable="false"
+    >
+        <template>
             <div class="flex items-center justify-center gap-1">
-                <span class="text-gray-500">Sections</span>
-                <span class="text-gray-700">3</span>
+                <span class="text-sm text-gray-500">
+                    3 Sections
+                </span>
             </div>
         </template>
         <template #name-column="{ data }">
             <div class="flex items-center gap-2">
-                <LockClosedIcon class="h-4 w-4" />
+                <LockClosedIcon class="h-4 w-4"/>
                 <span class="font-bold text-gray-700">{{ data }}</span>
             </div>
         </template>
@@ -17,6 +22,9 @@
             <div class="flex items-center justify-end gap-2">
                 <span class="text-gray-500">{{ data }}</span>
             </div>
+        </template>
+        <template #footer>
+            <div class="h-4"></div>
         </template>
     </TableElement>
 
