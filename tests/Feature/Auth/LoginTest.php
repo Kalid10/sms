@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 
 uses(DatabaseMigrations::class);
 
-test('user can log in from an api', function () {
+it('allows a user to log in via the API route', function () {
     // Create a user
     $password = 'secret';
     $user = User::factory()->create([
@@ -38,7 +38,7 @@ test('user can log in from an api', function () {
     $this->assertNotNull($token);
 });
 
-test('user can not login with incorrect password', function () {
+it('prevents a user from logging in with an incorrect password', function () {
     $user = User::factory()->create([
         'password' => Hash::make('secret'),
     ]);
