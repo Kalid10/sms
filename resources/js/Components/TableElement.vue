@@ -48,7 +48,7 @@
                         Actions
                     </th>
                 </tr>
-                <tr v-for="(item, index) in data" :key="index" :class="{ 'first:border-t': ! header }" class="border-b">
+                <tr v-for="(item, index) in data" :key="index" :class="{ 'first:border-t': ! header && titleHeader, 'last:border-b-0': ! footer }" class="border-b">
                     <th
                         v-if="selectable"
                         class="h-10 w-[1%] bg-white px-3">
