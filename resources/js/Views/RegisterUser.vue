@@ -1,101 +1,129 @@
 <template>
     <RegisterModal v-model:view="isOpen">
-        <div class="mt-10 flex min-h-screen flex-col items-center">
+        <div class="grid w-full space-y-6 overflow-hidden rounded-lg bg-white px-10">
+            <h1 class="flex justify-center pt-4 text-3xl font-bold">Add User</h1>
 
-            <div class="flex w-full flex-col items-center space-y-5 overflow-hidden rounded-lg bg-white p-4">
-                <h1 class="mb-6 text-3xl font-bold">Register as *</h1>
-                <RegisterCard
-                    icon
-                    title="Student" subtitle="Register as a student
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher"
-                    class="max-w-full cursor-pointer transition duration-300 hover:skew-y-2"
-                    @click="studentRegistrationLink">
-                    <template #icon>
-                        <AcademicCapIcon class="h-6 w-6"/>
-                    </template>
+            <RegisterCard
+                v-show="!anyRegistrationActive"
+                v-if="hasRole('manage-students')"
+                icon
+                title="Student"
+                subtitle="Register students to efficiently manage their academic progress, track achievements, and
+                facilitate communication between students, teachers, and guardians."
+                class="min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110"
+                @click="showRegisterStudent">
+                <template #icon>
+                    <AcademicCapIcon class="h-6 w-6"/>
+                </template>
+            </RegisterCard>
 
-                </RegisterCard>
+            <RegisterCard
+                v-show="!anyRegistrationActive"
+                v-if="hasRole('manage-teachers')"
+                icon
+                title="Teacher"
+                subtitle="Enroll teachers to empower them with educational tools, monitor performance, and foster collaboration
+                among educators, enhancing the learning environment."
+                class="min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110"
+                @click="showRegisterTeacher">
+                <template #icon>
+                    <BookOpenIcon class="h-6 w-6"/>
+                </template>
+            </RegisterCard>
 
-                <RegisterCard
-                    icon
-                    title="Teacher" subtitle="Register as a teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher"
-                    class="max-w-full cursor-pointer transition duration-300 hover:skew-y-2"
-                    @click="teacherRegistrationLink">
-                    <template #icon>
-                        <BookOpenIcon class="h-6 w-6"/>
-                    </template>
+            <RegisterCard
+                v-show="!anyRegistrationActive"
+                v-if="hasRole('manage-guardians')"
+                icon
+                title="Guardian"
+                subtitle="Add guardians to involve them in their child's education, keep them informed about school events,
+                and strengthen the relationship between school and families."
+                class="min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110"
+                @click="showRegisterGuardian">
+                <template #icon>
+                    <UserCircleIcon class="h-6 w-6"/>
+                </template>
+            </RegisterCard>
 
-                </RegisterCard>
-                <RegisterCard
-                    icon title="Guardian" subtitle="Register as a student
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher"
-                    class="max-w-full cursor-pointer transition duration-300 hover:skew-y-2"
-
-                    @click="guardianRegistrationLink">
-                    <template #icon>
-                        <UserCircleIcon class="h-6 w-6"/>
-                    </template>
-
-                </RegisterCard>
-
-                <div class="space-x-2">
-                    <snap class="text-sm font-light">Already have an account?</snap>
-                    <RegisterPrimaryButton class="mt-10" @click="loginLink">
-                        Log In
-                    </RegisterPrimaryButton>
-                </div>
+            <div class="w-full">
+                <component :is="currentComponent" v-if="currentComponent" @close="resetRegisterState()"></component>
             </div>
         </div>
     </RegisterModal>
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import RegisterCard from "@/Components/Card.vue";
-import RegisterPrimaryButton from "@/Components/PrimaryButton.vue";
-import {AcademicCapIcon, BookOpenIcon, UserCircleIcon} from "@heroicons/vue/24/outline"
+import {computed, ref} from 'vue'
 import RegisterModal from "@/Components/Modal.vue";
-import {router} from "@inertiajs/vue3";
-
+import RegisterCard from "@/Components/Card.vue";
+import {AcademicCapIcon, BookOpenIcon, UserCircleIcon} from "@heroicons/vue/24/outline";
+import Student from "@/Pages/Users/Create/Student.vue";
+import Teacher from "@/Pages/Users/Create/Teacher.vue";
+import Guardian from "@/Pages/Users/Create/Guardian.vue";
 
 const props = defineProps({
     toggle: {
         type: Boolean,
-        required: true
-    }
+        required: true,
+    },
+    userRoles: {
+        type: Object,
+        default: null
+    },
 })
 
+const hasRole = computed(() => {
+    return (role) => {
+        for (let i = 0; i < props
+            .userRoles.length; i++) {
+            if (props.userRoles[i].name === role) {
+                return true;
+            }
+        }
+        return false;
+    };
+});
+
 const isOpen = ref(props.toggle)
+const registerStudent = ref(false);
+const registerTeacher = ref(false);
+const registerGuardian = ref(false);
 
-// link to student registration
-function studentRegistrationLink() {
-    router.get("/users/create/student");
+const currentComponent = computed(() => {
+    if (registerStudent.value) return Student;
+    if (registerTeacher.value) return Teacher;
+    if (registerGuardian.value) return Guardian;
+    return null;
+});
+
+function resetRegisterState() {
+    registerStudent.value = false;
+    registerTeacher.value = false;
+    registerGuardian.value = false;
 }
 
-// link to login
-function loginLink() {
-    router.get("/login");
+function showRegisterStudent() {
+    resetRegisterState();
+    registerStudent.value = true;
 }
 
-// link to teacher registration
-function teacherRegistrationLink() {
-    router.get('/users/create/teacher')
+function showRegisterTeacher() {
+    resetRegisterState();
+    registerTeacher.value = true;
 }
 
-// link for parent registration
-function guardianRegistrationLink() {
-    router.get('/users/create/guardian')
+function showRegisterGuardian() {
+    resetRegisterState();
+    registerGuardian.value = true;
 }
+
+function goBack() {
+    resetRegisterState();
+}
+
+const anyRegistrationActive = computed(() => {
+    return registerStudent.value || registerTeacher.value || registerGuardian.value;
+});
 
 </script>
 

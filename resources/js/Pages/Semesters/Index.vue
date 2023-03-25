@@ -1,14 +1,14 @@
 <template>
 
-    <SemestersStatistics />
+    <SemestersStatistics/>
 
-    <AllSemesters />
+    <AllSemesters/>
 
-    <SemestersBySchoolYear school-year="2022/2023" />
+    <SemestersBySchoolYear :school-year-id="1"/>
 
-    <SemestersBySeason season="fall" />
+    <SemestersBySeason season="1"/>
 
-    <SemestersByStatus status="upcoming" />
+    <SemestersByStatus status="Upcoming"/>
 
 </template>
 
@@ -17,9 +17,7 @@ import SemestersStatistics from "@/Views/Semesters/SemestersStatistics.vue"
 import AllSemesters from "@/Views/Semesters/AllSemesters.vue";
 import SemestersBySchoolYear from "@/Views/Semesters/SemestersBySchoolYear.vue"
 import SemestersBySeason from "@/Views/Semesters/SemestersBySeason.vue"
-import SemestersByStatus from "@/Views/Semesters/SemestersByStatus.vue"
-
-</script>
+import SemestersByStatus from "@/Views/Semesters/SemestersByStatus.vue"</script>
 
 <style scoped>
 

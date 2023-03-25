@@ -22,16 +22,6 @@
 
         <template #action="{ selected }">
             <div class="flex flex-row space-x-4">
-                <SearchTextInput
-                    v-model="searchKey"
-                    :selectable="false"
-                    actionable
-                    data="subjects"
-                    placeholder="Search for subject"
-                    subtitle="list of all subjects"
-                    title="Subject"
-                    @keyup="search"
-                />
                 <div v-if="selected.selected" class="flex items-center gap-2">
                     <TertiaryButton
                         title="Move Items"
@@ -73,7 +63,7 @@
 
     </TableElement>
 
-    <Register v-if="showRegisterOptions" :toggle="showRegisterOptions"></Register>
+    <Register v-if="showRegisterOptions" :user-roles="userRoles" :toggle="showRegisterOptions"></Register>
 
     <Modal v-model:view="showModal">
         <FormElement
@@ -111,18 +101,16 @@
 <script setup>
 import {computed, ref} from "vue"
 import {ArchiveBoxXMarkIcon, ArrowPathIcon, BugAntIcon, CloudArrowDownIcon, EyeIcon} from "@heroicons/vue/24/outline"
-import {Link, router, usePage} from '@inertiajs/vue3'
+import {Link, usePage} from '@inertiajs/vue3'
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue"
 import TextInput from "@/Components/TextInput.vue"
-import SearchTextInput from "@/Components/TextInput.vue"
 import SelectInput from "@/Components/SelectInput.vue"
 import TableElement from "@/Components/TableElement.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import Card from "@/Components/Card.vue"
 import UsersStatistics from "@/Views/UsersStatistics.vue";
-import {debounce} from "lodash";
 import Register from "@/Views/RegisterUser.vue";
 
 const showRegisterOptions = ref(false);
@@ -156,6 +144,9 @@ const users = computed(() => {
     return usePage().props.users.data;
 });
 
+const userRoles = computed(() => usePage().props.user_roles);
+
+
 const showRegisterUser = ref(false)
 const showModal = ref(false)
 
@@ -163,16 +154,6 @@ function createUserForm() {
     showRegisterUser.value = true
 }
 
-
-const searchKey = ref(usePage().props.searchKey);
-
-const search = debounce(() => {
-    router.get(
-        "/users",
-        {search: searchKey.value},
-        {preserveState: true, replace: true}
-    );
-}, 300);
 
 </script>
 

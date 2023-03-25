@@ -6,9 +6,13 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import Layout from "./Layout.vue";
 
+import { createPinia } from "pinia";
+
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText ||
     "SchoolManagement";
+
+const pinia = createPinia();
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -22,6 +26,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .use(pinia)
             .mount(el);
     },
     progress: {
