@@ -29,6 +29,10 @@ module.exports = {
                 '8': '2rem',
                 '10': '2.5rem',
             },
+            minWidth: {
+                '8': '2rem',
+                '10': '2.5rem',
+            },
             animation: {
                 'slide-down': 'slideDown 150ms ease-out forwards',
                 'scale-up': 'scaleUp 150ms ease-out forwards',
