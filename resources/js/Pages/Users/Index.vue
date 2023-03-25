@@ -2,14 +2,6 @@
 
     <UsersStatistics/>
 
-    <Card icon subtitle="Teenage Ninja Mutant Spiders" title="Kylian Mbappe">
-
-        <template #icon>
-            <BugAntIcon/>
-        </template>
-
-    </Card>
-
     <TableElement
         :columns="config" :data="users"
         actionable
