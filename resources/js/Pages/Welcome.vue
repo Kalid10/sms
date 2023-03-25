@@ -25,6 +25,7 @@
     <button class="bg-red-400 p-1" @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
     <button class="bg-red-400 p-1" @click="removeHomeRoomTeacher">Test Remove Homeroom Teacher</button>
     <button class="bg-red-400 p-1" @click="getHomeRoomTeachers">Test Get Homeroom Teachers</button>
+    <button class="bg-red-400 p-1" @click="addStudentToBatch">Test Add Students To Batch</button>
 
 </template>
 <script setup>
@@ -411,6 +412,21 @@ function removeHomeRoomTeacher() {
 function getHomeRoomTeachers() {
     router.get('/teachers/homerooms', {
         teacher_id: 1
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addStudentToBatch() {
+    router.post('/batches/student/add', {
+        batch_id: 10,
+        student_id: 5
     }, {
         onSuccess: () => {
             console.log("Success")

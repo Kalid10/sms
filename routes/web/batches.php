@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\BatchStudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(BatchController::class)->prefix('batches/')->middleware(['checkUserRole:manage-batches'])->name('batches.')->group(function () {
@@ -8,4 +9,9 @@ Route::controller(BatchController::class)->prefix('batches/')->middleware(['chec
     Route::post('create_bulk', 'createBulk')->name('create');
     Route::get('', 'list')->name('list');
     Route::get('active', 'active')->name('active');
+    Route::post('assign/student', 'assignStudent')->name('assign_student');
+});
+
+Route::controller(BatchStudentController::class)->prefix('batches/student/')->middleware(['checkUserRole:manage-students'])->name('batches.student.')->group(function () {
+    Route::post('add', 'add')->name('add');
 });

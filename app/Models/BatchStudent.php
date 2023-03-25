@@ -4,30 +4,34 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class SchoolYear extends Model
+class BatchStudent extends Model
 {
     use HasFactory, SoftDeletes, LogsActivity;
 
     protected $fillable = [
-        'start_date',
-        'end_date',
-        'name',
+        'batch_id',
+        'student_id',
     ];
 
-    public function batches(): HasMany
+    public function batch(): BelongsTo
     {
-        return $this->hasMany(Batch::class);
+        return $this->belongsTo(Batch::class);
+    }
+
+    public function student(): BelongsTo
+    {
+        return $this->belongsTo(Student::class);
     }
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['start_date', 'end_date', 'name'])
-            ->useLogName('school_year');
+            ->logOnly(['batch_id', 'student_id'])
+            ->useLogName('batch_student');
     }
 }
