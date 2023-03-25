@@ -12,6 +12,7 @@ Route::controller(BatchController::class)->prefix('batches/')->middleware(['chec
     Route::post('assign/student', 'assignStudent')->name('assign_student');
 });
 
-Route::controller(BatchStudentController::class)->prefix('batches/student/')->middleware(['checkUserRole:manage-students'])->name('batches.student.')->group(function () {
+Route::controller(BatchStudentController::class)->prefix('batches/students/')->middleware(['checkUserRole:manage-students'])->name('batches.student.')->group(function () {
     Route::post('add', 'add')->name('add');
+    Route::get('', 'getBatchStudents')->name('get');
 });
