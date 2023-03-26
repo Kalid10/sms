@@ -6,9 +6,9 @@
         class="flex min-h-10 w-full flex-col border bg-white">
 
         <div class="flex flex-col gap-3 p-4">
-            <div class="">
-                <h3 class="">{{ title }}</h3>
-                <h5 class="text-sm text-gray-500">
+            <div class="flex flex-col text-sm">
+                <h3>{{ title }}</h3>
+                <h5 class="text-xs text-gray-500">
                     {{ subtitle }}
                 </h5>
             </div>
