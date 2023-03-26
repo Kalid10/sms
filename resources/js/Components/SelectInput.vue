@@ -1,16 +1,17 @@
 <template>
     <div class="flex flex-col">
         <label v-if="!! label" class="">
-            <span class="pl-2 text-sm font-medium text-gray-500">{{ label }}</span>
-            <span v-if="required" class="pl-1 text-red-600">*</span>
+            <span class="pl-0.5 text-xs font-medium text-gray-500">{{ label }}</span>
+            <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
         </label>
         <div class="relative flex h-10 w-full rounded-md border border-gray-200" tabindex="0" @click="toggleList">
             <span
                 :aria-placeholder="placeholder"
                 :class="[ !! selectedLabel ? 'text-black' : 'text-gray-500' ]"
-                class="grid h-full place-items-center px-3 text-sm">{{
+                class="grid h-full place-items-center px-3 text-sm capitalize">{{
                     selectedLabel ?? placeholder
-                }}</span>
+                }}
+            </span>
             <div class="absolute right-0 grid h-full place-items-center px-2">
                 <ChevronDownIcon class="h-4 w-4 stroke-[3] text-gray-500"/>
             </div>
