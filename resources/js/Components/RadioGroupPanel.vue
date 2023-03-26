@@ -1,30 +1,54 @@
 <template>
 
-    <fieldset class="flex w-full flex-col">
+    <div class="flex flex-col gap-1">
 
-        <label
-            v-for="(option, index) in options" :key="index" :for="option.id"
-            class="flex items-start justify-start gap-3 border-x border-t p-3 first:rounded-t-md last:rounded-b-md last:border-b"
-            :class="{ 'border-b border-black bg-black/5 [&+label]:border-t-0' : modelValue === option.value }"
-        >
+        <span v-if="!! label">
+            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{ label }}</span>
+            <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
+        </span>
+
+        <fieldset class="flex w-full flex-col">
+
+            <label
+                v-for="(option, index) in options" :key="index"
+                :class="{ 'border-b border-black bg-black/5 [&+label]:border-t-0' : modelValue === option.value }"
+                :for="option.id"
+                class="flex items-start justify-start gap-3 border-x border-t p-3 first:rounded-t-md last:rounded-b-md last:border-b"
+            >
                 <span class="mt-0.5 flex items-baseline gap-2">
                   <input
-                    :id="option.id" :checked="option.value === modelValue" :value="option.value" :name="name" type="radio"
-                    class="h-3 w-3 border-neutral-300 bg-gray-100 pt-1.5 text-black checked:outline-0 focus:border-0 focus:outline-0 focus:ring-0" @change="changeSelection"
+                      :id="option.id" :checked="option.value === modelValue" :name="name" :value="option.value"
+                      class="h-3 w-3 border-neutral-300 bg-gray-100 pt-1.5 text-black checked:outline-0 focus:border-0 focus:outline-0 focus:ring-0"
+                      type="radio"
+                      @change="changeSelection"
                   />
                 </span>
-            <span class="flex flex-col gap-0.5">
-                    <span :class="{ '' : modelValue === option.value }" class="text-xs font-semibold">{{ option.label }}</span>
-                    <span :class="{ '' : modelValue === option.value }" class="text-xs text-gray-500">{{ option.description }}</span>
+                <span class="flex flex-col gap-0.5">
+                    <span :class="{ '' : modelValue === option.value }" class="text-sm font-semibold">{{
+                            option.label
+                        }}</span>
+                    <span
+                        :class="{ '' : modelValue === option.value }"
+                        class="text-sm text-gray-500">{{ option.description }}</span>
                 </span>
-        </label>
+            </label>
 
-    </fieldset>
+        </fieldset>
+
+    </div>
 
 </template>
 
 <script setup>
 defineProps({
+    label: {
+        type: String,
+        default: null,
+    },
+    required: {
+        type: Boolean,
+        default: true
+    },
     modelValue: {
         type: [String, Number],
         required: true,
