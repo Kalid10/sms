@@ -3,66 +3,28 @@
 namespace Database\Seeders;
 
 use App\Models\SchoolYear;
-use App\Models\Semester;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 
 class SchoolYearSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        $currentYear = Carbon::now()->year;
-        $previousYear = $currentYear - 1;
+        for ($i = -3; $i <= 0; $i++) {
+            $startDate = Carbon::createFromDate(null, 9, 1)->addYears($i);
+            $endDate = $i == 0 ? null : $startDate->copy()->addMonths(10);
+            $name = 'School Year '.($startDate->year).'-'.($endDate ? $endDate->year : '');
 
-        // Create completed semesters for previous years
-        for ($year = $previousYear; $year < $currentYear; $year++) {
-            $schoolYear = SchoolYear::create([
-                'start_date' => Carbon::createFromDate($year, 1, 1),
-                'end_date' => Carbon::createFromDate($year, 12, 31),
+            SchoolYear::factory()->create([
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'name' => $name,
             ]);
-
-            for ($semesterNumber = 1; $semesterNumber <= 3; $semesterNumber++) {
-                Semester::create([
-                    'name' => 'Semester '.$semesterNumber,
-                    'status' => Semester::STATUS_COMPLETED,
-                    'start_date' => Carbon::createFromDate($year, ($semesterNumber - 1) * 4 + 1, 1),
-                    'end_date' => Carbon::createFromDate($year, $semesterNumber * 4, 31),
-                    'school_year_id' => $schoolYear->id,
-                ]);
-            }
         }
-
-        // Create completed and active semesters for current year
-        $schoolYear = SchoolYear::create([
-            'start_date' => Carbon::createFromDate($currentYear, 1, 1),
-            'end_date' => null,
-        ]);
-
-        Semester::create([
-            'name' => 'Semester 1',
-            'status' => Semester::STATUS_COMPLETED,
-            'start_date' => Carbon::createFromDate($currentYear, 1, 1),
-            'end_date' => Carbon::createFromDate($currentYear, 4, 30),
-            'school_year_id' => $schoolYear->id,
-        ]);
-
-        Semester::create([
-            'name' => 'Semester 2',
-            'status' => Semester::STATUS_ACTIVE,
-            'start_date' => Carbon::createFromDate($currentYear, 5, 1),
-            'end_date' => Carbon::createFromDate($currentYear, 8, 31),
-            'school_year_id' => $schoolYear->id,
-        ]);
-
-        Semester::create([
-            'name' => 'Semester 3',
-            'status' => Semester::STATUS_UPCOMING,
-            'start_date' => Carbon::createFromDate($currentYear, 9, 1),
-            'end_date' => Carbon::createFromDate($currentYear, 12, 31),
-            'school_year_id' => $schoolYear->id,
-        ]);
     }
 }

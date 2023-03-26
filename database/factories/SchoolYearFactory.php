@@ -2,24 +2,37 @@
 
 namespace Database\Factories;
 
+namespace Database\Factories;
+
+use App\Models\SchoolYear;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SchoolYear>
- */
 class SchoolYearFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = SchoolYear::class;
+
+    /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
+        $startYear = $this->faker->unique()->numberBetween(-3, 0);
+        $startDate = Carbon::createFromDate(null, 9, 1)->addYears($startYear);
+        $endDate = $startYear == 0 ? null : $startDate->copy()->addMonths(10);
+        $name = 'School Year '.($startDate->year).'-'.($endDate ? $endDate->year : '');
+
         return [
-            'start_date' => Carbon::now(),
-            'end_date' => null,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'name' => $name,
         ];
     }
 }

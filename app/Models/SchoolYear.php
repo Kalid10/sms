@@ -14,6 +14,7 @@ class SchoolYear extends Model
     protected $fillable = [
         'start_date',
         'end_date',
+        'name',
     ];
 
     public function semesters(): HasMany
