@@ -71,14 +71,7 @@
 
             <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
             <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
-
-            <div class="flex flex-col">
-                <span>
-                    <span class="pl-0.5 text-xs font-semibold text-gray-500">User Type</span>
-                    <span class="pl-0.5 text-xs text-red-600">*</span>
-                </span>
-                <RadioGroupPanel  v-model="userType" name="user_type" :options="user_types"/>
-            </div>
+            <RadioGroupPanel v-model="userType" :options="user_types" label="User Type" name="user_type"/>
 
         </FormElement>
     </Modal>
