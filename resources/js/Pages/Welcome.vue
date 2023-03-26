@@ -231,7 +231,7 @@ function deleteSubject() {
 function addSchoolYear() {
     router.post('/school-year/create', {
         start_date: "2024-01-01",
-        end_date: null,
+        number_of_semesters: 2,
         name: "2023-2024"
     }, {
         onSuccess: () => {
