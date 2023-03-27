@@ -29,7 +29,7 @@
     <button class="bg-red-400 p-1" @click="getBatchStudents">Test Get Batch Students</button>
     <button class="bg-red-400 p-1" @click="addBatchSubjects">Test Add Batch Subjects</button>
     <button class="bg-red-400 p-1" @click="addUserPosition">Test Add User Position</button>
-
+    <button class="bg-red-400 p-1" @click="addLevel">Test Add Level</button>
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
@@ -482,8 +482,22 @@ function addBatchSubjects() {
 function addUserPosition() {
     router.post('/positions/create', {
         name: "UnitLeader",
-        description: "Unit Leaderk",
+        description: "Unit Leader",
         role_names: ["manage-subjects", "manage-teachers"]
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addLevel() {
+    router.post('/levels/create', {
+        name: "Grade 13",
     }, {
         onSuccess: () => {
             console.log("Success")
