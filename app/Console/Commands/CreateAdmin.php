@@ -29,32 +29,39 @@ class CreateAdmin extends Command
     /**
      * Execute the console command.
      */
-    public function handle(): void
+    public function handle(): int
     {
         try {
-            if ($this->validate()) {
-                DB::beginTransaction();
+            $validationResult = $this->validate();
 
-                $user = User::create([
-                    'name' => $this->argument('name'),
-                    'email' => $this->argument('email'),
-                    'password' => Hash::make('secret'),
-                    'type' => User::TYPE_ADMIN,
-                ]);
-
-                // Get all roles and attach them to the user
-                $user->roles()->attach(Role::all()->pluck('name')->toArray());
-
-                DB::commit();
-                $this->info('Admin registration succeeded.');
+            if ($validationResult !== 0) {
+                return $validationResult;
             }
+            DB::beginTransaction();
+
+            $user = User::create([
+                'name' => $this->argument('name'),
+                'email' => $this->argument('email'),
+                'password' => Hash::make('secret'),
+                'type' => User::TYPE_ADMIN,
+            ]);
+
+            // Get all roles and attach them to the user
+            $user->roles()->attach(Role::all()->pluck('name')->toArray());
+
+            DB::commit();
+            $this->info('Admin registration succeeded.');
+
+            return 0;
         } catch (Exception $e) {
             DB::rollBack();
             $this->error($e->getMessage());
+
+            return 1;
         }
     }
 
-    private function validate(): bool
+    private function validate(): int
     {
         $validator = Validator::make([
             'name' => $this->argument('name'),
@@ -71,9 +78,9 @@ class CreateAdmin extends Command
                 $this->error($error);
             }
 
-            return false;
+            return 1;
         }
 
-        return true;
+        return 0;
     }
 }
