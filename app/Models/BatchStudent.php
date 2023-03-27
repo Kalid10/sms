@@ -9,33 +9,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Semester extends Model
+class BatchStudent extends Model
 {
     use HasFactory, SoftDeletes, LogsActivity;
 
-    const STATUS_ACTIVE = 'active';
-
-    const STATUS_COMPLETED = 'completed';
-
-    const STATUS_UPCOMING = 'upcoming';
-
     protected $fillable = [
-        'name',
-        'status',
-        'start_date',
-        'end_date',
-        'school_year_id',
+        'batch_id',
+        'student_id',
     ];
 
-    public function schoolYear(): BelongsTo
+    public function batch(): BelongsTo
     {
-        return $this->belongsTo(SchoolYear::class);
+        return $this->belongsTo(Batch::class);
+    }
+
+    public function student(): BelongsTo
+    {
+        return $this->belongsTo(Student::class);
     }
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'status', 'start_date', 'end_date', 'school_year_id'])
-            ->useLogName('semester');
+            ->logOnly(['batch_id', 'student_id'])
+            ->useLogName('batch_student');
     }
 }
