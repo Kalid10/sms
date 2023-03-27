@@ -5,9 +5,17 @@
             title="Register Admin"
             @submit="handleSubmit"
         >
-            <TextInput v-model="formData.name" label="Name" placeholder="Full name" :required="true" />
+            <TextInput v-model="formData.name" label="Name" placeholder="Full name" :required="true"/>
+
             <TextInput v-model="formData.phone" label="Phone" placeholder="+251..." :required="true" />
             <TextInput v-model="formData.email" label="Email" placeholder="example@example.com" :required="true" />
+
+            <div>
+                <div>
+                    <h3 class="">Select position:</h3>
+                    <RadioGroup v-model="selectedPosition" :name="'userPositions'" :options="userPositions" />
+                </div>
+            </div>
 
             <template #form-actions>
                 <TertiaryButton :title="modal ? 'Close' : 'skip'" @click="skip"/>
@@ -24,22 +32,27 @@ import TertiaryButton from "@/Components/TertiaryButton.vue";
 import UserRegistrationFormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { ref } from "vue";
-import {router,useForm} from "@inertiajs/vue3";
+import {useForm} from "@inertiajs/vue3";
+import RadioGroup from "@/Components/RadioGroup.vue";
+
+
+ const userPositions = ref([
+     {value:'Administrator',label:'Administrator'},
+     {value:'principal',label:'principal'},
+     {value:'Teacher',label:'Teacher'}
+      ])
+
+const selectedPosition = 'Administrator'
 
 const formData = useForm({
-    name: "test name",
+    name: "Jontra Kebede",
     phone: "09034932",
-    email: "test@test.com",
-    role: { value: "admin", label: "Administrator" },
+    email: "jontra@nafyad.com",
+    userType: selectedPosition ,
 });
-//
-//  funciton submit(){
-//     formData.post(route('/registor'));
-// }
+
 function handleSubmit() {
-    router.post('/register', {
-        data: formData.value
-    }, {
+    formData.post('/register',{
         onSuccess: () => {
             console.log("Success")
         },
