@@ -28,6 +28,7 @@
     <button class="bg-red-400 p-1" @click="addStudentToBatch">Test Add Students To Batch</button>
     <button class="bg-red-400 p-1" @click="getBatchStudents">Test Get Batch Students</button>
     <button class="bg-red-400 p-1" @click="addBatchSubjects">Test Add Batch Subjects</button>
+    <button class="bg-red-400 p-1" @click="addUserPosition">Test Add User Position</button>
 
 </template>
 <script setup>
@@ -467,6 +468,22 @@ function addBatchSubjects() {
                 subject_ids: [1, 2]
             }
         ]
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addUserPosition() {
+    router.post('/positions/create', {
+        name: "UnitLeader",
+        description: "Unit Leaderk",
+        role_names: ["manage-subjects", "manage-teachers"]
     }, {
         onSuccess: () => {
             console.log("Success")
