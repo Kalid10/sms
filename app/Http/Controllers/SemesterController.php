@@ -77,10 +77,10 @@ class SemesterController extends Controller
             });
 
             // Count of semesters
-            $semestersCount = Semester::all()->count();
+            $semestersCount = Semester::count();
 
             // Count of all school years
-            $schoolYearsCount = SchoolYear::all()->count();
+            $schoolYearsCount = SchoolYear::count();
 
             // Count active school year semesters
             $activeSchoolYearSemestersCount = $activeSchoolYearSemesters->count();

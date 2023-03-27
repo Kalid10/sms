@@ -1,26 +1,74 @@
 <template>
-    <div class="flex justify-center pb-5">
-        <div class="w-full max-w-4xl rounded-lg bg-white">
-            <div class="flex flex-row">
-                <TeacherPrimaryButton class="h-8 w-12" @click="$emit('close')">
-                    <ArrowUturnLeftIcon class="h-4 w-4"/>
-                </TeacherPrimaryButton>
-                <h2 class="mb-6 ml-8 text-lg font-medium text-gray-900">Register new teacher</h2>
-            </div>
+    <div class="grid-rows-12 grid sm:grid-cols-12">
 
-            <TeacherFormElement
-                subtitle="Fill in the information required about the new teacher"
-                title="Register new teacher"
-            >
-                <TeacherTextInput label="Name" placeholder="Full name of new teacher" required/>
-                <TeacherTextInput label="Assign levels" required/>
-            </TeacherFormElement>
+        // Handle success message
+        <div v-if="success" class="flex justify-end text-sm text-green-500">
+            {{ success }}
+        </div>
+
+        <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
+            <Heading
+                value="Register new teacher"/>
+            <Heading
+                value="Fill in the information required."
+                size="sm" class="font-normal text-gray-500"/>
+        </div>
+        <div class="col-span-8">
+            <div class="w-full max-w-4xl rounded-lg bg-white">
+
+                <TeacherFormElement @submit="submit"
+                >
+                    <TeacherTextInput
+v-model="form.name" label="Name" placeholder="Full name of new teacher"
+                                      :error="form.errors.name" required/>
+
+                    <div class="flex gap-3">
+                        <TeacherTextInput
+                            v-model="form.username" class="w-full" label="User Name" :error="form.errors.username"
+                            placeholder="username" required/>
+
+                        <TeacherTextInput
+                            v-model="form.phone_number" class="w-full" label="Phone number" placeholder="phone number"
+                            :error="form.errors.phone_number" required/>
+                    </div>
+
+                    <TeacherTextInput
+v-model="form.email" label="Email" type="email" placeholder="email"
+                                      :error="form.errors.email" required/>
+
+                </TeacherFormElement>
+            </div>
         </div>
     </div>
+
 </template>
 
 <script setup>
 import TeacherFormElement from "@/Components/FormElement.vue";
 import TeacherTextInput from "@/Components/TextInput.vue";
-import TeacherPrimaryButton from "@/Components/PrimaryButton.vue";
-import {ArrowUturnLeftIcon} from "@heroicons/vue/20/solid";</script>
+import Heading from "@/Components/Heading.vue";
+import {useForm, usePage} from "@inertiajs/vue3";
+import {computed} from "vue";
+
+const success = computed(() => usePage().props.flash.success);
+
+const form = useForm({
+    name: "",
+    type: "teacher",
+    email: "",
+    phone_number: "",
+    username: "",
+});
+
+const submit = () => {
+    form.post(route('register.admin'), {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    });
+}
+</script>

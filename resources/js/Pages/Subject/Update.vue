@@ -58,7 +58,6 @@ function editSubject() {
 
 // Clear form input
 const clear = () => {
-    form.full_name = '',
-        form.short_name = ''
+    form.reset();
 }
 </script>

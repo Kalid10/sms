@@ -12,7 +12,6 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Inertia\Inertia;
 
 class RegisterController extends Controller
 {
@@ -58,6 +57,18 @@ class RegisterController extends Controller
             // Start transaction
             DB::beginTransaction();
 
+            $guardian_user = null;
+            // Check if the user is a student, if so, create guardian
+            if ($request->input('type') === User::TYPE_STUDENT) {
+                // Create user with guardian
+                $guardian_user = User::create([
+                    'name' => $request->input('guardian_name'),
+                    'type' => User::TYPE_GUARDIAN,
+                    'email' => $request->input('guardian_email'),
+                    'phone_number' => $request->input('guardian_phone_number'),
+                    'password' => Hash::make('secret')]);
+            }
+
             // Create user
             $user = User::create(array_merge(
                 $request->validated(),
@@ -66,16 +77,6 @@ class RegisterController extends Controller
 
             // Add user to respective type table
             switch ($request->get('type')) {
-                case User::TYPE_GUARDIAN:
-                    // Create Guardian
-                    Guardian::create([
-                        'user_id' => $user->id,
-                    ]);
-
-                    // Commit transaction
-                    DB::commit();
-                    break;
-
                 case User::TYPE_TEACHER:
                     // Create Teacher
                     Teacher::create([
@@ -87,10 +88,23 @@ class RegisterController extends Controller
                     break;
 
                 case User::TYPE_STUDENT:
+                    if (! $guardian_user) {
+                        // Rollback
+                        DB::rollBack();
+
+                        // Abort
+                        abort(422, 'Guardian unknown!');
+                    }
+
+                    // Create Guardian
+                    $guardian = Guardian::create([
+                        'user_id' => $guardian_user->id,
+                    ]);
+
                     // Create Student
                     Student::create([
                         'user_id' => $user->id,
-                        'guardian_id' => $request->has('guardian_id'),
+                        'guardian_id' => $guardian->id,
                     ]);
 
                     // Commit transaction
@@ -119,7 +133,7 @@ class RegisterController extends Controller
 
             // Check if request is from inertia
             if ($request->header('X-Inertia')) {
-                return Inertia::render('Welcome');
+                return redirect()->back()->with('success', 'User created successfully.');
             }
 
             return response([

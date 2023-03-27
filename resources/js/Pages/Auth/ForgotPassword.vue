@@ -49,6 +49,7 @@
                     v-model="resetForm.password"
                     label="Password"
                     placeholder="*********"
+                    type="password"
                     required
                 />
             </div>
@@ -57,6 +58,7 @@
                     v-model="resetForm.password_confirmation"
                     label="Confirm Password"
                     placeholder="*********"
+                    type="password"
                     required/>
             </div>
             <div class="flex items-center justify-between">
@@ -87,24 +89,24 @@ const showResetPassword = ref(false);
 const showConfirmCode = ref(false);
 
 function confirmCode() {
-    // logic for confirming code goes here
-    // once the code is confirmed, show the reset password card
+    // Logic for confirming code goes here
+    // Once the code is confirmed, show the reset password card
     showForgotPassword.value = false;
     showResetPassword.value = false;
     showConfirmCode.value = true;
 }
 
 function resetPassword() {
-    // logic for resetting password goes here
-    // once the password is reset, show the forgot password card again
+    // Logic for resetting password goes here
+    // Once the password is reset, show the forgot password card again
     showForgotPassword.value = true;
     showResetPassword.value = false;
     showConfirmCode.value = false;
 }
 
 function forgotPassword() {
-    // logic for sending password reset email goes here
-    // once the email is sent, show the reset password card
+    // Logic for sending password reset email goes here
+    // Once the email is sent, show the reset password card
     showForgotPassword.value = false;
     showResetPassword.value = true;
     showConfirmCode.value = false;

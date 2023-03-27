@@ -61,4 +61,19 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Password updated Successfully');
     }
+
+    public function family()
+    {
+        return Inertia::render('Users/Create/Family');
+    }
+
+    public function admin()
+    {
+        return Inertia::render('Users/Create/Admin');
+    }
+
+    public function teacher()
+    {
+        return Inertia::render('Users/Create/Teacher');
+    }
 }

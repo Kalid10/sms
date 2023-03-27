@@ -3,15 +3,6 @@
         <LoginCard
             title="Welcome Back :)" subtitle="Hello! Please enter details."
             class="mx-2 mt-[5rem] flex h-fit w-full flex-col items-center py-20 sm:w-9/12 md:w-7/12 lg:w-5/12 xl:w-4/12">
-            <!--        <div-->
-            <!--            class="mx-2 mt-[5rem] flex h-fit w-full flex-col items-center py-4 sm:w-9/12 md:w-7/12 lg:w-5/12 xl:w-4/12"-->
-            <!--        >-->
-            <!--            <div class="text-3xl font-light italic">Welcome Back :)</div>-->
-
-            <!--            <div class="my-3 mb-6 text-xs font-light">-->
-            <!--                Hello! Please enter details.-->
-            <!--            </div>-->
-
 
             <!--        User input section-->
             <div class="mt-4 w-11/12">
@@ -25,13 +16,8 @@
                         label="Email or Phone"
                         placeholder="Email or Phone"
                         required
+                        :error="form.errors.emailOrPhone"
                     />
-                </div>
-                <div
-                    v-if="form.errors.emailOrPhone"
-                    class="ml-16 mt-2 text-[0.55rem] text-red-600"
-                >
-                    *{{ form.errors.emailOrPhone }}
                 </div>
             </div>
 
@@ -48,13 +34,8 @@
                         placeholder="*********"
                         required
                         type="password"
+                        :error="form.errors.password"
                     />
-                    <div
-                        v-if="form.errors.password"
-                        class="text-lightText-200 text-[0.55rem]"
-                    >
-                        *{{ form.errors.password }}
-                    </div>
                 </div>
 
                 <!--      Remember me and forgot password section-->
@@ -113,7 +94,7 @@ const form = useForm({
     password: "",
 });
 
-// submit form
+// Submit form
 const submit = () => {
     form.post("/login", {
         onFinish: () => {

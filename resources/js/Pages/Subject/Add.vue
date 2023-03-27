@@ -30,7 +30,7 @@ const form = useForm({
     short_name: '',
 })
 
-// Add Subject
+// Add subject
 const submit = () => {
     form.post(route('subjects.create'), {
         onSuccess: () => {
@@ -41,7 +41,6 @@ const submit = () => {
 
 // Clear form input
 const clear = () => {
-    form.full_name = '',
-        form.short_name = ''
+    form.reset();
 }
 </script>

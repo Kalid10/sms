@@ -1,96 +1,82 @@
 <template>
-    <div class="flex flex-col p-10">
+    <!--       Handle error message-->
+    <div v-if="profileForm.errors.id" class="flex justify-end text-[0.55rem] text-red-600">
+        {{ profileForm.errors.id }}
+    </div>
+    <div v-if="passwordForm.errors.id" class="flex justify-end text-[0.55rem] text-red-600">
+        {{ passwordForm.errors.id }}
+    </div>
 
-        <!--        handle error message-->
-        <div v-if="profileForm.errors.id" class="flex justify-end text-[0.55rem] text-red-600">
-            {{ profileForm.errors.id }}
+    <!--          Handle success message-->
+    <div v-if="success" class="flex justify-end text-sm text-green-500">
+        {{ success }}
+    </div>
+    <div class="grid-rows-12 grid sm:grid-cols-12">
+        <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
+            <Heading value="Profile"/>
+            <Heading
+                value="Update your personal information and make sure your profile accurately reflects who you are."
+                size="sm" class="font-normal text-gray-500"/>
         </div>
-        <div v-if="passwordForm.errors.id" class="flex justify-end text-[0.55rem] text-red-600">
-            {{ passwordForm.errors.id }}
-        </div>
-
-        <!--        handle success message-->
-        <div v-if="success" class="flex justify-end text-sm text-green-500">
-            {{ success }}
-        </div>
-
-        <div>
-            <h2 class="title-font mb-2 text-lg font-medium">
-                Profile
-            </h2>
+        <div class="col-span-8">
             <UserFormElement
-                title="Update your profile"
+                class="shadow-none"
                 @submit="submitProfileForm"
             >
-                <UserTextInput v-model="profileForm.name" :placeholder=user.name label="Name"/>
-                <div
-                    v-if="profileForm.errors.name"
-                    class=" text-sm  text-red-600"
-                >
-                    *{{ profileForm.errors.name }}
-                </div>
-                <UserTextInput v-model="profileForm.email" label="Email" :placeholder=user.email required/>
-                <div
-                    v-if="profileForm.errors.email"
-                    class=" text-[0.55rem] text-red-600"
-                >
-                    *{{ profileForm.errors.email }}
-                </div>
-                <UserTextInput v-model="profileForm.username" :placeholder=user.username label="User Name" required/>
-                <div
-                    v-if="profileForm.errors.username"
-                    class="text-[0.55rem] text-red-600"
-                >
-                    *{{ profileForm.errors.username }}
+                <UserTextInput
+                    v-model="profileForm.name" :placeholder=user.name label="Name"
+                    :error="profileForm.errors.name"/>
+
+                <div class="flex gap-3">
+                    <UserTextInput
+                        v-model="profileForm.email"
+                        class="w-full" label="Email" type="email" :placeholder=user.email
+                        :error="profileForm.errors.email" required/>
+
+                    <UserTextInput
+                        v-model="profileForm.username"
+                        class="w-full" :placeholder=user.username
+                        :error="profileForm.errors.email" label="User Name" required/>
                 </div>
                 <UserTextInput
-                    v-model="profileForm.phone_number" label="Phone Number" :placeholder=user.phone_number required/>
-                <div
-                    v-if="profileForm.errors.phone_number"
-                    class="text-[0.55rem] text-red-600"
-                >
-                    *{{ profileForm.errors.phone_number }}
-                </div>
-            </UserFormElement>
-        </div>
-        <div class="py-5">
-            <h2 class="title-font mb-2 text-lg font-medium">
-                Password Update </h2>
-            <UserFormElement
-                label="Password" title="Update your password"
-                @submit="submitPasswordForm">
-                <UserTextInput
-                    v-model="passwordForm.current_password" label="Current Password" type="password"
-                    required/>
-                <div
-                    v-if="passwordForm.errors.current_password"
-                    class="text-[0.55rem] text-red-600"
-                >
-                    *{{ passwordForm.errors.current_password }}
-                </div>
-                <UserTextInput v-model="passwordForm.password" label="New Password" type="password" required/>
-                <div
-                    v-if="passwordForm.errors.password"
-                    class="text-[0.55rem] text-red-600"
-                >
-                    *{{ passwordForm.errors.password }}
-                </div>
-                <UserTextInput
-                    v-model="passwordForm.password_confirmation" label="Confirm Password" type="password"
-                    required/>
-                <div
-                    v-if="passwordForm.errors.password_confirmation"
-                    class="text-[0.55rem] text-red-600"
-                >
-                    *{{ passwordForm.errors.password_confirmation }}
-                </div>
+                    v-model="profileForm.phone_number" label="Phone Number" :placeholder=user.phone_number
+                    :error="profileForm.errors.phone_number" required/>
             </UserFormElement>
         </div>
     </div>
+    <div class="grid-rows-12 grid pt-5 sm:grid-cols-12">
+        <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
+            <Heading value="Password"/>
+            <Heading
+                value="Stay ahead of potential security threats by updating your password now."
+                class="font-normal text-gray-500"/>
+        </div>
+        <div class="col-span-8">
+            <UserFormElement
+                class="shadow-none"
+                @submit="submitPasswordForm">
+                <UserTextInput
+                    v-model="passwordForm.current_password" label="Current Password" type="password"
+                    :error="passwordForm.errors.current_password"
+                    required/>
+
+                <UserTextInput
+                    v-model="passwordForm.password" label="New Password" type="password"
+                    :error="passwordForm.errors.password" required/>
+
+                <UserTextInput
+                    v-model="passwordForm.password_confirmation" label="Confirm Password" type="password"
+                    :error="passwordForm.errors.password_confirmation" required/>
+
+            </UserFormElement>
+        </div>
+    </div>
+
 </template>
 <script setup>
 import UserFormElement from "@/Components/FormElement.vue";
 import UserTextInput from "@/Components/TextInput.vue";
+import Heading from "@/Components/Heading.vue";
 import {useForm, usePage} from "@inertiajs/vue3";
 import {computed} from "vue";
 
@@ -106,7 +92,7 @@ const profileForm = useForm({
     phone_number: user.value.phone_number,
 });
 
-
+// Submit profile form
 const submitProfileForm = () => {
     profileForm.post(route('user.update.profile'));
 };
@@ -118,6 +104,7 @@ const passwordForm = useForm({
     password_confirmation: '',
 });
 
+// Submit password form
 const submitPasswordForm = () => {
     passwordForm.post(route('user.update.password'), {
         onFinish: () => passwordForm.reset(),

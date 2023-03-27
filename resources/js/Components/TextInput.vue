@@ -9,7 +9,7 @@
             :value="modelValue"
             class="h-10 w-full rounded-md border border-gray-200 placeholder:text-sm placeholder:text-gray-500"
             @input="$emit('update:modelValue', $event.target.value)"/>
-        <span v-if="error" class="text-lightText-200 text-[0.55rem]">
+        <span v-if="error" class="text-lightText-200 text-[0.55rem] text-red-500">
             *{{ error }}
         </span>
     </label>
