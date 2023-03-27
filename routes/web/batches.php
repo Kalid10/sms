@@ -21,4 +21,5 @@ Route::controller(BatchStudentController::class)->prefix('batches/students/')->m
 
 Route::controller(BatchSubjectController::class)->prefix('batches/subjects/')->middleware(['checkUserRole:manage-subjects'])->name('batches.subjects.')->group(function () {
     Route::post('assign', 'assign')->name('assign');
+    Route::post('assign/teacher', 'assignTeacher')->name('assign_teacher');
 });
