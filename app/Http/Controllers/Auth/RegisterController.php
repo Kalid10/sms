@@ -12,7 +12,6 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Inertia\Inertia;
 
 class RegisterController extends Controller
 {
@@ -90,7 +89,7 @@ class RegisterController extends Controller
                     // Create Student
                     Student::create([
                         'user_id' => $user->id,
-                        'guardian_id' => $request->has('guardian_id'),
+                        'guardian_id' => $request->input('guardian_id'),
                     ]);
 
                     // Commit transaction
@@ -101,7 +100,7 @@ class RegisterController extends Controller
                     // Create Admin
                     Admin::create([
                         'user_id' => $user->id,
-                        'position' => $request->has('position'),
+                        'position' => $request->input('position'),
                     ]);
 
                     // Commit transaction
@@ -119,7 +118,7 @@ class RegisterController extends Controller
 
             // Check if request is from inertia
             if ($request->header('X-Inertia')) {
-                return Inertia::render('Welcome');
+                return redirect()->back()->with('success', ucfirst($request->input('type')).' created successfully.');
             }
 
             return response([
