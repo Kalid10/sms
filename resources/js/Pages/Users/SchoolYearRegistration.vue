@@ -7,12 +7,9 @@
         >
             <TextInput v-model="formData.name" label="Year Name" placeholder="Name" :required="true" />
 
-            <div class="flex flex-row">
+            <div class="flex flex-row ">
                 <div class="p-2">
-
-                    <SelectInput :options="NoOfSemistor"></SelectInput>
-                    <TextInput v-model="formData.noOfSemester" label="No of Semester" placeholder="" :required="true" />
-
+                    <SelectInput :options="NoOfSemester" :placeholder="SelectedNoOfSemester" label="Number of semester"></SelectInput>
                 </div>
 
 
@@ -40,14 +37,14 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
 
-const NoOfSemistor =[
+const NoOfSemester =[
     {value: 1, label: 1},
     {value: 2, label: 2},
     {value: 3, label: 3},
     {value: 4, label: 4},
     {value: 5, label: 5},
-
 ]
+const SelectedNoOfSemester = ref(1)
 
 const formData = useForm({
     name: "",
@@ -64,5 +61,4 @@ function handleSubmit() {
 }
 
 
-numberOfSemistor
 </script>
