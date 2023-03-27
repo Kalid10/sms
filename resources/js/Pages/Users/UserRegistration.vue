@@ -8,18 +8,11 @@
             <TextInput v-model="formData.name" label="Name" placeholder="Full name" :required="true"/>
             <TextInput v-model="formData.phone" label="Phone" placeholder="+251..." :required="true" />
             <TextInput v-model="formData.email" label="Email" placeholder="example@example.com" :required="true" />
-
-            <div>
-                <div>
-                </div>
-            </div>
-
             <template #form-actions>
                 <TertiaryButton :title="modal ? 'Close' : 'skip'" @click="skip"/>
                 <PrimaryButton title="Submit" @click="handleSubmit"/>
             </template>
         </UserRegistrationFormElement>
-
     </div>
 </template>
 
