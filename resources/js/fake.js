@@ -414,4 +414,140 @@ const statuses = [
     }
 ]
 
-export {users, semesters, school_years, statuses};
+// create a list of level objects with attributes id, name, sections, last_updated
+const levels = [
+    {
+        id: 1,
+        name: 'Level 1',
+        statistics: {
+            students: 78,
+            teachers: 4,
+            sections: ['A', 'B', 'C', 'D'],
+            subjects: 6
+        },
+        last_updated: '2020-02-22'
+    },
+    {
+        id: 2,
+        name: 'Level 2',
+        statistics: {
+            students: 71,
+            teachers: 7,
+            sections: ['A', 'B', 'C'],
+            subjects: 9
+        },
+        last_updated: '2021-03-31'
+    },
+    {
+        id: 3,
+        name: 'Level 3',
+        statistics: {
+            students: 64,
+            teachers: 8,
+            sections: ['A', 'B', 'C'],
+            subjects: 7
+        },
+        last_updated: '2020-03-31'
+    },
+    {
+        id: 4,
+        name: 'Level 4',
+        statistics: {
+            students: 69,
+            teachers: 9,
+            sections: ['A', 'B', 'C'],
+            subjects: 9
+        },
+        last_updated: '2019-01-31'
+    },
+    {
+        id: 5,
+        name: 'Level 5',
+        statistics: {
+            students: 75,
+            teachers: 9,
+            sections: ['A', 'B', 'C', 'D'],
+            subjects: 9
+        },
+        last_updated: '2020-01-28'
+    },
+    {
+        id: 6,
+        name: 'Level 6',
+        statistics: {
+            students: 72,
+            teachers: 12,
+            sections: ['A', 'B', 'C', 'D'],
+            subjects: 9
+        },
+        last_updated: '2019-11-29'
+    },
+    {
+        id: 7,
+        name: 'Level 7',
+        statistics: {
+            students: 65,
+            teachers: 13,
+            sections: ['A', 'B', 'C', 'D'],
+            subjects: 11
+        },
+        last_updated: '2020-02-22'
+    },
+    {
+        id: 8,
+        name: 'Level 8',
+        statistics: {
+            students: 62,
+            teachers: 11,
+            sections: ['A', 'B', 'C', 'D'],
+            subjects: 11
+        },
+        last_updated: '2021-03-31'
+    },
+    {
+        id: 9,
+        name: 'Level 9',
+        statistics: {
+            students: 69,
+            teachers: 11,
+            sections: ['A', 'B', 'C'],
+            subjects: 10
+        },
+        last_updated: '2020-03-31'
+    },
+    {
+        id: 10,
+        name: 'Level 10',
+        statistics: {
+            students: 69,
+            teachers: 10,
+            sections: ['A', 'B', 'C'],
+            subjects: 10
+        },
+        last_updated: '2019-01-31'
+    },
+    {
+        id: 11,
+        name: 'Level 11',
+        statistics: {
+            students: 64,
+            teachers: 14,
+            sections: ['Natural A', 'Natural B', 'Social A', 'Social B'],
+            subjects: 12
+        },
+        last_updated: '2020-01-28'
+    },
+    {
+        id: 12,
+        name: 'Level 12',
+        statistics: {
+            students: 61,
+            teachers: 13,
+            sections: ['Natural A', 'Natural B', 'Social A', 'Social B'],
+            subjects: 12
+        },
+        last_updated: '2019-11-29'
+    },
+]
+
+export {users, semesters, levels, school_years, statuses};
