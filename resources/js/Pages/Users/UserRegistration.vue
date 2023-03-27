@@ -6,14 +6,11 @@
             @submit="handleSubmit"
         >
             <TextInput v-model="formData.name" label="Name" placeholder="Full name" :required="true"/>
-
             <TextInput v-model="formData.phone" label="Phone" placeholder="+251..." :required="true" />
             <TextInput v-model="formData.email" label="Email" placeholder="example@example.com" :required="true" />
 
             <div>
                 <div>
-                    <h3 class="">Select position:</h3>
-                    <RadioGroup v-model="selectedPosition" :name="'userPositions'" :options="userPositions" />
                 </div>
             </div>
 
@@ -62,7 +59,6 @@ function handleSubmit() {
         }
     });
 }
-
 
 function skip() {
     alert("Skip admin registration")
