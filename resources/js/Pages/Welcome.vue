@@ -457,7 +457,7 @@ function getBatchStudents() {
 
 function addBatchSubjects() {
     router.post('/batches/subjects/assign', {
-        batchesSubjects: [
+        batches_subjects: [
             {
                 batch_id: 10,
                 subject_ids: [1, 2]

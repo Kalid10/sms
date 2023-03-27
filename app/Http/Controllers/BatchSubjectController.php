@@ -14,7 +14,7 @@ class BatchSubjectController extends Controller
         DB::beginTransaction();
 
         // Loop through the batchesSubjects
-        foreach ($request->batchesSubjects as $batchData) {
+        foreach ($request->batches_subjects as $batchData) {
             $batchId = $batchData['batch_id'];
 
             // Loop through the subject_ids in each batch

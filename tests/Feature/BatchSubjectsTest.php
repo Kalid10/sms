@@ -28,7 +28,7 @@ it('assigns subject to batch', function () {
     $subject = Subject::first();
 
     $response = $this->actingAs($user)->post(route('batches.subjects.assign'), [
-        'batchesSubjects' => [
+        'batches_subjects' => [
             [
                 'batch_id' => $batch->id,
                 'subject_ids' => [$subject->id],
@@ -61,7 +61,7 @@ it('does not assign subject to batch if it already exists', function () {
     ]);
 
     $response = $this->actingAs($user)->post(route('batches.subjects.assign'), [
-        'batchesSubjects' => [
+        'batches_subjects' => [
             [
                 'batch_id' => $batch->id,
                 'subject_ids' => [$subject->id],
@@ -70,7 +70,7 @@ it('does not assign subject to batch if it already exists', function () {
     ]);
 
     $response->assertRedirect();
-    $response->assertSessionHasErrors(['batchesSubjects']);
+    $response->assertSessionHasErrors(['batches_subjects']);
 });
 
 it('does not assign subject to inactive batch', function () {
@@ -84,7 +84,7 @@ it('does not assign subject to inactive batch', function () {
     $subject = Subject::first();
 
     $response = $this->actingAs($user)->post(route('batches.subjects.assign'), [
-        'batchesSubjects' => [
+        'batches_subjects' => [
             [
                 'batch_id' => $batch->id,
                 'subject_ids' => [$subject->id],
@@ -93,5 +93,5 @@ it('does not assign subject to inactive batch', function () {
     ]);
 
     $response->assertRedirect();
-    $response->assertSessionHasErrors(['batchesSubjects']);
+    $response->assertSessionHasErrors(['batches_subjects']);
 });
