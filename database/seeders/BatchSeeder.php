@@ -31,5 +31,18 @@ class BatchSeeder extends Seeder
                 ]);
             }
         }
+
+        // Add batches for previous school year
+        $schoolYear = SchoolYear::whereNotNull('end_date')->first();
+        foreach ($levels as $level) {
+            $sectionCount = rand(1, $maxSections);
+            for ($i = 0; $i < $sectionCount; $i++) {
+                Batch::factory()->create([
+                    'level_id' => $level->id,
+                    'school_year_id' => $schoolYear->id,
+                    'section' => $sections[$i],
+                ]);
+            }
+        }
     }
 }

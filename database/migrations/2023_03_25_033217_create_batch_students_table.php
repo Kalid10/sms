@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('semesters', function (Blueprint $table) {
+        Schema::create('batch_students', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('status')->default('upcoming');
-            $table->dateTime('start_date')->nullable();
-            $table->dateTime('end_date')->nullable();
-            $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();
+            $table->foreignId('batch_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+            $table->unique(['batch_id', 'student_id']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('semesters');
+        Schema::dropIfExists('batch_students');
     }
 };
