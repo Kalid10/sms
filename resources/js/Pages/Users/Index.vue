@@ -70,7 +70,15 @@
         >
 
             <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
-            <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
+
+            <div class="flex gap-3">
+
+                <TextInput v-model="formData.position" class="w-3/5" label="Position" placeholder="Position of user"/>
+
+                <DatePicker v-model="start_date" placeholder="Select a Start Date" required label="Start Date" class="w-2/5" />
+
+            </div>
+
             <RadioGroupPanel v-model="userType" :options="user_types" label="User Type" name="user_type"/>
 
         </FormElement>
@@ -99,6 +107,7 @@ import TertiaryButton from "@/Components/TertiaryButton.vue";
 import Card from "@/Components/Card.vue"
 import UsersStatistics from "@/Views/UsersStatistics.vue";
 import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
+import DatePicker from "@/Components/DatePicker.vue";
 
 const formData = ref({
     name: '',
@@ -181,12 +190,14 @@ const config = [
     },
 ]
 
-const showRegisterUser = ref(false)
+const showRegisterUser = ref(true)
 const showModal = ref(false)
 
 function createUserForm() {
     showRegisterUser.value = true
 }
+
+const start_date = ref(null)
 </script>
 
 <style scoped>
