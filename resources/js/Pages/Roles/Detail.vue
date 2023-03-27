@@ -24,8 +24,6 @@
             </div>
         </div>
     </Card>
-
-
         <!-- list of roles   -->
         <div class=" max-w-md md:p-2 ">
             <div class="mx-auto my-10 max-w-2xl rounded-xl bg-white p-8 shadow shadow-slate-300">
@@ -100,7 +98,6 @@ const userId = urlParams.get('user_id');
 onMounted(() =>{
     showAllRoles();
     // roleActivities();
-    // showAllRoles()
 })
 
 function showAllRoles() {
