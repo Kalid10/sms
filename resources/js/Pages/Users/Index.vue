@@ -2,14 +2,6 @@
 
     <UsersStatistics/>
 
-    <Card icon subtitle="Teenage Ninja Mutant Spiders" title="Kylian Mbappe">
-
-        <template #icon>
-            <BugAntIcon/>
-        </template>
-
-    </Card>
-
     <TableElement
         :columns="config" :data="users"
         actionable
@@ -79,11 +71,7 @@
 
             <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
             <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
-            <SelectInput
-                v-model="formData.role"
-                :options="roleOptions" label="Role" placeholder="placeholder"
-                required
-            />
+            <RadioGroupPanel v-model="userType" :options="user_types" label="User Type" name="user_type"/>
 
         </FormElement>
     </Modal>
@@ -110,6 +98,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import Card from "@/Components/Card.vue"
 import UsersStatistics from "@/Views/UsersStatistics.vue";
+import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 
 const formData = ref({
     name: '',
@@ -122,6 +111,34 @@ const roleOptions = [
     {value: 'teacher', label: 'Teacher'},
     {value: 'student', label: 'Student'},
 ];
+
+const userType = ref('admin')
+const user_types = [
+    {
+        id: 'admin',
+        value: 'admin',
+        label: 'Administrator',
+        description: 'Manages the school resources based on access level',
+    },
+    {
+        id: 'teacher',
+        value: 'teacher',
+        label: 'Teacher',
+        description: 'Teachers employed by the school, tasked with taking over classes and managing students',
+    },
+    {
+        id: 'student',
+        value: 'student',
+        label: 'Student',
+        description: 'Students registered in the school, with access to their own assignment and assessment resources',
+    },
+    {
+        id: 'guardian',
+        value: 'guardian',
+        label: 'Guardian',
+        description: 'Guardians of students registered in the school, have access their children\'s resources i.e., grade reports, accessment results and more'
+    }
+]
 
 function updateItems(items) {
     console.log(`Items to update are `, items.map((item) => item.id))

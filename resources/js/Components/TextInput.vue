@@ -1,8 +1,8 @@
 <template>
-    <label>
+    <label class="flex flex-col gap-1">
             <span v-if="label" class="">
-                <span class="pl-2 text-sm font-medium text-gray-500">{{ label }}</span>
-                <span v-if="required" class="pl-1 text-red-600">*</span>
+                <span class="pl-0.5 text-sm font-semibold text-gray-500">{{ label }}</span>
+                <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
             </span>
         <input
             :disabled="disabled" :placeholder="placeholder" :required="required"
