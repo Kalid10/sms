@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col justify-center">
-        <SemesterRegistrationFormElement
+        <FormElement
             title="Create school year"
             subtitle="Register Name ,number of semesters and starting date"
             @submit="handleSubmit"
@@ -9,10 +9,14 @@
 
             <div class="flex flex-row ">
                 <div class="p-2">
-                    <SelectInput :options="NoOfSemester" :placeholder="SelectedNoOfSemester" label="Number of semester"></SelectInput>
+                    <SelectInput
+                        label="Number of semester"
+                        placeholder="0"
+                        :options="NoOfSemester"
+                        :model-value="selectedSemester"
+                        @update:modelValue="selectedSemester = $event"
+                    />
                 </div>
-
-
                 <div class="p-2">
                     <label for="Starting Date" class="mr-8">Starting Date</label><br>
                     <input  v-model="formData.start_date" type="date">
@@ -24,18 +28,20 @@
                     <PrimaryButton title="Submit" @click="handleSubmit"/>
                 </div>
             </template>
-        </SemesterRegistrationFormElement>
+        </FormElement>
     </div>
 </template>
 
 
 <script setup>
-import { ref,computed } from "vue";
+import { ref } from "vue";
 import TextInput from "@/Components/TextInput.vue";
-import SemesterRegistrationFormElement from "@/Components/FormElement.vue";
+import FormElement from "@/Components/FormElement.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
+
+const selectedSemester = ref(null);
 
 const NoOfSemester =[
     {value: 1, label: 1},
@@ -48,11 +54,12 @@ const SelectedNoOfSemester = ref(1)
 
 const formData = useForm({
     name: "",
-    noOfSemester: "",
+    noOfSemester: SelectedNoOfSemester,
     start_date: null
 });
 
 function handleSubmit() {
+    // console.log(formData)
         formData.post('school-year/create',{
             onSuccess:()=>{
                 alert("done");
