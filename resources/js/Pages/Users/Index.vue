@@ -2,15 +2,6 @@
 
     <UsersStatistics/>
 
-    <Card icon subtitle="Teenage Ninja Mutant Spiders" title="Kylian Mbappe">
-
-        <template #icon>
-            <BugAntIcon/>
-        </template>
-
-    </Card>
-
-
     <TableElement
         :data="users"
         actionable
@@ -87,11 +78,7 @@
 
             <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
             <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
-            <SelectInput
-                v-model="formData.role"
-                :options="roleOptions" label="Role" placeholder="placeholder"
-                required
-            />
+            <RadioGroupPanel v-model="userType" :options="user_types" label="User Type" name="user_type"/>
 
         </FormElement>
     </Modal>
@@ -111,6 +98,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import Card from "@/Components/Card.vue"
 import UsersStatistics from "@/Views/UsersStatistics.vue";
+import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import Register from "@/Views/RegisterUser.vue";
 
 const showRegisterOptions = ref(false);
@@ -153,8 +141,6 @@ const showModal = ref(false)
 function createUserForm() {
     showRegisterUser.value = true
 }
-
-
 </script>
 
 <style scoped>

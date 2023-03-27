@@ -20,6 +20,11 @@ class SemesterController extends Controller
         return Inertia::render('Semesters/Index');
     }
 
+    public function show(): Response
+    {
+        return Inertia::render('Semesters/Single');
+    }
+
     public function create(CreateRequest $request): RedirectResponse
     {
         try {

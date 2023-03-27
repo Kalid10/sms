@@ -115,7 +115,7 @@ class RegisterController extends Controller
                     // Create Admin
                     Admin::create([
                         'user_id' => $user->id,
-                        'position' => $request->has('position'),
+                        'position' => $request->input('position'),
                     ]);
 
                     // Commit transaction
@@ -133,7 +133,7 @@ class RegisterController extends Controller
 
             // Check if request is from inertia
             if ($request->header('X-Inertia')) {
-                return redirect()->back()->with('success', 'User created successfully.');
+                return redirect()->back()->with('success', ucfirst($request->input('type')).' created successfully.');
             }
 
             return response([
