@@ -17,6 +17,11 @@ use Spatie\Activitylog\Models\Activity;
 
 class RoleController extends Controller
 {
+    public function gettingStarted(): Response
+    {
+        return Inertia::render('GettingStarted/Index');
+    }
+
     public function assign(AssignRequest $request): RedirectResponse
     {
         try {
@@ -142,6 +147,7 @@ class RoleController extends Controller
             return Inertia::render('Roles/Detail', [
                 'user_roles' => $user->roles,
                 'activities' => $activities,
+                'roles' => Role::all(),
             ]);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());

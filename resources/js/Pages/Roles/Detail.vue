@@ -31,7 +31,7 @@
                     <h1 class="text-xl font-semibold text-slate-700">Roles</h1>
                 </div>
                 <p class="text-slate-500">List of available roles </p>
-                <SearchRoleTextInput placeholder="Search role"></SearchRoleTextInput>
+                <SearchRoleTextInput v-model="query" placeholder="Search role"></SearchRoleTextInput>
                 <div v-for="role in availableRoles" :key="role.id" class="my-3 ">
                     <div class="flex items-center justify-between border-b border-l-4 border-slate-200 border-l-transparent bg-gradient-to-r  from-transparent to-transparent py-3 px-2 transition duration-150 ease-linear hover:from-slate-100">
                         <div class="inline-flex items-center space-x-2">
@@ -60,7 +60,8 @@
             <li  v-for="activityLog in activities" :key="activityLog.date" class="justify-center pb-3 sm:pb-4">
                 <div class="flex items-center space-x-5 p-1">
                     <div class="shrink-0">
-                        <MinusIcon class="w-4 stroke-2"/>                    </div>
+                        <MinusIcon class="w-4 stroke-2"/>
+                    </div>
                     <div class="min-w-0 flex-1">
                         <p class="text-md truncate font-medium text-gray-900 dark:text-white">
                             <span class="font-bold">{{activityLog.role}}</span>
@@ -79,120 +80,34 @@
 </template>
 
 <script setup>
-import {computed, onMounted,ref,watchEffect} from "vue";
-import {router, usePage} from "@inertiajs/vue3";
-import PrimaryButton from "@/Components/PrimaryButton.vue"
-import TertiaryButton from "@/Components/TertiaryButton.vue";
-import SearchRoleTextInput from "@/Components/TextInput.vue"
-import DialogBox from "@/Components/DialogBox.vue";
+import { onMounted, ref, computed } from "vue"
 import Card from "@/Components/Card.vue"
-import { MinusIcon } from '@heroicons/vue/24/outline';
+import DialogBox from "@/Components/DialogBox.vue"
+import SearchRoleTextInput from "@/Components/TextInput.vue"
+import PrimaryButton from "@/Components/PrimaryButton.vue"
+import TertiaryButton from "@/Components/TertiaryButton.vue"
+import { MinusIcon } from "@heroicons/vue/24/outline"
+import { usePage } from "@inertiajs/vue3"
 
-const showDialog = ref(false)
+const user_roles = computed(() => usePage().props.user_roles)
+const roles = computed(() => usePage().props.roles)
+const activities = computed(() => usePage().props.activities)
 
-// get user id from url
-const urlParams = new URLSearchParams(window.location.search);
-const userId = urlParams.get('user_id');
 
+const availableRoles = computed(() => {
+    return roles.value.filter(a_role => !newUserRoles.value.map(role => role.name).includes(a_role.name))
+})
+const newUserRoles = ref([...user_roles.value])
+
+const query = ref('')
+
+function deleteRole(role) {
+    newUserRoles.value = newUserRoles.value.filter((item) => item !== role)
+}
 
 onMounted(() =>{
     showAllRoles();
     // roleActivities();
 })
 
-function showAllRoles() {
-    router.get('/roles', {
-    }, {
-        preserveState: true,
-        onSuccess: () =>{
-            console.log("Success")
-        },
-        onError: (error) =>{
-            console.log("Error")
-            console.log(error)
-        }
-    })
-}
-
-function roleActivities(row) {
-    router.get('/roles/activities', {
-        roles: ["manage-roles"],
-        user_id:1
-    }, {
-        preserveState: true,
-        onSuccess: () =>{
-            console.log("Success")
-        },
-        onError: (error) =>{
-            console.log("Error")
-            console.log(error)
-        }
-    })
-}
-
-
-const user_roles = computed(() => {
-    return usePage().props.user_roles;
-});
-
-const all_roles = computed(() =>{
-    return usePage().props.roles;
-});
-
-const available_roles = computed(() => {
-    return all_roles.value.filter(role => !user_roles.value.includes(role));
-});
-
-const availableRoles = ref([]);
-
-watchEffect(() => {
-    const userRoles = usePage().props.user_roles;
-    const allRoles = usePage().props.roles;
-
-    if (userRoles && allRoles) {
-        availableRoles.value = allRoles.filter(role => !userRoles.includes(role));
-    } else {
-        availableRoles.value = [];
-    }
-});
-
-
-
-const activities = computed(()=>{
-    return usePage().props.activities;
-});
-
-// initialize newUserRoles with user_roles
-const newUserRoles = ref([...user_roles.value]);
-
-
-function handleConfirm(confirmationType) {
-    assignRoles();
-    showDialog.value = false
-
-}
-    function deleteRole(role){
-        const index = newUserRoles.value.indexOf(role);
-        if (index > -1) {
-            newUserRoles.value.splice(index, 1);
-        }
-        role.deleted_at = now();
-        newUserRoles.value.pop(role);
-    }
-
-
-function assignRoles() {
-    router.post('/roles/assign', {
-        user_id: userId,
-        roles: newUserRoles.value.map((role) => role.name)
-    }, {
-        onSuccess: () =>{
-            console.log("Success")
-        },
-        onError: (error) =>{
-            console.log("Error")
-            console.log(error)
-        }
-    })
-}
 </script>
