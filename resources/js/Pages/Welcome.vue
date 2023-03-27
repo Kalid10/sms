@@ -25,6 +25,9 @@
     <button class="bg-red-400 p-1" @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
     <button class="bg-red-400 p-1" @click="removeHomeRoomTeacher">Test Remove Homeroom Teacher</button>
     <button class="bg-red-400 p-1" @click="getHomeRoomTeachers">Test Get Homeroom Teachers</button>
+    <button class="bg-red-400 p-1" @click="addStudentToBatch">Test Add Students To Batch</button>
+    <button class="bg-red-400 p-1" @click="getBatchStudents">Test Get Batch Students</button>
+    <button class="bg-red-400 p-1" @click="addBatchSubjects">Test Add Batch Subjects</button>
 
 </template>
 <script setup>
@@ -229,7 +232,7 @@ function deleteSubject() {
 function addSchoolYear() {
     router.post('/school-year/create', {
         start_date: "2024-01-01",
-        end_date: null,
+        number_of_semesters: 2,
         name: "2023-2024"
     }, {
         onSuccess: () => {
@@ -411,6 +414,59 @@ function removeHomeRoomTeacher() {
 function getHomeRoomTeachers() {
     router.get('/teachers/homerooms', {
         teacher_id: 1
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addStudentToBatch() {
+    router.post('/batches/students/add', {
+        batch_id: 10,
+        student_id: 5
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function getBatchStudents() {
+    router.get('/batches/students', {
+        batch_id: 10
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addBatchSubjects() {
+    router.post('/batches/subjects/assign', {
+        batchesSubjects: [
+            {
+                batch_id: 10,
+                subject_ids: [1, 2]
+
+            },
+            {
+                batch_id: 11,
+                subject_ids: [1, 2]
+            }
+        ]
     }, {
         onSuccess: () => {
             console.log("Success")
