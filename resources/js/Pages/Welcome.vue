@@ -30,6 +30,7 @@
     <button class="bg-red-400 p-1" @click="addBatchSubjects">Test Add Batch Subjects</button>
     <button class="bg-red-400 p-1" @click="addUserPosition">Test Add User Position</button>
     <button class="bg-red-400 p-1" @click="addLevel">Test Add Level</button>
+    <button class="bg-red-400 p-1" @click="getLevels">Test Get Level</button>
     <button class="bg-red-400 p-1" @click="assignBatchSubjectsTeachers">Test Assign Batch Subject Teachers</button>
 </template>
 <script setup>
@@ -523,6 +524,18 @@ function assignBatchSubjectsTeachers() {
             }
         ]
     }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function getLevels() {
+    router.get('/levels', {}, {
         onSuccess: () => {
             console.log("Success")
         },

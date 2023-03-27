@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Level;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class LevelController extends Controller
 {
@@ -23,5 +25,14 @@ class LevelController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Level created successfully');
+    }
+
+    public function list(): Response
+    {
+        $levels = Level::all();
+
+        return Inertia::render('Welcome', [
+            'levels' => $levels,
+        ]);
     }
 }
