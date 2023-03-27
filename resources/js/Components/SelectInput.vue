@@ -13,7 +13,7 @@
                 }}
             </span>
             <div class="absolute right-0 grid h-full place-items-center px-2">
-                <ChevronDownIcon class="h-4 w-4 stroke-[3] text-gray-500"/>
+                <ChevronDownIcon class="h-4 w-4 stroke-gray-500 stroke-2"/>
             </div>
 
             <input :disabled="disabled" :required="required" type="hidden"/>
