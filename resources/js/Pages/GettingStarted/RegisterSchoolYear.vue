@@ -14,7 +14,7 @@
                         placeholder="0"
                         :options="NoOfSemester"
                         :model-value="selectedSemester"
-                        @update:modelValue="selectedSemester = $event"
+                        @update:model-value="selectedSemester = $event"
                     />
                 </div>
                 <div class="p-2">
@@ -54,13 +54,13 @@ const SelectedNoOfSemester = ref(1)
 
 const formData = useForm({
     name: "",
-    noOfSemester: SelectedNoOfSemester,
+    number_of_semesters: SelectedNoOfSemester,
     start_date: null
 });
 
 function handleSubmit() {
     // console.log(formData)
-        formData.post('school-year/create',{
+        formData.post('/school-year/create',{
             onSuccess:()=>{
                 alert("done");
     }
