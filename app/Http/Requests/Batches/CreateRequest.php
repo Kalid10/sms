@@ -26,7 +26,6 @@ class CreateRequest extends FormRequest
     {
         return [
             'level_id' => 'required|exists:levels,id',
-            'school_year_id' => 'required|exists:school_years,id',
             'section' => 'required|string|max:2',
         ];
     }
@@ -34,20 +33,16 @@ class CreateRequest extends FormRequest
     // Check if section is unique for level and school year
     public function withValidator($validator)
     {
-        $validator->after(function ($validator) {
+        // Get active school year
+        $schoolYear = SchoolYear::whereNull('end_date')->first();
+        $validator->after(function ($validator) use ($schoolYear) {
             $batch = Batch::where('level_id', $this->level_id)
-                ->where('school_year_id', $this->school_year_id)
+                ->where('school_year_id', $schoolYear->id)
                 ->where('section', $this->section)
                 ->first();
 
             if ($batch) {
                 $validator->errors()->add('section', 'Section already exists for level and school year.');
-            }
-
-            $schoolYear = SchoolYear::find($this->school_year_id);
-
-            if (isset($schoolYear->end_date)) {
-                $validator->errors()->add('school_year_id', 'School year is not active.');
             }
         });
 

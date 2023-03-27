@@ -320,7 +320,6 @@ function addBatch() {
     router.post('/batches/create', {
         level_id: 1,
         section: "A",
-        school_year_id: 1,
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -333,17 +332,16 @@ function addBatch() {
 }
 
 function addBatches() {
-    router.post('/batches/create_bulk', {
+    router.post('/batches/create-bulk', {
             batches: {
-                school_year_id: 1,
                 grade: [
                     {
                         level_id: 1,
-                        sections: ["A", "B"]
+                        no_of_sections: 3
                     },
                     {
                         level_id: 2,
-                        sections: ["A", "B"]
+                        no_of_sections: 2
                     }
                 ]
             }

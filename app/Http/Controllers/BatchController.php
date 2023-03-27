@@ -13,29 +13,45 @@ use Inertia\Response;
 
 class BatchController extends Controller
 {
-    public function create(CreateRequest $request): Response
+    public function create(CreateRequest $request): Response|RedirectResponse
     {
         $validated = $request->validated();
 
-        Batch::create($validated);
+        // Get active school year
+        $schoolYear = SchoolYear::whereNull('end_date')->first();
 
-        // TODO: Change the component name to the correct one
-        return Inertia::render('Welcome', [
-            'batches' => Batch::with('level', 'schoolYear')->get(),
-        ]);
+        if (! $schoolYear) {
+            return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
+        }
+
+        Batch::create(array_merge(
+            $validated, ['school_year_id' => $schoolYear->id]
+        ));
+
+        return redirect()->back()->with('success', 'Batch created successfully!');
     }
 
-    public function createBulk(CreateBulkRequest $request): Response
+    public function createBulk(CreateBulkRequest $request): RedirectResponse|Response
     {
         $validated = $request->validated();
 
-        $schoolYearId = $validated['batches']['school_year_id'];
+        $schoolYearId = SchoolYear::whereNull('end_date')->first()->id;
+
+        if (! $schoolYearId) {
+            return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
+        }
 
         foreach ($validated['batches']['grade'] as $batch) {
             $levelId = $batch['level_id'];
-            $sections = $batch['sections'];
+            $noOfSections = $batch['no_of_sections'];
 
-            foreach ($sections as $section) {
+            if (Batch::where('level_id', $levelId)
+                    ->where('school_year_id', $schoolYearId)->count() === $noOfSections) {
+                continue;
+            }
+
+            for ($i = 0; $i < $noOfSections; $i++) {
+                $section = chr(65 + $i);
                 Batch::create([
                     'level_id' => $levelId,
                     'school_year_id' => $schoolYearId,
