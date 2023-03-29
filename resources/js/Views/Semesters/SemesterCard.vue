@@ -1,6 +1,6 @@
 <template>
     <Card
-        :icon="semester.status === 'active'" :subtitle="semester.school_year" :title="semester.name"
+        :icon="semester.status === 'active'" :title="semester.name" :subtitle="semester.school_year.start_date"
         class="!w-full !max-w-full">
         <div class="flex items-start justify-between">
 
@@ -16,7 +16,7 @@
                     />
                     <span class="text-xs capitalize">{{ semester.status }}</span>
                 </div>
-                <span class="text-xs text-gray-500">Updated {{ moment(semester.last_updated).fromNow() }}</span>
+                <span class="text-xs">Updated {{ moment(semester.updated_at).fromNow() }}</span>
             </div>
 
         </div>

@@ -30,4 +30,9 @@ class SchoolYear extends Model
             ->logOnly(['start_date', 'end_date', 'name'])
             ->useLogName('school_year');
     }
+
+    public function semesters(): HasMany
+    {
+        return $this->hasMany(Semester::class);
+    }
 }

@@ -12,6 +12,11 @@ use Inertia\Response;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        return Inertia::render('Auth/Login');
+    }
+
     public function login(LoginRequest $request): JsonResponse|Response
     {
         // Authenticate user

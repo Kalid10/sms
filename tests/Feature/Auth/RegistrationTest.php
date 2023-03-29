@@ -27,9 +27,13 @@ it('registers a guardian', function () {
     $this->actingAs($this->user);
 
     $payload = [
-        'name' => 'John Doe',
-        'email' => 'johndoe@example.com',
-        'type' => User::TYPE_GUARDIAN,
+        'name' => 'Mar Smth',
+        'email' => 'marsmith@example.com',
+        'guardian_name' => 'John Doe',
+        'guardian_email' => 'johndoe@example.com',
+        'guardian_phone_number' => '0911111111',
+        'username' => 'lucbrown',
+        'type' => User::TYPE_STUDENT,
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -97,7 +101,10 @@ it('registers a student', function () {
         'name' => 'Lucy Brown',
         'email' => 'lucybrown@example.com',
         'type' => User::TYPE_STUDENT,
-        'guardian_id' => $guardian->id,
+        'guardian_name' => 'John Doe',
+        'guardian_email' => 'johndoe@example.com',
+        'guardian_phone_number' => '0911111111',
+        'username' => 'lucybrown',
     ];
 
     $response = $this->postJson('/register', $payload);
