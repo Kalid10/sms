@@ -28,7 +28,10 @@
     <button class="bg-red-400 p-1" @click="addStudentToBatch">Test Add Students To Batch</button>
     <button class="bg-red-400 p-1" @click="getBatchStudents">Test Get Batch Students</button>
     <button class="bg-red-400 p-1" @click="addBatchSubjects">Test Add Batch Subjects</button>
-
+    <button class="bg-red-400 p-1" @click="addUserPosition">Test Add User Position</button>
+    <button class="bg-red-400 p-1" @click="addLevel">Test Add Level</button>
+    <button class="bg-red-400 p-1" @click="getLevels">Test Get Level</button>
+    <button class="bg-red-400 p-1" @click="assignBatchSubjectsTeachers">Test Assign Batch Subject Teachers</button>
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
@@ -317,7 +320,6 @@ function addBatch() {
     router.post('/batches/create', {
         level_id: 1,
         section: "A",
-        school_year_id: 1,
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -330,17 +332,16 @@ function addBatch() {
 }
 
 function addBatches() {
-    router.post('/batches/create_bulk', {
+    router.post('/batches/create-bulk', {
             batches: {
-                school_year_id: 1,
                 grade: [
                     {
                         level_id: 1,
-                        sections: ["A", "B"]
+                        no_of_sections: 3
                     },
                     {
                         level_id: 2,
-                        sections: ["A", "B"]
+                        no_of_sections: 2
                     }
                 ]
             }
@@ -456,7 +457,7 @@ function getBatchStudents() {
 
 function addBatchSubjects() {
     router.post('/batches/subjects/assign', {
-        batchesSubjects: [
+        batches_subjects: [
             {
                 batch_id: 10,
                 subject_ids: [1, 2]
@@ -468,6 +469,71 @@ function addBatchSubjects() {
             }
         ]
     }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addUserPosition() {
+    router.post('/positions/create', {
+        name: "UnitLeader",
+        description: "Unit Leader",
+        role_names: ["manage-subjects", "manage-teachers"]
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addLevel() {
+    router.post('/levels/create', {
+        name: "Grade 13",
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function assignBatchSubjectsTeachers() {
+    router.post('/batches/subjects/assign/teacher', {
+        batch_subjects_teachers: [
+            {
+                batch_subject_id: 4,
+                teacher_id: 2
+            },
+            {
+                batch_subject_id: 3,
+                teacher_id: 3
+            }
+        ]
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function getLevels() {
+    router.get('/levels', {}, {
         onSuccess: () => {
             console.log("Success")
         },

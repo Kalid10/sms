@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
         // Populate levels
         Artisan::call('app:create-levels');
 
+        // Populate subjects
+        Artisan::call('app:create-subjects');
+
         // Assign all roles to the user
         $user->roles()->attach(Role::all());
 

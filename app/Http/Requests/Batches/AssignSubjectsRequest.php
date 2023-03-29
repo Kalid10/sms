@@ -25,29 +25,29 @@ class AssignSubjectsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'batchesSubjects' => 'required|array',
-            'batchesSubjects.*.batch_id' => 'required|integer|exists:batches,id',
-            'batchesSubjects.*.subject_ids' => 'required|array',
-            'batchesSubjects.*.subject_ids.*' => 'integer|exists:subjects,id',
+            'batches_subjects' => 'required|array',
+            'batches_subjects.*.batch_id' => 'required|integer|exists:batches,id',
+            'batches_subjects.*.subject_ids' => 'required|array',
+            'batches_subjects.*.subject_ids.*' => 'integer|exists:subjects,id',
         ];
     }
 
     protected function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            foreach ($this->batchesSubjects as $batchData) {
+            foreach ($this->batches_subjects as $batchData) {
                 $batchId = $batchData['batch_id'];
                 $batch = Batch::find($batchId);
 
                 if (isset($batch->schoolYear->end_date)) {
-                    $validator->errors()->add('batchesSubjects', 'The batch with ID '.$batchId.' is not active.');
+                    $validator->errors()->add('batches_subjects', 'The batch with ID '.$batchId.' is not active.');
                 }
 
                 foreach ($batchData['subject_ids'] as $subjectId) {
                     if (BatchSubject::where('batch_id', $batchId)
                         ->where('subject_id', $subjectId)
                         ->exists()) {
-                        $validator->errors()->add('batchesSubjects', 'The subject with ID '.$subjectId.' already exists in batch '.$batchId.'.');
+                        $validator->errors()->add('batches_subjects', 'The subject with ID '.$subjectId.' already exists in batch '.$batchId.'.');
                     }
                 }
             }
@@ -57,8 +57,8 @@ class AssignSubjectsRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'batchesSubjects.*.batch_id.exists' => 'The batch with ID :input does not exist.',
-            'batchesSubjects.*.subject_ids.*.exists' => 'The subject with ID :input does not exist.',
+            'batches_subjects.*.batch_id.exists' => 'The batch with ID :input does not exist.',
+            'batches_subjects.*.subject_ids.*.exists' => 'The subject with ID :input does not exist.',
         ];
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(BatchController::class)->prefix('batches/')->middleware(['checkUserRole:manage-batches'])->name('batches.')->group(function () {
     Route::post('create', 'create')->name('create');
-    Route::post('create_bulk', 'createBulk')->name('create');
+    Route::post('create-bulk', 'createBulk')->name('create');
     Route::get('', 'list')->name('list');
     Route::get('active', 'active')->name('active');
     Route::post('assign/student', 'assignStudent')->name('assign_student');
@@ -21,4 +21,5 @@ Route::controller(BatchStudentController::class)->prefix('batches/students/')->m
 
 Route::controller(BatchSubjectController::class)->prefix('batches/subjects/')->middleware(['checkUserRole:manage-subjects'])->name('batches.subjects.')->group(function () {
     Route::post('assign', 'assign')->name('assign');
+    Route::post('assign/teacher', 'assignTeacher')->name('assign_teacher');
 });
