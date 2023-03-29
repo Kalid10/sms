@@ -52,8 +52,17 @@
 
                         <button
                             v-for="i in numberOfDays" :key="i" type="button"
-                            :class="isDateSelected(i) ? 'bg-black text-white' : 'hover:bg-black/10'"
-                            class="grid place-items-center rounded-md p-2.5 text-sm font-medium focus:outline-none"
+                            :class="[
+                                isDateSelected(i).value ?
+                                    range ?
+                                    isDateSelected(i).range === 'start' ?
+                                    'rounded-l-md bg-black text-white' :
+                                    'rounded-r-md bg-black text-white' :
+                                    'rounded-md bg-black text-white' :
+                                    'hover:bg-black/10',
+                                isBetweenRange(i) ? 'bg-black/10' : '',
+                            ]"
+                            class="grid place-items-center p-2.5 text-sm font-medium focus:outline-none"
                             @click="selectDate(i)"
                         >
                             {{ i }}
@@ -94,12 +103,23 @@
                     <span v-if="panel === 'date'" class="grid place-items-center p-2">
 
                         <button
+                            v-if="! range"
                             type="button"
                             :class="modelValue?.toDateString() === new Date().toDateString() ? 'bg-black/10 border-black text-black' : 'text-gray-500 hover:bg-black/10'"
                             class="flex h-10 w-full items-center justify-center gap-1 rounded-md border text-center text-sm focus:outline-none" @click="selectToday"
                         >
                             <span>Today</span>
                             {{ new Date().toLocaleDateString() }}
+                        </button>
+
+                        <button
+                            v-else
+                            type="button"
+                            :class="!! startDate ? 'bg-black/5 border-black text-black' : 'text-gray-500'"
+                            :disabled="!! ! startDate"
+                            class="flex h-10 w-full items-center justify-center gap-1 rounded-md border text-center text-sm focus:outline-none" @click="clearRange"
+                        >
+                            <span>Clear</span>
                         </button>
 
                     </span>
@@ -136,7 +156,19 @@ const props = defineProps({
     },
     modelValue: {
         type: [Date, null],
-        required: true
+        default: null
+    },
+    startDate: {
+        type: [Date, null],
+        default: null
+    },
+    endDate: {
+        type: [Date, null],
+        default: null
+    },
+    range: {
+        type: Boolean,
+        default: false
     },
     availableYears: {
         type: Array,
@@ -144,7 +176,7 @@ const props = defineProps({
     }
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'update:startDate', 'update:endDate'])
 
 const viewPanel = ref(false)
 const panelViewer = ref(null)
@@ -170,11 +202,33 @@ const today = new Date()
 const selectedYear = ref(!! props.modelValue ? props.modelValue.getFullYear() : today.getFullYear())
 const selectedMonth = ref(!! props.modelValue ? props.modelValue.getMonth() : today.getMonth())
 const selectedDate = computed(() => {
-    if (props.modelValue) {
-        return props.modelValue.toLocaleDateString()
-    } else {
-        return null
+
+    if (!! props.modelValue || props.startDate || props.endDate) {
+
+        if (! props.range) {
+
+            if (props.modelValue) {
+                return props.modelValue.toLocaleDateString()
+            }
+
+        } else {
+
+            let selectedDate = ''
+
+            if (props.startDate) {
+                selectedDate = props.startDate.toLocaleDateString() + ' - '
+            }
+
+            if (props.endDate) {
+                selectedDate += props.endDate.toLocaleDateString()
+            }
+
+            return selectedDate
+        }
+
     }
+
+    return null
 })
 
 const offsetDays = computed(() => new Date(selectedYear.value, selectedMonth.value).getDay())
@@ -221,20 +275,64 @@ function next() {
 
 }
 
+function isBetweenRange(date) {
+
+    const selectedDate = new Date(selectedYear.value, selectedMonth.value, date)
+
+    if (props.range && !! props.startDate && !! props.endDate) {
+        return selectedDate > props.startDate && selectedDate < props.endDate
+    }
+
+    return false;
+}
+
 function isDateSelected(date) {
-    return !! props.modelValue && date === props.modelValue.getDate() &&
-        selectedMonth.value === props.modelValue.getMonth() &&
-        selectedYear.value === props.modelValue.getFullYear()
+
+    const selectedDate = new Date(selectedYear.value, selectedMonth.value, date).toDateString()
+
+    if (! props.range) {
+        return {
+            value: !! props.modelValue && selectedDate === props.modelValue.toDateString()
+        }
+    } else {
+        return {
+            value: !! props.startDate && selectedDate === props.startDate.toDateString() ||
+                !! props.endDate && selectedDate === props.endDate.toDateString(),
+            range: !! props.startDate && selectedDate === props.startDate.toDateString() ? 'start' :
+                !! props.endDate && selectedDate === props.endDate.toDateString() ? 'end' : null
+        }
+    }
+
+}
+
+function isStartDateSelected() {
+
 }
 
 function selectDate(date) {
-    emits('update:modelValue', new Date(selectedYear.value, selectedMonth.value, date))
+    if (! props.range) {
+        emits('update:modelValue', new Date(selectedYear.value, selectedMonth.value, date))
+    } else {
+
+        if (!! ! props.startDate) {
+            emits('update:startDate', new Date(selectedYear.value, selectedMonth.value, date))
+        } else {
+            emits('update:endDate', new Date(selectedYear.value, selectedMonth.value, date))
+        }
+    }
+
 }
 
 function selectToday() {
     selectedMonth.value = new Date().getMonth()
     selectedYear.value = new Date().getFullYear()
     emits('update:modelValue', new Date())
+}
+
+function clearRange() {
+    selectToday()
+    emits('update:startDate', null)
+    emits('update:endDate', null)
 }
 
 function isMonthSelected(month_index) {

@@ -73,9 +73,9 @@
 
             <div class="flex gap-3">
 
-                <TextInput v-model="formData.position" class="w-3/5" label="Position" placeholder="Position of user"/>
+                <TextInput v-model="formData.position" class="w-1/2 lg:w-3/5" label="Position" placeholder="Position of user"/>
 
-                <DatePicker v-model="start_date" placeholder="Select a Start Date" required label="Start Date" class="w-2/5" />
+                <DatePicker v-model:start-date="start_date" v-model:end-date="end_date" range placeholder="Select a Date" required label="Start Date" class="w-1/2 lg:w-2/5" />
 
             </div>
 
@@ -198,6 +198,7 @@ function createUserForm() {
 }
 
 const start_date = ref(null)
+const end_date = ref(null)
 </script>
 
 <style scoped>
