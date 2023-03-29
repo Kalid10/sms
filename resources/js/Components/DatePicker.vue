@@ -56,16 +56,17 @@
                                 isDateSelected(i).value ?
                                     range ?
                                     isDateSelected(i).range === 'start' ?
-                                    'rounded-l-md bg-black text-white' :
-                                    'rounded-r-md bg-black text-white' :
+                                    'rounded-tl-md bg-black text-white' :
+                                    'rounded-br-md bg-black text-white' :
                                     'rounded-md bg-black text-white' :
                                     'hover:bg-black/10',
                                 isBetweenRange(i) ? 'bg-black/10' : '',
                             ]"
-                            class="grid place-items-center p-2.5 text-sm font-medium focus:outline-none"
+                            class="relative grid place-items-center p-2.5 text-sm font-medium focus:outline-none"
                             @click="selectDate(i)"
                         >
                             {{ i }}
+                            <span v-if="isToday(i)" :class="isDateSelected(i).value ? 'bg-white' : 'bg-black'" class="absolute bottom-0 my-1.5 h-0.5 w-0.5 rounded-full"/>
                         </button>
 
                         <span v-for="k in 7- ((offsetDays + numberOfDays) % 7)" :key="k" class="grid place-items-center p-2.5 text-sm text-gray-500">
@@ -305,7 +306,11 @@ function isDateSelected(date) {
 
 }
 
-function isStartDateSelected() {
+function isToday(date) {
+
+    const selectedDate = new Date(selectedYear.value, selectedMonth.value, date).toLocaleDateString()
+
+    return new Date().toLocaleDateString() === selectedDate
 
 }
 
