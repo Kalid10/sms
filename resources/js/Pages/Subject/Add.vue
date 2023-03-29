@@ -4,8 +4,12 @@
             title="Add Subject"
             @cancel="clear"
             @submit="submit">
-            <AddTextInput v-model="form.full_name" label="Full Name" placeholder="full name" required/>
-            <AddTextInput v-model="form.short_name" label="Short Name" placeholder="short name" required/>
+            <AddTextInput
+                v-model="form.full_name" :error="form.errors.full_name" label="Full Name"
+                placeholder="full name" required/>
+            <AddTextInput
+                v-model="form.short_name" :error="form.errors.short_name" label="Short Name"
+                placeholder="short name" required/>
         </AddFormElement>
     </AddModal>
 </template>

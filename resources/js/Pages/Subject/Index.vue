@@ -28,15 +28,15 @@
         </template>
         <template #row-actions="{ row }">
             <SubjectPrimaryButton @click="selectSubject(row)">
-                <PencilSquareIcon class="h-4 w-4" />
+                <PencilSquareIcon class="h-4 w-4"/>
             </SubjectPrimaryButton>
             <SubjectPrimaryButton @click="removeSubject(row.id)">
-                <TrashIcon class="h-4 w-4" />
+                <TrashIcon class="h-4 w-4"/>
             </SubjectPrimaryButton>
         </template>
     </SubjectTableElement>
 
-    <SubjectAdd v-if="isAddModalOpen" :toggle="isAddModalOpen" />
+    <SubjectAdd v-if="isAddModalOpen" :toggle="isAddModalOpen"/>
 
     <SubjectUpdate
         v-if="isUpdateModalOpen"
@@ -45,11 +45,11 @@
     />
 </template>
 <script setup>
-import { computed, ref } from "vue";
+import {computed, ref} from "vue";
 import SubjectAdd from "@/Pages/Subject/Add.vue";
-import { router, usePage } from "@inertiajs/vue3";
-import { debounce } from "lodash";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import {router, usePage} from "@inertiajs/vue3";
+import {debounce} from "lodash";
+import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/outline";
 import SubjectTableElement from "@/Components/TableElement.vue";
 import SubjectUpdate from "@/Pages/Subject/Update.vue";
 import SubjectPrimaryButton from "@/Components/PrimaryButton.vue";
@@ -76,8 +76,8 @@ const searchKey = ref(usePage().props.searchKey);
 const search = debounce(() => {
     router.get(
         "/subjects",
-        { search: searchKey.value },
-        { preserveState: true, replace: true }
+        {search: searchKey.value},
+        {preserveState: true, replace: true}
     );
 }, 300);
 
@@ -93,7 +93,6 @@ function selectSubject(subject) {
     toggleUpdateModal();
     if (!subject) {
         return (selectedSubject.value = null);
-        toggleUpdateModal();
     }
 }
 </script>

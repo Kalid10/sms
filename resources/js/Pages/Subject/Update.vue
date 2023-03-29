@@ -1,8 +1,12 @@
 <template>
     <UpdateModal v-model:view="isOpen">
         <UpdateFormElement title="Update Subject" @submit="update" @cancel="clear">
-            <UpdateTextInput v-model="form.full_name" label="Full Name" placeholder="full name"/>
-            <UpdateTextInput v-model="form.short_name" label="Short Name" placeholder="short name"/>
+            <UpdateTextInput
+                v-model="form.full_name" :error="form.errors.full_name" label="Full Name"
+                placeholder="full name"/>
+            <UpdateTextInput
+                v-model="form.short_name" :error="form.errors.short_name" label="Short Name"
+                placeholder="short name"/>
         </UpdateFormElement>
     </UpdateModal>
 </template>

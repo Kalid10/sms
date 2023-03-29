@@ -80,9 +80,13 @@
 
             <div class="flex gap-3">
 
-                <TextInput v-model="formData.position" class="w-1/2 lg:w-3/5" label="Position" placeholder="Position of user"/>
+                <TextInput
+v-model="formData.position" class="w-1/2 lg:w-3/5" label="Position"
+                           placeholder="Position of user"/>
 
-                <DatePicker v-model:start-date="start_date" v-model:end-date="end_date" range placeholder="Select a Date" required label="Start Date" class="w-1/2 lg:w-2/5" />
+                <DatePicker
+v-model:start-date="start_date" v-model:end-date="end_date" range
+                            placeholder="Select a Date" required label="Start Date" class="w-1/2 lg:w-2/5"/>
 
             </div>
 
@@ -95,16 +99,14 @@
 
 <script setup>
 import {computed, ref} from "vue"
-import {ArchiveBoxXMarkIcon, ArrowPathIcon, BugAntIcon, CloudArrowDownIcon, EyeIcon} from "@heroicons/vue/24/outline"
+import {ArchiveBoxXMarkIcon, ArrowPathIcon, CloudArrowDownIcon, EyeIcon} from "@heroicons/vue/24/outline"
 import {Link, usePage} from '@inertiajs/vue3'
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue"
 import TextInput from "@/Components/TextInput.vue"
-import SelectInput from "@/Components/SelectInput.vue"
 import TableElement from "@/Components/TableElement.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
-import Card from "@/Components/Card.vue"
 import UsersStatistics from "@/Views/UsersStatistics.vue";
 import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import DatePicker from "@/Components/DatePicker.vue";
@@ -157,10 +159,12 @@ const user_types = [
 ]
 
 function updateItems(items) {
+    // TODO: remove console.log when notification is ready
     console.log(`Items to update are `, items.map((item) => item.id))
 }
 
 function moveItems(items) {
+    // TODO: remove console.log when notification is ready
     console.log(`Items to move are `, items.map((item) => item.id))
 }
 

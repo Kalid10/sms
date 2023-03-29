@@ -96,17 +96,7 @@ const form = useForm({
 
 // Submit form
 const submit = () => {
-    form.post("/login", {
-        onFinish: () => {
-            console.log("Login finished");
-        },
-        onSuccess: () => {
-            console.log("Success");
-        },
-        onError: () => {
-            console.log("Error");
-        },
-    });
+    form.post("/login");
 };
 </script>
 

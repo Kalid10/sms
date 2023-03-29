@@ -28,6 +28,7 @@
             <ForgotTextInput
                 v-model="confirmationForm.confirmationCode"
                 label="Confirmation Code"
+                type="password"
                 placeholder="****"/>
             <div class="flex items-center justify-between">
                 <ForgotPrimaryButton
