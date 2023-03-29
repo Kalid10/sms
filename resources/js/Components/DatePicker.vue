@@ -317,7 +317,13 @@ function selectDate(date) {
         if (!! ! props.startDate) {
             emits('update:startDate', new Date(selectedYear.value, selectedMonth.value, date))
         } else {
-            emits('update:endDate', new Date(selectedYear.value, selectedMonth.value, date))
+            if (new Date(selectedYear.value, selectedMonth.value, date) < props.startDate) {
+                emits('update:startDate', new Date(selectedYear.value, selectedMonth.value, date))
+                emits('update:endDate', props.startDate)
+
+            } else {
+                emits('update:endDate', new Date(selectedYear.value, selectedMonth.value, date))
+            }
         }
     }
 
