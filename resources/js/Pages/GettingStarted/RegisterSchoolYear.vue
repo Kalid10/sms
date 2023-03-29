@@ -31,8 +31,6 @@
         </FormElement>
     </div>
 </template>
-
-
 <script setup>
 import { ref } from "vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -42,7 +40,6 @@ import {useForm} from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
 
 const selectedSemester = ref(null);
-
 const NoOfSemester =[
     {value: 1, label: 1},
     {value: 2, label: 2},
@@ -51,7 +48,6 @@ const NoOfSemester =[
     {value: 5, label: 5},
 ]
 const SelectedNoOfSemester = ref(1)
-
 const formData = useForm({
     name: "",
     number_of_semesters: SelectedNoOfSemester,
