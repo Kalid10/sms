@@ -57,7 +57,7 @@
 import { ref, watch, defineProps } from 'vue';
 import {XMarkIcon, ExclamationTriangleIcon, CheckCircleIcon,EnvelopeIcon} from '@heroicons/vue/24/outline';
 
-defineProps({
+const props = defineProps({
     title: {
         type: String,
         required: true,
@@ -66,17 +66,21 @@ defineProps({
         type: String,
         default: null,
     },
+    persistent: {
+        type: Boolean,
+        default: false,
+    },
     type: {
         type: String,
         default: 'default',
         validator: (value) =>
-            ['notification', 'error', 'success'].indexOf(value) !== -1,
+            ['default', 'error', 'success'].indexOf(value) !== -1,
 
     },
 });
 const showNotification = ref(true);
-watch(showNotification, (newVal) => {
-    if (newVal) {
+watch(showNotification, (value) => {
+    if (value && !props.persistent) {
         setTimeout(() => {
             showNotification.value = false;
         }, 3000);
