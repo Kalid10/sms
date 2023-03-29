@@ -39,12 +39,13 @@ class DatabaseSeeder extends Seeder
         // Populate users
         Admin::factory(5)->create();
         Teacher::factory(50)->create();
-        Guardian::factory(500)->create();
-        Student::factory(500)->create();
+        Guardian::factory(50)->create();
+        Student::factory(50)->create();
 
         $this->call([
             SchoolYearSeeder::class,
             BatchSeeder::class,
+            BatchSubjectsSeeder::class,
             HomeroomTeacherSeeder::class,
         ]);
     }
