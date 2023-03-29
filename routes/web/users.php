@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPositionController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(UserController::class)->prefix('users/')->middleware('web')->name('users.')->group(function () {
@@ -25,4 +26,8 @@ Route::controller(RegisterController::class)->prefix('register/')->middleware('w
     Route::post('admin', 'register')->name('admin');
     Route::post('family', 'register')->name('family');
     Route::post('teacher', 'register')->name('teacher');
+});
+
+Route::controller(UserPositionController::class)->prefix('positions/')->middleware(['checkUserType:admin', 'checkUserRole:manage-user-positions'])->name('user-positions.')->group(function () {
+    Route::post('create', 'create')->name('create');
 });

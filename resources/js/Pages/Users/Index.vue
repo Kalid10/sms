@@ -77,7 +77,15 @@
         >
 
             <TextInput v-model="formData.name" label="Name" placeholder="Full name of new user" required/>
-            <TextInput v-model="formData.position" label="Position" placeholder="Position of user"/>
+
+            <div class="flex gap-3">
+
+                <TextInput v-model="formData.position" class="w-1/2 lg:w-3/5" label="Position" placeholder="Position of user"/>
+
+                <DatePicker v-model:start-date="start_date" v-model:end-date="end_date" range placeholder="Select a Date" required label="Start Date" class="w-1/2 lg:w-2/5" />
+
+            </div>
+
             <RadioGroupPanel v-model="userType" :options="user_types" label="User Type" name="user_type"/>
 
         </FormElement>
@@ -99,6 +107,7 @@ import TertiaryButton from "@/Components/TertiaryButton.vue";
 import Card from "@/Components/Card.vue"
 import UsersStatistics from "@/Views/UsersStatistics.vue";
 import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
+import DatePicker from "@/Components/DatePicker.vue";
 import Register from "@/Views/RegisterUser.vue";
 
 const showRegisterOptions = ref(false);
@@ -119,6 +128,34 @@ const roleOptions = [
     {value: 'student', label: 'Student'},
 ];
 
+const userType = ref('admin')
+const user_types = [
+    {
+        id: 'admin',
+        value: 'admin',
+        label: 'Administrator',
+        description: 'Manages the school resources based on access level',
+    },
+    {
+        id: 'teacher',
+        value: 'teacher',
+        label: 'Teacher',
+        description: 'Teachers employed by the school, tasked with taking over classes and managing students',
+    },
+    {
+        id: 'student',
+        value: 'student',
+        label: 'Student',
+        description: 'Students registered in the school, with access to their own assignment and assessment resources',
+    },
+    {
+        id: 'guardian',
+        value: 'guardian',
+        label: 'Guardian',
+        description: 'Guardians of students registered in the school, have access their children\'s resources i.e., grade reports, accessment results and more'
+    }
+]
+
 function updateItems(items) {
     console.log(`Items to update are `, items.map((item) => item.id))
 }
@@ -135,12 +172,15 @@ const users = computed(() => {
 const userRoles = computed(() => usePage().props.user_roles);
 
 
-const showRegisterUser = ref(false)
+const showRegisterUser = ref(true)
 const showModal = ref(false)
 
 function createUserForm() {
     showRegisterUser.value = true
 }
+
+const start_date = ref(null)
+const end_date = ref(null)
 </script>
 
 <style scoped>
