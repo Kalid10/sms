@@ -41,7 +41,7 @@ class UserController extends Controller
 
     public function updatePassword(UpdatePasswordRequest $request): \Illuminate\Http\RedirectResponse
     {
-        //check if the this is the logged in user
+        // Check if the this is the logged in user
         if ($request->id != auth()->user()->id) {
             return redirect()->back()->with('error', 'You are not authorized to update this user.');
         }
@@ -62,9 +62,9 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Password updated Successfully');
     }
 
-    public function family()
+    public function guardian()
     {
-        return Inertia::render('Users/Create/Family');
+        return Inertia::render('Users/Create/Guardian');
     }
 
     public function admin()
