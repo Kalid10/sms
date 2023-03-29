@@ -1,7 +1,6 @@
 <template>
     <div>
-        <div
-            @submit="subjectRegistration">
+        <div>
             <div class="px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     <div v-for="subject in updatedSubjects" :key="subject.id" class="m:mb-0 rounded-md bg-white/20 backdrop-blur-lg">
