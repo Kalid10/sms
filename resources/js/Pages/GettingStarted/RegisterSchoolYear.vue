@@ -57,15 +57,15 @@ const formData = useForm({
     number_of_semesters: SelectedNoOfSemester,
     start_date: null
 });
-
 function handleSubmit() {
-    // console.log(formData)
         formData.post('/school-year/create',{
-            onSuccess:()=>{
-                alert("done");
-    }
+            onSuccess: () => {
+                console.log("Success")
+            },
+            onError: (error) => {
+                console.log("Error")
+                console.log(error)
+            }
         });
 }
-
-
 </script>
