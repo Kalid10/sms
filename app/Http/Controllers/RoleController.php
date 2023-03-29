@@ -17,11 +17,6 @@ use Spatie\Activitylog\Models\Activity;
 
 class RoleController extends Controller
 {
-    public function gettingStarted(): Response
-    {
-        return Inertia::render('GettingStarted/Index');
-    }
-
     public function assign(AssignRequest $request): RedirectResponse
     {
         try {
