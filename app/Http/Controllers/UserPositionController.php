@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserPosition;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserPositionController extends Controller
 {
@@ -15,8 +16,8 @@ class UserPositionController extends Controller
         // Get user positions
         $usersPositions = UserPosition::select('id', 'name', 'description', 'role_names')->where('name', 'like', '%'.$searchKey.'%')->paginate(10);
 
-        // To do: Change the path when position index page is created
-        return inertia('Welcome', [
+        // TODO: Change the path when position index page is created
+        return Inertia::render('Welcome', [
             'userPositions' => $usersPositions,
         ]);
     }
