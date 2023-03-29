@@ -1,29 +1,31 @@
 <template>
 
-    <label class="flex flex-col gap-1">
-            <span v-if="label" class="">
-                <span class="pl-0.5 text-sm font-semibold text-gray-500">{{ label }}</span>
-                <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
-            </span>
-        <input type="date" class="sr-only" :required="required" :disabled="disabled" />
+    <label class="relative flex flex-col gap-1">
+        <span v-if="label" class="">
+            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{ label }}</span>
+            <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
+        </span>
+
         <span
-            ref="datePicker"
             class="relative flex h-10 w-full items-center justify-between rounded-md border border-gray-200 py-2 px-3 placeholder:text-sm"
-            @click="displayPicker = false"
+            @click="viewPanel = !viewPanel"
         >
-            <span :class="[!! selectedDate ? 'text-black' : 'text-gray-500']" class="text-sm">
+            <input type="date" class="sr-only" :required="required" :disabled="disabled" />
+            <span :class="[!! selectedDate ? 'text-black' : 'text-gray-500']" class="truncate whitespace-nowrap text-sm">
                 {{ selectedDate ?? placeholder }}
             </span>
             <CalendarIcon class="h-4 w-4 stroke-gray-500 stroke-2" />
 
-            <span v-if="displayPicker" class="absolute bottom-0 right-0 -mb-2 translate-y-full rounded-md border bg-white drop-shadow-md">
+        </span>
+
+        <span v-if="viewPanel" ref="panelViewer" class="absolute bottom-0 right-0 z-50 -mb-2 min-w-[282.98px] translate-y-full rounded-md border bg-white drop-shadow-md" @click="elementClick">
 
                 <span class="flex min-w-fit flex-col overflow-hidden rounded-md">
 
-                    <span class="col-span-7 flex h-12 items-center justify-between border-b bg-neutral-50 p-2 shadow">
+                    <span class="col-span-7 flex h-12 min-w-fit items-center justify-between border-b bg-neutral-50 p-2 shadow">
 
-                        <ChevronLeftIcon class="h-4 w-4 cursor-pointer stroke-gray-500 stroke-[3]" @click="previousMonth" />
-                        <span class="flex select-none gap-1 text-sm font-semibold text-gray-500">
+                        <ChevronLeftIcon class="h-4 w-4 min-w-fit cursor-pointer stroke-gray-500 stroke-[3]" @click="previous" />
+                        <span class="flex min-w-fit select-none gap-1 text-sm font-semibold text-gray-500">
                             <button v-if="panel === 'date'" type="button" @click="changePanel('month')">
                                 {{ months[selectedMonth] }}
                             </button>
@@ -34,22 +36,32 @@
                                 Select Year
                             </span>
                         </span>
-                        <ChevronRightIcon class="h-4 w-4 cursor-pointer stroke-gray-500 stroke-[3]" @click="nextMonth" />
+                        <ChevronRightIcon class="h-4 w-4 cursor-pointer stroke-gray-500 stroke-[3]" @click="next" />
 
                     </span>
 
                     <span v-if="panel === 'date'" ref="daysPanel" class="grid grid-cols-7 p-2">
 
-                        <span v-for="i in offsetDays" :key="i" class="grid place-items-center p-2.5" />
+                        <span v-for="i in days" :key="i" class="grid place-items-center p-2.5 text-xs font-medium text-gray-500">
+                            {{ i }}
+                        </span>
+
+                        <span v-for="i in offsetDays" :key="i" class="grid place-items-center p-2.5 text-sm text-gray-500">
+                            {{ numberOfPreviousDays - offsetDays + i }}
+                        </span>
 
                         <button
                             v-for="i in numberOfDays" :key="i" type="button"
                             :class="isDateSelected(i) ? 'bg-black text-white' : 'hover:bg-black/10'"
-                            class="grid place-items-center rounded-md p-2.5 text-sm focus:outline-none"
+                            class="grid place-items-center rounded-md p-2.5 text-sm font-medium focus:outline-none"
                             @click="selectDate(i)"
                         >
                             {{ i }}
                         </button>
+
+                        <span v-for="k in 7- ((offsetDays + numberOfDays) % 7)" :key="k" class="grid place-items-center p-2.5 text-sm text-gray-500">
+                            {{ k }}
+                        </span>
 
                     </span>
 
@@ -79,12 +91,12 @@
 
                     </span>
 
-                    <span class="grid place-items-center p-2">
+                    <span v-if="panel === 'date'" class="grid place-items-center p-2">
 
                         <button
                             type="button"
-                            :class="modelValue?.toDateString() === new Date().toDateString() ? 'bg-black text-white' : 'hover:bg-black/10'"
-                            class="flex h-10 w-full items-center justify-center gap-1 rounded-md border-2 text-center text-sm text-gray-500 focus:outline-none" @click="selectToday"
+                            :class="modelValue?.toDateString() === new Date().toDateString() ? 'bg-black/10 border-black text-black' : 'text-gray-500 hover:bg-black/10'"
+                            class="flex h-10 w-full items-center justify-center gap-1 rounded-md border text-center text-sm focus:outline-none" @click="selectToday"
                         >
                             <span>Today</span>
                             {{ new Date().toLocaleDateString() }}
@@ -96,13 +108,12 @@
 
             </span>
 
-        </span>
     </label>
 
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, nextTick, computed } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { ChevronLeftIcon, ChevronRightIcon, CalendarIcon } from "@heroicons/vue/24/outline";
 
@@ -135,23 +146,24 @@ const props = defineProps({
 
 const emits = defineEmits(['update:modelValue'])
 
-const displayPicker = ref(false)
-function toggleDisplayPicker() {
-    displayPicker.value = !displayPicker.value
-}
+const viewPanel = ref(false)
+const panelViewer = ref(null)
 
-const datePicker = ref(null)
-onClickOutside(datePicker, () => {
-    toggleDisplayPicker()
+onClickOutside(panelViewer, () => {
+    viewPanel.value = false
 })
 
 const panel = ref('date')
 function changePanel(to) {
     panel.value = to
+    emits('update:modelValue', null)
 }
 
 const months = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+]
+const days = [
+    'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'
 ]
 
 const today = new Date()
@@ -166,24 +178,47 @@ const selectedDate = computed(() => {
 })
 
 const offsetDays = computed(() => new Date(selectedYear.value, selectedMonth.value).getDay())
+const numberOfPreviousDays = computed(() => 35 - (new Date(selectedMonth.value === 0 ? selectedYear.value - 1 : selectedYear.value, selectedMonth.value - 1 > -1 ? selectedMonth.value - 1 : 11, 35).getDate()))
 const numberOfDays = computed(() => 35 - (new Date(selectedYear.value, selectedMonth.value, 35).getDate()))
 
-function previousMonth() {
-    if (selectedMonth.value === 0) {
-        selectedMonth.value = 11
-        selectedYear.value--
-    } else {
-        selectedMonth.value--
+function previous() {
+
+    switch (panel.value) {
+        case 'date':
+            if (selectedMonth.value === 0) {
+                selectedMonth.value = 11
+                selectedYear.value--
+            } else {
+                selectedMonth.value--
+            }
+            break
+        case 'month':
+            selectedYear.value--
+            break
+        case 'year':
+            break
     }
+
 }
 
-function nextMonth() {
-    if (selectedMonth.value === 11) {
-        selectedMonth.value = 0
-        selectedYear.value++
-    } else {
-        selectedMonth.value++
+function next() {
+
+    switch (panel.value) {
+        case 'date':
+            if (selectedMonth.value === 11) {
+                selectedMonth.value = 0
+                selectedYear.value++
+            } else {
+                selectedMonth.value++
+            }
+            break
+        case 'month':
+            selectedYear.value++
+            break
+        case 'year':
+            break
     }
+
 }
 
 function isDateSelected(date) {
@@ -223,5 +258,9 @@ function selectYear(year) {
 </script>
 
 <style scoped>
+
+* {
+    @apply select-none;
+}
 
 </style>
