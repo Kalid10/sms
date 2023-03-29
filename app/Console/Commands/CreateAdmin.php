@@ -47,7 +47,7 @@ class CreateAdmin extends Command
             ]);
 
             // Get all roles and attach them to the user
-            $user->roles()->attach(Role::all()->pluck('name')->toArray());
+            $user->roles()->attach(Role::all()->pluck('name'));
 
             DB::commit();
             $this->info('Admin registration succeeded.');
