@@ -38,7 +38,7 @@ class CreateBulkRequest extends FormRequest
             $schoolYear = SchoolYear::whereNull('end_date')->first();
 
             if (isset($schoolYear->end_date)) {
-                $validator->errors()->add('batches', 'School year is not active');
+                return $validator->errors()->add('batches', 'School year is not active');
             }
 
             foreach ($batches['grade'] as $batch) {
@@ -46,7 +46,7 @@ class CreateBulkRequest extends FormRequest
                 $level = Level::find($batch['level_id']);
 
                 if (! $level) {
-                    $validator->errors()->add('batches', 'Level does not exist');
+                    return $validator->errors()->add('batches', 'Level does not exist');
                 }
             }
         });

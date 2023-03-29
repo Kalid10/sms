@@ -35,6 +35,12 @@ class CreateRequest extends FormRequest
     {
         // Get active school year
         $schoolYear = SchoolYear::whereNull('end_date')->first();
+
+        // Return error if there is no active school year
+        if (! $schoolYear) {
+            return $validator->errors()->add('school_year', 'School year is not active');
+        }
+
         $validator->after(function ($validator) use ($schoolYear) {
             $batch = Batch::where('level_id', $this->level_id)
                 ->where('school_year_id', $schoolYear->id)
