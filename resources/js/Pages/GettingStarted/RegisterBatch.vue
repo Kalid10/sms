@@ -46,7 +46,7 @@
         </div>
     </div>
         <AddBatchModal v-if="showModal" :view="true" >
-            <FormElement  title="Add new Level" class="relative" @submit="createLevel">
+            <FormElement  title="Add new Level" class="relative" @submit="updateLevel">
                 <XMarkIcon class="absolute top-0 right-0 m-2 h-7 w-7 cursor-pointer text-gray-500 transition-colors duration-300 ease-in-out hover:text-gray-900" @click="showModal=false"></XMarkIcon>
                 <TextInput v-model="levelForm.name" label="Level Name" required placeholder="Name Ex:2" :error="levelForm.errors.name"></TextInput>
                 <p v-if="!levelForm.name" class="text-sm text-red-500">{{error}}</p>
@@ -54,7 +54,7 @@
         </AddBatchModal>
 
         <div class="flex justify-end">
-            <PrimaryButton type="submit" class="w-1/20" @click="createBatches">Create Batches</PrimaryButton>
+            <PrimaryButton type="submit" class="w-1/20" @click="isDataValid? createBatches():createLevels()">Create Batches</PrimaryButton>
         </div>
     </div>
 </template>
@@ -68,7 +68,7 @@ import Checkbox from '@/Components/Checkbox.vue'
 import TextInput from '@/Components/TextInput.vue'
 import { PlusCircleIcon,XMarkIcon} from "@heroicons/vue/24/outline";
 import {router, useForm, usePage} from "@inertiajs/vue3";
-import { ref , computed } from 'vue'
+import {ref, computed} from 'vue'
 
 const error = ref('')
 const showModal =ref(false)
@@ -77,6 +77,7 @@ const levels = computed(() => usePage().props.levels)
 
 const updatedLevels = ref(levels.value.map(level => {
     return {
+        level_id: level.id,
         name: level.name,
         isSelected: true,
         no_of_sections: 1
@@ -87,28 +88,47 @@ const updatedLevels = ref(levels.value.map(level => {
 const levelForm = useForm({
     name: null,
 })
-function createLevel() {
-    levelForm.post('/levels/create', {
-        onSuccess: () => {
-            // Add new level to the list
-            updatedLevels.value.push({
-                name: levelForm.name,
-                isSelected: true,
-                no_of_sections: 1
+
+function updateLevel(){
+    updatedLevels.value.push({
+        name: levelForm.name,
+        isSelected: true,
+        no_of_sections: 1,
+        level_id: null
+    });
+    levelForm.reset();
+    showModal.value = false;
+}
+
+// Check if all the updatedLevels have level_id with computed property
+const isDataValid = computed(() => updatedLevels.value.every(level => level.level_id !== null));
+
+function createLevels(){
+    // Check updatedLevels for null level_id, which means that there is no level created yet,
+    // so loop and create the level and assign the id to the level_id
+    updatedLevels.value.forEach(level => {
+        if (level.level_id === null) {
+            // Send post request to create level and assign the id to the level_id
+            router.post('/levels/create', {
+                name: level.name,
+            }, {
+                preserveState: true,
+                preserveScroll: true,
+                onSuccess: () => {
+                    level.level_id = levels.value.find(l => l.name === level.name).id;
+                    if (isDataValid.value)
+                        createBatches();
+                }
             });
-            levelForm.reset();
-            showModal.value = false;
-        },
+        }
     });
 }
 
 function createBatches(){
+    // Send the levels and sections to create the batches
     router.post('/batches/create-bulk', {
         batches: updatedLevels.value,
-        onSuccess: () => {
-           showModal.value = false;
-        },
-    })
+    });
 }
 
 </script>
