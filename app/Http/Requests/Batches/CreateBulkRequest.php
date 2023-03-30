@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Batches;
 
+use App\Models\Batch;
 use App\Models\Level;
 use App\Models\SchoolYear;
 use Illuminate\Contracts\Validation\Rule;
@@ -41,7 +42,18 @@ class CreateBulkRequest extends FormRequest
                 $validator->errors()->add('batches', 'School year is not active');
             }
 
-            foreach ($batches['grade'] as $batch) {
+            // Check if batch already exists
+            foreach ($batches as $batch) {
+                $levelId = $batch['level_id'];
+                $noOfSections = $batch['no_of_sections'];
+
+                if (Batch::where('level_id', $levelId)
+                        ->where('school_year_id', $schoolYear->id)->count() === $noOfSections) {
+                    $validator->errors()->add('batches', 'Batch already exists');
+                }
+            }
+
+            foreach ($batches as $batch) {
                 // check if level exists
                 $level = Level::find($batch['level_id']);
 

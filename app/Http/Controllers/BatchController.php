@@ -8,6 +8,8 @@ use App\Models\Batch;
 use App\Models\SchoolYear;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -41,28 +43,35 @@ class BatchController extends Controller
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
         }
 
-        foreach ($validated['batches']['grade'] as $batch) {
-            $levelId = $batch['level_id'];
-            $noOfSections = $batch['no_of_sections'];
+        DB::beginTransaction();
+        try {
+            foreach ($validated['batches'] as $batch) {
+                $levelId = $batch['level_id'];
+                $noOfSections = $batch['no_of_sections'];
 
-            if (Batch::where('level_id', $levelId)
-                    ->where('school_year_id', $schoolYearId)->count() === $noOfSections) {
-                continue;
-            }
+                if (Batch::where('level_id', $levelId)
+                        ->where('school_year_id', $schoolYearId)->count() === $noOfSections) {
+                    continue;
+                }
 
-            for ($i = 0; $i < $noOfSections; $i++) {
-                $section = chr(65 + $i);
-                Batch::create([
-                    'level_id' => $levelId,
-                    'school_year_id' => $schoolYearId,
-                    'section' => $section,
-                ]);
+                for ($i = 0; $i < $noOfSections; $i++) {
+                    $section = chr(65 + $i);
+                    Batch::create([
+                        'level_id' => $levelId,
+                        'school_year_id' => $schoolYearId,
+                        'section' => $section,
+                    ]);
+                }
             }
+            DB::commit();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            DB::rollBack();
+
+            return redirect()->back()->withErrors(['batches' => 'Something went wrong!']);
         }
 
-        return Inertia::render('Welcome', [
-            'batches' => Batch::with('level', 'schoolYear')->get(),
-        ]);
+        return redirect()->back()->with('success', 'Batches created successfully!');
     }
 
     public function list(Request $request): Response

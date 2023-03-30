@@ -338,8 +338,7 @@ function addBatch() {
 
 function addBatches() {
     router.post('/batches/create-bulk', {
-            batches: {
-                grade: [
+            batches: [
                     {
                         level_id: 1,
                         no_of_sections: 3
@@ -348,8 +347,7 @@ function addBatches() {
                         level_id: 2,
                         no_of_sections: 2
                     }
-                ]
-            }
+            ]
         },
         {
             onSuccess: () => {
