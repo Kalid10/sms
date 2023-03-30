@@ -27,6 +27,8 @@ class CreateBulkRequest extends FormRequest
     {
         return [
             'batches' => 'required|array',
+            'batches.*.level_id' => 'required|exists:levels,id',
+            'batches.*.no_of_sections' => 'required|integer|min:1',
         ];
     }
 
