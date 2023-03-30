@@ -1,6 +1,6 @@
 <template>
 
-    <button :type="type" class="rounded-md border border-black bg-black py-1.5 px-4 text-sm text-white" @click="click">
+    <button :disabled="disabled" :type="type" class="rounded-md border border-black bg-black py-1.5 px-4 text-sm text-white opacity-100 transition-opacity duration-150 disabled:opacity-50" @click="click">
         <slot>
             {{ title }}
         </slot>
@@ -17,6 +17,10 @@ defineProps({
     type: {
         type: String,
         default: "button"
+    },
+    disabled: {
+        type: Boolean,
+        default: false
     }
 })
 

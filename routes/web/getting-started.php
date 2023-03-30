@@ -11,8 +11,8 @@ Route::prefix('getting-started')->group(function () {
     Route::get('/register-year', function () {
         return Inertia::render('GettingStarted/RegisterSchoolYear');
     });
-    Route::get('/register-batch', function () {
-        return Inertia::render('GettingStarted/RegisterBatch', [
+    Route::get('/register-batches', function () {
+        return Inertia::render('GettingStarted/RegisterBatches', [
             'levels' => Level::all(),
         ]);
     });
