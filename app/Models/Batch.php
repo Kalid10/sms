@@ -47,4 +47,9 @@ class Batch extends Model
             ->logOnly(['level_id', 'school_year_id', 'section'])
             ->useLogName('batch');
     }
+
+    public function batchSubjects(): HasMany
+    {
+        return $this->hasMany(BatchSubject::class);
+    }
 }

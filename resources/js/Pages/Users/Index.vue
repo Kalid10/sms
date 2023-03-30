@@ -3,7 +3,7 @@
     <UsersStatistics/>
 
     <TableElement
-        :columns="config" :data="users"
+        :data="users"
         actionable
         row-actionable
         selectable
@@ -12,17 +12,18 @@
     >
 
         <template #action="{ selected }">
-            <div v-if="selected.selected" class="flex items-center gap-2">
-                <TertiaryButton
-                    title="Move Items"
-                    @click="moveItems(selected.items)"
-                />
-                <PrimaryButton
-                    title="Update Items"
-                    @click="updateItems(selected.items)"
-                />
-            </div>
-            <PrimaryButton v-else title="Create New User" @click="createUserForm">
+            <div class="flex flex-row space-x-4">
+                <div v-if="selected.selected" class="flex items-center gap-2">
+                    <TertiaryButton
+                        title="Move Items"
+                        @click="moveItems(selected.items)"
+                    />
+                    <PrimaryButton
+                        title="Update Items"
+                        @click="updateItems(selected.items)"
+                    />
+                </div>
+                <PrimaryButton v-else title="Create New User" @click="createUserForm">
                 <span class="flex items-center gap-2">
                     <CloudArrowDownIcon class="h-4 w-4 stroke-white stroke-2"/>
                     <span>
@@ -30,7 +31,11 @@
                         <span class="font-mono">CSV</span>
                     </span>
                 </span>
-            </PrimaryButton>
+                </PrimaryButton>
+                <PrimaryButton @click="openRegisterOptions">
+                    Add User
+                </PrimaryButton>
+            </div>
         </template>
 
         <template #row-actions="{ row }">
@@ -48,6 +53,8 @@
         </template>
 
     </TableElement>
+
+    <Register v-if="showRegisterOptions" :user-roles="userRoles" :toggle="showRegisterOptions"></Register>
 
     <Modal v-model:view="showModal">
         <FormElement
@@ -73,9 +80,13 @@
 
             <div class="flex gap-3">
 
-                <TextInput v-model="formData.position" class="w-1/2 lg:w-3/5" label="Position" placeholder="Position of user"/>
+                <TextInput
+v-model="formData.position" class="w-1/2 lg:w-3/5" label="Position"
+                           placeholder="Position of user"/>
 
-                <DatePicker v-model:start-date="start_date" v-model:end-date="end_date" range placeholder="Select a Date" required label="Start Date" class="w-1/2 lg:w-2/5" />
+                <DatePicker
+v-model:start-date="start_date" v-model:end-date="end_date" range
+                            placeholder="Select a Date" required label="Start Date" class="w-1/2 lg:w-2/5"/>
 
             </div>
 
@@ -87,27 +98,25 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
-import {
-    BugAntIcon,
-    EyeIcon,
-    ArrowPathIcon,
-    ArchiveBoxXMarkIcon,
-    CloudArrowDownIcon
-} from "@heroicons/vue/24/outline"
-import {users} from "@/fake";
-import {Link} from '@inertiajs/vue3'
+import {computed, ref} from "vue"
+import {ArchiveBoxXMarkIcon, ArrowPathIcon, CloudArrowDownIcon, EyeIcon} from "@heroicons/vue/24/outline"
+import {Link, usePage} from '@inertiajs/vue3'
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue"
 import TextInput from "@/Components/TextInput.vue"
-import SelectInput from "@/Components/SelectInput.vue"
 import TableElement from "@/Components/TableElement.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
-import Card from "@/Components/Card.vue"
 import UsersStatistics from "@/Views/UsersStatistics.vue";
 import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import DatePicker from "@/Components/DatePicker.vue";
+import Register from "@/Views/RegisterUser.vue";
+
+const showRegisterOptions = ref(false);
+
+function openRegisterOptions() {
+    showRegisterOptions.value = !showRegisterOptions.value;
+}
 
 const formData = ref({
     name: '',
@@ -150,45 +159,22 @@ const user_types = [
 ]
 
 function updateItems(items) {
+    // TODO: remove console.log when notification is ready
     console.log(`Items to update are `, items.map((item) => item.id))
 }
 
 function moveItems(items) {
+    // TODO: remove console.log when notification is ready
     console.log(`Items to move are `, items.map((item) => item.id))
 }
 
-const config = [
-    {
-        name: 'Full Name',
-        key: 'name',
-        link: '/users/{id}',
-    },
-    {
-        name: 'Email',
-        key: 'email',
-        link: 'mailto:{email}'
-    },
-    {
-        name: 'Phone Number',
-        key: 'phone',
-    },
-    {
-        name: 'User Type',
-        key: 'type',
-        type: 'enum',
-        options: ['admin', 'teacher', 'student']
-    },
-    {
-        name: 'User Roles',
-        key: 'roles',
-        link: 'https://google.com'
-    },
-    {
-        name: 'Active',
-        key: 'active',
-        type: Boolean
-    },
-]
+// Get all users
+const users = computed(() => {
+    return usePage().props.users.data;
+});
+
+const userRoles = computed(() => usePage().props.user_roles);
+
 
 const showRegisterUser = ref(true)
 const showModal = ref(false)
