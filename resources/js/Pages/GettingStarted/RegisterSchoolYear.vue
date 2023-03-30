@@ -11,7 +11,7 @@
                     <SelectInput
                         label="Number of semester"
                         placeholder="0"
-                        :options="NoOfSemester"
+                        :options="noOfSemester"
                         :model-value="selectedSemester"
                         @update:model-value="selectedSemester = $event"
                     />
@@ -38,17 +38,17 @@ import SelectInput from "@/Components/SelectInput.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 
 const selectedSemester = ref(null);
-const NoOfSemester =[
+const noOfSemester =[
     {value: 1, label: 1},
     {value: 2, label: 2},
     {value: 3, label: 3},
     {value: 4, label: 4},
     {value: 5, label: 5},
 ]
-const SelectedNoOfSemester = ref(1)
+const selectedNoOfSemester = ref(1)
 const formData = useForm({
     name: "",
-    number_of_semesters: SelectedNoOfSemester,
+    number_of_semesters: selectedNoOfSemester,
     start_date: null
 });
 function handleSubmit() {

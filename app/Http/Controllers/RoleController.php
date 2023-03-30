@@ -112,7 +112,6 @@ class RoleController extends Controller
 
         return Inertia::render('Roles/Detail', [
             'roles' => $roles]);
-//         return redirect()->back()->with('roles', $roles);
     }
 
     // Add function to get user roles

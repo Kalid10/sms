@@ -3,13 +3,10 @@
         <div class="flex w-full flex-col space-x-2 md:flex-row">
             <!--    Assigned roles -->
             <Card class="max-h-fit max-w-fit" icon title="Assigned Role to User" subtitle="Add or remove roles to update the user's abilities">
-
                 <template #icon>
                     <IdentificationIcon />
                 </template>
-
                 <TextInput v-model="query" placeholder="Search roles" />
-
                 <ul class="max-h-80 overflow-auto">
                     <li v-for="(role, r) in newUserRoles" :key="r" class="group flex items-center gap-2 rounded-md p-3 odd:bg-neutral-100">
                         <InformationCircleIcon class="h-3 w-3"></InformationCircleIcon>
@@ -17,20 +14,13 @@
                         <TrashIcon class="h-4 w-4 stroke-gray-500 stroke-0 group-hover:stroke-2" @click="deleteRole(role)"></TrashIcon>
                     </li>
                 </ul>
-
                 <div class="flex w-full items-center justify-between">
-
                     <span class="text-xs text-gray-500">5 roles selected</span>
-
                     <div class="flex gap-2">
-
                         <TertiaryButton title="Reset" @click="resetRolesList" />
                         <PrimaryButton title="Update" @click="showDialog = true" />
-
                     </div>
-
                 </div>
-
             </Card>
             <!-- list of roles   -->
             <div class=" max-w-md md:p-2 ">
@@ -92,7 +82,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue"
+import { ref, computed } from "vue"
 import Card from "@/Components/Card.vue"
 import DialogBox from "@/Components/DialogBox.vue"
 import SearchRoleTextInput from "@/Components/TextInput.vue"
@@ -102,7 +92,6 @@ import { InformationCircleIcon, TrashIcon, IdentificationIcon, MinusIcon } from 
 import { usePage, router } from "@inertiajs/vue3"
 import TextInput from "@/Components/TextInput.vue";
 import {debounce} from "lodash";
-
 const showDialog = ref(false)
 const user_roles = computed(() => usePage().props.user_roles)
 const roles = computed(() => usePage().props.roles)
@@ -128,9 +117,7 @@ function handleConfirm(){
             console.log("Success")
         },
         onError: (error) =>{
-
             console.log("Error")
-            console.log(error)
         }
     })
 }

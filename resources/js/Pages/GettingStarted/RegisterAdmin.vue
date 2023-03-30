@@ -45,7 +45,6 @@ const formData = useForm({
 });
 
 function handleSubmit() {
-    console.log(formData)
     formData.post('/register',{
         onSuccess: () => {
             console.log("Success")

@@ -12,7 +12,10 @@
                                 <div class="m-2 rounded-xl p-2 text-left  font-bold">
                                     <div class=" flex flex-row justify-between">
                                         <p class="text-bold text-lg ">{{level.name}}</p>
-                                        <Checkbox v-model="level.isSelected" class="h-6 w-6 !rounded-full"></Checkbox>
+                                        <template v-if="!level.isNew">
+                                            <Checkbox v-model="level.isSelected" class="h-6 w-6 !rounded-full"></Checkbox>
+                                        </template>
+                                        <TrashIcon v-else class="h-6 w-6 stroke-black stroke-2" @click="removeLevel(index)"></TrashIcon>
                                     </div>
                                 </div>
                                 <div class=" absolute bottom-3 left-3  rounded align-bottom">
@@ -66,16 +69,21 @@ import AddBatchModal from "@/Components/Modal.vue";
 import Heading from "@/Components/Heading.vue";
 import Checkbox from '@/Components/Checkbox.vue'
 import TextInput from '@/Components/TextInput.vue'
-import { PlusCircleIcon,XMarkIcon} from "@heroicons/vue/24/outline";
+import { PlusCircleIcon,XMarkIcon, TrashIcon} from "@heroicons/vue/24/outline";
 import {router, useForm, usePage} from "@inertiajs/vue3";
-import {ref, computed} from 'vue'
+import {ref, computed, watch} from 'vue'
 
 const error = ref('')
 const showModal =ref(false)
 
 const levels = computed(() => usePage().props.levels)
 
-const updatedLevels = ref(levels.value.map(level => {
+function removeLevel(index){
+    updatedLevels.value.splice(index, 1);
+}
+
+const updatedLevels = ref(
+    levels.value.map(level => {
     return {
         level_id: level.id,
         name: level.name,
@@ -84,7 +92,6 @@ const updatedLevels = ref(levels.value.map(level => {
     }
 }));
 
-
 const levelForm = useForm({
     name: null,
 })
@@ -92,7 +99,7 @@ const levelForm = useForm({
 function updateLevel(){
     updatedLevels.value.push({
         name: levelForm.name,
-        isSelected: true,
+        isNew: true,
         no_of_sections: 1,
         level_id: null
     });
@@ -101,28 +108,59 @@ function updateLevel(){
 }
 
 // Check if all the updatedLevels have level_id with computed property
-const isDataValid = computed(() => updatedLevels.value.every(level => level.level_id !== null));
+const isDataValid = computed(() => {
+    return updatedLevels.value.every(level => level.level_id !== null);
+});
 
-function createLevels(){
-    // Check updatedLevels for null level_id, which means that there is no level created yet,
-    // so loop and create the level and assign the id to the level_id
-    updatedLevels.value.forEach(level => {
-        if (level.level_id === null) {
-            // Send post request to create level and assign the id to the level_id
-            router.post('/levels/create', {
-                name: level.name,
-            }, {
-                preserveState: true,
-                preserveScroll: true,
-                onSuccess: () => {
-                    level.level_id = levels.value.find(l => l.name === level.name).id;
-                    if (isDataValid.value)
-                        createBatches();
+function createLevels() {
+    updatedLevels.value.filter(level => level.isNew).forEach(l1 => {
+        console.log("this is "+l1.name);
+        router.post('/levels/create', {
+            name: l1.name,
+        }, {
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                console.log(l1.name);
+                l1.level_id = levels.value.find(l => l.name === l.name).id;
+                console.log(l1.level_id);
+
+                if (isDataValid.value) {
+                    createBatches();
                 }
-            });
-        }
-    });
+            }
+        })
+    })
+
 }
+
+//
+// function createLevels(){
+//     // Check updatedLevels for null level_id, which means that there is no level created yet,
+//     // so loop and create the level and assign the id to the level_id
+//     updatedLevels.value.forEach(level => {
+//         if (level.level_id === null) {
+//             alert("hello");
+//             // Send post request to create level and assign the id to the level_id
+//             router.post('/levels/create', {
+//                 name: level.name,
+//             }, {
+//                 preserveState: true,
+//                 preserveScroll: true,
+//                 onSuccess: () => {
+//                     alert(levels.value.find(l => l.name === level.name).id);
+//                     level.level_id = levels.value.find(l => l.name === level.name).id;
+//                     console.log(level.level_id)
+//                     if (isDataValid.value) {
+//                         alert('valid')
+//                         console.log('hello')
+//                         createBatches();
+//                     }
+//                 }
+//             });
+//         }
+//     });
+// }
 
 function createBatches(){
     // Send the levels and sections to create the batches
