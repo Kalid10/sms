@@ -43,7 +43,7 @@ class SemesterController extends Controller
             DB::rollBack();
             Log::error($e->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 
@@ -61,7 +61,7 @@ class SemesterController extends Controller
             DB::rollBack();
             Log::error($e->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 
@@ -72,7 +72,7 @@ class SemesterController extends Controller
             $semesters = Semester::all();
 
             // Get active school year semesters
-            $schoolYearSemesters = $semesters->filter(function ($semester) {
+            $activeSchoolYearSemesters = $semesters->filter(function ($semester) {
                 return $semester->schoolYear->end_date === null;
             });
 
@@ -81,11 +81,23 @@ class SemesterController extends Controller
                 return $semester->status === Semester::STATUS_ACTIVE;
             });
 
+            // Count of semesters
+            $semestersCount = Semester::count();
+
+            // Count of all school years
+            $schoolYearsCount = SchoolYear::count();
+
+            // Count active school year semesters
+            $activeSchoolYearSemestersCount = $activeSchoolYearSemesters->count();
+
             // TODO: Change to the correct component
             return Inertia::render('Semesters/Index', [
                 'semesters' => $semesters,
                 'activeSemester' => $activeSemester,
-                'schoolYearSemesters' => $schoolYearSemesters,
+                'activeSchoolYearSemesters' => $activeSchoolYearSemesters,
+                'semestersCount' => $semestersCount,
+                'schoolYearsCount' => $schoolYearsCount,
+                'activeSchoolYearSemestersCount' => $activeSchoolYearSemestersCount,
             ]);
         } catch (Exception $e) {
             Log::error($e->getMessage());

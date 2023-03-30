@@ -7,10 +7,25 @@ use App\Http\Requests\Subjects\UpdateRequest;
 use App\Models\Subject;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class SubjectController extends Controller
 {
+    public function index(Request $request)
+    {
+        // Get search key
+        $searchKey = $request->input('search');
+
+        // Get subjects
+        $subjects = Subject::select('id', 'full_name', 'short_name')->where('full_name', 'like', '%'.$searchKey.'%')->paginate(10);
+
+        return Inertia::render('Subject/Index', [
+            'subjects' => $subjects,
+        ]);
+    }
+
     public function create(CreateRequest $request): RedirectResponse
     {
         try {
@@ -23,7 +38,7 @@ class SubjectController extends Controller
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 
@@ -39,7 +54,7 @@ class SubjectController extends Controller
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 
@@ -60,7 +75,7 @@ class SubjectController extends Controller
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
-            return  redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
     }
 }
