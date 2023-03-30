@@ -108,6 +108,9 @@ const passwordForm = useForm({
 const submitPasswordForm = () => {
     passwordForm.post(route('user.update.password'), {
         onFinish: () => passwordForm.reset(),
+        onSuccess: () => {
+            passwordForm.reset();
+        }
     });
 }
 </script>
