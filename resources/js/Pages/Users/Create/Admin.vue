@@ -2,6 +2,7 @@
     <div class="grid-rows-12 grid sm:grid-cols-12">
 
         <!--        Handle success message-->
+        <!--         TODO: remove when notification is ready-->
         <div v-if="success" class="flex justify-end text-sm text-green-500">
             {{ success }}
         </div>
@@ -11,7 +12,7 @@
                 value="Register an Admin"/>
             <Heading
                 value="Fill in the information required."
-                size="sm" class="font-normal text-gray-500"/>
+                size="sm" class="text-xs font-light text-gray-500"/>
         </div>
         <div class="col-span-8">
             <div class="w-full max-w-4xl rounded-lg bg-white">
@@ -20,8 +21,8 @@
                     @submit="submit"
                 >
                     <AdminTextInput
-v-model="form.name" class="w-full" label="Name" placeholder="full name"
-                                    :error="form.errors.name" required/>
+                        v-model="form.name" class="w-full" label="Name" placeholder="full name"
+                        :error="form.errors.name" required/>
 
                     <div class="flex gap-3">
                         <AdminTextInput
@@ -68,14 +69,6 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('register.admin'), {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
-        }
-    });
+    form.post(route('register.admin'));
 }
 </script>

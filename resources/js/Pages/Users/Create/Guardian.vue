@@ -1,6 +1,7 @@
 <template>
     <div class="grid-rows-12 grid sm:grid-cols-12">
         <!--        Handle success message-->
+        <!--         TODO: remove when notification is ready-->
         <div v-if="success" class="flex justify-end text-sm text-green-500">
             {{ success }}
         </div>
@@ -12,7 +13,7 @@
             <Heading
                 value="Register students and parents to efficiently manage academic progress, track achievements, and
                 facilitate communications."
-                size="sm" class="font-normal text-gray-500"/>
+                size="sm" class="text-xs font-light text-gray-500"/>
         </div>
         <div class="col-span-8">
             <div class="w-full max-w-4xl rounded-lg bg-white">
@@ -58,7 +59,7 @@
                 value="Register student and parents in bulk"/>
             <Heading
                 value="only upload an excel or csv file."
-                size="sm" class="font-normal text-gray-500"/>
+                size="sm" class="text-xs font-light text-gray-500"/>
         </div>
         <div class="col-span-8">
             <div class="relative w-full max-w-4xl flex-col rounded-lg bg-white">
@@ -108,15 +109,6 @@ const bulkForm = useForm({
 })
 
 const submit = () => {
-    form.post(route('register.family'),
-        {
-            onSuccess: () => {
-                console.log("Success");
-            },
-            onError: (error) => {
-                console.log("Error")
-                console.log(error)
-            }
-        });
+    form.post(route('register.guardian'));
 }
 </script>

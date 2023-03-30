@@ -16,7 +16,7 @@ Route::controller(UserController::class)->prefix('user/')->middleware('auth')->n
 });
 
 Route::controller(UserController::class)->prefix('register/')->middleware('auth')->name('user.')->group(function () {
-    Route::get('family', 'family');
+    Route::get('guardian', 'guardian');
     Route::get('admin', 'admin');
     Route::get('teacher', 'teacher');
 });
@@ -24,10 +24,12 @@ Route::controller(UserController::class)->prefix('register/')->middleware('auth'
 Route::controller(RegisterController::class)->prefix('register/')->middleware('web')->name('register.')->group(function () {
     Route::get('/', 'index');
     Route::post('admin', 'register')->name('admin');
-    Route::post('family', 'register')->name('family');
+    Route::post('guardian', 'register')->name('guardian');
     Route::post('teacher', 'register')->name('teacher');
 });
 
 Route::controller(UserPositionController::class)->prefix('positions/')->middleware(['checkUserType:admin', 'checkUserRole:manage-user-positions'])->name('user-positions.')->group(function () {
     Route::post('create', 'create')->name('create');
+    Route::post('update', 'update')->name('update');
+    Route::delete('{id}', 'destroy')->name('destroy');
 });

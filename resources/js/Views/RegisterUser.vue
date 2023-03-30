@@ -6,11 +6,9 @@
             <RegisterCard
                 v-if="hasRole('manage-students')"
                 icon
-                title="Student" subtitle="Register as a student
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher"
+                title="Guardian and Student" subtitle="Students and their guardians are required to provide personal information such as name,
+                contact information and any special needs or accommodations required. Depending on the institution, guardians may also need to
+                 provide legal documentation such as proof of guardianship or custody."
                 class="hover:scale-11 min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out hover:-translate-y-1"
                 @click="familyRegistrationLink">
                 <template #icon>
@@ -22,15 +20,29 @@
             <RegisterCard
                 v-if="hasRole('manage-guardians')"
                 icon
-                title="Teacher" subtitle="Register as a teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher
-                    a small description for register as student, guardian and teacher"
-                class="hover:scale-11 min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out hover:-translate-y-1"
+                title="Teacher" subtitle=" Teachers are typically required to provide personal information such as name,
+                contact information, and educational qualifications.
+                They may also need to provide teaching experience, references, and any specialized training or
+                certifications."
+                class="hover:scale-11 min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out
+                hover:-translate-y-1"
                 @click="teacherRegistrationLink">
                 <template #icon>
                     <BookOpenIcon class="h-6 w-6"/>
+                </template>
+            </RegisterCard>
+
+            <RegisterCard
+                v-if="hasRole('manage-admins')"
+                icon
+                title="Admin" subtitle="Administrators may need to provide personal information such as name, contact
+                information, and job position.
+                They may also need to provide professional qualifications and references."
+                class="hover:scale-11 min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out
+                hover:-translate-y-1"
+                @click="adminRegistrationLink">
+                <template #icon>
+                    <BuildingLibraryIcon class="h-6 w-6"/>
                 </template>
             </RegisterCard>
 
@@ -41,7 +53,7 @@
 <script setup>
 import {computed, ref} from 'vue'
 import RegisterCard from "@/Components/Card.vue";
-import {AcademicCapIcon, BookOpenIcon} from "@heroicons/vue/24/outline"
+import {AcademicCapIcon, BookOpenIcon, BuildingLibraryIcon} from "@heroicons/vue/24/outline"
 import RegisterModal from "@/Components/Modal.vue";
 import {router} from "@inertiajs/vue3";
 
@@ -74,12 +86,17 @@ const isOpen = ref(props.toggle)
 
 // link to student registration
 function familyRegistrationLink() {
-    router.get("/family");
+    router.get("register/guardian");
 }
 
 // link to teacher registration
 function teacherRegistrationLink() {
-    router.get('/teacher')
+    router.get('register/teacher')
+}
+
+// link to admin registration
+function adminRegistrationLink() {
+    router.get('register/admin')
 }
 </script>
 

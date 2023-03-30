@@ -23,10 +23,10 @@ class UpdateRequest extends FormRequest
     {
         return [
             'id' => 'required|integer|exists:users,id',
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'],
-            'username' => ['required', 'string', 'max:255', 'unique:users,username,'],
-            'phone_number' => ['required', 'string', 'max:255', 'unique:users,phone_number,'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users|email',
+            'username' => 'required|string|max:255|unique:users|username',
+            'phone_number' => 'required|string|max:255|unique:users,phone_number',
         ];
     }
 

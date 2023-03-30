@@ -74,6 +74,7 @@ const handleFileUpload = (event) => {
             form.file = file;
         } else {
             form.file = null;
+            //  TODO: remove alert when notification is ready
             alert(`File size must be less than ${props.maxFileSize && !isNaN(props.maxFileSize) ? (props.maxFileSize / 1024 / 1024).toFixed(2) + ' MB' : 'N/A'}.`);
         }
     }
@@ -94,6 +95,7 @@ const handleDrop = (event) => {
             form.file = file;
         } else {
             form.file = null;
+            //  TODO: remove alert when notification is ready
             alert(`The file you selected is too large. Please choose a file that is smaller than ${props.maxFileSize && !isNaN(props.maxFileSize) ? (props.maxFileSize / 1024 / 1024).toFixed(2) + ' MB' : 'N/A'}.`);
         }
     }
