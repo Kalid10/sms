@@ -5,32 +5,36 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class UserController extends Controller
 {
-    public function index(Request $request): \Inertia\Response
+    public function index(Request $request): Response
     {
         // Get search key
         $searchKey = $request->input('search');
 
+        // For paginated data, get perPage value
+        $perPage = $request->input('per_page', 10);
+
         // Get users
-        $users = User::select('id', 'name', 'email', 'type')->where('name', 'like', '%'.$searchKey.'%')->paginate(10);
+        $users = User::select('id', 'name', 'email', 'type')->where('name', 'like', '%'.$searchKey.'%')->paginate($perPage);
 
         return Inertia::render('Users/Index', [
             'users' => $users,
         ]);
     }
 
-    public function profile(): \Inertia\Response
+    public function profile(): Response
     {
         return Inertia::render('Users/Profile');
     }
 
-    public function update(UpdateRequest $request): \Illuminate\Http\RedirectResponse
+    public function update(UpdateRequest $request): RedirectResponse
     {
         $user = User::find($request->id);
 
@@ -39,14 +43,14 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'User updated successfully.');
     }
 
-    public function updatePassword(UpdatePasswordRequest $request): \Illuminate\Http\RedirectResponse
+    public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
     {
-        // Check if the this is the logged in user
+        // Check if this is the logged-in user
         if ($request->id != auth()->user()->id) {
             return redirect()->back()->with('error', 'You are not authorized to update this user.');
         }
         // Check if old password and current password are same
-        if (! Hash::check($request->get('current_password'), Auth::user()->password)) {
+        if (! Hash::check($request->get('current_password'), auth()->user()->password)) {
             return back()->withErrors(['password' => 'Current Password is Invalid']);
         }
         // Check if current password and new password are same
