@@ -16,7 +16,7 @@ Route::prefix('getting-started')->group(function () {
             'levels' => Level::all(),
         ]);
     });
-    Route::get('/register-subject', function () {
-        return Inertia::render('GettingStarted/RegisterSubject');
+    Route::get('/register-subjects', function () {
+        return Inertia::render('GettingStarted/RegisterSubjects');
     });
 });
