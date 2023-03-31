@@ -1,3 +1,5 @@
+import {ref} from "vue";
+
 const users = [{
     "id": 1,
     "name": "Bartram Lockhurst",
@@ -550,4 +552,32 @@ const levels = [
     },
 ]
 
-export {users, semesters, levels, school_years, statuses};
+const grades = [
+    {id: 1, name: 'Grade 0ne',},
+    {id: 2, name: 'Grade Two',},
+    {id: 3, name: 'Grade Three',},
+    {id: 4, name: 'Grade Four',},
+    {id: 5, name: 'Grade Five',},
+    {id: 6, name: 'Grade Six',},
+    {id: 7, name: 'Grade Seven',},
+    {id: 8, name: 'Grade Eight',},
+    {id: 9, name: 'Grade Nine',},
+    {id: 10, name: 'Grade Ten',},
+    {id: 11, name: 'Grade Eleven',},
+    {id: 12, name: 'Grade Twelve',},
+]
+
+
+const sbj= [
+    {id:1,name:'Biology'},
+    {id:2,name:'Chemistry'},
+    {id:3,name:'Physics'},
+    {id:4,name:'English'},
+    {id:5,name:'Amharic'},
+    {id:6,name:'Mathematics'},
+    {id:7,name:'Geography'},
+    {id:8,name:'Civic'},
+
+]
+
+export {users, semesters, levels, school_years, statuses, grades,sbj};

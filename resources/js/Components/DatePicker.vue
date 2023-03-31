@@ -1,18 +1,22 @@
 <template>
 
     <label class="relative flex flex-col gap-1">
-        <span v-if="label" class="">
+        <span v-if="label && labelLocation === 'top'" class="">
             <span class="pl-0.5 text-sm font-semibold text-gray-500">{{ label }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
         </span>
 
         <span
-            class="relative flex h-10 w-full items-center justify-between rounded-md border border-gray-200 py-2 px-3 placeholder:text-sm"
+            class="relative flex w-full items-center justify-between rounded-md border border-gray-200 bg-white py-2 px-3 placeholder:text-sm"
+            :class="[labelLocation === 'inside' ? 'relative h-12' : 'h-10']"
             @click="viewPanel = !viewPanel"
         >
             <input type="date" class="sr-only" :required="required" :disabled="disabled" />
-            <span :class="[!! selectedDate ? 'text-black' : 'text-gray-500']" class="truncate whitespace-nowrap text-sm">
-                {{ selectedDate ?? placeholder }}
+            <span class="flex flex-col">
+                <span v-if="labelLocation === 'inside'" class="text-[0.7rem] text-gray-500">{{ label }}</span>
+                <span :class="[!! selectedDate ? 'text-black' : 'text-gray-500']" class="truncate whitespace-nowrap text-sm">
+                    {{ selectedDate ?? placeholder }}
+                </span>
             </span>
             <CalendarIcon class="h-4 w-4 stroke-gray-500 stroke-2" />
 
@@ -59,10 +63,11 @@
                                     'rounded-tl-md bg-black text-white' :
                                     'rounded-br-md bg-black text-white' :
                                     'rounded-md bg-black text-white' :
-                                    'hover:bg-black/10',
+                                    'hover:rounded-md hover:bg-black/10',
                                 isBetweenRange(i) ? 'bg-black/10' : '',
                             ]"
-                            class="relative grid place-items-center p-2.5 text-sm font-medium focus:outline-none"
+                            :disabled="isDateDisabled(i)"
+                            class="relative grid place-items-center p-2.5 text-sm font-medium focus:outline-none disabled:opacity-50 disabled:hover:bg-transparent"
                             @click="selectDate(i)"
                         >
                             {{ i }}
@@ -143,6 +148,10 @@ const props = defineProps({
         type: String,
         default: null
     },
+    labelLocation: {
+        type: String,
+        default: 'top'
+    },
     required: {
         type: Boolean,
         default: false
@@ -174,7 +183,11 @@ const props = defineProps({
     availableYears: {
         type: Array,
         default: () => [2020, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
-    }
+    },
+    minimum: {
+        type: [Date, null],
+        default: null
+    },
 })
 
 const emits = defineEmits(['update:modelValue', 'update:startDate', 'update:endDate'])
@@ -306,6 +319,17 @@ function isDateSelected(date) {
 
 }
 
+function isDateDisabled(date) {
+
+    const selectedDate = new Date(selectedYear.value, selectedMonth.value, date).toLocaleDateString()
+
+    if (!! props.minimum) {
+        return selectedDate <= props.minimum.toLocaleString()
+    }
+
+    return false
+}
+
 function isToday(date) {
 
     const selectedDate = new Date(selectedYear.value, selectedMonth.value, date).toLocaleDateString()
@@ -317,6 +341,7 @@ function isToday(date) {
 function selectDate(date) {
     if (! props.range) {
         emits('update:modelValue', new Date(selectedYear.value, selectedMonth.value, date))
+        viewPanel.value = false
     } else {
 
         if (!! ! props.startDate) {

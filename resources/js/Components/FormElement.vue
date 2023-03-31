@@ -20,10 +20,10 @@
         </div>
 
         <div class="flex min-h-10 w-full items-center justify-end gap-2 bg-neutral-100 py-2 px-4">
-
+            <slot name="form-actions">
             <SecondaryButton :title="modal ? 'Close' : 'Clear'" @click="cancel"/>
             <PrimaryButton title="Submit" @click="submit"/>
-
+            </slot>
         </div>
 
     </form>
