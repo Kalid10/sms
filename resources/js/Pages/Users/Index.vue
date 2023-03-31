@@ -3,13 +3,17 @@
     <UsersStatistics/>
 
     <TableElement
-        :data="users"
+        :data="users.data"
         actionable
         row-actionable
         selectable
         subtitle="List of personnel registered on your system, with user types and contact information"
         title="Users List"
     >
+
+        <template #filter>
+            <TextInput v-model="query" placeholder="Search for Users by Name or Email"/>
+        </template>
 
         <template #action="{ selected }">
             <div class="flex flex-row space-x-4">
@@ -52,6 +56,16 @@
             </Link>
         </template>
 
+        <template #footer>
+
+            <SelectInput v-model="perPage" class="w-36"  direction="up" placeholder="Per page" :options="perPageOptions"/>
+            <div class="flex w-full justify-end gap-3">
+                <TertiaryButton title="Previous" class="w-full md:w-fit" :disabled="!users['prev_page_url']" @click="previousPage"/>
+                <TertiaryButton title="Next" class="w-full md:w-fit" :disabled="!users['next_page_url']" @click="nextPage"/>
+            </div>
+
+        </template>
+
     </TableElement>
 
     <Register v-if="showRegisterOptions" :user-roles="userRoles" :toggle="showRegisterOptions"></Register>
@@ -81,12 +95,12 @@
             <div class="flex gap-3">
 
                 <TextInput
-v-model="formData.position" class="w-1/2 lg:w-3/5" label="Position"
-                           placeholder="Position of user"/>
+                    v-model="formData.position" class="w-1/2 lg:w-3/5" label="Position"
+                    placeholder="Position of user"/>
 
                 <DatePicker
-v-model:start-date="start_date" v-model:end-date="end_date" range
-                            placeholder="Select a Date" required label="Start Date" class="w-1/2 lg:w-2/5"/>
+                    v-model:start-date="start_date" v-model:end-date="end_date" range
+                    placeholder="Select a Date" required label="Start Date" class="w-1/2 lg:w-2/5"/>
 
             </div>
 
@@ -98,9 +112,9 @@ v-model:start-date="start_date" v-model:end-date="end_date" range
 </template>
 
 <script setup>
-import {computed, ref} from "vue"
+import {computed, ref, watch} from "vue"
 import {ArchiveBoxXMarkIcon, ArrowPathIcon, CloudArrowDownIcon, EyeIcon} from "@heroicons/vue/24/outline"
-import {Link, usePage} from '@inertiajs/vue3'
+import {Link, router, usePage} from '@inertiajs/vue3'
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue"
 import TextInput from "@/Components/TextInput.vue"
@@ -111,6 +125,7 @@ import UsersStatistics from "@/Views/UsersStatistics.vue";
 import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import Register from "@/Views/RegisterUser.vue";
+import SelectInput from "@/Components/SelectInput.vue";
 
 const showRegisterOptions = ref(false);
 
@@ -170,17 +185,62 @@ function moveItems(items) {
 
 // Get all users
 const users = computed(() => {
-    return usePage().props.users.data;
+    return usePage().props.users;
 });
 
 const userRoles = computed(() => usePage().props.user_roles);
 
-
-const showRegisterUser = ref(true)
+const showRegisterUser = ref(false)
 const showModal = ref(false)
 
 function createUserForm() {
     showRegisterUser.value = true
+}
+
+const query = ref('')
+const perPage = ref(10)
+const perPageOptions = [
+    {value: 10, label: '10'},
+    {value: 25, label: '25'},
+    {value: 50, label: '50'},
+    {value: 100, label: '100'},
+]
+
+function search() {
+
+    router.get('/users', {
+        search: query.value,
+        per_page: perPage.value,
+    }, {
+        preserveState: true,
+        replace: true,
+    })
+
+}
+
+const key = ref(0)
+watch([query, perPage], () => {
+    search()
+})
+
+function previousPage() {
+    router.get('/users', {
+        page: users.value['current_page'] - 1,
+        per_page: perPage.value,
+    }, {
+        preserveState: true,
+        replace: true
+    })
+}
+
+function nextPage() {
+    router.get('/users', {
+        page: users.value['current_page'] + 1,
+        per_page: perPage.value,
+    }, {
+        preserveState: true,
+        replace: true
+    })
 }
 
 const start_date = ref(null)
