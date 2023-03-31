@@ -4,7 +4,8 @@ import "../css/app.css";
 import {createApp, h} from "vue";
 import {createInertiaApp} from "@inertiajs/vue3";
 import {ZiggyVue} from "../../vendor/tightenco/ziggy/dist/vue.m";
-import Layout from "./Layout.vue";
+import Layout from "./Pages/Layouts/Layout.vue";
+import GettingStartedLayout from "./Pages/Layouts/GettingStartedLayout.vue";
 
 import {createPinia} from "pinia";
 
@@ -20,7 +21,7 @@ createInertiaApp({
         const pages = import.meta.glob("./Pages/**/*.vue", {eager: true});
         let page = pages[`./Pages/${name}.vue`]
         // console.log(page)
-        page.default.layout = name.startsWith('GettingStarted/') ? undefined : page.default.layout || Layout
+        page.default.layout = name.startsWith('GettingStarted/') ? GettingStartedLayout : page.default.layout || Layout
         // page.default.layout = page.default.layout || Layout;
         return page;
     },
