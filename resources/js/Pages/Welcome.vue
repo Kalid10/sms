@@ -35,6 +35,7 @@
         <button class="bg-red-400 p-1" @click="assignBatchSubjectsTeachers">Test Assign Batch Subject Teachers</button>
         <button class="bg-red-400 p-1" @click="updateUserPosition">Test Update User Position</button>
         <button class="bg-red-400 p-1" @click="deleteUserPosition">Test Delete User Position</button>
+        <button class="bg-red-400 p-1" @click="addSchoolSchedule">Test Add School Schedule</button>
     </div>
 
 </template>
@@ -549,7 +550,6 @@ function getLevels() {
     })
 }
 
-// Update user position
 function updateUserPosition() {
     router.post('/positions/update/', {
         name: "Leader",
@@ -566,7 +566,6 @@ function updateUserPosition() {
     })
 }
 
-// Delete user position
 function deleteUserPosition() {
     router.delete('/positions/' + 1, {
         onSuccess: () => {
@@ -579,6 +578,23 @@ function deleteUserPosition() {
     })
 }
 
+function addSchoolSchedule() {
+    router.post('/school-schedules/create', {
+        school_year_id: 1,
+        start_date: "2024-01-01",
+        end_date: "2024-12-31",
+        title: "Easter",
+        type: "holiday",
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
 </script>
 
 <style>
