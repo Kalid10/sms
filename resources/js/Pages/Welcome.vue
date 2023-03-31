@@ -35,6 +35,10 @@
         <button class="bg-red-400 p-1" @click="assignBatchSubjectsTeachers">Test Assign Batch Subject Teachers</button>
         <button class="bg-red-400 p-1" @click="updateUserPosition">Test Update User Position</button>
         <button class="bg-red-400 p-1" @click="deleteUserPosition">Test Delete User Position</button>
+        <button class="bg-red-400 p-1" @click="createAnnouncement">Test get Announcements</button>
+        <button class="bg-red-400 p-1" @click="createAnnouncement">Create Announcement</button>
+        <button class="bg-red-400 p-1" @click="updateAnnouncement">Update Announcement</button>
+        <button class="bg-red-400 p-1" @click="deleteAnnouncement">Delete Announcement</button>
     </div>
 
 </template>
@@ -579,6 +583,71 @@ function deleteUserPosition() {
     })
 }
 
+// Get all announcements
+function getAnnouncements() {
+    router.get('/announcements', {}, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+// Create announcement
+function createAnnouncement() {
+    router.post('/announcements/create', {
+        title: 'New announcement',
+        body: 'This is a test announcement',
+        author_id: 1,
+        expires_on: '2020-12-13',
+        target_group: ['all', 'students'],
+
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+// Update announcement
+function updateAnnouncement() {
+    router.post('/announcements/update', {
+        id: 1,
+        title: "Announcement 2",
+        body: "Announcement 2 description",
+        author_id: 1,
+        expires_on: "2020-12-13",
+        target_group: ["teachers"],
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+// Delete announcement
+function deleteAnnouncement() {
+    router.delete('/announcements/' + 1, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
 </script>
 
 <style>
