@@ -55,4 +55,20 @@ class SchoolScheduleController extends Controller
 
         return Inertia::render('Welcome', ['school_schedules' => $schoolSchedule]);
     }
+
+    public function delete($id): RedirectResponse
+    {
+        // Check if the school schedule exists
+        if (! SchoolSchedule::find($id)) {
+            return redirect()->back()->withErrors(['id' => 'The school schedule does not exist.']);
+        }
+
+        // Check if the school schedule is not in the past
+        if (SchoolSchedule::find($id)->start_date >= now()) {
+            return redirect()->back()->withErrors(['id' => 'Can not delete, the school schedule is in the past.']);
+        }
+        SchoolSchedule::find($id)->delete();
+
+        return redirect()->back()->with('success', 'Schedule has been deleted successfully.');
+    }
 }

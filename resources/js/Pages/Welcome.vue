@@ -38,6 +38,7 @@
         <button class="h-14 bg-orange-400 " @click="deleteUserPosition">Test Delete User Position</button>
         <button class="h-14 bg-green-500 " @click="addSchoolSchedule">Test Add School Schedule</button>
         <button class="h-14 bg-green-500 " @click="getSchoolSchedules">Test Get School Schedule</button>
+        <button class="h-14 bg-green-500 " @click="deleteSchoolSchedule">Test Delete School Schedule</button>
     </div>
 
 </template>
@@ -604,6 +605,18 @@ function getSchoolSchedules() {
     router.get('/school-schedules', {
         school_year_id: 1,
     }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function deleteSchoolSchedule() {
+    router.delete('/school-schedules/' + 2, {
         onSuccess: () => {
             console.log("Success")
         },

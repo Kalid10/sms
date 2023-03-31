@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
