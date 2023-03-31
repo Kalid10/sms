@@ -26,7 +26,7 @@ class SchoolScheduleFactory extends Factory
 
         return [
             'title' => fake()->sentence(5),
-            'body' => fake()->paragraph,
+            'body' => fake()->sentence,
             'start_date' => $startDate,
             'end_date' => $endDate,
             'type' => $type,
