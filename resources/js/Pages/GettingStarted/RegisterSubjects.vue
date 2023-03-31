@@ -37,8 +37,13 @@
 
                             <div class="flex items-center justify-between">
 
-                                <h3 class="font-semibold">
-                                    {{ subject.name }}
+                                <h3 class="flex items-baseline gap-2">
+                                    <span class="font-semibold">
+                                        {{ subject.name }}
+                                    </span>
+                                    <span class="text-sm uppercase text-gray-500">
+                                        {{ subject.short_name }}
+                                    </span>
                                 </h3>
 
                                 <Checkbox
@@ -94,6 +99,7 @@
     <div class="flex items-center gap-3">
 
         <PrimaryButton @click="submitSubjects">Finish</PrimaryButton>
+        <TertiaryButton v-if="selectedSubjects.length < updatedSubjects.length" @click="resetSubjects">Reset</TertiaryButton>
 
     </div>
 
@@ -102,6 +108,7 @@
         <FormElement title="New Subject" subtitle="Create a new subject and assign it to a category" @submit="addToSubjectsList">
 
             <TextInput v-model="newSubject.name" required placeholder="Name of the new Subject" label="Subject Name"/>
+            <TextInput v-model="short_name" required placeholder="Short name for Subject" label="Subject Short Name"/>
             <SelectInput v-model="newSubject.category" :options="categoryOptions" required placeholder="Category of the new Subject" label="Subject Category"/>
 
         </FormElement>
@@ -112,7 +119,7 @@
 
 <script setup>
 import { ref, computed } from "vue"
-import {gradesFromBatch, batches, subjects as fakeSubjects, sectionsOfLevel} from "@/fake"
+import { subjects as fakeSubjects } from "@/fake"
 import { PlusCircleIcon, PlusIcon, TrashIcon } from "@heroicons/vue/24/outline"
 import Heading from "@/Components/Heading.vue"
 import Card from "@/Components/Card.vue"
@@ -122,6 +129,7 @@ import FormElement from "@/Components/FormElement.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue"
 import TextInput from "@/Components/TextInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import TertiaryButton from "@/Components/TertiaryButton.vue";
 
 const subjects = computed(() => fakeSubjects)
 const categories = computed(() => {
@@ -163,6 +171,15 @@ const newSubject = ref({
     isNew: true
 })
 
+const short_name = computed({
+    get() {
+        return newSubject.value.name.substring(0, Math.min(3, newSubject.value.name.length)).toUpperCase()
+    },
+    set(value) {
+        short_name.value = value
+    }
+})
+
 const categoryOptions = computed(() =>
     categories.value.map(category => {
         return {
@@ -172,7 +189,7 @@ const categoryOptions = computed(() =>
 }))
 
 function addToSubjectsList() {
-    updatedSubjects.value.push(newSubject.value)
+    updatedSubjects.value.push({ ...newSubject.value, short_name: short_name.value })
     isNewSubjectFormOpened.value = false
 }
 
@@ -183,5 +200,14 @@ function openNewSubjectForm() {
 
 function removeSubject(subject) {
     updatedSubjects.value = updatedSubjects.value.filter(sub => sub !== subject)
+}
+
+function resetSubjects() {
+    updatedSubjects.value = subjects.value.map(subject => {
+        return {
+            ...subject,
+            selected: true
+        }
+    })
 }
 </script>
