@@ -13,23 +13,32 @@ class SchoolScheduleController extends Controller
 {
     public function create(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'nullable',
-            'start_date' => 'required|date|before:end_date|after_or_equal:today',
-            'end_date' => 'required|date',
-            'type' => 'required',
-            'school_year_id' => 'required|exists:school_years,id|integer|gt:0',
-        ]);
+        $validated = $this->validateRequest($request);
 
-        // Check if school year is active
-        if (! isset(SchoolYear::find($validated['school_year_id'])->end_date)) {
-            return redirect()->back()->withErrors(['school_year_id', 'The school year is not active.']);
+        // Get the active school year and create the school schedule
+        $schoolYear = SchoolYear::whereNull('end_date')->first();
+        if (! $schoolYear) {
+            return redirect()->back()->with('error', 'No active school year found.');
         }
 
-        SchoolSchedule::create($validated);
+        SchoolSchedule::create(array_merge($validated, ['school_year_id' => $schoolYear->id]));
 
         return redirect()->back()->with('success', $validated['title'].' has been added to the schedule.');
+    }
+
+    public function update(Request $request): RedirectResponse
+    {
+        $validated = $this->validateRequest($request);
+
+        // Check if the school schedule is not in the active school year
+        $schoolSchedule = SchoolSchedule::find($request->id);
+        if ($schoolSchedule->schoolYear->end_date) {
+            return redirect()->back()->with('error', 'Cannot update a school schedule that is not in the active school year.');
+        }
+
+        SchoolSchedule::find($request->id)->update($validated);
+
+        return redirect()->back()->with('success', $validated['title'].' has been updated.');
     }
 
     public function list(Request $request): RedirectResponse|Response
@@ -70,5 +79,17 @@ class SchoolScheduleController extends Controller
         SchoolSchedule::find($id)->delete();
 
         return redirect()->back()->with('success', 'Schedule has been deleted successfully.');
+    }
+
+    private function validateRequest(Request $request): array
+    {
+        return $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'nullable',
+            'start_date' => 'required|date|before:end_date|after_or_equal:today',
+            'end_date' => 'required|date',
+            'type' => 'required',
+            'id' => $request->id ? 'sometimes|exists:school_schedules,id|integer|gt:0' : '',
+        ]);
     }
 }

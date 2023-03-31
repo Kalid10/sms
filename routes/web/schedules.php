@@ -7,4 +7,5 @@ Route::controller(SchoolScheduleController::class)->prefix('school-schedules/')-
     Route::post('create', 'create')->name('create');
     Route::get('', 'list')->name('list');
     Route::delete('{id}', 'delete')->name('delete');
+    Route::post('update', 'update')->name('update');
 });

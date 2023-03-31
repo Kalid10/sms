@@ -37,6 +37,7 @@
         <button class="h-14 bg-orange-400 " @click="updateUserPosition">Test Update User Position</button>
         <button class="h-14 bg-orange-400 " @click="deleteUserPosition">Test Delete User Position</button>
         <button class="h-14 bg-green-500 " @click="addSchoolSchedule">Test Add School Schedule</button>
+        <button class="h-14 bg-green-500 " @click="updateSchoolSchedule">Test Update School Schedule</button>
         <button class="h-14 bg-green-500 " @click="getSchoolSchedules">Test Get School Schedule</button>
         <button class="h-14 bg-green-500 " @click="deleteSchoolSchedule">Test Delete School Schedule</button>
     </div>
@@ -588,6 +589,24 @@ function addSchoolSchedule() {
         end_date: "2024-12-31",
         title: "Easter",
         type: "holiday",
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function updateSchoolSchedule() {
+    router.post('/school-schedules/update', {
+        start_date: "2024-01-01",
+        end_date: "2024-12-31",
+        title: "Easter",
+        type: "holiday",
+        id: 27
     }, {
         onSuccess: () => {
             console.log("Success")
