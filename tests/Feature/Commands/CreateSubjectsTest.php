@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Subject;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
+uses(RefreshDatabase::class);
 it('creates subjects successfully', function () {
     // Make sure there are no subjects in the database before running the command
     expect(Subject::count())->toBe(0);

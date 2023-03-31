@@ -4,5 +4,5 @@ npx lint-staged
 ./vendor/bin/pint
 php artisan cache:clear
 php artisan config:clear
-./vendor/bin/pest
+./vendor/bin/pest --parallel
 php artisan migrate:fresh --seed
