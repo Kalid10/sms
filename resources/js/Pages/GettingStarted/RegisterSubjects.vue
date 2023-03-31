@@ -9,15 +9,15 @@
         </h3>
     </div>
 
-    <div class="flex gap-5">
+    <div class="flex flex-wrap gap-2 md:gap-5">
         <span class="col-span-1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4">
-            <span class="font-semibold text-black">{{ updatedSubjects.length }}</span> Total Subjects
+            <span class="whitespace-nowrap font-semibold text-black">{{ updatedSubjects.length }}</span> Total Subjects
         </span>
         <span class="col-span-1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4">
-            <span class="font-semibold text-black">{{ selectedSubjects.length }}</span> Subjects Selected
+            <span class="whitespace-nowrap font-semibold text-black">{{ selectedSubjects.length }}</span> Subjects Selected
         </span>
         <span v-if="newSubjects.length > 0" class="col-span-1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4">
-            <span class="font-semibold text-black">{{ newSubjects.length }}</span> New Subject{{ newSubjects.length > 1 ? 's' : '' }}
+            <span class="whitespace-nowrap font-semibold text-black">{{ newSubjects.length }}</span> New Subject{{ newSubjects.length > 1 ? 's' : '' }}
         </span>
     </div>
 
