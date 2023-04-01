@@ -47,4 +47,10 @@ class SchoolYear extends Model
 
         return $schoolYear;
     }
+
+    public static function isSchoolYearActive(int $schoolId): bool
+    {
+        // Check if there's an active school year with the given school_id
+        return SchoolYear::where('school_id', $schoolId)->whereNull('end_date')->exists();
+    }
 }
