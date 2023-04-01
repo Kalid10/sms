@@ -31,15 +31,15 @@
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
 
                 <label v-for="(subject, s) in updatedSubjects.filter(sub => sub.category === category)" :key="s">
-                    <Card class="group !min-w-full">
+                    <Card :class="{ 'border-black': !! filteredLabel && subjectIncludesLabel(subject), 'opacity-20': !subjectIncludesLabel(subject), 'border-black shadow-md': subject.isNew }" class="group !min-w-full transition duration-150">
 
-                        <div :class="subject.selected || subject.isNew ? 'opacity-100' : 'opacity-25'" class="flex flex-col gap-6">
+                        <div :class="subject.selected || subject.isNew ? 'opacity-100' : 'opacity-25'" class="flex flex-col justify-between gap-6">
 
                             <div class="flex items-center justify-between">
 
                                 <h3 class="flex items-baseline gap-2">
                                     <span class="font-semibold">
-                                        {{ subject.name }}
+                                        {{ subject.full_name }}
                                     </span>
                                     <span class="text-sm uppercase text-gray-500">
                                         {{ subject.short_name }}
@@ -55,9 +55,22 @@
 
                             </div>
 
-                            <div class="flex items-baseline gap-1">
+                            <span class="flex origin-bottom-left scale-[.85] flex-wrap gap-1">
 
-                            </div>
+                                <span
+                                    v-for="(label, l) in subject.tags"
+                                    :key="l"
+                                    :class="{ 'bg-gray-300' : filteredLabel === label }"
+                                    class="cursor-pointer whitespace-nowrap rounded-xl px-1.5
+                                    py-0.5 text-xs font-semibold leading-none transition
+                                    duration-300 hover:scale-110 hover:bg-gray-300"
+                                    @click="($e) => { $e.preventDefault(); }"
+                                    @mouseout="resetFilteredLabel"
+                                    @mouseover="filterTags(label)">
+                                    {{ toHashTag(label) }}
+                                </span>
+
+                            </span>
                         </div>
 
                     </Card>
@@ -107,9 +120,11 @@
 
         <FormElement title="New Subject" subtitle="Create a new subject and assign it to a category" @submit="addToSubjectsList">
 
-            <TextInput v-model="newSubject.name" required placeholder="Name of the new Subject" label="Subject Name"/>
-            <TextInput v-model="short_name" required placeholder="Short name for Subject" label="Subject Short Name"/>
-            <SelectInput v-model="newSubject.category" :options="categoryOptions" required placeholder="Category of the new Subject" label="Subject Category"/>
+            <TextInput v-model="newSubject.full_name" required placeholder="Name of the new Subject" label="Subject Name"/>
+            <TextInput v-model="newSubject.short_name" required placeholder="Short name for Subject" label="Subject Short Name"/>
+            <TextInput v-model="tags" placeholder="Assign tags (separate multiple tags with comma)" label="Subject Tags"/>
+            <SelectInput v-if="!customCategory" v-model="newSubject.category" :options="categoryOptions" required placeholder="Category of the new Subject" label="Subject Category"/>
+            <TextInput v-else v-model="newSubject.category" required placeholder="Category of the new Subject" label="Subject Category"/>
 
         </FormElement>
 
@@ -118,8 +133,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
-import { subjects as fakeSubjects } from "@/fake"
+import { ref, watch, computed } from "vue"
+import { subjects as initialSubjects } from "@/fake.js";
+import { toHashTag } from "@/utils.js";
 import { PlusCircleIcon, PlusIcon, TrashIcon } from "@heroicons/vue/24/outline"
 import Heading from "@/Components/Heading.vue"
 import Card from "@/Components/Card.vue"
@@ -130,12 +146,13 @@ import PrimaryButton from "@/Components/PrimaryButton.vue"
 import TextInput from "@/Components/TextInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
+import {router} from "@inertiajs/vue3";
 
-const subjects = computed(() => fakeSubjects)
+const subjects = computed(() => initialSubjects)
 const categories = computed(() => {
-    return subjects.value.reduce((acc, subject) => {
-        if (!acc.includes(subject.category)) {
-            acc.push(subject.category)
+    return updatedSubjects.value.reduce((acc, subject) => {
+        if (!acc.includes(subject['category'])) {
+            acc.push(subject['category'])
         }
         return acc
     }, [])
@@ -151,45 +168,93 @@ const newSubjects = computed(() => updatedSubjects.value.filter(subject => subje
 const selectedSubjects = computed(() => updatedSubjects.value.filter(subject => subject.selected || subject.isNew))
 
 const colors = [
-    "bg-blue-400",
-    "bg-yellow-400",
-    "bg-green-400",
-    "bg-red-400",
-    "bg-purple-400",
-    "bg-pink-400",
-    "bg-indigo-400",
-    "bg-gray-400",
+    "bg-blue-500",
+    "bg-yellow-500",
+    "bg-green-500",
+    "bg-red-500",
+    "bg-purple-500",
+    "bg-pink-500",
+    "bg-indigo-500",
+    "bg-gray-500",
 ]
 
 function submitSubjects() {
 
+    router.post('/subjects/create-bulk', {
+        subjects: updatedSubjects.value.map(subject => {
+            return {
+                full_name: subject['full_name'],
+                short_name: subject['short_name'],
+                category: subject['category'],
+                tags: subject['tags']
+            }
+        })
+    }, {
+        onSuccess: () => {
+            console.log('Success')
+        },
+        onError: () => {
+            console.log('Error')
+        }
+    })
+
 }
 
+
 const newSubject = ref({
-    name: "",
+    full_name: "",
     category: "",
     isNew: true
 })
 
-const short_name = computed({
-    get() {
-        return newSubject.value.name.substring(0, Math.min(3, newSubject.value.name.length)).toUpperCase()
-    },
-    set(value) {
-        short_name.value = value
-    }
+const tags = ref('')
+const computedShortName = computed(() => newSubject.value.full_name.substring(0, Math.min(3, newSubject.value.full_name.length)).toUpperCase())
+const formShortName = ref(null)
+
+watch(tags, (value) => {
+    console.log(value.split(','))
+    newSubject.value.tags = value.split(',')
 })
 
-const categoryOptions = computed(() =>
-    categories.value.map(category => {
+watch([computedShortName, formShortName], () => {
+    newSubject.value.short_name = formShortName.value ?? computedShortName.value
+})
+
+// const categoryOptions = computed(() => {
+//
+//     return {
+//         ...categories.value.map(category => {
+//             return {
+//                 label: category,
+//                 value: category
+//             }
+//         }),
+//         ...{
+//             label: "Create new Category",
+//             value: "custom"
+//         }
+//     }
+//
+// })
+
+
+const categoryOptions = computed(() => {
+    const options = categories.value.map(category => {
         return {
             label: category,
             value: category
         }
-}))
+    })
+    options.push({
+        label: "+ Add new Category",
+        value: "Custom"
+    })
+
+    return options
+})
 
 function addToSubjectsList() {
-    updatedSubjects.value.push({ ...newSubject.value, short_name: short_name.value })
+    updatedSubjects.value.push(newSubject.value)
     isNewSubjectFormOpened.value = false
 }
 
@@ -210,4 +275,27 @@ function resetSubjects() {
         }
     })
 }
+
+function subjectIncludesLabel(subject) {
+    if (filteredLabel.value === null) return true
+    return subject.tags.includes(filteredLabel.value)
+}
+
+const filteredLabel = ref(null)
+function filterTags(label) {
+    filteredLabel.value = label
+}
+
+function resetFilteredLabel() {
+    filteredLabel.value = null
+}
+
+const customCategory = ref(false)
+watch(newSubject, () => {
+    if (newSubject.value.category === 'Custom') {
+        customCategory.value = true
+    }
+}, {
+    deep: true
+})
 </script>
