@@ -339,14 +339,14 @@ function addBatch() {
 function addBatches() {
     router.post('/batches/create-bulk', {
             batches: [
-                    {
-                        level_id: 1,
-                        no_of_sections: 3
-                    },
-                    {
-                        level_id: 2,
-                        no_of_sections: 2
-                    }
+                {
+                    level_id: 1,
+                    no_of_sections: 3
+                },
+                {
+                    level_id: 2,
+                    no_of_sections: 2
+                }
             ]
         },
         {
