@@ -33,7 +33,7 @@ class SemesterController extends Controller
             $semesters = $request->get('semesters');
 
             foreach ($semesters as $semester) {
-                Semester::create(array_merge($semester, ['school_year_id' => SchoolYear::where('end_date', null)->first()->id]));
+                Semester::create(array_merge($semester, ['school_year_id' => SchoolYear::getActiveSchoolYear()->id]));
             }
 
             DB::commit();

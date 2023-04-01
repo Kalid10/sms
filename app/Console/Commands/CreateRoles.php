@@ -36,6 +36,7 @@ class CreateRoles extends Command
         'manage-admins',
         'manage-user-positions',
         'manage-levels',
+        'manage-school-schedules',
         'manage-announcements',
     ];
 
@@ -54,6 +55,7 @@ class CreateRoles extends Command
         'Manage Admins',
         'Manage User Positions',
         'Manage Levels',
+        'Manage School Schedules',
         'Manage Announcements',
     ];
 

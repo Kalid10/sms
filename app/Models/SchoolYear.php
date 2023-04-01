@@ -36,6 +36,24 @@ class SchoolYear extends Model
         return $this->hasMany(Semester::class);
     }
 
+    public static function getActiveSchoolYear(): ?SchoolYear
+    {
+        $schoolYear = SchoolYear::firstWhere('end_date', null);
+
+        if (! $schoolYear) {
+            // No active school year found
+            return null;
+        }
+
+        return $schoolYear;
+    }
+
+    public static function isSchoolYearActive(int $schoolId): bool
+    {
+        // Check if there's an active school year with the given school_id
+        return SchoolYear::where('school_id', $schoolId)->whereNull('end_date')->exists();
+    }
+
     public function announcements(): HasMany
     {
         return $this->hasMany(Announcement::class);

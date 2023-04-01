@@ -1,16 +1,19 @@
 <template>
     <div class="flex flex-col">
-        <label v-if="!! label" class="">
-            <span class="pl-0.5 text-xs font-medium text-gray-500">{{ label }}</span>
+        <label v-if="!! label && labelLocation === 'top'" class="">
+            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{ label }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
         </label>
-        <div class="relative flex h-10 w-full rounded-md border border-gray-200" tabindex="0" @click="toggleList">
-            <span
-                :aria-placeholder="placeholder"
-                :class="[ !! selectedLabel ? 'text-black' : 'text-gray-500' ]"
-                class="grid h-full place-items-center px-3 text-sm capitalize">{{
-                    selectedLabel ?? placeholder
-                }}
+        <div :class="[labelLocation === 'inside' ? 'h-12' : 'h-10']" class="relative flex w-full rounded-md border border-gray-200 bg-white" tabindex="0" @click="toggleList">
+            <span class="flex flex-col justify-center px-3">
+                <span v-if="labelLocation === 'inside'" class="text-[0.7rem] text-gray-500">{{ label }}</span>
+                <span
+                    :aria-placeholder="placeholder"
+                    :class="[ !! selectedLabel ? 'text-black' : 'text-gray-500' ]"
+                    class="flex text-sm capitalize">{{
+                        selectedLabel ?? placeholder
+                    }}
+                </span>
             </span>
             <div class="absolute right-0 grid h-full place-items-center px-2">
                 <ChevronDownIcon class="h-4 w-4 stroke-gray-500 stroke-2"/>
@@ -21,7 +24,7 @@
                 v-if="displayList"
                 ref="list"
                 :class="[ direction === 'down' ? 'bottom-0 -mb-1 translate-y-full' : 'top-0 -mt-1 -translate-y-full' ]"
-                class="absolute left-0 min-h-10 w-full rounded-md border bg-white drop-shadow"
+                class="absolute left-0 z-50 min-h-10 w-full rounded-md border bg-white drop-shadow"
             >
                 <template v-for="(option, index) in options" :key="index">
                     <li class="flex items-center justify-between py-2 px-3" @click="selectOption(option)">
@@ -45,6 +48,10 @@ const props = defineProps({
     label: {
         type: String,
         default: null
+    },
+    labelLocation: {
+        type: String,
+        default: 'top'
     },
     placeholder: {
         type: String,
