@@ -36,7 +36,7 @@ class AnnouncementController extends Controller
         $user = auth()->user()->id;
 
         // Get the current school year
-        $schoolYear = SchoolYear::whereNull('end_date')->first()->id;
+        $schoolYear = SchoolYear::getActiveSchoolYear()->id;
 
         if (! $schoolYear) {
             return redirect()->back()->withErrors(['error', 'No active school year found']);

@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('body');
-            $table->foreignId('author_id')->constrained('admins')->onDelete('cascade');
+            $table->foreignId('author_id')->constrained('admins')->cascadeOnDelete();
             $table->date('expires_on');
             $table->json('target_group');
-            $table->foreignId('school_year_id')->constrained()->onDelete('cascade');
+            $table->foreignId('school_year_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
