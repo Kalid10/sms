@@ -22,7 +22,7 @@ class BatchController extends Controller
         $validated = $request->validated();
 
         // Get active school year
-        $schoolYear = SchoolYear::whereNull('end_date')->first();
+        $schoolYear = SchoolYear::getActiveSchoolYear();
 
         if (! $schoolYear) {
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
@@ -39,7 +39,7 @@ class BatchController extends Controller
     {
         $validated = $request->validated();
 
-        $schoolYearId = SchoolYear::whereNull('end_date')->first()->id;
+        $schoolYearId = SchoolYear::getActiveSchoolYear()->id;
 
         if (! $schoolYearId) {
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
@@ -105,7 +105,7 @@ class BatchController extends Controller
 
     public function active(): RedirectResponse|Response
     {
-        $schoolYear = SchoolYear::whereNull('end_date')->first();
+        $schoolYear = SchoolYear::getActiveSchoolYear();
 
         if (! $schoolYear) {
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
