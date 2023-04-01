@@ -551,33 +551,89 @@ const levels = [
         last_updated: '2019-11-29'
     },
 ]
-
-const grades = [
-    {id: 1, name: 'Grade 0ne',},
-    {id: 2, name: 'Grade Two',},
-    {id: 3, name: 'Grade Three',},
-    {id: 4, name: 'Grade Four',},
-    {id: 5, name: 'Grade Five',},
-    {id: 6, name: 'Grade Six',},
-    {id: 7, name: 'Grade Seven',},
-    {id: 8, name: 'Grade Eight',},
-    {id: 9, name: 'Grade Nine',},
-    {id: 10, name: 'Grade Ten',},
-    {id: 11, name: 'Grade Eleven',},
-    {id: 12, name: 'Grade Twelve',},
+const batches = [
+    { id: 1, level: 1, section: 'A' },
+    { id: 2, level: 1, section: 'B' },
+    { id: 3, level: 1, section: 'C' },
+    { id: 4, level: 1, section: 'D' },
+    { id: 5, level: 2, section: 'A' },
+    { id: 6, level: 2, section: 'B' },
+    { id: 9, level: 3, section: 'A' },
+    { id: 10, level: 3, section: 'B' },
+    { id: 11, level: 3, section: 'C' },
+    { id: 12, level: 3, section: 'D' },
+    { id: 13, level: 4, section: 'A' },
+    { id: 14, level: 4, section: 'B' },
+    { id: 15, level: 4, section: 'C' },
+    { id: 16, level: 4, section: 'D' },
+    { id: 17, level: 5, section: 'A' },
+    { id: 18, level: 5, section: 'B' },
+    { id: 19, level: 5, section: 'C' },
+    { id: 20, level: 5, section: 'D' },
+    { id: 21, level: 6, section: 'A' },
+    { id: 22, level: 6, section: 'B' },
+    { id: 23, level: 6, section: 'C' },
+    { id: 24, level: 6, section: 'D' },
+    { id: 25, level: 7, section: 'A' },
+    { id: 26, level: 7, section: 'B' },
+    { id: 27, level: 7, section: 'C' },
+    { id: 28, level: 7, section: 'D' },
+    { id: 29, level: 8, section: 'A' },
+    { id: 30, level: 8, section: 'B' },
+    { id: 31, level: 8, section: 'C' },
+    { id: 32, level: 8, section: 'D' },
+    { id: 33, level: 9, section: 'A' },
+    { id: 34, level: 9, section: 'B' },
+    { id: 35, level: 9, section: 'C' },
+    { id: 36, level: 9, section: 'D' },
+    { id: 37, level: 10, section: 'A' },
+    { id: 38, level: 10, section: 'B' },
+    { id: 39, level: 10, section: 'C' },
+    { id: 40, level: 10, section: 'D' },
+    { id: 41, level: 11, section: 'A' },
+    { id: 42, level: 11, section: 'B' },
+    { id: 43, level: 11, section: 'C' },
+    { id: 44, level: 11, section: 'D' },
+    { id: 45, level: 12, section: 'A' },
+    { id: 46, level: 12, section: 'B' },
+    { id: 47, level: 12, section: 'C' },
+    { id: 48, level: 12, section: 'D' },
 ]
 
-
-const sbj= [
-    {id:1,name:'Biology'},
-    {id:2,name:'Chemistry'},
-    {id:3,name:'Physics'},
-    {id:4,name:'English'},
-    {id:5,name:'Amharic'},
-    {id:6,name:'Mathematics'},
-    {id:7,name:'Geography'},
-    {id:8,name:'Civic'},
-
+const sbj = [
+    {id:1,name:'bio'},
+    {id:1,name:'bio'},
+    {id:1,name:'bio'},
 ]
 
-export {users, semesters, levels, school_years, statuses, grades,sbj};
+const subjects = [
+    { id: 1, name: 'Mathematics', short_name: 'Math',  category: 'Mathematics', labels: ['Natural Sciences', 'Social Sciences'] },
+    { id: 2, name: 'English', short_name: 'Eng',  category: 'Languages', labels: ['Natural Sciences', 'Social Sciences'] },
+    { id: 3, name: 'አማርኛ', short_name: 'አማ',  category: 'Languages', labels: ['Natural Sciences', 'Social Sciences'] },
+    { id: 4, name: 'Biology', short_name: 'Bio',  category: 'Natural Science', labels: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 5, name: 'Chemistry', short_name: 'Chem',  category: 'Natural Science', labels: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 6, name: 'Physics', short_name: 'Phy',  category: 'Natural Science', labels: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 7, name: 'Geography', short_name: 'Geo',  category: 'Social Studies', labels: ['Social Sciences', 'Middle School', 'High School'] },
+    { id: 8, name: 'History', short_name: 'His',  category: 'Social Studies', labels: ['Social Sciences', 'Middle School', 'High School'] },
+    { id: 9, name: 'Arts and Crafts', short_name: 'A&C',  category: 'Extra Curricular', labels: ['Primary School', 'Arts'] },
+    { id: 9, name: 'Afaan Orommo', short_name: 'Oro',  category: 'Languages', labels: ['Natural Sciences', 'Social Sciences', 'Extra Curricular'] },
+    { id: 10, name: 'Physical Education', short_name: 'PE',  category: 'Extra Curricular', labels: ['Extra Curricular'] },
+    { id: 11, name: 'Technical Drawing', short_name: 'TD',  category: 'Preparatory', labels: ['Natural Sciences', 'Preparatory Level'] },
+    { id: 12, name: 'Economics', short_name: 'Econ',  category: 'Preparatory', labels: ['Social Sciences', 'Preparatory Level'] },
+    { id: 13, name: 'Business', short_name: 'Bus',  category: 'Preparatory', labels: ['Social Sciences', 'Preparatory Level'] },
+]
+
+function allGrades(batches) {
+    return batches.reduce((acc, batch) => {
+        if (!acc.includes(batch.level)) {
+            acc.push(batch.level)
+        }
+        return acc
+    }, [])
+}
+function sectionsOfLevel(batches, level) {
+    return batches.filter(batch => batch.level === level).map(batch => batch.section)
+}
+
+
+export {users, semesters, levels, school_years, statuses,sbj,batches,subjects,allGrades,sectionsOfLevel};

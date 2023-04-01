@@ -154,7 +154,7 @@ const selectedItems = computed(() => items.value.filter((item) => item.selected)
 const items = ref(props.data.map((item, index) => {
     return {
         id: index,
-        selected: false
+        selected: props.data[0].hasOwnProperty('selected') ? item.selected : false
     }
 }))
 
