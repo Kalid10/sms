@@ -33,7 +33,7 @@ class SubjectController extends Controller
                 'full_name' => $request->full_name,
                 'short_name' => $request->short_name,
                 'category' => $request->category,
-                'labels' => $request->labels,
+                'tags' => $request->tags,
             ]);
 
             return redirect()->back()->with('success', $request->full_name.' added successfully');
@@ -51,7 +51,7 @@ class SubjectController extends Controller
                 'full_name' => $request->full_name,
                 'short_name' => $request->short_name,
                 'category' => $request->category,
-                'labels' => $request->labels,
+                'tags' => $request->tags,
             ]);
 
             return redirect()->back()->with('success', $request->full_name.' updated successfully');

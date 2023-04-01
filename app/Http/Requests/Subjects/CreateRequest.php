@@ -26,7 +26,7 @@ class CreateRequest extends FormRequest
             'full_name' => 'required|unique:subjects,full_name',
             'short_name' => 'required|unique:subjects,short_name',
             'category' => 'required',
-            'labels' => 'nullable|array',
+            'tags' => 'nullable|array',
         ];
     }
 

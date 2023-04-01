@@ -25,7 +25,7 @@ it('can create subject with manage_subjects role', function () {
         'full_name' => 'Test Subject',
         'short_name' => 'TS',
         'category' => 'Test Category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ];
 
     // Call the create method of the controller
@@ -52,7 +52,7 @@ it('cannot create subject without manage_subjects role', function () {
         'full_name' => 'Test Subject',
         'short_name' => 'TS',
         'category' => 'Test Category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ];
 
     // Call the create method of the controller
@@ -64,7 +64,7 @@ it('cannot create subject without manage_subjects role', function () {
         'full_name' => 'Test Subject',
         'short_name' => 'TS',
         'category' => 'Test Category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ]);
 });
 
@@ -109,7 +109,7 @@ it('can update subject with manage_subjects role', function () {
         'full_name' => $subject->full_name,
         'short_name' => $subject->short_name,
         'category' => $subject->category,
-        'labels' => $subject->labels,
+        'tags' => $subject->tags,
     ]);
 });
 
@@ -122,7 +122,7 @@ it('cannot update subjects without manage_subjects role', function () {
         'full_name' => 'Test Subject',
         'short_name' => 'TS',
         'category' => 'Test Category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ]);
 
     // Authenticate the user
@@ -134,7 +134,7 @@ it('cannot update subjects without manage_subjects role', function () {
         'full_name' => 'New subject name',
         'short_name' => 'new_subj',
         'category' => 'New category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ];
 
     // Call the update method of the controller
@@ -147,6 +147,6 @@ it('cannot update subjects without manage_subjects role', function () {
         'full_name' => 'New subject name',
         'short_name' => 'new_subj',
         'category' => 'New category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ]);
 });
