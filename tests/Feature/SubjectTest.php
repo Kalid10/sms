@@ -40,6 +40,39 @@ it('can create subject with manage_subjects role', function () {
     ]);
 });
 
+it('creates subjects can be created in bulk', function () {
+    $subjects = [
+        [
+            'full_name' => 'Mathematics',
+            'short_name' => 'MATH',
+            'category' => 'Core',
+            'tags' => ['algebra', 'geometry'],
+        ],
+        [
+            'full_name' => 'Biology',
+            'short_name' => 'BIO',
+            'category' => 'Core',
+            'tags' => ['botany', 'zoology'],
+        ],
+    ];
+
+    $user = User::factory()->create();
+    $user->roles()->attach(['manage-subjects']);
+
+    $response = $this->actingAs($user)->post(route('subjects.create-bulk'), ['subjects' => $subjects]);
+
+    $response->assertSessionHas('success', 'Subjects added successfully');
+
+    // Verify that the subjects have been created
+    foreach ($subjects as $subjectData) {
+        $subject = Subject::where('full_name', $subjectData['full_name'])->first();
+        expect($subject)->not()->toBeNull();
+        expect($subject->short_name)->toBe($subjectData['short_name']);
+        expect($subject->category)->toBe($subjectData['category']);
+        expect($subject->tags)->toBe($subjectData['tags']);
+    }
+});
+
 it('cannot create subject without manage_subjects role', function () {
     // Create a user without the manage-roles role
     $creator = User::factory()->create();
