@@ -25,7 +25,7 @@ it('can create subject with manage_subjects role', function () {
         'full_name' => 'Test Subject',
         'short_name' => 'TS',
         'category' => 'Test Category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ];
 
     // Call the create method of the controller
@@ -40,6 +40,39 @@ it('can create subject with manage_subjects role', function () {
     ]);
 });
 
+it('creates subjects can be created in bulk', function () {
+    $subjects = [
+        [
+            'full_name' => 'Mathematics',
+            'short_name' => 'MATH',
+            'category' => 'Core',
+            'tags' => ['algebra', 'geometry'],
+        ],
+        [
+            'full_name' => 'Biology',
+            'short_name' => 'BIO',
+            'category' => 'Core',
+            'tags' => ['botany', 'zoology'],
+        ],
+    ];
+
+    $user = User::factory()->create();
+    $user->roles()->attach(['manage-subjects']);
+
+    $response = $this->actingAs($user)->post(route('subjects.create-bulk'), ['subjects' => $subjects]);
+
+    $response->assertSessionHas('success', 'Subjects added successfully');
+
+    // Verify that the subjects have been created
+    foreach ($subjects as $subjectData) {
+        $subject = Subject::where('full_name', $subjectData['full_name'])->first();
+        expect($subject)->not()->toBeNull();
+        expect($subject->short_name)->toBe($subjectData['short_name']);
+        expect($subject->category)->toBe($subjectData['category']);
+        expect($subject->tags)->toBe($subjectData['tags']);
+    }
+});
+
 it('cannot create subject without manage_subjects role', function () {
     // Create a user without the manage-roles role
     $creator = User::factory()->create();
@@ -52,7 +85,7 @@ it('cannot create subject without manage_subjects role', function () {
         'full_name' => 'Test Subject',
         'short_name' => 'TS',
         'category' => 'Test Category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ];
 
     // Call the create method of the controller
@@ -64,7 +97,7 @@ it('cannot create subject without manage_subjects role', function () {
         'full_name' => 'Test Subject',
         'short_name' => 'TS',
         'category' => 'Test Category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ]);
 });
 
@@ -109,7 +142,7 @@ it('can update subject with manage_subjects role', function () {
         'full_name' => $subject->full_name,
         'short_name' => $subject->short_name,
         'category' => $subject->category,
-        'labels' => $subject->labels,
+        'tags' => $subject->tags,
     ]);
 });
 
@@ -122,7 +155,7 @@ it('cannot update subjects without manage_subjects role', function () {
         'full_name' => 'Test Subject',
         'short_name' => 'TS',
         'category' => 'Test Category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ]);
 
     // Authenticate the user
@@ -134,7 +167,7 @@ it('cannot update subjects without manage_subjects role', function () {
         'full_name' => 'New subject name',
         'short_name' => 'new_subj',
         'category' => 'New category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ];
 
     // Call the update method of the controller
@@ -147,6 +180,6 @@ it('cannot update subjects without manage_subjects role', function () {
         'full_name' => 'New subject name',
         'short_name' => 'new_subj',
         'category' => 'New category',
-        'labels' => ['Test Label', 'Test Label 2'],
+        'tags' => ['Test Label', 'Test Label 2'],
     ]);
 });
