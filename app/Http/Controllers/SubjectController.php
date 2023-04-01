@@ -32,9 +32,11 @@ class SubjectController extends Controller
             Subject::create([
                 'full_name' => $request->full_name,
                 'short_name' => $request->short_name,
+                'category' => $request->category,
+                'labels' => $request->labels,
             ]);
 
-            return  redirect()->back()->with('success', $request->full_name.' added successfully');
+            return redirect()->back()->with('success', $request->full_name.' added successfully');
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
@@ -48,6 +50,8 @@ class SubjectController extends Controller
             Subject::find($request->id)->update([
                 'full_name' => $request->full_name,
                 'short_name' => $request->short_name,
+                'category' => $request->category,
+                'labels' => $request->labels,
             ]);
 
             return redirect()->back()->with('success', $request->full_name.' updated successfully');
