@@ -1,40 +1,45 @@
 <template>
     <div class="">Welcome</div>
     <div class="grid grid-cols-4 gap-6">
-        <button class="bg-red-400 p-1" @click="registerAdmin">Register Admin</button>
-        <button class="bg-red-400 p-1" @click="registerGuardian">Register Guardian</button>
-        <button class="bg-red-400 p-1" @click="registerStudent">Register Student</button>
-        <button class="bg-red-400 p-1" @click="registerTeacher">Register Teacher</button>
-        <button class="bg-red-400 p-1" @click="login">Test Login</button>
-        <button class="bg-red-400 p-1" @click="logout">Test Logout</button>
-        <button class="bg-red-400 p-1" @click="assignRoles">Test Assign Role</button>
-        <button class="bg-red-400 p-1" @click="removeRoles">Test Remove Role</button>
-        <button class="bg-red-400 p-1" @click="showAllRoles">Get Roles</button>
-        <button class="bg-red-400 p-1" @click="userDetails">User Details</button>
-        <button class="bg-red-400 p-1" @click="roleActivities">Test Role Activities</button>
-        <button class="bg-red-400 p-1" @click="addSubject">Test Add Subject</button>
-        <button class="bg-red-400 p-1" @click="deleteSubject">Test Delete Subject</button>
-        <button class="bg-red-400 p-1" @click="addSchoolYear">Test Add School Year</button>
-        <button class="bg-red-400 p-1" @click="addSemesters">Test Create Semester</button>
-        <button class="bg-red-400 p-1" @click="updateSemester">Test Update Semester</button>
-        <button class="bg-red-400 p-1" @click="listSemesters">Test List Semester</button>
-        <button class="bg-red-400 p-1" @click="deleteSemester">Test Delete Semester</button>
-        <button class="bg-red-400 p-1" @click="addBatch">Test Add Batch</button>
-        <button class="bg-red-400 p-1" @click="addBatches">Test Add Batches</button>
-        <button class="bg-red-400 p-1" @click="getBatches">Test Get Batches</button>
-        <button class="bg-red-400 p-1" @click="activeBatches">Test Get Active Batches</button>
-        <button class="bg-red-400 p-1" @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
-        <button class="bg-red-400 p-1" @click="removeHomeRoomTeacher">Test Remove Homeroom Teacher</button>
-        <button class="bg-red-400 p-1" @click="getHomeRoomTeachers">Test Get Homeroom Teachers</button>
-        <button class="bg-red-400 p-1" @click="addStudentToBatch">Test Add Students To Batch</button>
-        <button class="bg-red-400 p-1" @click="getBatchStudents">Test Get Batch Students</button>
-        <button class="bg-red-400 p-1" @click="addBatchSubjects">Test Add Batch Subjects</button>
-        <button class="bg-red-400 p-1" @click="addUserPosition">Test Add User Position</button>
-        <button class="bg-red-400 p-1" @click="addLevel">Test Add Level</button>
-        <button class="bg-red-400 p-1" @click="getLevels">Test Get Level</button>
-        <button class="bg-red-400 p-1" @click="assignBatchSubjectsTeachers">Test Assign Batch Subject Teachers</button>
-        <button class="bg-red-400 p-1" @click="updateUserPosition">Test Update User Position</button>
-        <button class="bg-red-400 p-1" @click="deleteUserPosition">Test Delete User Position</button>
+        <button class="h-14 bg-lime-500 " @click="registerAdmin">Register Admin</button>
+        <button class="h-14 bg-lime-500 " @click="registerGuardian">Register Guardian</button>
+        <button class="h-14 bg-lime-500 " @click="registerStudent">Register Student</button>
+        <button class="h-14 bg-lime-500 " @click="registerTeacher">Register Teacher</button>
+        <button class="h-14 bg-pink-900 text-white " @click="login">Test Login</button>
+        <button class="h-14 bg-pink-900 text-white " @click="logout">Test Logout</button>
+        <button class="h-14  bg-gray-600 text-white " @click="assignRoles">Test Assign Role</button>
+        <button class="h-14  bg-gray-600 text-white " @click="removeRoles">Test Remove Role</button>
+        <button class="h-14 bg-gray-600 text-white " @click="showAllRoles">Get Roles</button>
+        <button class="h-14  bg-gray-600 text-white " @click="userDetails">User Details</button>
+        <button class="h-14 bg-red-600 text-white " @click="roleActivities">Test Role Activities</button>
+        <button class="h-14 bg-indigo-500 text-white " @click="addSubject">Test Add Subject</button>
+        <button class="h-14 bg-indigo-500 text-white " @click="deleteSubject">Test Delete Subject</button>
+        <button class="h-14 bg-fuchsia-400 " @click="addSchoolYear">Test Add School Year</button>
+        <button class="h-14 bg-emerald-500 " @click="addSemesters">Test Create Semester</button>
+        <button class="h-14 bg-emerald-500 " @click="updateSemester">Test Update Semester</button>
+        <button class="h-14 bg-emerald-500 " @click="listSemesters">Test List Semester</button>
+        <button class="h-14 bg-emerald-500 " @click="deleteSemester">Test Delete Semester</button>
+        <button class="h-14 bg-sky-400 " @click="addBatch">Test Add Batch</button>
+        <button class="h-14 bg-sky-400 " @click="addBatches">Test Add Batches</button>
+        <button class="h-14 bg-sky-400 " @click="getBatches">Test Get Batches</button>
+        <button class="h-14 bg-sky-400 " @click="activeBatches">Test Get Active Batches</button>
+        <button class="h-14 bg-amber-500 " @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
+        <button class="h-14 bg-amber-500 " @click="removeHomeRoomTeacher">Test Remove Homeroom Teacher</button>
+        <button class="h-14 bg-amber-500 " @click="getHomeRoomTeachers">Test Get Homeroom Teachers</button>
+        <button class="h-14 bg-cyan-400 " @click="addStudentToBatch">Test Add Students To Batch</button>
+        <button class="h-14 bg-cyan-400 " @click="getBatchStudents">Test Get Batch Students</button>
+        <button class="h-14 bg-cyan-400 " @click="addBatchSubjects">Test Add Batch Subjects</button>
+        <button class="h-14 bg-purple-400 " @click="addLevel">Test Add Level</button>
+        <button class="h-14 bg-purple-400 " @click="getLevels">Test Get Level</button>
+        <button class="h-14 bg-yellow-400 " @click="assignBatchSubjectsTeachers">Test Assign Batch Subject Teachers
+        </button>
+        <button class="h-14 bg-orange-400 " @click="addUserPosition">Test Add User Position</button>
+        <button class="h-14 bg-orange-400 " @click="updateUserPosition">Test Update User Position</button>
+        <button class="h-14 bg-orange-400 " @click="deleteUserPosition">Test Delete User Position</button>
+        <button class="h-14 bg-green-500 " @click="addSchoolSchedule">Test Add School Schedule</button>
+        <button class="h-14 bg-green-500 " @click="updateSchoolSchedule">Test Update School Schedule</button>
+        <button class="h-14 bg-green-500 " @click="getSchoolSchedules">Test Get School Schedule</button>
+        <button class="h-14 bg-green-500 " @click="deleteSchoolSchedule">Test Delete School Schedule</button>
     </div>
 
 </template>
@@ -339,14 +344,14 @@ function addBatch() {
 function addBatches() {
     router.post('/batches/create-bulk', {
             batches: [
-                    {
-                        level_id: 1,
-                        no_of_sections: 3
-                    },
-                    {
-                        level_id: 2,
-                        no_of_sections: 2
-                    }
+                {
+                    level_id: 1,
+                    no_of_sections: 3
+                },
+                {
+                    level_id: 2,
+                    no_of_sections: 2
+                }
             ]
         },
         {
@@ -547,7 +552,6 @@ function getLevels() {
     })
 }
 
-// Update user position
 function updateUserPosition() {
     router.post('/positions/update/', {
         name: "Leader",
@@ -564,7 +568,6 @@ function updateUserPosition() {
     })
 }
 
-// Delete user position
 function deleteUserPosition() {
     router.delete('/positions/' + 1, {
         onSuccess: () => {
@@ -577,6 +580,68 @@ function deleteUserPosition() {
     })
 }
 
+function addSchoolSchedule() {
+    router.post('/school-schedules/create', {
+        start_date: "2024-01-01",
+        end_date: "2024-12-31",
+        title: "Easter",
+        type: "holiday",
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function updateSchoolSchedule() {
+    router.post('/school-schedules/update', {
+        start_date: "2024-01-01",
+        end_date: "2024-12-31",
+        title: "Easter",
+        type: "holiday",
+        id: 27
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+//- Filter by school_year, type, start_date, and end_date; if no filter is applied,
+// all schedules for the current school year are returned.
+function getSchoolSchedules() {
+    router.get('/school-schedules', {
+        school_year_id: 1,
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function deleteSchoolSchedule() {
+    router.delete('/school-schedules/' + 2, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
 </script>
 
 <style>

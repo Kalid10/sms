@@ -21,8 +21,7 @@ class SchoolYearController extends Controller
         ]);
 
         // Check if there is an ongoing academic year
-        $ongoingSchoolYear = SchoolYear::whereNull('end_date')->first();
-        if ($ongoingSchoolYear) {
+        if (SchoolYear::getActiveSchoolYear()) {
             return redirect()->back()->with('error', 'The current academic year is ongoing. You cannot start a new academic year without ending the current one.');
         }
 
