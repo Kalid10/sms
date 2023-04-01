@@ -553,7 +553,6 @@ function getLevels() {
     })
 }
 
-// Update user position
 function updateUserPosition() {
     router.post('/positions/update/', {
         name: "Leader",
@@ -570,7 +569,6 @@ function updateUserPosition() {
     })
 }
 
-// Delete user position
 function deleteUserPosition() {
     router.delete('/positions/' + 1, {
         onSuccess: () => {
@@ -583,7 +581,6 @@ function deleteUserPosition() {
     })
 }
 
-// Get all announcements
 function getAnnouncements() {
     router.get('/announcements', {}, {
         onSuccess: () => {
@@ -596,12 +593,10 @@ function getAnnouncements() {
     })
 }
 
-// Create announcement
 function createAnnouncement() {
     router.post('/announcements/create', {
         title: 'New announcement',
         body: 'This is a test announcement',
-        author_id: 1,
         expires_on: '2020-12-13',
         target_group: ['all', 'students'],
 
@@ -616,13 +611,11 @@ function createAnnouncement() {
     })
 }
 
-// Update announcement
 function updateAnnouncement() {
     router.post('/announcements/update', {
         id: 1,
         title: "Announcement 2",
         body: "Announcement 2 description",
-        author_id: 1,
         expires_on: "2020-12-13",
         target_group: ["teachers"],
     }, {
@@ -636,7 +629,6 @@ function updateAnnouncement() {
     })
 }
 
-// Delete announcement
 function deleteAnnouncement() {
     router.delete('/announcements/' + 1, {
         onSuccess: () => {

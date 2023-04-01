@@ -15,7 +15,6 @@ class Announcement extends Model
     protected $fillable = [
         'title',
         'body',
-        'author_id',
         'expires_on',
         'target_group',
     ];
@@ -23,6 +22,11 @@ class Announcement extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'author_id');
+    }
+
+    public function schoolYear(): BelongsTo
+    {
+        return $this->belongsTo(SchoolYear::class);
     }
 
     protected $casts = [

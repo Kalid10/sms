@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Admin;
 use App\Models\Announcement;
+use App\Models\SchoolYear;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -9,7 +11,7 @@ beforeEach(function () {
     $this->artisan('app:create-roles');
 
     // Create a test admin user
-    $this->admin = \App\Models\Admin::factory()->create();
+    $this->admin = Admin::factory()->create();
 
     $this->admin->user->roles()->attach(['manage-announcements']);
 
@@ -18,11 +20,14 @@ beforeEach(function () {
 });
 
 it('can create a new announcement', function () {
+    SchoolYear::factory()->create([
+        'end_date' => null,
+    ]);
+
     // Create a new announcement
     $response = $this->post(route('announcements.create'), [
         'title' => 'New announcement',
         'body' => 'This is a test announcement',
-        'author_id' => $this->admin->id,
         'expires_on' => now()->addDays(7)->toDateString(),
         'target_group' => ['all', 'students'],
     ]);
@@ -80,6 +85,35 @@ it('can update an existing announcement', function () {
     // Assert that the user was redirected back with a success message
     $response->assertRedirect()
         ->assertSessionHas('success', 'Announcement updated successfully');
+});
+
+it('cannot update an existing announcement from the previous school-year', function () {
+    // Create a test announcement
+    $announcement = Announcement::factory()->create([
+        'school_year_id' => SchoolYear::factory()->create([
+            'end_date' => now()->subDays(1),
+        ])->id,
+    ]);
+
+    // Update the announcement
+    $response = $this->post(route('announcements.update'), [
+        'title' => 'Updated announcement',
+        'body' => 'This is an updated test announcement',
+        'expires_on' => now()->addDays(14)->toDateString(),
+        'target_group' => ['all', 'teachers'],
+        'id' => $announcement->id,
+    ]);
+
+    // Assert that the announcement was not updated in the database
+    $this->assertDatabaseHas('announcements', [
+        'id' => $announcement->id,
+        'title' => $announcement->title,
+        'body' => $announcement->body,
+    ]);
+
+    // Assert that the user was redirected back with a success message
+    $response->assertRedirect()
+        ->assertSessionHas('error', 'Announcement is not in the current school year');
 });
 
 it('can delete an existing announcement', function () {

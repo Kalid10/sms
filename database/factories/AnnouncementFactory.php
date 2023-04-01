@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Admin;
 use App\Models\Announcement;
+use App\Models\SchoolYear;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -21,15 +22,13 @@ class AnnouncementFactory extends Factory
 
     public function definition(): array
     {
-        $title = $this->faker->sentence;
-        $body = $this->faker->paragraph;
-
         return [
-            'title' => $title,
-            'body' => $body,
+            'title' => $this->faker->sentence,
+            'body' => $this->faker->paragraph,
             'author_id' => Admin::factory()->create()->id,
             'expires_on' => Carbon::now()->addDays($this->faker->numberBetween(1, 30)),
             'target_group' => $this->faker->randomElement(['all', 'students', 'teachers', 'parents', 'admins']),
+            'school_year_id' => SchoolYear::factory()->create(['end_date' => null])->id,
         ];
     }
 }
