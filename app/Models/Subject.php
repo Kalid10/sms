@@ -16,11 +16,11 @@ class Subject extends Model
         'full_name',
         'short_name',
         'category',
-        'labels',
+        'tags',
     ];
 
     protected $casts = [
-        'labels' => 'array',
+        'tags' => 'array',
     ];
 
     public function getActivitylogOptions(): LogOptions

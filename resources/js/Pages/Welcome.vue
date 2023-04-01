@@ -13,6 +13,7 @@
         <button class="h-14  bg-gray-600 text-white " @click="userDetails">User Details</button>
         <button class="h-14 bg-red-600 text-white " @click="roleActivities">Test Role Activities</button>
         <button class="h-14 bg-indigo-500 text-white " @click="addSubject">Test Add Subject</button>
+        <button class="h-14 bg-indigo-500 text-white " @click="addSubjects">Test Add Subjects</button>
         <button class="h-14 bg-indigo-500 text-white " @click="deleteSubject">Test Delete Subject</button>
         <button class="h-14 bg-fuchsia-400 " @click="addSchoolYear">Test Add School Year</button>
         <button class="h-14 bg-emerald-500 " @click="addSemesters">Test Create Semester</button>
@@ -40,10 +41,10 @@
         <button class="h-14 bg-green-500 " @click="updateSchoolSchedule">Test Update School Schedule</button>
         <button class="h-14 bg-green-500 " @click="getSchoolSchedules">Test Get School Schedule</button>
         <button class="h-14 bg-green-500 " @click="deleteSchoolSchedule">Test Delete School Schedule</button>
-        <button class="bg-red-400 p-1" @click="getAnnouncements">Test get Announcements</button>
-        <button class="bg-red-400 p-1" @click="createAnnouncement">Create Announcement</button>
-        <button class="bg-red-400 p-1" @click="updateAnnouncement">Update Announcement</button>
-        <button class="bg-red-400 p-1" @click="deleteAnnouncement">Delete Announcement</button>
+        <button class="h-14 bg-red-400 p-1" @click="getAnnouncements">Test get Announcements</button>
+        <button class="h-14 bg-red-400 p-1" @click="createAnnouncement">Create Announcement</button>
+        <button class="h-14 bg-red-400 p-1" @click="updateAnnouncement">Update Announcement</button>
+        <button class="h-14 bg-red-400 p-1" @click="deleteAnnouncement">Delete Announcement</button>
     </div>
 
 </template>
@@ -218,9 +219,45 @@ function roleActivities() {
 }
 
 function addSubject() {
-    router.post('/subject/create', {
+    router.post('/subjects/create', {
         full_name: "Test Subject",
         short_name: "TS",
+        category: "test",
+        tags: ["test", "test2"]
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addSubjects() {
+    router.post('/subjects/create-bulk', {
+        subjects: [
+            {
+                full_name: "Test Subject 1",
+                short_name: "TS1",
+                category: "test1",
+                tags: ["test", "test2"]
+
+            },
+            {
+                full_name: "Test Subject 2",
+                short_name: "TS2",
+                category: "test2",
+                tags: ["test", "test5"]
+            },
+            {
+                full_name: "Test Subject 3",
+                short_name: "TS3",
+                category: "test3",
+                tags: ["test4", "test2"]
+            },
+        ]
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -646,6 +683,7 @@ function deleteSchoolSchedule() {
         }
     })
 }
+
 function getAnnouncements() {
     router.get('/announcements', {}, {
         onSuccess: () => {
