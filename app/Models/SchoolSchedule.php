@@ -17,7 +17,6 @@ class SchoolSchedule extends Model
         'start_date',
         'end_date',
         'type',
-        'school_year_id',
     ];
 
     public function schoolYear(): BelongsTo

@@ -582,7 +582,6 @@ function deleteUserPosition() {
 
 function addSchoolSchedule() {
     router.post('/school-schedules/create', {
-        school_year_id: 1,
         start_date: "2024-01-01",
         end_date: "2024-12-31",
         title: "Easter",

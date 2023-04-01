@@ -16,12 +16,15 @@ class SchoolScheduleController extends Controller
         $validated = $this->validateRequest($request);
 
         // Get the active school year and create the school schedule
-        $schoolYear = SchoolYear::whereNull('end_date')->first();
+        $schoolYear = SchoolYear::getActiveSchoolYear();
+
         if (! $schoolYear) {
             return redirect()->back()->with('error', 'No active school year found.');
         }
 
-        SchoolSchedule::create(array_merge($validated, ['school_year_id' => $schoolYear->id]));
+        $schoolSchedule = SchoolSchedule::make($validated);
+        $schoolSchedule->schoolYear()->associate($schoolYear);
+        $schoolSchedule->save();
 
         return redirect()->back()->with('success', $validated['title'].' has been added to the schedule.');
     }
@@ -47,7 +50,7 @@ class SchoolScheduleController extends Controller
             'school_year_id' => 'nullable|exists:school_years,id|integer|gt:0',
         ]);
 
-        $schoolYearId = $request->input('school_year_id') ?? SchoolYear::whereNull('end_date')->first()->id;
+        $schoolYearId = $request->input('school_year_id') ?? SchoolYear::getActiveSchoolYear()->id;
 
         $schoolSchedule = SchoolSchedule::query()
             ->where('school_year_id', $schoolYearId)
