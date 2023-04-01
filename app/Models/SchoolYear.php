@@ -53,4 +53,9 @@ class SchoolYear extends Model
         // Check if there's an active school year with the given school_id
         return SchoolYear::where('school_id', $schoolId)->whereNull('end_date')->exists();
     }
+
+    public function announcements(): HasMany
+    {
+        return $this->hasMany(Announcement::class);
+    }
 }

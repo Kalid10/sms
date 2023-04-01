@@ -40,6 +40,10 @@
         <button class="h-14 bg-green-500 " @click="updateSchoolSchedule">Test Update School Schedule</button>
         <button class="h-14 bg-green-500 " @click="getSchoolSchedules">Test Get School Schedule</button>
         <button class="h-14 bg-green-500 " @click="deleteSchoolSchedule">Test Delete School Schedule</button>
+        <button class="bg-red-400 p-1" @click="getAnnouncements">Test get Announcements</button>
+        <button class="bg-red-400 p-1" @click="createAnnouncement">Create Announcement</button>
+        <button class="bg-red-400 p-1" @click="updateAnnouncement">Update Announcement</button>
+        <button class="bg-red-400 p-1" @click="deleteAnnouncement">Delete Announcement</button>
     </div>
 
 </template>
@@ -633,6 +637,65 @@ function getSchoolSchedules() {
 
 function deleteSchoolSchedule() {
     router.delete('/school-schedules/' + 2, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+function getAnnouncements() {
+    router.get('/announcements', {}, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function createAnnouncement() {
+    router.post('/announcements/create', {
+        title: 'New announcement',
+        body: 'This is a test announcement',
+        expires_on: '2020-12-13',
+        target_group: ['all', 'students'],
+
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function updateAnnouncement() {
+    router.post('/announcements/update', {
+        id: 1,
+        title: "Announcement 2",
+        body: "Announcement 2 description",
+        expires_on: "2020-12-13",
+        target_group: ["teachers"],
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function deleteAnnouncement() {
+    router.delete('/announcements/' + 1, {
         onSuccess: () => {
             console.log("Success")
         },
