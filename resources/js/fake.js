@@ -1,5 +1,3 @@
-import {ref} from "vue";
-
 const users = [{
     "id": 1,
     "name": "Bartram Lockhurst",
@@ -569,20 +567,20 @@ const grades = [
 
 
 const subjects = [
-    { id: 2, name: 'English', short_name: 'Eng',  category: 'Languages', labels: ['Natural Sciences', 'Social Sciences'] },
-    { id: 3, name: 'አማርኛ', short_name: 'አማ',  category: 'Languages', labels: ['Natural Sciences', 'Social Sciences'] },
-    { id: 4, name: 'Biology', short_name: 'Bio',  category: 'Natural Science', labels: ['Natural Sciences', 'Middle School', 'High School'] },
-    { id: 5, name: 'Chemistry', short_name: 'Chem',  category: 'Natural Science', labels: ['Natural Sciences', 'Middle School', 'High School'] },
-    { id: 6, name: 'Physics', short_name: 'Phy',  category: 'Natural Science', labels: ['Natural Sciences', 'Middle School', 'High School'] },
-    { id: 7, name: 'Geography', short_name: 'Geo',  category: 'Social Studies', labels: ['Social Sciences', 'Middle School', 'High School'] },
-    { id: 1, name: 'Mathematics', short_name: 'Math',  category: 'Mathematics', labels: ['Natural Sciences', 'Social Sciences'] },
-    { id: 8, name: 'History', short_name: 'His',  category: 'Social Studies', labels: ['Social Sciences', 'Middle School', 'High School'] },
-    { id: 9, name: 'Arts and Crafts', short_name: 'A&C',  category: 'Extra Curricular', labels: ['Primary School', 'Arts'] },
-    { id: 9, name: 'Afaan Orommo', short_name: 'Oro',  category: 'Languages', labels: ['Natural Sciences', 'Social Sciences', 'Extra Curricular'] },
-    { id: 10, name: 'Physical Education', short_name: 'PE',  category: 'Extra Curricular', labels: ['Extra Curricular'] },
-    { id: 11, name: 'Technical Drawing', short_name: 'TD',  category: 'Preparatory', labels: ['Natural Sciences', 'Preparatory Level'] },
-    { id: 12, name: 'Economics', short_name: 'Econ',  category: 'Preparatory', labels: ['Social Sciences', 'Preparatory Level'] },
-    { id: 13, name: 'Business', short_name: 'Bus',  category: 'Preparatory', labels: ['Social Sciences', 'Preparatory Level'] },
+    { id: 2, full_name: 'English', short_name: 'Eng',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences'] },
+    { id: 3, full_name: 'አማርኛ', short_name: 'አማ',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences'] },
+    { id: 4, full_name: 'Biology', short_name: 'Bio',  category: 'Natural Science', tags: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 5, full_name: 'Chemistry', short_name: 'Chem',  category: 'Natural Science', tags: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 6, full_name: 'Physics', short_name: 'Phy',  category: 'Natural Science', tags: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 7, full_name: 'Geography', short_name: 'Geo',  category: 'Social Studies', tags: ['Social Sciences', 'Middle School', 'High School'] },
+    { id: 1, full_name: 'Mathematics', short_name: 'Math',  category: 'Mathematics', tags: ['Natural Sciences', 'Social Sciences'] },
+    { id: 8, full_name: 'History', short_name: 'His',  category: 'Social Studies', tags: ['Social Sciences', 'Middle School', 'High School'] },
+    { id: 9, full_name: 'Arts and Crafts', short_name: 'A&C',  category: 'Extra Curricular', tags: ['Primary School', 'Arts'] },
+    { id: 9, full_name: 'Afaan Orommo', short_name: 'Oro',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences', 'Extra Curricular'] },
+    { id: 10, full_name: 'Physical Education', short_name: 'PE',  category: 'Extra Curricular', tags: ['Extra Curricular'] },
+    { id: 11, full_name: 'Technical Drawing', short_name: 'TD',  category: 'Preparatory', tags: ['Natural Sciences', 'Preparatory Level'] },
+    { id: 12, full_name: 'Economics', short_name: 'Econ',  category: 'Preparatory', tags: ['Social Sciences', 'Preparatory Level'] },
+    { id: 13, full_name: 'Business', short_name: 'Bus',  category: 'Preparatory', tags: ['Social Sciences', 'Preparatory Level'] },
 ]
 
 const batches = [
