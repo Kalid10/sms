@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subjects', function (Blueprint $table) {
+        Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name')->unique();
-            $table->string('short_name')->unique();
-            $table->string('category');
-            $table->json('labels')->nullable();
+            $table->string('title');
+            $table->longText('body');
+            $table->foreignId('author_id')->constrained('admins')->cascadeOnDelete();
+            $table->date('expires_on');
+            $table->json('target_group');
+            $table->foreignId('school_year_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subjects');
+        Schema::dropIfExists('announcements');
     }
 };

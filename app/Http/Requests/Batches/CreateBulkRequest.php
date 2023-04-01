@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Batches;
 
 use App\Models\Batch;
-use App\Models\Level;
 use App\Models\SchoolYear;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -48,8 +47,8 @@ class CreateBulkRequest extends FormRequest
             // Get School year
             $schoolYear = SchoolYear::whereNull('end_date')->first();
 
-            if (isset($schoolYear->end_date)) {
-                $validator->errors()->add('batches', 'School year is not active');
+            if (! $schoolYear) {
+                return $validator->errors()->add('batches', 'School year is not active');
             }
 
             // If input('level_id') is an array, check if batch already exists
