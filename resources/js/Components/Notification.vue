@@ -1,90 +1,86 @@
 <template>
     <div>
-        <div
-            v-if="showNotification"
-            tabindex="-1"
-            class="fixed top-0 right-0 z-50 flex h-full w-full items-start justify-end overflow-y-auto overflow-x-hidden p-4 md:inset-0 md:h-fit"
-        >
-            <div class="relative h-full w-full max-w-md md:h-auto">
+        <transition
+v-if="showNotification" name="notification" mode="out-in"
+                    enter-active-class="notification-enter-active"
+                    leave-active-class="notification-leave-active"
+                    enter-class="notification-enter"
+                    leave-class="notification-leave-to">
+            <div
+                v-if="success || error || info"
+                :key="success || error || info"
+                class="fixed right-0 top-0 w-full md:bottom-0 md:top-auto md:w-1/2 lg:bottom-0 lg:top-auto lg:right-0 lg:z-50 lg:w-1/3 xl:right-0 xl:w-1/4"
+            >
                 <div
-                    class="relative rounded-lg px-4 py-3 font-medium text-white shadow-sm sm:px-6 sm:py-4"
-                    :class="{
-              'bg-red-400': type === 'error',
-              'bg-green-400': type === 'success',
-              'bg-blue-400': type === 'default',
-            }"
+                    v-if="error"
+                    class="m-10 max-w-md rounded-lg bg-white p-4 font-medium text-gray-500 shadow-lg sm:mb-10 sm:px-6 sm:py-4 md:h-auto"
                 >
-                    <button
-                        type="button"
-                        class="absolute top-0 right-0 mr-2 mt-2 rounded-md focus:outline-none"
-                        @click="showNotification = false"
-                    >
-                        <span class="sr-only">Close</span>
-                        <XMarkIcon class="h-5 w-5 stroke-2"></XMarkIcon>
-                    </button>
-                    <div class="flex items-center space-x-4">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-full">
-                            <slot name="icon">
-                                <slot name="icon" class="text-black">
-                                    <template v-if="type === 'error'">
-                                        <ExclamationTriangleIcon class="h-6 w-6 stroke-white" />
-                                    </template>
-                                    <template v-else-if="type === 'success'">
-                                        <CheckCircleIcon class="h-7 w-7 stroke-white" />
-                                    </template>
-                                    <template v-else>
-                                        <EnvelopeIcon class="h-6 w-6 stroke-white" />
-                                    </template>
-                                </slot>
-                            </slot>
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <div class="text-base">
-                                {{ title }}
-                            </div>
-                            <div class="mt-0.5 text-sm">
-                                {{ subtitle }}
-                            </div>
-                        </div>
+                    <div class="flex flex-row gap-3">
+                        <ExclamationTriangleIcon class="mt-1.5 h-7 min-h-[1.75rem] w-7 min-w-[1.75rem] stroke-red-500"/>
+                        <div>{{ error }}</div>
+                    </div>
+                </div>
+                <div
+                    v-else-if="success"
+                    class="m-10 max-w-md rounded-lg bg-white p-4 py-3 font-medium text-gray-500 shadow-lg sm:mb-10 sm:px-6 sm:py-4 md:h-auto"
+                >
+                    <div class="flex flex-row">
+                        <CheckCircleIcon class="h-7 w-7 stroke-green-500"/>
+                        <div class="pl-5">{{ success }}</div>
+                    </div>
+                </div>
+                <div
+                    v-else
+                    class="m-10 max-w-xs rounded-lg bg-blue-500 p-4 py-3 font-medium text-white shadow-md"
+                >
+                    <div>
+                        <EnvelopeIcon/>
                     </div>
                 </div>
             </div>
-        </div>
+        </transition>
     </div>
 </template>
 
 <script setup>
-import { ref, watch, defineProps } from 'vue';
-import {XMarkIcon, ExclamationTriangleIcon, CheckCircleIcon,EnvelopeIcon} from '@heroicons/vue/24/outline';
+import {computed, ref, watch} from "vue";
+import {CheckCircleIcon, EnvelopeIcon, ExclamationTriangleIcon,} from "@heroicons/vue/24/outline";
+import {usePage} from "@inertiajs/vue3";
 
-const props = defineProps({
-    title: {
-        type: String,
-        required: true,
-    },
-    subtitle: {
-        type: String,
-        default: null,
-    },
-    persistent: {
-        type: Boolean,
-        default: false,
-    },
-    type: {
-        type: String,
-        default: 'default',
-        validator: (value) =>
-            ['default', 'error', 'success'].indexOf(value) !== -1,
+const success = computed(() => usePage().props.flash.success);
+const error = computed(() => usePage().props.flash.error);
+const info = computed(() => usePage().props.flash.info);
 
-    },
-});
-const showNotification = ref(true);
-watch(showNotification, (value) => {
-    if (value && !props.persistent) {
-        setTimeout(() => {
-            showNotification.value = false;
-        }, 3000);
-    }
+const showNotification = ref(false);
+
+const flash = computed(() => usePage().props.flash);
+
+watch(flash, () => {
+    showNotification.value = true;
+    setTimeout(() => {
+        showNotification.value = false;
+    }, 4000);
 });
 </script>
 
+<style scoped>
+.notification-enter-active,
+.notification-leave-active {
+    transition: opacity 2.3s;
+}
+
+.notification-enter,
+.notification-leave-to {
+    opacity: 0;
+}
+
+@media (max-width: 767px) {
+    .fixed.top-0 {
+        top: 0;
+    }
+
+    .fixed.right-0 {
+        right: 0;
+    }
+}
+</style>
