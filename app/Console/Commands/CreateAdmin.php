@@ -71,7 +71,7 @@ class CreateAdmin extends Command
         ], [
             'name' => ['required'],
             'email' => ['required', 'unique:users,email', 'email'],
-            'gender' => ['required'],
+            'gender' => ['required', 'in:male,female'],
         ]);
 
         if ($validator->fails()) {
