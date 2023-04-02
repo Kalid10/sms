@@ -210,6 +210,7 @@ function submitBatches() {
         {
             onSuccess: () => {
                 console.log("Success")
+                router.get('/getting-started/register-subjects')
             },
             onError: (error) => {
                 console.log("Error")

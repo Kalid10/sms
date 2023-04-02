@@ -1,5 +1,3 @@
-import {ref} from "vue";
-
 const users = [{
     "id": 1,
     "name": "Bartram Lockhurst",
@@ -551,13 +549,47 @@ const levels = [
         last_updated: '2019-11-29'
     },
 ]
+
+const grades = [
+    {id: 1, name: 'Grade 0ne',},
+    {id: 2, name: 'Grade Two',},
+    {id: 3, name: 'Grade Three',},
+    {id: 4, name: 'Grade Four',},
+    {id: 5, name: 'Grade Five',},
+    {id: 6, name: 'Grade Six',},
+    {id: 7, name: 'Grade Seven',},
+    {id: 8, name: 'Grade Eight',},
+    {id: 9, name: 'Grade Nine',},
+    {id: 10, name: 'Grade Ten',},
+    {id: 11, name: 'Grade Eleven',},
+    {id: 12, name: 'Grade Twelve',},
+]
+
+
+const subjects = [
+    { id: 2, full_name: 'English', short_name: 'Eng',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences'] },
+    { id: 3, full_name: 'አማርኛ', short_name: 'አማ',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences'] },
+    { id: 4, full_name: 'Biology', short_name: 'Bio',  category: 'Natural Science', tags: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 5, full_name: 'Chemistry', short_name: 'Chem',  category: 'Natural Science', tags: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 6, full_name: 'Physics', short_name: 'Phy',  category: 'Natural Science', tags: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 7, full_name: 'Geography', short_name: 'Geo',  category: 'Social Studies', tags: ['Social Sciences', 'Middle School', 'High School'] },
+    { id: 1, full_name: 'Mathematics', short_name: 'Math',  category: 'Mathematics', tags: ['Natural Sciences', 'Social Sciences'] },
+    { id: 8, full_name: 'History', short_name: 'His',  category: 'Social Studies', tags: ['Social Sciences', 'Middle School', 'High School'] },
+    { id: 9, full_name: 'Arts and Crafts', short_name: 'A&C',  category: 'Extra Curricular', tags: ['Primary School', 'Arts'] },
+    { id: 9, full_name: 'Afaan Orommo', short_name: 'Oro',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences', 'Extra Curricular'] },
+    { id: 10, full_name: 'Physical Education', short_name: 'PE',  category: 'Extra Curricular', tags: ['Extra Curricular'] },
+    { id: 11, full_name: 'Technical Drawing', short_name: 'TD',  category: 'Preparatory', tags: ['Natural Sciences', 'Preparatory Level'] },
+    { id: 12, full_name: 'Economics', short_name: 'Econ',  category: 'Preparatory', tags: ['Social Sciences', 'Preparatory Level'] },
+    { id: 13, full_name: 'Business', short_name: 'Bus',  category: 'Preparatory', tags: ['Social Sciences', 'Preparatory Level'] },
+]
+
 const batches = [
     { id: 1, level: 1, section: 'A' },
-    { id: 2, level: 1, section: 'B' },
-    { id: 3, level: 1, section: 'C' },
     { id: 4, level: 1, section: 'D' },
     { id: 5, level: 2, section: 'A' },
     { id: 6, level: 2, section: 'B' },
+    { id: 7, level: 2, section: 'C' },
+    { id: 8, level: 2, section: 'D' },
     { id: 9, level: 3, section: 'A' },
     { id: 10, level: 3, section: 'B' },
     { id: 11, level: 3, section: 'C' },
@@ -600,30 +632,7 @@ const batches = [
     { id: 48, level: 12, section: 'D' },
 ]
 
-const sbj = [
-    {id:1,name:'bio'},
-    {id:1,name:'bio'},
-    {id:1,name:'bio'},
-]
-
-const subjects = [
-    { id: 1, name: 'Mathematics', short_name: 'Math',  category: 'Mathematics', labels: ['Natural Sciences', 'Social Sciences'] },
-    { id: 2, name: 'English', short_name: 'Eng',  category: 'Languages', labels: ['Natural Sciences', 'Social Sciences'] },
-    { id: 3, name: 'አማርኛ', short_name: 'አማ',  category: 'Languages', labels: ['Natural Sciences', 'Social Sciences'] },
-    { id: 4, name: 'Biology', short_name: 'Bio',  category: 'Natural Science', labels: ['Natural Sciences', 'Middle School', 'High School'] },
-    { id: 5, name: 'Chemistry', short_name: 'Chem',  category: 'Natural Science', labels: ['Natural Sciences', 'Middle School', 'High School'] },
-    { id: 6, name: 'Physics', short_name: 'Phy',  category: 'Natural Science', labels: ['Natural Sciences', 'Middle School', 'High School'] },
-    { id: 7, name: 'Geography', short_name: 'Geo',  category: 'Social Studies', labels: ['Social Sciences', 'Middle School', 'High School'] },
-    { id: 8, name: 'History', short_name: 'His',  category: 'Social Studies', labels: ['Social Sciences', 'Middle School', 'High School'] },
-    { id: 9, name: 'Arts and Crafts', short_name: 'A&C',  category: 'Extra Curricular', labels: ['Primary School', 'Arts'] },
-    { id: 9, name: 'Afaan Orommo', short_name: 'Oro',  category: 'Languages', labels: ['Natural Sciences', 'Social Sciences', 'Extra Curricular'] },
-    { id: 10, name: 'Physical Education', short_name: 'PE',  category: 'Extra Curricular', labels: ['Extra Curricular'] },
-    { id: 11, name: 'Technical Drawing', short_name: 'TD',  category: 'Preparatory', labels: ['Natural Sciences', 'Preparatory Level'] },
-    { id: 12, name: 'Economics', short_name: 'Econ',  category: 'Preparatory', labels: ['Social Sciences', 'Preparatory Level'] },
-    { id: 13, name: 'Business', short_name: 'Bus',  category: 'Preparatory', labels: ['Social Sciences', 'Preparatory Level'] },
-]
-
-function allGrades(batches) {
+function gradesFromBatch(batches) {
     return batches.reduce((acc, batch) => {
         if (!acc.includes(batch.level)) {
             acc.push(batch.level)
@@ -631,9 +640,9 @@ function allGrades(batches) {
         return acc
     }, [])
 }
+
 function sectionsOfLevel(batches, level) {
     return batches.filter(batch => batch.level === level).map(batch => batch.section)
 }
 
-
-export {users, semesters, levels, school_years, statuses,sbj,batches,subjects,allGrades,sectionsOfLevel};
+export { users, semesters, levels, school_years, statuses, grades, subjects, batches, gradesFromBatch, sectionsOfLevel };
