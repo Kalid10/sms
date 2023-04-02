@@ -1,11 +1,11 @@
 <template>
     <div>
         <transition
-v-if="showNotification" name="notification" mode="out-in"
-                    enter-active-class="notification-enter-active"
-                    leave-active-class="notification-leave-active"
-                    enter-class="notification-enter"
-                    leave-class="notification-leave-to">
+            v-if="showNotification" name="notification" mode="out-in"
+            enter-active-class="notification-enter-active"
+            leave-active-class="notification-leave-active"
+            enter-class="notification-enter"
+            leave-class="notification-leave-to">
             <div
                 v-if="success || error || info"
                 :key="success || error || info"
@@ -31,10 +31,11 @@ v-if="showNotification" name="notification" mode="out-in"
                 </div>
                 <div
                     v-else
-                    class="m-10 max-w-xs rounded-lg bg-blue-500 p-4 py-3 font-medium text-white shadow-md"
+                    class="m-10 max-w-md rounded-lg bg-white p-4 py-3 font-medium text-gray-500 shadow-lg sm:mb-10 sm:px-6 sm:py-4 md:h-auto"
                 >
-                    <div>
-                        <EnvelopeIcon/>
+                    <div class="flex flex-row">
+                        <EnvelopeIcon class="h-7 w-7 stroke-blue-500"/>
+                        <div class="pl-5">{{ info }}</div>
                     </div>
                 </div>
             </div>
