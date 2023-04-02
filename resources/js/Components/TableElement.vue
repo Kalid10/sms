@@ -25,7 +25,9 @@
         <div v-if="! titleHeader && actionable" class="w-full py-2"></div>
 
         <div v-if="filterable" class="mb-4 flex flex-col gap-4 px-4">
-            <TextInput v-model="query" placeholder="Search for [... attributes]"/>
+            <slot name="filter">
+                <TextInput v-model="query" placeholder="Search for [... attributes]"/>
+            </slot>
         </div>
 
         <div class="w-full overflow-x-auto">
@@ -151,12 +153,19 @@ const titleHeader = computed(() => props.title || props.subtitle)
 const selectAll = ref(false)
 const anySelected = computed(() => items.value.some((item) => item.selected))
 const selectedItems = computed(() => items.value.filter((item) => item.selected).map((item) => props.data[item.id]))
-const items = ref(props.data.map((item, index) => {
-    return {
-        id: index,
-        selected: props.data[0].hasOwnProperty('selected') ? item.selected : false
+const items = computed({
+    get() {
+        return props.data.map((item, index) => {
+            return {
+                id: index,
+                selected: false
+            }
+        })
+    },
+    set(value) {
+        items.value = value
     }
-}))
+})
 
 function getLink(link, index) {
     const matches = link?.match(/{(.*?)}/g) || []

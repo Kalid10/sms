@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Batches\CreateBulkRequest;
 use App\Http\Requests\Batches\CreateRequest;
 use App\Models\Batch;
+use App\Models\Level;
 use App\Models\SchoolYear;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +22,7 @@ class BatchController extends Controller
         $validated = $request->validated();
 
         // Get active school year
-        $schoolYear = SchoolYear::whereNull('end_date')->first();
+        $schoolYear = SchoolYear::getActiveSchoolYear();
 
         if (! $schoolYear) {
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
@@ -37,7 +39,7 @@ class BatchController extends Controller
     {
         $validated = $request->validated();
 
-        $schoolYearId = SchoolYear::whereNull('end_date')->first()->id;
+        $schoolYearId = SchoolYear::getActiveSchoolYear()->id;
 
         if (! $schoolYearId) {
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
@@ -47,6 +49,13 @@ class BatchController extends Controller
         try {
             foreach ($validated['batches'] as $batch) {
                 $levelId = $batch['level_id'];
+
+                if (is_array($batch['level_id'])) {
+                    $levelId = Level::create([
+                        'name' => $batch['level_id']['name'],
+                    ])->id;
+                }
+
                 $noOfSections = $batch['no_of_sections'];
 
                 if (Batch::where('level_id', $levelId)
@@ -64,7 +73,7 @@ class BatchController extends Controller
                 }
             }
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollBack();
 
@@ -96,7 +105,7 @@ class BatchController extends Controller
 
     public function active(): RedirectResponse|Response
     {
-        $schoolYear = SchoolYear::whereNull('end_date')->first();
+        $schoolYear = SchoolYear::getActiveSchoolYear();
 
         if (! $schoolYear) {
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);

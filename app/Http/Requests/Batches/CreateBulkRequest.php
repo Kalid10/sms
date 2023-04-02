@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Batches;
 
 use App\Models\Batch;
-use App\Models\Level;
 use App\Models\SchoolYear;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -27,7 +26,7 @@ class CreateBulkRequest extends FormRequest
     {
         return [
             'batches' => 'required|array',
-            'batches.*.level_id' => 'required|exists:levels,id',
+            'batches.*.level_id' => 'required',
             'batches.*.no_of_sections' => 'required|integer|min:1',
         ];
     }
@@ -35,32 +34,33 @@ class CreateBulkRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
+            $validator->sometimes('batches.*.level_id', 'exists:levels,id', function () {
+                return is_int($this->input('level_id'));
+            });
+
+            $validator->sometimes('batches.*.level_id.name', 'required|unique:levels,name|string', function () {
+                return is_array($this->input('level_id'));
+            });
+
             $batches = $this->input('batches');
 
             // Get School year
             $schoolYear = SchoolYear::whereNull('end_date')->first();
 
-            if (isset($schoolYear->end_date)) {
-                $validator->errors()->add('batches', 'School year is not active');
+            if (! $schoolYear) {
+                return $validator->errors()->add('batches', 'School year is not active');
             }
 
-            // Check if batch already exists
-            foreach ($batches as $batch) {
-                $levelId = $batch['level_id'];
-                $noOfSections = $batch['no_of_sections'];
+            // If input('level_id') is an array, check if batch already exists
+            if (is_int($this->input('level_id'))) {
+                foreach ($batches as $batch) {
+                    $levelId = $batch['level_id'];
+                    $noOfSections = $batch['no_of_sections'];
 
-                if (Batch::where('level_id', $levelId)
-                        ->where('school_year_id', $schoolYear->id)->count() === $noOfSections) {
-                    $validator->errors()->add('batches', 'Batch already exists');
-                }
-            }
-
-            foreach ($batches as $batch) {
-                // check if level exists
-                $level = Level::find($batch['level_id']);
-
-                if (! $level) {
-                    $validator->errors()->add('batches', 'Level does not exist');
+                    if (Batch::where('level_id', $levelId)
+                            ->where('school_year_id', $schoolYear->id)->count() === $noOfSections) {
+                        $validator->errors()->add('batches', 'Batch already exists');
+                    }
                 }
             }
         });

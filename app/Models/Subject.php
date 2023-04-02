@@ -10,11 +10,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Subject extends Model
 {
-    use HasFactory,LogsActivity,SoftDeletes;
+    use HasFactory, LogsActivity, SoftDeletes;
 
     protected $fillable = [
         'full_name',
         'short_name',
+        'category',
+        'tags',
+    ];
+
+    protected $casts = [
+        'tags' => 'array',
     ];
 
     public function getActivitylogOptions(): LogOptions

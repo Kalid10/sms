@@ -2,10 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\SchoolYear;
+use App\Models\Semester;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Semester>
+ * @extends Factory<Semester>
  */
 class SemesterFactory extends Factory
 {
@@ -21,6 +24,9 @@ class SemesterFactory extends Factory
             'status' => $this->faker->word,
             'start_date' => $this->faker->date,
             'end_date' => $this->faker->date,
+            'school_year_id' => SchoolYear::factory()->create([
+                'end_date' => Carbon::now(),
+            ]),
         ];
     }
 }

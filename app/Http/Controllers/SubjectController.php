@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Subjects\CreateBulkRequest;
 use App\Http\Requests\Subjects\CreateRequest;
 use App\Http\Requests\Subjects\UpdateRequest;
 use App\Models\Subject;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -32,11 +34,38 @@ class SubjectController extends Controller
             Subject::create([
                 'full_name' => $request->full_name,
                 'short_name' => $request->short_name,
+                'category' => $request->category,
+                'tags' => $request->tags,
             ]);
 
-            return  redirect()->back()->with('success', $request->full_name.' added successfully');
+            return redirect()->back()->with('success', $request->full_name.' added successfully');
         } catch (Exception $e) {
             Log::error($e->getMessage());
+
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        }
+    }
+
+    public function createBulk(CreateBulkRequest $request): RedirectResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            foreach ($request->subjects as $subject) {
+                Subject::create([
+                    'full_name' => $subject['full_name'],
+                    'short_name' => $subject['short_name'],
+                    'category' => $subject['category'],
+                    'tags' => $subject['tags'],
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Subjects added successfully');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            DB::rollBack();
 
             return redirect()->back()->with('error', 'Something went wrong. Please try again.');
         }
@@ -48,6 +77,8 @@ class SubjectController extends Controller
             Subject::find($request->id)->update([
                 'full_name' => $request->full_name,
                 'short_name' => $request->short_name,
+                'category' => $request->category,
+                'tags' => $request->tags,
             ]);
 
             return redirect()->back()->with('success', $request->full_name.' updated successfully');

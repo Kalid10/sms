@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subjects', function (Blueprint $table) {
+        Schema::create('school_schedules', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name')->unique();
-            $table->string('short_name')->unique();
-            $table->string('category');
-            $table->json('tags')->nullable();
+            $table->string('title');
+            $table->string('body')->nullable();
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
+            $table->string('type');
+            $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subjects');
+        Schema::dropIfExists('school_schedules');
     }
 };

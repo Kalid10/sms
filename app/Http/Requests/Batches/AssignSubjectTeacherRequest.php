@@ -39,12 +39,12 @@ class AssignSubjectTeacherRequest extends FormRequest
                 $batchSubject = BatchSubject::find($batchSubjectTeacher['batch_subject_id']);
 
                 if (isset($batchSubject->batch->schoolYear->end_date)) {
-                    $validator->errors()->add('batch_subjects_teachers', 'The batch subject with ID '.$batchSubjectTeacher['batch_subject_id'].' is not active.');
+                    return $validator->errors()->add('batch_subjects_teachers', 'The batch subject with ID '.$batchSubjectTeacher['batch_subject_id'].' is not active.');
                 }
 
                 // Check if the batch subject already has a teacher
                 if (isset($batchSubject->teacher_id)) {
-                    $validator->errors()->add('batch_subjects_teachers', 'The batch subject with ID '.$batchSubjectTeacher['batch_subject_id'].' already has a teacher.');
+                    return $validator->errors()->add('batch_subjects_teachers', 'The batch subject with ID '.$batchSubjectTeacher['batch_subject_id'].' already has a teacher.');
                 }
             }
         });
