@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Subjects;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateRequest extends FormRequest
@@ -14,18 +15,20 @@ class CreateRequest extends FormRequest
         return true;
     }
 
-        /**
-         * Get the validation rules that apply to the request.
-         *
-         * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-         */
-        public function rules(): array
-        {
-            return [
-                'full_name' => 'required|unique:subjects,full_name',
-                'short_name' => 'required|unique:subjects,short_name',
-            ];
-        }
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, Rule|array|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'full_name' => 'required|unique:subjects,full_name',
+            'short_name' => 'required|unique:subjects,short_name',
+            'category' => 'required',
+            'tags' => 'nullable|array',
+        ];
+    }
 
     // override the messages function to return custom messages
     public function messages(): array

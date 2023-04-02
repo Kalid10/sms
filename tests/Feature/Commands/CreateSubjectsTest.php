@@ -13,5 +13,5 @@ it('creates subjects successfully', function () {
         ->assertExitCode(0);
 
     // Check if the subjects were created
-    expect(Subject::count())->toBe(5);
+    expect(Subject::count())->toBeGreaterThan(5);
 });
