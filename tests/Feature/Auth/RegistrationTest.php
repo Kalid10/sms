@@ -34,6 +34,8 @@ it('registers a guardian', function () {
         'guardian_phone_number' => '0911111111',
         'username' => 'lucbrown',
         'type' => User::TYPE_STUDENT,
+        'gender' => 'male',
+        'guardian_gender' => 'male',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -56,6 +58,7 @@ it('registers an admin', function () {
         'email' => 'janedoe@example.com',
         'type' => User::TYPE_ADMIN,
         'position' => 'Manager',
+        'gender' => 'male',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -77,6 +80,7 @@ it('registers a teacher', function () {
         'name' => 'Mark Smith',
         'email' => 'marksmith@example.com',
         'type' => User::TYPE_TEACHER,
+        'gender' => 'male',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -101,10 +105,13 @@ it('registers a student', function () {
         'name' => 'Lucy Brown',
         'email' => 'lucybrown@example.com',
         'type' => User::TYPE_STUDENT,
+        'gender' => 'male',
         'guardian_name' => 'John Doe',
         'guardian_email' => 'johndoe@example.com',
         'guardian_phone_number' => '0911111111',
         'username' => 'lucybrown',
+        'guardian_gender' => 'male',
+
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -127,6 +134,7 @@ it('fails with unknown user type', function () {
         'name' => 'John Doe',
         'email' => 'johndoe@example.com',
         'type' => 'unknown',
+        'gender' => 'male',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -142,6 +150,7 @@ it('requires authentication to register a user', function () {
         'name' => 'John Doe',
         'email' => 'johndoe@example.com',
         'type' => User::TYPE_GUARDIAN,
+        'gender' => 'male',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -161,6 +170,7 @@ it('requires manage-users role to register a user', function () {
         'name' => 'John Doe',
         'email' => 'johndoe@example.com',
         'type' => User::TYPE_GUARDIAN,
+        'gender' => 'male',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -184,6 +194,7 @@ it('checks for specific manage-X role when registering a user', function () {
         'name' => 'John Doe',
         'email' => 'johndoe@example.com',
         'type' => User::TYPE_GUARDIAN,
+        'gender' => 'male',
     ];
 
     $response = $this->postJson('/register', $payload);

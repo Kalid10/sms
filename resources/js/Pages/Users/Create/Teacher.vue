@@ -1,12 +1,5 @@
 <template>
     <div class="grid-rows-12 grid sm:grid-cols-12">
-
-        <!--         Handle success message-->
-        <!--         TODO: remove console.log when notification is ready-->
-        <div v-if="success" class="flex justify-end text-sm text-green-500">
-            {{ success }}
-        </div>
-
         <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
             <Heading
                 value="Register new teacher"/>
@@ -33,10 +26,14 @@
                             :error="form.errors.phone_number" required/>
                     </div>
 
-                    <TeacherTextInput
-                        v-model="form.email" label="Email" type="email" placeholder="email"
-                        :error="form.errors.email" required/>
-
+                    <div class="flex gap-3">
+                        <TeacherTextInput
+                            v-model="form.email" class="w-full" label="Email" type="email" placeholder="email"
+                            :error="form.errors.email" required/>
+                        <TeacherTextInput
+                            v-model="form.gender" class="w-full" label="Gender" placeholder="gender"
+                            :error="form.errors.gender" required/>
+                    </div>
                 </TeacherFormElement>
             </div>
         </div>
@@ -48,10 +45,7 @@
 import TeacherFormElement from "@/Components/FormElement.vue";
 import TeacherTextInput from "@/Components/TextInput.vue";
 import Heading from "@/Components/Heading.vue";
-import {useForm, usePage} from "@inertiajs/vue3";
-import {computed} from "vue";
-
-const success = computed(() => usePage().props.flash.success);
+import {useForm} from "@inertiajs/vue3";
 
 const form = useForm({
     name: "",
@@ -59,6 +53,7 @@ const form = useForm({
     email: "",
     phone_number: "",
     username: "",
+    gender: "",
 });
 
 const submit = () => {

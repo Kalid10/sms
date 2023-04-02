@@ -27,11 +27,13 @@ class RegisterRequest extends FormRequest
             'type' => 'required|string|in:admin,student,guardian,teacher',
             'email' => 'required_without_all:phone_number,username|required_if:type,admin|email|unique:users',
             'phone_number' => 'required_without_all:email,username|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users',
+            'gender' => 'required|string|max:255',
             'username' => 'required_without_all:email,phone_number|exclude_unless:type,student|string|min:6|unique:users',
             'position' => 'required_if:type,admin',
             'guardian_name' => 'required_if:type,student',
             'guardian_email' => 'required_if:type,student|email',
             'guardian_phone_number' => 'required_if:type,student|regex:/(09)[0-9]{8}/|max:10|min:10',
+            'guardian_gender' => 'required_if:type,student|string|max:255',
         ];
     }
 }

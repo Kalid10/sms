@@ -1,11 +1,5 @@
 <template>
     <div class="grid-rows-12 grid sm:grid-cols-12">
-        <!--        Handle success message-->
-        <!--         TODO: remove when notification is ready-->
-        <div v-if="success" class="flex justify-end text-sm text-green-500">
-            {{ success }}
-        </div>
-
         <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
             <Heading
                 value="Register new
@@ -27,9 +21,14 @@
                             placeholder="name" :error="form.errors.name" required/>
 
                     </div>
-                    <FamilyTextInput
-                        v-model="form.email" type="email" class="w-full" label="Student's email"
-                        placeholder="email" :error="form.errors.email" required/>
+                    <div class="flex gap-3">
+                        <FamilyTextInput
+                            v-model="form.email" type="email" class="w-full" label="Student's email"
+                            placeholder="email" :error="form.errors.email" required/>
+                        <FamilyTextInput
+                            v-model="form.gender" class="w-full" label="Student's gender"
+                            placeholder="gender" :error="form.errors.gender" required/>
+                    </div>
                     <div class="flex gap-3">
 
                         <FamilyTextInput
@@ -42,10 +41,15 @@
                             required/>
 
                     </div>
-                    <FamilyTextInput
-                        v-model="form.guardian_email" label="Guardian's email" placeholder="email"
-                        :error="form.errors.guardian_email"
-                        required/>
+                    <div class="flex gap-3">
+                        <FamilyTextInput
+                            v-model="form.guardian_email" class="w-full" label="Guardian's email" placeholder="email"
+                            :error="form.errors.guardian_email"
+                            required/>
+                        <FamilyTextInput
+                            v-model="form.guardian_gender" class="w-full" label="Guardian's gender"
+                            placeholder="gender" :error="form.errors.guardian_gender" required/>
+                    </div>
                 </FamilyFormElement>
 
             </div>
@@ -80,15 +84,10 @@ import FamilyFormElement from "@/Components/FormElement.vue"
 import FamilyTextInput from "@/Components/TextInput.vue"
 import FamilyFileInput from "@/Components/FileInput.vue"
 import Heading from "@/Components/Heading.vue"
-import {useForm, usePage} from "@inertiajs/vue3";
-import {computed} from "vue";
+import {useForm} from "@inertiajs/vue3";
 import FamilyPrimaryButton from "@/Components/PrimaryButton.vue";
 
 defineEmits(['file-uploaded']);
-
-const user = computed(() => usePage().props.auth.user);
-
-const success = computed(() => usePage().props.flash.success);
 
 const handleFileUploaded = (file) => {
     // Todo: Remove this console.log when notification is implemented
@@ -98,10 +97,13 @@ const handleFileUploaded = (file) => {
 const form = useForm({
     name: '',
     email: '',
+    gender: '',
     type: 'student',
     guardian_name: '',
     guardian_email: '',
     guardian_phone_number: '',
+    guardian_gender: '',
+
 })
 
 const bulkForm = useForm({
