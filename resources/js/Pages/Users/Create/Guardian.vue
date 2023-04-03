@@ -12,45 +12,49 @@
         <div class="col-span-8">
             <div class="w-full max-w-4xl rounded-lg bg-white">
 
-                <FamilyFormElement title="Guardian's form" @submit="submit"
+                <GuardianFormElement title="Guardian's form" @submit="submit"
                 >
                     <div class="flex gap-3">
 
-                        <FamilyTextInput
+                        <GuardianTextInput
                             v-model="form.name" class="w-full" label="Student's name"
                             placeholder="name" :error="form.errors.name" required/>
 
                     </div>
                     <div class="flex gap-3">
-                        <FamilyTextInput
+                        <GuardianTextInput
                             v-model="form.email" type="email" class="w-full" label="Student's email"
                             placeholder="email" :error="form.errors.email" required/>
-                        <FamilyTextInput
+                        <GuardianTextInput
                             v-model="form.gender" class="w-full" label="Student's gender"
                             placeholder="gender" :error="form.errors.gender" required/>
                     </div>
+
+                    <GuardianDatePicker v-model="form.date_of_birth" label="Student's date of birth"/>
+
                     <div class="flex gap-3">
 
-                        <FamilyTextInput
+                        <GuardianTextInput
                             v-model="form.guardian_name" class="w-full" label="Guardian's name"
                             placeholder="name" :error="form.errors.guardian_name" required/>
-                        <FamilyTextInput
+                        <GuardianTextInput
                             v-model="form.guardian_phone_number"
-                            class="w-full" label="Guardian's phone number" placeholder="phone number"
+                            class="w-full" label="Guardian's phone number" type="number" placeholder="phone number"
                             :error="form.errors.guardian_phone_number"
                             required/>
 
                     </div>
                     <div class="flex gap-3">
-                        <FamilyTextInput
-                            v-model="form.guardian_email" class="w-full" label="Guardian's email" placeholder="email"
+                        <GuardianTextInput
+                            v-model="form.guardian_email" type="email" class="w-full" label="Guardian's email"
+                            placeholder="email"
                             :error="form.errors.guardian_email"
                             required/>
-                        <FamilyTextInput
+                        <GuardianTextInput
                             v-model="form.guardian_gender" class="w-full" label="Guardian's gender"
                             placeholder="gender" :error="form.errors.guardian_gender" required/>
                     </div>
-                </FamilyFormElement>
+                </GuardianFormElement>
 
             </div>
         </div>
@@ -68,10 +72,10 @@
         <div class="col-span-8">
             <div class="relative w-full max-w-4xl flex-col rounded-lg bg-white">
 
-                <FamilyFileInput max-file-size="10000000" @file-uploaded="handleFileUploaded"/>
+                <GuardianFileInput max-file-size="10000000" @file-uploaded="handleFileUploaded"/>
 
                 <div class="absolute right-0">
-                    <FamilyPrimaryButton title="Submit"/>
+                    <GuardianPrimaryButton title="Submit"/>
                 </div>
             </div>
         </div>
@@ -80,12 +84,13 @@
 </template>
 
 <script setup>
-import FamilyFormElement from "@/Components/FormElement.vue"
-import FamilyTextInput from "@/Components/TextInput.vue"
-import FamilyFileInput from "@/Components/FileInput.vue"
+import GuardianFormElement from "@/Components/FormElement.vue"
+import GuardianTextInput from "@/Components/TextInput.vue"
+import GuardianFileInput from "@/Components/FileInput.vue"
 import Heading from "@/Components/Heading.vue"
 import {useForm} from "@inertiajs/vue3";
-import FamilyPrimaryButton from "@/Components/PrimaryButton.vue";
+import GuardianPrimaryButton from "@/Components/PrimaryButton.vue";
+import GuardianDatePicker from "@/Components/DatePicker.vue";
 
 defineEmits(['file-uploaded']);
 
@@ -98,6 +103,7 @@ const form = useForm({
     name: '',
     email: '',
     gender: '',
+    date_of_birth: null,
     type: 'student',
     guardian_name: '',
     guardian_email: '',
