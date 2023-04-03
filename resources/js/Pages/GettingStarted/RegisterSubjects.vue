@@ -118,13 +118,13 @@
 
     <Modal v-model:view="isNewSubjectFormOpened">
 
-        <FormElement title="New Subject" subtitle="Create a new subject and assign it to a category" @submit="addToSubjectsList">
+        <FormElement v-model:show-modal="isNewSubjectFormOpened" modal title="New Subject" subtitle="Create a new subject and assign it to a category" @submit="addToSubjectsList">
 
             <TextInput v-model="newSubject.full_name" required placeholder="Name of the new Subject" label="Subject Name"/>
             <TextInput v-model="newSubject.short_name" required placeholder="Short name for Subject" label="Subject Short Name"/>
             <TextInput v-model="tags" placeholder="Assign tags (separate multiple tags with comma)" label="Subject Tags"/>
             <SelectInput v-if="!customCategory" v-model="newSubject.category" :options="categoryOptions" required placeholder="Category of the new Subject" label="Subject Category"/>
-            <TextInput v-else v-model="newSubject.category" required placeholder="Category of the new Subject" label="Subject Category"/>
+            <TextInput v-else id="categoryInput" v-model="newSubject.category" required placeholder="Create a custom Category" label="Subject Category"/>
 
         </FormElement>
 
@@ -133,7 +133,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from "vue"
+import {ref, watch, computed, nextTick} from "vue"
 import { subjects as initialSubjects } from "@/fake.js";
 import { toHashTag } from "@/utils.js";
 import { PlusCircleIcon, PlusIcon, TrashIcon } from "@heroicons/vue/24/outline"
@@ -203,7 +203,7 @@ function submitSubjects() {
 
 const newSubject = ref({
     full_name: "",
-    category: "",
+    category: null,
     isNew: true
 })
 
@@ -220,24 +220,6 @@ watch([computedShortName, formShortName], () => {
     newSubject.value.short_name = formShortName.value ?? computedShortName.value
 })
 
-// const categoryOptions = computed(() => {
-//
-//     return {
-//         ...categories.value.map(category => {
-//             return {
-//                 label: category,
-//                 value: category
-//             }
-//         }),
-//         ...{
-//             label: "Create new Category",
-//             value: "custom"
-//         }
-//     }
-//
-// })
-
-
 const categoryOptions = computed(() => {
     const options = categories.value.map(category => {
         return {
@@ -247,7 +229,7 @@ const categoryOptions = computed(() => {
     })
     options.push({
         label: "+ Add new Category",
-        value: "Custom"
+        value: ""
     })
 
     return options
@@ -256,6 +238,11 @@ const categoryOptions = computed(() => {
 function addToSubjectsList() {
     updatedSubjects.value.push(newSubject.value)
     isNewSubjectFormOpened.value = false
+    newSubject.value = {
+        full_name: "",
+        category: null,
+        isNew: true
+    }
 }
 
 const isNewSubjectFormOpened = ref(false)
@@ -292,8 +279,12 @@ function resetFilteredLabel() {
 
 const customCategory = ref(false)
 watch(newSubject, () => {
-    if (newSubject.value.category === 'Custom') {
+    if (newSubject.value.category === '') {
         customCategory.value = true
+        nextTick(() => {
+            const categoryInput = document.getElementById('categoryInput')
+            categoryInput.focus()
+        })
     }
 }, {
     deep: true
