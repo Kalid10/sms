@@ -576,7 +576,7 @@ const subjects = [
     { id: 1, full_name: 'Mathematics', short_name: 'Math',  category: 'Mathematics', tags: ['Natural Sciences', 'Social Sciences'] },
     { id: 8, full_name: 'History', short_name: 'His',  category: 'Social Studies', tags: ['Social Sciences', 'Middle School', 'High School'] },
     { id: 9, full_name: 'Arts and Crafts', short_name: 'A&C',  category: 'Extra Curricular', tags: ['Primary School', 'Arts'] },
-    { id: 9, full_name: 'Afaan Orommo', short_name: 'Oro',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences', 'Extra Curricular'] },
+    { id: 14, full_name: 'Afaan Orommo', short_name: 'Oro',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences', 'Extra Curricular'] },
     { id: 10, full_name: 'Physical Education', short_name: 'PE',  category: 'Extra Curricular', tags: ['Extra Curricular'] },
     { id: 11, full_name: 'Technical Drawing', short_name: 'TD',  category: 'Preparatory', tags: ['Natural Sciences', 'Preparatory Level'] },
     { id: 12, full_name: 'Economics', short_name: 'Econ',  category: 'Preparatory', tags: ['Social Sciences', 'Preparatory Level'] },
@@ -584,65 +584,72 @@ const subjects = [
 ]
 
 const batches = [
-    { id: 1, level: 1, section: 'A' },
-    { id: 4, level: 1, section: 'D' },
-    { id: 5, level: 2, section: 'A' },
-    { id: 6, level: 2, section: 'B' },
-    { id: 7, level: 2, section: 'C' },
-    { id: 8, level: 2, section: 'D' },
-    { id: 9, level: 3, section: 'A' },
-    { id: 10, level: 3, section: 'B' },
-    { id: 11, level: 3, section: 'C' },
-    { id: 12, level: 3, section: 'D' },
-    { id: 13, level: 4, section: 'A' },
-    { id: 14, level: 4, section: 'B' },
-    { id: 15, level: 4, section: 'C' },
-    { id: 16, level: 4, section: 'D' },
-    { id: 17, level: 5, section: 'A' },
-    { id: 18, level: 5, section: 'B' },
-    { id: 19, level: 5, section: 'C' },
-    { id: 20, level: 5, section: 'D' },
-    { id: 21, level: 6, section: 'A' },
-    { id: 22, level: 6, section: 'B' },
-    { id: 23, level: 6, section: 'C' },
-    { id: 24, level: 6, section: 'D' },
-    { id: 25, level: 7, section: 'A' },
-    { id: 26, level: 7, section: 'B' },
-    { id: 27, level: 7, section: 'C' },
-    { id: 28, level: 7, section: 'D' },
-    { id: 29, level: 8, section: 'A' },
-    { id: 30, level: 8, section: 'B' },
-    { id: 31, level: 8, section: 'C' },
-    { id: 32, level: 8, section: 'D' },
-    { id: 33, level: 9, section: 'A' },
-    { id: 34, level: 9, section: 'B' },
-    { id: 35, level: 9, section: 'C' },
-    { id: 36, level: 9, section: 'D' },
-    { id: 37, level: 10, section: 'A' },
-    { id: 38, level: 10, section: 'B' },
-    { id: 39, level: 10, section: 'C' },
-    { id: 40, level: 10, section: 'D' },
-    { id: 41, level: 11, section: 'A' },
-    { id: 42, level: 11, section: 'B' },
-    { id: 43, level: 11, section: 'C' },
-    { id: 44, level: 11, section: 'D' },
-    { id: 45, level: 12, section: 'A' },
-    { id: 46, level: 12, section: 'B' },
-    { id: 47, level: 12, section: 'C' },
-    { id: 48, level: 12, section: 'D' },
+    { id: 4, level_id:  5, level: { name: 1 }, section: 'D' },
+    { id: 1, level_id:  5, level: { name: 1 }, section: 'A' },
+    { id: 5, level_id:  2 * 5, level: { name: 2 }, section: 'A' },
+    { id: 6, level_id:  2 * 5, level: { name: 2 }, section: 'B' },
+    { id: 7, level_id:  2 * 5, level: { name: 2 }, section: 'C' },
+    { id: 8, level_id:  2 * 5, level: { name: 2 }, section: 'D' },
+    { id: 9, level_id:  3 * 5, level: { name: 3 }, section: 'A' },
+    { id: 10, level_id: 3 * 5, level: { name: 3 }, section: 'B' },
+    { id: 11, level_id: 3 * 5, level: { name: 3 }, section: 'C' },
+    { id: 12, level_id: 3 * 5, level: { name: 3 }, section: 'D' },
+    { id: 13, level_id: 4 * 5, level: { name: 4 }, section: 'A' },
+    { id: 14, level_id: 4 * 5, level: { name: 4 }, section: 'B' },
+    { id: 15, level_id: 4 * 5, level: { name: 4 }, section: 'C' },
+    { id: 16, level_id: 4 * 5, level: { name: 4 }, section: 'D' },
+    { id: 17, level_id: 5 * 5, level: { name: 5 }, section: 'A' },
+    { id: 18, level_id: 5 * 5, level: { name: 5 }, section: 'B' },
+    { id: 19, level_id: 5 * 5, level: { name: 5 }, section: 'C' },
+    { id: 20, level_id: 5 * 5, level: { name: 5 }, section: 'D' },
+    { id: 21, level_id: 6 * 5, level: { name: 6 }, section: 'A' },
+    { id: 22, level_id: 6 * 5, level: { name: 6 }, section: 'B' },
+    { id: 23, level_id: 6 * 5, level: { name: 6 }, section: 'C' },
+    { id: 25, level_id: 7 * 5, level: { name: 7 }, section: 'A' },
+    { id: 26, level_id: 7 * 5, level: { name: 7 }, section: 'B' },
+    { id: 27, level_id: 7 * 5, level: { name: 7 }, section: 'C' },
+    { id: 28, level_id: 7 * 5, level: { name: 7 }, section: 'D' },
+    { id: 29, level_id: 8 * 5, level: { name: 8 }, section: 'A' },
+    { id: 30, level_id: 8 * 5, level: { name: 8 }, section: 'B' },
+    { id: 31, level_id: 8 * 5, level: { name: 8 }, section: 'C' },
+    { id: 32, level_id: 8 * 5, level: { name: 8 }, section: 'D' },
+    { id: 33, level_id: 9 * 5, level: { name: 9 }, section: 'A' },
+    { id: 35, level_id: 9 * 5, level: { name: 9 }, section: 'C' },
+    { id: 36, level_id: 9 * 5, level: { name: 9 }, section: 'D' },
+    { id: 37, level_id: 10 * 5, level: { name: 10 }, section: 'A' },
+    { id: 38, level_id: 10 * 5, level: { name: 10 }, section: 'B' },
+    { id: 39, level_id: 10 * 5, level: { name: 10 }, section: 'C' },
+    { id: 40, level_id: 10 * 5, level: { name: 10 }, section: 'D' },
+    { id: 41, level_id: 11 * 5, level: { name: 11 }, section: 'A' },
+    { id: 42, level_id: 11 * 5, level: { name: 11 }, section: 'B' },
+    { id: 43, level_id: 11 * 5, level: { name: 11 }, section: 'C' },
+    { id: 44, level_id: 11 * 5, level: { name: 11 }, section: 'D' },
+    { id: 45, level_id: 12 * 5, level: { name: 12 }, section: 'A' },
+    { id: 46, level_id: 12 * 5, level: { name: 12 }, section: 'B' },
+    { id: 47, level_id: 12 * 5, level: { name: 12 }, section: 'C' },
+    { id: 48, level_id: 12 * 5, level: { name: 12 }, section: 'D' },
 ]
 
 function gradesFromBatch(batches) {
     return batches.reduce((acc, batch) => {
-        if (!acc.includes(batch.level)) {
+        if (!acc.includes(batch.level_id)) {
             acc.push(batch.level)
         }
         return acc
     }, [])
 }
 
-function sectionsOfLevel(batches, level) {
-    return batches.filter(batch => batch.level === level).map(batch => batch.section)
+function sectionsOfLevel(batches, level_id) {
+    return batches.filter(batch => batch.level_id === level_id)
 }
 
-export { users, semesters, levels, school_years, statuses, grades, subjects, batches, gradesFromBatch, sectionsOfLevel };
+function allLevels(batches) {
+    return batches.reduce((acc, batch) => {
+        if (!acc.map(a => a.level_id).includes(batch.level_id)) {
+            acc.push(batch)
+        }
+        return acc
+    }, [])
+}
+
+export { users, semesters, levels, school_years, statuses, grades, subjects, batches, gradesFromBatch, sectionsOfLevel, allLevels };

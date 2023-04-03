@@ -5,18 +5,18 @@
             class="mb-9 flex w-full cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-4"
             @click="showLevels = !showLevels"
         >
-            <h2 :class="[ showLevels ? 'text-gray-500' : 'text-gray-900' ]" class="font-medium">{{  showLevels ? 'Select a Grade' : selectedGrade }}</h2>
+            <h2 :class="[ showLevels ? 'text-gray-500' : 'text-gray-900' ]" class="font-medium">{{  showLevels ? 'Select a Grade' : selectedGrade.level.name }}</h2>
             <ChevronDownIcon
                 class="h-5 w-5 text-gray-500">
             </ChevronDownIcon>
         </div>
         <div v-if="showLevels" class="space-y-4">
-            <div v-for="grade in grades" :key="grade.id">
+            <div v-for="(grade, g) in grades" :key="g">
                 <div
                     class="flex w-full cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-4"
-                    @click="activeGrade(grade)"
+                    @click="selectGrade(grade)"
                 >
-                    <h2 class="font-medium text-gray-900">{{grade}}</h2>
+                    <h2 class="font-medium text-gray-900">{{ grade.level.name }}</h2>
                     <ChevronDownIcon
                         class="h-5 w-5 text-gray-500"></ChevronDownIcon>
                 </div>
@@ -24,148 +24,232 @@
         </div>
 
         <!--the tab component -->
-        <div class="pt-5 text-gray-700">
-            <div class=" text-gray-700">
-                <div class=" pt-4 shadow">
-                    <div class="flex flex-col gap-3">
-                        <header class="flex gap-3 overflow-x-auto px-3">
-                            <button
-                                class="whitespace-nowrap rounded-md bg-gray-200 p-3 text-sm ">
-                                all
-                            </button>
-                            <div v-for="(section, index) in sections" :key="index">
-                                <button
-                                    class="whitespace-nowrap "
-                                    :class="section.isActive ?'rounded-md bg-gray-200 p-3 text-sm':'bg-white bg-gray-200 p-3 text-sm' "
-                                    @click="activeSection(index)">
-                                    {{ section }}
-                                </button>
-                            </div>
-                            <PrimaryButton
-                                class="whitespace-nowrap"
-                                @click="showGroupModal=true"
-                            >
-                                group
-                            </PrimaryButton>
-                        </header>
-                        <p>{{}}</p>
-                        <div class="rounded-md ">
-                            <div class="m-5 md:m-1">
-                                <TableElement
-                                    :data="newSubjects"
-                                    :columns="configSubjectTable"
-                                    :filterable="false"
-                                    class="p-5">
-                                    <template #footer >
-                                        <PrimaryButton title="done" class="float-right"></PrimaryButton>
-                                    </template>
-                                </TableElement>
-                            </div>
-                        </div>
-                    </div>
+        <div class="flex flex-col ">
+            <header class="flex gap-3 overflow-x-auto p-3">
+                <TertiaryButton
+                    class="whitespace-nowrap !border-none"
+                    @click="showGroupModal=true"
+                >
+                    +
+                </TertiaryButton>
+                <button
+                    class="whitespace-nowrap rounded-md p-3 text-sm"
+                    :class="selectedSection === 'All' ? 'bg-gray-200 p-3 text-sm':'bg-white'"
+                    @click="selectSection('All')"
+                >
+                    All Sections
+                </button>
+                <div v-for="(section, index) in sections" :key="index">
+                    <button
+                        class="whitespace-nowrap rounded-md p-3 text-sm"
+                        :class="selectedSection === section ? 'bg-gray-200 p-3 text-sm' : 'bg-white'"
+                        @click="selectSection(section)">
+                        Section {{ section }}
+                    </button>
                 </div>
-            </div>
-        </div>
-                </div>
-    <Modal v-model:view="showGroupModal" view="view" title="Group section " class="max-w-md">
-        <FormElement title="Group Sections" @submit="addSectionGroup()" >
-            <p class="flex justify-center">Group multiple section to make subject assigning easy</p>
-                <TextInput v-model="groupedSection.name" required label="Group name" name="" placeholder="name"></TextInput>
-            <p>Sections:</p>
-<!--            group of section -->
-            <p>{{ selectedSections }}</p>
+            </header>
+            <TableElement
+                :key="subjects"
+                :data="subjects"
+                :columns="configSubjectTable"
+                :filterable="false"
+                @select="updateSelectedSubjects"
+            >
 
-            <div class="grid grid-cols-2 gap-2 ">
-                <div v-for="(section,index) in sections" :key="index">
-                    <div>
-                        <p class="">{{section}}</p>
-                        <Toggle v-model="selectedSections[section]"  :label="section"></Toggle>
+                <template #full_name-column="{ data }">
+
+                    <div class="text-left">
+                        {{ data }}
                     </div>
-                </div>
-            </div>
-        </FormElement>
-    </Modal>
+
+                </template>
+
+                <template #tags-column="{ data }">
+
+                    <div class="flex justify-start gap-1 text-gray-500">
+
+                        <span v-for="(tag, t) in data" :key="t" class="rounded-lg px-1.5 text-sm">
+
+                            {{ toHashTag(tag) }}
+
+                        </span>
+
+                    </div>
+
+                </template>
+
+                <template #short_name-column="{ data }">
+
+                    <div class="text-right text-sm uppercase text-gray-500">
+                        {{ data }}
+                    </div>
+
+                </template>
+
+                <template #footer>
+                    <PrimaryButton title="done" class="float-right"></PrimaryButton>
+                </template>
+            </TableElement>
+        </div>
+    </div>
 
 </template>
 
 <script setup>
-import {ref,computed} from "vue";
+import {ref, computed, watch, onMounted} from "vue";
+import { toHashTag } from "@/utils";
 import {
     subjects as fakeSubjects,
-    allGrades,
+    allLevels,
     batches, sectionsOfLevel,
 } from "@/fake";
 import {ChevronDownIcon} from "@heroicons/vue/24/outline";
 import TableElement from "@/Components/TableElement.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Modal from "@/Components/Modal.vue";
-import FormElement from "@/Components/FormElement.vue";
-import TextInput from "@/Components/TextInput.vue";
 import Heading from "@/Components/Heading.vue";
-import {useForm} from "@inertiajs/vue3";
-import Toggle from "@/Components/Toggle.vue";
-const showDetail = ref(false)
+import TertiaryButton from "@/Components/TertiaryButton.vue";
 const configSubjectTable = [
     {
-    name: 'Id',
-    key: 'id',
-    sortable: true,
-    searchable: true,
-},
-    {
-        name: 'Name',
-        key: 'name',
-        sortable: true,
-        searchable: true,
+        key: 'full_name',
+        type: 'custom',
+        name: 'All',
+        header: {
+            align: 'text-left'
+        }
     },
     {
-        name: 'Short Name',
+        key: 'tags',
+        name: 'Tags',
+        type: 'custom',
+        header: {
+            align: 'text-left'
+        }
+    },
+    {
+        name: '',
         key: 'short_name',
-        sortable: true,
-        searchable: true,
-    },
+        type: 'custom'
+    }
 ]
-const subjects = ref([...fakeSubjects])
-const newSubjects = computed(() => {
-    return subjects.value.map(subject => {
+
+const selectedSubjectsForBatches = ref([])
+function updateSelectedSubjects(items) {
+
+    const selectedBatch = selectedSubjectsForBatches.value.find(batch => batch?.level_id === selectedGrade.value.level_id && batch?.section === selectedSection.value)
+
+    if (selectedBatch !== undefined) {
+
+        if (selectedSection.value === 'All') {
+
+            selectedSubjectsForBatches.value.filter(batch => batch === selectedBatch).forEach(section => {
+                section.subjects = items.items.value.map(i => i.id)
+            })
+            return
+        }
+
+        selectedSubjectsForBatches.value.find(batch => batch === selectedBatch).subjects = items.items.value.map(i => i.id)
+
+    } else {
+
+        if (selectedSection.value === 'All') {
+
+            sections.value.forEach(section => {
+                selectedSubjectsForBatches.value.push({
+                    batch_id: selectedGrade.value.id,
+                    level_id: selectedGrade.value.level_id,
+                    section: section,
+                    subjects: items.items.value.map(i => i.id)
+                })
+            })
+            return
+        }
+
+        selectedSubjectsForBatches.value.push({
+            batch_id: selectedGrade.value.id,
+            level_id: selectedGrade.value.level_id,
+            section: selectedSection.value,
+            subjects: items.items.value.map(i => i.id)
+        })
+
+    }
+
+}
+
+const subjects = computed(() => {
+    return [...fakeSubjects].map(subject => {
         return {
             ...subject,
-            selected: Math.ceil(Math.random()*10) % 2
+            selected: isSubjectSelected(subject)
         }
     })
 })
 
 const showLevels = ref(false)
 const showGroupModal = ref(false)
-const grades = allGrades(batches);
+const grades = allLevels(batches);
 const selectedGrade = ref(grades[0])
-const sections = ref(sectionsOfLevel(batches,selectedGrade.value))
-
+const selectedSection = ref('All')
+const sections = computed(() => sectionsOfLevel(batches, selectedGrade.value.level_id).map(batch => batch.section))
 
 // level and section related functions
-function activeGrade(grade){
+function selectGrade(grade) {
     showLevels.value = false
     selectedGrade.value = grade
-    sections.value = sectionsOfLevel(batches,grade)
+    sections.value = sectionsOfLevel(batches, grade)
 }
-function activeSection(index) {
-    alert("section " + index);
+
+function selectSection(section) {
+    selectedSection.value = section
 }
-const selectedSections = ref({})
-const groupedSection = useForm(
-    {
-        name:'',
-        sections:selectedSections.value
+
+function isSubjectSelected(subject) {
+
+    if (selectedSection.value === 'All') {
+
+        // from the selectedSubjectsForBatches,
+        // filter the levels by selectedGrade
+
+        return selectedSubjectsForBatches.value.filter(batch => batch?.level_id === selectedGrade.value.level_id).forEach(level => {
+            if (!level?.subjects.includes(subject.id)) {
+                return false
+            }
+        })
+
+        // return selectedSubjectsForBatches.value.find(batch => {
+        //
+        //     // First, filter by the level
+        //     // Second, find all sections of the selectedGrade
+        //     // For each of the sections, check their subjects list
+        //     // If the given subject if found, return true
+        //     // else return false
+        //
+        //     return batch?.level_id === selectedGrade.value.level_id &&
+        //         ((sectionsOfLevel(selectedSubjectsForBatches.value, selectedGrade.value.level_id).forEach(section => {
+        //             if (!section.subjects.includes(section.subjects)) {
+        //                 return false
+        //             }
+        //         })) === true)
+        //
+        // }) !== undefined
+
     }
-)
-function addSectionGroup() {
-    alert(groupedSection.sections);
-    console.log(groupedSection.sections)
-    showGroupModal.value = false
 
+    return selectedSubjectsForBatches.value.find(batch => {
+        return batch?.level_id === selectedGrade.value.level_id &&
+            batch?.section === selectedSection.value &&
+            batch?.subjects.includes(subject.id)
+    }) !== undefined
 
 }
 
+watch(selectedSubjectsForBatches, () => {
 
+    selectedSubjectsForBatches.value.filter(batch => batch?.level_id === selectedGrade.value.level_id).forEach(level => {
+        if (!level?.subjects.includes(2)) {
+            return false
+        }
+    })
+
+}, { deep: true })
 
 </script>
