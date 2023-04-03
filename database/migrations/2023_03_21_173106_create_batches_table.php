@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('level_id')->constrained()->cascadeOnDelete();
             $table->foreignId('school_year_id')->constrained()->cascadeOnDelete();
             $table->char('section', 2);
+            $table->integer('min_students');
+            $table->integer('max_students');
             $table->unique(['level_id', 'school_year_id', 'section']);
             $table->softDeletes();
             $table->timestamps();

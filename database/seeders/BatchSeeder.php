@@ -17,7 +17,15 @@ class BatchSeeder extends Seeder
     public function run()
     {
         $levels = Level::all();
-        $schoolYear = SchoolYear::whereNull('end_date')->first();
+        $currentSchoolYear = SchoolYear::whereNull('end_date')->first();
+        $previousSchoolYear = SchoolYear::whereNotNull('end_date')->first();
+
+        $this->seedBatches($levels, $currentSchoolYear);
+        $this->seedBatches($levels, $previousSchoolYear);
+    }
+
+    private function seedBatches($levels, $schoolYear)
+    {
         $sections = range('A', 'Z');
         $maxSections = 6;
 
@@ -28,19 +36,8 @@ class BatchSeeder extends Seeder
                     'level_id' => $level->id,
                     'school_year_id' => $schoolYear->id,
                     'section' => $sections[$i],
-                ]);
-            }
-        }
-
-        // Add batches for previous school year
-        $schoolYear = SchoolYear::whereNotNull('end_date')->first();
-        foreach ($levels as $level) {
-            $sectionCount = rand(1, $maxSections);
-            for ($i = 0; $i < $sectionCount; $i++) {
-                Batch::factory()->create([
-                    'level_id' => $level->id,
-                    'school_year_id' => $schoolYear->id,
-                    'section' => $sections[$i],
+                    'min_students' => fake()->numberBetween(5, 10),
+                    'max_students' => fake()->numberBetween(20, 30),
                 ]);
             }
         }

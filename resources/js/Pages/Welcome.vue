@@ -371,6 +371,8 @@ function addBatch() {
     router.post('/batches/create', {
         level_id: 1,
         section: "A",
+        min_students: 34,
+        max_students: 51
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -387,7 +389,9 @@ function addBatches() {
             batches: [
                 {
                     level_id: 1,
-                    no_of_sections: 3
+                    no_of_sections: 3,
+                    min_students: 10,
+                    max_students: 20
                 },
                 {
                     level_id: 2,

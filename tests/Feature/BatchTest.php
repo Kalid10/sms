@@ -32,6 +32,8 @@ it('allows users to create a batch with valid data', function () {
     $this->actingAs($user)->post('batches/create', [
         'level_id' => $level->id,
         'section' => 'A',
+        'min_students' => 5,
+        'max_students' => 10,
     ]);
 
     $this->assertDatabaseCount('batches', 1);
@@ -49,6 +51,8 @@ it('allows users to create batches in bulk with valid data', function () {
         [
             'level_id' => 1,
             'no_of_sections' => 2,
+            'min_students' => 5,
+            'max_students' => 10,
         ],
         [
             'level_id' => 2,
@@ -56,7 +60,7 @@ it('allows users to create batches in bulk with valid data', function () {
         ],
     ];
 
-    $response = $this->actingAs($user)->post('batches/create-bulk', [
+    $this->actingAs($user)->post('batches/create-bulk', [
         'batches' => $batchData,
     ]);
 
@@ -64,6 +68,8 @@ it('allows users to create batches in bulk with valid data', function () {
     $this->assertDatabaseHas('batches', [
         'level_id' => 1,
         'section' => 'A',
+        'min_students' => 5,
+        'max_students' => 10,
     ]);
 });
 
