@@ -9,7 +9,9 @@ use App\Models\Guardian;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -66,13 +68,21 @@ class RegisterController extends Controller
                     'type' => User::TYPE_GUARDIAN,
                     'email' => $request->input('guardian_email'),
                     'phone_number' => $request->input('guardian_phone_number'),
-                    'password' => Hash::make('secret')]);
+                    'password' => Hash::make('secret'),
+                    'gender' => 'male',
+                ]);
             }
+
+            $dateOfBirth = Carbon::parse($request->input('date_of_birth'));
+            $dateOfBirth = $dateOfBirth->format('Y-m-d');
+
+            // Filter validated data, like removing the excluding birthdate
+            $validatedData = Arr::except($request->validated(), 'date_of_birth');
 
             // Create user
             $user = User::create(array_merge(
-                $request->validated(),
-                ['password' => Hash::make('secret')]
+                $validatedData,
+                ['password' => Hash::make('secret'), 'date_of_birth' => $dateOfBirth]
             ));
 
             // Add user to respective type table

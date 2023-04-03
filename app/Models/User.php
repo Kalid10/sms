@@ -32,6 +32,8 @@ class User extends Authenticatable
         'phone_number',
         'username',
         'address_id',
+        'gender',
+        'date_of_birth',
     ];
 
     protected $hidden = [

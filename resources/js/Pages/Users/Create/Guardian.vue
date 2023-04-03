@@ -1,11 +1,5 @@
 <template>
     <div class="grid-rows-12 grid sm:grid-cols-12">
-        <!--        Handle success message-->
-        <!--         TODO: remove when notification is ready-->
-        <div v-if="success" class="flex justify-end text-sm text-green-500">
-            {{ success }}
-        </div>
-
         <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
             <Heading
                 value="Register new
@@ -18,35 +12,49 @@
         <div class="col-span-8">
             <div class="w-full max-w-4xl rounded-lg bg-white">
 
-                <FamilyFormElement title="Guardian's form" @submit="submit"
+                <GuardianFormElement title="Guardian's form" @submit="submit"
                 >
                     <div class="flex gap-3">
 
-                        <FamilyTextInput
+                        <GuardianTextInput
                             v-model="form.name" class="w-full" label="Student's name"
                             placeholder="name" :error="form.errors.name" required/>
 
                     </div>
-                    <FamilyTextInput
-                        v-model="form.email" type="email" class="w-full" label="Student's email"
-                        placeholder="email" :error="form.errors.email" required/>
+                    <div class="flex gap-3">
+                        <GuardianTextInput
+                            v-model="form.email" type="email" class="w-full" label="Student's email"
+                            placeholder="email" :error="form.errors.email" required/>
+                        <GuardianTextInput
+                            v-model="form.gender" class="w-full" label="Student's gender"
+                            placeholder="gender" :error="form.errors.gender" required/>
+                    </div>
+
+                    <GuardianDatePicker v-model="form.date_of_birth" label="Student's date of birth"/>
+
                     <div class="flex gap-3">
 
-                        <FamilyTextInput
+                        <GuardianTextInput
                             v-model="form.guardian_name" class="w-full" label="Guardian's name"
                             placeholder="name" :error="form.errors.guardian_name" required/>
-                        <FamilyTextInput
+                        <GuardianTextInput
                             v-model="form.guardian_phone_number"
-                            class="w-full" label="Guardian's phone number" placeholder="phone number"
+                            class="w-full" label="Guardian's phone number" type="number" placeholder="phone number"
                             :error="form.errors.guardian_phone_number"
                             required/>
 
                     </div>
-                    <FamilyTextInput
-                        v-model="form.guardian_email" label="Guardian's email" placeholder="email"
-                        :error="form.errors.guardian_email"
-                        required/>
-                </FamilyFormElement>
+                    <div class="flex gap-3">
+                        <GuardianTextInput
+                            v-model="form.guardian_email" type="email" class="w-full" label="Guardian's email"
+                            placeholder="email"
+                            :error="form.errors.guardian_email"
+                            required/>
+                        <GuardianTextInput
+                            v-model="form.guardian_gender" class="w-full" label="Guardian's gender"
+                            placeholder="gender" :error="form.errors.guardian_gender" required/>
+                    </div>
+                </GuardianFormElement>
 
             </div>
         </div>
@@ -64,10 +72,10 @@
         <div class="col-span-8">
             <div class="relative w-full max-w-4xl flex-col rounded-lg bg-white">
 
-                <FamilyFileInput max-file-size="10000000" @file-uploaded="handleFileUploaded"/>
+                <GuardianFileInput max-file-size="10000000" @file-uploaded="handleFileUploaded"/>
 
                 <div class="absolute right-0">
-                    <FamilyPrimaryButton title="Submit"/>
+                    <GuardianPrimaryButton title="Submit"/>
                 </div>
             </div>
         </div>
@@ -76,19 +84,15 @@
 </template>
 
 <script setup>
-import FamilyFormElement from "@/Components/FormElement.vue"
-import FamilyTextInput from "@/Components/TextInput.vue"
-import FamilyFileInput from "@/Components/FileInput.vue"
+import GuardianFormElement from "@/Components/FormElement.vue"
+import GuardianTextInput from "@/Components/TextInput.vue"
+import GuardianFileInput from "@/Components/FileInput.vue"
 import Heading from "@/Components/Heading.vue"
-import {useForm, usePage} from "@inertiajs/vue3";
-import {computed} from "vue";
-import FamilyPrimaryButton from "@/Components/PrimaryButton.vue";
+import {useForm} from "@inertiajs/vue3";
+import GuardianPrimaryButton from "@/Components/PrimaryButton.vue";
+import GuardianDatePicker from "@/Components/DatePicker.vue";
 
 defineEmits(['file-uploaded']);
-
-const user = computed(() => usePage().props.auth.user);
-
-const success = computed(() => usePage().props.flash.success);
 
 const handleFileUploaded = (file) => {
     // Todo: Remove this console.log when notification is implemented
@@ -98,10 +102,13 @@ const handleFileUploaded = (file) => {
 const form = useForm({
     name: '',
     email: '',
+    gender: '',
+    date_of_birth: null,
     type: 'student',
     guardian_name: '',
     guardian_email: '',
     guardian_phone_number: '',
+    guardian_gender: '',
 })
 
 const bulkForm = useForm({

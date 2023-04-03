@@ -57,6 +57,7 @@ function registerAdmin() {
         name: "Biniyam Lemma",
         email: "admin@gmaill.com",
         position: "Principal",
+        gender: "male",
         type: "admin"
     }, {
         onSuccess: () => {
@@ -73,6 +74,7 @@ function registerGuardian() {
     router.post('/register', {
         name: "Kalid Abdu",
         email: "kalid@gmaill.com",
+        gender: "male",
         type: "guardian"
     }, {
         onSuccess: () => {
@@ -90,6 +92,8 @@ function registerStudent() {
         name: "Kidist Andarge",
         email: "Kidist@gmail.com",
         type: "student",
+        gender: "female",
+        date_of_birth: "03/07/2000",
         level_id: 1,
         guardian_id: 1,
     }, {
@@ -108,6 +112,7 @@ function registerTeacher() {
     router.post('/register', {
         name: "Yoseph Seboka",
         phone_number: "0943104326",
+        gender: "male",
         type: "teacher",
     }, {
         onSuccess: () => {

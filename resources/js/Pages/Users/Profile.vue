@@ -1,16 +1,4 @@
 <template>
-    <!--       Handle error message-->
-    <div v-if="profileForm.errors.id" class="flex justify-end text-[0.55rem] text-red-600">
-        {{ profileForm.errors.id }}
-    </div>
-    <div v-if="passwordForm.errors.id" class="flex justify-end text-[0.55rem] text-red-600">
-        {{ passwordForm.errors.id }}
-    </div>
-
-    <!--          Handle success message-->
-    <div v-if="success" class="flex justify-end text-sm text-green-500">
-        {{ success }}
-    </div>
     <div class="grid-rows-12 grid sm:grid-cols-12">
         <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
             <Heading value="Profile"/>
@@ -36,11 +24,18 @@
                     <UserTextInput
                         v-model="profileForm.username"
                         class="w-full" :placeholder=user.username
-                        :error="profileForm.errors.email" label="User Name" required/>
+                        :error="profileForm.errors.username" label="User Name" required/>
                 </div>
-                <UserTextInput
-                    v-model="profileForm.phone_number" label="Phone Number" :placeholder=user.phone_number
-                    :error="profileForm.errors.phone_number" required/>
+                <div class="flex gap-3">
+                    <UserTextInput
+                        v-model="profileForm.phone_number" class="w-full" label="Phone Number"
+                        :placeholder=user.phone_number
+                        :error="profileForm.errors.phone_number" required/>
+                    <UserTextInput
+                        v-model="profileForm.gender"
+                        class="w-full" :placeholder=user.gender
+                        :error="profileForm.errors.gender" label="User Name" required/>
+                </div>
             </UserFormElement>
         </div>
     </div>
@@ -90,6 +85,7 @@ const profileForm = useForm({
     email: user.value.email,
     username: user.value.username,
     phone_number: user.value.phone_number,
+    gender: user.value.gender,
 });
 
 // Submit profile form
