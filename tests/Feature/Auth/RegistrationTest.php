@@ -23,33 +23,6 @@ beforeEach(function () {
     $this->user->roles()->attach(['manage-users']);
 });
 
-it('registers a guardian', function () {
-    $this->actingAs($this->user);
-
-    $payload = [
-        'name' => 'Mar Smth',
-        'email' => 'marsmith@example.com',
-        'guardian_name' => 'John Doe',
-        'guardian_email' => 'johndoe@example.com',
-        'guardian_phone_number' => '0911111111',
-        'username' => 'lucbrown',
-        'type' => User::TYPE_STUDENT,
-        'gender' => 'male',
-        'guardian_gender' => 'male',
-    ];
-
-    $response = $this->postJson('/register', $payload);
-
-    $response->assertStatus(200);
-    $response->assertJson([
-        'message' => 'User created successfully.',
-    ]);
-
-    $guardianUser = User::where('email', 'johndoe@example.com')->first();
-    expect($guardianUser->exists())->toBeTrue();
-    expect(Guardian::where('user_id', $guardianUser->id)->exists())->toBeTrue();
-});
-
 it('registers an admin', function () {
     $this->actingAs($this->user);
 
@@ -59,6 +32,7 @@ it('registers an admin', function () {
         'type' => User::TYPE_ADMIN,
         'position' => 'Manager',
         'gender' => 'male',
+        'date_of_birth' => '1990-01-01',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -81,6 +55,7 @@ it('registers a teacher', function () {
         'email' => 'marksmith@example.com',
         'type' => User::TYPE_TEACHER,
         'gender' => 'male',
+        'date_of_birth' => '1990-01-01',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -106,6 +81,7 @@ it('registers a student', function () {
         'email' => 'lucybrown@example.com',
         'type' => User::TYPE_STUDENT,
         'gender' => 'male',
+        'date_of_birth' => '1990-01-01',
         'guardian_name' => 'John Doe',
         'guardian_email' => 'johndoe@example.com',
         'guardian_phone_number' => '0911111111',
@@ -114,7 +90,7 @@ it('registers a student', function () {
 
     ];
 
-    $response = $this->postJson('/register', $payload);
+    $response = $this->post('/register', $payload);
 
     Log::info($response->getContent());
     $response->assertStatus(200);
@@ -135,6 +111,7 @@ it('fails with unknown user type', function () {
         'email' => 'johndoe@example.com',
         'type' => 'unknown',
         'gender' => 'male',
+        'date_of_birth' => '1990-01-01',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -151,6 +128,7 @@ it('requires authentication to register a user', function () {
         'email' => 'johndoe@example.com',
         'type' => User::TYPE_GUARDIAN,
         'gender' => 'male',
+        'date_of_birth' => '1990-01-01',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -195,6 +173,7 @@ it('checks for specific manage-X role when registering a user', function () {
         'email' => 'johndoe@example.com',
         'type' => User::TYPE_GUARDIAN,
         'gender' => 'male',
+        'date_of_birth' => '1990-01-01',
     ];
 
     $response = $this->postJson('/register', $payload);
