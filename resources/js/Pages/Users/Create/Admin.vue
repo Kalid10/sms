@@ -1,12 +1,5 @@
 <template>
     <div class="grid-rows-12 grid sm:grid-cols-12">
-
-        <!--        Handle success message-->
-        <!--         TODO: remove when notification is ready-->
-        <div v-if="success" class="flex justify-end text-sm text-green-500">
-            {{ success }}
-        </div>
-
         <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
             <Heading
                 value="Register an Admin"/>
@@ -38,12 +31,16 @@
                         :error="form.errors.username"
                         required/>
 
-
-                    <AdminTextInput
-                        v-model="form.position" class="w-full" label="Position" placeholder="position"
-                        :error="form.errors.position"
-                        required/>
-
+                    <div class="flex gap-3">
+                        <AdminTextInput
+                            v-model="form.position" class="w-full" label="Position" placeholder="position"
+                            :error="form.errors.position"
+                            required/>
+                        <AdminTextInput
+                            v-model="form.gender" class="w-full" label="Gender" placeholder="gender"
+                            :error="form.errors.gender"
+                            required/>
+                    </div>
                 </AdminFormElement>
             </div>
         </div>
@@ -54,10 +51,7 @@
 import AdminFormElement from "@/Components/FormElement.vue";
 import AdminTextInput from "@/Components/TextInput.vue";
 import Heading from "@/Components/Heading.vue";
-import {useForm, usePage} from "@inertiajs/vue3";
-import {computed} from "vue";
-
-const success = computed(() => usePage().props.flash.success);
+import {useForm} from "@inertiajs/vue3";
 
 const form = useForm({
     name: "",
@@ -66,6 +60,7 @@ const form = useForm({
     email: "",
     phone_number: "",
     position: "",
+    gender: "",
 });
 
 const submit = () => {

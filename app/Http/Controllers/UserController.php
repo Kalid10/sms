@@ -22,7 +22,7 @@ class UserController extends Controller
         $perPage = $request->input('per_page', 10);
 
         // Get users
-        $users = User::select('id', 'name', 'email', 'type')->where('name', 'like', '%'.$searchKey.'%')->paginate($perPage);
+        $users = User::select('id', 'name', 'email', 'type', 'gender')->where('name', 'like', '%'.$searchKey.'%')->paginate($perPage);
 
         return Inertia::render('Users/Index', [
             'users' => $users,

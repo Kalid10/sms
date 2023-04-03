@@ -66,7 +66,9 @@ class RegisterController extends Controller
                     'type' => User::TYPE_GUARDIAN,
                     'email' => $request->input('guardian_email'),
                     'phone_number' => $request->input('guardian_phone_number'),
-                    'password' => Hash::make('secret')]);
+                    'password' => Hash::make('secret'),
+                    'gender' => $request->input('guardian_gender'),
+                ]);
             }
 
             // Create user

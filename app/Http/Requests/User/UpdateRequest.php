@@ -27,10 +27,11 @@ class UpdateRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users|email',
             'username' => 'required|string|max:255|unique:users|username',
             'phone_number' => 'required|string|max:255|unique:users,phone_number',
+            'gender' => 'required|string|max:255',
         ];
     }
 
-    // Check if the logged in user is the same as the user being updated
+    // Check if the logged-in user is the same as the user being updated
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
