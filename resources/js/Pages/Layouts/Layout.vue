@@ -12,6 +12,8 @@
                 <slot/>
             </div>
         </div>
+        <Notification/>
+
     </div>
 
 </template>
@@ -20,6 +22,7 @@
 import {ref} from "vue";
 import Header from "@/Views/Header.vue";
 import Drawer from "@/Views/Drawer.vue";
+import Notification from "@/Components/Notification.vue";
 
 const drawerVisible = ref(false);
 </script>
