@@ -2,7 +2,6 @@
     <div class="">Welcome</div>
     <div class="grid grid-cols-4 gap-6">
         <button class="h-14 bg-lime-500 " @click="registerAdmin">Register Admin</button>
-        <button class="h-14 bg-lime-500 " @click="registerGuardian">Register Guardian</button>
         <button class="h-14 bg-lime-500 " @click="registerStudent">Register Student</button>
         <button class="h-14 bg-lime-500 " @click="registerTeacher">Register Teacher</button>
         <button class="h-14 bg-pink-900 text-white " @click="login">Test Login</button>
@@ -90,12 +89,15 @@ function registerGuardian() {
 function registerStudent() {
     router.post('/register', {
         name: "Kidist Andarge",
-        email: "Kidist@gmail.com",
+        email: "K@gmails.com",
         type: "student",
         gender: "female",
-        date_of_birth: "03/07/2000",
+        date_of_birth: "03-07-2000",
         level_id: 1,
-        guardian_id: 1,
+        guardian_name: "Kalid Abdu",
+        guardian_phone_number: "0963134321",
+        guardian_email: "k2@gmail.com",
+        guardian_gender: 'male'
     }, {
         onSuccess: () => {
             console.log("Success")
