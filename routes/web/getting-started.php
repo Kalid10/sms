@@ -19,4 +19,8 @@ Route::prefix('getting-started')->group(function () {
     Route::get('/register-subjects', function () {
         return Inertia::render('GettingStarted/RegisterSubjects');
     });
+
+    Route::get('/assign-subject', function () {
+        return Inertia::render('GettingStarted/AssignSubject');
+    });
 });
