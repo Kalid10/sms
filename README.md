@@ -40,6 +40,25 @@ Run database migrations and seeders:
 php artisan migrate --seed
 ```
 
+#### Queue Configuration
+
+To enable efficient background processing of the import tasks, make sure to configure your queue database connection in
+the .env file:
+
+```QUEUE_CONNECTION=database```
+
+If you are using a different queue connection like Redis, update the ```QUEUE_CONNECTION``` value accordingly.
+
+#### Running the Queue Worker
+
+To process the jobs in the background, you need to run the Laravel queue worker. In your terminal, navigate to the
+project root and execute the following command:
+
+```php artisan queue:work```
+
+This command will start the queue worker, listening for new jobs and processing them in the background. For production
+environments, consider using a process manager like Supervisor to manage the queue workers.
+
 Install npm packages and compile the assets and start the frontend development server:
 
 ```
