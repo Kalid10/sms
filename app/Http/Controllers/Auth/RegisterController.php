@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\StudentHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Imports\StudentsRegistrationImport;
 use App\Models\Admin;
-use App\Models\Batch;
-use App\Models\BatchStudent;
 use App\Models\Guardian;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -14,14 +14,41 @@ use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\HeadingRowImport;
 
 class RegisterController extends Controller
 {
+    public function bulkRegisterStudents(Request $request): RedirectResponse
+    {
+        // Validate the request
+        $request->validate([
+            'students_file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        try {
+            $this->validateHeaders($request->file('students_file'));
+
+            (new StudentsRegistrationImport())->queue($request->file('students_file'));
+
+            return redirect()->back()->with('success', 'We have started processing your file. You will be notified when it is done.');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator->getMessageBag());
+        } catch (Exception $exception) {
+            // If an error occurs, log the error and return an error message
+            Log::error($exception->getMessage());
+
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
+    }
+
     public function register(RegisterRequest $request): Response|RedirectResponse
     {
         // Check role
@@ -68,19 +95,18 @@ class RegisterController extends Controller
     private function createStudent(RegisterRequest $request)
     {
         // Create guardian
-        $guardian_user = $this->createGuardian($request);
+        $guardianUser = $this->createGuardian($request);
 
-        $guardian = Guardian::create(['user_id' => $guardian_user->id]);
+        $guardian = Guardian::create(['user_id' => $guardianUser->id]);
 
         // Create student
-        $student_user = $this->createUser($request, User::TYPE_STUDENT);
+        $studentUser = $this->createUser($request, User::TYPE_STUDENT);
         $student = Student::create([
-            'user_id' => $student_user->id,
+            'user_id' => $studentUser->id,
             'guardian_id' => $guardian->id,
         ]);
 
-        // Assign student to batch
-        $assigned = $this->assignStudentToBatch($student, $request->input('level_id'));
+        $assigned = StudentHelper::assignStudentToBatch($student->id, $request->input('level_id'));
 
         if (! $assigned) {
             // Rollback transaction
@@ -88,7 +114,7 @@ class RegisterController extends Controller
             throw new Exception('Batch full!');
         }
 
-        return $student_user;
+        return $studentUser;
     }
 
     private function createGuardian(RegisterRequest $request)
@@ -121,16 +147,14 @@ class RegisterController extends Controller
             $dateOfBirth = Carbon::parse($request->input('date_of_birth'));
             $dateOfBirth = $dateOfBirth->format('Y-m-d');
 
-            Log::info($dateOfBirth);
-
             // Filter validated data, like removing the excluding birthdate
             $validatedData = Arr::except($request->validated(), 'date_of_birth');
 
-            Log::info($validatedData['gender']);
             // Create user
-            return User::create(array_merge(
-                $validatedData,
-                ['password' => Hash::make('secret'), 'date_of_birth' => $dateOfBirth]
+            return User::create(array_merge($validatedData,
+                ['password' => Hash::make('secret'),
+                    'date_of_birth' => $dateOfBirth,
+                    'username' => StudentHelper::generateUsername($request->input('name'))]
             ));
         }
 
@@ -173,39 +197,6 @@ class RegisterController extends Controller
         }
     }
 
-    private function assignStudentToBatch(Student $student, $levelId): bool
-    {
-        // Find all the batches in the student's level
-        $batches = Batch::where('level_id', $levelId)->get();
-
-        // Initialize variables to store the minimum number of students and the target batch
-        $minStudentCount = PHP_INT_MAX;
-        $targetBatch = null;
-
-        // Loop through the batches and find the batch with the minimum number of students
-        foreach ($batches as $batch) {
-            $studentCount = BatchStudent::where('batch_id', $batch->id)->count();
-
-            if ($studentCount < $minStudentCount && $studentCount < $batch->max_students) {
-                $minStudentCount = $studentCount;
-                $targetBatch = $batch;
-            }
-        }
-
-        // If a target batch is found, assign the student to the batch
-        if ($targetBatch) {
-            BatchStudent::create([
-                'batch_id' => $targetBatch->id,
-                'student_id' => $student->id,
-            ]);
-
-            return true;
-        }
-
-        // If no suitable batch is found, return false
-        return false;
-    }
-
     private function successResponse(RegisterRequest $request, User $user): Response|RedirectResponse
     {
         if ($request->header('X-Inertia')) {
@@ -227,5 +218,28 @@ class RegisterController extends Controller
         return response([
             'message' => $message,
         ], 422);
+    }
+
+    private function validateHeaders(UploadedFile $file): void
+    {
+        $headings = (new HeadingRowImport)->toArray($file);
+
+        $expectedHeaders = [
+            'name',
+            'date_of_birth',
+            'gender',
+            'guardian_name',
+            'guardian_email',
+            'guardian_phone_number',
+            'guardian_gender',
+            'grade',
+        ];
+
+        foreach ($expectedHeaders as $expectedHeader) {
+            if (! in_array($expectedHeader, $headings[0][0])) {
+                $errors = ['headers' => ["Missing required header: {$expectedHeader}"]];
+                throw ValidationException::withMessages($errors);
+            }
+        }
     }
 }

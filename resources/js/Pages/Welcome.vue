@@ -3,6 +3,7 @@
     <div class="grid grid-cols-4 gap-6">
         <button class="h-14 bg-lime-500 " @click="registerAdmin">Register Admin</button>
         <button class="h-14 bg-lime-500 " @click="registerStudent">Register Student</button>
+        <input type="file" @change="handleFileUpload">
         <button class="h-14 bg-lime-500 " @click="registerTeacher">Register Teacher</button>
         <button class="h-14 bg-pink-900 text-white " @click="login">Test Login</button>
         <button class="h-14 bg-pink-900 text-white " @click="logout">Test Logout</button>
@@ -49,6 +50,7 @@
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
+import {ref} from "vue";
 
 // Register admin
 function registerAdmin() {
@@ -69,25 +71,14 @@ function registerAdmin() {
     });
 }
 
-function registerGuardian() {
-    router.post('/register', {
-        name: "Kalid Abdu",
-        email: "kalid@gmaill.com",
-        gender: "male",
-        type: "guardian"
-    }, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
-        }
-    });
+const file = ref(null);
+
+function handleFileUpload(event) {
+    file.value = event.target.files[0];
 }
 
 function registerStudent() {
-    router.post('/register', {
+    router.post('/register-bulk', {
         name: "Kidist Andarge",
         email: "K@gmails.com",
         type: "student",
@@ -97,7 +88,8 @@ function registerStudent() {
         guardian_name: "Kalid Abdu",
         guardian_phone_number: "0963134321",
         guardian_email: "k2@gmail.com",
-        guardian_gender: 'male'
+        guardian_gender: 'male',
+        students_file: file.value
     }, {
         onSuccess: () => {
             console.log("Success")
