@@ -28,6 +28,7 @@ class RegisterRequest extends FormRequest
             'email' => 'required_without_all:phone_number,username|required_if:type,admin|email|unique:users',
             'phone_number' => 'required_without_all:email,username|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users',
             'gender' => 'required|string|max:255',
+            'date_of_birth' => 'required_if:type,student|date',
             'username' => 'required_without_all:email,phone_number|exclude_unless:type,student|string|min:6|unique:users',
             'position' => 'required_if:type,admin',
             'guardian_name' => 'required_if:type,student',
