@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 uses(RefreshDatabase::class);
 
@@ -96,6 +97,8 @@ it('registers a student', function () {
 
     // Register student
     $response = $this->post('/register', $payload);
+
+    Log::info($response->getContent());
     $response->assertStatus(200);
     $response->assertJson([
         'message' => 'User created successfully.',
