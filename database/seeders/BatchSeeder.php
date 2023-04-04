@@ -36,8 +36,8 @@ class BatchSeeder extends Seeder
                     'level_id' => $level->id,
                     'school_year_id' => $schoolYear->id,
                     'section' => $sections[$i],
-                    'min_students' => fake()->numberBetween(5, 10),
-                    'max_students' => fake()->numberBetween(20, 30),
+                    'min_students' => fake()->numberBetween(50, 60),
+                    'max_students' => fake()->numberBetween(51, 90),
                 ]);
             }
         }
