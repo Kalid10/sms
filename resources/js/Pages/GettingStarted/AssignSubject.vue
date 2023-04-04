@@ -1,5 +1,6 @@
 <template>
     <div class=" p-3">
+        <DelegateLink></DelegateLink>
         <Heading size="lg">Assign Subject to Section</Heading>
         <div
             class="mb-9 flex w-full cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-4"
@@ -108,6 +109,7 @@ import TableElement from "@/Components/TableElement.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Heading from "@/Components/Heading.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
+import DelegateLink from "@/Views/DelegateLink.vue";
 const configSubjectTable = [
     {
         key: 'full_name',

@@ -1,6 +1,6 @@
 <template>
-
     <div class="flex flex-col">
+        <DelegateLink></DelegateLink>
         <Heading>Register Subjects</Heading>
         <h3 class="text-sm text-gray-500">
             We have selected a set predefined subjects for you. You can remove the subjects you don't provide or
@@ -146,6 +146,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue"
 import TextInput from "@/Components/TextInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
+import DelegateLink from "@/Views/DelegateLink.vue";
 import {router} from "@inertiajs/vue3";
 
 const subjects = computed(() => initialSubjects)
