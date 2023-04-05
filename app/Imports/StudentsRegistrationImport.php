@@ -115,14 +115,12 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
 
     public function chunkSize(): int
     {
-        // TODO: Change the number of rows to be read at a time, after testing
-        return 100;
+        return env('STUDENT_IMPORT_CHUNK_SIZE', 100);
     }
 
     public function batchSize(): int
     {
-        // TODO: Change the number of rows to be inserted at a time, after testing
-        return 100;
+        return env('STUDENT_IMPORT_BATCH_SIZE', 100);
     }
 
     public function registerEvents(): array
