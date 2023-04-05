@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -76,7 +78,11 @@ class SchoolScheduleController extends Controller
         }
 
         // Check if the school schedule is not in the past
-        if (SchoolSchedule::find($id)->start_date >= now()) {
+        if (Carbon::parse(SchoolSchedule::find($id)->start_date)->isPast()) {
+            Log::error(Carbon::parse(SchoolSchedule::find($id)->start_date)->isPast());
+            Log::info(SchoolSchedule::find($id)->start_date);
+            Log::info(Carbon::now());
+
             return redirect()->back()->withErrors(['id' => 'Can not delete, the school schedule is in the past.']);
         }
         SchoolSchedule::find($id)->delete();
@@ -87,11 +93,12 @@ class SchoolScheduleController extends Controller
     private function validateRequest(Request $request): array
     {
         return $request->validate([
-            'title' => 'required|max:255',
+            'title' => 'required|string|max:255',
             'body' => 'nullable',
             'start_date' => 'required|date|before:end_date|after_or_equal:today',
             'end_date' => 'required|date',
-            'type' => 'required',
+            'type' => 'required|in:closed,half_closed,not_closed',
+            'tags' => 'nullable|array',
             'id' => $request->id ? 'sometimes|exists:school_schedules,id|integer|gt:0' : '',
         ]);
     }

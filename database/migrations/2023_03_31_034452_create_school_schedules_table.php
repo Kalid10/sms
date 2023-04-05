@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('start_date');
             $table->timestamp('end_date');
             $table->string('type');
+            $table->json('tags')->nullable();
             $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
