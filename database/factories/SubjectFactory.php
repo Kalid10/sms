@@ -34,6 +34,8 @@ class SubjectFactory extends Factory
         return [
             'full_name' => $subjects[$random],
             'short_name' => $random,
+            'category' => $this->faker->word,
+            'tags' => $this->faker->words(3),
         ];
     }
 }
