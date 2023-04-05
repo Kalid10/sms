@@ -1,6 +1,7 @@
 <template>
 
     <div class="flex flex-col">
+        <DelegateLink></DelegateLink>
         <Heading>Assign Subjects</Heading>
         <h3 class="text-sm text-gray-500">
             Now that you have registered your classes and subjects, you can now assign each class to the subject they will be taking.
@@ -171,6 +172,7 @@
 </template>
 
 <script setup>
+import DelegateLink from "@/Views/DelegateLink.vue";
 import { computed, ref, watch, onMounted } from "vue";
 import {router, usePage} from "@inertiajs/vue3";
 import { toHashTag } from "@/utils";

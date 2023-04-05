@@ -1,6 +1,7 @@
 <template>
 
     <div class="flex flex-col">
+        <DelegateLink></DelegateLink>
         <Heading>Register Batches</Heading>
         <h3 class="text-sm text-gray-500">
             We have selected a set of default batches for you. You can remove batches you don't need, add new batches
@@ -128,6 +129,7 @@ import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import DelegateLink from "@/Views/DelegateLink.vue";
 
 const levels = computed(() => usePage().props.levels)
 const updatedLevels = ref(levels.value.map(level => {
