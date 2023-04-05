@@ -27,6 +27,8 @@ class CreateRequest extends FormRequest
         return [
             'level_id' => 'required|exists:levels,id',
             'section' => 'required|string|max:2',
+            'min_students' => 'nullable|integer|min:5|lt:max_students',
+            'max_students' => 'nullable|integer|min:5|gt:min_students',
         ];
     }
 

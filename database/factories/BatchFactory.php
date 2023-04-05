@@ -30,6 +30,8 @@ class BatchFactory extends Factory
             'level_id' => $level->id,
             'school_year_id' => $schoolYear->id,
             'section' => $this->faker->regexify('[A-Z]{1}'),
+            'min_students' => $this->faker->numberBetween(30, 50),
+            'max_students' => $this->faker->numberBetween(51, 90),
         ];
     }
 }
