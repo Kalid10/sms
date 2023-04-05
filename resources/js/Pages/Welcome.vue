@@ -52,6 +52,16 @@
 import {router} from "@inertiajs/vue3";
 import {ref} from "vue";
 
+// Listen for broadcast events
+Echo.private('students-import')
+    .listen('.students-import', (e) => {
+        // Two variables are passed to the callback function
+        // Check the type to see if it is success or error
+        // e.message and e.type are the variables
+        console.log(e.type);
+        console.log(e.message);
+    });
+
 // Register admin
 function registerAdmin() {
     router.post('/register', {

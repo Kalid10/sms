@@ -26,7 +26,7 @@ use Maatwebsite\Excel\HeadingRowImport;
 
 class RegisterController extends Controller
 {
-    public function bulkRegisterStudents(Request $request): RedirectResponse
+    public function bulkRegisterStudents(Request $request): bool|RedirectResponse
     {
         // Validate the request
         $request->validate([
@@ -38,7 +38,7 @@ class RegisterController extends Controller
 
             (new StudentsRegistrationImport())->queue($request->file('students_file'));
 
-            return redirect()->back()->with('success', 'We have started processing your file. You will be notified when it is done.');
+            return true;
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->getMessageBag());
         } catch (Exception $exception) {
