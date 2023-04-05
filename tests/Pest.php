@@ -11,11 +11,11 @@
 |
 */
 
-use Plannr\Laravel\FastRefreshDatabase\Traits\FastRefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(
     Tests\TestCase::class,
-    FastRefreshDatabase::class
+    RefreshDatabase::class
 )->in('Feature');
 
 /*
