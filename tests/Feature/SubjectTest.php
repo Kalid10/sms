@@ -2,10 +2,7 @@
 
 use App\Models\Subject;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
-
-uses(RefreshDatabase::class);
 
 beforeEach(function () {
     // Populate roles

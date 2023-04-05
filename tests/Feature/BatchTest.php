@@ -5,10 +5,9 @@ use App\Models\Role;
 use App\Models\SchoolYear;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
 
-uses(DatabaseMigrations::class, RefreshDatabase::class);
+uses(DatabaseMigrations::class);
 
 beforeEach(function () {
     // Populate levels and roles
