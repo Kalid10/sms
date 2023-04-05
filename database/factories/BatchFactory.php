@@ -23,11 +23,10 @@ class BatchFactory extends Factory
      */
     public function definition()
     {
-        $level = Level::inRandomOrder()->first() ?? Level::factory()->create();
         $schoolYear = SchoolYear::whereNull('end_date')->first() ?? SchoolYear::factory()->create();
 
         return [
-            'level_id' => $level->id,
+            'level_id' => Level::inRandomOrder()->firstOrCreate(['name' => $this->faker->word])->id,
             'school_year_id' => $schoolYear->id,
             'section' => $this->faker->regexify('[A-Z]{1}'),
             'min_students' => $this->faker->numberBetween(30, 50),
