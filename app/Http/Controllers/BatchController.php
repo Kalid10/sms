@@ -28,6 +28,14 @@ class BatchController extends Controller
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
         }
 
+        // Check if min_students and max_students are null, if so get default from .env
+        if (! $validated['min_students']) {
+            $validated['min_students'] = env('DEFAULT_MIN_STUDENTS', 10);
+        }
+
+        if (! $validated['max_students']) {
+            $validated['max_students'] = env('DEFAULT_MAX_STUDENTS', 50);
+        }
         Batch::create(array_merge(
             $validated, ['school_year_id' => $schoolYear->id]
         ));
@@ -56,6 +64,18 @@ class BatchController extends Controller
                     ])->id;
                 }
 
+                if (! isset($batch['min_students'])) {
+                    $batch['min_students'] = env('DEFAULT_MIN_STUDENTS', 10);
+                }
+
+                if (! isset($batch['max_students'])) {
+                    $batch['max_students'] = env('DEFAULT_MAX_STUDENTS', 50);
+                }
+
+                if ($batch['min_students'] > $batch['max_students']) {
+                    return redirect()->back()->withErrors(['batches' => 'Minimum students cannot be greater than maximum students!']);
+                }
+
                 $noOfSections = $batch['no_of_sections'];
 
                 if (Batch::where('level_id', $levelId)
@@ -69,9 +89,12 @@ class BatchController extends Controller
                         'level_id' => $levelId,
                         'school_year_id' => $schoolYearId,
                         'section' => $section,
+                        'min_students' => $batch['min_students'],
+                        'max_students' => $batch['max_students'],
                     ]);
                 }
             }
+
             DB::commit();
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -110,12 +133,9 @@ class BatchController extends Controller
         if (! $schoolYear) {
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
         }
-        $batches = Batch::with('level', 'schoolYear')
-            ->where('school_year_id', $schoolYear->id)
-            ->get();
 
-        return Inertia::render('Welcome', [
-            'batches' => $batches,
+        return Inertia::render('GettingStarted/AssignSubjects', [
+            'batches' => Batch::active(['level', 'schoolYear']),
         ]);
     }
 }

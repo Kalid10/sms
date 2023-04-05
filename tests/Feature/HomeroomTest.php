@@ -6,11 +6,8 @@ use App\Models\Role;
 use App\Models\Teacher;
 use Database\Seeders\HomeroomTeacherSeeder;
 use Database\Seeders\SchoolYearSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Inertia\Testing\AssertableInertia;
-
-uses(RefreshDatabase::class);
 
 beforeEach(function () {
     // populate levels and roles

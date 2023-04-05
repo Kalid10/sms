@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,8 @@ class Batch extends Model
         'level_id',
         'school_year_id',
         'section',
+        'min_students',
+        'max_students',
     ];
 
     public function level(): BelongsTo
@@ -51,5 +54,12 @@ class Batch extends Model
     public function batchSubjects(): HasMany
     {
         return $this->hasMany(BatchSubject::class);
+    }
+
+    public static function active(array $with = []): Collection
+    {
+        return static::with($with)
+            ->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->get();
     }
 }

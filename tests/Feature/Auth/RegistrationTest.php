@@ -1,20 +1,18 @@
 <?php
 
 use App\Models\Admin;
-use App\Models\Guardian;
+use App\Models\Level;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
-uses(RefreshDatabase::class);
-
 beforeEach(function () {
     // populate roles
     Artisan::call('app:create-roles');
+    Artisan::call('app:create-levels');
 
     // Create a user with manage-users role
     $this->user = User::factory()->create([
@@ -73,9 +71,13 @@ it('registers a teacher', function () {
 it('registers a student', function () {
     $this->actingAs($this->user);
 
-    $guardian = Guardian::factory()->create();
+    // Get first level
+    $level = Level::first();
 
-    Log::info($guardian->user->name);
+    // Add school year and batch seeder
+    $this->seed('SchoolYearSeeder');
+    $this->seed('BatchSeeder');
+
     $payload = [
         'name' => 'Lucy Brown',
         'email' => 'lucybrown@example.com',
@@ -87,9 +89,10 @@ it('registers a student', function () {
         'guardian_phone_number' => '0911111111',
         'username' => 'lucybrown',
         'guardian_gender' => 'male',
-
+        'level_id' => $level->id,
     ];
 
+    // Register student
     $response = $this->post('/register', $payload);
 
     Log::info($response->getContent());
@@ -147,7 +150,7 @@ it('requires manage-users role to register a user', function () {
     $payload = [
         'name' => 'John Doe',
         'email' => 'johndoe@example.com',
-        'type' => User::TYPE_GUARDIAN,
+        'type' => User::TYPE_TEACHER,
         'gender' => 'male',
     ];
 
@@ -164,14 +167,14 @@ it('checks for specific manage-X role when registering a user', function () {
     $userWithSpecificRole = User::factory()->create([
         'password' => Hash::make('password'),
     ]);
-    $userWithSpecificRole->roles()->attach(['manage-teachers']);
+    $userWithSpecificRole->roles()->attach(['manage-guardians']);
 
     $this->actingAs($userWithSpecificRole);
 
     $payload = [
         'name' => 'John Doe',
         'email' => 'johndoe@example.com',
-        'type' => User::TYPE_GUARDIAN,
+        'type' => User::TYPE_TEACHER,
         'gender' => 'male',
         'date_of_birth' => '1990-01-01',
     ];
