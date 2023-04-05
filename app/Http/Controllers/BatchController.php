@@ -110,12 +110,9 @@ class BatchController extends Controller
         if (! $schoolYear) {
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
         }
-        $batches = Batch::with('level', 'schoolYear')
-            ->where('school_year_id', $schoolYear->id)
-            ->get();
 
-        return Inertia::render('Welcome', [
-            'batches' => $batches,
+        return Inertia::render('GettingStarted/AssignSubjects', [
+            'batches' => Batch::active(['level', 'schoolYear']),
         ]);
     }
 }
