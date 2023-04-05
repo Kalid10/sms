@@ -1,42 +1,84 @@
 <template>
-    <SubjectTableElement
-        :data="subjects"
-        :selectable="false"
-        actionable
-        row-actionable
-        subtitle="list of all subjects"
-        title="Subject"
-    >
-        <template #action>
-            <div class="flex flex-row space-x-4">
-                <SubjectTextInput
-                    v-model="searchKey"
+    <div class="w-full">
+        <div class="flex space-x-4">
+            <button
+                :class="activeTab === 'tab1' ? activeButtonClass : inactiveButtonClass"
+                @click="activeTab = 'tab1'"
+            >
+                Active Subjects
+            </button>
+            <button
+                :class="activeTab === 'tab2' ? activeButtonClass : inactiveButtonClass"
+                @click="activeTab = 'tab2'"
+            >
+                Deleted Subjects
+            </button>
+        </div>
+        <div class="p-4">
+            <div v-if="activeTab === 'tab1'">
+                <SubjectTableElement
+                    :data="subjects"
                     :selectable="false"
                     actionable
-                    data="subjects"
-                    placeholder="Search for subject"
+                    row-actionable
                     subtitle="list of all subjects"
                     title="Subject"
-                    @keyup="search"
-                />
-
-                <SubjectPrimaryButton
-                    title="Add Subject"
-                    @click="toggleAddModal"
-                />
+                >
+                    <template #filter>
+                        <SubjectTextInput
+                            v-model="searchKey"
+                            :selectable="false"
+                            actionable
+                            placeholder="Search for subject"
+                            @keyup="search"
+                        />
+                    </template>
+                    <template #action>
+                        <SubjectPrimaryButton
+                            title="Add Subject"
+                            @click="toggleAddModal"
+                        />
+                    </template>
+                    <template #row-actions="{ row }">
+                        <SubjectPrimaryButton @click="selectSubject(row)">
+                            <PencilSquareIcon class="h-4 w-4"/>
+                        </SubjectPrimaryButton>
+                        <SubjectPrimaryButton @click="toggleDialogBox(row.id)">
+                            <TrashIcon class="h-4 w-4"/>
+                        </SubjectPrimaryButton>
+                    </template>
+                </SubjectTableElement>
             </div>
-        </template>
-        <template #row-actions="{ row }">
-            <SubjectPrimaryButton @click="selectSubject(row)">
-                <PencilSquareIcon class="h-4 w-4"/>
-            </SubjectPrimaryButton>
-            <SubjectPrimaryButton @click="removeSubject(row.id)">
-                <TrashIcon class="h-4 w-4"/>
-            </SubjectPrimaryButton>
-        </template>
-    </SubjectTableElement>
+            <div v-if="activeTab === 'tab2'">
+                <SubjectTableElement
+                    :data="deletedSubjects"
+                    :selectable="false"
+                    actionable
+                    row-actionable
+                    subtitle="list of deleted subjects"
+                    title="Deleted Subjects">
+                    <template #filter>
+                        <SubjectTextInput
+                            v-model="searchKey"
+                            :selectable="false"
+                            actionable
+                            placeholder="Search for deleted subject"
+                            @keyup="search"
+                        />
+                    </template>
+                    <template #row-actions="{ row }">
+                        <SubjectPrimaryButton @click="restoreSubject(row.id)">
+                            <p>Restore</p>
+                        </SubjectPrimaryButton>
+                    </template>
+                </SubjectTableElement>
+            </div>
+        </div>
+    </div>
 
-    <SubjectAdd v-if="isAddModalOpen" :toggle="isAddModalOpen"/>
+    <RegisterSubjectForm v-if="isAddModalOpen" :toggle="isAddModalOpen"/>
+
+    <DialogBox v-if="isDialogBoxOpen" @confirm="removeSubject"/>
 
     <SubjectUpdate
         v-if="isUpdateModalOpen"
@@ -46,7 +88,6 @@
 </template>
 <script setup>
 import {computed, ref} from "vue";
-import SubjectAdd from "@/Pages/Subject/Add.vue";
 import {router, usePage} from "@inertiajs/vue3";
 import {debounce} from "lodash";
 import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/outline";
@@ -54,8 +95,19 @@ import SubjectTableElement from "@/Components/TableElement.vue";
 import SubjectUpdate from "@/Pages/Subject/Update.vue";
 import SubjectPrimaryButton from "@/Components/PrimaryButton.vue";
 import SubjectTextInput from "@/Components/TextInput.vue";
+import RegisterSubjectForm from "@/Views/RegisterSubjectForm.vue";
+import DialogBox from "@/Components/DialogBox.vue";
 
 const isAddModalOpen = ref(false);
+const isDialogBoxOpen = ref(false);
+
+const selectedSubjectId = ref(null);
+
+function toggleDialogBox(id) {
+    isDialogBoxOpen.value = !isDialogBoxOpen.value;
+    selectedSubjectId.value = id;
+}
+
 
 function toggleAddModal() {
     isAddModalOpen.value = !isAddModalOpen.value;
@@ -73,6 +125,10 @@ const subjects = computed(() => {
 
 const searchKey = ref(usePage().props.searchKey);
 
+const deletedSubjects = computed(() => {
+    return usePage().props.deletedSubjects.data;
+});
+
 const search = debounce(() => {
     router.get(
         "/subjects",
@@ -82,11 +138,17 @@ const search = debounce(() => {
 }, 300);
 
 // Remove Subject
-const removeSubject = (id) => {
-    router.delete("/subjects/delete/" + id);
+const removeSubject = () => {
+    router.delete("/subjects/delete/" + selectedSubjectId.value, {
+        onFinish: () => {
+            isDialogBoxOpen.value = false;
+            selectedSubjectId.value = null;
+        },
+    })
 };
 
 const selectedSubject = ref();
+
 
 function selectSubject(subject) {
     selectedSubject.value = subject;
@@ -95,4 +157,19 @@ function selectSubject(subject) {
         return (selectedSubject.value = null);
     }
 }
+
+// Restore deleted subject
+const restoreSubject = (id) => {
+    router.get("/subjects/restore/" + id);
+};
+
+const activeButtonClass = "bg-blue-500 text-white font-bold py-2 px-4 rounded"
+const inactiveButtonClass = "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+const activeTab = ref("tab1")
 </script>
+
+<style scoped>
+button {
+    outline: none;
+}
+</style>

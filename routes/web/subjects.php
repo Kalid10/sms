@@ -9,4 +9,5 @@ Route::controller(SubjectController::class)->prefix('subjects/')->middleware(['c
     Route::post('create-bulk', 'createBulk')->name('create-bulk');
     Route::post('update', 'update')->name('update');
     Route::delete('delete/{id}', 'delete')->name('delete');
+    Route::get('restore/{id}', 'restore')->name('restore');
 });
