@@ -1,6 +1,7 @@
 <template>
     <div class="">Welcome</div>
     <div class="grid grid-cols-4 gap-6">
+        <button class="h-14 bg-lime-500 " @click="registerBulkUser">Register Bulk User</button>
         <button class="h-14 bg-lime-500 " @click="registerAdmin">Register Admin</button>
         <button class="h-14 bg-lime-500 " @click="registerStudent">Register Student</button>
         <input type="file" @change="handleFileUpload">
@@ -52,9 +53,18 @@
 import {router} from "@inertiajs/vue3";
 import {ref} from "vue";
 
-// Listen for broadcast events
+// Listen for student import broadcast events
 Echo.private('students-import')
     .listen('.students-import', (e) => {
+        // Two variables are passed to the callback function
+        // Check the type to see if it is success or error
+        // e.message and e.type are the variables
+        console.log(e.type);
+        console.log(e.message);
+    });
+
+Echo.private('teachers-import')
+    .listen('.teachers-import', (e) => {
         // Two variables are passed to the callback function
         // Check the type to see if it is success or error
         // e.message and e.type are the variables
@@ -88,7 +98,7 @@ function handleFileUpload(event) {
 }
 
 function registerStudent() {
-    router.post('/register-bulk', {
+    router.post('/register', {
         name: "Kidist Andarge",
         email: "K@gmails.com",
         type: "student",
@@ -99,7 +109,6 @@ function registerStudent() {
         guardian_phone_number: "0963134321",
         guardian_email: "k2@gmail.com",
         guardian_gender: 'male',
-        students_file: file.value
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -108,6 +117,14 @@ function registerStudent() {
             console.log("Error")
             console.log(error)
         }
+    });
+}
+
+// Register student
+function registerBulkUser() {
+    router.post('/register-bulk', {
+        user_file: file.value,
+        user_type: "student",
     });
 }
 
