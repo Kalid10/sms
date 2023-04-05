@@ -20,6 +20,8 @@ class Batch extends Model
         'level_id',
         'school_year_id',
         'section',
+        'min_students',
+        'max_students',
     ];
 
     public function level(): BelongsTo

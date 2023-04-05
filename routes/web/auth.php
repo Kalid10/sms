@@ -12,6 +12,7 @@ Route::prefix('login/')->middleware('guest')->name('login.')->group(function () 
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('web')->name('logout');
 Route::post('/register', [RegisterController::class, 'register'])->middleware(['auth'])->name('register');
+Route::post('/register-bulk', [RegisterController::class, 'bulkRegisterStudents'])->middleware(['auth'])->name('register.bulk');
 
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');

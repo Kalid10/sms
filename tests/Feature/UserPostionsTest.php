@@ -2,10 +2,9 @@
 
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 
-uses(RefreshDatabase::class, WithFaker::class);
+uses(WithFaker::class);
 
 beforeEach(function () {
     // Populate roles
