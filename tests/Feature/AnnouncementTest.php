@@ -3,9 +3,6 @@
 use App\Models\Admin;
 use App\Models\Announcement;
 use App\Models\SchoolYear;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->artisan('app:create-roles');

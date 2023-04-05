@@ -8,10 +8,8 @@ use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 
-uses(RefreshDatabase::class);
 uses(WithFaker::class);
 uses(DatabaseMigrations::class);
 

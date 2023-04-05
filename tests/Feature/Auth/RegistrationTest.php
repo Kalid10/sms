@@ -5,12 +5,9 @@ use App\Models\Level;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-
-uses(RefreshDatabase::class);
 
 beforeEach(function () {
     // populate roles
