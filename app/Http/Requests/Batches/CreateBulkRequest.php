@@ -28,6 +28,8 @@ class CreateBulkRequest extends FormRequest
             'batches' => 'required|array',
             'batches.*.level_id' => 'required',
             'batches.*.no_of_sections' => 'required|integer|min:1',
+            'batches.*.min_students' => 'nullable|integer|min:5',
+            'batches.*.max_students' => 'nullable|integer|min:5',
         ];
     }
 

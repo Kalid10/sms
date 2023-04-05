@@ -2,8 +2,8 @@
     <div class="">Welcome</div>
     <div class="grid grid-cols-4 gap-6">
         <button class="h-14 bg-lime-500 " @click="registerAdmin">Register Admin</button>
-        <button class="h-14 bg-lime-500 " @click="registerGuardian">Register Guardian</button>
         <button class="h-14 bg-lime-500 " @click="registerStudent">Register Student</button>
+        <input type="file" @change="handleFileUpload">
         <button class="h-14 bg-lime-500 " @click="registerTeacher">Register Teacher</button>
         <button class="h-14 bg-pink-900 text-white " @click="login">Test Login</button>
         <button class="h-14 bg-pink-900 text-white " @click="logout">Test Logout</button>
@@ -50,6 +50,17 @@
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
+import {ref} from "vue";
+
+// Listen for broadcast events
+Echo.private('students-import')
+    .listen('.students-import', (e) => {
+        // Two variables are passed to the callback function
+        // Check the type to see if it is success or error
+        // e.message and e.type are the variables
+        console.log(e.type);
+        console.log(e.message);
+    });
 
 // Register admin
 function registerAdmin() {
@@ -70,32 +81,25 @@ function registerAdmin() {
     });
 }
 
-function registerGuardian() {
-    router.post('/register', {
-        name: "Kalid Abdu",
-        email: "kalid@gmaill.com",
-        gender: "male",
-        type: "guardian"
-    }, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
-        }
-    });
+const file = ref(null);
+
+function handleFileUpload(event) {
+    file.value = event.target.files[0];
 }
 
 function registerStudent() {
-    router.post('/register', {
+    router.post('/register-bulk', {
         name: "Kidist Andarge",
-        email: "Kidist@gmail.com",
+        email: "K@gmails.com",
         type: "student",
         gender: "female",
-        date_of_birth: "03/07/2000",
+        date_of_birth: "03-07-2000",
         level_id: 1,
-        guardian_id: 1,
+        guardian_name: "Kalid Abdu",
+        guardian_phone_number: "0963134321",
+        guardian_email: "k2@gmail.com",
+        guardian_gender: 'male',
+        students_file: file.value
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -376,6 +380,8 @@ function addBatch() {
     router.post('/batches/create', {
         level_id: 1,
         section: "A",
+        min_students: 34,
+        max_students: 51
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -392,7 +398,9 @@ function addBatches() {
             batches: [
                 {
                     level_id: 1,
-                    no_of_sections: 3
+                    no_of_sections: 3,
+                    min_students: 10,
+                    max_students: 20
                 },
                 {
                     level_id: 2,
