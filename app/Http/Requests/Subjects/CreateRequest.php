@@ -35,9 +35,9 @@ class CreateRequest extends FormRequest
     {
         return [
             'full_name.required' => 'Full name is required',
-            'full_name.unique' => $this->full_name.' has already been added!',
+            'full_name.unique' => $this->full_name.' has already been added! Please try another name, if deleted restore from deleted subjects tab',
             'short_name.required' => 'Short name is required',
-            'short_name.unique' => $this->short_name.' has already been added!',
+            'short_name.unique' => $this->short_name.' has already been added! Please try another name, if deleted restore from deleted subjects tab',
         ];
     }
 }

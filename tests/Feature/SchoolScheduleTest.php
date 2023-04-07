@@ -3,6 +3,7 @@
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -29,7 +30,8 @@ it('creates a school schedule in the current school year', function () {
         'body' => 'This is a test school schedule.',
         'start_date' => now(),
         'end_date' => now()->addDays(7),
-        'type' => 'test',
+        'type' => 'closed',
+        'tags' => ['test'],
     ];
 
     $this->post('school-schedules/create', $schoolScheduleData)
@@ -48,7 +50,7 @@ it('creates a school schedule in the current school year', function () {
 });
 
 it('updates a school schedule successfully', function () {
-    //    // Create user and attach role
+    // Create user and attach role
     $user = User::factory()->create();
     $user->roles()->attach(['manage-school-schedules']);
 
@@ -68,8 +70,9 @@ it('updates a school schedule successfully', function () {
         'body' => 'This is an updated test school schedule.',
         'start_date' => now()->addDays(5),
         'end_date' => now()->addDays(10),
-        'type' => 'updated_test',
+        'type' => 'half_closed',
         'school_year_id' => $schoolYear->id,
+        'tags' => ['test'],
     ]);
 
     // Assert that the school schedule was updated in the database
@@ -79,7 +82,7 @@ it('updates a school schedule successfully', function () {
         'body' => 'This is an updated test school schedule.',
         'start_date' => now()->addDays(5)->toDateTimeString(),
         'end_date' => now()->addDays(10)->toDateTimeString(),
-        'type' => 'updated_test',
+        'type' => 'half_closed',
         'school_year_id' => $schoolYear->id,
     ]);
 
@@ -101,6 +104,7 @@ it('can delete a school schedule', function () {
 
     // Create a new school schedule
     $schoolSchedule = SchoolSchedule::factory()->create([
+        'start_date' => Carbon::now()->addMonth(),
         'school_year_id' => $schoolYear->id,
     ]);
 
@@ -130,7 +134,8 @@ it('cannot create a school schedule if user does not have the manage-school-sche
         'body' => 'This is a test school schedule.',
         'start_date' => now(),
         'end_date' => now()->addDays(7),
-        'type' => 'test',
+        'type' => 'not_closed',
+        'tags' => ['test'],
     ]);
 
     // Assert that the user was redirected back with a forbidden message

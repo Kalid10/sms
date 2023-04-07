@@ -639,7 +639,8 @@ function addSchoolSchedule() {
         start_date: "2024-01-01",
         end_date: "2024-12-31",
         title: "Easter",
-        type: "holiday",
+        type: "closed",
+        tags: ['Holiday'],
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -655,8 +656,9 @@ function updateSchoolSchedule() {
     router.post('/school-schedules/update', {
         start_date: "2024-01-01",
         end_date: "2024-12-31",
-        title: "Easter",
-        type: "holiday",
+        title: "Teachers Parents meeting",
+        type: "not_closed",
+        tags: ['after school'],
         id: 27
     }, {
         onSuccess: () => {
