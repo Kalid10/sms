@@ -22,7 +22,8 @@ class SubjectController extends Controller
         $searchKey = $request->input('search');
 
         // Get subjects
-        $subjects = Subject::select('id', 'full_name', 'short_name', 'category', 'tags')->where('full_name', 'like', '%'.$searchKey.'%')->paginate(10);
+        $subjects = Subject::select('id', 'full_name', 'short_name', 'category', 'tags')->where('full_name', 'like', '%'.$searchKey.'%')
+            ->OrWhere(DB::raw('lower(tags)'), 'like', '%'.$searchKey.'%')->paginate(10);
 
         // Get deleted subjects with search key
         $deletedSubjects = Subject::onlyTrashed()->select('id', 'full_name', 'short_name')->where('full_name', 'like', '%'.$searchKey.'%')->paginate(10);

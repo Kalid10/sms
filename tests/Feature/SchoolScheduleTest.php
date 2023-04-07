@@ -50,7 +50,7 @@ it('creates a school schedule in the current school year', function () {
 });
 
 it('updates a school schedule successfully', function () {
-    //    // Create user and attach role
+    // Create user and attach role
     $user = User::factory()->create();
     $user->roles()->attach(['manage-school-schedules']);
 
@@ -111,7 +111,6 @@ it('can delete a school schedule', function () {
     // Delete the school schedule
     $response = $this->delete(route('school-schedule.delete', $schoolSchedule->id));
 
-    \Illuminate\Support\Facades\Log::error($response->getContent());
     // Assert that the school schedule was deleted from the database
     $this->assertSoftDeleted('school_schedules', [
         'id' => $schoolSchedule->id,

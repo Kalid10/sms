@@ -17,6 +17,7 @@
         <div class="p-4">
             <div v-if="activeTab === 'tab1'">
                 <SubjectTableElement
+                    :columns="config"
                     :data="subjects"
                     :selectable="false"
                     actionable
@@ -24,6 +25,13 @@
                     subtitle="list of all subjects"
                     title="Subject"
                 >
+                    <template #tags-column="data">
+                        <div class="flex items-center justify-center gap-2">
+                            <p v-for="(tag, t) in data.data" :key="t" class="text-xs font-medium text-gray-500">
+                                {{ toHashTag(tag) }}
+                            </p>
+                        </div>
+                    </template>
                     <template #filter>
                         <SubjectTextInput
                             v-model="searchKey"
@@ -90,6 +98,7 @@
 import {computed, ref} from "vue";
 import {router, usePage} from "@inertiajs/vue3";
 import {debounce} from "lodash";
+import {toHashTag} from "@/utils"
 import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/outline";
 import SubjectTableElement from "@/Components/TableElement.vue";
 import SubjectUpdate from "@/Pages/Subject/Update.vue";
@@ -162,6 +171,27 @@ function selectSubject(subject) {
 const restoreSubject = (id) => {
     router.get("/subjects/restore/" + id);
 };
+
+
+const config = [
+    {
+        name: 'Full Name',
+        key: 'full_name',
+    },
+    {
+        name: 'Short Name',
+        key: 'short_name',
+    },
+    {
+        name: 'Category',
+        key: 'category',
+    },
+    {
+        name: 'Tags',
+        key: 'tags',
+        type: 'custom'
+    },
+]
 
 const activeButtonClass = "bg-blue-500 text-white font-bold py-2 px-4 rounded"
 const inactiveButtonClass = "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"

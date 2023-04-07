@@ -8,7 +8,7 @@
                 v-model="form.short_name" required :error="form.errors.short_name" label="Short Name"
                 placeholder="short name"/>
             <UpdateTextInput
-                v-model="form.tags"
+                v-model="tags"
                 required
                 placeholder="Assign tags (separate multiple tags with comma)"
                 label="Subject Tags"
@@ -23,11 +23,11 @@
     </UpdateModal>
 </template>
 <script setup>
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import UpdateModal from "@/Components/Modal.vue";
 import UpdateFormElement from "@/Components/FormElement.vue";
 import UpdateTextInput from "@/Components/TextInput.vue";
-import {useForm} from "@inertiajs/vue3";
+import {router, useForm} from "@inertiajs/vue3";
 
 const props = defineProps({
     toggle: {
@@ -55,25 +55,30 @@ const form = useForm({
     short_name: "",
     id: "",
     category: "",
-    tags: [],
 })
 
 // Update Subject
 const update = () => {
-    form.post(route('subjects.update'), {
+    router.post(route('subjects.update'), {
+        ...form,
+        tags: formTags.value
+    }, {
         onSuccess: () => {
             isOpen.value = false
         }
     })
 }
 
-// Edit Subject
+const tags = ref('')
+const formTags = computed(() => tags.value.split(','))
+
 function editSubject() {
-    form.full_name = props.subject.full_name,
-        form.short_name = props.subject.short_name,
-        form.id = props.subject.id,
-        form.category = props.subject.category,
-        form.tags = props.subject.tags
+    form.full_name = props.subject.full_name
+    form.short_name = props.subject.short_name
+    form.id = props.subject.id
+    form.category = props.subject.category
+    tags.value = props.subject.tags
+
 }
 
 // Clear form input
