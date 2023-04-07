@@ -6,6 +6,7 @@ use App\Helpers\StudentHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Imports\StudentsRegistrationImport;
+use App\Mail\AdminRegistered;
 use App\Models\Admin;
 use App\Models\Guardian;
 use App\Models\Student;
@@ -21,6 +22,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\HeadingRowImport;
 
@@ -131,16 +134,21 @@ class RegisterController extends Controller
 
     private function createAdmin(RegisterRequest $request)
     {
-        $user = $this->createUser($request);
-        Admin::create([
+        // Generate random password
+        $newPassword = str::Password();
+
+        $user = $this->createUser($request, null, $newPassword);
+        $admin = Admin::create([
             'user_id' => $user->id,
             'position' => $request->input('position'),
         ]);
 
+        Mail::to($user->email)->send(new AdminRegistered($admin, $newPassword));
+
         return $user;
     }
 
-    private function createUser(RegisterRequest $request, string $type = null)
+    private function createUser(RegisterRequest $request, string $type = null, $newPassword = null)
     {
         // if type is student, add birth_date to the request
         if ($type === User::TYPE_STUDENT) {
@@ -160,7 +168,7 @@ class RegisterController extends Controller
 
         return User::create(array_merge(
             $request->validated(),
-            ['password' => Hash::make('secret')]
+            ['password' => Hash::make($newPassword || 'secret')]
         ));
     }
 
