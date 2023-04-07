@@ -35,13 +35,15 @@
                 <tr v-if="header">
                     <th
                         v-if="selectable"
-                        class="h-10 w-[1%] border-y bg-neutral-50 px-3">
+                        :class="[titleHeader ? 'border-y' : '']"
+                        class="h-10 w-[1%] bg-neutral-50 px-3">
                         <Checkbox v-model="selectAll"/>
                     </th>
                     <th
                         v-for="(key, index) in (columns.length > 0 ? columns.map(item => item.name) : Object.keys(data[0]))"
                         :key="index"
-                        class="h-10 whitespace-nowrap border-y bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
+                        :class="[columns.length > 0 && columns[index].header?.align, titleHeader && 'border-y']"
+                        class="h-10 whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
                         {{ key }}
                     </th>
                     <th
@@ -149,23 +151,19 @@ const props = defineProps({
     }
 })
 
+const emits = defineEmits(['select'])
+
 const titleHeader = computed(() => props.title || props.subtitle)
 const selectAll = ref(false)
 const anySelected = computed(() => items.value.some((item) => item.selected))
 const selectedItems = computed(() => items.value.filter((item) => item.selected).map((item) => props.data[item.id]))
-const items = computed({
-    get() {
-        return props.data.map((item, index) => {
-            return {
-                id: index,
-                selected: false
-            }
-        })
-    },
-    set(value) {
-        items.value = value
+const items = ref(props.data.map((item, index) => {
+    return {
+        id: index,
+        selected: props.data[0].hasOwnProperty('selected') ? props.data[index].selected : false
     }
-})
+}))
+
 
 function getLink(link, index) {
     const matches = link?.match(/{(.*?)}/g) || []
@@ -193,6 +191,10 @@ watch(selectAll, (value) => {
             }
         })
     }
+})
+
+watch([anySelected, selectedItems], () => {
+    emits('select', { selected: anySelected, items: selectedItems })
 })
 
 function cell(columnIndex, rowIndex) {

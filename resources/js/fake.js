@@ -1,5 +1,3 @@
-import {ref} from "vue";
-
 const users = [{
     "id": 1,
     "name": "Bartram Lockhurst",
@@ -568,16 +566,90 @@ const grades = [
 ]
 
 
-const sbj= [
-    {id:1,name:'Biology'},
-    {id:2,name:'Chemistry'},
-    {id:3,name:'Physics'},
-    {id:4,name:'English'},
-    {id:5,name:'Amharic'},
-    {id:6,name:'Mathematics'},
-    {id:7,name:'Geography'},
-    {id:8,name:'Civic'},
-
+const subjects = [
+    { id: 2, full_name: 'English', short_name: 'Eng',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences'] },
+    { id: 3, full_name: 'አማርኛ', short_name: 'አማ',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences'] },
+    { id: 4, full_name: 'Biology', short_name: 'Bio',  category: 'Natural Science', tags: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 5, full_name: 'Chemistry', short_name: 'Chem',  category: 'Natural Science', tags: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 6, full_name: 'Physics', short_name: 'Phy',  category: 'Natural Science', tags: ['Natural Sciences', 'Middle School', 'High School'] },
+    { id: 7, full_name: 'Geography', short_name: 'Geo',  category: 'Social Studies', tags: ['Social Sciences', 'Middle School', 'High School'] },
+    { id: 1, full_name: 'Mathematics', short_name: 'Math',  category: 'Mathematics', tags: ['Natural Sciences', 'Social Sciences'] },
+    { id: 8, full_name: 'History', short_name: 'His',  category: 'Social Studies', tags: ['Social Sciences', 'Middle School', 'High School'] },
+    { id: 9, full_name: 'Arts and Crafts', short_name: 'A&C',  category: 'Extra Curricular', tags: ['Primary School', 'Arts'] },
+    { id: 14, full_name: 'Afaan Orommo', short_name: 'Oro',  category: 'Languages', tags: ['Natural Sciences', 'Social Sciences', 'Extra Curricular'] },
+    { id: 10, full_name: 'Physical Education', short_name: 'PE',  category: 'Extra Curricular', tags: ['Extra Curricular'] },
+    { id: 11, full_name: 'Technical Drawing', short_name: 'TD',  category: 'Preparatory', tags: ['Natural Sciences', 'Preparatory Level'] },
+    { id: 12, full_name: 'Economics', short_name: 'Econ',  category: 'Preparatory', tags: ['Social Sciences', 'Preparatory Level'] },
+    { id: 13, full_name: 'Business', short_name: 'Bus',  category: 'Preparatory', tags: ['Social Sciences', 'Preparatory Level'] },
 ]
 
-export {users, semesters, levels, school_years, statuses, grades,sbj};
+const batches = [
+    { id: 4, level_id:  5, level: { name: 1 }, section: 'D' },
+    { id: 1, level_id:  5, level: { name: 1 }, section: 'A' },
+    { id: 5, level_id:  2 * 5, level: { name: 2 }, section: 'A' },
+    { id: 6, level_id:  2 * 5, level: { name: 2 }, section: 'B' },
+    { id: 7, level_id:  2 * 5, level: { name: 2 }, section: 'C' },
+    { id: 8, level_id:  2 * 5, level: { name: 2 }, section: 'D' },
+    { id: 9, level_id:  3 * 5, level: { name: 3 }, section: 'A' },
+    { id: 10, level_id: 3 * 5, level: { name: 3 }, section: 'B' },
+    { id: 11, level_id: 3 * 5, level: { name: 3 }, section: 'C' },
+    { id: 12, level_id: 3 * 5, level: { name: 3 }, section: 'D' },
+    { id: 13, level_id: 4 * 5, level: { name: 4 }, section: 'A' },
+    { id: 14, level_id: 4 * 5, level: { name: 4 }, section: 'B' },
+    { id: 15, level_id: 4 * 5, level: { name: 4 }, section: 'C' },
+    { id: 16, level_id: 4 * 5, level: { name: 4 }, section: 'D' },
+    { id: 17, level_id: 5 * 5, level: { name: 5 }, section: 'A' },
+    { id: 18, level_id: 5 * 5, level: { name: 5 }, section: 'B' },
+    { id: 19, level_id: 5 * 5, level: { name: 5 }, section: 'C' },
+    { id: 20, level_id: 5 * 5, level: { name: 5 }, section: 'D' },
+    { id: 21, level_id: 6 * 5, level: { name: 6 }, section: 'A' },
+    { id: 22, level_id: 6 * 5, level: { name: 6 }, section: 'B' },
+    { id: 23, level_id: 6 * 5, level: { name: 6 }, section: 'C' },
+    { id: 25, level_id: 7 * 5, level: { name: 7 }, section: 'A' },
+    { id: 26, level_id: 7 * 5, level: { name: 7 }, section: 'B' },
+    { id: 27, level_id: 7 * 5, level: { name: 7 }, section: 'C' },
+    { id: 28, level_id: 7 * 5, level: { name: 7 }, section: 'D' },
+    { id: 29, level_id: 8 * 5, level: { name: 8 }, section: 'A' },
+    { id: 30, level_id: 8 * 5, level: { name: 8 }, section: 'B' },
+    { id: 31, level_id: 8 * 5, level: { name: 8 }, section: 'C' },
+    { id: 32, level_id: 8 * 5, level: { name: 8 }, section: 'D' },
+    { id: 33, level_id: 9 * 5, level: { name: 9 }, section: 'A' },
+    { id: 35, level_id: 9 * 5, level: { name: 9 }, section: 'C' },
+    { id: 36, level_id: 9 * 5, level: { name: 9 }, section: 'D' },
+    { id: 37, level_id: 10 * 5, level: { name: 10 }, section: 'A' },
+    { id: 38, level_id: 10 * 5, level: { name: 10 }, section: 'B' },
+    { id: 39, level_id: 10 * 5, level: { name: 10 }, section: 'C' },
+    { id: 40, level_id: 10 * 5, level: { name: 10 }, section: 'D' },
+    { id: 41, level_id: 11 * 5, level: { name: 11 }, section: 'A' },
+    { id: 42, level_id: 11 * 5, level: { name: 11 }, section: 'B' },
+    { id: 43, level_id: 11 * 5, level: { name: 11 }, section: 'C' },
+    { id: 44, level_id: 11 * 5, level: { name: 11 }, section: 'D' },
+    { id: 45, level_id: 12 * 5, level: { name: 12 }, section: 'A' },
+    { id: 46, level_id: 12 * 5, level: { name: 12 }, section: 'B' },
+    { id: 47, level_id: 12 * 5, level: { name: 12 }, section: 'C' },
+    { id: 48, level_id: 12 * 5, level: { name: 12 }, section: 'D' },
+]
+
+function gradesFromBatch(batches) {
+    return batches.reduce((acc, batch) => {
+        if (!acc.includes(batch.level_id)) {
+            acc.push(batch.level)
+        }
+        return acc
+    }, [])
+}
+
+function sectionsOfLevel(batches, level_id) {
+    return batches.filter(batch => batch.level_id === level_id)
+}
+
+function allLevels(batches) {
+    return batches.reduce((acc, batch) => {
+        if (!acc.map(a => a.level_id).includes(batch.level_id)) {
+            acc.push(batch)
+        }
+        return acc
+    }, [])
+}
+
+export { users, semesters, levels, school_years, statuses, grades, subjects, batches, gradesFromBatch, sectionsOfLevel, allLevels };
