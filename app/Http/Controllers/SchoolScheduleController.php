@@ -7,7 +7,6 @@ use App\Models\SchoolYear;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -79,10 +78,6 @@ class SchoolScheduleController extends Controller
 
         // Check if the school schedule is not in the past
         if (Carbon::parse(SchoolSchedule::find($id)->start_date)->isPast()) {
-            Log::error(Carbon::parse(SchoolSchedule::find($id)->start_date)->isPast());
-            Log::info(SchoolSchedule::find($id)->start_date);
-            Log::info(Carbon::now());
-
             return redirect()->back()->withErrors(['id' => 'Can not delete, the school schedule is in the past.']);
         }
         SchoolSchedule::find($id)->delete();
