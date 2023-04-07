@@ -28,7 +28,7 @@ class SubjectController extends Controller
         // Get deleted subjects with search key
         $deletedSubjects = Subject::onlyTrashed()->select('id', 'full_name', 'short_name')->where('full_name', 'like', '%'.$searchKey.'%')->paginate(10);
 
-        return Inertia::render('Subject/Index', [
+        return Inertia::render('Subjects/Index', [
             'subjects' => $subjects,
             'deletedSubjects' => $deletedSubjects,
         ]);

@@ -36,7 +36,7 @@
                 />
                 <div
                     v-if="isDropdownOpen"
-                    class="absolute z-10 mt-2 max-h-60 w-8/12 overflow-auto rounded-md border border-gray-200 bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5"
+                    class="absolute z-10 mt-2 max-h-60 w-8/12 overflow-auto rounded-md border border-gray-200 bg-white py-1 text-base shadow-lg"
 
                 >
                     <div class="relative flex items-center justify-between px-3 py-2">
@@ -49,6 +49,7 @@
                         />
                         <button
                             class="absolute right-0 mr-3 grid h-10 w-10 place-items-center rounded bg-gray-100"
+                            type="button"
                             @click="addCategory"
                         >
                             <PlusIcon class="h-4 w-4"/>

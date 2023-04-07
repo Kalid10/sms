@@ -84,5 +84,6 @@ function editSubject() {
 // Clear form input
 const clear = () => {
     form.reset();
+    tags.value = '';
 }
 </script>

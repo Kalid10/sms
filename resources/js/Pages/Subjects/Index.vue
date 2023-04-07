@@ -48,12 +48,12 @@
                         />
                     </template>
                     <template #row-actions="{ row }">
-                        <SubjectPrimaryButton @click="selectSubject(row)">
+                        <button @click="selectSubject(row)">
                             <PencilSquareIcon class="h-4 w-4"/>
-                        </SubjectPrimaryButton>
-                        <SubjectPrimaryButton @click="toggleDialogBox(row.id)">
+                        </button>
+                        <button @click="toggleDialogBox(row.id)">
                             <TrashIcon class="h-4 w-4"/>
-                        </SubjectPrimaryButton>
+                        </button>
                     </template>
                 </SubjectTableElement>
             </div>
@@ -101,7 +101,7 @@ import {debounce} from "lodash";
 import {toHashTag} from "@/utils"
 import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/outline";
 import SubjectTableElement from "@/Components/TableElement.vue";
-import SubjectUpdate from "@/Pages/Subject/Update.vue";
+import SubjectUpdate from "@/Views/SubjectUpdate.vue";
 import SubjectPrimaryButton from "@/Components/PrimaryButton.vue";
 import SubjectTextInput from "@/Components/TextInput.vue";
 import RegisterSubjectForm from "@/Views/RegisterSubjectForm.vue";
