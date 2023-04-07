@@ -11,7 +11,7 @@
             :class="[labelLocation === 'inside' ? 'relative h-12' : 'h-10']"
             @click="viewPanel = !viewPanel"
         >
-            <input type="date" class="sr-only" :required="required" :disabled="disabled" />
+            <input type="date" class="sr-only hidden" :required="required" :disabled="disabled" />
             <span class="flex flex-col">
                 <span v-if="labelLocation === 'inside'" class="text-[0.7rem] text-gray-500">{{ label }}</span>
                 <span :class="[!! selectedDate ? 'text-black' : 'text-gray-500']" class="truncate whitespace-nowrap text-sm">
@@ -74,7 +74,7 @@
                             <span v-if="isToday(i)" :class="isDateSelected(i).value ? 'bg-white' : 'bg-black'" class="absolute bottom-0 my-1.5 h-0.5 w-0.5 rounded-full"/>
                         </button>
 
-                        <span v-for="k in 7- ((offsetDays + numberOfDays) % 7)" :key="k" class="grid place-items-center p-2.5 text-sm text-gray-500">
+                        <span v-for="k in 7 - ((offsetDays + numberOfDays) % 7)" :key="k" class="grid place-items-center p-2.5 text-sm text-gray-500">
                             {{ k }}
                         </span>
 

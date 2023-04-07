@@ -2,7 +2,7 @@
 
     <Teleport v-if="view" to="#top-view">
 
-        <div class="fixed z-50 h-screen w-full bg-black/50 p-4">
+        <div class="fixed z-50 h-screen w-full bg-black/50 p-4 backdrop-blur">
 
             <div ref="modal" class="container mx-auto max-w-3xl">
 
