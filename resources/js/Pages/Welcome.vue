@@ -46,6 +46,7 @@
         <button class="h-14 bg-red-400 p-1" @click="createAnnouncement">Create Announcement</button>
         <button class="h-14 bg-red-400 p-1" @click="updateAnnouncement">Update Announcement</button>
         <button class="h-14 bg-red-400 p-1" @click="deleteAnnouncement">Delete Announcement</button>
+        <button class="h-14 bg-stone-600 p-1 text-white" @click="createSchoolPeriod">Create School Period</button>
     </div>
 
 </template>
@@ -764,6 +765,59 @@ function updateAnnouncement() {
 
 function deleteAnnouncement() {
     router.delete('/announcements/' + 1, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function createSchoolPeriod() {
+    router.post('/school-periods/create', {
+        school_periods: [
+            {
+                no_of_periods: 8,
+                minutes_per_period: 40,
+                start_time: "02:00",
+                level_category_ids: [1, 3],
+                custom_periods: [
+                    {
+                        name: "BreakFast",
+                        duration: 20,
+                        before_period: 4,
+                    },
+                    {
+                        name: "Lunch",
+                        duration: 40,
+                        before_period: 6,
+                    }
+                ]
+
+            },
+            {
+                no_of_periods: 8,
+                minutes_per_period: 40,
+                start_time: "02:00",
+                level_category_ids: [2],
+                custom_periods: [
+                    {
+                        name: "BreakFast",
+                        duration: 20,
+                        before_period: 3,
+                    },
+                    {
+                        name: "Lunch",
+                        duration: 40,
+                        before_period: 5,
+                    }
+                ]
+
+            },
+        ]
+    }, {
         onSuccess: () => {
             console.log("Success")
         },
