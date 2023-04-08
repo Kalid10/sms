@@ -17,6 +17,7 @@ uses(DatabaseMigrations::class);
 beforeEach(function () {
     // Populate roles
     $this->artisan('app:create-roles');
+    $this->artisan('app:create-levels');
 });
 
 it('can assign subjects to batches', function () {

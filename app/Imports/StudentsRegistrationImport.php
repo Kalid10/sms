@@ -42,52 +42,88 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
         // Start db transaction
         DB::beginTransaction();
 
-        // Insert guardian user
-        $guardianUserId = DB::table('users')->insertGetId([
-            'name' => $row['guardian_name'],
-            'type' => User::TYPE_GUARDIAN,
-            'phone_number' => $row['guardian_phone_number'],
-            'email' => $row['guardian_email'],
-            'password' => Hash::make('secret'),
-            'gender' => $row['guardian_gender'],
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        // Upsert guardian user
+        DB::table('users')->updateOrInsert(
+            [
+                'email' => $row['guardian_email'],
+                'phone_number' => $row['guardian_phone_number'],
+                'type' => User::TYPE_GUARDIAN,
+            ],
+            [
+                'name' => $row['guardian_name'],
+                'password' => Hash::make('secret'),
+                'gender' => $row['guardian_gender'],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        );
 
-        // Insert guardian
-        $guardianId = DB::table('guardians')->insertGetId([
-            'user_id' => $guardianUserId,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        // Get guardian user id
+        $guardianUser = DB::table('users')->where('email', $row['guardian_email'])->first();
+
+        // Upsert guardian
+        DB::table('guardians')->updateOrInsert(
+            ['user_id' => $guardianUser->id],
+            [
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        );
+
+        // Get guardian id
+        $guardian = DB::table('guardians')->where('user_id', $guardianUser->id)->first();
 
         // Parse birthdate
-        $dateOfBirth = Carbon::parse($row['date_of_birth']);
-        $dateOfBirth = $dateOfBirth->format('Y-m-d');
+        $dateOfBirth = Carbon::parse($row['date_of_birth'])->format('Y-m-d');
 
-        // Insert student user
-        $studentUserId = DB::table('users')->insertGetId([
-            'name' => $row['name'],
-            'type' => User::TYPE_STUDENT,
-            'email' => $row['email'] ?? null,
-            'date_of_birth' => $dateOfBirth,
-            'password' => Hash::make('secret'),
-            'gender' => $row['gender'],
-            'username' => StudentHelper::generateUsername($row['name']),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        // Check if a student with the same name, date of birth, and guardian email exists
+        $existingStudent = DB::table('users')
+            ->join('students', 'users.id', '=', 'students.user_id')
+            ->join('guardians', 'students.guardian_id', '=', 'guardians.id')
+            ->join('users as guardian_users', 'guardians.user_id', '=', 'guardian_users.id')
+            ->where('users.name', $row['name'])
+            ->where('users.date_of_birth', $dateOfBirth)
+            ->where('users.type', User::TYPE_STUDENT)
+            ->where('guardian_users.email', $row['guardian_email'])
+            ->select('users.*')
+            ->first();
 
-        // Insert student
-        $studentId = DB::table('students')->insertGetId([
-            'user_id' => $studentUserId,
-            'guardian_id' => $guardianId,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        $studentUserName = $existingStudent
+            ? $existingStudent->username
+            : ($row['username'] ?? StudentHelper::generateUsername($row['name']));
+
+        // Upsert student user
+        DB::table('users')->updateOrInsert(
+            ['username' => $studentUserName, 'email' => $row['email'] ?? null, 'type' => User::TYPE_STUDENT],
+            [
+                'name' => $row['name'],
+                'date_of_birth' => $dateOfBirth,
+                'password' => Hash::make('secret'),
+                'gender' => $row['gender'],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        );
+
+        // Get student user id
+        $studentUser = DB::table('users')->where('username', $studentUserName)->first();
+
+        // Upsert student
+        DB::table('students')->updateOrInsert(
+            ['user_id' => $studentUser->id,
+                'guardian_id' => $guardian->id, ],
+            [
+
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        );
+
+        // Get student id
+        $student = DB::table('students')->where('user_id', $studentUser->id)->first();
 
         // Assign the student to a batch
-        $assign = StudentHelper::assignStudentToBatch($studentId, $levelId);
+        $assign = StudentHelper::assignStudentToBatch($student->id, $levelId);
 
         // Throw exception
         if (! $assign) {
@@ -100,19 +136,6 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
         DB::commit();
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => 'required|string|max:255',
-            'gender' => ['required', Rule::in(['male', 'female', 'Male', 'Female'])],
-            'guardian_name' => 'required|string|max:255',
-            'guardian_email' => 'nullable|email|unique:users,email,0',
-            'guardian_phone_number' => 'required|max:20|unique:users,phone_number,0',
-            'username' => 'nullable|string|max:255|unique:users,username,0',
-            'guardian_gender' => ['required', Rule::in(['male', 'female', 'Male', 'Female'])],
-        ];
-    }
-
     public function chunkSize(): int
     {
         return env('STUDENT_IMPORT_CHUNK_SIZE', 100);
@@ -121,6 +144,20 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
     public function batchSize(): int
     {
         return env('STUDENT_IMPORT_BATCH_SIZE', 100);
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'gender' => ['required', Rule::in(['male', 'female', 'Male', 'Female'])],
+            'email' => 'nullable|email',
+            'guardian_name' => 'required|string|max:255',
+            'guardian_email' => 'nullable|email',
+            'guardian_phone_number' => 'required|max:20|regex:/(09)[0-9]{8}/|max:10|min:10',
+            'username' => 'nullable|string|max:255',
+            'guardian_gender' => ['required', Rule::in(['male', 'female', 'Male', 'Female'])],
+        ];
     }
 
     public function registerEvents(): array

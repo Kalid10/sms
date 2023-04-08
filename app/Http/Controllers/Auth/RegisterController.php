@@ -6,6 +6,7 @@ use App\Helpers\StudentHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Imports\StudentsRegistrationImport;
+use App\Imports\TeachersRegistrationImport;
 use App\Mail\AdminRegistered;
 use App\Models\Admin;
 use App\Models\Guardian;
@@ -29,19 +30,54 @@ use Maatwebsite\Excel\HeadingRowImport;
 
 class RegisterController extends Controller
 {
-    public function bulkRegisterStudents(Request $request): bool|RedirectResponse
+    public function bulkRegisterStudents(Request $request): RedirectResponse
     {
         // Validate the request
         $request->validate([
-            'students_file' => 'required|mimes:xlsx,xls,csv',
+            'user_file' => 'required|mimes:xlsx,xls,csv',
+            'user_type' => 'required|in:student,teacher,admin',
         ]);
 
         try {
-            $this->validateHeaders($request->file('students_file'));
+            // Check if the user has the permission to register students
+            $this->checkRole($request->get('user_type'));
 
-            (new StudentsRegistrationImport())->queue($request->file('students_file'));
+            // Set the expected headers and the import class based on the user type selected
+            $expectedHeaders = [];
+            $importClass = null;
 
-            return true;
+            if ($request->get('user_type') === User::TYPE_STUDENT) {
+                $expectedHeaders = [
+                    'name',
+                    'date_of_birth',
+                    'gender',
+                    'guardian_name',
+                    'guardian_email',
+                    'guardian_phone_number',
+                    'guardian_gender',
+                    'grade',
+                ];
+                $importClass = new StudentsRegistrationImport();
+            }
+
+            if ($request->get('user_type') === User::TYPE_TEACHER) {
+                $expectedHeaders = [
+                    'name',
+                    'gender',
+                    'email',
+                    'phone_number',
+                    'gender',
+                ];
+                $importClass = new TeachersRegistrationImport();
+            }
+
+            // Validate the headers
+            $this->validateHeaders($request->file('user_file'), $expectedHeaders);
+
+            // Start the import queue
+            $importClass->queue($request->file('user_file'));
+
+            return redirect()->back();
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->getMessageBag());
         } catch (Exception $exception) {
@@ -228,20 +264,9 @@ class RegisterController extends Controller
         ], 422);
     }
 
-    private function validateHeaders(UploadedFile $file): void
+    private function validateHeaders(UploadedFile $file, array $expectedHeaders): void
     {
         $headings = (new HeadingRowImport)->toArray($file);
-
-        $expectedHeaders = [
-            'name',
-            'date_of_birth',
-            'gender',
-            'guardian_name',
-            'guardian_email',
-            'guardian_phone_number',
-            'guardian_gender',
-            'grade',
-        ];
 
         foreach ($expectedHeaders as $expectedHeader) {
             if (! in_array($expectedHeader, $headings[0][0])) {

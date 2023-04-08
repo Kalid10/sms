@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,5 +24,8 @@ class AppServiceProvider extends ServiceProvider
         if (env('APP_ENV') !== 'local') {
             $url->forceScheme('https');
         }
+
+        // Prevent lazy loading of Eloquent relationships
+        Model::preventLazyLoading(! $this->app->isProduction());
     }
 }
