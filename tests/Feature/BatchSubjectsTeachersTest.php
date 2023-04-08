@@ -16,6 +16,7 @@ uses(DatabaseMigrations::class);
 
 beforeEach(function () {
     // Populate roles
+    $this->artisan('app:create-levels');
     $this->artisan('app:create-roles');
 });
 

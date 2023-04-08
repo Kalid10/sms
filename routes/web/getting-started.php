@@ -2,6 +2,8 @@
 
 use App\Models\Batch;
 use App\Models\Level;
+use App\Models\SchoolSchedule;
+use App\Models\SchoolYear;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -12,6 +14,11 @@ Route::prefix('getting-started')->group(function () {
     });
     Route::get('/register-admin', function () {
         return Inertia::render('GettingStarted/RegisterAdmin');
+    });
+    Route::get('/school-schedule', function () {
+        return Inertia::render('GettingStarted/SchoolSchedule', [
+            'school_schedule' => SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->get(),
+        ]);
     });
     Route::get('/register-batches', function () {
         return Inertia::render('GettingStarted/RegisterBatches', [
