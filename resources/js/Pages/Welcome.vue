@@ -783,9 +783,14 @@ function createSchoolPeriod() {
             {
                 no_of_periods: 8,
                 minutes_per_period: 40,
-                start_time: "02:00",
+                start_time: "02:30",
                 level_category_ids: [1, 3],
                 custom_periods: [
+                    {
+                        name: "HomeroomPeriod",
+                        duration: 10,
+                        before_period: 1,
+                    },
                     {
                         name: "BreakFast",
                         duration: 20,
@@ -802,9 +807,14 @@ function createSchoolPeriod() {
             {
                 no_of_periods: 8,
                 minutes_per_period: 40,
-                start_time: "02:00",
+                start_time: "02:30",
                 level_category_ids: [2],
                 custom_periods: [
+                    {
+                        name: "HomeroomPeriod",
+                        duration: 10,
+                        before_period: 1
+                    },
                     {
                         name: "BreakFast",
                         duration: 20,
