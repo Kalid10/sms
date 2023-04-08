@@ -11,5 +11,6 @@ class Level extends Model
 
     protected $fillable = [
         'name',
+        'level_category_id',
     ];
 }
