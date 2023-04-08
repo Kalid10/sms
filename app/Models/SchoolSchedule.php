@@ -17,10 +17,15 @@ class SchoolSchedule extends Model
         'start_date',
         'end_date',
         'type',
+        'tags',
     ];
 
     public function schoolYear(): BelongsTo
     {
         return $this->belongsTo(SchoolYear::class);
     }
+
+    protected $casts = [
+        'tags' => 'array',
+    ];
 }

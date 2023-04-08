@@ -4,39 +4,43 @@
             <Heading value="Profile"/>
             <Heading
                 value="Update your personal information and make sure your profile accurately reflects who you are."
-                size="sm" class="font-normal text-gray-500"/>
+                size="sm" class="text-xs font-normal text-gray-500"/>
         </div>
         <div class="col-span-8">
-            <UserFormElement
-                class="shadow-none"
-                @submit="submitProfileForm"
-            >
-                <UserTextInput
-                    v-model="profileForm.name" :placeholder=user.name label="Name"
-                    :error="profileForm.errors.name"/>
+            <div class="w-full max-w-4xl rounded-lg bg-white">
+                <UserFormElement
+                    class="shadow-none"
+                    @submit="submitProfileForm"
+                >
+                    <UserTextInput
+                        v-model="profileForm.name" :placeholder=user.name label="Name"
+                        :error="profileForm.errors.name"/>
 
-                <div class="flex gap-3">
-                    <UserTextInput
-                        v-model="profileForm.email"
-                        class="w-full" label="Email" type="email" :placeholder=user.email
-                        :error="profileForm.errors.email" required/>
+                    <div class="flex gap-3">
+                        <UserTextInput
+                            v-model="profileForm.email"
+                            class="w-full" label="Email" type="email" :placeholder=user.email
+                            :error="profileForm.errors.email" required/>
 
-                    <UserTextInput
-                        v-model="profileForm.username"
-                        class="w-full" :placeholder=user.username
-                        :error="profileForm.errors.username" label="User Name" required/>
-                </div>
-                <div class="flex gap-3">
-                    <UserTextInput
-                        v-model="profileForm.phone_number" class="w-full" label="Phone Number"
-                        :placeholder=user.phone_number
-                        :error="profileForm.errors.phone_number" required/>
-                    <UserTextInput
-                        v-model="profileForm.gender"
-                        class="w-full" :placeholder=user.gender
-                        :error="profileForm.errors.gender" label="User Name" required/>
-                </div>
-            </UserFormElement>
+                        <UserTextInput
+                            v-model="profileForm.username"
+                            class="w-full" :placeholder=user.username
+                            :error="profileForm.errors.username" label="User Name" required/>
+                    </div>
+                    <div class="flex gap-3">
+                        <UserTextInput
+                            v-model="profileForm.phone_number" class="w-full" label="Phone Number"
+                            :placeholder=user.phone_number
+                            :error="profileForm.errors.phone_number" required/>
+                        <UserSelectInput
+                            v-model="profileForm.gender" class="w-full cursor-pointer" :options="genderOptions"
+                            placeholder="select gender"
+                            label="Gender"
+                            required/>
+
+                    </div>
+                </UserFormElement>
+            </div>
         </div>
     </div>
     <div class="grid-rows-12 grid pt-5 sm:grid-cols-12">
@@ -44,26 +48,29 @@
             <Heading value="Password"/>
             <Heading
                 value="Stay ahead of potential security threats by updating your password now."
-                class="font-normal text-gray-500"/>
+                size="sm"
+                class="text-xs font-normal text-gray-500"/>
         </div>
         <div class="col-span-8">
-            <UserFormElement
-                class="shadow-none"
-                @submit="submitPasswordForm">
-                <UserTextInput
-                    v-model="passwordForm.current_password" label="Current Password" type="password"
-                    :error="passwordForm.errors.current_password"
-                    required/>
+            <div class="w-full max-w-4xl rounded-lg bg-white">
+                <UserFormElement
+                    class="shadow-none"
+                    @submit="submitPasswordForm">
+                    <UserTextInput
+                        v-model="passwordForm.current_password" label="Current Password" type="password"
+                        :error="passwordForm.errors.current_password"
+                        required/>
 
-                <UserTextInput
-                    v-model="passwordForm.password" label="New Password" type="password"
-                    :error="passwordForm.errors.password" required/>
+                    <UserTextInput
+                        v-model="passwordForm.password" label="New Password" type="password"
+                        :error="passwordForm.errors.password" required/>
 
-                <UserTextInput
-                    v-model="passwordForm.password_confirmation" label="Confirm Password" type="password"
-                    :error="passwordForm.errors.password_confirmation" required/>
+                    <UserTextInput
+                        v-model="passwordForm.password_confirmation" label="Confirm Password" type="password"
+                        :error="passwordForm.errors.password_confirmation" required/>
 
-            </UserFormElement>
+                </UserFormElement>
+            </div>
         </div>
     </div>
 
@@ -74,6 +81,12 @@ import UserTextInput from "@/Components/TextInput.vue";
 import Heading from "@/Components/Heading.vue";
 import {useForm, usePage} from "@inertiajs/vue3";
 import {computed} from "vue";
+import UserSelectInput from "@/Components/SelectInput.vue";
+
+const genderOptions = [
+    {value: 'male', label: 'Male'},
+    {value: 'female', label: 'Female'},
+]
 
 const user = computed(() => usePage().props.auth.user);
 

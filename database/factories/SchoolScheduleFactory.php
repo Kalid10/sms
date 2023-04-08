@@ -23,6 +23,7 @@ class SchoolScheduleFactory extends Factory
         $startDate = Carbon::parse($schoolYear->start_date)->addDays(rand(1, 90));
         $endDate = Carbon::parse($schoolYear->end_date)->subDays(rand(1, 90));
         $type = fake()->randomElement(['holiday', 'event']);
+        $tags = fake()->randomElements(['holiday', 'after school', 'special day'], rand(1, 2));
 
         return [
             'title' => fake()->sentence(5),
@@ -31,6 +32,7 @@ class SchoolScheduleFactory extends Factory
             'end_date' => $endDate,
             'type' => $type,
             'school_year_id' => $schoolYear->id,
+            'tags' => $tags,
         ];
     }
 }
