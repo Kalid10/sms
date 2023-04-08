@@ -36,9 +36,10 @@
                             v-model="form.position" class="w-full" label="Position" placeholder="position"
                             :error="form.errors.position"
                             required/>
-                        <AdminTextInput
-                            v-model="form.gender" class="w-full" label="Gender" placeholder="gender"
-                            :error="form.errors.gender"
+                        <AdminSelectInput
+                            v-model="form.gender" class="w-full cursor-pointer" :options="genderOptions"
+                            placeholder="select gender"
+                            label="Gender"
                             required/>
                     </div>
                 </AdminFormElement>
@@ -52,6 +53,12 @@ import AdminFormElement from "@/Components/FormElement.vue";
 import AdminTextInput from "@/Components/TextInput.vue";
 import Heading from "@/Components/Heading.vue";
 import {useForm} from "@inertiajs/vue3";
+import AdminSelectInput from "@/Components/SelectInput.vue";
+
+const genderOptions = [
+    {value: 'male', label: 'Male'},
+    {value: 'female', label: 'Female'},
+]
 
 const form = useForm({
     name: "",
@@ -64,6 +71,10 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('register.admin'));
+    form.post(route('register.admin'), {
+        onSuccess: () => {
+            form.reset();
+        }
+    });
 }
 </script>
