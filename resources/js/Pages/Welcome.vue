@@ -1,6 +1,7 @@
 <template>
     <div class="">Welcome</div>
     <div class="grid grid-cols-4 gap-6">
+        <button class="h-14 bg-lime-500 " @click="registerBulkUser">Register Bulk User</button>
         <button class="h-14 bg-lime-500 " @click="registerAdmin">Register Admin</button>
         <button class="h-14 bg-lime-500 " @click="registerStudent">Register Student</button>
         <input type="file" @change="handleFileUpload">
@@ -45,6 +46,7 @@
         <button class="h-14 bg-red-400 p-1" @click="createAnnouncement">Create Announcement</button>
         <button class="h-14 bg-red-400 p-1" @click="updateAnnouncement">Update Announcement</button>
         <button class="h-14 bg-red-400 p-1" @click="deleteAnnouncement">Delete Announcement</button>
+        <button class="h-14 bg-stone-600 p-1 text-white" @click="createSchoolPeriod">Create School Period</button>
     </div>
 
 </template>
@@ -52,9 +54,18 @@
 import {router} from "@inertiajs/vue3";
 import {ref} from "vue";
 
-// Listen for broadcast events
+// Listen for student import broadcast events
 Echo.private('students-import')
     .listen('.students-import', (e) => {
+        // Two variables are passed to the callback function
+        // Check the type to see if it is success or error
+        // e.message and e.type are the variables
+        console.log(e.type);
+        console.log(e.message);
+    });
+
+Echo.private('teachers-import')
+    .listen('.teachers-import', (e) => {
         // Two variables are passed to the callback function
         // Check the type to see if it is success or error
         // e.message and e.type are the variables
@@ -88,7 +99,7 @@ function handleFileUpload(event) {
 }
 
 function registerStudent() {
-    router.post('/register-bulk', {
+    router.post('/register', {
         name: "Kidist Andarge",
         email: "K@gmails.com",
         type: "student",
@@ -99,7 +110,6 @@ function registerStudent() {
         guardian_phone_number: "0963134321",
         guardian_email: "k2@gmail.com",
         guardian_gender: 'male',
-        students_file: file.value
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -108,6 +118,14 @@ function registerStudent() {
             console.log("Error")
             console.log(error)
         }
+    });
+}
+
+// Register student
+function registerBulkUser() {
+    router.post('/register-bulk', {
+        user_file: file.value,
+        user_type: "student",
     });
 }
 
@@ -639,7 +657,8 @@ function addSchoolSchedule() {
         start_date: "2024-01-01",
         end_date: "2024-12-31",
         title: "Easter",
-        type: "holiday",
+        type: "closed",
+        tags: ['Holiday'],
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -655,8 +674,9 @@ function updateSchoolSchedule() {
     router.post('/school-schedules/update', {
         start_date: "2024-01-01",
         end_date: "2024-12-31",
-        title: "Easter",
-        type: "holiday",
+        title: "Teachers Parents meeting",
+        type: "not_closed",
+        tags: ['after school'],
         id: 27
     }, {
         onSuccess: () => {
@@ -747,6 +767,59 @@ function updateAnnouncement() {
 
 function deleteAnnouncement() {
     router.delete('/announcements/' + 1, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function createSchoolPeriod() {
+    router.post('/school-periods/create', {
+        school_periods: [
+            {
+                no_of_periods: 8,
+                minutes_per_period: 40,
+                start_time: "02:00",
+                level_category_ids: [1, 3],
+                custom_periods: [
+                    {
+                        name: "BreakFast",
+                        duration: 20,
+                        before_period: 4,
+                    },
+                    {
+                        name: "Lunch",
+                        duration: 40,
+                        before_period: 6,
+                    }
+                ]
+
+            },
+            {
+                no_of_periods: 8,
+                minutes_per_period: 40,
+                start_time: "02:00",
+                level_category_ids: [2],
+                custom_periods: [
+                    {
+                        name: "BreakFast",
+                        duration: 20,
+                        before_period: 3,
+                    },
+                    {
+                        name: "Lunch",
+                        duration: 40,
+                        before_period: 5,
+                    }
+                ]
+
+            },
+        ]
+    }, {
         onSuccess: () => {
             console.log("Success")
         },

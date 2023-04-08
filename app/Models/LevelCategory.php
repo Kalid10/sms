@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class LevelCategory extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+    ];
+
+    public function levels(): HasMany
+    {
+        return $this->hasMany(Level::class);
+    }
+
+    public function schoolPeriods(): HasMany
+    {
+        return $this->hasMany(SchoolPeriod::class);
+    }
+
+    public function getSchoolPeriodsBySchoolYearId(int $schoolYearId): array
+    {
+        return $this->schoolPeriods()
+            ->where('school_year_id', $schoolYearId)
+            ->get()
+            ->toArray();
+    }
+
+    public function getActiveSchoolPeriods(): array
+    {
+        $schoolYear = SchoolYear::getActiveSchoolYear();
+        if (! $schoolYear) {
+            return [];
+        }
+
+        return $this->getSchoolPeriodsBySchoolYearId($schoolYear->id);
+    }
+}

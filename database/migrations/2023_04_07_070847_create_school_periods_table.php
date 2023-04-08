@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('levels', function (Blueprint $table) {
+        Schema::create('school_periods', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 25)->unique();
+            $table->string('name');
+            $table->time('start_time');
+            $table->integer('duration');
+            $table->boolean('is_custom');
+            $table->foreignId('school_year_id')->constrained()->cascadeOnDelete();
             $table->foreignId('level_category_id')->constrained()->cascadeOnDelete();
+            $table->unique(['name', 'school_year_id', 'level_category_id']);
             $table->timestamps();
         });
     }
@@ -24,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('school_periods');
     }
 };

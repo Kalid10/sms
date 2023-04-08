@@ -5,12 +5,21 @@ namespace App\Helpers;
 use App\Models\Batch;
 use App\Models\BatchStudent;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class StudentHelper
 {
     public static function assignStudentToBatch($studentId, $levelId): bool
     {
+        // Check if the student is already assigned to a batch
+        $alreadyAssigned = BatchStudent::where('student_id', $studentId)->exists();
+
+        if ($alreadyAssigned) {
+            return true;
+        }
+
         // Find all the batches in the student's level
         $batches = Batch::where('level_id', $levelId)->get();
 
@@ -30,10 +39,13 @@ class StudentHelper
 
         // If a target batch is found, assign the student to the batch
         if ($targetBatch) {
-            BatchStudent::create([
-                'batch_id' => $targetBatch->id,
-                'student_id' => $studentId,
-            ]);
+            DB::table('batch_students')->updateOrInsert(
+                ['batch_id' => $targetBatch->id, 'student_id' => $studentId],
+                [
+                    'updated_at' => Carbon::now(),
+                    'created_at' => Carbon::now(),
+                ]
+            );
 
             return true;
         }

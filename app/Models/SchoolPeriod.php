@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SchoolSchedule extends Model
+class SchoolPeriod extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
-        'title',
-        'body',
-        'start_date',
-        'end_date',
-        'type',
-        'tags',
+        'name',
+        'start_time',
+        'duration',
+        'is_custom',
+        'level_categories_id',
     ];
 
     public function schoolYear(): BelongsTo
@@ -25,7 +23,8 @@ class SchoolSchedule extends Model
         return $this->belongsTo(SchoolYear::class);
     }
 
-    protected $casts = [
-        'tags' => 'array',
-    ];
+    public function levelCategory(): BelongsTo
+    {
+        return $this->belongsTo(LevelCategory::class);
+    }
 }

@@ -17,7 +17,7 @@ class HomeroomTeacherSeeder extends Seeder
     public function run()
     {
         $teachers = Teacher::all();
-        $batches = Batch::all();
+        $batches = Batch::with('homeroomTeacher')->get();
 
         foreach ($batches as $batch) {
             if (! $batch->homeroomTeacher) {

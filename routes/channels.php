@@ -18,6 +18,9 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('students-import', function ($user) {
-    // Check if user has manage-students permission
     return $user->hasRole('manage-students');
+});
+
+Broadcast::channel('teachers-import', function ($user) {
+    return $user->hasRole('manage-teachers');
 });

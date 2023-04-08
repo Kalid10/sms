@@ -25,9 +25,11 @@
                         <GuardianTextInput
                             v-model="form.email" type="email" class="w-full" label="Student's email"
                             placeholder="email" :error="form.errors.email" required/>
-                        <GuardianTextInput
-                            v-model="form.gender" class="w-full" label="Student's gender"
-                            placeholder="gender" :error="form.errors.gender" required/>
+                        <GuardianSelectInput
+                            v-model="form.gender" class="w-full cursor-pointer" :options="genderOptions"
+                            placeholder="select student's gender"
+                            label="Student's gender"
+                            required/>
                     </div>
 
                     <GuardianDatePicker v-model="form.date_of_birth" label="Student's date of birth"/>
@@ -50,9 +52,11 @@
                             placeholder="email"
                             :error="form.errors.guardian_email"
                             required/>
-                        <GuardianTextInput
-                            v-model="form.guardian_gender" class="w-full" label="Guardian's gender"
-                            placeholder="gender" :error="form.errors.guardian_gender" required/>
+                        <GuardianSelectInput
+                            v-model="form.guardian_gender" class="w-full cursor-pointer" :options="genderOptions"
+                            placeholder="select guardian's gender"
+                            label="Guardian's gender"
+                            required/>
                     </div>
                 </GuardianFormElement>
 
@@ -91,8 +95,14 @@ import Heading from "@/Components/Heading.vue"
 import {useForm} from "@inertiajs/vue3";
 import GuardianPrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianDatePicker from "@/Components/DatePicker.vue";
+import GuardianSelectInput from "@/Components/SelectInput.vue";
 
 defineEmits(['file-uploaded']);
+
+const genderOptions = [
+    {value: 'male', label: 'Male'},
+    {value: 'female', label: 'Female'},
+]
 
 const handleFileUploaded = (file) => {
     // Todo: Remove this console.log when notification is implemented
@@ -117,6 +127,10 @@ const bulkForm = useForm({
 })
 
 const submit = () => {
-    form.post(route('register.guardian'));
+    form.post(route('register.guardian'), {
+        onSuccess: () => {
+            form.reset();
+        }
+    });
 }
 </script>
