@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Level extends Model
 {
@@ -13,4 +14,9 @@ class Level extends Model
         'name',
         'level_category_id',
     ];
+
+    public function levelCategory(): BelongsTo
+    {
+        return $this->belongsTo(LevelCategory::class);
+    }
 }

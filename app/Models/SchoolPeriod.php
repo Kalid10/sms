@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,5 +27,40 @@ class SchoolPeriod extends Model
     public function levelCategory(): BelongsTo
     {
         return $this->belongsTo(LevelCategory::class);
+    }
+
+    // get active school periods for the active school year
+    public function getSchoolPeriodsBySchoolYearId(int $schoolYearId): array
+    {
+        return $this->where('school_year_id', $schoolYearId)
+            ->get()->toArray();
+    }
+
+    public function getActiveAllPeriods(): array
+    {
+        $schoolYear = SchoolYear::getActiveSchoolYear();
+        if (! $schoolYear) {
+            return [];
+        }
+
+        return $this->getSchoolPeriodsBySchoolYearId($schoolYear->id);
+    }
+
+    /**
+     * Get active school periods for the active school year
+     *
+     * @return array
+     */
+    public function getActivePeriods(bool $custom = false): Collection
+    {
+        $activeSchoolYear = SchoolYear::getActiveSchoolYear();
+
+        if (! $activeSchoolYear) {
+            return [];
+        }
+
+        return $this->where('school_year_id', $activeSchoolYear->id)
+            ->where('is_custom', $custom)
+            ->get();
     }
 }
