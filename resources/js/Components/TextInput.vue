@@ -7,7 +7,7 @@
         <input
             :disabled="disabled" :placeholder="placeholder" :required="required" :type="type"
             :value="modelValue"
-            class="h-10 w-full rounded-md border border-gray-200 placeholder:text-sm placeholder:text-gray-500"
+            class="h-10 w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-500"
             @input="$emit('update:modelValue', $event.target.value)"/>
         <span v-if="error" class="text-xs text-negative-50">
             *{{ error }}

@@ -4,19 +4,21 @@
             <span class="pl-0.5 text-sm font-semibold text-gray-500">{{ label }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
         </label>
-        <div :class="[labelLocation === 'inside' ? 'h-12' : 'h-10']" class="relative flex w-full rounded-md border border-gray-200 bg-white" tabindex="0" @click="toggleList">
-            <span class="flex flex-col justify-center px-3">
-                <span v-if="labelLocation === 'inside'" class="text-[0.7rem] text-gray-500">{{ label }}</span>
-                <span
-                    :aria-placeholder="placeholder"
-                    :class="[ !! selectedLabel ? 'text-black' : 'text-gray-500' ]"
-                    class="flex text-sm capitalize">{{
-                        selectedLabel ?? placeholder
-                    }}
+        <div :class="[labelLocation === 'inside' ? 'h-12' : 'h-10']" class="relative flex w-full rounded-md border border-gray-200 bg-white" tabindex="0">
+            <div class="flex h-full w-full" @click="toggleList">
+                <span class="flex grow flex-col justify-center px-3">
+                    <span v-if="labelLocation === 'inside'" class="text-[0.7rem] text-gray-500">{{ label }}</span>
+                    <span
+                        :aria-placeholder="placeholder"
+                        :class="[ !! selectedLabel ? 'text-black' : 'text-gray-500' ]"
+                        class="flex text-sm capitalize">{{
+                            selectedLabel ?? placeholder
+                        }}
+                    </span>
                 </span>
-            </span>
-            <div class="absolute right-0 grid h-full place-items-center px-2">
-                <ChevronDownIcon class="h-4 w-4 stroke-gray-500 stroke-2"/>
+                <div class="absolute right-0 grid h-full place-items-center px-2">
+                    <ChevronDownIcon class="h-4 w-4 stroke-gray-500 stroke-2"/>
+                </div>
             </div>
 
             <input :disabled="disabled" :required="required" type="hidden"/>

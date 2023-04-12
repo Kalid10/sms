@@ -3,7 +3,8 @@
         :class="{
             'text-lg': size === 'lg',
             'text-base': size === 'md',
-            'text-sm': size === 'sm'
+            'text-sm': size === 'sm',
+            'text-xs': size === 'xs'
         }"
         class="w-full font-semibold capitalize"
     >
