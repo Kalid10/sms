@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <div :class="labelLocation === 'top' ? 'flex-col' : ''" class="flex h-10 items-center gap-2">
+        <span class="">
+            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{ label }}</span>
+        </span>
         <label class="relative inline-flex cursor-pointer items-center">
             <input
                 :checked="modelValue"
@@ -7,7 +10,7 @@
                 class="peer sr-only"
                 @input="input"
             >
-            <div class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-black peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-black dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-black"></div>
+            <span class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-black peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"></span>
         </label>
     </div>
 </template>
@@ -17,9 +20,13 @@ defineProps({
         type: Boolean,
         required: true,
     },
-    label:{
-        type:String,
+    label: {
+        type: String,
         default: null
+    },
+    labelLocation: {
+        type: String,
+        default: 'left'
     }
 })
 const emits = defineEmits(['update:modelValue'])
