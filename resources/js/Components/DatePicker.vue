@@ -15,7 +15,7 @@
             <span class="flex flex-col">
                 <span v-if="labelLocation === 'inside'" class="text-[0.7rem] text-gray-500">{{ label }}</span>
                 <span :class="[!! selectedDate ? 'text-black' : 'text-gray-500']" class="truncate whitespace-nowrap text-sm">
-                    {{ selectedDate ?? placeholder }}
+                    {{ selectedDate ?? placeholder ?? defaultPlaceholder }}
                 </span>
             </span>
             <CalendarIcon class="h-4 w-4 stroke-gray-500 stroke-2" />
@@ -139,7 +139,7 @@
 </template>
 
 <script setup>
-import { ref, nextTick, computed } from "vue";
+import { ref, computed } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { ChevronLeftIcon, ChevronRightIcon, CalendarIcon } from "@heroicons/vue/24/outline";
 
@@ -162,7 +162,7 @@ const props = defineProps({
     },
     placeholder: {
         type: String,
-        default: 'Select a date'
+        default: null
     },
     modelValue: {
         type: [Date, null],
@@ -191,6 +191,8 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['update:modelValue', 'update:startDate', 'update:endDate'])
+
+const defaultPlaceholder = computed(() => props.range ? 'Select the Dates' : 'Select the Date')
 
 const viewPanel = ref(false)
 const panelViewer = ref(null)
@@ -321,10 +323,14 @@ function isDateSelected(date) {
 
 function isDateDisabled(date) {
 
-    const selectedDate = new Date(selectedYear.value, selectedMonth.value, date).toLocaleDateString()
+    const selectedDate = new Date(selectedYear.value, selectedMonth.value, date)
+    const minimumDate = props.minimum
+
+    selectedDate.setHours(0, 0, 0, 0)
 
     if (!! props.minimum) {
-        return selectedDate <= props.minimum.toLocaleString()
+        minimumDate.setHours(0, 0, 0, 0)
+        return selectedDate < minimumDate
     }
 
     return false

@@ -2,7 +2,9 @@
 
     <Teleport v-if="view" to="#top-view">
 
-        <div class="fixed z-50 h-screen w-full bg-black/50 p-4 backdrop-blur">
+        <div
+            :class="{ 'bg-black/50': backgroundColor === 'black', 'bg-black/20': backgroundColor === 'white' }"
+            class="fixed z-50 h-screen w-full p-4 backdrop-blur">
 
             <div ref="modal" class="container mx-auto max-w-3xl">
 
@@ -20,10 +22,18 @@
 import {ref} from "vue"
 import {onClickOutside} from "@vueuse/core";
 
-defineProps({
+const props = defineProps({
     view: {
         type: Boolean,
         required: true
+    },
+    closeOnOutsideClick: {
+        type: Boolean,
+        default: true
+    },
+    backgroundColor: {
+        type: String,
+        default: 'black'
     }
 })
 
@@ -32,7 +42,9 @@ const emits = defineEmits(['update:view'])
 const modal = ref(null)
 
 onClickOutside(modal, () => {
-    emits('update:view', false)
+    if (props.closeOnOutsideClick) {
+        emits('update:view', false)
+    }
 })
 </script>
 
