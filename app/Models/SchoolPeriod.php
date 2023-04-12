@@ -15,7 +15,7 @@ class SchoolPeriod extends Model
         'start_time',
         'duration',
         'is_custom',
-        'level_categories_id',
+        'level_category_id',
     ];
 
     public function schoolYear(): BelongsTo
