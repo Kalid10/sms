@@ -2,7 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LevelCategory;
+use Exception;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
+
 class LevelCategoryController extends Controller
 {
-    //
+    public function index()
+    {
+        $levelCategories = LevelCategory::all();
+
+        return Inertia::render('Levels/LevelCategory', [
+            'levelCategories' => $levelCategories,
+        ]);
+    }
+
+    public function create(Request $request): RedirectResponse
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        // Create level category
+        $levelCategory = new LevelCategory($validated);
+        $levelCategory->save();
+
+        return redirect()->back()->with('success', 'Level category created successfully');
+    }
+
+    public function update(Request $request): RedirectResponse
+    {
+        try {
+            // Validate the request
+            $validated = $request->validate([
+                'name' => 'string|max:255',
+            ]);
+
+            // Get the level category
+            $levelCategory = LevelCategory::find($request->id);
+
+            // Update the level category
+            $levelCategory->update($validated);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        }
+
+        return redirect()->back()->with('success', 'Level category updated successfully');
+    }
+
+    public function destroy($id): RedirectResponse
+    {
+        $levelCategory = LevelCategory::find($id);
+
+        // Delete the level category
+        $levelCategory->delete();
+
+        return redirect()->back()->with('success', 'Level Category deleted successfully');
+    }
 }
