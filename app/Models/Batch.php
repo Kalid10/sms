@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
@@ -49,21 +50,16 @@ class Batch extends Model
         return $this->hasMany(BatchSubject::class);
     }
 
+    public function schedules(): HasManyThrough
+    {
+        return $this->hasManyThrough(BatchSchedule::class, BatchSubject::class);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->logOnly(['level_id', 'school_year_id', 'section'])
             ->useLogName('batch');
-    }
-
-    public function batchSchedules(): HasMany
-    {
-        return $this->hasMany(BatchSchedule::class);
-    }
-
-    public function batchSubjects(): HasMany
-    {
-        return $this->hasMany(BatchSubject::class);
     }
 
     public static function active(array $with = []): Collection

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BatchSchedule extends Model
 {
@@ -24,5 +25,11 @@ class BatchSchedule extends Model
     public function schoolPeriod(): BelongsTo
     {
         return $this->belongsTo(SchoolPeriod::class);
+    }
+
+    // Add relationship with batch session
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(BatchSession::class);
     }
 }
