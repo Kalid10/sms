@@ -51,6 +51,7 @@ class DatabaseSeeder extends Seeder
             SchoolPeriodSeeder::class,
             BatchScheduleSeeder::class,
             BatchSessionSeeder::class,
+            BatchStudentSeeder::class,
         ]);
     }
 }
