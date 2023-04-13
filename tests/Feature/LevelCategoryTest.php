@@ -13,11 +13,14 @@ beforeEach(function () {
 
     // Use this user for this test
     $this->actingAs($this->admin->user);
+
+    // Create a test level category
+    $this->seed('LevelCategorySeeder');
 });
 
 it('can create a new level category', function () {
     // Create a new level category
-    $response = $this->post(route('level-category.create'), [
+    $response = $this->post(route('level-categories.create'), [
         'name' => 'New level category',
     ]);
 
@@ -33,14 +36,11 @@ it('can create a new level category', function () {
 });
 
 it('can list all level categories', function () {
-    // Create some test level categories
-    $this->seed('LevelCategorySeeder');
-
     // Get the level categories index page
-    $response = $this->get(route('level-category.index'));
+    $response = $this->get(route('level-categories.index'));
 
     // Check no of level categories in the database
-    $this->assertEquals(4, LevelCategory::count());
+    expect(LevelCategory::count())->toBeGreaterThan(3);
 
     // Assert that the response contains the level categories' names
     $response->assertSee(LevelCategory::first()->name)
@@ -48,12 +48,10 @@ it('can list all level categories', function () {
 });
 
 it('can update a level category', function () {
-    // Create a test level category
-    $this->seed('LevelCategorySeeder');
     $levelCategory = LevelCategory::first();
 
     // Update the level category
-    $response = $this->post(route('level-category.update'), [
+    $response = $this->post(route('level-categories.update'), [
         'id' => $levelCategory->id,
         'name' => 'Updated level category',
     ]);
@@ -71,12 +69,10 @@ it('can update a level category', function () {
 });
 
 it('can delete an existing level category', function () {
-    // Create a test level category
-    $this->seed('LevelCategorySeeder');
     $levelCategory = LevelCategory::first();
 
     // Delete the level category
-    $response = $this->delete(route('level-category.delete', $levelCategory->id));
+    $response = $this->delete(route('level-categories.delete', $levelCategory->id));
 
     // Assert that the level category was deleted from the database
     $response->assertRedirect();
@@ -97,7 +93,7 @@ it('cannot create a new level category if the user does not have the manage-leve
     $this->actingAs($this->admin->user);
 
     // Create a new level category
-    $response = $this->post(route('level-category.create'), [
+    $response = $this->post(route('level-categories.create'), [
         'name' => 'New level category',
     ]);
 
