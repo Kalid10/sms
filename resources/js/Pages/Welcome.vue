@@ -49,6 +49,8 @@
         <button class="h-14 bg-stone-600 p-1 text-white" @click="createSchoolPeriod">Create School Period</button>
         <button class="h-14 bg-stone-600 p-1 text-white" @click="createBatchSchedule">Create Batch Schedules</button>
         <button class="h-14 bg-stone-600 p-1 text-white" @click="checkSchoolPeriod">Check Schedule</button>
+        <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="addStudentAbsentees">Test Add Student Absentees
+        </button>
     </div>
 
 </template>
@@ -874,6 +876,32 @@ function checkSchoolPeriod() {
         }
     })
 }
+
+function addStudentAbsentees() {
+    router.post('/absentees/students/add', {
+        batch_session_id: 4,
+        user_type: "student",
+        absentees: [
+            {
+                user_id: 107,
+                reason: "Sick",
+            },
+            {
+                user_id: 109,
+                reason: "Sick",
+            },
+        ],
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
 </script>
 
 <style>
