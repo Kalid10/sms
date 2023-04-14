@@ -7,11 +7,8 @@ use Illuminate\Database\Seeder;
 
 class SchoolPeriodSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        SchoolPeriod::factory()->create();
+        SchoolPeriod::factory()->count(50)->create();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SchoolYear;
 use App\Models\Semester;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,8 +30,10 @@ class SchoolYearController extends Controller
         DB::beginTransaction();
 
         try {
+            $startDate = Carbon::parse($request->input('start_date'));
+            $startDate = $startDate->format('Y-m-d');
             $schoolYear = SchoolYear::create([
-                'start_date' => $request->start_date,
+                'start_date' => $startDate,
                 'end_date' => null,
                 'name' => $request->name,
             ]);
@@ -40,7 +43,7 @@ class SchoolYearController extends Controller
                 Semester::create([
                     'school_year_id' => $schoolYear->id,
                     'name' => "Semester {$i}",
-                    'start_date' => $i === 1 ? $request->start_date : null,
+                    'start_date' => $i === 1 ? $startDate : null,
                     'end_date' => null,
                     'status' => $i === 1 ? Semester::STATUS_ACTIVE : Semester::STATUS_UPCOMING,
                 ]);
@@ -48,7 +51,7 @@ class SchoolYearController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'School year created successfully with.');
+            return redirect()->back()->with('success', 'School year successfully created.');
         } catch (Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());

@@ -28,8 +28,7 @@ class LevelCategoryController extends Controller
         ]);
 
         // Create level category
-        $levelCategory = new LevelCategory($validated);
-        $levelCategory->save();
+        LevelCategory::create($validated);
 
         return redirect()->back()->with('success', 'Level category created successfully');
     }
@@ -58,10 +57,7 @@ class LevelCategoryController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        $levelCategory = LevelCategory::find($id);
-
-        // Delete the level category
-        $levelCategory->delete();
+        LevelCategory::find($id)->delete();
 
         return redirect()->back()->with('success', 'Level Category deleted successfully');
     }

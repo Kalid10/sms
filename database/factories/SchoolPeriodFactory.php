@@ -3,31 +3,23 @@
 namespace Database\Factories;
 
 use App\Models\LevelCategory;
-use App\Models\SchoolYear;
+use App\Models\SchoolPeriod;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SchoolPeriod>
- */
 class SchoolPeriodFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = SchoolPeriod::class;
+
+    public function definition()
     {
-        $schoolYear = SchoolYear::whereNull('end_date')->first() ?? SchoolYear::factory()->create();
-        $levelCategory = LevelCategory::all()->random() ?? LevelCategory::factory()->create();
+        $start_time = $this->faker->time('H:i');
 
         return [
-            'name' => $this->faker->randomDigit,
-            'start_time' => $this->faker->time('H:i'),
-            'duration' => $this->faker->numberBetween(1, 120),
-            'is_custom' => false,
-            'school_year_id' => $schoolYear->id,
-            'level_category_id' => $levelCategory->id,
+            'name' => $this->faker->unique()->numberBetween(1, 50),
+            'start_time' => $start_time,
+            'duration' => $this->faker->numberBetween(40, 60),
+            'is_custom' => $this->faker->boolean(20),
+            'level_category_id' => LevelCategory::factory(),
         ];
     }
 }
