@@ -10,6 +10,11 @@ Route::prefix('login/')->middleware('guest')->name('login.')->group(function () 
     Route::get('', [AuthController::class, 'index']);
 });
 
+Route::prefix('signup/')->middleware('guest')->name('signup.')->group(function () {
+    Route::post('', [AuthController::class, 'signup'])->name('post');
+    Route::get('', [AuthController::class, 'firstLogin']);
+});
+
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('web')->name('logout');
 Route::post('/register', [RegisterController::class, 'register'])->middleware(['auth'])->name('register');
 Route::post('/register-bulk', [RegisterController::class, 'bulkRegisterStudents'])->middleware(['auth'])->name('register.bulk');
