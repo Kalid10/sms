@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('guardian_id')->constrained()->cascadeOnDelete();
+            $table->string('guardian_relation')->nullable();
             $table->timestamps();
         });
     }
