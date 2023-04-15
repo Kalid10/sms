@@ -15,14 +15,29 @@ const appName =
 
 const pinia = createPinia();
 
+function getLayout(name, page) {
+
+    switch (true) {
+
+        case (name.startsWith('GettingStarted/')):
+        case (name.startsWith('Auth/')):
+
+            return GettingStartedLayout;
+
+        default:
+
+            return page.default.layout || Layout
+
+    }
+
+}
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => {
         const pages = import.meta.glob("./Pages/**/*.vue", {eager: true});
         let page = pages[`./Pages/${name}.vue`]
-        // console.log(page)
-        page.default.layout = name.startsWith('GettingStarted/') ? GettingStartedLayout : page.default.layout || Layout
-        // page.default.layout = page.default.layout || Layout;
+        page.default.layout = getLayout(name, page)
         return page;
     },
     setup({el, App, props, plugin}) {
@@ -35,4 +50,4 @@ createInertiaApp({
     progress: {
         color: "#4B5563",
     },
-});
+}).then(() => {});

@@ -68,4 +68,9 @@ class AuthController extends Controller
             'message' => 'You have successfully logged out.',
         ]);
     }
+
+    public function firstLogin(): Response
+    {
+        return Inertia::render('Auth/Signup');
+    }
 }
