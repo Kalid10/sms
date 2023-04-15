@@ -17,6 +17,7 @@ class Subject extends Model
         'short_name',
         'category',
         'tags',
+        'priority',
     ];
 
     protected $casts = [

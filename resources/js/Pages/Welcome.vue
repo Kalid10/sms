@@ -47,6 +47,8 @@
         <button class="h-14 bg-red-400 p-1" @click="updateAnnouncement">Update Announcement</button>
         <button class="h-14 bg-red-400 p-1" @click="deleteAnnouncement">Delete Announcement</button>
         <button class="h-14 bg-stone-600 p-1 text-white" @click="createSchoolPeriod">Create School Period</button>
+        <button class="h-14 bg-stone-600 p-1 text-white" @click="createBatchSchedule">Create Batch Schedules</button>
+        <button class="h-14 bg-stone-600 p-1 text-white" @click="checkSchoolPeriod">Check Schedule</button>
     </div>
 
 </template>
@@ -66,6 +68,15 @@ Echo.private('students-import')
 
 Echo.private('teachers-import')
     .listen('.teachers-import', (e) => {
+        // Two variables are passed to the callback function
+        // Check the type to see if it is success or error
+        // e.message and e.type are the variables
+        console.log(e.type);
+        console.log(e.message);
+    });
+
+Echo.private('batch-schedule')
+    .listen('.batch-schedule', (e) => {
         // Two variables are passed to the callback function
         // Check the type to see if it is success or error
         // e.message and e.type are the variables
@@ -783,9 +794,14 @@ function createSchoolPeriod() {
             {
                 no_of_periods: 8,
                 minutes_per_period: 40,
-                start_time: "02:00",
+                start_time: "02:30",
                 level_category_ids: [1, 3],
                 custom_periods: [
+                    {
+                        name: "HomeroomPeriod",
+                        duration: 10,
+                        before_period: 1,
+                    },
                     {
                         name: "BreakFast",
                         duration: 20,
@@ -802,9 +818,14 @@ function createSchoolPeriod() {
             {
                 no_of_periods: 8,
                 minutes_per_period: 40,
-                start_time: "02:00",
+                start_time: "02:30",
                 level_category_ids: [2],
                 custom_periods: [
+                    {
+                        name: "HomeroomPeriod",
+                        duration: 10,
+                        before_period: 1
+                    },
                     {
                         name: "BreakFast",
                         duration: 20,
@@ -820,6 +841,30 @@ function createSchoolPeriod() {
             },
         ]
     }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function createBatchSchedule() {
+    router.post('/batch-schedules/create', {}, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function checkSchoolPeriod() {
+    router.get('/batch-schedules/check', {}, {
         onSuccess: () => {
             console.log("Success")
         },

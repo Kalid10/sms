@@ -24,3 +24,7 @@ Broadcast::channel('students-import', function ($user) {
 Broadcast::channel('teachers-import', function ($user) {
     return $user->hasRole('manage-teachers');
 });
+
+Broadcast::channel('batch-schedule', function ($user) {
+    return $user->hasRole('manage-batch-schedules');
+});

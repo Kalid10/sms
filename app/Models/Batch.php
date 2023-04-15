@@ -44,11 +44,21 @@ class Batch extends Model
         return $this->hasMany(BatchStudent::class);
     }
 
+    public function subjects(): HasMany
+    {
+        return $this->hasMany(BatchSubject::class);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->logOnly(['level_id', 'school_year_id', 'section'])
             ->useLogName('batch');
+    }
+
+    public function batchSchedules(): HasMany
+    {
+        return $this->hasMany(BatchSchedule::class);
     }
 
     public function batchSubjects(): HasMany

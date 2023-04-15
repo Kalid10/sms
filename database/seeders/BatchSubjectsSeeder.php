@@ -35,6 +35,7 @@ class BatchSubjectsSeeder extends Seeder
                     'batch_id' => $batch->id,
                     'subject_id' => $subject->id,
                     'teacher_id' => $teacher->id,
+                    'weekly_frequency' => fake()->numberBetween(1, 5),
                 ]);
             }
         }
