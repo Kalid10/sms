@@ -4,7 +4,8 @@
     <div
         v-if="
             activePage === '/getting-started/school-schedule' ||
-            activePage === '/login'
+            activePage === '/login' ||
+            activePage === '/signup'
         "
         class="relative flex h-screen w-full flex-col"
     >

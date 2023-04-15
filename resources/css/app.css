@@ -10,4 +10,12 @@
     * {
         @apply font-basic;
     }
+
+    ::-moz-selection { /* Code for Firefox */
+        @apply bg-brand-50;
+    }
+
+    ::selection {
+        @apply bg-brand-50;
+    }
 }
