@@ -13,7 +13,7 @@
     </div>
 </template>
 <script setup>
-import RegisterAdmin from "@/Pages/GettingStarted/RegisterAdmin.vue";
+import RegisterAdmin from "@/Views/GettingStarted/RegisterAdmin.vue";
 import Modal from "@/Components/Modal.vue"
 import {ref} from "vue";
 const delegateModal = ref(false)

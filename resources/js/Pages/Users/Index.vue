@@ -3,7 +3,8 @@
     <UsersStatistics/>
 
     <TableElement
-        :data="users.data"
+        :columns="users_config"
+        :data="users.data.map(user => { return { ...user, active: true } })"
         actionable
         row-actionable
         selectable
@@ -58,17 +59,23 @@
 
         <template #footer>
 
-            <SelectInput v-model="perPage" class="w-36"  direction="up" placeholder="Per page" :options="perPageOptions"/>
+            <SelectInput
+                v-model="perPage" :options="perPageOptions" class="w-36" direction="up"
+                placeholder="Per page"/>
             <div class="flex w-full justify-end gap-3">
-                <TertiaryButton title="Previous" class="w-full md:w-fit" :disabled="!users['prev_page_url']" @click="previousPage"/>
-                <TertiaryButton title="Next" class="w-full md:w-fit" :disabled="!users['next_page_url']" @click="nextPage"/>
+                <TertiaryButton
+                    :disabled="!users['prev_page_url']" class="w-full md:w-fit" title="Previous"
+                    @click="previousPage"/>
+                <TertiaryButton
+                    :disabled="!users['next_page_url']" class="w-full md:w-fit" title="Next"
+                    @click="nextPage"/>
             </div>
 
         </template>
 
     </TableElement>
 
-    <Register v-if="showRegisterOptions" :user-roles="userRoles" :toggle="showRegisterOptions"></Register>
+    <Register v-if="showRegisterOptions" :toggle="showRegisterOptions" :user-roles="userRoles"></Register>
 
     <Modal v-model:view="showModal">
         <FormElement
@@ -99,8 +106,8 @@
                     placeholder="Position of user"/>
 
                 <DatePicker
-                    v-model:start-date="start_date" v-model:end-date="end_date" range
-                    placeholder="Select a Date" required label="Start Date" class="w-1/2 lg:w-2/5"/>
+                    v-model:end-date="end_date" v-model:start-date="start_date" class="w-1/2 lg:w-2/5"
+                    label="Start Date" placeholder="Select a Date" range required/>
 
             </div>
 
@@ -185,7 +192,7 @@ function moveItems(items) {
 
 // Get all users
 const users = computed(() => {
-    return usePage().props.users;
+    return usePage().props.users
 });
 
 const userRoles = computed(() => usePage().props.user_roles);
@@ -242,6 +249,42 @@ function nextPage() {
         replace: true
     })
 }
+
+// 'name', 'email', 'type', 'gender'
+const users_config = [
+    {
+        name: 'Full Name',
+        key: 'name',
+        link: '/users/{id}',
+        class: 'w-[35%]',
+        align: 'left'
+    },
+    {
+        name: 'Email',
+        key: 'email',
+        link: 'mailto:{email}',
+        class: 'w-[35%]',
+        align: 'left'
+    },
+    {
+        name: 'User Type',
+        key: 'type',
+        type: 'enum',
+        options: ['admin', 'teacher', 'student', 'guardian'],
+    },
+    {
+        name: 'Gender',
+        key: 'gender',
+        type: 'enum',
+        options: ['male', 'female'],
+    },
+    {
+        name: 'Active',
+        key: 'active',
+        type: Boolean,
+        class: 'w-fit'
+    }
+]
 
 const start_date = ref(null)
 const end_date = ref(null)
