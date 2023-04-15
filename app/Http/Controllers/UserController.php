@@ -59,8 +59,8 @@ class UserController extends Controller
         }
 
         // Update password
-        User::whereId(auth()->user()->id)->update([
-            'password' => Hash::make($request->new_password),
+        auth()->user()->update([
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect()->back()->with('success', 'Password updated Successfully');
