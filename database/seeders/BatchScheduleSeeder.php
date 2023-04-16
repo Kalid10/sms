@@ -29,6 +29,7 @@ class BatchScheduleSeeder extends Seeder
             }
 
             BatchSchedule::create([
+                'batch_id' => $batch->id,
                 'school_period_id' => $schoolPeriod->id,
                 'day_of_week' => 1,
                 'batch_subject_id' => fake()->randomElement($batch->subjects->pluck('id')->toArray()),

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\SchoolPeriod;
+use App\Models\SchoolYear;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -68,7 +69,7 @@ class SchoolPeriodSeeder extends Seeder
         ];
 
         foreach ($schoolPeriodsData as $data) {
-            $activeSchoolYearId = 1; // Replace with the active school year ID
+            $activeSchoolYearId = SchoolYear::getActiveSchoolYear()->id; // Replace with the active school year ID
             $start_time = Carbon::parse($data['start_time']);
             $custom_periods = collect($data['custom_periods'])->keyBy('before_period');
 

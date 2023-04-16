@@ -13,12 +13,10 @@ class BatchSessionSeeder extends Seeder
      */
     public function run(): void
     {
-        $batch = Batch::with('schedules.batchSubject.teacher')->where('id', 1)->first();
-
-        $batchSchedules = $batch->schedules;
+        $batch = Batch::with('schedule.batchSubject.teacher')->where('id', 1)->first();
 
         // For every batch schedule, create a session
-        foreach ($batchSchedules as $key => $batchSchedule) {
+        foreach ($batch->schedule as $key => $batchSchedule) {
             $batchSchedule->sessions()->create([
                 'date' => fake()->dateTimeBetween('-1 week', '+1 week'),
                 'teacher_id' => $batchSchedule->batchSubject->teacher_id,
