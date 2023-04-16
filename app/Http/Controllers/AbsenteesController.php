@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Absentee;
 use App\Models\BatchSession;
+use App\Models\Student;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class AbsenteesController extends Controller
 {
@@ -32,7 +35,7 @@ class AbsenteesController extends Controller
         }
 
         // Check if the student is enrolled in the batch
-        $batchId = $batchSession->batchSchedule->batchSubject->batch->id;
+        $batchId = $batchSession->batchSchedule->batch_id;
         $absenteeUserIds = array_column($request->absentees, 'user_id');
         $absenteeUsers = User::with('student')->whereIn('id', $absenteeUserIds)->get();
 
@@ -86,5 +89,17 @@ class AbsenteesController extends Controller
         }
 
         return redirect()->back()->with('success', 'Absentees updated successfully.');
+    }
+
+    public function getStudentAbsenteePercentage(Request $request): Response
+    {
+        $request->validate([
+            'student_id' => 'required|integer|exists:students,id',
+            'school_year_id' => 'integer|exists:school_years,id',
+        ]);
+
+        return Inertia::render('Welcome', [
+            'absenteePercentage' => Student::find($request->student_id)->absenteePercentage(),
+        ]);
     }
 }

@@ -51,8 +51,11 @@
         <button class="h-14 bg-stone-600 p-1 text-white" @click="checkSchoolPeriod">Check Schedule</button>
         <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="addStudentAbsentees">Test Add Student Absentees
         </button>
-        <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="batchSessions">Test Get Batch Sessions</button>
-        <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="teacherSessions">Test Get Teacher Sessions</button>
+        <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="getStudentAbsenteePercentage">Test Get Student
+            Absentees
+        </button>
+        <button class="h-14 bg-blue-600 p-1 text-white" @click="batchSessions">Test Get Batch Sessions</button>
+        <button class="h-14 bg-blue-600 p-1 text-white" @click="teacherSessions">Test Get Teacher Sessions</button>
     </div>
 
 </template>
@@ -926,6 +929,21 @@ function teacherSessions() {
         teacher_id: 34,
         status: "scheduled",
         date: "2023-04-19",
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+// Add function to get student absentees
+function getStudentAbsenteePercentage() {
+    router.get('/absentees/student', {
+        student_id: 3,
     }, {
         onSuccess: () => {
             console.log("Success")
