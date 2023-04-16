@@ -41,7 +41,7 @@ class GenerateBatchSchedulesJob implements ShouldQueue
             ->where('school_year_id', $this->activeSchoolYearId)
             ->get();
 
-        $activeSchoolPeriods = (new SchoolPeriod)->getActivePeriods();
+        $activeSchoolPeriods = (new SchoolPeriod)->activePeriods();
 
         if (count($activeSchoolPeriods) === 0) {
             return redirect()->back()->with('error', 'No active school periods found.');
@@ -75,11 +75,17 @@ class GenerateBatchSchedulesJob implements ShouldQueue
                 });
 
                 foreach ($schoolPeriods as $schoolPeriod) {
-                    // Skip custom periods (breaks, lunches, etc.)
+                    // Schedule custom periods
                     if ($schoolPeriod->is_custom) {
+                        BatchSchedule::create([
+                            'batch_id' => $batch->id,
+                            'school_period_id' => $schoolPeriod->id,
+                            'batch_subject_id' => null,
+                            'day_of_week' => $dayOfWeek,
+                        ]);
+
                         continue;
                     }
-
                     foreach ($remainingSubjects as $key => $remainingSubject) {
                         $batchSubject = $remainingSubject['subject'];
 
