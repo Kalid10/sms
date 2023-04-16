@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\SignupRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -67,5 +69,23 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'You have successfully logged out.',
         ]);
+    }
+
+    public function firstLogin(): Response
+    {
+        return Inertia::render('Auth/Signup');
+    }
+
+    public function signup(SignupRequest $request): RedirectResponse
+    {
+        // Authenticate user
+        $request->authenticate();
+
+        // Update password
+        auth()->user()->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'You have successfully logged in');
     }
 }
