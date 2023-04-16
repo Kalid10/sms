@@ -51,9 +51,14 @@ class Batch extends Model
         return $this->hasMany(BatchSubject::class);
     }
 
-    public function schedules(): HasManyThrough
+    public function schedule(): HasMany
     {
-        return $this->hasManyThrough(BatchSchedule::class, BatchSubject::class);
+        return $this->hasMany(BatchSchedule::class);
+    }
+
+    public function sessions(): HasManyThrough
+    {
+        return $this->hasManyThrough(BatchSession::class, BatchSchedule::class);
     }
 
     public function getActivitylogOptions(): LogOptions

@@ -15,6 +15,7 @@ class BatchSchedule extends Model
         'school_period_id',
         'day_of_week',
         'batch_subject_id',
+        'batch_id',
     ];
 
     public function batchSubject(): BelongsTo
@@ -27,9 +28,18 @@ class BatchSchedule extends Model
         return $this->belongsTo(SchoolPeriod::class);
     }
 
-    // Add relationship with batch session
     public function sessions(): HasMany
     {
         return $this->hasMany(BatchSession::class);
+    }
+
+    public function batch(): BelongsTo
+    {
+        return $this->belongsTo(Batch::class);
+    }
+
+    public function teacher(): BelongsTo
+    {
+        return $this->belongsTo(Teacher::class);
     }
 }
