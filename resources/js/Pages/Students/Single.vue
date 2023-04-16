@@ -2,7 +2,7 @@
 
     <div class="mx-auto grid w-full grid-cols-12 gap-4">
 
-        <div class="col-span-12 flex h-full flex-col p-2 md:col-span-3">
+         <div class="col-span-12 flex h-full flex-col p-2 md:col-span-3">
 
             <div class="flex flex-col items-center gap-5">
 
@@ -11,16 +11,14 @@
                     <img
                         :src="`https://xsgames.co/randomusers/avatar.php?g=${gender}`"
                         alt="avatar"
-                        class="mx-auto aspect-square w-3/4 rounded-full"
+                        class="mx-auto aspect-square w-24 rounded-full md:w-3/4"
                     />
 
-                    <div class="flex flex-col items-center">
+                    <div class="mx-auto flex w-fit flex-col items-center">
                         <Heading class="!font-semibold !uppercase" size="lg">Adil Abdu Bushra</Heading>
-                        <div class="flex gap-2 leading-none">
-                            <Heading class="!font-normal" size="">12B</Heading>
-                            <h3>
-                                <span class="text-gray-500">(05)</span>
-                            </h3>
+                        <div class="flex w-full min-w-[28px] justify-between gap-2 leading-none">
+                            <Heading class="" size="">12B</Heading>
+                            <h3 class="text- text-gray-500" size="">Class of 2023/24</h3>
                         </div>
                     </div>
 
@@ -76,7 +74,7 @@
 
                 </Card>
 
-                <div class="flex w-full flex-col gap-1">
+                <div class="hidden w-full flex-col gap-1 md:flex">
 
                     <Heading class="!font-semibold !uppercase text-gray-500" size="xs">Guardians</Heading>
 
@@ -125,58 +123,39 @@
 
                 </div>
 
-
             </div>
 
         </div>
 
-        <div class="col-span-9 h-full overflow-auto p-2">
+        <div class="col-span-12 h-full overflow-auto p-2 md:col-span-9">
 
             <div class="flex flex-col gap-4">
 
-                <ul class="flex w-full items-center gap-4">
+                <TabElement :tabs="tabs">
 
-                    <li class="rounded-full bg-brand-50 py-2 px-4">
-                        <button class="w-full whitespace-nowrap text-sm font-semibold text-brand-100">
-                            Overview
-                        </button>
-                    </li>
+                    <template #overview>
 
-                    <li class="rounded-full py-2 px-4">
-                        <button class="w-full whitespace-nowrap text-sm font-semibold text-gray-500">
-                            Personal Details
-                        </button>
-                    </li>
+                        <div class="flex h-fit w-full gap-3">
 
-                    <li class="rounded-full py-2 px-4">
-                        <button class="w-full whitespace-nowrap text-sm font-semibold text-gray-500">
-                            Attendance
-                        </button>
-                    </li>
+                            <Card class="flex aspect-square !w-1/4 flex-col items-center !justify-center">
 
-                    <li class="rounded-full py-2 px-4">
-                        <button class="w-full whitespace-nowrap text-sm font-semibold text-gray-500">
-                            Academic Performance
-                        </button>
-                    </li>
+                                <CircularProgress :stroke-width="22.5" :diameter="200" :dasharray="200*5/2" :percentage="78">
 
-                    <li class="rounded-full py-2 px-4">
-                        <button class="w-full whitespace-nowrap text-sm font-semibold text-gray-500">
-                            Conduct Record
-                        </button>
-                    </li>
+                                    <div class="flex flex-col items-center gap-2">
+                                        <h3 class="text-4xl font-semibold text-positive-100" size="xl">78%</h3>
+                                    </div>
 
-                    <li class="rounded-full py-2 px-4">
-                        <button class="w-full whitespace-nowrap text-sm font-semibold text-gray-500">
-                            Schedule
-                        </button>
-                    </li>
+                                </CircularProgress>
 
-                </ul>
+                            </Card>
 
-                <div class="h-52 w-full rounded-lg bg-gray-200">
+                            <Card class="!max-h-full !w-3/4 !max-w-full"></Card>
 
-                </div>
+                        </div>
+
+                    </template>
+
+                </TabElement>
 
             </div>
 
@@ -198,8 +177,20 @@ import {
 import Heading from "@/Components/Heading.vue";
 import Card from "@/Components/Card.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
+import TabElement from "@/Components/TabElement.vue";
+import CircularProgress from "@/Components/CircularProgress.vue";
 
 const gender = ref(Math.floor(Math.random() * 100) % 2 === 0 ? 'male' : 'female')
+
+const tabs = [
+    'Overview',
+    'Personal Details',
+    'Attendance',
+    'Academic Performance',
+    'Conduct Record',
+    'Schedule',
+    'Notes'
+]
 </script>
 
 <style scoped>
