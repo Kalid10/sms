@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,19 +25,18 @@ class LevelCategory extends Model
         return $this->hasMany(SchoolPeriod::class);
     }
 
-    public function getSchoolPeriodsBySchoolYearId(int $schoolYearId): array
+    public function getSchoolPeriodsBySchoolYearId(int $schoolYearId): Collection
     {
         return $this->schoolPeriods()
             ->where('school_year_id', $schoolYearId)
-            ->get()
-            ->toArray();
+            ->get();
     }
 
-    public function getActiveSchoolPeriods(): array
+    public function activeSchoolPeriods(): null|Collection
     {
         $schoolYear = SchoolYear::getActiveSchoolYear();
         if (! $schoolYear) {
-            return [];
+            return null;
         }
 
         return $this->getSchoolPeriodsBySchoolYearId($schoolYear->id);

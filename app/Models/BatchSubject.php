@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class BatchSubject extends Model
 {
@@ -37,6 +38,16 @@ class BatchSubject extends Model
     public function schedule(): HasMany
     {
         return $this->hasMany(BatchSchedule::class);
+    }
+
+    public function sessions(): HasManyThrough
+    {
+        return $this->hasOneThrough(
+            BatchSession::class,
+            BatchSchedule::class,
+            'batch_subject_id', // Foreign key on BatchSchedule table
+            'batch_schedule_id'
+        );
     }
 
     public static function active(array $with = []): Collection

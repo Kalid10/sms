@@ -49,6 +49,13 @@
         <button class="h-14 bg-stone-600 p-1 text-white" @click="createSchoolPeriod">Create School Period</button>
         <button class="h-14 bg-stone-600 p-1 text-white" @click="createBatchSchedule">Create Batch Schedules</button>
         <button class="h-14 bg-stone-600 p-1 text-white" @click="checkSchoolPeriod">Check Schedule</button>
+        <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="addStudentAbsentees">Test Add Student Absentees
+        </button>
+        <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="getStudentAbsenteePercentage">Test Get Student
+            Absentees
+        </button>
+        <button class="h-14 bg-blue-600 p-1 text-white" @click="batchSessions">Test Get Batch Sessions</button>
+        <button class="h-14 bg-blue-600 p-1 text-white" @click="teacherSessions">Test Get Teacher Sessions</button>
     </div>
 
 </template>
@@ -865,6 +872,79 @@ function createBatchSchedule() {
 
 function checkSchoolPeriod() {
     router.get('/batch-schedules/check', {}, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addStudentAbsentees() {
+    router.post('/absentees/students/add', {
+        batch_session_id: 4,
+        user_type: "student",
+        absentees: [
+            {
+                user_id: 107,
+                reason: "Sick",
+            },
+            {
+                user_id: 109,
+                reason: "Sick",
+            },
+        ],
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+// This function fetches batch sessions with the following filters:
+// batch_id, teacher_id, date, and status
+function batchSessions() {
+    router.get('/sessions/batch', {
+        batch_id: 1,
+        teacher_id: 1,
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function teacherSessions() {
+    router.get('/sessions/teacher', {
+        teacher_id: 34,
+        status: "scheduled",
+        date: "2023-04-19",
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+// Add function to get student absentees
+function getStudentAbsenteePercentage() {
+    router.get('/absentees/student', {
+        student_id: 3,
+    }, {
         onSuccess: () => {
             console.log("Success")
         },

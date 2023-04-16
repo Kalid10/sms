@@ -46,17 +46,12 @@ class SchoolPeriod extends Model
         return $this->getSchoolPeriodsBySchoolYearId($schoolYear->id);
     }
 
-    /**
-     * Get active school periods for the active school year
-     *
-     * @return array
-     */
-    public function getActivePeriods(bool $custom = false): Collection
+    public function activePeriods(bool $custom = false): null|Collection
     {
         $activeSchoolYear = SchoolYear::getActiveSchoolYear();
 
         if (! $activeSchoolYear) {
-            return [];
+            return null;
         }
 
         return $this->where('school_year_id', $activeSchoolYear->id)
