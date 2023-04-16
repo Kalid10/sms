@@ -52,6 +52,7 @@
         <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="addStudentAbsentees">Test Add Student Absentees
         </button>
         <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="batchSessions">Test Get Batch Sessions</button>
+        <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="teacherSessions">Test Get Teacher Sessions</button>
     </div>
 
 </template>
@@ -909,6 +910,22 @@ function batchSessions() {
     router.get('/sessions/batch', {
         batch_id: 1,
         teacher_id: 1,
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function teacherSessions() {
+    router.get('/sessions/teacher', {
+        teacher_id: 34,
+        status: "scheduled",
+        date: "2023-04-19",
     }, {
         onSuccess: () => {
             console.log("Success")
