@@ -169,7 +169,7 @@ function registerTeacher() {
 
 function login() {
     router.post('/login', {
-        emailOrPhone: "stroman.tia@example.org",
+        emailOrPhone: "test@example.com",
         password: "password"
     }, {
         onSuccess: () => {
@@ -914,7 +914,11 @@ function addStudentAbsentees() {
 function batchSessions() {
     router.get('/sessions/batch', {
         batch_id: 1,
-        teacher_id: 1,
+        teacher_id: 25,
+        // date: "2023-04-24",
+        start_date: "2023-04-24",
+        end_date: "2023-04-25",
+
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -928,9 +932,11 @@ function batchSessions() {
 
 function teacherSessions() {
     router.get('/sessions/teacher', {
-        teacher_id: 34,
+        teacher_id: 26,
         status: "scheduled",
-        date: "2023-04-19",
+        // date: "2023-04-24",
+        start_date: "2023-04-24",
+        end_date: "2023-04-25",
     }, {
         onSuccess: () => {
             console.log("Success")
