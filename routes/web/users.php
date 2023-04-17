@@ -16,7 +16,7 @@ Route::controller(UserController::class)->prefix('user/')->middleware('auth')->n
 });
 
 Route::controller(UserController::class)->prefix('register/')->middleware('auth')->name('user.')->group(function () {
-    Route::get('guardian', 'guardian');
+    Route::get('student', 'student');
     Route::get('admin', 'admin');
     Route::get('teacher', 'teacher');
 });

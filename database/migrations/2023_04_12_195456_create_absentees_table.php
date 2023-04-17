@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('absentees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('guardian_id')->constrained()->cascadeOnDelete();
-            $table->string('guardian_relation')->nullable();
+            $table->foreignId('batch_session_id')->constrained('batch_sessions')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->string('reason')->nullable();
+            $table->unique(['batch_session_id', 'user_id']);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('absentees');
     }
 };

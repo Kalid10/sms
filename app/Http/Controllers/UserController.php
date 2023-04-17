@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateRequest;
+use App\Models\Level;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -66,9 +67,13 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Password updated Successfully');
     }
 
-    public function guardian()
+    public function student()
     {
-        return Inertia::render('Users/Create/Guardian');
+        $levels = Level::all();
+
+        return Inertia::render('Users/Create/Student', [
+            'levels' => $levels,
+        ]);
     }
 
     public function admin()

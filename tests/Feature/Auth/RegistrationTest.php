@@ -31,6 +31,7 @@ it('registers an admin', function () {
         'position' => 'Manager',
         'gender' => 'male',
         'date_of_birth' => '1990-01-01',
+        'phone_number' => '0911223344',
     ];
 
     $response = $this->postJson('/register', $payload);
@@ -90,6 +91,7 @@ it('registers a student', function () {
         'username' => 'lucybrown',
         'guardian_gender' => 'male',
         'level_id' => $level->id,
+        'guardian_relation' => 'father',
     ];
 
     // Register student
