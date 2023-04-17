@@ -56,6 +56,7 @@
         </button>
         <button class="h-14 bg-blue-600 p-1 text-white" @click="batchSessions">Test Get Batch Sessions</button>
         <button class="h-14 bg-blue-600 p-1 text-white" @click="teacherSessions">Test Get Teacher Sessions</button>
+        <button class="h-14 bg-yellow-400 p-1" @click="addNotes">Test Add notes</button>
     </div>
 
 </template>
@@ -167,7 +168,7 @@ function registerTeacher() {
 
 function login() {
     router.post('/login', {
-        emailOrPhone: "test@example.com",
+        emailOrPhone: "stroman.tia@example.org",
         password: "password"
     }, {
         onSuccess: () => {
@@ -940,10 +941,26 @@ function teacherSessions() {
     })
 }
 
-// Add function to get student absentees
 function getStudentAbsenteePercentage() {
     router.get('/absentees/student', {
         student_id: 3,
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addNotes() {
+    router.post('/notes/student/add', {
+        student_user_id: 170,
+        title: "This is a test note",
+        body: "This is a test note body",
+        batch_session_id: 1,
     }, {
         onSuccess: () => {
             console.log("Success")
