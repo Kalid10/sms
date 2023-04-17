@@ -25,6 +25,17 @@ class SchoolPeriodController extends Controller
         ]);
 
         $activeSchoolYearId = SchoolYear::getActiveSchoolYear()->id;
+        $activeSchoolYearPeriods = SchoolPeriod::where('school_year_id', $activeSchoolYearId);
+
+        // Check if there is active school year
+        if (! $activeSchoolYearId) {
+            return redirect()->back()->with('error', 'There is no active school year');
+        }
+
+        // Check if there are any school periods for the active school year
+        if ($activeSchoolYearPeriods->exists()) {
+            $activeSchoolYearPeriods->delete();
+        }
 
         // Loop through the school periods array
         foreach ($request->school_periods as $schoolPeriodData) {
@@ -48,16 +59,6 @@ class SchoolPeriodController extends Controller
         $periods = [];
 
         for ($i = 1; $i <= $no_of_periods; $i++) {
-            $periods[] = [
-                'name' => $i,
-                'start_time' => $start_time->format('H:i'),
-                'duration' => $minutes_per_period,
-                'is_custom' => false,
-                'school_year_id' => $activeSchoolYearId,
-                'level_category_id' => $level_category_id,
-            ];
-            $start_time->addMinutes($minutes_per_period);
-
             // Check if there is a custom period after the current period
             if ($custom_periods->has($i)) {
                 $custom_period = $custom_periods->get($i);
@@ -72,6 +73,16 @@ class SchoolPeriodController extends Controller
                 ];
                 $start_time->addMinutes($custom_period['duration']);
             }
+
+            $periods[] = [
+                'name' => $i,
+                'start_time' => $start_time->format('H:i'),
+                'duration' => $minutes_per_period,
+                'is_custom' => false,
+                'school_year_id' => $activeSchoolYearId,
+                'level_category_id' => $level_category_id,
+            ];
+            $start_time->addMinutes($minutes_per_period);
         }
 
         SchoolPeriod::insert($periods);

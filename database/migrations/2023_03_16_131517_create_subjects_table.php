@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('short_name')->unique();
             $table->string('category');
             $table->json('tags')->nullable();
+            $table->integer('priority')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
