@@ -40,9 +40,9 @@
                         <Checkbox v-model="selectAll"/>
                     </th>
                     <th
-                        v-for="(key, index) in (columns.length > 0 ? columns.map(item => item.name) : Object.keys(data[0]))"
+                        v-for="(key, index) in (columns.length > 0 ? columns.map(item => item.name) : Object.keys(items[0]))"
                         :key="index"
-                        :class="[columns.length > 0 && columns[index].header?.align, titleHeader && 'border-y']"
+                        :class="[columns.length > 0 && (columns[index].header?.align || align(columns[index].align)), titleHeader && 'border-y']"
                         class="h-10 whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
                         {{ key }}
                     </th>
@@ -52,7 +52,11 @@
                         Actions
                     </th>
                 </tr>
-                <tr v-for="(item, index) in data" :key="index" :class="{ 'first:border-t': ! header && titleHeader, 'last:border-b-0': ! footer }" class="border-b">
+                <tr
+                    v-for="(item, index) in items" :key="index"
+                    :class="{ 'first:border-t': ! header && titleHeader, 'last:border-b-0': ! footer }"
+                    class="border-b"
+                >
                     <th
                         v-if="selectable"
                         class="h-10 w-[1%] bg-white px-3">
@@ -63,8 +67,14 @@
                         :key="i"
                     >
                         <td
-                            :class="[columns.length > 0 && !! columns[i]?.link ? 'cursor-pointer hover:underline hover:underline-offset-2' : '']"
-                            class="h-10 whitespace-nowrap px-3 text-center text-sm"
+                            :class="[
+                                columns.length > 0 && !! columns[i]?.link ?
+                                'cursor-pointer hover:underline hover:underline-offset-2' :
+                                '',
+                                columns.length > 0 && columns[i].class,
+                                columns.length > 0 && align(columns[i].align)
+                            ]"
+                            class="h-10 whitespace-nowrap px-3 text-sm"
                         >
                             <component
                                 :is="cell(i, index).component"
@@ -156,45 +166,39 @@ const emits = defineEmits(['select'])
 const titleHeader = computed(() => props.title || props.subtitle)
 const selectAll = ref(false)
 const anySelected = computed(() => items.value.some((item) => item.selected))
-const selectedItems = computed(() => items.value.filter((item) => item.selected).map((item) => props.data[item.id]))
-const items = ref(props.data.map((item, index) => {
-    return {
-        id: index,
-        selected: props.data[0].hasOwnProperty('selected') ? props.data[index].selected : false
-    }
-}))
-
+const selectedItems = computed(() => items.value.filter((item) => item.selected))
+// const items = ref(props.data.map((item, index) => {
+//     return {
+//         id: index,
+//         selected: props.data[0].hasOwnProperty('selected') ? props.data[index].selected : false
+//     }
+// }))
+const items = computed(() => props.data)
 
 function getLink(link, index) {
     const matches = link?.match(/{(.*?)}/g) || []
     let newLink = link
     matches.forEach((match) => {
         const key = match.replace('{', '').replace('}', '')
-        newLink = newLink.replace(match, props.data[index][key])
+        newLink = newLink.replace(match, items.value[index][key])
     })
     return newLink
 }
 
-watch(selectAll, (value) => {
+watch(selectAll, () => {
     if (selectAll.value) {
-        items.value = items.value.map((item) => {
-            return {
-                ...item,
-                selected: true
-            }
+        items.value.forEach((item) => {
+            item.selected = true
         })
     } else {
-        items.value = items.value.map((item) => {
-            return {
-                ...item,
-                selected: false
-            }
+        items.value.forEach((item) => {
+            item.selected = false
         })
     }
 })
 
 watch([anySelected, selectedItems], () => {
-    emits('select', { selected: anySelected, items: selectedItems })
+    emits('select', {selected: anySelected, items: selectedItems})
 })
 
 function cell(columnIndex, rowIndex) {
@@ -234,6 +238,21 @@ function cell(columnIndex, rowIndex) {
             }
 
     }
+}
+
+function align(align) {
+
+    switch (align) {
+
+        case 'left':
+            return 'text-left'
+        case 'right':
+            return 'text-right'
+        case 'center':
+        default:
+            return 'text-center'
+    }
+
 }
 
 const query = ref('')
