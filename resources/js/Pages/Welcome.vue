@@ -56,6 +56,8 @@
         </button>
         <button class="h-14 bg-blue-600 p-1 text-white" @click="batchSessions">Test Get Batch Sessions</button>
         <button class="h-14 bg-blue-600 p-1 text-white" @click="teacherSessions">Test Get Teacher Sessions</button>
+        <button class="h-14 bg-yellow-400 p-1" @click="addNotes">Test Add notes</button>
+        <button class="h-14 bg-yellow-400 p-1" @click="getNotes">Test Get notes</button>
     </div>
 
 </template>
@@ -912,7 +914,11 @@ function addStudentAbsentees() {
 function batchSessions() {
     router.get('/sessions/batch', {
         batch_id: 1,
-        teacher_id: 1,
+        teacher_id: 25,
+        // date: "2023-04-24",
+        start_date: "2023-04-24",
+        end_date: "2023-04-25",
+
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -926,9 +932,11 @@ function batchSessions() {
 
 function teacherSessions() {
     router.get('/sessions/teacher', {
-        teacher_id: 34,
+        teacher_id: 26,
         status: "scheduled",
-        date: "2023-04-19",
+        // date: "2023-04-24",
+        start_date: "2023-04-24",
+        end_date: "2023-04-25",
     }, {
         onSuccess: () => {
             console.log("Success")
@@ -940,10 +948,43 @@ function teacherSessions() {
     })
 }
 
-// Add function to get student absentees
 function getStudentAbsenteePercentage() {
     router.get('/absentees/student', {
         student_id: 3,
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function addNotes() {
+    router.post('/notes/student/add', {
+        student_user_id: 107,
+        title: "This is a test note",
+        body: "This is a test note body",
+        batch_session_id: 1,
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+// This function fetches notes with the following filters:
+// student_user_id, batch_session_id, batch_id, school_year_id and author_user_id
+function getNotes() {
+    router.get('/notes/student', {
+        student_user_id: 107,
+        school_year_id: 3,
     }, {
         onSuccess: () => {
             console.log("Success")

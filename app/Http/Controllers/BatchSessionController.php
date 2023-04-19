@@ -18,6 +18,8 @@ class BatchSessionController extends Controller
             'batch_schedule_id' => 'integer|exists:batch_schedules,id',
             'teacher_id' => 'integer|exists:teachers,id',
             'status' => 'string|in:scheduled,in_progress,completed',
+            'start_date' => 'date|nullable',
+            'end_date' => 'date|nullable|after_or_equal:start_date',
         ]);
 
         $batchSessions = Batch::where('id', $data['batch_id'])
@@ -33,6 +35,10 @@ class BatchSessionController extends Controller
 
                     if (isset($data['teacher_id'])) {
                         $query->where('teacher_id', $data['teacher_id']);
+                    }
+
+                    if (isset($data['start_date']) && isset($data['end_date'])) {
+                        $query->whereBetween('date', [$data['start_date'], $data['end_date']]);
                     }
                 },
                 'sessions.batchSchedule.batchSubject.subject',
@@ -52,6 +58,8 @@ class BatchSessionController extends Controller
             'date' => 'date',
             'teacher_id' => 'required|integer|exists:teachers,id',
             'status' => 'string|in:scheduled,in_progress,completed',
+            'start_date' => 'date|nullable',
+            'end_date' => 'date|nullable|after_or_equal:start_date',
         ]);
 
         $teacherSessions = BatchSession::query()
@@ -63,6 +71,9 @@ class BatchSessionController extends Controller
             })
             ->when(isset($data['date']), function ($query) use ($data) {
                 return $query->where('date', $data['date']);
+            })
+            ->when(isset($data['start_date']) && isset($data['end_date']), function ($query) use ($data) {
+                return $query->whereBetween('date', [$data['start_date'], $data['end_date']]);
             })
             ->with([
                 'batchSchedule' => function ($query) use ($data) {
