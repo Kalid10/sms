@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('batch_id')->constrained()->cascadeOnDelete();
             $table->foreignId('subject_id')->constrained()->cascadeOnDelete();
             $table->foreignId('teacher_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->integer('weekly_frequency')->nullable();
             $table->unique(['batch_id', 'subject_id']);
             $table->timestamps();
         });

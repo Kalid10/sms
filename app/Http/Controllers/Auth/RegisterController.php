@@ -143,6 +143,7 @@ class RegisterController extends Controller
         $student = Student::create([
             'user_id' => $studentUser->id,
             'guardian_id' => $guardian->id,
+            'guardian_relation' => $request->guardian_relation,
         ]);
 
         $assigned = StudentHelper::assignStudentToBatch($student->id, $request->input('level_id'));
