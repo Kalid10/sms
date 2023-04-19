@@ -2,124 +2,25 @@
 
     <div class="mx-auto grid w-full grid-cols-12 gap-4">
 
-         <div class="col-span-12 flex h-full flex-col p-2 md:col-span-3">
+        <div class="col-span-12 flex h-full flex-col p-2 md:col-span-2">
 
             <div class="flex flex-col items-center gap-5">
 
                 <div class="flex w-full flex-col gap-3">
 
                     <img
-                        :src="`https://xsgames.co/randomusers/avatar.php?g=${gender}`"
+                        :src="`https://xsgames.co/randomusers/avatar.php?g=${student.user.gender}`"
                         alt="avatar"
-                        class="mx-auto aspect-square w-24 rounded-full md:w-3/4"
+                        class="mx-auto aspect-square w-16 rounded-full md:w-3/4"
                     />
 
                     <div class="mx-auto flex w-fit flex-col items-center">
-                        <Heading class="!font-semibold !uppercase" size="lg">Adil Abdu Bushra</Heading>
-                        <div class="flex w-full min-w-[28px] justify-between gap-2 leading-none">
-                            <Heading class="" size="">12B</Heading>
-                            <h3 class="text- text-gray-500" size="">Class of 2023/24</h3>
+                        <Heading class="!font-semibold" size="lg">{{ student.user.name }}</Heading>
+                        <div class="flex w-full min-w-[28px] justify-start gap-2 leading-none">
+                            <h3 class="text-gray-500" size="">12B</h3>
                         </div>
                     </div>
 
-
-                </div>
-
-                <Card class="!min-w-full">
-
-                    <ul class="flex w-full flex-col gap-2">
-
-                        <li class="flex gap-2">
-                            <IdentificationIcon class="h-5 w-5 stroke-gray-500"/>
-                            <span class="flex gap-1 text-sm">
-                            <span>GSN/2201/19</span>
-                        </span>
-                        </li>
-
-                        <li class="flex gap-2">
-                            <CakeIcon class="h-5 w-5 stroke-gray-500"/>
-                            <span class="flex gap-1 text-sm">
-                            <span>January 27, 1997</span>
-                        </span>
-                        </li>
-
-                        <li class="flex gap-2">
-                            <RectangleStackIcon class="h-5 w-5 stroke-gray-500"/>
-                            <span class="flex gap-1 text-sm">
-                            <span>12th Semester</span>
-                            <span class="text-gray-500">at Gibson Youth</span>
-                        </span>
-                        </li>
-
-                        <li class="flex gap-2">
-                            <AtSymbolIcon class="h-5 w-5 stroke-gray-500"/>
-                            <span class="flex gap-1 text-sm">
-                            <a
-                                class="text-blue-500 underline-offset-2 hover:underline"
-                                href="mailto:adilabdu68@gmail.com">adilabdu68@gmail.com</a>
-                        </span>
-                        </li>
-
-                        <li class="flex gap-2">
-                            <DevicePhoneMobileIcon class="h-5 w-5 stroke-gray-500"/>
-                            <span class="flex gap-1 text-sm">
-                            <a
-                                class="text-blue-500 underline-offset-2 hover:underline"
-                                href="#">+251 91 2272 145</a>
-                        </span>
-                        </li>
-
-                    </ul>
-
-
-                </Card>
-
-                <div class="hidden w-full flex-col gap-1 md:flex">
-
-                    <Heading class="!font-semibold !uppercase text-gray-500" size="xs">Guardians</Heading>
-
-                    <div class="flex flex-col gap-3">
-                        <Card class="min-w-full">
-
-                            <div class="flex flex-col items-center gap-3">
-
-                                <div class="flex w-full items-center justify-between gap-3">
-                                    <Heading size="sm">Abdu Bushra Omer</Heading>
-                                    <Heading class="whitespace-nowrap !font-normal" size="sm">Father</Heading>
-                                </div>
-
-                                <div class="flex w-full gap-3">
-
-                                    <TertiaryButton class="w-1/2">Contact</TertiaryButton>
-                                    <TertiaryButton class="w-1/2">Details</TertiaryButton>
-
-                                </div>
-
-                            </div>
-
-                        </Card>
-                        <Card class="min-w-full">
-
-                            <div class="flex flex-col items-center gap-3">
-
-                                <div class="flex w-full items-center justify-between gap-3">
-                                    <Heading class="truncate whitespace-nowrap" size="sm">
-                                        Anissa Ibrahim
-                                    </Heading>
-                                    <Heading class="whitespace-nowrap !font-normal" size="sm">Mother</Heading>
-                                </div>
-
-                                <div class="flex w-full gap-3">
-
-                                    <TertiaryButton class="w-1/2">Contact</TertiaryButton>
-                                    <TertiaryButton class="w-1/2">Details</TertiaryButton>
-
-                                </div>
-
-                            </div>
-
-                        </Card>
-                    </div>
 
                 </div>
 
@@ -127,31 +28,27 @@
 
         </div>
 
-        <div class="col-span-12 h-full overflow-auto p-2 md:col-span-9">
+        <div class="col-span-12 h-full overflow-auto p-2 md:col-span-10">
 
             <div class="flex flex-col gap-4">
 
                 <TabElement :tabs="tabs">
 
-                    <template #overview>
+                    <template #personal_details>
 
-                        <div class="flex h-fit w-full gap-3">
+                        <StudentPersonalDetail/>
 
-                            <Card class="flex aspect-square !w-1/4 flex-col items-center !justify-center">
+                    </template>
 
-                                <CircularProgress :stroke-width="22.5" :diameter="200" :dasharray="200*5/2" :percentage="78">
+                    <template #guardian>
 
-                                    <div class="flex flex-col items-center gap-2">
-                                        <h3 class="text-4xl font-semibold text-positive-100" size="xl">78%</h3>
-                                    </div>
+                        <StudentGuardian/>
 
-                                </CircularProgress>
+                    </template>
 
-                            </Card>
+                    <template #notes>
 
-                            <Card class="!max-h-full !w-3/4 !max-w-full"></Card>
-
-                        </div>
+                        <NotesAboutStudent/>
 
                     </template>
 
@@ -166,31 +63,23 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
-import {
-    CakeIcon,
-    RectangleStackIcon,
-    AtSymbolIcon,
-    DevicePhoneMobileIcon,
-    IdentificationIcon
-} from "@heroicons/vue/24/outline";
+import {computed} from "vue"
+import {usePage} from "@inertiajs/vue3";
 import Heading from "@/Components/Heading.vue";
-import Card from "@/Components/Card.vue";
-import TertiaryButton from "@/Components/TertiaryButton.vue";
 import TabElement from "@/Components/TabElement.vue";
-import CircularProgress from "@/Components/CircularProgress.vue";
+import StudentPersonalDetail from "@/Views/Students/StudentPersonalDetail.vue"
+import StudentGuardian from "@/Views/Students/StudentGuardian.vue"
+import NotesAboutStudent from "@/Views/Students/NotesAboutStudent.vue";
 
-const gender = ref(Math.floor(Math.random() * 100) % 2 === 0 ? 'male' : 'female')
+const student = computed(() => usePage().props.student)
 
 const tabs = [
-    'Overview',
     'Personal Details',
-    'Attendance',
-    'Academic Performance',
-    'Conduct Record',
-    'Schedule',
+    'Guardian',
+    'Classes',
     'Notes'
 ]
+
 </script>
 
 <style scoped>
