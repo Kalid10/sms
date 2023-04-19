@@ -76,6 +76,8 @@ const student = computed(() => usePage().props.student)
 const tabs = [
     'Personal Details',
     'Guardian',
+    'Current Batch',
+
     'Classes',
     'Notes'
 ]
