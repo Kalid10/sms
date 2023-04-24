@@ -35,4 +35,9 @@ class Teacher extends Model
             'batch_subject_id' // Foreign key on BatchSchedule table
         );
     }
+
+    public function batchSessions(): HasMany
+    {
+        return $this->hasMany(BatchSession::class);
+    }
 }
