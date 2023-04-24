@@ -21,7 +21,7 @@
         </ul>
 
         <div class="w-full rounded-lg p-2">
-            <slot v-if="! activeOnly" :name="activeTab">
+            <slot v-if="! activeOnly" :name="toUnderscore(activeTab)">
                 {{ activeTab }}
             </slot>
             <slot v-else :active="{ tab: activeTab, index: tabs.indexOf(activeTab) }">
@@ -52,6 +52,10 @@ const activeTab = ref(props.tabs[0])
 
 function setActiveTab(tab) {
     activeTab.value = tab
+}
+
+function toUnderscore(str) {
+    return str.replace(' ', '_').toLowerCase()
 }
 
 </script>
