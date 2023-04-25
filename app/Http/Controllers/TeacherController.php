@@ -8,7 +8,6 @@ use App\Models\HomeroomTeacher;
 use App\Models\Teacher;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -34,19 +33,18 @@ class TeacherController extends Controller
 
     public function show($id): Response
     {
-        Log::info("Teacher ID: $id");
         $teacher = Teacher::with([
             'user:id,name,email,phone_number,gender',
-            'batchSubjects:id,subject_id,batch_id,teacher_id',
-            'batchSubjects.subject:id,full_name',
-            'batchSubjects.batch:id,section,level_id',
-            'batchSubjects.batch.level:id,name',
             'homeroom:id,batch_id,teacher_id',
             'homeroom.batch:id,section,level_id',
             'homeroom.batch.level:id,name',
+            'batchSchedules',
+            'batchSchedules.schoolPeriod:id,name,start_time,duration',
+            'batchSchedules.batchSubject:id,subject_id,batch_id',
+            'batchSchedules.batchSubject.subject:id,full_name',
+            'batchSchedules.batchSubject.batch:id,section,level_id',
+            'batchSchedules.batchSubject.batch.level:id,name',
         ])->select('id', 'user_id')->findOrFail($id);
-
-        Log::info($teacher);
 
         return Inertia::render('Teachers/Single', [
             'teacher' => $teacher,
@@ -91,7 +89,6 @@ class TeacherController extends Controller
 
     public function getHomeroomTeachers(Request $request): Response
     {
-        Log::info('this is the teacher id: '.$request->teacher_id);
         // Validate the request
         $request->validate([
             'teacher_id' => 'nullable|integer|exists:teachers,id',
