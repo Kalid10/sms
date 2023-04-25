@@ -6,7 +6,7 @@
             'text-sm': size === 'sm',
             'text-xs': size === 'xs'
         }"
-        class="w-full font-semibold capitalize"
+        class="font-semibold capitalize"
     >
         <slot>
             {{ value }}
