@@ -44,13 +44,13 @@ class LevelController extends Controller
 
     public function detail(Level $level): Response
     {
-        $level->load(['levelCategory', 'batches.students.student', 'batches.schoolYear', 'batches.subjects', 'batches' => function ($query) {
+        $levelDetail = $level->load(['levelCategory', 'batches.students.student', 'batches.schoolYear', 'batches.subjects', 'batches' => function ($query) {
             $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
         },
         ]);
 
         return Inertia::render('Levels/Single', [
-            'level' => $level,
+            'level_details' => $levelDetail,
         ]);
     }
 }

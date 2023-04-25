@@ -11,11 +11,12 @@
             <div class="grid w-full grid-cols-1 gap-y-3 md:grid-cols-3  md:gap-2">
                 <LevelCard
                     v-for="(batch, index) in  level.batches" :key="index"
-                    class="min-w-full">
-                    <BuildingOfficeIcon class="h-6 w-6"/>
-                    <h2 class="text-md cursor-pointer font-medium text-gray-900">{{
-                            batch.school_year.name
-                        }}</h2>
+                    class="min-w-full" icon
+                    :title="batch.school_year.name">
+                    <template #icon>
+                        <BuildingOfficeIcon/>
+                    </template>
+
                     <span class="mb-1 text-sm text-gray-500">Section {{ batch.section }} <br>
                     </span>
                     <div class="border-t border-gray-200 dark:border-gray-600">
@@ -46,5 +47,5 @@ import {usePage} from "@inertiajs/vue3";
 import LevelCard from "@/Components/Card.vue";
 import {BuildingOfficeIcon} from "@heroicons/vue/24/solid";
 
-const level = computed(() => usePage().props.level);
+const level = computed(() => usePage().props.level_details);
 </script>
