@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Teachers\AssignHomeroomRequest;
 use App\Models\Batch;
 use App\Models\HomeroomTeacher;
+use App\Models\Teacher;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,6 +13,44 @@ use Inertia\Response;
 
 class TeacherController extends Controller
 {
+    public function index(): Response
+    {
+        $teachers = Teacher::with([
+            'user:id,name,email,phone_number,gender',
+            'batchSubjects:id,subject_id,batch_id,teacher_id',
+            'batchSubjects.subject:id,full_name',
+            'batchSubjects.batch:id,section,level_id',
+            'batchSubjects.batch.level:id,name',
+            'homeroom:id,batch_id,teacher_id',
+            'homeroom.batch:id,section,level_id',
+            'homeroom.batch.level:id,name',
+        ])->select('id', 'user_id')->paginate(15);
+
+        return Inertia::render('Teachers/Index', [
+            'teachers' => $teachers,
+        ]);
+    }
+
+    public function show($id): Response
+    {
+        $teacher = Teacher::with([
+            'user:id,name,email,phone_number,gender',
+            'homeroom:id,batch_id,teacher_id',
+            'homeroom.batch:id,section,level_id',
+            'homeroom.batch.level:id,name',
+            'batchSchedules',
+            'batchSchedules.schoolPeriod:id,name,start_time,duration',
+            'batchSchedules.batchSubject:id,subject_id,batch_id',
+            'batchSchedules.batchSubject.subject:id,full_name',
+            'batchSchedules.batchSubject.batch:id,section,level_id',
+            'batchSchedules.batchSubject.batch.level:id,name',
+        ])->select('id', 'user_id')->findOrFail($id);
+
+        return Inertia::render('Teachers/Single', [
+            'teacher' => $teacher,
+        ]);
+    }
+
     public function assignHomeroomTeacher(AssignHomeroomRequest $request): RedirectResponse
     {
         // Get the teacher ID and batch ID from the request
