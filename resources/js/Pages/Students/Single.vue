@@ -59,17 +59,24 @@
 
                     <h3 class="text-sm font-semibold">Class Schedule</h3>
 
-                    <div class="flex h-full w-full rounded-md border">
+                    <div class="flex h-full w-full rounded-md border-x border-t">
 
-                        <div class="hours grid grid-cols-1 flex-col">
+                        <div class="hours grid w-fit grid-cols-1 flex-col">
 
-                            <div class="border-b"></div>
-                            <div v-for="(period, p) in periods" :key="p" class="grid place-items-center border-r border-b px-2 text-xs font-semibold text-gray-500 last:border-b-0">{{ period['start_time'] }}</div>
+                            <div class="grid w-[5rem] max-w-[5rem] place-items-center whitespace-nowrap border-r border-b px-3 text-xs font-semibold text-gray-500 last:border-b-0"></div>
+                            <div
+                                v-for="(period, p) in periods" :key="p"
+                                class="flex w-[5rem] max-w-[5rem] flex-col items-center justify-center whitespace-nowrap border-r border-b px-3 text-xs font-semibold text-gray-500"
+                            >
+                                <span>
+                                    {{ period['start_time'] }}
+                                </span>
+                            </div>
 
                         </div>
 
-                        <div class="days grid w-full">
-                            <div class="row-span-1 grid h-full w-full grid-cols-5 grid-rows-1">
+                        <div class="days grid w-[calc(100%-5rem)]">
+                            <div class="row-span-1 grid h-full grid-cols-5 grid-rows-1">
                                 <div
                                     v-for="(day, d) in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
                                     :key="d"
@@ -88,7 +95,7 @@
                                             :class="schedule['school_period']['is_custom'] ?
                                                 'bg-brand-50/15 text-brand-100 col-span-5 border-r-0' :
                                                 'col-span-1 session'"
-                                            class="row-span-1 flex items-center justify-center border-r border-b text-sm font-semibold"
+                                            class="row-span-1 flex items-center justify-center border-r border-b text-xs font-semibold"
                                         >
                                             {{ getPeriodName(schedule) }}
                                         </div>
@@ -198,11 +205,11 @@ const tabs = [
 }
 
 .hours {
-    grid-template-rows: repeat(v-bind((periodsCount + 1)), minmax(0, 1fr));
+    grid-template-rows: repeat(v-bind(periodsCount + 1), minmax(0, 1fr));
 }
 
 .days {
-    grid-template-rows: repeat(v-bind((periodsCount + 1)), minmax(0, 1fr));
+    grid-template-rows: repeat(v-bind(periodsCount + 1), minmax(0, 1fr));
 }
 
 .subjects {
@@ -214,15 +221,8 @@ const tabs = [
     @apply border-r;
 }
 
-.sessions > .session:nth-last-child(-n + v-bind(periodsCount)) {
-    @apply border-r-0;
-}
-
 .day {
     height: calc(100% * (1 / v-bind(periodsCount + 1)));
 }
 
-/*.sessions > .session:nth-child(9n) {*/
-/*    @apply border-b-0;*/
-/*}*/
 </style>
