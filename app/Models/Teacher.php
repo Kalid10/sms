@@ -40,4 +40,9 @@ class Teacher extends Model
     {
         return $this->hasMany(BatchSession::class);
     }
+
+    public function homeroom(): HasMany
+    {
+        return $this->hasMany(HomeroomTeacher::class);
+    }
 }

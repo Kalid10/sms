@@ -65,12 +65,16 @@ class BatchScheduleController extends Controller
     private function checkScheduleData()
     {
         // Get all batch schedules
-        $batchSchedules = BatchSchedule::with(['batchSubject.subject', 'batchSubject.teacher.user', 'batchSubject.batch.level', 'schoolPeriod'])->get();
+        $batchSchedules = BatchSchedule::with(['batchSubject.subject', 'batchSubject.teacher.user', 'batchSubject.batch.level', 'schoolPeriod', 'batch.level'])->get();
 
         // Log teacher's schedules
         Log::info("Teacher's Schedules:");
         $teacherSchedules = $batchSchedules->filter(function ($schedule) {
-            return $schedule->batchSubject->teacher_id == 1;
+            if ($schedule->batchSubject) {
+                return $schedule->batchSubject->teacher_id == 1;
+            }
+
+            return false;
         });
 
         $teacherSchedules->each(function ($schedule) {
@@ -79,7 +83,7 @@ class BatchScheduleController extends Controller
 
         // Log teacher subjects
         Log::info("Teacher's Subjects:");
-        $teacher = Teacher::with('batchSubjects.subject')->find(1);
+        $teacher = Teacher::with('batchSubjects.subject')->find(25);
         $subjects = $teacher->batchSubjects->pluck('subject')->unique('id');
 
         $subjects->each(function ($subject) {
@@ -89,7 +93,11 @@ class BatchScheduleController extends Controller
         // Log subject's schedules
         Log::info("Subject's Schedules:");
         $subjectSchedules = $batchSchedules->filter(function ($schedule) {
-            return $schedule->batchSubject->subject_id == 2;
+            if ($schedule->batchSubject) {
+                return $schedule->batchSubject->subject_id == 2;
+            }
+
+            return false;
         });
 
         $subjectSchedules->each(function ($schedule) {
@@ -99,11 +107,13 @@ class BatchScheduleController extends Controller
         // Log the schedules for batch 40
         Log::info("Now the schedules for batch 40 are: \n");
         $batchSchedules = $batchSchedules->filter(function ($schedule) {
-            return $schedule->batchSubject->batch_id == 2;
+            return $schedule->batch_id == 2;
         });
 
         $batchSchedules->each(function ($schedule) {
-            Log::info('Batch id: '.$schedule->batchSubject->batch->id.' - '.$schedule->day_of_week.' -  Period: '.$schedule->schoolPeriod->name.' Grade: '.$schedule->batchSubject->batch->level->name.'-'.$schedule->batchSubject->batch->section.' - Subject: '.$schedule->batchSubject->subject->full_name.' Priority: '.$schedule->batchSubject->subject->priority.' - '.$schedule->batchSubject->teacher->user->name);
+            if ($schedule->batchSubject) {
+                Log::info('Batch id: '.$schedule->batch_id.' - '.$schedule->day_of_week.' -  Period: '.$schedule->schoolPeriod->name.' Grade: '.$schedule->batch->level->name.'-'.$schedule->batch->section.' - Subject: '.$schedule->batchSubject->subject->full_name.' Priority: '.$schedule->batchSubject->subject->priority.' - '.$schedule->batchSubject->teacher->user->name);
+            }
         });
     }
 
