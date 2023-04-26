@@ -22,7 +22,7 @@
                 </h3>
             </div>
 
-            <div v-if="icon" class="stroke-1.5 my-0.5 h-6 w-6">
+            <div v-if="icon" class="stroke-1.5 my-0.5 grid h-6 w-6 place-items-center">
                 <slot name="icon">
                     <UsersIcon/>
                 </slot>
