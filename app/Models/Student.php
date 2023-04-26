@@ -32,6 +32,26 @@ class Student extends Model
         return $this->hasMany(BatchStudent::class);
     }
 
+    public function activeBatch($load = ['level', 'schoolYear'])
+    {
+        return $this->batches()->whereHas('batch.schoolYear', function ($query) {
+            $query->where('end_date', null);
+        })->first()->batch->load($load);
+    }
+
+    public function absenteeRecords(int $schoolYearId = null)
+    {
+        $schoolYearId = $schoolYearId ?? SchoolYear::getActiveSchoolYear()->id;
+
+        return Absentee::where('user_id', $this->user_id)
+            ->whereHas('batchSession.batchSchedule', function ($query) use ($schoolYearId) {
+                $query->whereIn('batch_id', $this->batches->pluck('batch_id'))
+                    ->whereHas('batch', function ($query) use ($schoolYearId) {
+                        $query->where('school_year_id', $schoolYearId);
+                    });
+            });
+    }
+
     public function absenteePercentage(int $schoolYearId = null): float
     {
         $schoolYearId = $schoolYearId ?? SchoolYear::getActiveSchoolYear()->id;
@@ -45,13 +65,7 @@ class Student extends Model
         })->where('status', BatchSession::STATUS_COMPLETED)->count();
 
         // Get the total number of absent records for the specific student
-        $absenteeRecords = Absentee::where('user_id', $this->user_id)
-            ->whereHas('batchSession.batchSchedule', function ($query) use ($schoolYearId) {
-                $query->whereIn('batch_id', $this->batches->pluck('batch_id'))
-                    ->whereHas('batch', function ($query) use ($schoolYearId) {
-                        $query->where('school_year_id', $schoolYearId);
-                    });
-            })->count();
+        $absenteeRecords = $this->absenteeRecords()->count();
 
         // Calculate the absentee percentage
         if ($completedBatchSessions === 0) {

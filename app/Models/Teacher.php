@@ -36,6 +36,11 @@ class Teacher extends Model
         );
     }
 
+    public function batchSessions(): HasMany
+    {
+        return $this->hasMany(BatchSession::class);
+    }
+
     public function homeroom(): HasMany
     {
         return $this->hasMany(HomeroomTeacher::class);

@@ -15,13 +15,12 @@ class BatchStudentSeeder extends Seeder
     public function run(): void
     {
         // Add students to batch_students table
-        $batch = Batch::find(1);
         $students = Student::all();
 
         foreach ($students as $student) {
             BatchStudent::create([
                 'student_id' => $student->id,
-                'batch_id' => $batch->id,
+                'batch_id' => Batch::active()->random()->id,
             ]);
         }
     }
