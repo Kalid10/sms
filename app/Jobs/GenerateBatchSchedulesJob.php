@@ -117,6 +117,11 @@ class GenerateBatchSchedulesJob implements ShouldQueue
                             continue;
                         }
 
+                        // Check if the subject has already been scheduled today
+                        if (in_array($batchSubject->id, $subjectsScheduledToday)) {
+                            continue;
+                        }
+
                         $teacherHasClass = false;
                         $teacherSchedules = BatchSchedule::whereHas('batchSubject', function ($query) use ($batchSubject) {
                             $query->where('teacher_id', $batchSubject->teacher_id);
