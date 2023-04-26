@@ -667,6 +667,37 @@ const subjects = [
     },
 ];
 
+const notes = [
+    {
+        title: 'Incessant Disturbance',
+        body: 'This student has been disturbing in my classes non stop and no amount of warnings has been able to stop him. I would like to request that he be suspended for a week.',
+        author: 'Teacher James Altman',
+        party: 'teacher',
+        date: '2 weeks ago'
+    },
+    {
+        title: 'Missing Homework',
+        body: 'This student has been continuously missing homework and has been warned multiple times. I would like to request that he be suspended for a week.',
+        author: 'Teacher Micheal Myers',
+        party: 'teacher',
+        date: 'a few hours ago'
+    },
+    {
+        title: 'Allergic to peanuts',
+        body: 'My kid is allergic to peanuts and should not be given any food containing peanuts.',
+        author: 'Darren Young',
+        party: 'parent',
+        date: '2 months ago'
+    },
+    {
+        title: 'Leave of absence',
+        body: 'My kid will be absent for the next two weeks due to a family emergency.',
+        author: 'Darren Young',
+        party: 'parent',
+        date: '2 days ago'
+    }
+]
+
 const batches = [
     { id: 4, level_id: 5, level: { name: 1 }, section: "D" },
     { id: 1, level_id: 5, level: { name: 1 }, section: "A" },
@@ -739,6 +770,10 @@ function allLevels(batches) {
     }, []);
 }
 
+function getOppositeGender(gender) {
+    return gender.toLowerCase() === 'male' ? 'female' : 'male'
+}
+
 export {
     users,
     semesters,
@@ -748,7 +783,9 @@ export {
     grades,
     subjects,
     batches,
+    notes,
     gradesFromBatch,
     sectionsOfLevel,
     allLevels,
+    getOppositeGender
 };

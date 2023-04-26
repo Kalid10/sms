@@ -4,55 +4,19 @@
 
         <div class="col-span-12 flex h-full flex-col p-2 md:col-span-2">
 
-            <div class="flex flex-col items-center gap-5">
-
-                <div class="flex w-full flex-col gap-3">
-
-                    <img
-                        :src="`https://xsgames.co/randomusers/avatar.php?g=${student.user.gender}`"
-                        alt="avatar"
-                        class="mx-auto aspect-square w-16 rounded-full md:w-3/4"
-                    />
-
-                    <div class="mx-auto flex w-fit flex-col items-center">
-                        <Heading class="!font-semibold" size="lg">{{ student.user.name }}</Heading>
-                        <div class="flex w-full min-w-[28px] justify-start gap-2 leading-none">
-                            <h3 class="text-gray-500" size="">12B</h3>
-                        </div>
-                    </div>
-
-
-                </div>
-
-            </div>
+            <StudentProfile />
 
         </div>
 
-        <div class="col-span-12 h-full overflow-auto p-2 md:col-span-10">
+        <div class="col-span-12 flex h-full flex-col gap-6 overflow-auto p-2 md:col-span-10">
 
-            <div class="flex flex-col gap-4">
+            <StudentOverview />
 
-                <TabElement :tabs="tabs">
+            <div class="flex w-full gap-4">
 
-                    <template #personal_details>
+                <StudentNotesPreview />
 
-                        <StudentPersonalDetail/>
-
-                    </template>
-
-                    <template #guardian>
-
-                        <StudentGuardian/>
-
-                    </template>
-
-                    <template #notes>
-
-                        <NotesAboutStudent/>
-
-                    </template>
-
-                </TabElement>
+                <StudentSemesterSchedule />
 
             </div>
 
@@ -65,22 +29,13 @@
 <script setup>
 import {computed} from "vue"
 import {usePage} from "@inertiajs/vue3";
-import Heading from "@/Components/Heading.vue";
-import TabElement from "@/Components/TabElement.vue";
-import StudentPersonalDetail from "@/Views/Students/StudentPersonalDetail.vue"
-import StudentGuardian from "@/Views/Students/StudentGuardian.vue"
-import NotesAboutStudent from "@/Views/Students/NotesAboutStudent.vue";
+import StudentProfile from "@/Views/Students/StudentProfile.vue";
+import StudentNotesPreview from "@/Views/Students/StudentNotesPreview.vue";
+import StudentSemesterSchedule from "@/Views/Students/StudentSemesterSchedule.vue";
+import StudentOverview from "@/Views/Students/StudentOverview/Index.vue";
 
 const student = computed(() => usePage().props.student)
-
-const tabs = [
-    'Personal Details',
-    'Guardian',
-    'Current Batch',
-
-    'Classes',
-    'Notes'
-]
+const section = computed(() => usePage().props.active_batch)
 
 </script>
 

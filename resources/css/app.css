@@ -11,6 +11,24 @@
         @apply font-basic;
     }
 
+    .line-clamp-3 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .line-clamp-4 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
+
     ::-moz-selection { /* Code for Firefox */
         @apply bg-brand-50;
     }
