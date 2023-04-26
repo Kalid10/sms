@@ -32,7 +32,7 @@ import {usePage} from "@inertiajs/vue3";
 import StudentProfile from "@/Views/Students/StudentProfile.vue";
 import StudentNotesPreview from "@/Views/Students/StudentNotesPreview.vue";
 import StudentSemesterSchedule from "@/Views/Students/StudentSemesterSchedule.vue";
-import StudentOverview from "@/Views/Students/StudentOverview.vue";
+import StudentOverview from "@/Views/Students/StudentOverview/Index.vue";
 
 const student = computed(() => usePage().props.student)
 const section = computed(() => usePage().props.active_batch)
