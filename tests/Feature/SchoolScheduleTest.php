@@ -80,7 +80,7 @@ it('updates a school schedule successfully', function () {
         'id' => $schoolSchedule->id,
         'title' => 'Updated School Schedule',
         'body' => 'This is an updated test school schedule.',
-        'start_date' => now()->addDays(5)->toDateTimeString(),
+        'start_date' => Carbon::now()->addDays(5)->toDateTimeString(),
         'end_date' => now()->addDays(10)->toDateTimeString(),
         'type' => 'half_closed',
         'school_year_id' => $schoolYear->id,
