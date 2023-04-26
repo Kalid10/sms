@@ -27,16 +27,29 @@ class BatchSubjectsSeeder extends Seeder
         // Assign unique teachers for each subject
         $teachers = Teacher::all()->unique('id');
 
+        $teacherIndex = 0;
+
         // Assign the subjects to the batches
         foreach ($batches as $batch) {
             foreach ($subjects as $subject) {
-                $teacher = $teachers->random();
+                // Get the current teacher
+                $teacher = $teachers[$teacherIndex];
+
+                // Assign the subject to the current teacher
                 BatchSubject::create([
                     'batch_id' => $batch->id,
                     'subject_id' => $subject->id,
                     'teacher_id' => $teacher->id,
-                    'weekly_frequency' => fake()->numberBetween(1, 5),
+                    'weekly_frequency' => 4,
                 ]);
+
+                // Move to the next teacher
+                $teacherIndex++;
+
+                // Reset the teacher index if all teachers have been assigned
+                if ($teacherIndex >= $teachers->count()) {
+                    $teacherIndex = 0;
+                }
             }
         }
     }
