@@ -45,7 +45,7 @@ import {computed} from "vue";
 import TableElement from "@/Components/TableElement.vue";
 import {Link, usePage} from "@inertiajs/vue3";
 import moment from 'moment'
-import {parseLevel} from "../../utils.js";
+import {parseLevel} from "@/utils.js";
 
 const levels = computed(() => {
     return usePage().props.levels.map((level) => {

@@ -40,7 +40,6 @@
 import {ref, computed, onMounted} from "vue";
 import {Link, router, usePage} from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
-import moment from "moment";
 import RadioGroup from "@/Components/RadioGroup.vue";
 import {parseLevel} from "@/utils.js";
 import {ArchiveBoxXMarkIcon, ArrowPathIcon, EyeIcon} from "@heroicons/vue/24/outline/index.js";
