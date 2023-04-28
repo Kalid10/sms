@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LessonPlanController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,4 +10,10 @@ Route::controller(TeacherController::class)->prefix('teachers/')->middleware(['c
     Route::get('{id}', 'show')->name('show');
     Route::post('assign/homeroom', 'assignHomeroomTeacher')->name('assign.homeroom');
     Route::delete('remove/homeroom/{id}', 'removeHomeroomTeacher')->name('remove.homeroom');
+});
+
+Route::controller(LessonPlanController::class)->prefix('teacher/lesson-plan/')->middleware(['checkUserType:teacher'])->name('lesson-plan.')->group(function () {
+    Route::get('', 'index')->name('index');
+    Route::post('', 'updateOrCreate')->name('updateOrCreate');
+    Route::delete('delete/{id}', 'destroy')->name('delete');
 });
