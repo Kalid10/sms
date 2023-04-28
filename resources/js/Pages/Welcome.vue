@@ -58,6 +58,8 @@
         <button class="h-14 bg-blue-600 p-1 text-white" @click="teacherSessions">Test Get Teacher Sessions</button>
         <button class="h-14 bg-yellow-400 p-1" @click="addNotes">Test Add notes</button>
         <button class="h-14 bg-yellow-400 p-1" @click="getNotes">Test Get notes</button>
+
+        <button class="h-14 bg-orange-800 p-1 text-white" @click="addTeacherFeedback">Test Add Teacher Feedback</button>
     </div>
 
 </template>
@@ -993,6 +995,14 @@ function getNotes() {
             console.log("Error")
             console.log(error)
         }
+    })
+}
+
+// Make sure the logged-in user is not teacher
+function addTeacherFeedback() {
+    router.post('/teacher/feedback/add', {
+        teacher_id: 26,
+        feedback: "This is a test feedback",
     })
 }
 </script>

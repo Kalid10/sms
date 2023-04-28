@@ -44,6 +44,8 @@ class TeacherController extends Controller
             'batchSchedules.batchSubject.subject:id,full_name',
             'batchSchedules.batchSubject.batch:id,section,level_id',
             'batchSchedules.batchSubject.batch.level:id,name',
+            'feedbacks',
+            'feedbacks.author:id,name',
         ])->select('id', 'user_id')->findOrFail($id);
 
         return Inertia::render('Teachers/Single', [

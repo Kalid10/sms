@@ -37,7 +37,7 @@ class GenerateBatchSchedulesJob implements ShouldQueue
 
     public function createSchedule(): array|RedirectResponse|null
     {
-        $batches = Batch::with(['subjects', 'level.levelCategory'])
+        $batches = Batch::with(['subjects.subject', 'level.levelCategory'])
             ->where('school_year_id', $this->activeSchoolYearId)
             ->get();
 
@@ -65,12 +65,14 @@ class GenerateBatchSchedulesJob implements ShouldQueue
                         $remainingSubjects[] = [
                             'subject' => $batchSubject,
                             'remaining_slots' => $batchSubject->weekly_frequency,
+                            'priority' => $batchSubject->subject->priority,
                         ];
                     }
                 }
 
+                // Sort remaining subjects based on priority (lower value indicates higher priority)
                 usort($remainingSubjects, function ($a, $b) {
-                    return $b['remaining_slots'] <=> $a['remaining_slots'];
+                    return $a['priority'] <=> $b['priority'];
                 });
 
                 // Initialize the scheduled count for each batch subject
@@ -114,6 +116,11 @@ class GenerateBatchSchedulesJob implements ShouldQueue
 
                         // Check if the subject has been scheduled enough times for the current week
                         if ($scheduledCountByBatchSubject[$batchSubject->id] >= $batchSubject->weekly_frequency) {
+                            continue;
+                        }
+
+                        // Check if the subject has already been scheduled today
+                        if (in_array($batchSubject->id, $subjectsScheduledToday)) {
                             continue;
                         }
 
