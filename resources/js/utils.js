@@ -9,4 +9,13 @@ function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-export { toHashTag, capitalize }
+function parseLevel(level) {
+    return isNaN(level) ? level : `Grade ${level}`
+}
+
+function unshift(array, value) {
+    array.unshift(value)
+    return array
+}
+
+export { toHashTag, capitalize, parseLevel, unshift }

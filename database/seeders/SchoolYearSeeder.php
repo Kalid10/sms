@@ -18,7 +18,10 @@ class SchoolYearSeeder extends Seeder
         for ($i = -3; $i <= 0; $i++) {
             $startDate = Carbon::createFromDate(null, 9, 1)->addYears($i);
             $endDate = $i == 0 ? null : $startDate->copy()->addMonths(10);
-            $name = 'School Year '.($startDate->year).'-'.($endDate ? $endDate->year : '');
+            $name = 'School Year '.($startDate->year).'/'.($endDate ?
+                    $endDate->year :
+                    $startDate->copy()->addYear()->year
+            );
 
             SchoolYear::factory()->create([
                 'start_date' => $startDate,
