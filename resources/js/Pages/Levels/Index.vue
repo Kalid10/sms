@@ -12,7 +12,7 @@
         <template #level-column="{ data }">
             <Link :href="`levels/${data.id}`" class="flex items-center gap-2">
                 <div class="h-2 w-2 rounded-full" :class="categoryColors[data.category.name]"/>
-                <snap class="font-medium">{{ parseLevel(data.name) }}</snap>
+                <span class="font-medium">{{ parseLevel(data.name) }}</span>
                 <span class="hidden text-xs text-gray-500 md:inline">(Class of 2026/2027)</span>
 
             </Link>
