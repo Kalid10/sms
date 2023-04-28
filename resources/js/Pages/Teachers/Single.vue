@@ -14,7 +14,7 @@
 
 
                 <div class="mx-auto flex w-fit flex-col items-center">
-                    <heading class="!font-semibold" size="lg">{{ teacher.user.name }}</heading>
+                    <Heading class="!font-semibold" size="lg">{{ teacher.user.name }}</Heading>
                     <div class="flex w-full lg:gap-2">
                         <h3 class="max-w-full text-gray-500" size="">{{ teacher.user.email }}</h3>
                     </div>
@@ -50,32 +50,47 @@
     </div>
 
     <div>
-        <heading size="lg">Subjects</heading>
+        <Heading size="lg">Subjects</Heading>
         <div class="flex w-full flex-wrap items-center space-x-1.5">
             <div
                 v-for="(item, index) in uniqueSubjectsAndLevels" :key="index"
                 class="m-0.5 mt-3 w-full lg:w-1/4">
-                <card :title="item.subject" :subtitle="item.levels" class="min-w-full">
-
-                </card>
+                <Card :title="item.subject" :subtitle="item.levels" class="min-w-full"/>
             </div>
 
         </div>
     </div>
 
     <div>
-        <heading size="lg">Homerooms</heading>
+        <Heading size="lg">Homerooms</Heading>
         <div
             class="flex h-full w-full flex-col flex-wrap space-y-3 md:flex-row md:space-y-0">
             <div
                 v-for="(item, index) in teacher.homeroom" :key="index"
                 class="w-full"
                 :class=" teacher.homeroom.length > 3 ? 'md:w-1/4':'md:w-1/2 lg:w-1/3'">
-                <card :title="item.batch.level.name + item.batch.section" subtitle="Class" :icon="true">
+                <Card :title="item.batch.level.name + item.batch.section" subtitle="Class" :icon="true">
                     <template #icon>
                         <AcademicCapIcon/>
                     </template>
-                </card>
+                </Card>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <Heading>Feedbacks</Heading>
+        <div class="mt-2 grid grid-cols-1 gap-3 lg:grid-cols-2">
+            <div v-for="(feedback, index) in  teacher.feedbacks" :key="index">
+                <Card class="h-full min-w-full">
+                    {{ feedback.feedback }}
+
+                    <div class="flex w-full justify-between">
+                        <div>{{ feedback.author.name }}</div>
+                        <div>{{ moment(feedback.updated_at).fromNow() }}</div>
+                    </div>
+                </Card>
+
             </div>
         </div>
     </div>

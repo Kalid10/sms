@@ -32,7 +32,7 @@ class StudentController extends Controller
                 'schedule.batchSubject.subject',
                 'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id'
             )->only('schedule')['schedule'],
-            'active_batch' => $student->activeBatch(load: ['level']),
+            'active_batch' => $student->activeBatch(load: ['level', 'level.levelCategory']),
             'attendance' => [
                 'absence_rate' => $student->absenteePercentage(),
                 'absentee_records' => $student->absenteeRecords()->get(),
