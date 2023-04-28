@@ -32,7 +32,7 @@
 
         <div class="w-full overflow-x-auto">
             <table class="w-full">
-                <tr v-if="header">
+                <tr v-if="header && !emptyData">
                     <th
                         v-if="selectable"
                         :class="[titleHeader ? 'border-y' : '']"
@@ -98,6 +98,13 @@
                     </td>
                 </tr>
             </table>
+            <div v-if="emptyData" class="grid h-48 w-full place-items-center border-t">
+                <slot name="empty-data">
+                    <p class="text-sm font-semibold text-gray-500">
+                        No data found
+                    </p>
+                </slot>
+            </div>
         </div>
 
         <div v-if="footer" class="flex gap-3 bg-neutral-50 p-4">
@@ -171,6 +178,8 @@ const selectAll = ref(false)
 const anySelected = computed(() => items.value.some((item) => item.selected))
 const selectedItems = computed(() => items.value.filter((item) => item.selected))
 const items = computed(() => props.data)
+
+const emptyData = computed(() => items.value.length === 0)
 
 function getLink(link, index) {
     const matches = link?.match(/{(.*?)}/g) || []
