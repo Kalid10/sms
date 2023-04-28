@@ -86,4 +86,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Student::class);
     }
+
+    public function isTeacher(): bool
+    {
+        return $this->type === self::TYPE_TEACHER;
+    }
 }
