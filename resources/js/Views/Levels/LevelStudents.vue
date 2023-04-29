@@ -30,14 +30,14 @@
             </template>
 
             <template #row-actions="{ row }">
-                <Link :href="'/students/' + row.id" class="flex flex-col items-center gap-1">
+                <Link :href="'/students/' + row['student_id']" class="flex flex-col items-center gap-1">
                     <EyeIcon class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"/>
                 </Link>
-                <Link :href="'/users/' + row.id + '/edit'" class="flex flex-col items-center gap-1">
+                <Link :href="'/users/' + row['student_id'] + '/edit'" class="flex flex-col items-center gap-1">
                     <ArrowPathIcon
                         class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"/>
                 </Link>
-                <Link :href="'/users/' + row.id + '/delete'" class="flex flex-col items-center gap-1">
+                <Link :href="'/users/' + row['student_id'] + '/delete'" class="flex flex-col items-center gap-1">
                     <ArchiveBoxXMarkIcon
                         class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"/>
                 </Link>

@@ -73,6 +73,7 @@ class LevelController extends Controller
                     ->get()
                 ->map(fn ($batchStudent) => [
                     ...$batchStudent->student->user->toArray(),
+                    'student_id' => $batchStudent->student->id,
                     'section' => $batchStudent->batch->section,
                     'updated_at' => $batchStudent->updated_at->diffForHumans(Carbon::now()),
                 ])
