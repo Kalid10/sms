@@ -60,6 +60,10 @@
         <button class="h-14 bg-yellow-400 p-1" @click="getNotes">Test Get notes</button>
 
         <button class="h-14 bg-orange-800 p-1 text-white" @click="addTeacherFeedback">Test Add Teacher Feedback</button>
+        <button class="h-14 bg-orange-800 p-1 text-white" @click="updateTeacherFeedback">Test update Teacher Feedback
+        </button>
+        <button class="h-14 bg-orange-800 p-1 text-white" @click="deleteTeacherFeedback">Test delete Teacher Feedback
+        </button>
     </div>
 
 </template>
@@ -1003,6 +1007,35 @@ function addTeacherFeedback() {
     router.post('/teacher/feedback/add', {
         teacher_id: 26,
         feedback: "This is a test feedback",
+    })
+}
+
+
+// Todo: Check if author is not the author of the feedback for the update and delete on the front-end pages
+function updateTeacherFeedback() {
+    router.post('/teacher/feedback/update', {
+        id: 1,
+        feedback: "This is the updated test feedback",
+    }, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function deleteTeacherFeedback() {
+    router.delete('teacher/feedback/delete/' + 1, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
     })
 }
 </script>

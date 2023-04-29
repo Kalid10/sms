@@ -15,6 +15,8 @@ Route::controller(TeacherController::class)->prefix('teachers/')->middleware(['c
 
 Route::controller(TeacherFeedbackController::class)->prefix('teacher/feedback/')->middleware(['auth'])->name('teacher.')->group(function () {
     Route::post('add', 'add')->name('feedback.add');
+    Route::post('update', 'update')->name('feedback.update');
+    Route::delete('delete/{id}', 'destroy')->name('feedback.delete');
 });
 
 Route::controller(LessonPlanController::class)->prefix('teacher/lesson-plan/')->middleware(['checkUserType:teacher'])->name('lesson-plan.')->group(function () {
