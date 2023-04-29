@@ -42,13 +42,14 @@
                     <th
                         v-for="(key, index) in (columns.length > 0 ? columns.map(item => item.name) : Object.keys(items[0]))"
                         :key="index"
-                        :class="[columns.length > 0 && (columns[index].header?.align || align(columns[index].align)), titleHeader && 'border-y']"
+                        :class="[columns.length > 0 && (columns[index].header?.align || align(columns[index].align)), titleHeader ? 'border-y' : 'border-b']"
                         class="h-10 whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
                         {{ key }}
                     </th>
                     <th
                         v-if="rowActionable"
-                        class="h-10 w-fit whitespace-nowrap border-y bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
+                        :class="titleHeader ? 'border-y' : 'border-b'"
+                        class="h-10 w-fit whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
                         Actions
                     </th>
                 </tr>
@@ -101,8 +102,10 @@
 
         <div v-if="footer" class="flex gap-3 bg-neutral-50 p-4">
             <slot name="footer">
-                <TertiaryButton :click="() => {}" class="w-full" title="Previous"/>
-                <TertiaryButton :click="() => {}" class="w-full" title="Next"/>
+                <div class="flex w-full items-center gap-3 lg:justify-end">
+                    <TertiaryButton :click="() => {}" class="w-full lg:w-fit lg:text-right" title="Previous"/>
+                    <TertiaryButton :click="() => {}" class="w-full lg:w-fit lg:text-right" title="Next"/>
+                </div>
             </slot>
         </div>
 
@@ -167,12 +170,6 @@ const titleHeader = computed(() => props.title || props.subtitle)
 const selectAll = ref(false)
 const anySelected = computed(() => items.value.some((item) => item.selected))
 const selectedItems = computed(() => items.value.filter((item) => item.selected))
-// const items = ref(props.data.map((item, index) => {
-//     return {
-//         id: index,
-//         selected: props.data[0].hasOwnProperty('selected') ? props.data[index].selected : false
-//     }
-// }))
 const items = computed(() => props.data)
 
 function getLink(link, index) {

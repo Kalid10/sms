@@ -26,6 +26,7 @@ class StudentFactory extends Factory
         return [
             'user_id' => User::factory()->create([
                 'type' => 'student',
+                'username' => 'GSN/'.$this->faker->unique()->numberBetween(1000, 9999).'/2021',
             ])->id,
             'guardian_id' => Guardian::factory(),
         ];
