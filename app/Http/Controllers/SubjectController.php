@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Subjects\CreateBulkRequest;
 use App\Http\Requests\Subjects\CreateRequest;
 use App\Http\Requests\Subjects\UpdateRequest;
+use App\Models\Batch;
+use App\Models\BatchSubject;
 use App\Models\Subject;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -22,15 +24,40 @@ class SubjectController extends Controller
         $searchKey = $request->input('search');
 
         // Get subjects
-        $subjects = Subject::select('id', 'full_name', 'short_name', 'category', 'tags')->where('full_name', 'like', '%'.$searchKey.'%')
-            ->OrWhere(DB::raw('lower(tags)'), 'like', '%'.$searchKey.'%')->paginate(10);
-
-        // Get deleted subjects with search key
-        $deletedSubjects = Subject::onlyTrashed()->select('id', 'full_name', 'short_name')->where('full_name', 'like', '%'.$searchKey.'%')->paginate(10);
+        $subjects = Subject::withTrashed()
+            ->select('id', 'full_name', 'short_name', 'priority', 'category', 'tags', 'updated_at', 'deleted_at')
+            ->where('full_name', 'like', '%'.$searchKey.'%')
+            ->OrWhere(DB::raw('lower(tags)'), 'like', '%'.$searchKey.'%')->paginate(20);
 
         return Inertia::render('Subjects/Index', [
             'subjects' => $subjects,
-            'deletedSubjects' => $deletedSubjects,
+        ]);
+    }
+
+    public function show(Subject $subject): Response
+    {
+        return Inertia::render('Subjects/Single', [
+            'subject' => $subject,
+            'levels' => BatchSubject::where('subject_id', $subject->id)
+                ->whereIn('batch_id', Batch::active()->pluck('id'))
+                ->with('batch', 'batch.level', 'batch.level.levelCategory')
+                ->get()
+                ->groupBy('batch.level_id')
+                ->map(fn ($batches) => [
+                    'level' => [
+                        ...$batches->first()->batch->level->toArray(),
+                        'level_category' => $batches->first()->batch->level->levelCategory->name,
+                    ],
+                    'batches' => $batches->map(fn ($batch) => [
+                        'batch_id' => $batch->batch_id,
+                        'section' => $batch->batch->section,
+                        'weekly_frequency' => $batch->weekly_frequency,
+                        'min_students' => $batch->min_students,
+                        'max_students' => $batch->max_students,
+                    ]),
+                ])
+                ->values(),
+            'teacher' => Inertia::lazy(fn () => $subject->teachers()),
         ]);
     }
 
@@ -112,13 +139,20 @@ class SubjectController extends Controller
                 return redirect()->back()->with('error', 'Subject not found.');
             }
 
-            // Check if subject is associated with teacher or batch
-            if ($subject->teachers || $subject->batch) {
-                // Delete subject with soft delete
-                $subject->delete();
+            Log::info($subject->batches->whereIn('id', Batch::active()->pluck('id')));
+
+            // If active batches exist, prevent deletion
+            if ($subject->batches->whereIn('id', Batch::active()->pluck('id'))->count() > 0) {
+                return redirect()->back()->with('error', 'Subject cannot be deleted as it is associated with the current school year');
             }
 
-            // Delete subject permanently
+            // If batches exist, archive subject
+            if ($subject->batches->count() > 0) {
+                $subject->delete();
+
+                return redirect()->back()->with('success', 'Subject archived successfully');
+            }
+
             $subject->forceDelete();
 
             return redirect()->back()->with('success', 'Subject deleted successfully');
@@ -129,7 +163,6 @@ class SubjectController extends Controller
         }
     }
 
-    // Restore subject
     public function restore($id): RedirectResponse
     {
         try {

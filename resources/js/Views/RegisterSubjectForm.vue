@@ -84,13 +84,22 @@ import {router} from "@inertiajs/vue3";
 import {PlusIcon} from "@heroicons/vue/24/solid";
 
 const props = defineProps({
-    toggle: {
+    open: {
         type: Boolean,
         required: true,
     },
 });
 
-const isNewSubjectFormOpened = ref(props.toggle);
+const emits = defineEmits(["update:open"]);
+
+const isNewSubjectFormOpened = computed({
+    get() {
+        return props.open;
+    },
+    set(value) {
+        emits("update:open", value);
+    },
+});
 
 const {subjects} = useSubjectStore();
 

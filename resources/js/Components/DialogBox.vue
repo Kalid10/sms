@@ -1,72 +1,153 @@
 <template>
-    <div>
-        <DialogBoxModal :view="confirmModal">
-            <div class="relative max-w-md rounded-lg bg-white shadow dark:bg-gray-700 ">
-                <div class="flex flex-col justify-center p-4">
-                    <div v-if="type === 'confirmation'" class="flex justify-center">
-                        <ShieldCheckIcon class="h-10 w-10" />
+
+    <Modal v-model:view="view" place-items-center>
+
+        <div class="flex min-h-10 w-[32rem] animate-scale-up flex-col gap-3 rounded-lg bg-white p-6">
+
+            <div class="flex gap-4">
+
+                <div class="min-w-fit">
+                    <div :class="accent || types[type].accent" class="icon-wrapper grid h-10 w-10 place-items-center rounded-full">
+                        <span class="h-4 w-4">
+                            <slot name="icon">
+                                <component :is="types[type].icon" class="icon" />
+                            </slot>
+                        </span>
                     </div>
-                    <div v-else-if="type === 'delete'" class="flex justify-center">
-                        <TrashIcon class="h-10 w-10" />
-                    </div>
-                    <h3 class="flex justify-center text-lg font-bold leading-6">
-                        {{ type === 'confirmation' ? confirmationTitle : deleteTitle }}
-                    </h3>
-                    <div class="mt-2 flex justify-center">
-                        <slot :text="type === 'confirmation' ? confirmationText : deleteText">
-                            <p class="text-sm">{{ type === 'confirmation' ? confirmationText : deleteText }}</p>
+                </div>
+
+                <div class="flex grow flex-col gap-0.5">
+
+                    <h3 class="font-medium">
+                        <slot name="title">
+                            {{ title || types[type].title }}
                         </slot>
-                    </div>
+                    </h3>
+                    <h3 class="text-sm text-gray-500">
+                        <slot name="description">
+                            {{ description || types[type].description }}
+                        </slot>
+                    </h3>
+
                 </div>
-                <div class="mt-5 flex justify-center space-x-4 p-2">
-                    <PrimaryButton :title="confirmText" @click="$emit('confirm')"></PrimaryButton>
-                    <PrimaryButton :title="cancelText" @click="$emit('close')"></PrimaryButton>
-                </div>
+
             </div>
-        </DialogBoxModal>
-    </div>
+
+            <div :class="accent || types[type].accent" class="flex w-full items-center justify-end gap-3">
+
+                <TertiaryButton v-if="abortAction" @click="abort">Cancel</TertiaryButton>
+                <PrimaryButton class="action-button" @click="confirm">
+                    <slot name="action">
+                        {{ types[type].actionTitle || types[type].title }}
+                    </slot>
+                </PrimaryButton>
+
+            </div>
+
+        </div>
+
+    </Modal>
+
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import DialogBoxModal from './Modal.vue';
-import PrimaryButton from './PrimaryButton.vue';
-import { TrashIcon, ShieldCheckIcon } from '@heroicons/vue/24/outline';
+import Modal from "@/Components/Modal.vue";
+import {computed, defineAsyncComponent} from "vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TertiaryButton from "@/Components/TertiaryButton.vue";
 
-defineEmits(['confirm', 'close'])
-
-const confirmModal = ref(true);
-defineProps({
+const props = defineProps({
+    open: {
+        type: Boolean,
+        required: true
+    },
+    title: {
+        type: String,
+        default: null
+    },
+    description: {
+        type: String,
+        default: null
+    },
     type: {
         type: String,
-        validator: (value) => {
-            return ['confirmation', 'delete'].includes(value);
-        },
-        default: 'confirmation',
+        default: 'delete'
     },
-    confirmationTitle: {
+    accent: {
         type: String,
-        default: 'Confirmation',
+        default: null
     },
-    confirmationText: {
-        type: String,
-        default: 'Are you sure you want to proceed?',
+    abortAction: {
+        type: Boolean,
+        default: true
+    }
+})
+
+const emits = defineEmits(['update:open', 'abort', 'confirm'])
+function abort() {
+    emits('abort')
+    emits('update:open', false)
+}
+
+function confirm() {
+    emits('confirm')
+    emits('update:open', false)
+}
+
+const view = computed({
+    get() {
+        return props.open
     },
-    deleteTitle: {
-        type: String,
-        default: 'Delete',
+    set(value) {
+        emits('update:open', value)
+    }
+})
+
+const types = {
+    'delete': {
+        title: 'Delete item',
+        description: 'You are about to permanently delete this item. Are you sure? This action cannot be reversed and the data will be lost forever.',
+        actionTitle: 'Delete item',
+        icon: defineAsyncComponent(() => import('@heroicons/vue/24/outline/TrashIcon.js')),
+        accent: 'red'
     },
-    deleteText: {
-        type: String,
-        default: 'Are you sure you want to delete this item?',
+    'archive': {
+        title: 'Archive item',
+        description: 'You are about to archive this item. Are you sure? Do not worry, you can always restore it later.',
+        actionTitle: 'Archive',
+        icon: defineAsyncComponent(() => import('@heroicons/vue/24/outline/ArchiveBoxArrowDownIcon.js')),
+        accent: 'gray'
     },
-    confirmText: {
-        type: String,
-        default: 'Confirm',
-    },
-    cancelText: {
-        type: String,
-        default: 'Cancel',
-    },
-});
+}
 </script>
+
+<style scoped>
+.icon {
+    @apply stroke-2;
+}
+
+.gray.icon-wrapper {
+    @apply bg-gray-200;
+}
+
+.gray .icon {
+    @apply stroke-gray-800;
+}
+
+.red.icon-wrapper {
+    @apply bg-red-100;
+}
+
+.red .icon {
+    @apply stroke-red-500;
+}
+
+.red .action-button {
+    @apply bg-red-600 border-red-600;
+}
+
+.gray .action-button {
+    @apply bg-black border-black;
+}
+
+</style>
