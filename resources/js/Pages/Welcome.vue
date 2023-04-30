@@ -1013,7 +1013,7 @@ function addTeacherFeedback() {
 
 // Todo: Check if author is not the author of the feedback for the update and delete on the front-end pages
 function updateTeacherFeedback() {
-    router.post('/teacher/feedback/update', {
+    router.post('/teacher/feedback/update/' + 1, {
         id: 1,
         feedback: "This is the updated test feedback",
     }, {
