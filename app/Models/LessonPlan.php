@@ -13,7 +13,6 @@ class LessonPlan extends Model
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'batch_session_ids',
         'topic',
         'description',
     ];

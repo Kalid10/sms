@@ -50,4 +50,14 @@ class Teacher extends Model
     {
         return $this->hasMany(TeacherFeedback::class);
     }
+
+    public function lessonPlans(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            LessonPlan::class,
+            BatchSession::class,
+            'teacher_id', // Foreign key on BatchSession table
+            'batch_session_id' // Foreign key on LessonPlan table
+        );
+    }
 }
