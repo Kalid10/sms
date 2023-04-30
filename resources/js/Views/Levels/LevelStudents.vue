@@ -13,6 +13,12 @@
             :columns="studentsConfig"
             :data="students"
         >
+            <template #date_of_birth-column="{ data }">
+
+                {{ Math.abs(moment(data).diff(new Date(), 'years')) }}
+
+            </template>
+
             <template #filter>
                 <RadioGroup v-model="selectedSection" :options="sectionsRadioButtons" name="sections" />
             </template>
@@ -55,6 +61,7 @@ import TableElement from "@/Components/TableElement.vue";
 import RadioGroup from "@/Components/RadioGroup.vue";
 import {parseLevel} from "@/utils.js";
 import {ArchiveBoxXMarkIcon, ArrowPathIcon, EyeIcon, ExclamationTriangleIcon} from "@heroicons/vue/24/outline/index.js";
+import moment from "moment";
 
 const level = computed(() => usePage().props.level)
 const students = computed(() => (usePage().props.students || [])
@@ -99,8 +106,9 @@ const studentsConfig = [
         options: ['male', 'female']
     },
     {
-        name: 'Date of Birth',
+        name: 'Age',
         key: 'date_of_birth',
+        type: 'custom'
     },
     {
         name: 'Last updated',

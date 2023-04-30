@@ -44,13 +44,15 @@ class LevelController extends Controller
         ]);
     }
 
-    public function show(Level $level, Request $request): Response
+    public function show(Level $level): Response
     {
         return Inertia::render('Levels/Single', [
             'level' => $level->load([
                 'levelCategory',
                 'batches.schoolYear',
-                'batches.subjects.subject',
+                'batches.subjects.subject' => function ($query) {
+                    $query->withTrashed('subjects');
+                },
                 'batches.subjects.teacher.user',
                 'batches' => function ($query) {
                     $query
@@ -65,7 +67,7 @@ class LevelController extends Controller
                 ])
                 ->only('id', 'name', 'level_category_id', 'updated_at', 'batches', 'batches_count'),
             'batches' => $level->batches,
-            'students' => Inertia::lazy(fn () => BatchStudent::whereIn('batch_id', Level::first()->batches->pluck('id'))
+            'students' => Inertia::lazy(fn () => BatchStudent::whereIn('batch_id', $level->batches->pluck('id'))
                     ->with(
                         'student:id,user_id',
                         'student.user:id,name,email,username,phone_number,gender,date_of_birth',
