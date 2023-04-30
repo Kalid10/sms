@@ -1,12 +1,12 @@
 <template>
-    <UpdateModal v-model:view="isOpen">
-        <UpdateFormElement title="Update Subject" @submit="update" @cancel="clear">
+    <UpdateModal v-model:view="isUpdateSubjectFormOpened">
+        <UpdateFormElement v-model:show-modal="isUpdateSubjectFormOpened" modal title="Update Subject" @submit="update" @cancel="clear">
             <UpdateTextInput
                 v-model="form.full_name" required :error="form.errors.full_name" label="Full Name"
-                placeholder="full name"/>
+                placeholder="Full Name"/>
             <UpdateTextInput
                 v-model="form.short_name" required :error="form.errors.short_name" label="Short Name"
-                placeholder="short name"/>
+                placeholder="Short Name"/>
             <UpdateTextInput
                 v-model="tags"
                 required
@@ -23,14 +23,14 @@
     </UpdateModal>
 </template>
 <script setup>
-import {computed, onMounted, ref} from "vue";
+import {computed, ref, watch} from "vue";
 import UpdateModal from "@/Components/Modal.vue";
 import UpdateFormElement from "@/Components/FormElement.vue";
 import UpdateTextInput from "@/Components/TextInput.vue";
 import {router, useForm} from "@inertiajs/vue3";
 
 const props = defineProps({
-    toggle: {
+    open: {
         type: Boolean,
         required: true
     },
@@ -40,15 +40,21 @@ const props = defineProps({
     },
 })
 
-const isOpen = ref(props.toggle)
+const emits = defineEmits(['update:open'])
 
-onMounted(() => {
-    isOpen.value = true;
+const subject = computed(() => props.subject)
+watch(subject, () => {
+    editSubject()
+})
 
-    if (props.subject) {
-        editSubject();
+const isUpdateSubjectFormOpened = computed({
+    get() {
+        return props.open;
+    },
+    set(value) {
+        emits('update:open', value)
     }
-});
+})
 
 const form = useForm({
     full_name: "",
@@ -64,7 +70,8 @@ const update = () => {
         tags: formTags.value
     }, {
         onSuccess: () => {
-            isOpen.value = false
+            clear();
+            emits('update:open', false)
         }
     })
 }
@@ -73,7 +80,7 @@ const tags = ref('')
 const formTags = computed(() => tags.value.split(','))
 
 function editSubject() {
-    form.full_name = props.subject.full_name
+    form.full_name = props.subject.full_name.full_name
     form.short_name = props.subject.short_name
     form.id = props.subject.id
     form.category = props.subject.category

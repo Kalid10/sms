@@ -18,4 +18,12 @@ function unshift(array, value) {
     return array
 }
 
-export { toHashTag, capitalize, parseLevel, unshift }
+const subjectPriorityLabel = [
+    'bg-red-100',
+    'bg-red-300',
+    'bg-red-500',
+    'bg-red-700',
+    'bg-red-900',
+]
+
+export { toHashTag, capitalize, parseLevel, unshift, subjectPriorityLabel }
