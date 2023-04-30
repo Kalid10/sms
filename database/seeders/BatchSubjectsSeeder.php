@@ -13,11 +13,15 @@ class BatchSubjectsSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
-        // Retrieve the current school year
-        $schoolYear = SchoolYear::whereNull('end_date')->first();
+        // Run seeder for an active and past school year
+        $this->seed(SchoolYear::whereNull('end_date')->first());
+        $this->seed(SchoolYear::whereNotNull('end_date')->first());
+    }
 
+    private function seed($schoolYear): void
+    {
         // Retrieve the batches for the current school year
         $batches = $schoolYear->batches;
 
