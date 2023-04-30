@@ -90,4 +90,22 @@ class BatchSessionController extends Controller
             'teacher_sessions' => $teacherSessions,
         ]);
     }
+
+    public function activeSession(Batch $batch): Response
+    {
+        $activeSessions = BatchSession::where('status', BatchSession::STATUS_IN_PROGRESS)->whereHas('batchSchedule',
+            function ($query) use ($batch) {
+                $query->where('batch_id', $batch->id);
+            })
+            ->with([
+                'batchSchedule.batchSubject.subject:id,category,full_name,short_name,priority,tags',
+                'batchSchedule.schoolPeriod:id,duration,level_category_id,name,school_year_id',
+                'batchSchedule.batch',
+                'teacher.user:id,name,email,gender,date_of_birth,type',
+            ])->get();
+
+        return Inertia::render('Welcome', [
+            'active_sessions' => $activeSessions,
+        ]);
+    }
 }
