@@ -7,7 +7,7 @@
         <input
             :disabled="disabled" :placeholder="placeholder" :required="required" :type="type"
             :value="modelValue"
-            class="h-10 w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-300"
+            class="h-10 w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-400"
             @input="$emit('update:modelValue', $event.target.value)"/>
         <span v-if="subtext" class="text-xs text-gray-500">
             <component :is="descriptionIcon" class="inline-block h-4 w-4 stroke-2"/>

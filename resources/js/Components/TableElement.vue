@@ -24,9 +24,9 @@
         </slot>
         <div v-if="! titleHeader && actionable" class="w-full py-2"></div>
 
-        <div v-if="filterable" class="mb-4 flex flex-col gap-4 px-4">
+        <div v-if="filterable" :class="!titleHeader && 'mt-4'" class="mb-4 flex flex-col gap-4 px-4">
             <slot name="filter">
-                <TextInput v-model="query" placeholder="Search for [... attributes]"/>
+                <TextInput v-model="query" class="lg:max-w-lg" placeholder="Search for [... attributes]"/>
             </slot>
         </div>
 
@@ -35,27 +35,27 @@
                 <tr v-if="header && !emptyData">
                     <th
                         v-if="selectable"
-                        :class="[titleHeader ? 'border-y' : '']"
+                        :class="[titleHeader || filterable ? 'border-y' : 'border-b']"
                         class="h-10 w-[1%] bg-neutral-50 px-3">
                         <Checkbox v-model="selectAll"/>
                     </th>
                     <th
                         v-for="(key, index) in (columns.length > 0 ? columns.map(item => item.name) : Object.keys(items[0]))"
                         :key="index"
-                        :class="[columns.length > 0 && (columns[index].header?.align || align(columns[index].align)), titleHeader ? 'border-y' : 'border-b']"
+                        :class="[columns.length > 0 && (columns[index].header?.align || align(columns[index].align)), titleHeader || filterable ? 'border-y' : 'border-b']"
                         class="h-10 whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
                         {{ key }}
                     </th>
                     <th
                         v-if="rowActionable"
-                        :class="titleHeader ? 'border-y' : 'border-b'"
+                        :class="titleHeader || filterable ? 'border-y' : 'border-b'"
                         class="h-10 w-fit whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
                         Actions
                     </th>
                 </tr>
                 <tr
                     v-for="(item, index) in items" :key="index"
-                    :class="{ 'first:border-t': ! header && titleHeader, 'last:border-b-0': ! footer }"
+                    :class="{ 'first:border-t': (filterable && ! header) || ! header && titleHeader, 'last:border-b-0': ! footer }"
                     class="border-b"
                 >
                     <th
@@ -107,7 +107,7 @@
             </div>
         </div>
 
-        <div v-if="footer" class="flex gap-3 bg-neutral-50 p-4">
+        <div v-if="footer && ! emptyData" class="flex gap-3 bg-neutral-50 p-4">
             <slot name="footer">
                 <div class="flex w-full items-center gap-3 lg:justify-end">
                     <TertiaryButton :click="() => {}" class="w-full lg:w-fit lg:text-right" title="Previous"/>
@@ -262,7 +262,6 @@ function align(align) {
 }
 
 const query = ref('')
-const perPage = ref(5)
 </script>
 
 <style scoped>
