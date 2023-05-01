@@ -4,7 +4,12 @@
 
         <div v-for="(category, c) in levelCategories" :key="c" class="flex flex-col gap-3">
 
-            <h3 class="text-sm font-semibold text-gray-500">{{ category }} Levels</h3>
+            <div class="flex items-center gap-1.5">
+                <div :class="levelCategoryLabels[c]" class="grid h-5 w-5 place-items-center rounded-full border text-xs font-semibold">
+                    {{ category[0] }}
+                </div>
+                <h3 class="text-sm font-semibold text-gray-500">{{ category }} Levels</h3>
+            </div>
 
             <div class="grid grid-cols-4 gap-3">
 
@@ -18,7 +23,7 @@
                             <div
                                 v-for="(section, s) in level.batches"
                                 :key="s"
-                                class="grid h-6 w-6 place-items-center rounded-full bg-brand-50 text-sm font-semibold text-brand-100"
+                                class="grid h-6 w-6 place-items-center rounded-full border border-brand-100 bg-brand-50 text-sm font-semibold text-brand-100"
                             >
                                 {{ section.section }}
                             </div>
@@ -40,9 +45,7 @@
 <script setup>
 import {computed, ref} from "vue";
 import {usePage, Link} from "@inertiajs/vue3";
-import TableElement from "@/Components/TableElement.vue";
-import {parseLevel} from "@/utils.js";
-import RadioGroup from "@/Components/RadioGroup.vue";
+import {levelCategoryLabels, parseLevel, subjectPriorityLabels} from "@/utils.js";
 import Card from "@/Components/Card.vue";
 
 const levels = computed(() => usePage().props.levels)

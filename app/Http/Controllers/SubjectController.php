@@ -139,8 +139,6 @@ class SubjectController extends Controller
                 return redirect()->back()->with('error', 'Subject not found.');
             }
 
-            Log::info($subject->batches->whereIn('id', Batch::active()->pluck('id')));
-
             // If active batches exist, prevent deletion
             if ($subject->batches->whereIn('id', Batch::active()->pluck('id'))->count() > 0) {
                 return redirect()->back()->with('error', 'Subject cannot be deleted as it is associated with the current school year');

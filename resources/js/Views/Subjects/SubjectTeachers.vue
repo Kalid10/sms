@@ -25,7 +25,7 @@
                 <div class="flex flex-col">
                     <div class="flex items-center gap-1.5">
                         <span class="font-semibold underline-offset-2 group-hover:underline">{{ data['name'] }}</span>
-                        <span :class="gender[data['gender']]" class="scale-[.7] rounded-xl px-2.5 py-0.5">{{ data['gender'] }}</span>
+                        <span :class="genderLabels[data['gender']]" class="scale-[.7] rounded-xl px-2.5 py-0.5 font-semibold">{{ data['gender'] }}</span>
                     </div>
                     <span class="text-gray-500">{{ data['email'] }}</span>
                 </div>
@@ -52,7 +52,7 @@
 import {computed, onMounted, ref} from "vue";
 import {usePage, Link, router} from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
-import {parseLevel} from "@/utils.js";
+import {genderLabels, levelCategoryLabels, parseLevel} from "@/utils.js";
 import RadioGroup from "@/Components/RadioGroup.vue";
 
 const filteredLevelCategory = ref(null)
@@ -70,17 +70,6 @@ const levelCategoryOptions = computed(() => levelCategories.value.map(levelCateg
         value: levelCategory
     }
 }))
-
-const gender = {
-    male: 'bg-blue-200 text-blue-800',
-    female: 'bg-purple-200 text-purple-800'
-}
-
-const levelCategoryLabels = [
-    'bg-green-100 text-green-600 border-green-600',
-    'bg-yellow-100 text-yellow-600 border-yellow-600',
-    'bg-blue-100 text-blue-600 border-blue-600',
-]
 
 const config = [
     {
