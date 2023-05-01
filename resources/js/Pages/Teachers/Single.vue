@@ -78,19 +78,27 @@
         </div>
     </div>
 
-    <div>
-        <Heading>Feedbacks</Heading>
-        <div class="mt-2 grid grid-cols-1 gap-3 lg:grid-cols-2">
-            <div v-for="(feedback, index) in  teacher.feedbacks" :key="index">
-                <Card class="h-full min-w-full">
-                    {{ feedback.feedback }}
-
-                    <div class="flex w-full justify-between">
-                        <div>{{ feedback.author.name }}</div>
-                        <div>{{ moment(feedback.updated_at).fromNow() }}</div>
+    <div class="min-h-screen">
+        <Heading class="my-2">Feedbacks</Heading>
+        <div class="space-y-4 rounded-md p-2 xl:grid xl:grid-cols-3 xl:gap-3 xl:space-y-0">
+            <div
+                v-for="(feedback, index) in teacher.feedbacks"
+                :key="feedback.id"
+                class="rounded-md p-4 shadow-md"
+            >
+                <div
+                    class="border-l-4 pl-4"
+                    :class="{
+          'border-blue-500': index % 2 === 0,
+          'border-green-500': index % 2 === 1,
+        }"
+                >
+                    <p class="text-sm text-gray-600">{{ feedback.feedback }}</p>
+                    <div class="mt-2 flex items-center text-sm text-gray-500">
+                        <span class="text-xs">Submitted by: {{ feedback.author.name }}</span>
+                        <span class="ml-auto text-xs">{{ moment(feedback.updated_at).fromNow() }}</span>
                     </div>
-                </Card>
-
+                </div>
             </div>
         </div>
     </div>

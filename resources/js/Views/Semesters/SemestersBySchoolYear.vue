@@ -1,7 +1,8 @@
 <template>
 
     <div class="container mx-auto flex w-full flex-col items-center gap-3">
-        <Heading>{{ new Date(selectedSemesters[0].school_year.start_date).getFullYear() }} Semesters</Heading>
+        <Heading v-if="selectedSemesters.length === 0"> {{ selectedSemesters.length }} Semesters</Heading>
+        <Heading v-else>{{ new Date(selectedSemesters[0].school_year.start_date).getFullYear() }} Semesters</Heading>
         <SemestersList
             :semesters="selectedSemesters.slice().reverse()"/>
     </div>

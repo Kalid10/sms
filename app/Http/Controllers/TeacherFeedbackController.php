@@ -31,4 +31,32 @@ class TeacherFeedbackController extends Controller
         // Redirect back with success message
         return redirect()->back()->with('success', 'Feedback added successfully.');
     }
+
+    public function update(Request $request, TeacherFeedback $feedback): RedirectResponse
+    {
+        $request->validate([
+            'feedback' => 'required|string',
+        ]);
+
+        $author = auth()->user();
+
+        // Check if author is not teacher
+        if ($author->isTeacher()) {
+            return redirect()->back()->with('error', 'You are not allowed to update feedback.');
+        }
+
+        $feedback->update([
+            'feedback' => $request->feedback,
+        ]);
+
+        // Redirect back with success message
+        return redirect()->back()->with('success', 'Feedback updated successfully.');
+    }
+
+    public function destroy($id): RedirectResponse
+    {
+        TeacherFeedback::find($id)->delete();
+
+        return redirect()->back()->with('success', 'Feedback deleted successfully.');
+    }
 }
