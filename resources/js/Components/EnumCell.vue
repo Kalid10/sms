@@ -32,11 +32,14 @@ const colors = [
     'black',
     'white',
     'red',
-
     'green',
     'yellow',
-
-    'gray'
+    'gray',
+    'blue-darker',
+    'purple-darker',
+    'yellow-darker',
+    'red-darker',
+    'green-darker',
 ];
 
 </script>
@@ -47,8 +50,16 @@ const colors = [
     @apply bg-green-200 text-green-800;
 }
 
+.green-darker {
+    @apply bg-green-400 text-green-900;
+}
+
 .yellow {
     @apply bg-yellow-200 text-yellow-800;
+}
+
+.yellow-darker {
+    @apply bg-yellow-400 text-yellow-900;
 }
 
 .black {
@@ -63,12 +74,24 @@ const colors = [
     @apply bg-red-200 text-red-800;
 }
 
+.red-darker {
+    @apply bg-red-400 text-red-900;
+}
+
 .blue {
     @apply bg-blue-200 text-blue-800;
 }
 
+.blue-darker {
+    @apply bg-blue-400 text-blue-900;
+}
+
 .purple {
     @apply bg-purple-200 text-purple-800;
+}
+
+.purple-darker {
+    @apply bg-purple-400 text-purple-900;
 }
 
 .gray {

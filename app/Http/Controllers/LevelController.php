@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BatchStudent;
 use App\Models\Level;
 use App\Models\SchoolYear;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -42,15 +44,42 @@ class LevelController extends Controller
         ]);
     }
 
-    public function detail(Level $level): Response
+    public function show(Level $level): Response
     {
-        $levelDetail = $level->load(['levelCategory', 'batches.students.student', 'batches.schoolYear', 'batches.subjects', 'batches' => function ($query) {
-            $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-        },
-        ]);
-
         return Inertia::render('Levels/Single', [
-            'level_details' => $levelDetail,
+            'level' => $level->load([
+                'levelCategory',
+                'batches.schoolYear',
+                'batches.subjects.subject' => function ($query) {
+                    $query->withTrashed('subjects');
+                },
+                'batches.subjects.teacher.user',
+                'batches' => function ($query) {
+                    $query
+                        ->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+                        ->withCount('students', 'subjects');
+                },
+            ])
+                ->loadCount([
+                    'batches' => function ($query) {
+                        $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                    },
+                ])
+                ->only('id', 'name', 'level_category_id', 'updated_at', 'batches', 'batches_count'),
+            'batches' => $level->batches,
+            'students' => Inertia::lazy(fn () => BatchStudent::whereIn('batch_id', $level->batches->pluck('id'))
+                    ->with(
+                        'student:id,user_id',
+                        'student.user:id,name,email,username,phone_number,gender,date_of_birth',
+                        'batch:id,section')
+                    ->get()
+                ->map(fn ($batchStudent) => [
+                    ...$batchStudent->student->user->toArray(),
+                    'student_id' => $batchStudent->student->id,
+                    'section' => $batchStudent->batch->section,
+                    'updated_at' => $batchStudent->updated_at->diffForHumans(Carbon::now()),
+                ])
+            ),
         ]);
     }
 }

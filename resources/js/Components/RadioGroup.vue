@@ -12,8 +12,8 @@
 <script setup>
 defineProps({
     modelValue: {
-        type: [String, Number],
-        required: true,
+        type: [null, String, Number],
+        default: null,
     },
     name: {
         type: String,

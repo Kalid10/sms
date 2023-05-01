@@ -3,10 +3,18 @@
     <Teleport v-if="view" to="#top-view">
 
         <div
-            :class="{ 'bg-black/50': backgroundColor === 'black', 'bg-black/20': backgroundColor === 'white' }"
+            :class="{
+                'bg-black/50': backgroundColor === 'black',
+                'bg-black/20': backgroundColor === 'white',
+                'grid place-items-center': placeItemsCenter,
+            }"
             class="fixed z-50 h-screen w-full p-4 backdrop-blur">
 
-            <div ref="modal" class="container mx-auto max-w-3xl">
+            <div
+                ref="modal"
+                class="container mx-auto max-w-3xl"
+                :class="{ 'grid place-items-center': placeItemsCenter }"
+            >
 
                 <slot/>
 
@@ -34,6 +42,10 @@ const props = defineProps({
     backgroundColor: {
         type: String,
         default: 'black'
+    },
+    placeItemsCenter: {
+        type: Boolean,
+        default: false
     }
 })
 
