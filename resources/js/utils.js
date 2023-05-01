@@ -18,7 +18,7 @@ function unshift(array, value) {
     return array
 }
 
-const subjectPriorityLabel = [
+const subjectPriorityLabels = [
     'bg-red-100',
     'bg-red-300',
     'bg-red-500',
@@ -26,4 +26,15 @@ const subjectPriorityLabel = [
     'bg-red-900',
 ]
 
-export { toHashTag, capitalize, parseLevel, unshift, subjectPriorityLabel }
+const genderLabels = {
+    male: 'bg-blue-200 text-blue-800',
+    female: 'bg-purple-200 text-purple-800'
+}
+
+const levelCategoryLabels = [
+    'bg-green-100 text-green-600 border-green-600',
+    'bg-yellow-100 text-yellow-600 border-yellow-600',
+    'bg-blue-100 text-blue-600 border-blue-600',
+]
+
+export { toHashTag, capitalize, parseLevel, unshift, subjectPriorityLabels, levelCategoryLabels, genderLabels }
