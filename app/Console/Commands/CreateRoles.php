@@ -39,6 +39,7 @@ class CreateRoles extends Command
         'manage-school-schedules',
         'manage-announcements',
         'manage-batch-schedules',
+        'manage-assessment-types',
     ];
 
     // Description for each user role
@@ -59,6 +60,7 @@ class CreateRoles extends Command
         'Manage School Schedules',
         'Manage Announcements',
         'Manage Batch Schedules',
+        'Manage Assessment Types',
     ];
 
     /**
