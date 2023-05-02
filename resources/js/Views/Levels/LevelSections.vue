@@ -4,7 +4,7 @@
 
         <Card v-for="(batch, b) in batches" :key="b" class="!w-full" :title="`Section ${batch.section}`">
 
-            <div class="flex gap-3">
+            <div class="flex flex-wrap gap-3">
 
                 <div class="flex items-center gap-1">
                     <div class="h-1.5 w-1.5 rounded-full bg-red-600"/>
