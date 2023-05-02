@@ -9,7 +9,6 @@
             class="w-fit"
             :row-actionable="true"
             :selectable="false"
-            :footer="false"
             :columns="studentsConfig"
             :data="students"
         >
@@ -20,7 +19,12 @@
             </template>
 
             <template #filter>
-                <RadioGroup v-model="selectedSection" :options="sectionsRadioButtons" name="sections" />
+                <div class="flex w-full gap-4">
+                    <div class="grow">
+                        <RadioGroup v-model="selectedSection" :options="sectionsRadioButtons" name="sections"/>
+                    </div>
+                    <TextInput v-model="searchKey" class="w-full" placeholder="Search for a student by name"/>
+                </div>
             </template>
 
             <template #empty-data>
@@ -29,9 +33,16 @@
                     <p class="text-sm font-semibold">
                         No data found
                     </p>
-                    <p class="text-sm text-gray-500">
-                        No student has been enrolled in this section
-                    </p>
+                    <div v-if="searchKey.length">
+                        <p v-if="searchKey === null" class="text-sm text-gray-500">
+                            No student has been enrolled in this section
+                        </p>
+                        <p v-else class="text-center text-sm text-gray-500">
+                            Your search query "<span class="font-medium text-black">{{ searchKey }}</span>" did not
+                            match
+                            <span class="block">any student's name</span>
+                        </p>
+                    </div>
                 </div>
             </template>
 
@@ -48,6 +59,15 @@
                         class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"/>
                 </Link>
             </template>
+
+            <template #footer>
+
+                <SelectInput
+                    v-model="perPage" :options="perPageOptions" class="w-36" direction="up"
+                    placeholder="Per page"/>
+
+
+            </template>
         </TableElement>
 
     </div>
@@ -55,22 +75,35 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {Link, router, usePage} from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import RadioGroup from "@/Components/RadioGroup.vue";
 import {parseLevel} from "@/utils.js";
-import {ArchiveBoxXMarkIcon, ArrowPathIcon, EyeIcon, ExclamationTriangleIcon} from "@heroicons/vue/24/outline/index.js";
+import {ArchiveBoxXMarkIcon, ArrowPathIcon, ExclamationTriangleIcon, EyeIcon} from "@heroicons/vue/24/outline/index.js";
 import moment from "moment";
+import TextInput from "@/Components/TextInput.vue";
+import SelectInput from "@/Components/SelectInput.vue";
+
+
+const props = {
+    pagination: {
+        type: Object,
+        default: () => null
+    },
+}
+
+function changePage(url) {
+    router.get(url, {
+        only: ["students"],
+        preserveState: true,
+        replace: true
+    });
+}
+
 
 const level = computed(() => usePage().props.level)
-const students = computed(() => (usePage().props.students || [])
-    .filter(student => {
-        if (!! selectedSection.value) {
-            return student?.section === selectedSection.value
-        }
-        return true
-    }))
+const students = computed(() => usePage().props.students || [])
 const batches = computed(() => usePage().props.batches)
 
 const selectedSection = ref()
@@ -80,6 +113,36 @@ const sectionsRadioButtons = computed(() => usePage().props.batches.map(batch =>
         value: batch.section
     }
 }))
+
+const searchKey = ref('');
+const perPage = ref(10)
+const perPageOptions = [
+    {value: 10, label: '10'},
+    {value: 25, label: '25'},
+    {value: 50, label: '50'},
+    {value: 100, label: '100'},
+]
+
+const search = () => {
+    const currentPage = usePage().props.page || 1; // Add this line
+    router.get(
+        "/levels/" + level.value.id, {
+            search: searchKey.value,
+            section: selectedSection.value,
+            per_page: perPage.value,
+            page: currentPage, // Add this line
+        }, {
+            only: ["students"],
+            preserveState: true,
+            replace: true
+        });
+}
+
+const page = computed(() => usePage().props.page || 1);
+watch([selectedSection, searchKey, perPage, page], () => {
+    search();
+})
+
 
 const studentsConfig = [
     {
@@ -123,7 +186,6 @@ onMounted(() => {
     router.reload({
         only: ["students"],
     })
-
 })
 </script>
 

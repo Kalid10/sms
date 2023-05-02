@@ -10,14 +10,42 @@
                     {{ data }}
                 </div>
             </template>
+
+            <template #filter>
+                <div class="flex w-full gap-4">
+                    <TextInput v-model="searchKey" class="w-full" placeholder="Search for a teacher by name"/>
+                </div>
+            </template>
+
+            <template #empty-data>
+                <div class="flex flex-col items-center justify-center">
+                    <ExclamationTriangleIcon class="mb-2 h-6 w-6 text-negative-50"/>
+                    <p class="text-sm font-semibold">
+                        No data found
+                    </p>
+                    <div v-if="searchKey.length">
+                        <p v-if="searchKey === null" class="text-sm text-gray-500">
+                            No teacher has been enrolled
+                        </p>
+                        <p v-else class="text-center text-sm text-gray-500">
+                            Your search query "<span class="font-medium text-black">{{ searchKey }}</span>" did not
+                            match
+                            <span class="block">any teacher's name</span>
+                        </p>
+                    </div>
+                </div>
+            </template>
         </TeacherTableElement>
     </div>
 </template>
 
 <script setup>
-import {computed} from "vue";
-import {usePage} from "@inertiajs/vue3";
+import {computed, ref, watch} from "vue";
+import {router, usePage} from "@inertiajs/vue3";
 import TeacherTableElement from "@/Components/TableElement.vue";
+import {ExclamationTriangleIcon} from "@heroicons/vue/24/outline/index";
+import TextInput from "@/Components/TextInput.vue";
+import {debounce} from "lodash";
 
 const teachers = computed(() => {
     return usePage().props.teachers.data;
@@ -38,6 +66,23 @@ const formattedTeachersData = computed(() => {
         };
     });
 });
+
+const searchKey = ref('');
+
+const search = debounce(() => {
+    router.get(
+        "/teachers/",
+        {search: searchKey.value},
+        {
+            only: ["teachers"],
+            preserveState: true, replace: true
+        }
+    );
+}, 300);
+
+watch([searchKey], () => {
+    search()
+})
 
 const config = [
     {

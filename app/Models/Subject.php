@@ -22,11 +22,16 @@ class Subject extends Model
         'priority',
     ];
 
-    public function teachers()
+    public function teachers(string $search = null)
     {
         return BatchSubject::where('subject_id', $this->getKey())
             ->whereIn('batch_id', Batch::active()->pluck('id'))
             ->with('batch', 'batch.level', 'batch.level.levelCategory:id,name', 'teacher', 'teacher.user')
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('teacher.user', function ($query) use ($search) {
+                    $query->where('name', 'like', '%'.$search.'%');
+                });
+            })
             ->get()
             ->groupBy('teacher_id')
             ->map(fn ($teacherBatches) => [

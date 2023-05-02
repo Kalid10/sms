@@ -14,8 +14,10 @@ use Inertia\Response;
 
 class TeacherController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $searchKey = $request->input('search');
+
         $teachers = Teacher::with([
             'user:id,name,email,phone_number,gender',
             'batchSubjects:id,subject_id,batch_id,teacher_id',
@@ -25,7 +27,13 @@ class TeacherController extends Controller
             'homeroom:id,batch_id,teacher_id',
             'homeroom.batch:id,section,level_id',
             'homeroom.batch.level:id,name',
-        ])->select('id', 'user_id')->paginate(15);
+        ])->select('id', 'user_id')
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->whereHas('user', function ($query) use ($searchKey) {
+                    return $query->where('name', 'like', "%{$searchKey}%");
+                });
+            })
+            ->paginate(15);
 
         return Inertia::render('Teachers/Index', [
             'teachers' => $teachers,
