@@ -125,8 +125,8 @@ const days = [
 const uniqueSubjectsAndLevels = computed(() => {
     const subjectsMap = new Map();
 
-    teacher.batch_schedules.forEach(schedule => {
-        const batchSubject = schedule.batch_subject;
+    teacher.batch_subjects.forEach(subject => {
+        const batchSubject = subject;
         const subjectId = batchSubject.subject.id;
         const subjectName = batchSubject.subject.full_name;
         const level = batchSubject.batch.level.name;

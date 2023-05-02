@@ -61,6 +61,10 @@ class TeacherController extends Controller
             'batchSchedules.batchSubject.subject:id,full_name',
             'batchSchedules.batchSubject.batch:id,section,level_id',
             'batchSchedules.batchSubject.batch.level:id,name',
+            'batchSubjects:id,subject_id,batch_id,teacher_id',
+            'batchSubjects.subject:id,full_name',
+            'batchSubjects.batch:id,section,level_id',
+            'batchSubjects.batch.level:id,name',
             'feedbacks',
             'feedbacks.author:id,name',
         ])->select('id', 'user_id')->findOrFail($id);
