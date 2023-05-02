@@ -48,7 +48,9 @@ class TeacherController extends Controller
 
         // Get teacher batches from batch_subjects table, make sure it is from active school year and distinct
         $batches = Batch::with([
-            'level:id,name',
+            'level:id,name,level_category_id',
+            'level.levelCategory:id,name',
+            'level.levelCategory.assessmentTypes',
         ])->whereHas('subjects', function ($query) use ($id) {
             $query->where('teacher_id', $id);
         })->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->distinct()->get(['id', 'section', 'level_id'])
@@ -69,10 +71,15 @@ class TeacherController extends Controller
             'batchSchedules.batchSubject.subject:id,full_name',
             'batchSchedules.batchSubject.batch:id,section,level_id',
             'batchSchedules.batchSubject.batch.level:id,name',
-            'batchSubjects:id,subject_id,batch_id,teacher_id',
+            'batchSubjects' => function ($query) {
+                $query->whereHas('batch', function ($batchQuery) {
+                    $batchQuery->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                });
+            },
             'batchSubjects.subject:id,full_name',
-            'batchSubjects.batch:id,section,level_id',
-            'batchSubjects.batch.level:id,name',
+            'batchSubjects.batch:id,section,level_id,school_year_id',
+            'batchSubjects.batch.level:id,name,level_category_id',
+            'batchSubjects.batch.level.levelCategory:id,name',
             'feedbacks',
             'feedbacks.author:id,name',
         ])->select('id', 'user_id')->findOrFail($id);
@@ -80,6 +87,7 @@ class TeacherController extends Controller
         return Inertia::render('Teachers/Single', [
             'teacher' => $teacher,
             'batches' => $batches,
+            'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),
         ]);
     }
 

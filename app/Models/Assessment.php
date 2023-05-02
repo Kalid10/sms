@@ -32,4 +32,8 @@ class Assessment extends Model
     {
         return $this->belongsTo(Quarter::class);
     }
+
+    protected $casts = [
+        'due_date' => 'datetime',
+    ];
 }

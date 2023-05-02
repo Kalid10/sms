@@ -54,4 +54,9 @@ class BatchSubject extends Model
     {
         return static::with($with)->whereIn('batch_id', Batch::active()->pluck('id')->toArray())->get();
     }
+
+    public function isActive(): bool
+    {
+        return $this->batch->school_year_id === SchoolYear::getActiveSchoolYear()->id;
+    }
 }

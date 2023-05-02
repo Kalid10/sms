@@ -23,8 +23,9 @@
         </div>
     </div>
 
-
     <div class="mt-4 flex flex-col space-y-3 lg:mt-10 lg:space-y-8">
+        <Assessments/>
+
         <Subjects/>
 
         <HomeroomClasses/>
@@ -39,6 +40,7 @@ import Subjects from "@/Views/Teachers/Subjects.vue";
 import HomeroomClasses from "@/Views/Teachers/HomeroomClasses.vue";
 import Feedbacks from "@/Views/Teachers/Feedbacks.vue";
 import {usePage} from "@inertiajs/vue3";
+import Assessments from "@/Views/Teachers/Assessments.vue";
 
 const teacher = usePage().props.teacher;
 </script>
