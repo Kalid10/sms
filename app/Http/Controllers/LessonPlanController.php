@@ -3,38 +3,95 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LessonPlans\UpdateOrCreateRequest;
+use App\Models\Batch;
 use App\Models\BatchSession;
+use App\Models\BatchSubject;
 use App\Models\LessonPlan;
-use Illuminate\Support\Facades\Log;
+use App\Models\SchoolYear;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\Activitylog\Models\Activity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LessonPlanController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response|\Illuminate\Http\RedirectResponse
     {
-        $lessonPlan = BatchSession::whereHas('batchSubject', function ($query) {
-            $query->where('teacher_id', auth()->user()->teacher->id);
-        })->with(['lessonPlan' => function ($query) {
-            $query->with('batchSessions');
-        }])->first()->lessonPlan()->get();
+        $request->validate([
+            'batch_subject_id' => 'nullable|exists:batch_subjects,id',
+            'month' => 'nullable|date_format:"Y-m"',
+        ]);
 
-        $activityLogs = Activity::all();
+        $teacherId = auth()->user()->teacher->id;
 
-        // Get all BatchSessions
-        $batchSessions = BatchSession::all();
+        $batchSubject = BatchSubject::with([
+            'subject:id,full_name',
+            'batch:id,section,level_id',
+            'batch.level:id,name',
+        ])->when($request->input('batch_subject_id'), function ($query, $batchSubjectId) {
+            $query->where('id', $batchSubjectId);
+        }, function ($query) use ($teacherId) {
+            $query->where('teacher_id', $teacherId);
+        })->firstOrFail();
 
-        $availableBatchSessions = BatchSession::whereHas('batchSubject', function ($query) {
-            $query->where('teacher_id', auth()->user()->teacher->id);
-        })->where('status', BatchSession::STATUS_SCHEDULED)->get();
+        if ($batchSubject->teacher_id !== $teacherId) {
+            return redirect()->back()->with('error', 'You are not assigned to this subject.');
+        }
+
+        $batchId = $batchSubject->batch_id;
+        $currentMonth = $request->input('month') ? Carbon::createFromFormat('Y-m', $request->input('month')) : Carbon::now();
+        $firstDayOfMonth = $currentMonth->copy()->startOfMonth();
+        $lastDayOfMonth = $currentMonth->copy()->endOfMonth();
+
+        $teacherSubjects = BatchSubject::with([
+            'subject:id,full_name',
+            'batch:id,section,level_id',
+            'batch.level:id,name',
+        ])->where('teacher_id', $teacherId)
+            ->whereHas('batch', fn ($query) => $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id))
+            ->distinct()
+            ->get(['id', 'subject_id', 'batch_id']);
+
+        $batchSessionsWithLessonPlans = BatchSession::where('teacher_id', $teacherId)
+            ->whereHas('batchSchedule.batchSubject', fn ($query) => $query->where('batch_subject_id', $batchSubject->id))
+            ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
+            ->with([
+                'batchSchedule.schoolPeriod',
+                'batchSchedule.batchSubject.subject',
+                'lessonPlan',
+            ])
+            ->get()
+            ->groupBy(function ($batchSession) use ($firstDayOfMonth) {
+                $date = Carbon::parse($batchSession->date);
+                $weekNumber = $date->weekOfYear - $firstDayOfMonth->weekOfYear + 1;
+
+                return 'week'.max($weekNumber, 1);
+            });
+
+        $weeksInMonth = (int) ($currentMonth->daysInMonth / 7) + ($currentMonth->daysInMonth % 7 != 0 ? 1 : 0);
+
+        $weeklyBatchSessions = array_fill_keys(array_map(fn ($i) => "week{$i}", range(1, $weeksInMonth)), collect([]));
+
+        foreach ($batchSessionsWithLessonPlans as $weekKey => $batchSessions) {
+            $weeklyBatchSessions[$weekKey] = $batchSessions;
+        }
+
+        $months = collect(range(1, 12))->map(function ($month) {
+            return [
+                'value' => Carbon::today()->month($month)->format('Y-m'),
+                'label' => Carbon::today()->month($month)->format('F'),
+            ];
+        });
 
         return Inertia::render('LessonPlans/Index', [
-            'lesson_plan' => $lessonPlan,
-            'activity_logs' => $activityLogs,
-            'batch_sessions' => $batchSessions,
-            'availableBatchSessions' => $availableBatchSessions,
+            'batch_sessions' => $weeklyBatchSessions,
+            'batch' => Batch::find($batchId)->load('level'),
+            'subjects' => $teacherSubjects,
+            'weeks_in_month' => $weeksInMonth,
+            'lesson_plan_subject' => $batchSubject,
+            'months' => $months,
+            'selected_month' => $currentMonth->format('Y-m'),
         ]);
     }
 
@@ -42,20 +99,17 @@ class LessonPlanController extends Controller
     {
         $validatedData = $request->validated();
 
-        // Find a lesson plan that contains at least one of the batch_session_ids in the request
-        $lessonPlan = LessonPlan::where(function ($query) use ($validatedData) {
-            foreach ($validatedData['batch_session_ids'] as $batchSessionId) {
-                $query->orWhereJsonContains('batch_session_ids', $batchSessionId);
-            }
-        })->first();
+        // Find the batch session with the given ID
+        $batchSession = BatchSession::find($validatedData['batch_session_id']);
 
-        if ($lessonPlan) {
-            // If found, update the lesson plan with the new batch_session_ids
-            $lessonPlan->update($validatedData);
+        if ($batchSession->lessonPlan) {
+            // If a lesson plan is already associated with the batch session, update it
+            $batchSession->lessonPlan->update($validatedData);
         } else {
-            Log::info($validatedData);
-            // If not found, create a new lesson plan with the new batch_session_ids
-            LessonPlan::create($validatedData);
+            // If not, create a new lesson plan and associate it with the batch session
+            $lessonPlan = LessonPlan::create($validatedData);
+            $batchSession->lesson_plan_id = $lessonPlan->id;
+            $batchSession->save();
         }
 
         // Return a response or redirect to another page

@@ -23,6 +23,7 @@ class BatchSession extends Model
         'batch_schedule_id',
         'teacher_id',
         'status',
+        'lesson_plan_id',
     ];
 
     public function batchSchedule(): BelongsTo

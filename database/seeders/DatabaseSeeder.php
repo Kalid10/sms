@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
 
         // Populate users
         Admin::factory(5)->create();
-        Teacher::factory(300)->create();
+        Teacher::factory(500)->create();
         Guardian::factory(50)->create();
         Student::factory(50)->create();
 

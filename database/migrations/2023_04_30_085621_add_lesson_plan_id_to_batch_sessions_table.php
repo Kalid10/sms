@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lesson_plans', function (Blueprint $table) {
-            $table->id();
-            $table->string('topic');
-            $table->longText('description');
-            $table->timestamps();
+        Schema::table('batch_sessions', function (Blueprint $table) {
+            $table->foreignId('lesson_plan_id')->nullable()->constrained()->cascadeOnDelete();
         });
     }
 
@@ -24,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lesson_plans');
+        Schema::table('batch_sessions', function (Blueprint $table) {
+            $table->dropForeign(['lesson_plan_id']);
+            $table->dropColumn('lesson_plan_id');
+        });
     }
 };

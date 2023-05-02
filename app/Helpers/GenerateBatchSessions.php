@@ -4,39 +4,51 @@ namespace App\Helpers;
 
 use App\Models\BatchSession;
 use App\Models\Level;
-use Illuminate\Support\Facades\Log;
 
 class GenerateBatchSessions
 {
-    public static function generate()
+    public static function generate($command, string $duration = 'weekly'): void
     {
-        $levels = Level::all();
+        // Get the dates for the next week or month
+        $nextDates = $duration === 'monthly' ? self::getNextMonthDates() : self::getNextWeekDates();
 
-        // Get the dates for the next week
-        $nextWeekDates = self::getNextWeekDates();
+        // Set the chunk size
+        $chunkSize = 1;
 
-        // Iterate through each level
-        $levels->each(function ($level) use ($nextWeekDates) {
-            // Iterate through each active batch of the level
-            $level->activeBatches()->each(function ($batch) use ($nextWeekDates) {
-                // Iterate through each schedule of the batch
-                $batch->schedule->each(function ($schedule) use ($nextWeekDates) {
-                    // Iterate through the dates of the next week
-                    foreach ($nextWeekDates as $nextWeekDate) {
-                        if (strtolower($schedule->day_of_week) === strtolower($nextWeekDate['day'])) {
-                            BatchSession::create([
-                                'date' => $nextWeekDate['date'],
-                                'batch_schedule_id' => $schedule->id,
-                                'teacher_id' => $schedule->batchSubject->teacher_id ?? null,
-                                'status' => BatchSession::STATUS_SCHEDULED,
-                            ]);
+        // Add memory limit
+        ini_set('memory_limit', '250');
+
+        // Use chunk to process levels in smaller parts
+        Level::orderBy('id')->chunk($chunkSize, function ($levels) use ($nextDates) {
+            // Iterate through each level
+            $levels->each(function ($level) use ($nextDates) {
+                // Iterate through each active batch of the level
+                $level->activeBatches()->each(function ($batch) use ($nextDates) {
+                    // Iterate through each schedule of the batch
+                    $batch->schedule->each(function ($schedule) use ($nextDates) {
+                        // Iterate through the dates of the next week or month
+                        foreach ($nextDates as $nextDate) {
+                            if (strtolower($schedule->day_of_week) === strtolower($nextDate['day'])) {
+                                BatchSession::create([
+                                    'date' => $nextDate['date'],
+                                    'batch_schedule_id' => $schedule->id,
+                                    'teacher_id' => $schedule->batchSubject->teacher_id ?? null,
+                                    'status' => BatchSession::STATUS_SCHEDULED,
+                                ]);
+                            }
                         }
-                    }
+                    });
                 });
             });
         });
 
-        Log::info('Batch sessions for the next week have been generated.');
+        $duration = $duration === 'monthly' ? 'month' : 'week';
+        $message = 'Batch sessions generated for the next '.$duration.'.';
+        $message .= ' Total batch sessions generated: '.count($nextDates);
+        $message .= ' Memory used: '.memory_get_peak_usage(true) / 1024 / 1024;
+        $message .= ' MB. Memory limit: '.ini_get('memory_limit');
+
+        $command->info($message);
     }
 
     /**
@@ -53,6 +65,23 @@ class GenerateBatchSessions
         $dates = [];
 
         for ($date = $startOfWeek; $date->lte($endOfWeek); $date->addDay()) {
+            $dates[] = [
+                'date' => $date->copy(),
+                'day' => $date->format('l'),
+            ];
+        }
+
+        return $dates;
+    }
+
+    protected static function getNextMonthDates(): array
+    {
+        $startOfMonth = now()->addMonth()->startOfMonth();
+        $endOfMonth = now()->addMonth()->endOfMonth();
+
+        $dates = [];
+
+        for ($date = $startOfMonth; $date->lte($endOfMonth); $date->addDay()) {
             $dates[] = [
                 'date' => $date->copy(),
                 'day' => $date->format('l'),

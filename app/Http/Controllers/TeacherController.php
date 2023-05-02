@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Teachers\AssignHomeroomRequest;
 use App\Models\Batch;
 use App\Models\HomeroomTeacher;
+use App\Models\SchoolYear;
 use App\Models\Teacher;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,8 +32,24 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function show($id): Response
+    public function show(int $id = null): Response
     {
+        if ($id === null && auth()->user()->isTeacher()) {
+            $id = auth()->user()->teacher->id;
+        }
+
+        // Get teacher batches from batch_subjects table, make sure it is from active school year and distinct
+        $batches = Batch::with([
+            'level:id,name',
+        ])->whereHas('subjects', function ($query) use ($id) {
+            $query->where('teacher_id', $id);
+        })->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->distinct()->get(['id', 'section', 'level_id'])
+            ->map(function ($batch) {
+                $batch->full_name = $batch->level->name.' - '.$batch->section;
+
+                return $batch;
+            });
+
         $teacher = Teacher::with([
             'user:id,name,email,phone_number,gender',
             'homeroom:id,batch_id,teacher_id',
@@ -50,6 +67,7 @@ class TeacherController extends Controller
 
         return Inertia::render('Teachers/Single', [
             'teacher' => $teacher,
+            'batches' => $batches,
         ]);
     }
 

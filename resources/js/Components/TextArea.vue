@@ -2,12 +2,12 @@
     <label class="flex flex-col gap-1">
                 <span class="">
                     <span class="pl-0.5 text-sm font-semibold text-gray-500"
-                    >{{ lable }}</span
+                    >{{ label }}</span
                     >
                     <span class="pl-0.5 text-xs text-red-600">*</span>
                 </span>
         <textarea
-            rows="5"
+            :rows="rows"
             :placeholder="placeholder" :disabled="disabled" :required="required" :value="modelValue"
             class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-500"
             @input="$emit('update:modelValue', $event.target.value)"
@@ -20,7 +20,7 @@
 <script setup>
 
 const props = defineProps({
-    lable: {
+    label: {
         type: String,
         required: true
     },
@@ -44,6 +44,10 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    rows: {
+        type: Number,
+        default: 5
+    }
 })
 
 defineEmits(['update:modelValue'])

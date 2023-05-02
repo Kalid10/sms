@@ -34,7 +34,7 @@
                 v-for="(item, index) in sortedAndFormattedTeacherPeriods"
                 :key="index"
             >
-                <card
+                <Card
                     v-show="item && item.day_of_week && item.day_of_week === day.key"
                     class="mb-2 min-w-full"
                     :subtitle="'Period ' + item.school_period.name"
@@ -44,7 +44,7 @@
                         {{ item.formattedStartTime }} - {{ item.formattedEndTime }}
                     </div>
                     <div>{{ item.batch_subject.subject.full_name }}</div>
-                </card>
+                </Card>
             </div>
         </div>
     </div>
