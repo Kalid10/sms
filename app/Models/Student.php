@@ -39,6 +39,11 @@ class Student extends Model
         })->first()->batch->load($load);
     }
 
+    public function activeSession()
+    {
+        return $this->activeBatch([])->getSessions();
+    }
+
     public function absenteeRecords(int $schoolYearId = null)
     {
         $schoolYearId = $schoolYearId ?? SchoolYear::getActiveSchoolYear()->id;

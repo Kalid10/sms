@@ -31,6 +31,18 @@ class BatchSession extends Model
         return $this->belongsTo(BatchSchedule::class);
     }
 
+    public function schoolPeriod(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            SchoolPeriod::class,
+            BatchSchedule::class,
+            'id', // Foreign key on BatchSchedule table
+            'id', // Foreign key on SchoolPeriod table
+            'batch_schedule_id', // Local key on BatchSession table
+            'school_period_id' // Local key on BatchSchedule table
+        );
+    }
+
     // get batchSubject through batchSchedule using hasOneThrough relationship
     public function batchSubject(): HasOneThrough
     {
@@ -58,4 +70,8 @@ class BatchSession extends Model
     {
         return $this->belongsTo(LessonPlan::class);
     }
+
+    protected $casts = [
+        'date' => 'date',
+    ];
 }

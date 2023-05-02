@@ -7,9 +7,7 @@
             class="hide-scrollbar w-full grow overflow-y-auto bg-white p-2 md:p-2"
             :class="teacherLessonPlanRoute ? 'teacher-lesson-plan-container' : 'container mx-auto flex flex-col gap-12'"
         >
-            <div>
-                <slot/>
-            </div>
+            <slot/>
         </div>
         <Notification/>
     </div>
