@@ -19,8 +19,14 @@ Route::controller(TeacherFeedbackController::class)->prefix('teacher/feedback/')
     Route::delete('delete/{id}', 'destroy')->name('feedback.delete');
 });
 
-Route::controller(LessonPlanController::class)->prefix('teacher/lesson-plan/')->middleware(['checkUserType:teacher'])->name('lesson-plan.')->group(function () {
-    Route::get('', 'index')->name('index');
-    Route::post('', 'updateOrCreate')->name('updateOrCreate');
-    Route::delete('delete/{id}', 'destroy')->name('delete');
+Route::prefix('teacher/')->middleware(['checkUserType:teacher'])->name('teacher.')->group(function () {
+    Route::controller(LessonPlanController::class)->prefix('lesson-plan/')->name('lesson-plan.')->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::post('', 'updateOrCreate')->name('updateOrCreate');
+        Route::delete('delete/{id}', 'destroy')->name('delete');
+    });
+
+    // Teacher profile page
+    // TODO: If there is a need to change teacher profile page, change this route
+    Route::get('', [TeacherController::class, 'show'])->name('show');
 });
