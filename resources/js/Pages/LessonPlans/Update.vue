@@ -12,7 +12,7 @@
                 placeholder="topic"
                 label="Topic"
             />
-            <TextArea v-model="form.description" required lable="Description" placeholder="description"/>
+            <TextArea v-model="form.description" required label="Description" placeholder="description"/>
 
             <TextInput
                 v-model="form.batch_session_id"
