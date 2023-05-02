@@ -5,23 +5,56 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LessonPlans\UpdateOrCreateRequest;
 use App\Models\Batch;
 use App\Models\BatchSession;
+use App\Models\BatchSubject;
 use App\Models\LessonPlan;
+use App\Models\SchoolYear;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LessonPlanController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response|\Illuminate\Http\RedirectResponse
     {
-        $batchId = 1;
-        $currentMonth = Carbon::now();
-        $firstDayOfMonth = $currentMonth->copy()->startOfMonth()->addMonth();
-        $lastDayOfMonth = $currentMonth->copy()->endOfMonth()->addMonth();
+        $request->validate([
+            'batch_subject_id' => 'nullable|exists:batch_subjects,id',
+            'month' => 'nullable|date_format:"Y-m"',
+        ]);
 
-        $batchSessionsWithLessonPlans = BatchSession::where('teacher_id', auth()->user()->teacher->id)
-            ->whereHas('batchSchedule', fn ($query) => $query->where('batch_id', $batchId))
+        $teacherId = auth()->user()->teacher->id;
+
+        $batchSubject = BatchSubject::with([
+            'subject:id,full_name',
+            'batch:id,section,level_id',
+            'batch.level:id,name',
+        ])->when($request->input('batch_subject_id'), function ($query, $batchSubjectId) {
+            $query->where('id', $batchSubjectId);
+        }, function ($query) use ($teacherId) {
+            $query->where('teacher_id', $teacherId);
+        })->firstOrFail();
+
+        if ($batchSubject->teacher_id !== $teacherId) {
+            return redirect()->back()->with('error', 'You are not assigned to this subject.');
+        }
+
+        $batchId = $batchSubject->batch_id;
+        $currentMonth = $request->input('month') ? Carbon::createFromFormat('Y-m', $request->input('month')) : Carbon::now();
+        $firstDayOfMonth = $currentMonth->copy()->startOfMonth();
+        $lastDayOfMonth = $currentMonth->copy()->endOfMonth();
+
+        $teacherSubjects = BatchSubject::with([
+            'subject:id,full_name',
+            'batch:id,section,level_id',
+            'batch.level:id,name',
+        ])->where('teacher_id', $teacherId)
+            ->whereHas('batch', fn ($query) => $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id))
+            ->distinct()
+            ->get(['id', 'subject_id', 'batch_id']);
+
+        $batchSessionsWithLessonPlans = BatchSession::where('teacher_id', $teacherId)
+            ->whereHas('batchSchedule.batchSubject', fn ($query) => $query->where('batch_subject_id', $batchSubject->id))
             ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
             ->with([
                 'batchSchedule.schoolPeriod',
@@ -44,10 +77,21 @@ class LessonPlanController extends Controller
             $weeklyBatchSessions[$weekKey] = $batchSessions;
         }
 
+        $months = collect(range(1, 12))->map(function ($month) {
+            return [
+                'value' => Carbon::today()->month($month)->format('Y-m'),
+                'label' => Carbon::today()->month($month)->format('F'),
+            ];
+        });
+
         return Inertia::render('LessonPlans/Index', [
             'batch_sessions' => $weeklyBatchSessions,
             'batch' => Batch::find($batchId)->load('level'),
+            'subjects' => $teacherSubjects,
             'weeks_in_month' => $weeksInMonth,
+            'lesson_plan_subject' => $batchSubject,
+            'months' => $months,
+            'selected_month' => $currentMonth->format('Y-m'),
         ]);
     }
 
