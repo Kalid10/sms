@@ -34,7 +34,7 @@ class SubjectController extends Controller
         ]);
     }
 
-    public function show(Subject $subject): Response
+    public function show(Subject $subject, Request $request): Response
     {
         return Inertia::render('Subjects/Single', [
             'subject' => $subject,
@@ -57,7 +57,7 @@ class SubjectController extends Controller
                     ]),
                 ])
                 ->values(),
-            'teacher' => Inertia::lazy(fn () => $subject->teachers()),
+            'teacher' => Inertia::lazy(fn () => $subject->teachers($request->input('search'))),
         ]);
     }
 
