@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -30,6 +31,11 @@ class Semester extends Model
     public function schoolYear(): BelongsTo
     {
         return $this->belongsTo(SchoolYear::class);
+    }
+
+    public function quarters(): HasMany
+    {
+        return $this->hasMany(Quarter::class);
     }
 
     public function getActivitylogOptions(): LogOptions
