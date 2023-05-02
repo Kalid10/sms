@@ -41,4 +41,9 @@ class LevelCategory extends Model
 
         return $this->getSchoolPeriodsBySchoolYearId($schoolYear->id);
     }
+
+    public function assessmentTypes(): HasMany
+    {
+        return $this->hasMany(AssessmentType::class);
+    }
 }

@@ -14,8 +14,8 @@ class AssessmentType extends Model
     protected $fillable = [
         'name',
         'percentage',
-        'minimum_number',
-        'maximum_number',
+        'min_assessments',
+        'max_assessments',
         'customizable',
         'school_year_id',
         'level_category_id',

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedTinyInteger('percentage');
-            $table->unsignedTinyInteger('minimum_number');
-            $table->unsignedTinyInteger('maximum_number');
+            $table->unsignedTinyInteger('min_assessments');
+            $table->unsignedTinyInteger('max_assessments');
             $table->boolean('customizable')->default(true);
             $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();
             $table->foreignId('level_category_id')->constrained('level_categories')->cascadeOnDelete();
