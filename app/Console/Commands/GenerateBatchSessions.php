@@ -32,6 +32,6 @@ class GenerateBatchSessions extends Command
             return;
         }
 
-        \App\Helpers\GenerateBatchSessions::generate($duration);
+        \App\Helpers\GenerateBatchSessions::generate($this, $duration);
     }
 }

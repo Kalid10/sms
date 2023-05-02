@@ -4,17 +4,19 @@ namespace App\Helpers;
 
 use App\Models\BatchSession;
 use App\Models\Level;
-use Illuminate\Support\Facades\Log;
 
 class GenerateBatchSessions
 {
-    public static function generate(string $duration = 'weekly'): void
+    public static function generate($command, string $duration = 'weekly'): void
     {
         // Get the dates for the next week or month
         $nextDates = $duration === 'monthly' ? self::getNextMonthDates() : self::getNextWeekDates();
 
         // Set the chunk size
-        $chunkSize = 3;
+        $chunkSize = 1;
+
+        // Add memory limit
+        ini_set('memory_limit', '250');
 
         // Use chunk to process levels in smaller parts
         Level::orderBy('id')->chunk($chunkSize, function ($levels) use ($nextDates) {
@@ -40,7 +42,13 @@ class GenerateBatchSessions
             });
         });
 
-        Log::info('Batch sessions for the next '.$duration.' have been generated.');
+        $duration = $duration === 'monthly' ? 'month' : 'week';
+        $message = 'Batch sessions generated for the next '.$duration.'.';
+        $message .= ' Total batch sessions generated: '.count($nextDates);
+        $message .= ' Memory used: '.memory_get_peak_usage(true) / 1024 / 1024;
+        $message .= ' MB. Memory limit: '.ini_get('memory_limit');
+
+        $command->info($message);
     }
 
     /**
