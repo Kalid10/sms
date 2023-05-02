@@ -35,7 +35,7 @@ class BatchSessionHelper
             if (is_null($batchSession)) {
                 $batchSessionInRange = self::findBatchSessionInRange($batch);
 
-                // IF no BatchSession that overlaps with the current time
+                // If no BatchSession that overlaps with the current time
                 // is found, find and store the next upcoming BatchSession
                 if (is_null($batchSessionInRange)) {
                     $batchSessionInRange = self::findUpcomingBatchSession($batch);
