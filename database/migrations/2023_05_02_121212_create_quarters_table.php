@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('quarters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->foreignId('semester_id')->constrained()->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
