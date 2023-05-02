@@ -64,6 +64,7 @@
         </button>
         <button class="h-14 bg-orange-800 p-1 text-white" @click="deleteTeacherFeedback">Test delete Teacher Feedback
         </button>
+        <button class="h-14 bg-blue-500 p-1 text-white" @click="transferStudent">Transfer Student</button>
     </div>
 
 </template>
@@ -1038,6 +1039,23 @@ function deleteTeacherFeedback() {
         }
     })
 }
+
+function transferStudent() {
+    router.post('batches/students/transfer', {
+            destination_batch_id: 2,
+            student_id: 21,
+        },
+        {
+            onSuccess: () => {
+                console.log("Success")
+            },
+            onError: (error) => {
+                console.log("Error")
+                console.log(error)
+            }
+        })
+}
+
 </script>
 
 <style>
