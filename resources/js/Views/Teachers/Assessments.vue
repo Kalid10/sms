@@ -39,13 +39,17 @@
                     </div>
                 </div>
 
-                <div class="flex w-3/12 flex-col uppercase">
-                    <div class="flex font-light">
+                <div class="flex w-3/12 flex-col space-y-2">
+                    <div class="flex font-light uppercase">
                         <div class="mr-2 text-3xl font-bold">{{ item.maximum_point }}</div>
                         <div class="flex flex-col space-y-0.5 text-xs font-medium">
                             <div>MAX</div>
                             <div>POINTS</div>
                         </div>
+                    </div>
+                    <div
+                        class="text-xs text-neutral-600 underline-offset-1 hover:cursor-pointer hover:text-black hover:underline">
+                        LessonPlan #{{ item.id }}
                     </div>
                 </div>
             </div>
