@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('min_students');
             $table->integer('max_students');
             $table->unique(['level_id', 'school_year_id', 'section']);
+            $table->timestamp('session_last_synced')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
