@@ -79,6 +79,13 @@ class TeacherController extends Controller
             'batchSubjects.batch.level.levelCategory:id,name',
             'feedbacks',
             'feedbacks.author:id,name',
+            'assessments' => function ($query) {
+                $query->orderBy('created_at', 'desc')->limit(5);
+            },
+            'assessments.assessmentType',
+            'assessments.batchSubject.batch:id,section,level_id',
+            'assessments.batchSubject.batch.level:id,name,level_category_id',
+            'assessments.batchSubject.subject:id,full_name',
         ])->select('id', 'user_id')->findOrFail($id);
 
         return Inertia::render('Teachers/Single', [

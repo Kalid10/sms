@@ -71,7 +71,7 @@
         <div class="flex min-h-screen w-10/12 flex-col items-center bg-gray-50/30">
 
             <div class="w-11/12">
-                <Heading class="mb-7 mt-3 py-5 text-start text-6xl">Home</Heading>
+                <div class="my-7 text-start text-6xl font-semibold">Home</div>
             </div>
             <div class="mt-4 grid w-11/12 grid-cols-12 gap-12">
                 <Assessments class="col-span-7"/>

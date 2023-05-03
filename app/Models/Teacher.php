@@ -60,4 +60,14 @@ class Teacher extends Model
             'batch_session_id' // Foreign key on LessonPlan table
         );
     }
+
+    public function assessments(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Assessment::class,
+            BatchSubject::class,
+            'teacher_id', // Foreign key on BatchSession table
+            'batch_subject_id' // Foreign key on Assessment table
+        );
+    }
 }

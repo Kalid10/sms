@@ -1,13 +1,67 @@
 <template>
-    <div class="b h-32 min-w-full rounded-lg">
-        <div class="text-2xl font-medium">Assessments</div>
+    <div class="h-32 min-w-full rounded-lg">
+        <div class="flex w-11/12 justify-between xl:w-10/12">
+            <div class="text-2xl font-medium">Recent Assessments</div>
+            <div
+                class="flex w-fit items-center justify-center space-x-1 rounded-md px-3 text-sm font-medium underline underline-offset-2 hover:scale-105 hover:cursor-pointer">
+                <div>SEE ALL</div>
+            </div>
+        </div>
+
+        <div class="mt-2 flex w-10/12 flex-col justify-center divide-y-2 py-2">
+            <div
+                v-for="(item,index) in teacher.assessments"
+                :key="index"
+                class="mt-2 flex items-center justify-evenly py-2">
+
+                <div class="flex w-2/12 flex-col items-center justify-center text-center">
+                    <div
+                        class="flex h-10 w-10 items-center justify-center rounded-xl">
+                        <component
+                            :is="getIconAndColor(item.assessment_type.name).icon"
+                            :class="getIconAndColor(item.assessment_type.name).color" class="w-5"/>
+                    </div>
+                    <div class="mt-1.5 text-xs font-light uppercase">
+                        {{ item.batch_subject.batch.level.name }}{{ item.batch_subject.batch.section }}
+                    </div>
+                </div>
+
+                <div class="flex w-7/12 flex-col space-y-4">
+                    <div class="flex w-full flex-col justify-between space-x-4">
+                        <div class="font-medium">{{ item.title }}</div>
+                    </div>
+                    <div class="flex space-x-1.5 text-start text-sm font-light">
+                        <div>{{ item.batch_subject.subject.full_name }}</div>
+                        <div class="font-medium">{{ item.assessment_type.name }}</div>
+                        <div>
+                            <span class="font-base">on, </span>{{ moment(item.due_date).format('dddd MMMM Do') }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex w-3/12 flex-col uppercase">
+                    <div class="flex font-light">
+                        <div class="mr-2 text-3xl font-bold">{{ item.maximum_point }}</div>
+                        <div class="flex flex-col space-y-0.5 text-xs font-medium">
+                            <div>MAX</div>
+                            <div>POINTS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <Modal v-model:view="showModal">
             <FormElement title="Assessment Name" class="my-2" @submit="handleSubmit">
-
+                <TextInput v-model="form.title" placeholder="Add title for the assessment" label="Title"/>
+                <TextArea
+                    v-model="form.description" :rows="7" label="Description"
+                    placeholder="Add description for the assessment"/>
+                <TextInput
+                    v-model="form.maximum_point" placeholder="Maximum Point" label="Maximum Point"
+                    type="number"/>
                 <DatePicker v-model="form.due_date" placeholder="Due Date"/>
 
-                <!--                Todo: Change the select options to SelectInput component-->
                 <select v-model="form.assessment_type_id">
                     <option
                         v-for="type in selected_batch_assessment_types" :key="type.id"
@@ -24,23 +78,27 @@
                         {{ batch_subject.batch.section }}
                     </option>
                 </select>
-
             </FormElement>
         </Modal>
-
-        <div class="flex justify-center">
-            <PrimaryButton class="my-2 w-fit px-5" @click="showModal = true">View Assessments</PrimaryButton>
-        </div>
     </div>
 </template>
-
 <script setup>
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import FormElement from "@/Components/FormElement.vue";
 import {computed, onMounted, ref} from "vue";
 import Modal from "@/Components/Modal.vue";
 import {useForm, usePage} from "@inertiajs/vue3";
 import DatePicker from "@/Components/DatePicker.vue";
+import TextInput from "@/Components/TextInput.vue";
+import TextArea from "@/Components/TextArea.vue";
+import {
+    BookOpenIcon,
+    ClipboardDocumentCheckIcon,
+    DocumentChartBarIcon,
+    DocumentTextIcon,
+    HomeIcon,
+    PencilIcon
+} from "@heroicons/vue/24/solid";
+import moment from "moment";
 
 const showModal = ref(false);
 const teacher = usePage().props.teacher;
@@ -57,11 +115,13 @@ const selected_batch_assessment_types = computed(() => {
     return [];
 });
 
-
 const form = useForm({
     assessment_type_id: '',
     batch_subject_id: teacher.batch_subjects.length > 0 ? teacher.batch_subjects[0].id : '',
-    due_date: new Date()
+    due_date: new Date(),
+    title: '',
+    description: '',
+    maximum_point: ''
 });
 
 onMounted(() => {
@@ -75,9 +135,23 @@ function handleSubmit() {
         }
     });
 }
+
+function getIconAndColor(name) {
+    switch (name) {
+        case "Tests":
+            return {icon: DocumentTextIcon, color: 'fill-orange-500'};
+        case "Homework":
+            return {icon: ClipboardDocumentCheckIcon, color: 'fill-red-500'};
+        case "Classwork":
+            return {icon: PencilIcon, color: 'fill-cyan-600'};
+        case "Final Quarterly Exam":
+            return {icon: DocumentChartBarIcon, color: 'fill-yellow-500'};
+        case "Final Exam":
+            return {icon: BookOpenIcon, color: 'fill-teal-600'};
+        default:
+            return {icon: HomeIcon, color: 'fill-emerald-600'};
+    }
+}
 </script>
-
-
 <style scoped>
-
 </style>
