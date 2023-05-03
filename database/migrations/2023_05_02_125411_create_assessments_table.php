@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('assessments', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->unsignedTinyInteger('maximum_point');
             $table->foreignId('assessment_type_id')->constrained()->cascadeOnDelete();
             $table->foreignId('batch_subject_id')->constrained()->cascadeOnDelete();
             $table->foreignId('quarter_id')->constrained()->cascadeOnDelete();
