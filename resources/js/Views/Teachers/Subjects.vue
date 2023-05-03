@@ -1,11 +1,12 @@
 <template>
     <div>
         <Heading size="lg">Subjects</Heading>
-        <div v-if="uniqueSubjectsAndLevels.length > 0" class="flex w-full flex-wrap items-center space-x-1.5">
+        <div v-if="uniqueSubjectsAndLevels.length > 0" class="flex w-full flex-col items-center space-y-3 space-x-1.5">
             <div
                 v-for="(item, index) in uniqueSubjectsAndLevels" :key="index"
-                class="m-0.5 mt-3 w-full lg:w-1/4">
-                <Card :title="item.subject" :subtitle="item.levels" class="min-w-full"/>
+                class="m-0.5 mt-3 w-full">
+                <div class="font-medium">{{ item.subject }}</div>
+                <div class="text-sm font-light">{{ item.levels }}</div>
             </div>
 
         </div>
@@ -19,7 +20,6 @@
 
 <script setup>
 import Heading from "@/Components/Heading.vue";
-import Card from "@/Components/Card.vue";
 import {computed} from "vue";
 import {usePage} from "@inertiajs/vue3";
 

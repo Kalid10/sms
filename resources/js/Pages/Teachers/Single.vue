@@ -1,48 +1,161 @@
 <template>
-    <div class="mx-auto grid w-full grid-cols-12">
+    <div class="flex w-full space-x-1.5">
+        <div class="flex w-2/12 flex-col justify-between rounded-r-md bg-zinc-900 text-white lg:w-80">
+            <div>
+                <div
+                    class="flex h-44 flex-col items-center justify-center">
 
-        <div class="col-span-12 flex h-fit p-2 md:col-span-10">
+                    <div class="flex w-full items-center justify-center space-x-4 space-y-1 py-2 px-1">
+                        <div class="h-full w-fit lg:w-24">
+                            <img
+                                :src="`https://xsgames.co/randomusers/avatar.php?g=${teacher.user.gender}`"
+                                alt="avatar"
+                                class="mx-auto h-full w-full rounded-md object-cover md:w-3/4"
+                            />
+                        </div>
+                        <div class="flex flex-col space-y-2">
 
-            <div class="flex w-fit items-center lg:gap-5">
-                <div class="mr-2 w-fit lg:w-full">
-                    <img
-                        :src="`https://xsgames.co/randomusers/avatar.php?g=${teacher.user.gender}`"
-                        alt="avatar"
-                        class="mx-auto aspect-square w-full rounded-full md:w-3/4"
-                    />
+                            <Heading>{{ teacher.user.name }}</Heading>
+                            <div class="flex space-x-1.5 text-sm font-light">
+                                <EnvelopeIcon class="h-5"/>
+                                <span>{{ teacher.user.email }}</span>
+                            </div>
+                            <div class=" flex space-x-1.5 text-sm font-light">
+                                <PhoneIcon class="h-5"/>
+                                <span>  0943104396</span>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
+                <div
+                    class="mt-4 space-y-2 lg:mt-10">
+                    <div
+                        v-for="(item, index) in sidebarItems"
+                        :key="index"
+                        class="flex h-20 w-full items-center justify-between "
+                        :class="index === 0 ? 'font-medium bg-zinc-800 rounded-lg' : 'font-normal'"
+                    >
+                        <div class="flex h-20 w-full items-center justify-center ">
+                            <div class="relative flex w-2/3 items-center text-center hover:cursor-pointer">
+                                <div
+                                    class="relative flex w-full items-center justify-between">
+                                    <component :is="item.icon" class="h-6"/>
 
-
-                <div class="mx-auto flex w-fit flex-col items-center">
-                    <Heading class="!font-semibold" size="lg">{{ teacher.user.name }}</Heading>
-                    <div class="flex w-full lg:gap-2">
-                        <h3 class="max-w-full text-gray-500" size="">{{ teacher.user.email }}</h3>
+                                    <div class="absolute inset-x-2">{{ item.name }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            :class="index === 0 ? 'h-full w-2 bg-neutral-50 pr-0.5 rounded-l-md' : ''"></div>
                     </div>
                 </div>
             </div>
+            <div class="flex flex-col items-center space-y-10 pb-10">
+                <div class="flex w-2/3 flex-col items-center space-y-10 text-center">
+                    <div class="relative flex w-full items-center justify-between">
+                        <ChatBubbleLeftRightIcon class="h-6"/>
+                        <div class="absolute inset-x-2">Support</div>
+                    </div>
+                    <div class="relative flex w-full items-center justify-between">
+                        <PowerIcon class="h-6"/>
+                        <div class="absolute inset-x-2">Logout</div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="mt-4 flex flex-col space-y-3 lg:mt-10 lg:space-y-8">
-        <Assessments/>
 
-        <Subjects/>
+        <div class="flex min-h-screen w-10/12 flex-col items-center bg-gray-50/30">
 
-        <HomeroomClasses/>
+            <div class="w-11/12">
+                <Heading class="mb-7 mt-3 py-5 text-start text-6xl">Home</Heading>
+            </div>
+            <div class="mt-4 grid w-11/12 grid-cols-12 gap-12">
+                <Assessments class="col-span-7"/>
 
-        <Feedbacks/>
+                <div
+                    class="grids-rows-4 col-span-5 flex min-w-full flex-col space-y-3">
+                    <Card
+                        title="LessonPlans"
+                        class="min-w-full"
+                    >
+                        <Heading>Recent Lesson Plans</Heading>
+
+                    </Card>
+                </div>
+
+                <!--                <Feedbacks class="col-span-5"/>-->
+                <!--                <Subjects/>-->
+
+                <!--                <HomeroomClasses/>-->
+
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script setup>
 import Heading from "@/Components/Heading.vue";
-import Subjects from "@/Views/Teachers/Subjects.vue";
-import HomeroomClasses from "@/Views/Teachers/HomeroomClasses.vue";
+// import Subjects from "@/Views/Teachers/Subjects.vue";
+// import HomeroomClasses from "@/Views/Teachers/HomeroomClasses.vue";
 import Feedbacks from "@/Views/Teachers/Feedbacks.vue";
 import {usePage} from "@inertiajs/vue3";
 import Assessments from "@/Views/Teachers/Assessments.vue";
+import {HomeIcon} from "@heroicons/vue/24/solid";
+import {
+    CalendarDaysIcon,
+    ChatBubbleBottomCenterIcon,
+    ChatBubbleLeftRightIcon,
+    ClipboardIcon,
+    Cog6ToothIcon,
+    EnvelopeIcon,
+    PhoneIcon,
+    PowerIcon,
+    UserIcon
+} from "@heroicons/vue/20/solid";
+import Card from "@/Components/Card.vue";
+
 
 const teacher = usePage().props.teacher;
+
+// Populate sidebar items
+const sidebarItems = [
+    {
+        name: "Home",
+        icon: HomeIcon,
+        route: "/teacher",
+    },
+    {
+        name: "Schedule",
+        icon: CalendarDaysIcon,
+        route: "/teacher/subjects",
+    },
+    {
+        name: "Homerooms",
+        icon: UserIcon,
+        route: "/teacher/homeroom-classes",
+    },
+    {
+        name: "Assessments",
+        icon: ClipboardIcon,
+        route: "/teacher/assessments",
+    },
+    {
+        name: "Settings",
+        icon: Cog6ToothIcon,
+        route: "/teacher/settings",
+    },
+    {
+        name: "Feedbacks",
+        icon: ChatBubbleBottomCenterIcon,
+        route: "/teacher/feedbacks",
+    },
+];
+
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <Heading class="my-2">Assessments</Heading>
+    <div class="b h-32 min-w-full rounded-lg">
+        <div class="text-2xl font-medium">Assessments</div>
 
         <Modal v-model:view="showModal">
             <FormElement title="Assessment Name" class="my-2" @submit="handleSubmit">
@@ -28,12 +28,13 @@
             </FormElement>
         </Modal>
 
-        <PrimaryButton class="my-2" @click="showModal = true">Add Assessment</PrimaryButton>
+        <div class="flex justify-center">
+            <PrimaryButton class="my-2 w-fit px-5" @click="showModal = true">View Assessments</PrimaryButton>
+        </div>
     </div>
 </template>
 
 <script setup>
-import Heading from "@/Components/Heading.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import FormElement from "@/Components/FormElement.vue";
 import {computed, onMounted, ref} from "vue";

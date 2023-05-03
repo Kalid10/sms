@@ -2,10 +2,10 @@
     <div id="top-view"></div>
 
     <div class="relative flex h-screen w-full flex-col">
-        <Header @open-drawer="drawerVisible = true"/>
+        <Header v-if="drawerVisible" @open-drawer="drawerVisible = true"/>
         <div
-            class="hide-scrollbar w-full grow overflow-y-auto bg-white p-2 md:p-2"
-            :class="teacherLessonPlanRoute ? 'w-full' : 'container mx-auto flex flex-col gap-12'"
+            class="hide-scrollbar w-full grow overflow-y-auto bg-white"
+            :class="teacherLessonPlanRoute ? 'w-full' : 'container mx-auto flex flex-col gap-12 p-2 md:p-2'"
         >
             <slot/>
         </div>
@@ -22,8 +22,15 @@ import Notification from "@/Components/Notification.vue";
 const drawerVisible = ref(false);
 const page = usePage();
 
-const teacherLessonPlanRoute = computed(() =>
-    page.url.startsWith("/teacher/lesson-plan")
+
+const teacherLessonPlanRoute = computed(() => {
+        if (page.url.startsWith("/teacher/lesson-plan") || page.url.startsWith("/teacher")) {
+            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+            drawerVisible.value = false;
+            return true;
+        }
+        return false;
+    }
 );
 </script>
 
