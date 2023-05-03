@@ -13,7 +13,7 @@ class BatchSessionController extends Controller
     public function batchSessions(Request $request): Response
     {
         $data = $request->validate([
-            'batch_id' => 'integer|exists:batches,id',
+            'batch_id' => 'required|integer|exists:batches,id',
             'date' => 'date',
             'batch_schedule_id' => 'integer|exists:batch_schedules,id',
             'teacher_id' => 'integer|exists:teachers,id',

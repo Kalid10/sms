@@ -15,8 +15,8 @@ class GenerateBatchSessions
         // Set the chunk size
         $chunkSize = 1;
 
-        // Add memory limit
-        ini_set('memory_limit', '250');
+        // Add memory limit to 250 MB
+        ini_set('memory_limit', '250M');
 
         // Use chunk to process levels in smaller parts
         Level::orderBy('id')->chunk($chunkSize, function ($levels) use ($nextDates) {

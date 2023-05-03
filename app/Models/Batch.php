@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Helpers\BatchSessionHelper;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -60,11 +62,34 @@ class Batch extends Model
         return $this->hasManyThrough(BatchSession::class, BatchSchedule::class);
     }
 
+    public function inProgressSession(): BatchSession|null
+    {
+        return $this->sessions->where('status', BatchSession::STATUS_IN_PROGRESS)->first();
+    }
+
+    public function getSessions(string $span = 'now'): BatchSession|Collection|null
+    {
+        BatchSessionHelper::sync($this->load('sessions.schoolPeriod'));
+
+        return match ($span) {
+            'now' => $this->inProgressSession(),
+            'week' => $this->sessions
+                ->where('date', '>=', Carbon::now()->startOfWeek())
+                ->where('date', '<=', Carbon::now()->endOfWeek()),
+            default => $this->sessions,
+        };
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->logOnly(['level_id', 'school_year_id', 'section'])
             ->useLogName('batch');
+    }
+
+    public function isActive(): bool
+    {
+        return $this->school_year_id === SchoolYear::getActiveSchoolYear()->id;
     }
 
     public static function active(array $with = []): Collection
@@ -73,4 +98,8 @@ class Batch extends Model
             ->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
             ->get();
     }
+
+    protected $casts = [
+        'session_last_synced' => 'datetime',
+    ];
 }
