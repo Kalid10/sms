@@ -49,10 +49,15 @@ class DatabaseSeeder extends Seeder
             SchoolScheduleSeeder::class,
             SchoolPeriodSeeder::class,
             BatchSubjectsSeeder::class,
+            // BatchSchedule seeder class is disabled because it will clash when the real batch schedule is generated,
+            // enable it whenever you need small sample data
             //            BatchScheduleSeeder::class,
             BatchSessionSeeder::class,
             BatchStudentSeeder::class,
             TeacherFeedbackSeeder::class,
+            // Run this seeder after populating the batch sessions
+            //            LessonPlanSeeder::class,
+            AssessmentTypeSeeder::class,
         ]);
     }
 }
