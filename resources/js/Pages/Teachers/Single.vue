@@ -75,19 +75,9 @@
             </div>
             <div class="mt-4 grid w-11/12 grid-cols-12 gap-12">
                 <Assessments class="col-span-7"/>
+                <NextClass class="col-span-5 "/>
 
-                <div
-                    class="grids-rows-4 col-span-5 flex min-w-full flex-col space-y-3">
-                    <Card
-                        title="LessonPlans"
-                        class="min-w-full"
-                    >
-                        <Heading>Recent Lesson Plans</Heading>
-
-                    </Card>
-                </div>
-
-                <!--                <Feedbacks class="col-span-5"/>-->
+                <!--                <Feedbacks class="col-span-12"/>-->
                 <!--                <Subjects/>-->
 
                 <!--                <HomeroomClasses/>-->
@@ -106,6 +96,7 @@ import Feedbacks from "@/Views/Teachers/Feedbacks.vue";
 import {usePage} from "@inertiajs/vue3";
 import Assessments from "@/Views/Teachers/Assessments.vue";
 import {HomeIcon} from "@heroicons/vue/24/solid";
+import NextClass from "@/Views/Teachers/NextClass.vue";
 import {
     CalendarDaysIcon,
     ChatBubbleBottomCenterIcon,
@@ -117,7 +108,6 @@ import {
     PowerIcon,
     UserIcon
 } from "@heroicons/vue/20/solid";
-import Card from "@/Components/Card.vue";
 
 
 const teacher = usePage().props.teacher;

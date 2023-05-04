@@ -58,4 +58,8 @@ class SchoolPeriod extends Model
             ->where('is_custom', $custom)
             ->get();
     }
+
+    protected $casts = [
+        'start_time' => 'datetime',
+    ];
 }
