@@ -66,4 +66,9 @@ class Teacher extends Model
     {
         return $this->hasOne(BatchSession::class)->where('status', BatchSession::STATUS_SCHEDULED)->where('date', '>=', now()->toDateString())->orderBy('date', 'asc');
     }
+
+    public function lessonPlans(): HasMany
+    {
+        return $this->hasMany(BatchSession::class, 'teacher_id', 'id')->with('lessonPlan')->whereHas('lessonPlan');
+    }
 }

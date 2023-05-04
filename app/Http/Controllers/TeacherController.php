@@ -91,6 +91,9 @@ class TeacherController extends Controller
             'nextBatchSession.batchSubject.batch.level:id,name',
             'nextBatchSession.batchSubject.subject:id,full_name',
             'nextBatchSession.lessonPlan:id',
+            'lessonPlans',
+            'lessonPlans.batchSchedule.batch.level',
+            'lessonPlans.batchSchedule.batchSubject.subject',
         ])->select('id', 'user_id')->findOrFail($id);
 
         return Inertia::render('Teachers/Single', [

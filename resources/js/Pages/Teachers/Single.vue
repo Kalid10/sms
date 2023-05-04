@@ -76,6 +76,7 @@
             <div class="mt-4 grid w-11/12 grid-cols-12 gap-12">
                 <Assessments class="col-span-7"/>
                 <NextClass class="col-span-5 "/>
+                <LessonPlans class="col-span-6"/>
 
                 <!--                <Feedbacks class="col-span-12"/>-->
                 <!--                <Subjects/>-->
@@ -97,8 +98,10 @@ import {usePage} from "@inertiajs/vue3";
 import Assessments from "@/Views/Teachers/Assessments.vue";
 import {HomeIcon} from "@heroicons/vue/24/solid";
 import NextClass from "@/Views/Teachers/NextClass.vue";
+import LessonPlans from "@/Views/Teachers/LessonPlans.vue";
 import {
     CalendarDaysIcon,
+    CalendarIcon,
     ChatBubbleBottomCenterIcon,
     ChatBubbleLeftRightIcon,
     ClipboardIcon,
@@ -106,7 +109,7 @@ import {
     EnvelopeIcon,
     PhoneIcon,
     PowerIcon,
-    UserIcon
+    UserIcon,
 } from "@heroicons/vue/20/solid";
 
 
@@ -120,9 +123,9 @@ const sidebarItems = [
         route: "/teacher",
     },
     {
-        name: "Schedule",
-        icon: CalendarDaysIcon,
-        route: "/teacher/subjects",
+        name: "Lesson Plan",
+        icon: CalendarIcon,
+        route: "/teacher/feedbacks",
     },
     {
         name: "Homerooms",
@@ -135,14 +138,19 @@ const sidebarItems = [
         route: "/teacher/assessments",
     },
     {
-        name: "Settings",
-        icon: Cog6ToothIcon,
-        route: "/teacher/settings",
+        name: "Schedule",
+        icon: CalendarDaysIcon,
+        route: "/teacher/subjects",
     },
     {
         name: "Feedbacks",
         icon: ChatBubbleBottomCenterIcon,
         route: "/teacher/feedbacks",
+    },
+    {
+        name: "Settings",
+        icon: Cog6ToothIcon,
+        route: "/teacher/settings",
     },
 ];
 
