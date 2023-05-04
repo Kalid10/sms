@@ -1,19 +1,27 @@
 <template>
     <div class="flex min-w-full flex-col items-center space-y-2 py-4 text-center">
-        <div class="flex h-96 w-3/5 flex-col items-center justify-evenly rounded-xl bg-black py-5 text-white">
-            <span class="text-xl font-light">Next Class</span>
-            <span class="text-7xl font-bold">{{
-                    nextClass.batch_subject.batch.level.name
-                }}{{ nextClass.batch_subject.batch.section }}</span>
-            <span class="text-xl font-medium">{{ nextClass.batch_subject.subject.full_name }}</span>
-            <span class="text-xl font-light">{{
-                    nextClass.school_period.name
-                }}th Period {{ moment(nextClass.date).fromNow() }}</span>
+        <div
+            class="flex h-96 w-3/5 flex-col items-center justify-evenly rounded-xl bg-black py-5 text-white">
+            <div v-if="nextClass">
+                <span class="text-xl font-light">Next Class</span>
+                <span class="text-7xl font-bold">{{
+                        nextClass.batch_subject.batch.level.name
+                    }}{{ nextClass.batch_subject.batch.section }}</span>
+                <span class="text-xl font-medium">{{ nextClass.batch_subject.subject.full_name }}</span>
+                <span class="text-xl font-light">{{
+                        nextClass.school_period.name
+                    }}th Period {{ moment(nextClass.date).fromNow() }}</span>
 
-            <div class="font-light hover:cursor-pointer hover:font-medium hover:underline">
+                <div class="font-light hover:cursor-pointer hover:font-medium hover:underline">
                <span v-if="nextClass.lesson_plan"> Lesson
                 Plan #{{ nextClass.lesson_plan_id }}</span>
-                <span v-else> Add LessonPlan</span>
+                    <span v-else> Add LessonPlan</span>
+                </div>
+
+            </div>
+            <div class="px-5 text-xl font-light leading-relaxed">
+                No upcoming classes found! Please check your schedule or contact the <span
+                class="cursor-pointer underline underline-offset-2 hover:font-medium">admin</span> for assistance.
             </div>
             <PrimaryButton class="w-2/3 bg-neutral-800">View Full Schedule</PrimaryButton>
         </div>
