@@ -195,7 +195,7 @@ import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import TextArea from "@/Components/TextArea.vue";
-import {computed, onMounted, ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 import {useForm, usePage} from "@inertiajs/vue3";
 
 const props = defineProps({
@@ -246,7 +246,7 @@ function closeForm() {
 
 function dayLabel(day) {
 
-    let label = ''
+    let label
     day[0].toLowerCase() === 't' ? label = day[0] + day[1] : label = day[0]
     return label.toUpperCase()
 }

@@ -51,11 +51,8 @@
 
 <script setup>
 import {computed, ref, watch} from "vue";
-import Card from "@/Components/Card.vue";
 import {usePage, Link, router} from "@inertiajs/vue3";
-import {levelCategoryLabels, parseLevel} from "@/utils.js";
-import { PlusCircleIcon, ExclamationTriangleIcon, ClockIcon, CalendarIcon } from "@heroicons/vue/24/outline";
-import moment from "moment";
+import {parseLevel} from "@/utils.js";
 import LessonPlanFormModal from "@/Views/LessonPlans/LessonPlanFormModal.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import LessonPlanMonthViewer from "@/Views/LessonPlans/LessonPlanMonthViewer.vue";
