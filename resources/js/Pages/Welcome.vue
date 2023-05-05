@@ -65,6 +65,13 @@
         <button class="h-14 bg-orange-800 p-1 text-white" @click="deleteTeacherFeedback">Test delete Teacher Feedback
         </button>
         <button class="h-14 bg-blue-500 p-1 text-white" @click="transferStudent">Transfer Student</button>
+        <button class="h-14 bg-purple-500 p-1 text-white" @click="createAssessmentType">Test Create Assessment Type
+        </button>
+        <button class="h-14 bg-purple-500 p-1 text-white" @click="updateAssessmentType">Test Update Assessment Type
+        </button>
+        <button class="h-14 bg-purple-500 p-1 text-white" @click="deleteAssessmentType">Test Delete Assessment Type
+        </button>
+        <button class="h-14 bg-purple-500 p-1 text-white" @click="getAssessmentTypes">Test Get Assessment Types</button>
     </div>
 
 </template>
@@ -1044,6 +1051,76 @@ function transferStudent() {
     router.post('batches/students/transfer', {
             destination_batch_id: 2,
             student_id: 21,
+        },
+        {
+            onSuccess: () => {
+                console.log("Success")
+            },
+            onError: (error) => {
+                console.log("Error")
+                console.log(error)
+            }
+        })
+}
+
+function createAssessmentType() {
+    router.post('assessments/type/create', {
+            name: "Test Create Assessment Type",
+            percentage: 10,
+            school_year_id: 4,
+            level_category_id: [2],
+            customizable: false,
+            min_assessments: null,
+            max_assessments: null,
+        },
+        {
+            onSuccess: () => {
+                console.log("Success")
+            },
+            onError: (error) => {
+                console.log("Error")
+                console.log(error)
+            }
+        })
+}
+
+function updateAssessmentType() {
+    router.post('assessments/type/update/' + 5, {
+            name: "Zemmmm Update Assessment Type",
+            percentage: 20,
+            school_year_id: 4,
+            level_category_id: 3,
+            customizable: true,
+            min_assessments: 1,
+            max_assessments: 4,
+        },
+        {
+            onSuccess: () => {
+                console.log("Success")
+            },
+            onError: (error) => {
+                console.log("Error")
+                console.log(error)
+            }
+        })
+}
+
+function deleteAssessmentType() {
+    router.delete('assessments/type/destroy/' + 16, {
+        onSuccess: () => {
+            console.log("Success")
+        },
+        onError: (error) => {
+            console.log("Error")
+            console.log(error)
+        }
+    })
+}
+
+function getAssessmentTypes() {
+    router.get('assessments/type/', {
+            school_year_id: 4,
+            level_category_id: 3,
         },
         {
             onSuccess: () => {
