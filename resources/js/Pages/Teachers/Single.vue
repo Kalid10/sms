@@ -76,8 +76,8 @@
             <div class="mt-4 grid w-11/12 grid-cols-12 gap-12">
                 <Assessments class="col-span-7"/>
                 <NextClass class="col-span-5 "/>
-                <LessonPlans class="col-span-6"/>
-
+                <LessonPlans class="col-span-5"/>
+                <Students class="col-span-4"/>
                 <!--                <Feedbacks class="col-span-12"/>-->
                 <!--                <Subjects/>-->
 
@@ -111,6 +111,7 @@ import {
     PowerIcon,
     UserIcon,
 } from "@heroicons/vue/20/solid";
+import Students from "@/Views/Teachers/Students.vue";
 
 
 const teacher = usePage().props.teacher;

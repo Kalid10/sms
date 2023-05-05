@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="flex w-7/12 flex-col space-y-4">
+                <div class="flex w-8/12 flex-col space-y-4">
                     <div class="flex w-full flex-col justify-between space-x-4">
                         <div class="font-medium">{{ item.title }}</div>
                     </div>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="flex w-3/12 flex-col space-y-2">
+                <div class="flex w-2/12 flex-col items-end space-y-2">
                     <div class="flex font-light uppercase">
                         <div class="mr-2 text-3xl font-bold">{{ item.maximum_point }}</div>
                         <div class="flex flex-col space-y-0.5 text-xs font-medium">

@@ -1,8 +1,10 @@
 <template>
     <div class="flex min-w-full flex-col items-center space-y-2 py-4 text-center">
         <div
-            class="flex h-96 w-3/5 flex-col items-center justify-evenly rounded-xl bg-black py-5 text-white">
-            <div v-if="nextClass">
+            class="flex h-96 w-8/12 flex-col items-center justify-evenly rounded-xl bg-black py-5 text-white xl:w-7/12">
+            <div
+                v-if="nextClass"
+                class="flex h-full w-full flex-col items-center justify-evenly">
                 <span class="text-xl font-light">Next Class</span>
                 <span class="text-7xl font-bold">{{
                         nextClass.batch_subject.batch.level.name
@@ -19,7 +21,7 @@
                 </div>
 
             </div>
-            <div class="px-5 text-xl font-light leading-relaxed">
+            <div v-else class="px-5 text-xl font-light leading-relaxed">
                 No upcoming classes found! Please check your schedule or contact the <span
                 class="cursor-pointer underline underline-offset-2 hover:font-medium">admin</span> for assistance.
             </div>
