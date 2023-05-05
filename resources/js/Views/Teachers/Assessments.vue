@@ -1,5 +1,5 @@
 <template>
-    <div class="h-32 min-w-full rounded-lg">
+    <div class="h-full min-w-full rounded-lg">
         <div class="flex w-11/12 justify-between xl:w-10/12">
             <div class="text-2xl font-medium">Recent Assessments</div>
             <div
@@ -8,50 +8,58 @@
             </div>
         </div>
 
-        <div class="mt-2 flex w-10/12 flex-col justify-center divide-y-2 py-2">
+        <div class="flex h-full flex-col items-center justify-center">
             <div
-                v-for="(item,index) in teacher.assessments"
-                :key="index"
-                class="mt-2 flex items-center justify-evenly py-2">
+                v-if="teacher.assessments.length > 0"
+                class="mt-2 flex w-10/12 flex-col justify-center divide-y-2 py-2">
+                <div
+                    v-for="(item,index) in teacher.assessments"
+                    :key="index"
+                    class="mt-2 flex items-center justify-evenly py-2">
 
-                <div class="flex w-2/12 flex-col items-center justify-center text-center">
-                    <div
-                        class="flex h-10 w-10 items-center justify-center rounded-xl">
-                        <component
-                            :is="getIconAndColor(item.assessment_type.name).icon"
-                            :class="getIconAndColor(item.assessment_type.name).color" class="w-5"/>
+                    <div class="flex w-2/12 flex-col items-center justify-center text-center">
+                        <div
+                            class="flex h-10 w-10 items-center justify-center rounded-xl">
+                            <component
+                                :is="getIconAndColor(item.assessment_type.name).icon"
+                                :class="getIconAndColor(item.assessment_type.name).color" class="w-5"/>
+                        </div>
+                        <div class="mt-1.5 text-xs font-light uppercase">
+                            {{ item.batch_subject.batch.level.name }}{{ item.batch_subject.batch.section }}
+                        </div>
                     </div>
-                    <div class="mt-1.5 text-xs font-light uppercase">
-                        {{ item.batch_subject.batch.level.name }}{{ item.batch_subject.batch.section }}
-                    </div>
-                </div>
 
-                <div class="flex w-8/12 flex-col space-y-4">
-                    <div class="flex w-full flex-col justify-between space-x-4">
-                        <div class="font-medium">{{ item.title }}</div>
+                    <div class="flex w-8/12 flex-col space-y-4">
+                        <div class="flex w-full flex-col justify-between space-x-4">
+                            <div class="font-medium">{{ item.title }}</div>
+                        </div>
+                        <div class="flex space-x-1.5 text-start text-sm font-light">
+                            <div>{{ item.batch_subject.subject.full_name }}</div>
+                            <div class="font-medium">{{ item.assessment_type.name }}</div>
+                            <div>
+                                <span class="font-base">on, </span>{{ moment(item.due_date).format('dddd MMMM Do') }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex space-x-1.5 text-start text-sm font-light">
-                        <div>{{ item.batch_subject.subject.full_name }}</div>
-                        <div class="font-medium">{{ item.assessment_type.name }}</div>
-                        <div>
-                            <span class="font-base">on, </span>{{ moment(item.due_date).format('dddd MMMM Do') }}
+
+                    <div class="flex w-2/12 flex-col items-end space-y-2">
+                        <div class="flex font-light uppercase">
+                            <div class="mr-2 text-3xl font-bold">{{ item.maximum_point }}</div>
+                            <div class="flex flex-col space-y-0.5 text-xs font-medium">
+                                <div>MAX</div>
+                                <div>POINTS</div>
+                            </div>
+                        </div>
+                        <div
+                            class="text-xs text-neutral-600 underline-offset-1 hover:cursor-pointer hover:text-black hover:underline">
+                            LessonPlan #{{ item.id }}
                         </div>
                     </div>
                 </div>
-
-                <div class="flex w-2/12 flex-col items-end space-y-2">
-                    <div class="flex font-light uppercase">
-                        <div class="mr-2 text-3xl font-bold">{{ item.maximum_point }}</div>
-                        <div class="flex flex-col space-y-0.5 text-xs font-medium">
-                            <div>MAX</div>
-                            <div>POINTS</div>
-                        </div>
-                    </div>
-                    <div
-                        class="text-xs text-neutral-600 underline-offset-1 hover:cursor-pointer hover:text-black hover:underline">
-                        LessonPlan #{{ item.id }}
-                    </div>
-                </div>
+            </div>
+            <div v-else class="flex flex-col space-y-4 ">
+                <div>No Assessments found!</div>
+                <PrimaryButton>Go To Assessments</PrimaryButton>
             </div>
         </div>
 
@@ -103,6 +111,7 @@ import {
     PencilIcon
 } from "@heroicons/vue/24/solid";
 import moment from "moment";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const showModal = ref(false);
 const teacher = usePage().props.teacher;
