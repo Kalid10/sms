@@ -1,7 +1,7 @@
 <template>
 
     <!-- Add/Update Modal -->
-    <Modal v-model:view="modalOpen">
+    <Modal v-model:view="isModalOpen">
         <FormElement :title="modalTitle" @submit="submitForm">
             <div class="flex gap-3">
                 <TextInput
@@ -188,15 +188,14 @@ import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
 import SelectInput from "@/Components/SelectInput.vue";
 
-
-const modalOpen = ref(false);
+const isModalOpen = ref(false);
 const isUpdate = ref(false);
 const filterByLevelCategory = ref(null);
 
 function openAddModal() {
     isUpdate.value = false;
     form.reset();
-    modalOpen.value = true;
+    isModalOpen.value = true;
 }
 
 function openUpdateModal(row) {
@@ -208,7 +207,7 @@ function openUpdateModal(row) {
     form.customizable = row.customizable;
     form.min_assessments = row.min_assessments;
     form.max_assessments = row.max_assessments;
-    modalOpen.value = true;
+    isModalOpen.value = true;
 }
 
 const modalTitle = computed(() => (isUpdate.value ? "Update Assessment Type" : "Add Assessment Type"));
@@ -231,7 +230,7 @@ function toggleDialogBox(id) {
 }
 
 const assessmentTypes = computed(() => {
-    return usePage().props.assessmentTypes.map((assessment_type) => {
+    return usePage().props.assessment_types.map((assessment_type) => {
         return {
             ...assessment_type,
             updated_at: moment(assessment_type.updated_at).fromNow()
@@ -239,7 +238,7 @@ const assessmentTypes = computed(() => {
     })
 })
 
-const level_categories = computed(() => usePage().props.levelCategories)
+const level_categories = computed(() => usePage().props.level_categories)
 
 const levelCategories = computed(() => {
     return [
@@ -310,10 +309,7 @@ function submit() {
     form.post(route('assessments.type.create'), {
         onSuccess: () => {
             form.reset();
-            modalOpen.value = false;
-        },
-        onError: () => {
-            console.log('error');
+            isModalOpen.value = false;
         },
     });
 }
@@ -326,7 +322,7 @@ function update(id) {
     form.post(route('assessments.type.update', id), {
         onSuccess: () => {
             form.reset();
-            modalOpen.value = false;
+            isModalOpen.value = false;
         },
     });
 }
@@ -334,7 +330,6 @@ function update(id) {
 const remove = () => {
     router.delete('/assessments/type/destroy/' + selectedAssessmentId.value, {
         onFinish: () => {
-            console.log(selectedAssessmentId.value);
             isDialogBoxOpen.value = false;
             selectedAssessmentId.value = null;
         },

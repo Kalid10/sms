@@ -20,8 +20,8 @@ class AssessmentTypeController extends Controller
         $levelCategories = LevelCategory::all();
 
         return Inertia::render('Assessment/AssessmentTypes/Index', [
-            'assessmentTypes' => $assessmentTypes,
-            'levelCategories' => $levelCategories,
+            'assessment_types' => $assessmentTypes,
+            'level_categories' => $levelCategories,
         ]);
     }
 
