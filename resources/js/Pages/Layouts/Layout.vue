@@ -4,8 +4,8 @@
     <div class="relative flex h-screen w-full flex-col">
         <Header @open-drawer="drawerVisible = true"/>
         <div
-            class="hide-scrollbar w-full grow overflow-y-auto bg-white p-2 md:p-2"
-            :class="teacherLessonPlanRoute ? 'w-full' : 'container mx-auto flex flex-col gap-12'"
+            class="hide-scrollbar w-full grow overflow-y-auto bg-white"
+            :class="teacherLessonPlanRoute ? 'p-0' : 'p-2 container mx-auto flex flex-col gap-12'"
         >
             <slot/>
         </div>
