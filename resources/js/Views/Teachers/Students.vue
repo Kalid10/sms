@@ -1,8 +1,9 @@
 <template>
-    <div class="mt-16 flex max-w-full flex-col space-y-2 rounded-md">
-        <div class="flex h-28 flex-col justify-between rounded-t-md bg-black px-4 pt-3 pb-3.5 text-white">
-            <div class="text-2xl font-medium">Students</div>
-            <div class="flex w-full justify-between space-x-6 text-black">
+    <div class="mt-16 flex max-w-full flex-col space-y-3 rounded-md">
+
+        <div class="flex h-36 flex-col justify-evenly space-y-2 rounded-t-md bg-black pt-3 text-white">
+            <div class="px-4 text-2xl font-medium">Students</div>
+            <div class="flex w-full justify-between space-x-6 px-4 text-black">
                 <TextInput
                     v-model="searchText" placeholder="Search Student"
                     class="w-6/12 rounded-lg text-sm"/>
@@ -11,10 +12,8 @@
                     v-model="selectedBatchSubject" class="w-6/12" :options="subjectGradeOptions"
                     placeholder=""/>
             </div>
-        </div>
-        <div v-if="students.length > 0" class="flex flex-col items-center justify-center divide-y-2">
             <div
-                class="flex h-10 w-full items-center justify-evenly rounded-md text-center text-sm">
+                class="flex h-14 w-full items-center justify-evenly rounded-sm text-center font-light text-white">
                 <div
                     class="w-6/12">
                     Name
@@ -23,6 +22,8 @@
                 <div class="w-2/12">Attendance</div>
                 <div class="w-2/12">Conduct</div>
             </div>
+        </div>
+        <div v-if="students.length > 0" class="flex flex-col items-center justify-center divide-y-2">
 
             <div
                 v-for="(item, index) in students"
@@ -33,7 +34,7 @@
                     @click="$inertia.get('/teacher/student/2')">
                     {{ item.user.name }}
                 </div>
-                <div class="w-2/12  font-bold">60</div>
+                <div class="w-2/12 font-medium">60</div>
                 <div class="w-2/12">11/12</div>
                 <div class="w-2/12">C</div>
             </div>
