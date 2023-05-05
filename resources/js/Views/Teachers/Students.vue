@@ -39,7 +39,7 @@
                 <div class="w-2/12">C</div>
             </div>
         </div>
-        <div v-else class="flex h-full w-full flex-col items-center justify-center rounded-md text-center">
+        <div v-else class="flex h-full w-full flex-col items-center justify-center rounded-md pt-2 text-center">
             <div class="mb-5 w-full font-light">No Students Found!</div>
             <PrimaryButton @click="$inertia.get('/teacher/students')"> View All Students</PrimaryButton>
         </div>

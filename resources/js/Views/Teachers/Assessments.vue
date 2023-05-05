@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div v-else class="flex flex-col space-y-4 ">
-                <div>No Assessments found!</div>
+                <div>No Assessments Found!</div>
                 <PrimaryButton>Go To Assessments</PrimaryButton>
             </div>
         </div>
