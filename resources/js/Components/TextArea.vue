@@ -9,7 +9,8 @@
         <textarea
             :rows="rows"
             :placeholder="placeholder" :disabled="disabled" :required="required" :value="modelValue"
-            class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-500"
+            :class="leading"
+            class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-400"
             @input="$emit('update:modelValue', $event.target.value)"
         />
         <span v-if="error" class="text-xs text-negative-50">
@@ -47,6 +48,10 @@ const props = defineProps({
     rows: {
         type: Number,
         default: 5
+    },
+    leading: {
+        type: String,
+        default: null
     }
 })
 

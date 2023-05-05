@@ -43,6 +43,8 @@ module.exports = {
             },
             animation: {
                 'slide-down': 'slideDown 150ms ease-out forwards',
+                'slide-left': 'slideLeft 150ms ease-out',
+                'darken': 'darken 150ms ease-out forwards',
                 'scale-up': 'scaleUp 150ms ease-out forwards',
             },
             keyframes: {
@@ -50,9 +52,17 @@ module.exports = {
                     '0%': {transform: 'translateY(-100%)'},
                     '100%': {transform: 'translateY(0%)'}
                 },
+                slideLeft: {
+                    '0%': {transform: 'translateX(100%)'},
+                    '100%': {transform: 'translateX(0%)'}
+                },
                 scaleUp: {
                     '0%': {transform: 'scale(.5)'},
                     '100%': {transform: 'scale(1)'}
+                },
+                darken: {
+                    '0%': {backgroundColor: '#FFFFFF0'},
+                    '100%': {backgroundColor: '#00000025'}
                 }
             }
         },
