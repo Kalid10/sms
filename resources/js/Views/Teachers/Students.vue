@@ -14,10 +14,25 @@
         </div>
         <div v-if="students.length > 0" class="flex flex-col items-center justify-center divide-y-2">
             <div
+                class="flex h-10 w-full items-center justify-evenly rounded-md text-center text-sm">
+                <div
+                    class="w-6/12">
+                    Name
+                </div>
+                <div class="w-2/12">Score</div>
+                <div class="w-2/12">Attendance</div>
+                <div class="w-2/12">Conduct</div>
+            </div>
+
+            <div
                 v-for="(item, index) in students"
                 :key="index"
                 class="flex h-14 w-full items-center justify-evenly rounded-md text-center text-sm">
-                <div class="w-6/12 font-medium">{{ item.user.name }}</div>
+                <div
+                    class="w-6/12 cursor-pointer font-medium hover:font-semibold hover:underline hover:underline-offset-2"
+                    @click="$inertia.get('/teacher/student/2')">
+                    {{ item.user.name }}
+                </div>
                 <div class="w-2/12  font-bold">60</div>
                 <div class="w-2/12">11/12</div>
                 <div class="w-2/12">C</div>
@@ -29,7 +44,7 @@
         </div>
         <div
             v-if="students.length > 0"
-            class="w-full cursor-pointer pr-3 text-end text-sm font-light decoration-neutral-500 underline-offset-2 hover:font-medium"
+            class="w-full cursor-pointer pr-3 text-end text-sm font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium"
             @click="$inertia.get('/teacher/students')">
             View All Students
         </div>

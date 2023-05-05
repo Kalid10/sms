@@ -85,7 +85,7 @@ class TeacherController extends Controller
             'batchSubjects.students' => function ($query) use ($studentSearch) {
                 $query->whereHas('user', function ($userQuery) use ($studentSearch) {
                     $userQuery->where('name', 'LIKE', '%'.$studentSearch.'%');
-                })->take(7);
+                })->take(6);
             },
             'batchSubjects.students.user',
         ])->select('id', 'user_id')
