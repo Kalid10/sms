@@ -47,7 +47,7 @@ class LessonPlanController extends Controller
         $teacherSubjects = BatchSubject::with([
             'subject:id,full_name',
             'batch:id,section,level_id',
-            'batch.level:id,name',
+            'batch.level:id,name,level_category_id',
         ])->where('teacher_id', $teacherId)
             ->whereHas('batch', fn ($query) => $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id))
             ->distinct()
@@ -62,6 +62,7 @@ class LessonPlanController extends Controller
                 'lessonPlan',
             ])
             ->get()
+            ->sortBy('date')
             ->groupBy(function ($batchSession) use ($firstDayOfMonth) {
                 $date = Carbon::parse($batchSession->date);
                 $weekNumber = $date->weekOfYear - $firstDayOfMonth->weekOfYear + 1;

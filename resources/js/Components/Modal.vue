@@ -4,11 +4,12 @@
 
         <div
             :class="{
-                'bg-black/50': backgroundColor === 'black',
-                'bg-black/20': backgroundColor === 'white',
+                'bg-black/50 backdrop-blur': backgroundColor === 'black',
+                'bg-black/20 backdrop-blur': backgroundColor === 'white',
+                'bg-transparent': backgroundColor === 'transparent',
                 'grid place-items-center': placeItemsCenter,
             }"
-            class="fixed z-50 h-screen w-full p-4 backdrop-blur">
+            class="fixed z-50 h-screen w-full p-4">
 
             <div
                 ref="modal"

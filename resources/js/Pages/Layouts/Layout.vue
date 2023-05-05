@@ -5,7 +5,7 @@
         <Header v-if="drawerVisible" @open-drawer="drawerVisible = true"/>
         <div
             class="hide-scrollbar w-full grow overflow-y-auto bg-white"
-            :class="teacherLessonPlanRoute ? 'w-full' : 'container mx-auto flex flex-col gap-12 p-2 md:p-2'"
+            :class="teacherLessonPlanRoute ? 'p-0' : 'p-2 container mx-auto flex flex-col gap-12'"
         >
             <slot/>
         </div>
