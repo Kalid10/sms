@@ -150,7 +150,9 @@ class TeacherController extends Controller
             'nextBatchSession.batchSubject.batch.level:id,name',
             'nextBatchSession.batchSubject.subject:id,full_name',
             'nextBatchSession.lessonPlan:id',
-            'lessonPlans',
+            'lessonPlans' => function ($query) {
+                $query->orderBy('created_at', 'desc')->limit(4);
+            },
             'lessonPlans.batchSchedule.batch.level',
             'lessonPlans.batchSchedule.batchSubject.subject',
         ])->select('id', 'user_id')->findOrFail($id);
