@@ -1,9 +1,11 @@
 <template>
     <div class="mt-16 flex max-w-full flex-col space-y-3 rounded-md">
+        <div class="px-4 text-2xl font-medium">Students</div>
+        <div class="flex h-fit flex-col justify-evenly space-y-2 rounded-sm bg-black pt-4 text-white">
 
-        <div class="flex h-36 flex-col justify-evenly space-y-2 rounded-t-md bg-black pt-3 text-white">
-            <div class="px-4 text-2xl font-medium">Students</div>
-            <div class="flex w-full justify-between space-x-6 px-4 text-black">
+            <div
+                class="flex w-full justify-between space-x-6 px-4 text-black"
+                :class="students.length< 1? 'pb-3' : ''">
                 <TextInput
                     v-model="searchText" placeholder="Search Student"
                     class="w-6/12 rounded-lg text-sm"/>
@@ -13,7 +15,8 @@
                     placeholder=""/>
             </div>
             <div
-                class="flex h-14 w-full items-center justify-evenly rounded-sm text-center font-light text-white">
+                v-if="students.length>0"
+                class="flex h-fit w-full items-center justify-evenly rounded-sm py-3 text-center text-sm font-light text-white">
                 <div
                     class="w-6/12">
                     Name
@@ -40,7 +43,8 @@
             </div>
         </div>
         <div v-else class="flex h-full w-full flex-col items-center justify-center rounded-md pt-2 text-center">
-            <div class="mb-5 w-full font-light">No Students Found!</div>
+            <ExclamationTriangleIcon class="h-6 w-6 text-gray-500"/>
+            <div class="mb-5 mt-2 w-full font-light">No Students Found!</div>
             <PrimaryButton @click="$inertia.get('/teacher/students')"> View All Students</PrimaryButton>
         </div>
         <div
@@ -60,6 +64,7 @@ import SelectInput from "@/Components/SelectInput.vue";
 import debounce from "lodash/debounce";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import {ExclamationTriangleIcon} from "@heroicons/vue/24/outline";
 
 const teacherSubjects = usePage().props.teacher.batch_subjects;
 

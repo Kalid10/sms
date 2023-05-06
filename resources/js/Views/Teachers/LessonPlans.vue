@@ -1,9 +1,9 @@
 <template>
-    <div class="mt-16 flex cursor-pointer flex-col space-y-2">
-        <div class="text-2xl font-medium">Recent Lesson Plans</div>
+    <div class="mt-16 flex cursor-pointer flex-col space-y-2 text-center">
+        <div class=" text-2xl font-medium">Recent Lesson Plans</div>
 
         <div class="flex h-full flex-col items-center justify-center space-y-4">
-            <div v-if="lessonPlans.length > 0" class="flex flex-col items-center space-y-4 rounded-md bg-gray-50 p-4">
+            <div v-if="lessonPlans.length > 0" class="flex flex-col items-center space-y-4 rounded-md p-4">
                 <template v-for="(item, index) in lessonPlans" :key="index">
                     <div
                         class="flex h-24 w-full items-center justify-between rounded-r-lg bg-white shadow-sm hover:scale-105">
@@ -40,7 +40,8 @@
                     View All Lesson Plans
                 </div>
             </div>
-            <div v-else class="flex flex-col space-y-4 ">
+            <div v-else class="flex flex-col items-center space-y-4 ">
+                <ExclamationTriangleIcon class="h-6 w-6 text-gray-500"/>
                 <div>No Lesson Plan Found!</div>
                 <PrimaryButton>Go To Lesson Plans</PrimaryButton>
             </div>
@@ -52,6 +53,7 @@
 import {usePage} from "@inertiajs/vue3";
 import moment from "moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import {ExclamationTriangleIcon} from "@heroicons/vue/24/outline";
 
 const lessonPlans = usePage().props.teacher.lesson_plans;
 </script>

@@ -71,17 +71,36 @@
         <div class="flex min-h-screen w-10/12 flex-col items-center bg-gray-50/30">
 
             <div class="w-11/12">
-                <div class="my-7 text-start text-6xl font-semibold">Home</div>
-            </div>
-            <div class="mt-4 grid w-11/12 grid-cols-12 gap-12">
-                <Assessments class="col-span-7"/>
-                <NextClass class="col-span-5 "/>
-                <LessonPlans class="col-span-5"/>
-                <Students class="col-span-4"/>
-                <!--                <Feedbacks class="col-span-12"/>-->
-                <!--                <Subjects/>-->
+                <!--                <div class="my-7 text-start text-6xl font-semibold">Home</div>-->
 
-                <!--                <HomeroomClasses/>-->
+
+            </div>
+
+            <div class="mt-4 grid h-screen w-11/12 grid-cols-12 grid-rows-3 gap-10 py-5">
+
+                <div class="col-span-8 row-span-3 flex flex-col space-y-5">
+                    <div
+                        class="flex items-center rounded-lg py-7 text-4xl font-light ">
+                        Welcome back,
+
+                        <span class="ml-2 font-semibold">{{ teacher.user.name }}!</span>
+                    </div>
+                    <Assessments class=""/>
+                </div>
+
+                <div class="col-span-4 col-start-9 row-span-1 row-start-1">
+                    <NextClass/>
+                </div>
+
+                <div class="col-span-12 flex justify-between">
+                    <Students class="w-3/12"/>
+                    <LessonPlans class="w-4/12"/>
+                </div>
+
+                <!--                            <Feedbacks class="col-span-12"/>-->
+                <!--                            <Subjects/>-->
+
+                <!--                            <HomeroomClasses/>-->
 
             </div>
         </div>
@@ -97,8 +116,6 @@ import Feedbacks from "@/Views/Teachers/Feedbacks.vue";
 import {usePage} from "@inertiajs/vue3";
 import Assessments from "@/Views/Teachers/Assessments.vue";
 import {HomeIcon} from "@heroicons/vue/24/solid";
-import NextClass from "@/Views/Teachers/NextClass.vue";
-import LessonPlans from "@/Views/Teachers/LessonPlans.vue";
 import {
     CalendarDaysIcon,
     CalendarIcon,
@@ -111,7 +128,9 @@ import {
     PowerIcon,
     UserIcon,
 } from "@heroicons/vue/20/solid";
+import NextClass from "@/Views/Teachers/NextClass.vue";
 import Students from "@/Views/Teachers/Students.vue";
+import LessonPlans from "@/Views/Teachers/LessonPlans.vue";
 
 
 const teacher = usePage().props.teacher;

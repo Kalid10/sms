@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full min-w-full rounded-lg">
+    <div class="h-fit min-w-full rounded-lg">
         <div class="flex w-11/12 justify-between xl:w-10/12">
             <div class="text-2xl font-medium">Recent Assessments</div>
             <div
@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div class="flex h-full flex-col items-center justify-center">
+        <div class="flex flex-col">
             <div
                 v-if="teacher.assessments.length > 0"
                 class="mt-2 flex w-10/12 flex-col justify-center divide-y-2 py-2">
@@ -57,7 +57,8 @@
                     </div>
                 </div>
             </div>
-            <div v-else class="flex flex-col space-y-4 ">
+            <div v-else class="flex flex-col items-center space-y-4 ">
+                <ExclamationTriangleIcon class="h-6 w-6 text-gray-500"/>
                 <div>No Assessments Found!</div>
                 <PrimaryButton>Go To Assessments</PrimaryButton>
             </div>
@@ -110,6 +111,7 @@ import {
     HomeIcon,
     PencilIcon
 } from "@heroicons/vue/24/solid";
+import {ExclamationTriangleIcon} from "@heroicons/vue/24/outline";
 import moment from "moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
