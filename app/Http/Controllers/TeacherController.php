@@ -130,6 +130,7 @@ class TeacherController extends Controller
                 $query->whereHas('batch', function ($batchQuery) {
                     $batchQuery->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
                 });
+                $query->orderBy('updated_at', 'desc')->limit(6);
             },
             'batchSubjects.subject:id,full_name',
             'batchSubjects.batch:id,section,level_id,school_year_id',
