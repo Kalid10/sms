@@ -76,34 +76,38 @@
 
             </div>
 
-            <div class="mt-4 grid h-screen w-11/12 grid-cols-12 grid-rows-3 gap-7 py-5">
 
-                <div class="col-span-8 row-span-3 flex flex-col space-y-5">
-                    <div
-                        class="flex items-center rounded-lg py-7 text-4xl font-light ">
-                        Welcome back,
+            <div class="flex w-11/12 flex-col space-y-10 pt-3">
+                <div
+                    class="flex items-center rounded-lg py-7 text-4xl font-light ">
+                    Welcome back,
 
-                        <span class="ml-2 font-semibold">{{ teacher.user.name }}!</span>
+                    <span class="ml-2 font-semibold">{{ teacher.user.name }}!</span>
+                </div>
+                <div class="flex w-full justify-between">
+                    <div class="w-8/12">
+                        <Assessments/>
                     </div>
-                    <Assessments/>
-                </div>
 
-                <div class="col-span-4 col-start-9 row-span-1 row-start-1">
-                    <NextClass/>
+                    <div class="w-3/12">
+                        <NextClass/>
+                    </div>
                 </div>
-
-                <div class="col-span-12 flex justify-between">
+                <div class="flex justify-between pt-8">
                     <Students class="w-3/12"/>
-                    <Classes class="w-3/12"/>
                     <LessonPlans class="w-4/12"/>
+                    <div class="flex w-4/12 flex-col justify-evenly space-y-2">
+                        <SchoolSchedule class="h-2/5"/>
+                        <Grades/>
+                    </div>
                 </div>
-
-                <!--                            <Feedbacks class="col-span-12"/>-->
-                <!--                            <Subjects/>-->
-
-                <!--                            <HomeroomClasses/>-->
-
             </div>
+
+            <!--                            <Feedbacks class="col-span-12"/>-->
+            <!--                            <Subjects/>-->
+
+            <!--                            <HomeroomClasses/>-->
+
         </div>
 
     </div>
@@ -132,7 +136,9 @@ import {
 import NextClass from "@/Views/Teachers/NextClass.vue";
 import Students from "@/Views/Teachers/Students.vue";
 import LessonPlans from "@/Views/Teachers/LessonPlans.vue";
-import Classes from "@/Views/Teachers/Grades.vue";
+import Grades from "@/Views/Teachers/Grades.vue";
+import Schedule from "@/Views/Teachers/Schedule.vue";
+import SchoolSchedule from "@/Views/Teachers/SchoolSchedule.vue";
 
 
 const teacher = usePage().props.teacher;

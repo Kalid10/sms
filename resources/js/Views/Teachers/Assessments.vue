@@ -1,5 +1,5 @@
 <template>
-    <div class="h-fit min-w-full rounded-lg">
+    <div class="h-fit w-full rounded-lg">
         <div class="flex w-11/12 justify-between xl:w-10/12">
             <div class="text-2xl font-medium">Recent Assessments</div>
             <div
@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex w-full flex-col">
             <div
                 v-if="teacher.assessments.length > 0"
                 class="mt-2 flex w-10/12 flex-col justify-center divide-y-2 py-2">

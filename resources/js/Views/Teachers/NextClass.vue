@@ -1,44 +1,56 @@
 <template>
-    <div class="flex min-w-full flex-col items-center space-y-2 py-6 text-center">
+    <div class="flex w-full flex-col items-center space-y-2 text-center">
         <div
-            class="flex h-fit w-8/12 flex-col items-center justify-evenly space-y-3 rounded-xl bg-black py-10 text-white xl:w-8/12">
+            class="flex h-fit w-full flex-col items-center justify-evenly space-y-3 rounded-xl bg-black py-10 text-white"
+        >
             <div
                 v-if="nextClass"
-                class="flex h-full w-full flex-col items-center justify-evenly space-y-5">
+                class="flex h-full w-full flex-col items-center justify-evenly space-y-5"
+            >
                 <span class="text-xl font-light">Next Class</span>
-                <span class="text-7xl font-bold">{{
-                        nextClass.batch_subject.batch.level.name
-                    }}{{ nextClass.batch_subject.batch.section }}</span>
-                <span class="text-xl font-medium">{{ nextClass.batch_subject.subject.full_name }}</span>
-                <span class="text-xl font-light">{{
-                        nextClass.school_period.name
-                    }}th Period {{ moment(nextClass.date).fromNow() }}</span>
+                <span class="text-7xl font-bold"
+                    >{{ nextClass.batch_subject.batch.level.name
+                    }}{{ nextClass.batch_subject.batch.section }}</span
+                >
+                <span class="text-xl font-medium">{{
+                    nextClass.batch_subject.subject.full_name
+                }}</span>
+                <span class="text-xl font-light"
+                    >{{ nextClass.school_period.name }}th Period
+                    {{ moment(nextClass.date).fromNow() }}</span
+                >
 
-                <div class="font-light hover:cursor-pointer hover:font-medium hover:underline">
-               <span v-if="nextClass.lesson_plan"> Lesson
-                Plan #{{ nextClass.lesson_plan_id }}</span>
+                <div
+                    class="font-light hover:cursor-pointer hover:font-medium hover:underline"
+                >
+                    <span v-if="nextClass.lesson_plan">
+                        Lesson Plan #{{ nextClass.lesson_plan_id }}</span
+                    >
                     <span v-else> Add LessonPlan</span>
                 </div>
-
             </div>
             <div v-else class="px-5 text-xl font-light leading-relaxed">
-                No upcoming classes found! Please check your schedule or contact the <span
-                class="cursor-pointer underline underline-offset-2 hover:font-medium">admin</span> for assistance.
+                No upcoming classes found! Please check your schedule or contact
+                the
+                <span
+                    class="cursor-pointer underline underline-offset-2 hover:font-medium"
+                    >admin</span
+                >
+                for assistance.
             </div>
-            <PrimaryButton class="w-2/3 bg-neutral-800">View Full Schedule</PrimaryButton>
+            <PrimaryButton class="w-2/3 bg-neutral-800"
+                >View Full Schedule</PrimaryButton
+            >
         </div>
     </div>
-
 </template>
 
 <script setup>
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {usePage} from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 import moment from "moment";
 
 const nextClass = usePage().props.teacher.next_batch_session;
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
