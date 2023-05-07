@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Batch;
 use App\Models\BatchSubject;
+use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -49,11 +51,21 @@ class TeacherController extends Controller
         $students = $this->getStudents($id, $request->input('batch_subject_id'), $request->input('search'));
         $teacher = $this->getTeacherDetails($id);
 
+        $schoolScheduleDate = $request->input('school_schedule_date') ?? now();
+        $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
+            ->whereDate('end_date', '>=', Carbon::parse($schoolScheduleDate))
+            ->orderBy('start_date', 'asc')
+            ->take(5)
+            ->get();
+
         return Inertia::render('Teachers/Single', [
             'teacher' => $teacher,
             'batches' => $batches,
             'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),
             'students' => $students,
+            'school_schedule' => $schoolSchedule,
+            'school_schedule_date' => $schoolScheduleDate,
         ]);
     }
 
@@ -140,7 +152,7 @@ class TeacherController extends Controller
             'feedbacks.author:id,name',
             'batchSubjects.students.user',
             'assessments' => function ($query) {
-                $query->orderBy('created_at', 'desc')->limit(5);
+                $query->orderBy('created_at', 'desc')->limit(4);
             },
             'assessments.assessmentType',
             'assessments.batchSubject.batch:id,section,level_id',
