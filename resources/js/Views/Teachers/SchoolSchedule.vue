@@ -1,30 +1,68 @@
 <template>
-    <div class="flex flex-col items-center space-y-1 p-4">
+    <div class="flex w-full flex-col items-center">
         <!--        <div class="px-4 text-2xl font-medium">School Schedule</div>-->
 
-        <div class="flex h-full w-full justify-between rounded-lg shadow-md">
+        <div class="flex h-fit w-full flex-col justify-between rounded-lg">
             <div
-                class="flex h-full w-4/12 flex-col items-center justify-evenly rounded-l-lg bg-black text-white"
+                class="flex h-fit w-full items-center justify-evenly rounded-t-lg bg-black py-2.5 text-white"
             >
-                <ChevronUpIcon
-                    class="w-9 cursor-pointer opacity-20 hover:opacity-100"
-                    @click="changeDate('up')"
-                />
-                <div class="text-6xl font-bold">
-                    {{ moment(selectedDate).format("ddd") }}
+                <div class="flex w-1/12 items-center justify-center">
+                    <ChevronLeftIcon
+                        class="w-9 cursor-pointer opacity-20 hover:opacity-100"
+                        @click="changeDate('down')"
+                    />
                 </div>
-                <div>{{ moment(selectedDate).format("MMMM D YYYY") }}</div>
-                <ChevronDownIcon
-                    class="w-9 cursor-pointer opacity-20 hover:opacity-100"
-                    @click="changeDate('down')"
-                />
-            </div>
-
-            <div class="flex w-7/12 flex-col justify-evenly space-y-1">
-                <div v-for="(item, index) in schoolSchedule" :key="index">
-                    <div class="w-full text-sm">
-                        <span class="font-bold">-</span> {{ item.title }}
+                <div
+                    class="flex h-full w-8/12 items-center justify-center space-x-2.5"
+                >
+                    <div class="text-5xl font-bold">
+                        {{ moment(selectedDate).format("ddd") }}
                     </div>
+                    <div
+                        class="flex h-full flex-col items-center justify-center space-y-1 text-sm font-semibold"
+                    >
+                        <div class="w-full text-xs">
+                            {{ moment(selectedDate).format("MMMM D") }}
+                        </div>
+                        <div>{{ moment(selectedDate).format("YYYY") }}</div>
+                    </div>
+                </div>
+
+                <div class="flex w-1/12 items-center justify-center">
+                    <ChevronRightIcon
+                        class="w-9 cursor-pointer opacity-25 hover:opacity-100"
+                        @click="changeDate('up')"
+                    />
+                </div>
+            </div>
+            <div
+                class="flex w-full flex-col items-center justify-center rounded-b-md px-2 pl-3 shadow-md"
+            >
+                <div class="flex flex-col justify-evenly pt-2">
+                    <div v-for="(item, index) in schoolSchedule" :key="index">
+                        <div
+                            class="flex h-11 w-full items-center justify-center space-x-3 font-light"
+                        >
+                            <CalendarDaysIcon class="w-4" />
+                            <div>{{ item.title }}</div>
+                        </div>
+                    </div>
+
+                    <div
+                        v-if="schoolSchedule.length < 1"
+                        class="flex h-full flex-col items-center justify-center space-y-2"
+                    >
+                        <ExclamationTriangleIcon
+                            class="h-6 w-6 text-gray-500"
+                        />
+                        <div>No Schedule found for today!</div>
+                    </div>
+                </div>
+                <div class="flex h-14 w-full items-center justify-center">
+                    <SecondaryButton
+                        title="View All Schedules"
+                        class="w-11/12 bg-neutral-800 text-white"
+                    />
                 </div>
             </div>
         </div>
@@ -34,7 +72,12 @@
 import { router, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
 import moment from "moment";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/vue/20/solid";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import {
+    CalendarDaysIcon,
+    ExclamationTriangleIcon,
+} from "@heroicons/vue/24/outline";
 
 const schoolSchedule = computed(() => usePage().props.school_schedule);
 
