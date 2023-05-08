@@ -16,7 +16,7 @@ class LevelCategoryController extends Controller
         $levelCategories = LevelCategory::all();
 
         return Inertia::render('Levels/LevelCategory', [
-            'levelCategories' => $levelCategories,
+            'level_categories' => $levelCategories,
         ]);
     }
 

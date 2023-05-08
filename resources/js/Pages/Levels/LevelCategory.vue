@@ -19,10 +19,10 @@
                 </template>
                 <template #row-actions="{ row }">
                     <button @click="editCategory(row)">
-                        <PencilSquareIcon class="h-4 w-4" />
+                        <PencilSquareIcon class="h-4 w-4"/>
                     </button>
                     <button @click="toggleDialogBox(row.id)">
-                        <TrashIcon class="h-4 w-4" />
+                        <TrashIcon class="h-4 w-4"/>
                     </button>
                 </template>
             </CategoryTableElement>
@@ -62,12 +62,12 @@
 <script setup>
 import CategoryPrimaryButton from "@/Components/PrimaryButton.vue";
 import CategoryTableElement from "@/Components/TableElement.vue";
-import { computed, ref } from "vue";
-import { router, useForm, usePage } from "@inertiajs/vue3";
+import {computed, ref} from "vue";
+import {router, useForm, usePage} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/outline";
 import DialogBox from "@/Components/DialogBox.vue";
 
 const addCategory = ref(false);
@@ -101,7 +101,7 @@ const config = [
     },
 ];
 
-const levelCategories = computed(() => usePage().props.levelCategories);
+const levelCategories = computed(() => usePage().props.level_categories);
 
 const form = useForm({
     name: "",
