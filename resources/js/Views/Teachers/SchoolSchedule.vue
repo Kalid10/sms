@@ -93,7 +93,7 @@ const changeDate = (direction) => {
     }
 };
 
-watch(selectedDate, (newValue, oldValue) => {
+watch(selectedDate, (newValue) => {
     const formattedDate = moment(newValue).format("YYYY-MM-DD");
     router.visit("/teacher?school_schedule_date=" + formattedDate, {
         only: ["school_schedule"],

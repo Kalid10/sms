@@ -56,7 +56,7 @@ class TeacherController extends Controller
             ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
             ->whereDate('end_date', '>=', Carbon::parse($schoolScheduleDate))
             ->orderBy('start_date', 'asc')
-            ->take(5)
+            ->take(2)
             ->get();
 
         return Inertia::render('Teachers/Single', [

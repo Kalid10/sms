@@ -1,21 +1,19 @@
 <template>
     <div class="flex w-full flex-col items-center space-y-1 rounded-md">
-        <div class="w-full pl-4 text-start text-2xl font-medium">Grades</div>
         <div
-            class="flex h-fit w-full items-center justify-evenly rounded-sm bg-black py-3 text-center text-sm font-semibold text-white"
+            class="flex h-fit w-full items-center justify-evenly rounded-sm border-b border-gray-200 py-1 text-center font-bold"
         >
             <div class="w-4/12">Grade</div>
             <div class="w-8/12">Subjects</div>
         </div>
 
         <div v-if="grades.length > 0" class="flex w-full flex-col space-y-3">
-            <div
-                class="flex w-full flex-col items-center justify-center divide-y-2"
-            >
+            <div class="flex w-full flex-col items-center justify-center">
                 <div
                     v-for="(item, index) in grades"
                     :key="index"
-                    class="flex h-fit w-full items-center justify-evenly py-3 text-center text-sm"
+                    class="my-1 flex h-fit w-full items-center justify-evenly py-3 text-center text-sm"
+                    :class="index % 2 === 1 ? 'bg-white' : 'bg-gray-50'"
                 >
                     <div class="w-4/12">{{ item.class }}</div>
                     <div class="w-8/12">{{ item.subject }}</div>
@@ -75,7 +73,7 @@ const grades = computed(() => {
     return mergedClasses.map(({ class: className, subjects }) => {
         const limitedSubjects = subjects.slice(0, 3);
 
-        let subjectText = "";
+        let subjectText = ``;
         if (limitedSubjects.length > 1) {
             subjectText = limitedSubjects
                 .slice(0, -1)
