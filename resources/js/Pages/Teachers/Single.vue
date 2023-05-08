@@ -1,95 +1,28 @@
 <template>
-    <div class="flex w-full space-x-1.5">
+    <div class="flex w-full">
         <div
-            class="flex w-2/12 flex-col justify-between rounded-r-md bg-zinc-900 text-white lg:w-80"
+            class="bg-zinc-800 text-white"
+            :class="[
+                isSideBarOpen ? 'w-7/12 lg:w-80' : 'w-1/12 lg:w-20',
+                'transition-all duration-300 ease-in-out',
+                isSideBarOpen ? 'backdrop-blur-md' : '',
+            ]"
+            @click="isSideBarOpen = !isSideBarOpen"
         >
-            <div>
-                <div class="flex h-44 flex-col items-center justify-center">
-                    <div
-                        class="flex w-full items-center justify-center space-x-4 space-y-1 py-2 px-1"
-                    >
-                        <div class="h-full w-fit lg:w-24">
-                            <img
-                                :src="`https://xsgames.co/randomusers/avatar.php?g=${teacher.user.gender}`"
-                                alt="avatar"
-                                class="mx-auto h-full w-full rounded-md object-cover md:w-3/4"
-                            />
-                        </div>
-                        <div class="flex flex-col space-y-2">
-                            <Heading>{{ teacher.user.name }}</Heading>
-                            <div class="flex space-x-1.5 text-sm font-light">
-                                <EnvelopeIcon class="h-5" />
-                                <span>{{ teacher.user.email }}</span>
-                            </div>
-                            <div class="flex space-x-1.5 text-sm font-light">
-                                <PhoneIcon class="h-5" />
-                                <span> 0943104396</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-4 space-y-2 lg:mt-10">
-                    <div
-                        v-for="(item, index) in sidebarItems"
-                        :key="index"
-                        class="flex h-20 w-full items-center justify-between"
-                        :class="
-                            index === 0
-                                ? 'font-medium bg-zinc-800 rounded-lg'
-                                : 'font-normal'
-                        "
-                    >
-                        <div
-                            class="flex h-20 w-full items-center justify-center"
-                        >
-                            <div
-                                class="relative flex w-2/3 items-center text-center hover:cursor-pointer"
-                            >
-                                <div
-                                    class="relative flex w-full items-center justify-between"
-                                >
-                                    <component :is="item.icon" class="h-6" />
-
-                                    <div class="absolute inset-x-2">
-                                        {{ item.name }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            :class="
-                                index === 0
-                                    ? 'h-full w-2 bg-neutral-50 pr-0.5 rounded-l-md'
-                                    : ''
-                            "
-                        ></div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-col items-center space-y-10 pb-10">
-                <div
-                    class="flex w-2/3 flex-col items-center space-y-10 text-center"
-                >
-                    <div
-                        class="relative flex w-full items-center justify-between"
-                    >
-                        <ChatBubbleLeftRightIcon class="h-6" />
-                        <div class="absolute inset-x-2">Support</div>
-                    </div>
-                    <div
-                        class="relative flex w-full items-center justify-between"
-                    >
-                        <PowerIcon class="h-6" />
-                        <div class="absolute inset-x-2">Logout</div>
-                    </div>
-                </div>
-            </div>
+            <SideBar
+                class="sticky top-0"
+                :header="teacher"
+                :main-items="sidebarItems"
+                :footer-items="footerItems"
+                :is-open="isSideBarOpen"
+            />
         </div>
 
         <div
-            class="flex min-h-screen w-10/12 flex-col items-center bg-gray-50/30"
+            class="flex w-full flex-col items-center"
+            :class="isSideBarOpen ? 'w-5/12 lg:w-10/12' : 'w-10/12 lg:w-full'"
         >
-            <div class="flex w-11/12 flex-col space-y-10 pt-3">
+            <div class="flex w-full flex-col space-y-10 pt-3 lg:px-5">
                 <div
                     class="flex items-center rounded-lg py-7 text-4xl font-light"
                 >
@@ -145,7 +78,6 @@
 </template>
 
 <script setup>
-import Heading from "@/Components/Heading.vue";
 // import Subjects from "@/Views/Teachers/Subjects.vue";
 // import HomeroomClasses from "@/Views/Teachers/HomeroomClasses.vue";
 import { usePage } from "@inertiajs/vue3";
@@ -155,11 +87,8 @@ import {
     CalendarDaysIcon,
     CalendarIcon,
     ChatBubbleBottomCenterIcon,
-    ChatBubbleLeftRightIcon,
     ClipboardIcon,
     Cog6ToothIcon,
-    EnvelopeIcon,
-    PhoneIcon,
     PowerIcon,
     UserIcon,
 } from "@heroicons/vue/20/solid";
@@ -169,6 +98,8 @@ import LessonPlans from "@/Views/Teachers/LessonPlans.vue";
 import Grades from "@/Views/Teachers/Grades.vue";
 import SchoolSchedule from "@/Views/Teachers/SchoolSchedule.vue";
 import Feedbacks from "@/Views/Teachers/Feedbacks.vue";
+import SideBar from "@/Pages/Layouts/SideBar.vue";
+import { ref } from "vue";
 
 const teacher = usePage().props.teacher;
 
@@ -210,6 +141,13 @@ const sidebarItems = [
         route: "/teacher/settings",
     },
 ];
+
+const footerItems = [
+    { icon: ChatBubbleBottomCenterIcon, name: "Chat" },
+    { icon: PowerIcon, name: "Logout" },
+];
+
+const isSideBarOpen = ref(false);
 </script>
 
 <style scoped></style>
