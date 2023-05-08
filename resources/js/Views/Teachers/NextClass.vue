@@ -1,13 +1,12 @@
 <template>
-    <div class="flex w-full flex-col items-center space-y-2 text-center">
-        <div
-            class="flex h-fit w-full flex-col items-center justify-evenly space-y-3 rounded-xl bg-black py-10 text-white"
-        >
+    <div
+        class="flex h-full w-full flex-col items-center justify-evenly space-y-1 rounded-xl bg-black text-white"
+    >
+        <span class="text-center text-xl font-light">Next Class</span>
+        <div v-if="nextClass" class="flex w-full justify-evenly">
             <div
-                v-if="nextClass"
-                class="flex h-full w-full flex-col items-center justify-evenly space-y-5"
+                class="flex h-full w-5/12 flex-col items-center justify-evenly space-y-5"
             >
-                <span class="text-xl font-light">Next Class</span>
                 <span class="text-7xl font-bold"
                     >{{ nextClass.batch_subject.batch.level.name
                     }}{{ nextClass.batch_subject.batch.section }}</span
@@ -28,19 +27,36 @@
                     >
                     <span v-else> Add LessonPlan</span>
                 </div>
+
+                <PrimaryButton class="w-9/12 bg-neutral-800"
+                    >View Full Schedule
+                </PrimaryButton>
             </div>
-            <div v-else class="px-5 text-xl font-light leading-relaxed">
-                No upcoming classes found! Please check your schedule or contact
-                the
-                <span
-                    class="cursor-pointer underline underline-offset-2 hover:font-medium"
-                    >admin</span
-                >
-                for assistance.
-            </div>
-            <PrimaryButton class="w-2/3 bg-neutral-800"
-                >View Full Schedule</PrimaryButton
+
+            <div class="h-full w-0.5 bg-neutral-600"></div>
+            <div
+                class="flex w-5/12 flex-col items-center justify-between space-y-2.5"
             >
+                <div class="text-xl font-medium">Last assessment</div>
+                <div class="font-medium">
+                    <span class="text-6xl font-bold">10</span> Pts
+                    <div>Homework</div>
+                </div>
+                <div>Finish reading algebra</div>
+                <div>Monday May 4,2023</div>
+                <PrimaryButton class="w-11/12 bg-neutral-800"
+                    >View All Assessments
+                </PrimaryButton>
+            </div>
+        </div>
+
+        <div v-else class="px-5 text-xl font-light leading-relaxed">
+            No upcoming classes found! Please check your schedule or contact the
+            <span
+                class="cursor-pointer underline underline-offset-2 hover:font-medium"
+                >admin</span
+            >
+            for assistance.
         </div>
     </div>
 </template>
