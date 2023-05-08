@@ -41,10 +41,10 @@
                 <div class="flex flex-col justify-evenly pt-2">
                     <div v-for="(item, index) in schoolSchedule" :key="index">
                         <div
-                            class="flex h-11 w-full items-center justify-center space-x-3 font-light"
+                            class="flex h-11 w-full items-center justify-center space-x-1 font-light"
                         >
-                            <CalendarDaysIcon class="w-4" />
-                            <div>{{ item.title }}</div>
+                            <CalendarDaysIcon class="w-3.5" />
+                            <div class="text-sm">{{ item.title }}</div>
                         </div>
                     </div>
 
@@ -72,12 +72,13 @@
 import { router, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
 import moment from "moment";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {
     CalendarDaysIcon,
-    ExclamationTriangleIcon,
-} from "@heroicons/vue/24/outline";
+    ChevronLeftIcon,
+    ChevronRightIcon,
+} from "@heroicons/vue/20/solid";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 
 const schoolSchedule = computed(() => usePage().props.school_schedule);
 

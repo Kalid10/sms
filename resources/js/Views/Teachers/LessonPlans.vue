@@ -4,7 +4,7 @@
         <div class="flex flex-col items-center justify-center space-y-4">
             <div
                 v-if="lessonPlans.length > 0"
-                class="flex flex-col items-center space-y-4 rounded-md p-4"
+                class="flex flex-col items-center space-y-4 rounded-md py-4"
             >
                 <template v-for="(item, index) in lessonPlans" :key="index">
                     <div

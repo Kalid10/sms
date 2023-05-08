@@ -1,5 +1,6 @@
 <template>
     <div class="flex w-full flex-col items-center space-y-1 rounded-md">
+        <div class="px-4 text-2xl font-medium">Grades</div>
         <div
             class="flex h-fit w-full items-center justify-evenly rounded-sm border-b border-gray-200 py-1 text-center font-bold"
         >

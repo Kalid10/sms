@@ -104,17 +104,34 @@
                         <Assessments class="" />
                     </div>
                     <div class="w-5/12">
-                        <NextClass class="" />
+                        <NextClass />
                     </div>
                 </div>
-                <div class="flex w-full justify-between pt-8">
+                <div class="flex h-full w-full justify-between pt-8">
                     <Students class="w-3/12" />
                     <LessonPlans class="w-4/12" />
-                    <div
-                        class="flex h-full w-3/12 flex-col items-center justify-evenly"
-                    >
-                        <Grades />
-                        <SchoolSchedule class="w-4/5" />
+
+                    <div class="flex h-full w-4/12 flex-col justify-between">
+                        <div class="w-full">
+                            <Grades />
+                        </div>
+
+                        <div class="mt-5 flex w-full justify-between">
+                            <div class="w-6/12">
+                                <div class="w-full text-center font-medium">
+                                    Feedbacks
+                                </div>
+                                <Feedbacks />
+                            </div>
+                            <div class="flex w-5/12 flex-col items-center">
+                                <div
+                                    class="mb-4 w-full text-center font-medium"
+                                >
+                                    School Schedule
+                                </div>
+                                <SchoolSchedule />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -151,6 +168,7 @@ import Students from "@/Views/Teachers/Students.vue";
 import LessonPlans from "@/Views/Teachers/LessonPlans.vue";
 import Grades from "@/Views/Teachers/Grades.vue";
 import SchoolSchedule from "@/Views/Teachers/SchoolSchedule.vue";
+import Feedbacks from "@/Views/Teachers/Feedbacks.vue";
 
 const teacher = usePage().props.teacher;
 
