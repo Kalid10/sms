@@ -24,7 +24,7 @@ class SchoolYearFactory extends Factory
      */
     public function definition()
     {
-        $startYear = $this->faker->unique()->numberBetween(-3, 0);
+        $startYear = $this->faker->unique()->numberBetween(-10, 0);
         $startDate = Carbon::createFromDate(null, 9, 1)->addYears($startYear);
         $endDate = $startYear == 0 ? null : $startDate->copy()->addMonths(10);
         $name = 'School Year '.($startDate->year).'-'.($endDate ? $endDate->year : '');
