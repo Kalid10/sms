@@ -1,9 +1,11 @@
 <template>
-    <div class="flex cursor-pointer flex-col space-y-2 text-center">
-        <div class="text-2xl font-medium">Recent Lesson Plans</div>
-        <div class="flex flex-col items-center justify-center space-y-4">
+    <div class="flex h-full cursor-pointer flex-col space-y-2 text-center">
+        <div v-if="!isLessonPlansEmpty" class="text-2xl font-medium">
+            Recent Lesson Plans
+        </div>
+        <div class="flex h-full flex-col items-center justify-center space-y-4">
             <div
-                v-if="lessonPlans.length > 0"
+                v-if="!isLessonPlansEmpty"
                 class="flex flex-col items-center space-y-4 rounded-md py-4"
             >
                 <template v-for="(item, index) in lessonPlans" :key="index">
@@ -71,10 +73,18 @@
                     View All Lesson Plans
                 </div>
             </div>
-            <div v-else class="mt-8 flex flex-col items-center space-y-6">
+            <div
+                v-else
+                class="flex h-full flex-col items-center justify-center space-y-6"
+            >
                 <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
                 <div>No Lesson Plan Found!</div>
-                <PrimaryButton>Go To Lesson Plans</PrimaryButton>
+                <div
+                    class="w-fit cursor-pointer text-sm font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium"
+                    @click="$inertia.get('/teacher/lesson-plan')"
+                >
+                    View All Lesson Plans
+                </div>
             </div>
         </div>
     </div>
@@ -83,10 +93,14 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 import moment from "moment";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
+import { computed } from "vue";
 
 const lessonPlans = usePage().props.teacher.lesson_plans;
+
+const isLessonPlansEmpty = computed(() => {
+    return lessonPlans.length === 0;
+});
 </script>
 
 <style scoped></style>
