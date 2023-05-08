@@ -8,7 +8,7 @@
             >
                 <div class="w-4/12">Name</div>
                 <div class="w-2/12">Score</div>
-                <div class="w-2.5/12">Attendance</div>
+                <div class="w-2.5/12">Attendance %</div>
                 <div class="w-2.5/12">Conduct</div>
             </div>
             <div
@@ -44,8 +44,9 @@
                 >
                     {{ item.user.name }}
                 </div>
-                <div class="w-2/12 font-medium">60</div>
-                <div class="w-3/12">11/12</div>
+                <!--                TODO:Add the calculated score-->
+                <div class="w-3/12">60</div>
+                <div class="w-2/12">{{ item.attendance_percentage }}%</div>
                 <div class="w-2/12">C</div>
             </div>
         </div>
@@ -56,8 +57,8 @@
             <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
             <div class="mb-5 mt-2 w-full font-light">No Students Found!</div>
             <PrimaryButton @click="$inertia.get('/teacher/students')">
-                View All Students</PrimaryButton
-            >
+                View All Students
+            </PrimaryButton>
         </div>
         <div
             v-if="students.length > 0"
@@ -125,7 +126,6 @@ const debouncedSearch = debounce(updateStudents, 300);
 watch(searchText, () => {
     debouncedSearch();
 });
-
 watch(selectedBatchSubject, () => {
     updateStudents();
 });

@@ -100,14 +100,21 @@ class TeacherController extends Controller
                 })->take(6);
             },
             'batchSubjects.students.user',
+            'batchSubjects.students.batches',
         ])->select('id', 'user_id')
             ->where('id', $id)
             ->first()
             ->batchSubjects
             ->map(function ($batchSubject) use ($studentSearch) {
+                $students = $batchSubject->students->map(function ($student) {
+                    $student->attendance_percentage = 100 - $student->absenteePercentage();
+
+                    return $student;
+                });
+
                 return [
                     'batch_subject_id' => $batchSubject->id,
-                    'students' => $batchSubject->students,
+                    'students' => $students,
                     'search' => $studentSearch ?? '',
                 ];
             });
