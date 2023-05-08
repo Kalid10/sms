@@ -18,11 +18,13 @@
             />
         </div>
 
-        <div
-            class="flex w-full flex-col items-center"
-            :class="isSideBarOpen ? 'w-5/12 lg:w-10/12' : 'w-10/12 lg:w-full'"
-        >
-            <div class="flex w-full flex-col space-y-10 pt-3 lg:px-5">
+        <div class="flex w-full flex-col items-center">
+            <div
+                :class="
+                    isSideBarOpen ? 'w-5/12 lg:w-full' : 'w-10/12 lg:w-full'
+                "
+                class="flex w-full flex-col space-y-10 pt-3 lg:px-12"
+            >
                 <div
                     class="flex items-center rounded-lg py-7 text-4xl font-light"
                 >

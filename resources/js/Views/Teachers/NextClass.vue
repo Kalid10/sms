@@ -2,10 +2,14 @@
     <div
         class="flex h-full w-full flex-col items-center justify-evenly space-y-1 rounded-xl bg-black text-white"
     >
-        <div class="flex w-full justify-between text-center font-light">
+        <div
+            v-if="nextClass"
+            class="flex w-full justify-between text-center font-light"
+        >
             <div class="w-1/2">Next Class</div>
             <div class="w-1/2">Last Assessment</div>
         </div>
+
         <div v-if="nextClass" class="flex w-full justify-evenly">
             <div
                 class="flex h-full w-5/12 flex-col items-center justify-evenly space-y-5"
@@ -63,7 +67,10 @@
             </div>
         </div>
 
-        <div v-else class="px-5 text-xl font-light leading-relaxed">
+        <div
+            v-else
+            class="text-center text-xl font-light leading-relaxed lg:w-8/12"
+        >
             No upcoming classes found! Please check your schedule or contact the
             <span
                 class="cursor-pointer underline underline-offset-2 hover:font-medium"
