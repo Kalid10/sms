@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assessment;
 use App\Models\Batch;
 use App\Models\BatchSubject;
+use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
@@ -51,6 +53,15 @@ class TeacherController extends Controller
         $students = $this->getStudents($id, $request->input('batch_subject_id'), $request->input('search'));
         $teacher = $this->getTeacherDetails($id);
 
+        if (isset($teacher->nextBatchSession)) {
+            // Get the last assessment of the next batch session using the batch subject id
+            $lastAssessment = Assessment::where('batch_subject_id', $teacher->nextBatchSession->batchSubject->id)
+                ->where('quarter_id', Quarter::getActiveQuarter()->id)
+                ->orderBy('created_at', 'desc')
+                ->first()
+                ->load('assessmentType:id,name');
+        }
+
         $schoolScheduleDate = $request->input('school_schedule_date') ?? now();
         $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
             ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
@@ -66,6 +77,7 @@ class TeacherController extends Controller
             'students' => $students,
             'school_schedule' => $schoolSchedule,
             'school_schedule_date' => $schoolScheduleDate,
+            'last_assessment' => $lastAssessment ?? null,
         ]);
     }
 
