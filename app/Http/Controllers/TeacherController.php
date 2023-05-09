@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Teachers\AssignHomeroomRequest;
+use App\Models\Assessment;
 use App\Models\Batch;
-use App\Models\HomeroomTeacher;
+use App\Models\BatchSubject;
+use App\Models\Quarter;
+use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
-use Illuminate\Http\RedirectResponse;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -40,14 +45,45 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function show(int $id = null): Response
+    public function show(Request $request, int $id = null): Response
     {
-        if ($id === null && auth()->user()->isTeacher()) {
-            $id = auth()->user()->teacher->id;
+        $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : abort(403));
+
+        $batches = $this->getBatches($id);
+        $students = $this->getStudents($id, $request->input('batch_subject_id'), $request->input('search'));
+        $teacher = $this->getTeacherDetails($id);
+
+        if (isset($teacher->nextBatchSession)) {
+            // Get the last assessment of the next batch session using the batch subject id
+            $lastAssessment = Assessment::where('batch_subject_id', $teacher->nextBatchSession->batchSubject->id)
+                ->where('quarter_id', Quarter::getActiveQuarter()->id)
+                ->orderBy('created_at', 'desc')
+                ->first()
+                ->load('assessmentType:id,name');
         }
 
-        // Get teacher batches from batch_subjects table, make sure it is from active school year and distinct
-        $batches = Batch::with([
+        $schoolScheduleDate = $request->input('school_schedule_date') ?? now();
+        $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
+            ->whereDate('end_date', '>=', Carbon::parse($schoolScheduleDate))
+            ->orderBy('start_date', 'asc')
+            ->take(2)
+            ->get();
+
+        return Inertia::render('Teachers/Single', [
+            'teacher' => $teacher,
+            'batches' => $batches,
+            'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),
+            'students' => $students,
+            'school_schedule' => $schoolSchedule,
+            'school_schedule_date' => $schoolScheduleDate,
+            'last_assessment' => $lastAssessment ?? null,
+        ]);
+    }
+
+    private function getBatches(int $id)
+    {
+        return Batch::with([
             'level:id,name,level_category_id',
             'level.levelCategory:id,name',
             'level.levelCategory.assessmentTypes',
@@ -59,8 +95,58 @@ class TeacherController extends Controller
 
                 return $batch;
             });
+    }
 
-        $teacher = Teacher::with([
+    private function getStudents(int $id, ?string $batchSubjectId, ?string $studentSearch)
+    {
+        // Get students of a teacher for specific batchSubjectId
+        $batchSubjectId = $batchSubjectId ?? BatchSubject::where('teacher_id', $id)->first()->id;
+
+        $students = Teacher::with([
+            'batchSubjects' => function ($query) use ($batchSubjectId) {
+                $query->where('id', $batchSubjectId);
+            },
+            'batchSubjects.students' => function ($query) use ($studentSearch) {
+                $query->whereHas('user', function ($userQuery) use ($studentSearch) {
+                    $userQuery->where('name', 'LIKE', '%'.$studentSearch.'%');
+                })->take(6);
+            },
+            'batchSubjects.students.user',
+            'batchSubjects.students.batches',
+        ])->select('id', 'user_id')
+            ->where('id', $id)
+            ->first()
+            ->batchSubjects
+            ->map(function ($batchSubject) use ($studentSearch) {
+                $students = $batchSubject->students->map(function ($student) {
+                    $student->attendance_percentage = 100 - $student->absenteePercentage();
+
+                    return $student;
+                });
+
+                return [
+                    'batch_subject_id' => $batchSubject->id,
+                    'students' => $students,
+                    'search' => $studentSearch ?? '',
+                ];
+            });
+
+        if ($students->isEmpty()) {
+            return [
+                [
+                    'batch_subject_id' => (int) $batchSubjectId,
+                    'students' => [],
+                    'search' => $studentSearch ?? '',
+                ],
+            ];
+        }
+
+        return $students;
+    }
+
+    private function getTeacherDetails(int $id): Model|Collection|Builder|array|null
+    {
+        return Teacher::with([
             'user:id,name,email,phone_number,gender',
             'homeroom:id,batch_id,teacher_id',
             'homeroom.batch:id,section,level_id',
@@ -75,93 +161,34 @@ class TeacherController extends Controller
                 $query->whereHas('batch', function ($batchQuery) {
                     $batchQuery->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
                 });
+                $query->orderBy('updated_at', 'desc')->limit(6);
             },
             'batchSubjects.subject:id,full_name',
             'batchSubjects.batch:id,section,level_id,school_year_id',
             'batchSubjects.batch.level:id,name,level_category_id',
             'batchSubjects.batch.level.levelCategory:id,name',
-            'feedbacks',
+            'feedbacks' => function ($query) {
+                $query->orderBy('created_at', 'desc')->limit(2);
+            },
             'feedbacks.author:id,name',
+            'batchSubjects.students.user',
+            'assessments' => function ($query) {
+                $query->orderBy('created_at', 'desc')->limit(4);
+            },
+            'assessments.assessmentType',
+            'assessments.batchSubject.batch:id,section,level_id',
+            'assessments.batchSubject.batch.level:id,name,level_category_id',
+            'assessments.batchSubject.subject:id,full_name',
+            'nextBatchSession.schoolPeriod:name',
+            'nextBatchSession.batchSubject.batch:id,section,level_id',
+            'nextBatchSession.batchSubject.batch.level:id,name',
+            'nextBatchSession.batchSubject.subject:id,full_name',
+            'nextBatchSession.lessonPlan:id',
+            'lessonPlans' => function ($query) {
+                $query->orderBy('created_at', 'desc')->limit(4);
+            },
+            'lessonPlans.batchSchedule.batch.level',
+            'lessonPlans.batchSchedule.batchSubject.subject',
         ])->select('id', 'user_id')->findOrFail($id);
-
-        return Inertia::render('Teachers/Single', [
-            'teacher' => $teacher,
-            'batches' => $batches,
-            'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),
-        ]);
-    }
-
-    public function assignHomeroomTeacher(AssignHomeroomRequest $request): RedirectResponse
-    {
-        // Get the teacher ID and batch ID from the request
-        $teacherId = $request->teacher_id;
-        $batchId = $request->batch_id;
-
-        // If replace is true, delete the homeroom teacher
-        if ($request->replace) {
-            // Check if the teacher is assigned to only one batch
-            if (HomeroomTeacher::where('teacher_id', $teacherId)->count() === 1) {
-                HomeroomTeacher::where('teacher_id', $teacherId)->delete();
-            } else {
-                return redirect()->back()->withErrors(['teacher_id' => 'Cannot replace homeroom teacher. The teacher is assigned to more than one batch.']);
-            }
-        }
-
-        Batch::findOrFail($batchId)->homeroomTeacher()->updateOrCreate(
-            ['batch_id' => $batchId],
-            ['teacher_id' => $teacherId]
-        );
-
-        return redirect()->back()->with('success', 'Homeroom teacher assigned successfully.');
-    }
-
-    public function removeHomeroomTeacher($id): RedirectResponse
-    {
-        // Find the homeroom teacher by ID or fail
-        $homeroomTeacher = HomeroomTeacher::findOrFail($id);
-
-        // Delete the homeroom teacher
-        $homeroomTeacher->delete();
-
-        // Redirect back with success message
-        return redirect()->back()->with('success', 'Homeroom teacher removed successfully.');
-    }
-
-    public function getHomeroomTeachers(Request $request): Response
-    {
-        // Validate the request
-        $request->validate([
-            'teacher_id' => 'nullable|integer|exists:teachers,id',
-            'batch_id' => 'nullable|integer|exists:batches,id',
-        ]);
-
-        // Get the teacher ID and batch ID from the request
-        $teacherId = $request->teacher_id;
-        $batchId = $request->batch_id;
-
-        // Initialize the query builder for HomeroomTeacher
-        $query = HomeroomTeacher::query();
-
-        // If teacher ID is provided, filter by teacher ID
-        if ($teacherId) {
-            $query->where('teacher_id', $teacherId);
-        }
-
-        // If batch ID is provided, filter by batch ID
-        if ($batchId) {
-            $query->where('batch_id', $batchId);
-        }
-
-        // Load the related Teacher and Batch models, and paginate the results if no filters are applied
-        $homerooms = $query->with(['teacher.user', 'batch.level'])->when(! $teacherId && ! $batchId, function ($query) {
-            return $query->paginate(10);
-        }, function ($query) {
-            return $query->get();
-        });
-
-        // Return the results with the view
-        return Inertia::render('Welcome', [
-            'homerooms' => $homerooms,
-        ]);
     }
 }

@@ -2,28 +2,27 @@
     <div :class="clamp">
         <span>{{ text }}</span>
     </div>
-    <button v-if="!readMoreActivated" class="" href="#" @click="activateReadMore">
+    <button v-if="!readMoreActivated" class="" @click="activateReadMore">
         Read more...
     </button>
     <span v-if="readMoreActivated">{{ text }}</span>
-    <button v-if="readMoreActivated" class="" href="#" @click="activateReadLess">
+    <button v-if="readMoreActivated" class="" @click="activateReadLess">
         Read less...
     </button>
 </template>
 
 <script setup>
-import {computed, defineProps, ref} from 'vue'
-
+import { computed, defineProps, ref } from "vue";
 
 const props = defineProps({
     text: {
         type: String,
-        required: true
+        required: true,
     },
     lines: {
         type: Number,
-        default: 3
-    }
+        default: 3,
+    },
 });
 
 const readMoreActivated = ref(false);
@@ -37,9 +36,7 @@ function activateReadLess() {
 }
 
 const clamp = computed(() => {
-
     return `line-clamp-${props.lines}`;
-
 });
 </script>
 
@@ -60,5 +57,4 @@ const clamp = computed(() => {
     -webkit-line-clamp: 4;
     line-clamp: 4;
 }
-
 </style>

@@ -34,7 +34,7 @@ class AssessmentTypeSeeder extends Seeder
                     'customizable' => true,
                 ],
                 [
-                    'name' => 'Tests',
+                    'name' => 'Test',
                     'percentage' => 20,
                     'min_assessments' => 3,
                     'max_assessments' => 8,

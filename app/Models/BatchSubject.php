@@ -72,4 +72,16 @@ class BatchSubject extends Model
     {
         return $this->batch->school_year_id === SchoolYear::getActiveSchoolYear()->id;
     }
+
+    public function students(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Student::class,
+            BatchStudent::class,
+            'batch_id', // Foreign key on BatchStudent table
+            'id', // Foreign key on Student table
+            'batch_id', // Local key on BatchSubject table
+            'student_id' // Local key on BatchStudent table
+        );
+    }
 }

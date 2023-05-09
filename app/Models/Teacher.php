@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Teacher extends Model
 {
@@ -51,13 +52,26 @@ class Teacher extends Model
         return $this->hasMany(TeacherFeedback::class);
     }
 
-    public function lessonPlans(): HasManyThrough
+    public function assessments(): HasManyThrough
     {
         return $this->hasManyThrough(
-            LessonPlan::class,
-            BatchSession::class,
+            Assessment::class,
+            BatchSubject::class,
             'teacher_id', // Foreign key on BatchSession table
-            'batch_session_id' // Foreign key on LessonPlan table
+            'batch_subject_id' // Foreign key on Assessment table
         );
+    }
+
+    public function nextBatchSession(): HasOne
+    {
+        return $this->hasOne(BatchSession::class)
+            ->where('status', BatchSession::STATUS_SCHEDULED)
+            ->where('date', '>', now())
+            ->orderBy('date', 'asc');
+    }
+
+    public function lessonPlans(): HasMany
+    {
+        return $this->hasMany(BatchSession::class, 'teacher_id', 'id')->with('lessonPlan')->whereHas('lessonPlan');
     }
 }

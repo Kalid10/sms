@@ -58,6 +58,7 @@ class DatabaseSeeder extends Seeder
             // Run this seeder after populating the batch sessions
             //            LessonPlanSeeder::class,
             AssessmentTypeSeeder::class,
+            AssessmentSeeder::class,
         ]);
     }
 }

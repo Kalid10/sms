@@ -30,7 +30,7 @@ class GenerateBatchSessions
                         foreach ($nextDates as $nextDate) {
                             if (strtolower($schedule->day_of_week) === strtolower($nextDate['day'])) {
                                 BatchSession::create([
-                                    'date' => $nextDate['date'],
+                                    'date' => $nextDate['date']->setTimeFrom($schedule->schoolPeriod->start_time),
                                     'batch_schedule_id' => $schedule->id,
                                     'teacher_id' => $schedule->batchSubject->teacher_id ?? null,
                                     'status' => BatchSession::STATUS_SCHEDULED,

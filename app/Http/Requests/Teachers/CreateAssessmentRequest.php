@@ -32,6 +32,9 @@ class CreateAssessmentRequest extends FormRequest
             'batch_subject_id' => 'required|exists:batch_subjects,id',
             'assessment_type_id' => 'required|exists:assessment_types,id',
             'due_date' => 'required|date',
+            'title' => 'required|string',
+            'description' => 'string',
+            'maximum_point' => 'required|integer|min:1|max:100',
         ];
     }
 
