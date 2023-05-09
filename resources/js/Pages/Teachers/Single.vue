@@ -3,14 +3,15 @@
         <div
             class="bg-zinc-800 text-white"
             :class="[
-                isSideBarOpen ? 'w-7/12 bg-red-400 lg:w-80' : 'w-1/12 lg:w-20',
-                'transition-all duration-300 ease-in-out',
-                isSideBarOpen ? 'backdrop-blur-md' : '',
+                isSideBarOpen
+                    ? 'min-w-[16rem] bg-blue-200 lg:w-80'
+                    : 'w-3/12 lg:w-16',
+                'transition-all duration-300 ease-in-out ',
             ]"
             @click="isSideBarOpen = !isSideBarOpen"
         >
             <SideBar
-                class="sticky top-0"
+                class="sticky top-0 h-screen"
                 :header="teacher"
                 :main-items="sidebarItems"
                 :footer-items="footerItems"
@@ -19,12 +20,14 @@
         </div>
 
         <div
-            :class="isSideBarOpen ? 'w-5/12' : 'w-11/12'"
-            class="flex flex-col items-center lg:w-full"
+            :class="isSideBarOpen ? 'min-w-full lg:min-w-0 blur lg:blur-0' : ''"
+            class="flex flex-col items-center overflow-x-hidden lg:w-full"
+            @click="isSideBarOpen = false"
         >
             <div
                 class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-10 lg:px-12"
             >
+                <!--                 Welcome header-->
                 <div
                     class="flex items-center rounded-lg py-5 text-xl font-light lg:py-7 lg:pl-0 lg:text-4xl"
                 >
@@ -34,16 +37,20 @@
                         >{{ teacher.user.name }}!</span
                     >
                 </div>
+
+                <!--                Assessments and Next class-->
                 <div
                     class="flex w-full flex-col justify-between space-y-5 lg:flex-row lg:space-y-0"
                 >
                     <div class="w-full lg:w-6/12">
                         <Assessments class="" />
                     </div>
-                    <div class="w-full lg:w-5/12">
+                    <div class="hidden lg:inline-block lg:w-5/12">
                         <NextClass />
                     </div>
                 </div>
+
+                <!--                Students, LessonPlan, Feedback, Grades and SchoolSchedule-->
                 <div
                     class="flex h-full w-full flex-col justify-between space-y-2 pt-8 lg:flex-row"
                 >

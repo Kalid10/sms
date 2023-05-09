@@ -167,7 +167,9 @@ class TeacherController extends Controller
             'batchSubjects.batch:id,section,level_id,school_year_id',
             'batchSubjects.batch.level:id,name,level_category_id',
             'batchSubjects.batch.level.levelCategory:id,name',
-            'feedbacks',
+            'feedbacks' => function ($query) {
+                $query->orderBy('created_at', 'desc')->limit(2);
+            },
             'feedbacks.author:id,name',
             'batchSubjects.students.user',
             'assessments' => function ($query) {
