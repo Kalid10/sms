@@ -11,16 +11,18 @@
             >
                 <div>
                     <p class="text-xs">{{ feedback.feedback }}</p>
-                    <div class="mt-2 flex items-center text-sm text-gray-500">
-                        <span class="text-xs">{{ feedback.author.name }}</span>
-                        <span class="ml-auto text-xs">{{
+                    <div
+                        class="mt-2 flex items-center text-[0.65rem] text-gray-500 lg:text-sm"
+                    >
+                        <span class="">{{ feedback.author.name }}</span>
+                        <span class="ml-auto">{{
                             moment(feedback.updated_at).fromNow()
                         }}</span>
                     </div>
                 </div>
             </div>
             <div
-                class="w-full cursor-pointer text-end text-sm font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium"
+                class="w-full cursor-pointer text-end text-xs font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium lg:text-sm"
                 @click="$inertia.get('/teacher/feedbacks')"
             >
                 View All Feedbacks

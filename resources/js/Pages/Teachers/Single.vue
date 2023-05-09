@@ -3,7 +3,7 @@
         <div
             class="bg-zinc-800 text-white"
             :class="[
-                isSideBarOpen ? 'w-7/12 lg:w-80' : 'w-1/12 lg:w-20',
+                isSideBarOpen ? 'w-7/12 bg-red-400 lg:w-80' : 'w-1/12 lg:w-20',
                 'transition-all duration-300 ease-in-out',
                 isSideBarOpen ? 'backdrop-blur-md' : '',
             ]"
@@ -18,49 +18,59 @@
             />
         </div>
 
-        <div class="flex w-full flex-col items-center">
+        <div
+            :class="isSideBarOpen ? 'w-5/12' : 'w-11/12'"
+            class="flex flex-col items-center lg:w-full"
+        >
             <div
-                :class="
-                    isSideBarOpen ? 'w-5/12 lg:w-full' : 'w-10/12 lg:w-full'
-                "
-                class="flex w-full flex-col space-y-10 pt-3 lg:px-12"
+                class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-10 lg:px-12"
             >
                 <div
-                    class="flex items-center rounded-lg py-7 text-4xl font-light"
+                    class="flex items-center rounded-lg py-5 text-xl font-light lg:py-7 lg:pl-0 lg:text-4xl"
                 >
                     Welcome back,
 
-                    <span class="ml-2 font-semibold"
+                    <span class="ml-1 font-semibold lg:ml-2"
                         >{{ teacher.user.name }}!</span
                     >
                 </div>
-                <div class="flex w-full justify-between">
-                    <div class="w-6/12">
+                <div
+                    class="flex w-full flex-col justify-between space-y-5 lg:flex-row lg:space-y-0"
+                >
+                    <div class="w-full lg:w-6/12">
                         <Assessments class="" />
                     </div>
-                    <div class="w-5/12">
+                    <div class="w-full lg:w-5/12">
                         <NextClass />
                     </div>
                 </div>
-                <div class="flex h-full w-full justify-between pt-8">
-                    <Students class="w-3/12" />
-                    <LessonPlans class="w-4/12" />
+                <div
+                    class="flex h-full w-full flex-col justify-between space-y-2 pt-8 lg:flex-row"
+                >
+                    <Students class="w-full lg:w-3/12" />
+                    <LessonPlans class="w-full lg:w-4/12" />
 
-                    <div class="flex h-full w-4/12 flex-col justify-between">
+                    <div
+                        class="w-ful flex h-full flex-col justify-between lg:w-4/12"
+                    >
                         <div class="w-full">
                             <Grades />
                         </div>
 
-                        <div class="mt-5 flex w-full justify-between">
-                            <div class="w-6/12">
-                                <div class="w-full text-center font-medium">
+                        <div
+                            class="mt-5 flex w-full flex-col justify-between space-y-2 lg:flex-row lg:space-y-0"
+                        >
+                            <div class="w-full lg:w-6/12">
+                                <div class="w-full font-medium lg:text-center">
                                     Feedbacks
                                 </div>
                                 <Feedbacks />
                             </div>
-                            <div class="flex w-5/12 flex-col items-center">
+                            <div
+                                class="flex w-full flex-col items-center lg:w-5/12"
+                            >
                                 <div
-                                    class="mb-4 w-full text-center font-medium"
+                                    class="mb-4 w-full font-medium lg:text-center"
                                 >
                                     School Schedule
                                 </div>

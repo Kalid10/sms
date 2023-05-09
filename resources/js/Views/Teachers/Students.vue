@@ -1,10 +1,10 @@
 <template>
     <div class="flex max-w-full flex-col space-y-1 rounded-md">
-        <div class="px-4 text-2xl font-medium">Students</div>
+        <div class="font-medium lg:px-4 lg:text-2xl">Students</div>
         <div class="flex h-fit flex-col justify-evenly space-y-2 rounded-sm">
             <div
                 v-if="students.length > 0"
-                class="flex h-fit w-full items-center justify-evenly rounded-sm bg-black py-3 text-center text-sm font-semibold text-white"
+                class="flex h-fit w-full items-center justify-evenly rounded-sm bg-black py-3 text-center text-xs font-light text-white lg:text-sm lg:font-semibold"
             >
                 <div class="w-4/12">Name</div>
                 <div class="w-2/12">Score</div>
@@ -18,12 +18,12 @@
                 <TextInput
                     v-model="searchText"
                     placeholder="Search Student"
-                    class="w-6/12 rounded-lg text-sm"
+                    class="w-6/12 rounded-lg text-xs lg:text-sm"
                 />
 
                 <select-input
                     v-model="selectedBatchSubject"
-                    class="w-6/12"
+                    class="w-6/12 text-xs"
                     :options="subjectGradeOptions"
                     placeholder=""
                 />
@@ -36,7 +36,7 @@
             <div
                 v-for="(item, index) in students"
                 :key="index"
-                class="flex h-14 w-full items-center justify-evenly rounded-md text-center text-sm"
+                class="flex h-14 w-full items-center justify-evenly rounded-md text-center text-xs lg:text-sm"
             >
                 <div
                     class="w-6/12 cursor-pointer font-medium hover:font-semibold hover:underline hover:underline-offset-2"
@@ -62,7 +62,7 @@
         </div>
         <div
             v-if="students.length > 0"
-            class="w-full cursor-pointer pr-3 text-end text-sm font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium"
+            class="w-full cursor-pointer pr-3 text-end text-xs font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium lg:text-sm"
             @click="$inertia.get('/teacher/students')"
         >
             View All Students

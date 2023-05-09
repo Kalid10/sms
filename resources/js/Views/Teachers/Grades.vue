@@ -1,8 +1,8 @@
 <template>
-    <div class="flex w-full flex-col items-center space-y-1 rounded-md">
-        <div class="px-4 text-2xl font-medium">Grades</div>
+    <div class="flex w-full flex-col space-y-1 rounded-md lg:items-center">
+        <div class="font-medium lg:px-4 lg:text-2xl">Grades</div>
         <div
-            class="flex h-fit w-full items-center justify-evenly rounded-sm border-b border-gray-200 py-1 text-center font-bold"
+            class="flex h-fit w-full items-center justify-evenly rounded-sm border-b border-gray-200 py-1 text-center text-xs font-medium lg:text-base lg:font-bold"
         >
             <div class="w-4/12">Grade</div>
             <div class="w-8/12">Subjects</div>
@@ -13,7 +13,7 @@
                 <div
                     v-for="(item, index) in grades"
                     :key="index"
-                    class="my-1 flex h-fit w-full items-center justify-evenly py-3 text-center text-sm"
+                    class="my-1 flex h-fit w-full items-center justify-evenly py-3 text-center text-xs lg:text-sm"
                     :class="index % 2 === 1 ? 'bg-white' : 'bg-gray-50'"
                 >
                     <div class="w-4/12">{{ item.class }}</div>
@@ -22,7 +22,7 @@
             </div>
 
             <div
-                class="w-full cursor-pointer text-end text-sm font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium"
+                class="w-full cursor-pointer text-end text-xs font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium lg:text-sm"
                 @click="$inertia.get('/teacher/grades')"
             >
                 View All Grades

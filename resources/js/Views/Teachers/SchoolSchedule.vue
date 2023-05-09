@@ -13,15 +13,15 @@
                     />
                 </div>
                 <div
-                    class="flex h-full w-8/12 items-center justify-center space-x-2.5"
+                    class="flex h-full w-5/12 items-center justify-center space-x-2.5 lg:w-8/12"
                 >
-                    <div class="text-5xl font-bold">
+                    <div class="text-4xl font-bold lg:text-5xl">
                         {{ moment(selectedDate).format("ddd") }}
                     </div>
                     <div
-                        class="flex h-full flex-col items-center justify-center space-y-1 text-sm font-semibold"
+                        class="flex h-full flex-col items-center justify-center space-y-1 text-xs font-semibold"
                     >
-                        <div class="w-full text-xs">
+                        <div class="w-full text-[0.65rem] lg:text-xs">
                             {{ moment(selectedDate).format("MMMM D") }}
                         </div>
                         <div>{{ moment(selectedDate).format("YYYY") }}</div>
@@ -43,8 +43,10 @@
                         <div
                             class="flex h-11 w-full items-center justify-center space-x-1 font-light"
                         >
-                            <CalendarDaysIcon class="w-3.5" />
-                            <div class="text-sm">{{ item.title }}</div>
+                            <CalendarDaysIcon class="w-3 lg:w-3.5" />
+                            <div class="text-xs lg:text-sm">
+                                {{ item.title }}
+                            </div>
                         </div>
                     </div>
 
@@ -58,7 +60,9 @@
                         <div>No Schedule found for today!</div>
                     </div>
                 </div>
-                <div class="flex h-14 w-full items-center justify-center">
+                <div
+                    class="flex h-14 w-10/12 items-center justify-center lg:w-full"
+                >
                     <SecondaryButton
                         title="View All Schedules"
                         class="w-11/12 bg-neutral-800 text-white"
