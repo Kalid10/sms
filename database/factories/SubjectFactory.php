@@ -16,24 +16,9 @@ class SubjectFactory extends Factory
      */
     public function definition(): array
     {
-        $subjects = [
-            'bio' => 'Biology',
-            'chem' => 'Chemistry',
-            'geo' => 'geography',
-            'eng' => 'English',
-            'hist' => 'History',
-            'sci' => 'Science',
-            'P.E' => 'Physical Education',
-            'phy' => 'Physics',
-            'social' => 'Social Studies',
-            'alg' => 'Algebra',
-        ];
-
-        $random = fake()->unique()->randomElement(['bio', 'chem', 'geo', 'eng', 'hist', 'sci', 'P.E', 'phy', 'social', 'alg']);
-
         return [
-            'full_name' => $subjects[$random],
-            'short_name' => $random,
+            'full_name' => $this->faker->unique()->word,
+            'short_name' => $this->faker->unique()->word,
             'category' => $this->faker->word,
             'tags' => $this->faker->words(3),
         ];

@@ -17,7 +17,7 @@ class SchoolPeriodSeeder extends Seeder
         $this->createSchoolPeriods();
     }
 
-    private function createSchoolPeriods()
+    private function createSchoolPeriods(): void
     {
         $schoolPeriodsData = [
             [
@@ -27,17 +27,17 @@ class SchoolPeriodSeeder extends Seeder
                 'level_category_ids' => [1, 3],
                 'custom_periods' => [
                     [
-                        'name' => 'HomeroomPeriod',
+                        'name' => 'Homeroom Period',
                         'duration' => 10,
                         'before_period' => 1,
                     ],
                     [
-                        'name' => 'BreakFast',
+                        'name' => 'Recess',
                         'duration' => 20,
                         'before_period' => 4,
                     ],
                     [
-                        'name' => 'Lunch',
+                        'name' => 'Lunch Break',
                         'duration' => 40,
                         'before_period' => 6,
                     ],
@@ -50,17 +50,17 @@ class SchoolPeriodSeeder extends Seeder
                 'level_category_ids' => [2],
                 'custom_periods' => [
                     [
-                        'name' => 'HomeroomPeriod',
+                        'name' => 'Homeroom Period',
                         'duration' => 10,
                         'before_period' => 1,
                     ],
                     [
-                        'name' => 'BreakFast',
+                        'name' => 'Recess',
                         'duration' => 20,
                         'before_period' => 3,
                     ],
                     [
-                        'name' => 'Lunch',
+                        'name' => 'Lunch Break',
                         'duration' => 40,
                         'before_period' => 5,
                     ],
@@ -86,7 +86,7 @@ class SchoolPeriodSeeder extends Seeder
         }
     }
 
-    private function createSchoolPeriodsForLevelCategory($start_time, $minutes_per_period, $no_of_periods, $custom_periods, $activeSchoolYearId, $level_category_id)
+    private function createSchoolPeriodsForLevelCategory($start_time, $minutes_per_period, $no_of_periods, $custom_periods, $activeSchoolYearId, $level_category_id): void
     {
         $periods = [];
 
