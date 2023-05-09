@@ -27,9 +27,35 @@
             <div
                 class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-10 lg:px-12"
             >
+                <!--                 Next Class Header On Mobile Devices-->
+                <div
+                    v-if="nextClass"
+                    class="flex h-20 w-full flex-col justify-center rounded-sm bg-black px-1 text-center text-xs font-light text-white lg:hidden"
+                >
+                    <div class="w-full">
+                        Your next class is
+                        <span class="font-semibold">
+                            {{ nextClass.batch_subject.subject.full_name }}
+                        </span>
+                        with grade
+                        <span class="font-semibold">
+                            {{ nextClass.batch_subject.batch.level.name }}
+                            {{ nextClass.batch_subject.batch.section }}
+                        </span>
+                        during the
+                        <span class="font-semibold">
+                            {{ nextClass.school_period.name }} period. </span
+                        >Approximately
+                        <span class="font-semibold"
+                            >{{ moment(nextClass.date).fromNow() }}.
+                        </span>
+                    </div>
+                </div>
+
                 <!--                 Welcome header-->
                 <div
-                    class="flex items-center rounded-lg py-5 font-light lg:py-7 lg:pl-0 lg:text-4xl"
+                    class="flex items-center rounded-lg font-light lg:py-2 lg:pl-0 lg:text-4xl"
+                    :class="nextClass ? 'py-2' : 'py-3'"
                 >
                     Welcome back,
 
@@ -39,9 +65,7 @@
                 </div>
 
                 <!--                Assessments and Next class-->
-                <div
-                    class="flex w-full flex-col justify-between space-y-5 lg:flex-row lg:space-y-0"
-                >
+                <div class="flex w-full flex-col justify-between lg:flex-row">
                     <div class="w-full lg:w-6/12">
                         <Assessments class="" />
                     </div>
@@ -52,7 +76,7 @@
 
                 <!--                Students, LessonPlan, Feedback, Grades and SchoolSchedule-->
                 <div
-                    class="flex h-full w-full flex-col justify-between space-y-2 pt-8 lg:flex-row"
+                    class="flex h-full w-full flex-col justify-between space-y-2 pt-2 lg:flex-row"
                 >
                     <Students class="w-full lg:w-3/12" />
                     <LessonPlans class="w-full lg:w-4/12" />
@@ -119,8 +143,10 @@ import SchoolSchedule from "@/Views/Teachers/SchoolSchedule.vue";
 import Feedbacks from "@/Views/Teachers/Feedbacks.vue";
 import SideBar from "@/Pages/Layouts/SideBar.vue";
 import { ref } from "vue";
+import moment from "moment";
 
 const teacher = usePage().props.teacher;
+const nextClass = usePage().props.teacher.next_batch_session;
 
 // Populate sidebar items
 const sidebarItems = [

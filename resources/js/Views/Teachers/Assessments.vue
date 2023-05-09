@@ -12,12 +12,12 @@
         <div class="flex w-full flex-col">
             <div
                 v-if="teacher.assessments.length > 0"
-                class="mt-1 flex w-full flex-col justify-center divide-y-2 py-2 lg:mt-2"
+                class="mt-1 flex w-full flex-col justify-center divide-y-2 lg:mt-2 lg:py-2"
             >
                 <div
                     v-for="(item, index) in teacher.assessments"
                     :key="index"
-                    class="mt-2 flex items-center justify-evenly py-2"
+                    class="mt-1 flex items-center justify-evenly py-1.5 lg:mt-2 lg:py-2"
                 >
                     <div
                         class="hidden flex-col items-center justify-center text-center lg:flex lg:w-2/12"
