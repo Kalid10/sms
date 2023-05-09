@@ -7,6 +7,7 @@ use App\Http\Requests\Subjects\CreateRequest;
 use App\Http\Requests\Subjects\UpdateRequest;
 use App\Models\Batch;
 use App\Models\BatchSubject;
+use App\Models\SchoolYear;
 use App\Models\Subject;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -29,8 +30,25 @@ class SubjectController extends Controller
             ->where('full_name', 'like', '%'.$searchKey.'%')
             ->OrWhere(DB::raw('lower(tags)'), 'like', '%'.$searchKey.'%')->paginate(20);
 
+        // Get all batches
+        $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level')->get();
+
+        $request->validate([
+            'batch_id' => 'nullable|exists:batches,id',
+        ]);
+
+        $batchId = $request->batch_id ?? Batch::active()->firstOrFail()->id;
+        $selectedBatch = Batch::find($batchId)->load('level');
+
+        Log::info('This is batch id '.$batchId);
+
+        $batchSubjects = BatchSubject::where('batch_id', $batchId)->with('subject')->get();
+
         return Inertia::render('Subjects/Index', [
             'subjects' => $subjects,
+            'batch_subjects' => $batchSubjects,
+            'batches' => $batches,
+            'selected_batch' => $selectedBatch,
         ]);
     }
 

@@ -74,7 +74,7 @@ const grades = computed(() => {
     return mergedClasses.map(({ class: className, subjects }) => {
         const limitedSubjects = subjects.slice(0, 3);
 
-        let subjectText = ``;
+        let subjectText;
         if (limitedSubjects.length > 1) {
             subjectText = limitedSubjects
                 .slice(0, -1)
