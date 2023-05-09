@@ -29,11 +29,11 @@
             >
                 <!--                 Welcome header-->
                 <div
-                    class="flex items-center rounded-lg py-5 text-xl font-light lg:py-7 lg:pl-0 lg:text-4xl"
+                    class="flex items-center rounded-lg py-5 font-light lg:py-7 lg:pl-0 lg:text-4xl"
                 >
                     Welcome back,
 
-                    <span class="ml-1 font-semibold lg:ml-2"
+                    <span class="ml-0.5 font-semibold lg:ml-2"
                         >{{ teacher.user.name }}!</span
                     >
                 </div>

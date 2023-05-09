@@ -3,9 +3,9 @@
         <div class="flex w-full justify-between">
             <div class="font-medium lg:text-2xl">Recent Assessments</div>
             <div
-                class="flex w-fit items-center justify-center space-x-1 rounded-md px-3 text-xs font-medium underline underline-offset-2 hover:scale-105 hover:cursor-pointer lg:text-sm"
+                class="flex w-fit items-center justify-center space-x-1 rounded-md px-3 text-[0.62rem] font-medium underline underline-offset-2 hover:scale-105 hover:cursor-pointer lg:text-sm"
             >
-                <div>SEE ALL</div>
+                SEE ALL
             </div>
         </div>
 
@@ -20,7 +20,7 @@
                     class="mt-2 flex items-center justify-evenly py-2"
                 >
                     <div
-                        class="flex w-2/12 flex-col items-center justify-center text-center"
+                        class="hidden flex-col items-center justify-center text-center lg:flex lg:w-2/12"
                     >
                         <div
                             class="flex h-10 w-10 items-center justify-center rounded-xl"
@@ -34,17 +34,19 @@
                                     getIconAndColor(item.assessment_type.name)
                                         .color
                                 "
-                                class="w-5"
+                                class="w-4 lg:w-5"
                             />
                         </div>
-                        <div class="mt-1.5 text-xs font-light uppercase">
+                        <div
+                            class="mt-1.5 text-[0.65rem] font-light uppercase lg:text-xs"
+                        >
                             {{ item.batch_subject.batch.level.name
                             }}{{ item.batch_subject.batch.section }}
                         </div>
                     </div>
 
                     <div
-                        class="flex w-7/12 flex-col space-y-4 text-center lg:w-8/12 lg:text-start"
+                        class="flex w-9/12 flex-col space-y-4 lg:w-8/12 lg:text-start"
                     >
                         <div
                             class="flex w-full flex-col justify-between space-x-4"
@@ -54,7 +56,7 @@
                             </div>
                         </div>
                         <div
-                            class="flex flex-col items-center space-y-0.5 text-[0.65rem] font-light lg:flex-row lg:space-x-1.5 lg:space-y-0 lg:text-start lg:text-sm"
+                            class="flex flex-col space-y-0.5 text-[0.65rem] font-light lg:flex-row lg:space-x-1.5 lg:space-y-0 lg:text-start lg:text-sm"
                         >
                             <div class="flex space-x-1">
                                 <div>
@@ -65,12 +67,18 @@
                                 </div>
                             </div>
                             <div>
-                                <span class="font-base hidden lg:inline-block"
-                                    >on,
-                                </span>
+                                On
                                 {{
                                     moment(item.due_date).format("dddd MMMM Do")
                                 }}
+
+                                <span class="font-semibold lg:hidden"
+                                    ><span class="font-light">for </span
+                                    >{{ item.batch_subject.batch.level.name
+                                    }}{{
+                                        item.batch_subject.batch.section
+                                    }}</span
+                                >
                             </div>
                         </div>
                     </div>
