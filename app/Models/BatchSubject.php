@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class BatchSubject extends Model
 {
@@ -47,6 +48,18 @@ class BatchSubject extends Model
             BatchSchedule::class,
             'batch_subject_id', // Foreign key on BatchSchedule table
             'batch_schedule_id'
+        );
+    }
+
+    public function level(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Level::class,
+            Batch::class,
+            'id', // Foreign key on Batch table
+            'id',
+            'batch_id', // Foreign key on Level table
+            'level_id'
         );
     }
 
