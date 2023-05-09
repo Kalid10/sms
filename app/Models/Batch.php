@@ -43,9 +43,15 @@ class Batch extends Model
         return $this->hasOne(HomeroomTeacher::class);
     }
 
-    public function students(): BelongsToMany
+    public function base_students(): BelongsToMany
     {
-        return $this->belongsToMany(Student::class, 'batch_students');
+        return $this->belongsToMany(Student::class, 'batch_students')
+            ->withTimestamps();
+    }
+
+    public function students(): HasMany
+    {
+        return $this->hasMany(BatchStudent::class);
     }
 
     public function base_subjects(): BelongsToMany

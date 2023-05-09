@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
@@ -27,18 +27,16 @@ class Student extends Model
         return $this->belongsTo(Guardian::class);
     }
 
-    public function batches(): BelongsToMany
+    public function batches(): HasMany
     {
-        return $this->belongsToMany(Batch::class, 'batch_students');
+        return $this->hasMany(BatchStudent::class);
     }
 
-    public function activeBatch($load = [])
+    public function activeBatch($load = ['level', 'schoolYear'])
     {
-        return $this->load('batches')->batches
-            ->filter(function ($batch) {
-                return $batch->school_year_id === SchoolYear::getActiveSchoolYear()->id;
-            })
-        ->first()->load($load);
+        return $this->batches()->whereHas('batch.schoolYear', function ($query) {
+            $query->where('end_date', null);
+        })->first()->batch->load($load);
     }
 
     public function activeSession()

@@ -99,7 +99,7 @@ class BatchSeeder extends Seeder
 
         // Attach the students to the Batches
         $levelStudents->split($sectionCount)->each(function ($students, $index) use ($newBatches, $timestamp) {
-            $newBatches[$index]->students()->attach($students->pluck('id'), [
+            $newBatches[$index]->base_students()->attach($students->pluck('id'), [
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ]);
