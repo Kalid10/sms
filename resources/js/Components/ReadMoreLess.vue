@@ -41,14 +41,6 @@ const clamp = computed(() => {
     return `line-clamp-${props.lines}`;
 
 });
-
-// watchEffect(() => {
-//     if (readMoreActivated.value) {
-//         truncatedText.value = longText;
-//     } else {
-//         truncatedText.value = longText.slice(0, 200);
-//     }
-// });
 </script>
 
 <style scoped>
