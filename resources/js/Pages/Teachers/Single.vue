@@ -20,42 +20,46 @@
         </div>
 
         <div
-            :class="isSideBarOpen ? 'min-w-full lg:min-w-0 blur lg:blur-0' : ''"
+            :class="
+                isSideBarOpen
+                    ? 'min-w-full lg:min-w-0 blur lg:blur-0'
+                    : 'px-0.5 py-0.5'
+            "
             class="flex flex-col items-center overflow-x-hidden lg:w-full"
             @click="isSideBarOpen = false"
         >
+            <!--                 Next Class Header On Mobile Devices-->
+            <div
+                v-if="nextClass"
+                class="flex h-16 w-full flex-col justify-center rounded-sm bg-black px-2 text-center text-xs font-light leading-5 text-white lg:hidden"
+                @click="scrollToNextClass"
+            >
+                <div class="w-full">
+                    Your next class is
+                    <span class="font-semibold">
+                        {{ nextClass.batch_subject.subject.full_name }}
+                    </span>
+                    with grade
+                    <span class="font-semibold">
+                        {{ nextClass.batch_subject.batch.level.name }}
+                        {{ nextClass.batch_subject.batch.section }}
+                    </span>
+                    during
+                    <span class="font-semibold">
+                        period {{ nextClass.school_period.name }} , </span
+                    >approximately
+                    <span class="font-semibold"
+                        >{{ moment(nextClass.date).fromNow() }}.
+                    </span>
+                </div>
+            </div>
             <div
                 class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-10 lg:px-12"
             >
-                <!--                 Next Class Header On Mobile Devices-->
-                <div
-                    v-if="nextClass"
-                    class="flex h-20 w-full flex-col justify-center rounded-sm bg-black px-1 text-center text-xs font-light text-white lg:hidden"
-                >
-                    <div class="w-full">
-                        Your next class is
-                        <span class="font-semibold">
-                            {{ nextClass.batch_subject.subject.full_name }}
-                        </span>
-                        with grade
-                        <span class="font-semibold">
-                            {{ nextClass.batch_subject.batch.level.name }}
-                            {{ nextClass.batch_subject.batch.section }}
-                        </span>
-                        during the
-                        <span class="font-semibold">
-                            {{ nextClass.school_period.name }} period. </span
-                        >Approximately
-                        <span class="font-semibold"
-                            >{{ moment(nextClass.date).fromNow() }}.
-                        </span>
-                    </div>
-                </div>
-
                 <!--                 Welcome header-->
                 <div
                     class="flex items-center rounded-lg font-light lg:py-2 lg:pl-0 lg:text-4xl"
-                    :class="nextClass ? 'py-2' : 'py-3'"
+                    :class="nextClass ? 'py-1.5' : 'py-3'"
                 >
                     Welcome back,
 
@@ -82,8 +86,12 @@
                     <LessonPlans class="w-full lg:w-4/12" />
 
                     <div
-                        class="w-ful flex h-full flex-col justify-between lg:w-4/12"
+                        class="w-ful flex h-full flex-col justify-between space-y-5 lg:w-4/12"
                     >
+                        <div class="w-full lg:hidden">
+                            <NextClass ref="nextClassSection" />
+                        </div>
+
                         <div class="w-full">
                             <Grades />
                         </div>
@@ -147,6 +155,12 @@ import moment from "moment";
 
 const teacher = usePage().props.teacher;
 const nextClass = usePage().props.teacher.next_batch_session;
+
+const nextClassSection = ref(null);
+
+const scrollToNextClass = () => {
+    nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
+};
 
 // Populate sidebar items
 const sidebarItems = [
