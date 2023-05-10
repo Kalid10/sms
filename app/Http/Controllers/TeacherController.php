@@ -73,7 +73,7 @@ class TeacherController extends Controller
             ->take(2)
             ->get();
 
-        return Inertia::render('Teachers/Single', [
+        return Inertia::render('Teacher/Single', [
             'teacher' => $teacher,
             'batches' => $batches,
             'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),

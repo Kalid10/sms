@@ -1,11 +1,20 @@
 <template>
     <div
+        class="bg-zinc-800 text-white"
+        :class="[
+                open
+                    ? 'min-w-[16rem] lg:w-80 lg:min-w-0'
+                    : 'w-3/12 min-w-0 lg:w-16',
+                'transition-all duration-300 ease-in-out ',
+            ]"
+    >
+    <div
         class="flex min-h-screen w-full flex-col items-center justify-between pt-1 pb-10 text-white lg:pt-5"
     >
         <div class="flex w-full flex-col items-center justify-center">
             <!-- Header -->
             <div
-                v-if="header && isOpen"
+                v-if="header && open"
                 class="flex w-full flex-col items-center justify-center space-x-4 space-y-2 py-2 px-1 lg:flex-row lg:space-y-1"
             >
                 <div class="h-full w-fit lg:w-20">
@@ -34,12 +43,13 @@
 
             <!-- Main Items -->
             <div class="mt-3 flex w-full flex-col justify-evenly lg:mt-10">
-                <div
-                    v-for="(item, index) in mainItems"
+                <Link
+                    v-for="(item, index) in sideBarItems"
                     :key="index"
+                    :href="`${item.route}`"
                     class="flex h-14 w-full items-center justify-between lg:h-20"
                     :class="
-                        index === 0
+                        item.active
                             ? 'font-medium bg-zinc-800 rounded-lg'
                             : 'font-normal'
                     "
@@ -51,17 +61,17 @@
                             <div
                                 class="relative flex w-full items-center"
                                 :class="
-                                    isOpen
+                                    open
                                         ? 'justify-between'
                                         : 'justify-center'
                                 "
                             >
                                 <component :is="item.icon" class="h-4 lg:h-6" />
                                 <div
-                                    class="absolute inset-x-2 text-xs lg:text-base"
+                                    class="absolute inset-x-2 whitespace-nowrap text-xs lg:text-base"
                                     :class="{
-                                        hidden: !isOpen,
-                                        'lg:inline': isOpen,
+                                        hidden: !open,
+                                        'lg:inline': open,
                                     }"
                                 >
                                     {{ item.name }}
@@ -71,12 +81,12 @@
                     </div>
                     <div
                         :class="
-                            index === 0
+                            item.active
                                 ? 'h-3/5 lg:h-full w-1 lg:w-2 bg-neutral-50 pr-0.5 rounded-l-md'
                                 : ''
                         "
                     ></div>
-                </div>
+                </Link>
             </div>
         </div>
 
@@ -89,24 +99,41 @@
                     v-for="(item, index) in footerItems"
                     :key="index"
                     class="relative flex w-4/5 items-center lg:w-2/3"
-                    :class="isOpen ? 'justify-between' : 'justify-center'"
+                    :class="open ? 'justify-between' : 'justify-center'"
                 >
                     <component :is="item.icon" class="h-4 lg:h-6" />
                     <div
                         class="absolute inset-x-2 text-xs lg:text-base"
-                        :class="{ hidden: !isOpen, 'lg:inline': isOpen }"
+                        :class="{ hidden: !open, 'lg:inline': open }"
                     >
                         {{ item.name }}
+                    </div>
+                </div>
+                <div
+                    class="relative flex w-4/5 items-center lg:w-2/3"
+                    :class="open ? 'justify-between' : 'justify-center'"
+                    @click="toggleView"
+                >
+                    <Bars3BottomLeftIcon v-if="open" class="h-4 lg:h-6" />
+                    <Bars3BottomRightIcon v-else class="h-4 rotate-180 lg:h-6" />
+                    <div
+                        class="absolute inset-x-2 text-xs lg:text-base"
+                        :class="{ hidden: !open, 'lg:inline': open }"
+                    >
+                        Shrink
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </template>
 
 <script setup>
 import Heading from "@/Components/Heading.vue";
-import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/20/solid";
+import { Link } from "@inertiajs/vue3";
+import { EnvelopeIcon, PhoneIcon, Bars3BottomLeftIcon, Bars3BottomRightIcon } from "@heroicons/vue/20/solid";
+import {computed} from "vue";
 
 const props = defineProps({
     header: {
@@ -121,9 +148,26 @@ const props = defineProps({
         type: Array,
         required: true,
     },
-    isOpen: {
+    open: {
         type: Boolean,
         required: true,
     },
 });
+
+const emits = defineEmits(['update:open'])
+
+const sideBarItems = computed(() => props.mainItems)
+
+const view = computed({
+    get() {
+        return props.open
+    },
+    set(value) {
+        emits('update:open', value)
+    }
+})
+
+function toggleView() {
+    view.value = !view.value
+}
 </script>
