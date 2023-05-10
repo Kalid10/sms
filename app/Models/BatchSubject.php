@@ -41,6 +41,18 @@ class BatchSubject extends Model
         return $this->hasMany(BatchSchedule::class);
     }
 
+    public function schoolYear(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            SchoolYear::class,
+            Batch::class,
+            'id', // Foreign key on Batch table
+            'id',
+            'batch_id', // Foreign key on SchoolYear table
+            'school_year_id'
+        );
+    }
+
     public function sessions(): HasManyThrough
     {
         return $this->hasOneThrough(
