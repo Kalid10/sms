@@ -41,6 +41,11 @@ class BatchSubject extends Model
         return $this->hasMany(BatchSchedule::class);
     }
 
+    public function assessments(): HasMany
+    {
+        return $this->hasMany(Assessment::class);
+    }
+
     public function sessions(): HasManyThrough
     {
         return $this->hasOneThrough(

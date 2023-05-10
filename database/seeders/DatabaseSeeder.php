@@ -24,6 +24,15 @@ class DatabaseSeeder extends Seeder
             'type' => User::TYPE_ADMIN,
         ]);
 
+        $teacher = User::factory()->create([
+            'name' => 'Jane Doe',
+            'email' => 'janedoe@example.com',
+            'type' => User::TYPE_TEACHER,
+        ]);
+        Teacher::create([
+            'user_id' => $teacher->id,
+        ]);
+
         // Populate roles
         Artisan::call('app:create-roles');
 

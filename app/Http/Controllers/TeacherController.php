@@ -58,8 +58,10 @@ class TeacherController extends Controller
             $lastAssessment = Assessment::where('batch_subject_id', $teacher->nextBatchSession->batchSubject->id)
                 ->where('quarter_id', Quarter::getActiveQuarter()->id)
                 ->orderBy('created_at', 'desc')
-                ->first()
-                ->load('assessmentType:id,name');
+                ->first();
+            if ($lastAssessment) {
+                $lastAssessment->load('assessmentType:id,name');
+            }
         }
 
         $schoolScheduleDate = $request->input('school_schedule_date') ?? now();
@@ -70,7 +72,7 @@ class TeacherController extends Controller
             ->take(2)
             ->get();
 
-        return Inertia::render('Teachers/Single', [
+        return Inertia::render('Teacher/Single', [
             'teacher' => $teacher,
             'batches' => $batches,
             'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),
