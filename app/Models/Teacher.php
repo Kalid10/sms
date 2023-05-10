@@ -66,7 +66,7 @@ class Teacher extends Model
     {
         return $this->hasOne(BatchSession::class)
             ->where('status', BatchSession::STATUS_SCHEDULED)
-            ->where('date', '>', now())
+            ->whereDate('date', '>', now())
             ->orderBy('date', 'asc');
     }
 
