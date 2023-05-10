@@ -106,6 +106,12 @@
                         </div>
                     </div>
                 </div>
+                <div
+                    class="w-full cursor-pointer pt-4 text-end text-xs font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium lg:text-sm"
+                    @click="$inertia.get('/teacher/assessments')"
+                >
+                    View All Assessments
+                </div>
             </div>
             <div v-else class="flex flex-col items-center space-y-4">
                 <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
