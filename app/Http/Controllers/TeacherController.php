@@ -58,8 +58,11 @@ class TeacherController extends Controller
             $lastAssessment = Assessment::where('batch_subject_id', $teacher->nextBatchSession->batchSubject->id)
                 ->where('quarter_id', Quarter::getActiveQuarter()->id)
                 ->orderBy('created_at', 'desc')
-                ->first()
-                ->load('assessmentType:id,name');
+                ->first();
+
+            if ($lastAssessment) {
+                $lastAssessment->load('assessmentType:id,name');
+            }
         }
 
         $schoolScheduleDate = $request->input('school_schedule_date') ?? now();
@@ -173,7 +176,7 @@ class TeacherController extends Controller
             'feedbacks.author:id,name',
             'batchSubjects.students.user',
             'assessments' => function ($query) {
-                $query->orderBy('created_at', 'desc')->limit(4);
+                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'desc')->limit(4);
             },
             'assessments.assessmentType',
             'assessments.batchSubject.batch:id,section,level_id',
