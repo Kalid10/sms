@@ -13,7 +13,7 @@
                         class="flex h-24 w-full items-center justify-between rounded-r-lg bg-white shadow-sm hover:scale-105"
                     >
                         <div
-                            class="flex h-full w-2/12 flex-col items-center justify-evenly rounded-l-lg bg-black text-white"
+                            class="flex h-full w-3/12 flex-col items-center justify-evenly rounded-l-lg bg-black text-white lg:w-2/12"
                         >
                             <div class="font-bold lg:text-2xl">
                                 {{ moment(item.date).format("ddd") }}
@@ -34,7 +34,7 @@
                         </div>
 
                         <div
-                            class="flex w-8/12 flex-col items-center justify-between space-y-2 text-center lg:w-7/12"
+                            class="flex w-9/12 flex-col items-center justify-between space-y-2 text-center lg:w-8/12 lg:px-1"
                         >
                             <div
                                 class="pl-2 text-[0.65rem] font-medium lg:pl-0 lg:text-sm"
@@ -45,20 +45,40 @@
                                 class="flex w-full justify-between pl-2 text-start text-xs lg:pl-0"
                             >
                                 <div
-                                    class="text-center text-[0.55rem] font-light lg:text-[0.65rem]"
+                                    class="text-center text-[0.55rem] font-light lg:pl-3 lg:text-[0.65rem]"
                                 >
-                                    Updated
+                                    <span class="hidden lg:inline-block"
+                                        >Updated</span
+                                    >
                                     {{
                                         moment(
                                             item.lesson_plan.created_at
                                         ).fromNow()
                                     }}
                                 </div>
+
+                                <div
+                                    class="pr-2 text-[0.55rem] font-light lg:hidden"
+                                >
+                                    <div>
+                                        {{
+                                            item.batch_schedule.batch.level
+                                                .name +
+                                            item.batch_schedule.batch.section
+                                        }}
+                                        (
+                                        {{
+                                            item.batch_schedule.batch_subject
+                                                .subject.short_name
+                                        }}
+                                        )
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div
-                            class="flex h-full w-2/12 flex-col items-end justify-center space-y-1 text-center lg:items-center"
+                            class="hidden h-full w-2/12 flex-col items-end justify-center space-y-1 text-center lg:flex lg:items-center"
                         >
                             <div class="w-fit pr-1 lg:pr-0">
                                 <div
@@ -70,18 +90,12 @@
                                     }}
                                 </div>
                                 <div
-                                    class="cursor-pointer text-[0.6rem] font-light underline-offset-2 hover:font-medium hover:underline lg:text-xs"
+                                    class="cursor-pointer text-[0.6rem] font-light underline-offset-2 hover:font-medium hover:underline lg:mt-1 lg:text-xs"
                                 >
-                                    <span class="hidden lg:inline-block"
-                                        >{{
-                                            item.batch_schedule.batch_subject
-                                                .subject.full_name
-                                        }}
-                                    </span>
-                                    <span class="lg:hidden">{{
+                                    {{
                                         item.batch_schedule.batch_subject
-                                            .subject.short_name
-                                    }}</span>
+                                            .subject.full_name
+                                    }}
                                 </div>
                             </div>
                         </div>
