@@ -41,10 +41,12 @@
             </div>
 
             <div
+                v-if="lastAssessment"
                 class="hidden h-full w-0.5 bg-neutral-600 lg:inline-block"
             ></div>
 
             <div
+                v-if="lastAssessment"
                 class="flex w-full flex-col items-center justify-between space-y-4 py-3 lg:w-5/12 lg:space-y-5 lg:py-0"
             >
                 <div

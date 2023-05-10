@@ -2,7 +2,7 @@
     <div id="top-view"></div>
 
     <div class="relative flex h-screen w-full flex-col">
-        <Header v-if="drawerVisible" @open-drawer="drawerVisible = true"/>
+        <Header v-if="!teacherLessonPlanRoute" @open-drawer="drawerVisible = true"/>
         <div
             class="hide-scrollbar w-full grow overflow-y-auto bg-white"
             :class="teacherLessonPlanRoute ? 'p-0' : 'p-2 container mx-auto flex flex-col gap-12'"

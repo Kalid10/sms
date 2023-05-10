@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\HomeroomController;
 use App\Http\Controllers\LessonPlanController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherFeedbackController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,8 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher'])->name('teacher.
     // Teacher profile page
     // TODO: If there is a need to change teacher profile page, change this route
     Route::get('', [TeacherController::class, 'show'])->name('show');
+
+    Route::get('/students/{student}', [StudentController::class, 'teacherShow'])->name('teacherShow');
 
     Route::controller(AssessmentController::class)->prefix('assessments/')->name('assessment.')->group(function () {
         Route::post('create', 'create')->name('create');
