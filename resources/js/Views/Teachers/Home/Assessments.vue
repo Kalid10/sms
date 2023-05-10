@@ -40,8 +40,8 @@
                         <div
                             class="mt-1.5 text-[0.65rem] font-light uppercase lg:text-xs"
                         >
-                            {{ item.batch_subject.batch.level.name
-                            }}{{ item.batch_subject.batch.section }}
+                            {{ item.batch_subject.batch.level.name }}
+                            {{ item.batch_subject.batch.section }}
                         </div>
                     </div>
 

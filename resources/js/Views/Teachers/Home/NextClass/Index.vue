@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-full w-full flex-col items-center justify-evenly rounded-xl bg-black text-white"
+        class="flex h-full w-full flex-col items-center justify-evenly rounded-xl bg-black text-white lg:py-5"
     >
         <div
             v-if="nextClass"
@@ -36,8 +36,8 @@
 
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import NextClass from "@/Views/Teachers/NextClass/NextClass.vue";
-import LastAssessment from "@/Views/Teachers/NextClass/LastAssessment.vue";
+import NextClass from "@/Views/Teachers/Home/NextClass/NextClass.vue";
+import LastAssessment from "@/Views/Teachers/Home/NextClass/LastAssessment.vue";
 
 const nextClass = usePage().props.teacher.next_batch_session;
 </script>

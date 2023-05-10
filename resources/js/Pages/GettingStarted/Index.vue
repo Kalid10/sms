@@ -29,7 +29,7 @@ const steps = {
     },
     // 5: {
     //     component: defineAsyncComponent(() =>
-    //         import("@/Views/GettingStarted/SchoolSchedule.vue")
+    //         import("@/Views/GettingStarted/Index.vue")
     //     ),
     // },
 };

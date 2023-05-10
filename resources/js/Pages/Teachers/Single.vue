@@ -4,7 +4,7 @@
             class="bg-zinc-800 text-white"
             :class="[
                 isSideBarOpen
-                    ? 'min-w-[16rem] bg-blue-200 lg:w-80'
+                    ? 'min-w-[16rem] bg-blue-200 xl:w-96'
                     : 'w-3/12 lg:w-16',
                 'transition-all duration-300 ease-in-out ',
             ]"
@@ -132,7 +132,7 @@
 // import Subjects from "@/Views/Teachers/Subjects.vue";
 // import HomeroomClasses from "@/Views/Teachers/HomeroomClasses.vue";
 import { usePage } from "@inertiajs/vue3";
-import Assessments from "@/Views/Teachers/Assessments.vue";
+import Assessments from "@/Views/Teachers/Home/Assessments.vue";
 import { HomeIcon } from "@heroicons/vue/24/solid";
 import {
     CalendarDaysIcon,
@@ -143,12 +143,12 @@ import {
     PowerIcon,
     UserIcon,
 } from "@heroicons/vue/20/solid";
-import NextClass from "@/Views/Teachers/NextClass/Index.vue";
-import Students from "@/Views/Teachers/Students.vue";
-import LessonPlans from "@/Views/Teachers/LessonPlans.vue";
-import Grades from "@/Views/Teachers/Grades.vue";
-import SchoolSchedule from "@/Views/Teachers/SchoolSchedule.vue";
-import Feedbacks from "@/Views/Teachers/Feedbacks.vue";
+import NextClass from "@/Views/Teachers/Home/NextClass/Index.vue";
+import Students from "@/Views/Teachers/Home/Students.vue";
+import LessonPlans from "@/Views/Teachers/Home/LessonPlans.vue";
+import Grades from "@/Views/Teachers/Home/Grades.vue";
+import SchoolSchedule from "@/Views/Teachers/Home/SchoolSchedule/Index.vue";
+import Feedbacks from "@/Views/Teachers/Home/Feedbacks.vue";
 import SideBar from "@/Pages/Layouts/SideBar.vue";
 import { ref } from "vue";
 import moment from "moment";
