@@ -143,7 +143,7 @@ import {
     PowerIcon,
     UserIcon,
 } from "@heroicons/vue/20/solid";
-import NextClass from "@/Views/Teachers/NextClass.vue";
+import NextClass from "@/Views/Teachers/NextClass/Index.vue";
 import Students from "@/Views/Teachers/Students.vue";
 import LessonPlans from "@/Views/Teachers/LessonPlans.vue";
 import Grades from "@/Views/Teachers/Grades.vue";
