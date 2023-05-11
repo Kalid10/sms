@@ -4,7 +4,7 @@
         <div class="flex h-fit flex-col justify-evenly space-y-2 rounded-sm">
             <div
                 v-if="students.length > 0"
-                class="flex h-fit w-full items-center justify-evenly rounded-sm bg-black py-3 text-center text-xs font-light text-white lg:text-sm lg:font-semibold"
+                class="flex h-fit w-full items-center justify-evenly rounded-sm bg-black py-2 text-center text-[0.65rem] font-medium text-white lg:py-3 lg:text-sm lg:font-semibold"
             >
                 <div class="w-4/12">Name</div>
                 <div class="w-2/12">Score</div>

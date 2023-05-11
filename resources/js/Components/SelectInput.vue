@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col">
+    <div class="flex cursor-pointer flex-col">
         <label v-if="!!label && labelLocation === 'top'" class="">
             <span class="pl-0.5 text-sm font-semibold text-gray-500">{{
                 label

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Assessment;
 use App\Models\Quarter;
+use App\Models\SchoolYear;
 use App\Models\Teacher;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +16,13 @@ class AssessmentSeeder extends Seeder
     public function run(): void
     {
         $teacher = Teacher::find(1)
-            ->load('batchSubjects.batch.level.levelCategory.assessmentTypes');
+            ->load([
+                'batchSubjects' => function ($query) {
+                    $query->whereHas('schoolYear', function ($query) {
+                        $query->where('school_years.id', SchoolYear::getActiveSchoolYear()->id);
+                    });
+                },
+                'batchSubjects.batch.level.levelCategory.assessmentTypes']);
 
         if ($teacher) {
             $batchSubjects = $teacher->batchSubjects;

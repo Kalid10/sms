@@ -34,9 +34,11 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher'])->name('teacher.
         Route::delete('delete/{id}', 'destroy')->name('delete');
     });
 
-    // Teacher profile page
-    // TODO: If there is a need to change teacher profile page, change this route
-    Route::get('', [TeacherController::class, 'show'])->name('show');
+    // Teacher profile page routes
+    Route::controller(TeacherController::class)->group(function () {
+        Route::get('', 'show')->name('show');
+        Route::get('assessments', 'assessments')->name('assessments');
+    });
 
     Route::get('/students/{student}', [StudentController::class, 'teacherShow'])->name('teacherShow');
 

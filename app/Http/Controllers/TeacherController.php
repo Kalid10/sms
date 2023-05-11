@@ -8,6 +8,7 @@ use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
+use App\Models\Semester;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -59,6 +60,7 @@ class TeacherController extends Controller
                 ->where('quarter_id', Quarter::getActiveQuarter()->id)
                 ->orderBy('created_at', 'desc')
                 ->first();
+
             if ($lastAssessment) {
                 $lastAssessment->load('assessmentType:id,name');
             }
@@ -72,7 +74,7 @@ class TeacherController extends Controller
             ->take(2)
             ->get();
 
-        return Inertia::render('Teacher/Single', [
+        return Inertia::render('Teacher/Index', [
             'teacher' => $teacher,
             'batches' => $batches,
             'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),
@@ -80,6 +82,67 @@ class TeacherController extends Controller
             'school_schedule' => $schoolSchedule,
             'school_schedule_date' => $schoolScheduleDate,
             'last_assessment' => $lastAssessment ?? null,
+        ]);
+    }
+
+    public function assessments(Request $request): Response
+    {
+        $request->validate([
+            'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
+            'assessment_type_id' => 'nullable|integer|exists:assessment_types,id',
+            'due_date' => 'nullable|date',
+            'quarter_id' => 'nullable|integer|exists:quarters,id',
+            'semester_id' => 'nullable|integer|exists:semesters,id',
+            'school_year_id' => 'nullable|integer|exists:school_years,id',
+            'search' => 'nullable|string',
+        ]);
+
+        $batchSubjectId = $request->input('batch_subject_id') ??
+            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+                ->whereHas('batch', function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                })->first()->id;
+
+        $quarters = Quarter::with('semester.schoolYear')->get();
+        $semesters = Semester::with('schoolYear')->get();
+        $schoolYears = SchoolYear::all();
+
+        $assessments = Assessment::where('batch_subject_id', $batchSubjectId)
+            ->when($request->input('assessment_type_id'), function ($query) use ($request) {
+                return $query->where('assessment_type_id', $request->input('assessment_type_id'));
+            })
+            ->when($request->input('due_date'), function ($query) use ($request) {
+                return $query->whereDate('due_date', $request->input('due_date'));
+            })
+            ->when($request->input('quarter_id'), function ($query) use ($request) {
+                return $query->where('quarter_id', $request->input('quarter_id'));
+            })
+            ->when($request->input('semester_id'), function ($query) use ($request) {
+                return $query->whereHas('quarter', function ($query) use ($request) {
+                    return $query->where('semester_id', $request->input('semester_id'));
+                });
+            })
+            ->when($request->input('school_year_id'), function ($query) use ($request) {
+                return $query->whereHas('quarter.semester', function ($query) use ($request) {
+                    return $query->where('school_year_id', $request->input('school_year_id'));
+                });
+            })
+            ->when($request->input('search'), function ($query) use ($request) {
+                return $query->where('title', 'like', "%{$request->input('search')}%");
+            })
+            ->with([
+                'batchSubject:id,batch_id,subject_id,teacher_id',
+                'assessmentType:id,name',
+                'quarter:id,name',
+            ])
+            ->orderBy('due_date', 'desc')
+            ->paginate(15);
+
+        return Inertia::render('Teacher/Assessments/Index', [
+            'assessments' => $assessments,
+            'quarters' => $quarters,
+            'semesters' => $semesters,
+            'school_years' => $schoolYears,
         ]);
     }
 
@@ -175,7 +238,7 @@ class TeacherController extends Controller
             'feedbacks.author:id,name',
             'batchSubjects.students.user',
             'assessments' => function ($query) {
-                $query->orderBy('created_at', 'desc')->limit(4);
+                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'desc')->limit(4);
             },
             'assessments.assessmentType',
             'assessments.batchSubject.batch:id,section,level_id',
