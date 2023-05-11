@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class BatchSubject extends Model
 {
@@ -40,6 +41,11 @@ class BatchSubject extends Model
         return $this->hasMany(BatchSchedule::class);
     }
 
+    public function assessments(): HasMany
+    {
+        return $this->hasMany(Assessment::class);
+    }
+
     public function sessions(): HasManyThrough
     {
         return $this->hasOneThrough(
@@ -47,6 +53,18 @@ class BatchSubject extends Model
             BatchSchedule::class,
             'batch_subject_id', // Foreign key on BatchSchedule table
             'batch_schedule_id'
+        );
+    }
+
+    public function level(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Level::class,
+            Batch::class,
+            'id', // Foreign key on Batch table
+            'id',
+            'batch_id', // Foreign key on Level table
+            'level_id'
         );
     }
 
@@ -58,5 +76,17 @@ class BatchSubject extends Model
     public function isActive(): bool
     {
         return $this->batch->school_year_id === SchoolYear::getActiveSchoolYear()->id;
+    }
+
+    public function students(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Student::class,
+            BatchStudent::class,
+            'batch_id', // Foreign key on BatchStudent table
+            'id', // Foreign key on Student table
+            'batch_id', // Local key on BatchSubject table
+            'student_id' // Local key on BatchStudent table
+        );
     }
 }

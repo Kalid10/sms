@@ -7,6 +7,8 @@
         <input type="file" @change="handleFileUpload">
         <button class="h-14 bg-lime-500 " @click="registerTeacher">Register Teacher</button>
         <button class="h-14 bg-pink-900 text-white " @click="login">Test Login</button>
+        <button class="h-14 bg-pink-900 text-white " @click="login(false, 'teacher')">Test Login (Teacher)</button>
+        <button class="h-14 bg-pink-900 text-white " @click="login(true)">Test Login (Benji)</button>
         <button class="h-14 bg-pink-900 text-white " @click="logout">Test Logout</button>
         <button class="h-14  bg-gray-600 text-white " @click="assignRoles">Test Assign Role</button>
         <button class="h-14  bg-gray-600 text-white " @click="removeRoles">Test Remove Role</button>
@@ -181,9 +183,22 @@ function registerTeacher() {
     });
 }
 
-function login() {
+// Admin: test@example.com
+function login(simulation=false, userType='admin') {
+
+    let email = ''
+    switch (userType) {
+        case 'teacher':
+            email = 'janedoe@example.com'
+            break;
+        case 'admin':
+        default:
+            email = 'test@example.com'
+            break;
+    }
+
     router.post('/login', {
-        emailOrPhone: "test@example.com",
+        emailOrPhone: (simulation ? "biniyam.lemma@gibson.edu.et" : email),
         password: "password"
     }, {
         onSuccess: () => {

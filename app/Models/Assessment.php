@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Assessment extends Model
@@ -16,6 +17,9 @@ class Assessment extends Model
         'batch_subject_id',
         'quarter_id',
         'due_date',
+        'title',
+        'description',
+        'maximum_point',
     ];
 
     public function assessmentType(): BelongsTo
@@ -31,6 +35,18 @@ class Assessment extends Model
     public function quarter(): BelongsTo
     {
         return $this->belongsTo(Quarter::class);
+    }
+
+    public function teacher(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Teacher::class,
+            BatchSubject::class,
+            'teacher_id',
+            'id',
+            'batch_subject_id',
+            'teacher_id'
+        );
     }
 
     protected $casts = [

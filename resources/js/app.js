@@ -8,6 +8,7 @@ import Layout from "./Pages/Layouts/Layout.vue";
 import GettingStartedLayout from "./Pages/Layouts/GettingStartedLayout.vue";
 
 import {createPinia} from "pinia";
+import TeacherLayout from "@/Pages/Layouts/TeacherLayout.vue";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText ||
@@ -18,6 +19,10 @@ const pinia = createPinia();
 function getLayout(name, page) {
 
     switch (true) {
+
+        case (name.startsWith('Teacher/')):
+
+            return TeacherLayout;
 
         case (name.startsWith('GettingStarted/')):
         case (name.startsWith('Auth/')):
