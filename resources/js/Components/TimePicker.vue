@@ -5,26 +5,23 @@
                 <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
             </span>
         <input
-            :disabled="disabled" :placeholder="placeholder" :required="required" :type="type"
+            type="time"
+            :disabled="disabled" :placeholder="placeholder" :required="required"
             :value="modelValue"
-            class="h-10 w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-400"
-            @input="$emit('update:modelValue', $event.target.value)"
-            @focusin="toggleSubtext ? showSubText = true : null"
-            @focusout="toggleSubtext ? showSubText = false : null"
-        />
-        <span
-            v-if="subtext && showSubText"
-            class="text-xs text-gray-500">
+            class="h-10 w-full rounded-md border border-gray-200 placeholder:text-sm placeholder:text-gray-500"
+            @input="$emit('update:modelValue', $event.target.value)"/>
+        <span v-if="subtext" class="text-xs text-gray-500">
             <component :is="descriptionIcon" class="inline-block h-4 w-4 stroke-2"/>
             {{ subtext }}
         </span>
         <span v-if="error" class="text-xs text-negative-50">
-            * {{ error }}
+            *{{ error }}
         </span>
     </label>
 </template>
 
 <script setup>
+
 import {computed, defineAsyncComponent} from "vue";
 
 const props = defineProps({
@@ -52,21 +49,9 @@ const props = defineProps({
         type: String,
         default: null,
     },
-    type: {
-        type: String,
-        default: 'text'
-    },
     subtext: {
         type: String,
         default: null
-    },
-    showSubText: {
-        type: Boolean,
-        default: true
-    },
-    toggleSubtext: {
-        type: Boolean,
-        default: false
     }
 })
 
@@ -78,8 +63,6 @@ const descriptionIcon = computed(() => {
     }
     return 'span'
 })
-
-
 </script>
 
 <style scoped>
