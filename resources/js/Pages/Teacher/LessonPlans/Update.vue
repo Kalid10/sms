@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <FormElement
             title="Update Lesson plan"
@@ -12,7 +11,12 @@
                 placeholder="topic"
                 label="Topic"
             />
-            <TextArea v-model="form.description" required label="Description" placeholder="description"/>
+            <TextArea
+                v-model="form.description"
+                required
+                label="Description"
+                placeholder="description"
+            />
 
             <TextInput
                 v-model="form.batch_session_id"
@@ -27,9 +31,9 @@
 <script setup>
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
-import {useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import TextArea from "@/Components/TextArea.vue";
-import {onMounted} from "vue";
+import { onMounted } from "vue";
 
 const props = defineProps({
     lessonPlan: {
@@ -45,29 +49,20 @@ onMounted(() => {
 });
 
 const form = useForm({
-    topic: '',
-    description: '',
-    id: '',
+    topic: "",
+    description: "",
+    id: "",
     batch_session_ids: [4],
 });
 
 const update = () => {
-    form.post('lesson-plan/'), {
-        onSuccess: () => {
-            console.log('Success');
-        },
-        onError: () => {
-            console.log('Error')
-        }
-    }
-}
+    form.post("lesson-plan/");
+};
 
 function edit() {
-    form.topic = props.lessonPlan.topic
-    form.description = props.lessonPlan.description
-    form.id = props.lessonPlan.id
-    form.batch_session_id = props.lessonPlan.batch_session_id
+    form.topic = props.lessonPlan.topic;
+    form.description = props.lessonPlan.description;
+    form.id = props.lessonPlan.id;
+    form.batch_session_id = props.lessonPlan.batch_session_id;
 }
-
-
 </script>
