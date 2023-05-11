@@ -38,31 +38,8 @@
 
 
                     <PrimaryButton
-title="Now Lets Add School Periods"
-                                   @click="welcomeModal = false"/>
-                    <!--                            <div-->
-                    <!--                                class="flex flex-col items-center justify-between gap-2"-->
-                    <!--                            >-->
-                    <!--                                <div-->
-                    <!--                                    class="flex items-center justify-center"-->
-                    <!--                                >-->
-                    <!--                                    <h3 class="text-xs font-semibold">-->
-                    <!--                                        Register School Periods-->
-                    <!--                                    </h3>-->
-                    <!--                                    <div-->
-                    <!--                                        class="flex max-w-0 grow justify-end opacity-0 transition-all duration-150 group-hover:max-w-full group-hover:opacity-100"-->
-                    <!--                                    >-->
-                    <!--                                        <ArrowRightIcon-->
-                    <!--                                            class="h-3 w-3 stroke-2"-->
-                    <!--                                        />-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-
-                    <!--                                <h3 class="text-center text-xs">-->
-                    <!--                                    Add the start and end times for each class period.-->
-                    <!--                                    This will create a clear timetable for everyone involved.-->
-                    <!--                                </h3>-->
-                    <!--                            </div>-->
+                        title="Now Lets Add School Periods"
+                        @click="welcomeModal = false"/>
 
                 </div>
             </div>
