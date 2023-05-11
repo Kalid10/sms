@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Batch;
 use App\Models\Level;
+use App\Models\LevelCategory;
+use App\Models\SchoolPeriod;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Subject;
@@ -30,9 +32,12 @@ class GettingStartedController extends Controller
 
         return Inertia::render('GettingStarted/Index', [
             'step' => $step,
-            'levels' => Level::all(),
+            'levels' => Level::with('levelCategory')->get(),
             'batches' => Inertia::lazy(fn () => Batch::active(['level'])),
             'subjects' => Inertia::lazy(fn () => Subject::all()),
+            'level_categories' => Inertia::lazy(fn () => LevelCategory::all()),
+            'school_periods' => SchoolPeriod::with('levelCategory')->get(),
+            'school_schedule' => SchoolSchedule::all(),
         ]);
     }
 
@@ -40,6 +45,20 @@ class GettingStartedController extends Controller
     {
         return Inertia::render('GettingStarted/SchoolSchedule', [
             'school_schedule' => SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->get(),
+        ]);
+    }
+
+    public function schoolPeriod(): Response
+    {
+        return Inertia::render('GettingStarted/SchoolPeriod', [
+            'level_categories' => Inertia::lazy(fn () => LevelCategory::all()),
+        ]);
+    }
+
+    public function classSchedule(): Response
+    {
+        return Inertia::render('GettingStarted/ClassSchedule', [
+            'school_schedule' => SchoolSchedule::all(),
         ]);
     }
 }

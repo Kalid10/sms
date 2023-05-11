@@ -4,32 +4,34 @@
     <div
         v-if="
             activePage === '/getting-started/school-schedule' ||
+            activePage === '/getting-started/class-schedule' ||
+            activePage === '/getting-started/school-period' ||
             activePage === '/login' ||
             activePage === '/signup'
         "
         class="relative flex h-screen w-full flex-col"
     >
-        <slot />
+        <slot/>
     </div>
     <div v-else class="relative flex h-screen w-full flex-col">
-        <Header />
+        <Header/>
         <div class="grow overflow-y-auto p-2 md:p-6 lg:w-full">
             <div
                 :class="maxWidth"
                 class="container mx-auto flex flex-col gap-4"
             >
-                <slot />
+                <slot/>
             </div>
         </div>
     </div>
 
-    <Notification />
+    <Notification/>
 </template>
 
 <script setup>
 import Header from "@/Views/Header.vue";
-import { computed } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import {computed} from "vue";
+import {usePage} from "@inertiajs/vue3";
 import Notification from "@/Components/Notification.vue";
 
 const activePage = computed(() => usePage().url);

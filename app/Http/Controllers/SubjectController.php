@@ -40,8 +40,6 @@ class SubjectController extends Controller
         $batchId = $request->batch_id ?? Batch::active()->firstOrFail()->id;
         $selectedBatch = Batch::find($batchId)->load('level');
 
-        Log::info('This is batch id '.$batchId);
-
         $batchSubjects = BatchSubject::where('batch_id', $batchId)->with('subject')->get();
 
         return Inertia::render('Subjects/Index', [

@@ -4,8 +4,8 @@
             class="col-span-1 flex h-full w-full flex-col items-center justify-center p-6 lg:items-end lg:p-16"
         >
             <form
-class="flex min-h-10 w-full max-w-2xl flex-col gap-8"
-                  @submit.prevent="submit">
+                class="flex min-h-10 w-full max-w-lg flex-col gap-8"
+                @submit.prevent="submit">
                 <div class="flex items-center gap-3 lg:hidden">
                     <svg
                         fill="none"
@@ -128,8 +128,8 @@ class="flex min-h-10 w-full max-w-2xl flex-col gap-8"
             <h3 class="max-w-xl font-medium text-white">
                 Maximize your school's potential with our all-inclusive management platform. Simplify operations, boost
                 communication, and create a teamwork-driven learning space for a brilliant future.
+                <span class="block py-3">Sign in to start your journey towards educational excellence.</span>
             </h3>
-            <p class="text-sm text-white"> Sign in to start your journey towards educational excellence.</p>
         </div>
     </div>
 </template>

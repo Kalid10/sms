@@ -116,7 +116,7 @@
             <button
                 class="mx-auto flex w-fit items-center justify-center gap-1 rounded-2xl bg-gray-200 px-3 py-2 text-xs"
             >
-                <ChevronDoubleDownIcon class="h-4 w-4" />
+                <ChevronDoubleDownIcon class="h-4 w-4"/>
                 <span>Show All</span>
             </button>
         </div>
@@ -168,7 +168,7 @@
                             <div class="flex items-center justify-between">
                                 <h3 class="font-semibold">
                                     <span v-if="level.name.length < 3"
-                                        >Grade</span
+                                    >Grade</span
                                     >
                                     {{ level.name }}
                                 </h3>
@@ -279,7 +279,7 @@
                                             :percentage="100"
                                         />
                                         <span class="text-sm"
-                                            >All Sections</span
+                                        >All Sections</span
                                         >
                                     </div>
 
@@ -303,17 +303,12 @@
 
 <script setup>
 import DelegateLink from "@/Views/DelegateLink.vue";
-import { computed, onMounted, ref, watch } from "vue";
-import { router } from "@inertiajs/vue3";
-import { toHashTag } from "@/utils";
-import { allLevels, sectionsOfLevel } from "@/fake";
-import { XCircleIcon } from "@heroicons/vue/24/solid";
-import {
-    CheckCircleIcon,
-    ChevronDoubleDownIcon,
-    ChevronDownIcon,
-    MinusCircleIcon,
-} from "@heroicons/vue/24/outline";
+import {computed, onMounted, ref, watch} from "vue";
+import {router} from "@inertiajs/vue3";
+import {toHashTag} from "@/utils";
+import {allLevels, sectionsOfLevel} from "@/fake";
+import {XCircleIcon} from "@heroicons/vue/24/solid";
+import {CheckCircleIcon, ChevronDoubleDownIcon, ChevronDownIcon, MinusCircleIcon,} from "@heroicons/vue/24/outline";
 import CircularProgress from "@/Components/CircularProgress.vue";
 import Card from "@/Components/Card.vue";
 import Checkbox from "@/Components/Checkbox.vue";
@@ -475,7 +470,7 @@ function saveBatches() {
 }
 
 function submitForm() {
-    router.get("/getting-started/school-schedule");
+    router.get("/getting-started/school-period");
 }
 
 const batchToSubjects = ref([]);
