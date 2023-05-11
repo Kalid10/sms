@@ -2,36 +2,24 @@
     <div id="top-view"></div>
 
     <div class="relative flex h-screen w-full flex-col">
-        <Header v-if="!teacherLessonPlanRoute" @open-drawer="drawerVisible = true"/>
+        <Header @open-drawer="drawerVisible = true" />
         <div
-            class="hide-scrollbar w-full grow overflow-y-auto bg-white"
-            :class="teacherLessonPlanRoute ? 'p-0' : 'p-2 container mx-auto flex flex-col gap-12'"
+            class="hide-scrollbar container mx-auto flex w-full grow flex-col gap-12 overflow-y-auto bg-white p-2"
         >
-            <slot/>
+            <slot />
         </div>
-        <Notification/>
+        <Notification />
     </div>
 </template>
 
 <script setup>
-import {computed, ref} from "vue";
-import {usePage} from "@inertiajs/vue3";
+import { ref } from "vue";
+import { usePage } from "@inertiajs/vue3";
 import Header from "@/Views/Header.vue";
 import Notification from "@/Components/Notification.vue";
 
 const drawerVisible = ref(false);
 const page = usePage();
-
-
-const teacherLessonPlanRoute = computed(() => {
-        if (page.url.startsWith("/teacher/lesson-plan") || page.url.startsWith("/teacher")) {
-            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-            drawerVisible.value = false;
-            return true;
-        }
-        return false;
-    }
-);
 </script>
 
 <style scoped>
