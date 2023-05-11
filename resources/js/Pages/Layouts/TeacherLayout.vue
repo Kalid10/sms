@@ -2,11 +2,8 @@
     <div id="top-view"></div>
 
     <div class="relative flex h-screen w-full flex-col">
-        <div
-            class="hide-scrollbar w-full grow overflow-y-auto bg-white p-0"
-        >
+        <div class="hide-scrollbar w-full grow overflow-y-auto bg-white p-0">
             <div class="flex w-full">
-
                 <SideBar
                     v-model:open="openSideBar"
                     class="sticky top-0 h-screen"
@@ -15,42 +12,46 @@
                     :footer-items="footerItems"
                 />
                 <div
-                    :class="openSideBar ? 'min-w-full lg:min-w-0 blur lg:blur-0' : ''"
+                    :class="
+                        openSideBar
+                            ? 'min-w-full lg:min-w-0 blur lg:blur-0'
+                            : ''
+                    "
                     class="flex flex-col items-center overflow-x-hidden lg:w-full"
                 >
-                    <slot/>
+                    <slot />
                 </div>
-
-
             </div>
         </div>
-        <Notification/>
+        <Notification />
     </div>
 </template>
 
 <script setup>
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Pages/Layouts/SideBar.vue";
-import {computed, reactive, ref} from "vue";
-import {HomeIcon} from "@heroicons/vue/24/solid/index.js";
+import { computed, ref } from "vue";
+import { HomeIcon } from "@heroicons/vue/24/solid/index.js";
 import {
     CalendarDaysIcon,
     CalendarIcon,
     ChatBubbleBottomCenterIcon,
-    ClipboardIcon, Cog6ToothIcon, PowerIcon,
-    UserIcon
+    ClipboardIcon,
+    Cog6ToothIcon,
+    PowerIcon,
+    UserIcon,
 } from "@heroicons/vue/20/solid/index.js";
-import {usePage} from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
     auth: {
         type: Object,
         required: true,
-    }
-})
+    },
+});
 
-const openSideBar = ref(true)
-const directory = computed(() => usePage().url.split('/')[2])
+const openSideBar = ref(true);
+const directory = computed(() => usePage().url.split("/")[2]);
 
 // Populate sidebar items
 const sidebarItems = computed(() => [
@@ -58,49 +59,50 @@ const sidebarItems = computed(() => [
         name: "Home",
         icon: HomeIcon,
         route: "/teacher",
-        active: directory.value === undefined
+        active: directory.value === undefined,
     },
     {
         name: "Lesson Plan",
         icon: CalendarIcon,
-        route: "/teacher/feedbacks",
-        active: directory.value === 'lesson-plan'
-    },
-    {
-        name: "Homerooms",
-        icon: UserIcon,
-        route: "/teacher/homeroom-classes",
-        active: directory.value === 'homerooms'
+        route: "/teacher/lesson-plan",
+        active: directory.value === "lesson-plan",
     },
     {
         name: "Assessments",
         icon: ClipboardIcon,
         route: "/teacher/assessments",
-        active: directory.value === 'assessments'
+        active: directory.value === "assessments",
     },
+    {
+        name: "Homerooms",
+        icon: UserIcon,
+        route: "/teacher/homeroom-classes",
+        active: directory.value === "homerooms",
+    },
+
     {
         name: "Schedule",
         icon: CalendarDaysIcon,
         route: "/teacher/subjects",
-        active: directory.value === 'subjects'
+        active: directory.value === "subjects",
     },
     {
         name: "Students",
         icon: UserIcon,
         route: "/teacher/students/1",
-        active: directory.value === 'students'
+        active: directory.value === "students",
     },
     {
         name: "Feedbacks",
         icon: ChatBubbleBottomCenterIcon,
         route: "/teacher/feedbacks",
-        active: directory.value === 'feedbacks'
+        active: directory.value === "feedbacks",
     },
     {
         name: "Settings",
         icon: Cog6ToothIcon,
         route: "/teacher/settings",
-        active: directory.value === 'settings'
+        active: directory.value === "settings",
     },
 ]);
 
@@ -108,8 +110,6 @@ const footerItems = [
     { icon: ChatBubbleBottomCenterIcon, name: "Chat" },
     { icon: PowerIcon, name: "Logout" },
 ];
-
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
