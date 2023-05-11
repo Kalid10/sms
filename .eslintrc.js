@@ -20,5 +20,6 @@ module.exports = {
         "vue/no-setup-props-destructure": "off",
         "tailwindcss/no-custom-classname": "off",
         "vue/no-template-shadow": "off",
+        "vue/no-mutating-props": "off",
     },
 };
