@@ -40,7 +40,7 @@ class BatchSeeder extends Seeder
     {
         $studentsBirthYear = 2023 - (3 + $level->id);
 
-        return Student::with('user', 'batches', 'batches.schoolYear', 'batches.level')->get()->filter(function ($student) use ($studentsBirthYear) {
+        return Student::with('user', 'batches.batch', 'batches.batch.schoolYear', 'batches.batch.level')->get()->filter(function ($student) use ($studentsBirthYear) {
             return Carbon::createFromDate($student->user->date_of_birth->year)
                     ->between(
                         Carbon::createFromDate($studentsBirthYear - 1),
