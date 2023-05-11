@@ -1,12 +1,12 @@
 <template>
     <div id="top-view"></div>
 
-    <div class="relative flex h-screen w-full flex-col">
+    <div class="relative flex max-h-screen w-full flex-col">
         <div class="hide-scrollbar w-full grow overflow-y-auto bg-white p-0">
             <div class="flex w-full">
                 <SideBar
                     v-model:open="openSideBar"
-                    class="sticky top-0 h-screen"
+                    class="sticky top-0"
                     :header="auth"
                     :main-items="sidebarItems || []"
                     :footer-items="footerItems"
@@ -106,10 +106,7 @@ const sidebarItems = computed(() => [
     },
 ]);
 
-const footerItems = [
-    { icon: ChatBubbleBottomCenterIcon, name: "Chat" },
-    { icon: PowerIcon, name: "Logout" },
-];
+const footerItems = [{ icon: PowerIcon, name: "Logout" }];
 </script>
 
 <style scoped></style>
