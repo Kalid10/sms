@@ -1,17 +1,27 @@
 <template>
     <label class="flex flex-col gap-1">
-            <span v-if="label" class="">
-                <span class="pl-0.5 text-sm font-semibold text-gray-500">{{ label }}</span>
-                <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
-            </span>
+        <span v-if="label" class="">
+            <span class="pl-0.5 text-xs font-semibold text-gray-500">{{
+                label
+            }}</span>
+            <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
+        </span>
         <input
             type="time"
-            :disabled="disabled" :placeholder="placeholder" :required="required"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :required="required"
             :value="modelValue"
             class="h-10 w-full rounded-md border border-gray-200 placeholder:text-sm placeholder:text-gray-500"
-            @input="$emit('update:modelValue', $event.target.value)"/>
-        <span v-if="subtext" class="text-xs text-gray-500">
-            <component :is="descriptionIcon" class="inline-block h-4 w-4 stroke-2"/>
+            @input="$emit('update:modelValue', $event.target.value)"
+            @focusin="toggleSubtext ? (showSubText = true) : null"
+            @focusout="toggleSubtext ? (showSubText = false) : null"
+        />
+        <span v-if="subtext && showSubText" class="text-xs text-gray-500">
+            <component
+                :is="descriptionIcon"
+                class="inline-block h-4 w-4 stroke-2"
+            />
             {{ subtext }}
         </span>
         <span v-if="error" class="text-xs text-negative-50">
@@ -21,25 +31,24 @@
 </template>
 
 <script setup>
-
-import {computed, defineAsyncComponent} from "vue";
+import { computed, defineAsyncComponent } from "vue";
 
 const props = defineProps({
     label: {
         type: String,
-        default: null
+        default: null,
     },
     required: {
         type: Boolean,
-        default: false
+        default: false,
     },
     disabled: {
         type: Boolean,
-        default: false
+        default: false,
     },
     placeholder: {
         type: String,
-        required: true
+        required: true,
     },
     modelValue: {
         type: [String, Number],
@@ -51,20 +60,28 @@ const props = defineProps({
     },
     subtext: {
         type: String,
-        default: null
-    }
-})
+        default: null,
+    },
+    showSubText: {
+        type: Boolean,
+        default: true,
+    },
+    toggleSubtext: {
+        type: Boolean,
+        default: false,
+    },
+});
 
-defineEmits(['update:modelValue'])
+defineEmits(["update:modelValue"]);
 
 const descriptionIcon = computed(() => {
     if (props.subtext) {
-        return defineAsyncComponent(() => import('@heroicons/vue/24/outline/InformationCircleIcon.js'))
+        return defineAsyncComponent(() =>
+            import("@heroicons/vue/24/outline/InformationCircleIcon.js")
+        );
     }
-    return 'span'
-})
+    return "span";
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

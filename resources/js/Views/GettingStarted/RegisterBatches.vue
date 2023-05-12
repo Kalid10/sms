@@ -1,14 +1,13 @@
 <template>
-
     <div class="flex flex-col">
         <DelegateLink></DelegateLink>
         <Heading>Register Grades</Heading>
         <h3 class="text-sm text-gray-500">
             We have selected a set of default grades for you. You can remove
-            grades you don't need, add new grades or edit the number of
-            sections in each grade.
+            grades you don't need, add new grades or edit the number of sections
+            in each grade.
             <span class="inline-block"
-            >Click on the "Finish" to proceed, and "Next" to save and
+                >Click on the "Finish" to proceed, and "Next" to save and
                 proceed.</span
             >
         </h3>
@@ -19,8 +18,8 @@
             class="col-span1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
         >
             <span class="font-semibold text-black">{{
-                    updatedLevels.length
-                }}</span>
+                selectedGradeCount
+            }}</span>
             Grades Selected
         </span>
 
@@ -33,26 +32,36 @@
     </div>
 
     <div
-        v-for="(levelCategory, lc) in levelCategories" :key="lc"
+        v-for="(levelCategory, lc) in levelCategories"
+        :key="lc"
         class="flex flex-col gap-4"
     >
         <div class="flex items-center gap-2">
-            <div class="z-10 h-3.5 w-3.5 rounded-full" :class="colors[lc]"/>
+            <div class="z-10 h-3.5 w-3.5 rounded-full" :class="colors[lc]" />
             <Heading size="sm" class="font-normal text-gray-500">
-                {{ updatedLevels.filter(level => level.level_category_id === levelCategory)[0].level_category.name }}
+                {{
+                    updatedLevels.filter(
+                        (level) => level.level_category_id === levelCategory
+                    )[0].level_category.name
+                }}
             </Heading>
         </div>
-        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
+        <div
+            class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4"
+        >
             <label
-v-for="(level, l) in updatedLevels.filter(level => level.level_category_id === levelCategory)"
-                   :key="l">
+                v-for="(level, l) in updatedLevels.filter(
+                    (level) => level.level_category_id === levelCategory
+                )"
+                :key="l"
+            >
                 <Card class="group !min-w-full">
                     <div
                         :class="
-                        level.selected || level.isNew
-                            ? 'opacity-100'
-                            : 'opacity-25'
-                    "
+                            level.selected || level.isNew
+                                ? 'opacity-100'
+                                : 'opacity-25'
+                        "
                         class="flex flex-col gap-6"
                     >
                         <div class="flex items-center justify-between">
@@ -77,13 +86,15 @@ v-for="(level, l) in updatedLevels.filter(level => level.level_category_id === l
                         <div class="flex items-baseline gap-1">
                             <span>Sections</span>
                             <span class="font-semibold">{{
-                                    level.no_of_sections
-                                }}</span>
+                                level.no_of_sections
+                            }}</span>
                             <button
                                 class="ml-2 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-neutral-200 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                                 @click="editSection(l)"
                             >
-                                <PencilIcon class="h-3 w-3 stroke-black stroke-2"/>
+                                <PencilIcon
+                                    class="h-3 w-3 stroke-black stroke-2"
+                                />
                             </button>
                         </div>
                     </div>
@@ -112,42 +123,42 @@ v-for="(level, l) in updatedLevels.filter(level => level.level_category_id === l
 </template>
 
 <script setup>
-import {computed, ref, watch} from "vue";
-import {router, useForm} from "@inertiajs/vue3";
+import { computed, ref, watch } from "vue";
+import { router, useForm } from "@inertiajs/vue3";
 import Heading from "@/Components/Heading.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Card from "@/Components/Card.vue";
-import {PencilIcon, TrashIcon,} from "@heroicons/vue/24/outline";
+import { PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DelegateLink from "@/Views/DelegateLink.vue";
-import {useGettingStartedStore} from "@/Store/getting-started";
+import { useGettingStartedStore } from "@/Store/getting-started";
 
 const emits = defineEmits(["success"]);
 
 const gettingStartedStore = useGettingStartedStore();
 
-const levelCategories = computed(() => updatedLevels.value.reduce((acc, level) => {
+const levelCategories = computed(() =>
+    updatedLevels.value.reduce((acc, level) => {
+        acc.add(level.level_category_id);
 
-    acc.add(level.level_category_id)
-
-    return acc;
-
-}, new Set))
+        return acc;
+    }, new Set())
+);
 
 const levels = computed(() => gettingStartedStore.levels);
 
 const updatedLevels = ref(
     gettingStartedStore.levels.map((level) => {
-        return {...level, selected: true, no_of_sections: 3};
+        return { ...level, selected: true, no_of_sections: 3 };
     })
 );
 const formData = computed(() => {
     return updatedLevels.value.map((level) => {
         return {
-            level_id: level.isNew ? {name: level.name} : level.id,
+            level_id: level.isNew ? { name: level.name } : level.id,
             no_of_sections: level.no_of_sections,
         };
     });
@@ -155,24 +166,22 @@ const formData = computed(() => {
 
 const batchesCount = computed(() => {
     return updatedLevels.value.reduce((acc, level) => {
-        if (level.selected || level.isNew) acc += level.no_of_sections;
+        if (level.selected || level.isNew) acc += Number(level.no_of_sections);
         return acc;
     }, 0);
 });
 
+const selectedGradeCount = computed(() => {
+    return updatedLevels.value.reduce((acc, level) => {
+        if (level.selected || level.isNew) acc += 1;
+        return acc;
+    }, 0);
+});
 const newLevel = useForm({
     name: "",
     number_of_sections: 3,
 });
 
-const sectionsOptions = [
-    {value: 1, label: "1 Section"},
-    {value: 2, label: "2 Sections"},
-    {value: 3, label: "3 Sections"},
-    {value: 4, label: "4 Sections"},
-    {value: 5, label: "5 Sections"},
-    {value: 0, label: "Custom number"},
-];
 const customSections = ref(false);
 watch(
     newLevel,
