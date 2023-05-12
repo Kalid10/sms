@@ -47,12 +47,13 @@ class StudentController extends Controller
         $student = $student->load('user');
         $studentBatch = $student->activeBatch([]);
 
-        $teacherStudentAssessment = BatchSubject::with('assessments')
+        $teacherStudentAssessment = BatchSubject::with('batch.level', 'subject', 'assessments.assessmentType')
             ->where('batch_id', $studentBatch->id)->get();
 
         return Inertia::render('Teacher/Student', [
             'student' => $student->load('user'),
             'assessments' => $teacherStudentAssessment,
+            'batchSessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod'])->get(),
         ]);
     }
 }

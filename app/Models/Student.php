@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Student extends Model
 {
@@ -78,5 +79,22 @@ class Student extends Model
         }
 
         return ($absenteeRecords / $completedBatchSessions) * 100;
+    }
+
+    public function batchSessions(): HasManyThrough
+    {
+        return $this->activeBatch()->sessions();
+    }
+
+    public function upcomingSessions(array $with = [], Teacher $teacher = null): HasManyThrough
+    {
+        return $this->activeBatch()->sessions()
+            ->with($with)
+            ->where('status', BatchSession::STATUS_SCHEDULED)
+            ->where('date', '>', now())
+            ->when($teacher, function ($query) use ($teacher) {
+                $query->where('teacher_id', $teacher->id);
+            })
+            ->orderBy('date', 'asc');
     }
 }
