@@ -29,7 +29,7 @@ class UserController extends Controller
         // Get activity logs of users
         $activityLog = Activity::where('log_name', 'user')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return Inertia::render('Users/Index', [
             'users' => $users,

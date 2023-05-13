@@ -2,7 +2,24 @@
 
     <UsersStatistics/>
 
-    <Index :logs="activityLogs" :columns="header"/>
+    <ActivityLog
+        title="Activity Logs"
+        subtitle="users activity logs"
+        :logs="activityLogs"
+        :columns="user_log_column">
+
+        <template #footer>
+            <div class="flex w-full justify-end gap-3">
+                <TertiaryButton
+                    class="w-full md:w-fit" title="Previous"
+                    @click="logPreviousPage"/>
+                <TertiaryButton
+                    class="w-full md:w-fit" title="Next"
+                    @click="logNextPage"/>
+            </div>
+
+        </template>
+    </ActivityLog>
 
     <TableElement
         :columns="users_config"
@@ -135,9 +152,11 @@ import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import Register from "@/Views/RegisterUser.vue";
 import SelectInput from "@/Components/SelectInput.vue";
-import Index from "@/Views/ActivityLogs/Index.vue";
+import ActivityLog from "@/Views/ActivityLogs/Index.vue";
 
-const activityLogs = computed(() => usePage().props.activity_log);
+const activityLogs = computed(() => {
+    return usePage().props.activity_log.data
+})
 
 const showRegisterOptions = ref(false);
 
@@ -255,6 +274,26 @@ function nextPage() {
     })
 }
 
+function logPreviousPage() {
+    router.get('/users', {
+        page: activityLogs.value['current_page'] - 1,
+        per_page: perPage.value,
+    }, {
+        preserveState: true,
+        replace: true
+    })
+}
+
+function logNextPage() {
+    router.get('/users', {
+        page: activityLogs.value['current_page'] + 1,
+        per_page: perPage.value,
+    }, {
+        preserveState: true,
+        replace: true
+    })
+}
+
 // 'name', 'email', 'type', 'gender'
 const users_config = [
     {
@@ -291,7 +330,7 @@ const users_config = [
     }
 ]
 
-const header = [
+const user_log_column = [
     {
         name: 'name',
     },
