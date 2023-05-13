@@ -1,113 +1,22 @@
 <template>
-    <div class="flex h-full cursor-pointer flex-col space-y-2 lg:text-center">
-        <div v-if="!isLessonPlansEmpty" class="font-medium lg:text-2xl">
+    <div class="flex h-full cursor-pointer flex-col">
+        <div
+            v-if="!isLessonPlansEmpty"
+            class="text-center font-medium 2xl:text-2xl"
+        >
             Recent Lesson Plans
         </div>
-        <div class="flex h-full flex-col items-center justify-center space-y-4">
+        <div class="flex flex-col items-center justify-center">
             <div
                 v-if="!isLessonPlansEmpty"
                 class="flex flex-col items-center space-y-4 rounded-md py-4"
             >
-                <template v-for="(item, index) in lessonPlans" :key="index">
-                    <div
-                        class="flex h-24 w-full items-center justify-between rounded-r-lg bg-white shadow-sm hover:scale-105"
-                    >
-                        <div
-                            class="flex h-full w-3/12 flex-col items-center justify-evenly rounded-l-lg bg-black text-white lg:w-2/12"
-                        >
-                            <div class="font-bold lg:text-2xl">
-                                {{ moment(item.date).format("ddd") }}
-                            </div>
-                            <div
-                                class="flex flex-col justify-evenly text-center text-xs"
-                            >
-                                <span class="hidden lg:inline-block">{{
-                                    moment(item.date).format("MMMM d YYYY")
-                                }}</span>
-                                <span class="lg:hidden">{{
-                                    moment(item.date).format("MMMM d")
-                                }}</span>
-                                <span class="lg:hidden">{{
-                                    moment(item.date).format("YYYY")
-                                }}</span>
-                            </div>
-                        </div>
-
-                        <div
-                            class="flex w-9/12 flex-col items-center justify-between space-y-2 text-center lg:w-8/12 lg:px-1"
-                        >
-                            <div
-                                class="pl-2 text-[0.65rem] font-medium lg:pl-0 lg:text-sm"
-                            >
-                                {{ item.lesson_plan.topic }}
-                            </div>
-                            <div
-                                class="flex w-full justify-between pl-2 text-start text-xs lg:pl-0"
-                            >
-                                <div
-                                    class="text-center text-[0.55rem] font-light lg:pl-3 lg:text-[0.65rem]"
-                                >
-                                    <span class="hidden lg:inline-block"
-                                        >Updated</span
-                                    >
-                                    {{
-                                        moment(
-                                            item.lesson_plan.created_at
-                                        ).fromNow()
-                                    }}
-                                </div>
-
-                                <div
-                                    class="pr-2 text-[0.55rem] font-light lg:hidden"
-                                >
-                                    <div>
-                                        {{
-                                            item.batch_schedule.batch.level
-                                                .name +
-                                            item.batch_schedule.batch.section
-                                        }}
-                                        (
-                                        {{
-                                            item.batch_schedule.batch_subject
-                                                .subject.short_name
-                                        }}
-                                        )
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            class="hidden h-full w-2/12 flex-col items-end justify-center space-y-1 text-center lg:flex lg:items-center"
-                        >
-                            <div class="w-fit pr-1 lg:pr-0">
-                                <div
-                                    class="cursor-pointer text-xs underline-offset-2 hover:font-bold hover:underline"
-                                >
-                                    {{
-                                        item.batch_schedule.batch.level.name +
-                                        item.batch_schedule.batch.section
-                                    }}
-                                </div>
-                                <div
-                                    class="cursor-pointer text-[0.6rem] font-light underline-offset-2 hover:font-medium hover:underline lg:mt-1 lg:text-xs"
-                                >
-                                    {{
-                                        item.batch_schedule.batch_subject
-                                            .subject.full_name
-                                    }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-
-                <div
-                    class="w-full cursor-pointer text-end text-xs font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium lg:text-sm"
-                    @click="$inertia.get('/teacher/lesson-plan')"
-                >
-                    View All Lesson Plans
-                </div>
+                <Items />
+                <LinkCell
+                    class="flex w-full justify-end"
+                    href="/teacher/lesson-plan"
+                    value="View All Lesson Plans"
+                />
             </div>
             <div
                 v-else
@@ -115,12 +24,10 @@
             >
                 <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
                 <div>No Lesson Plan Found!</div>
-                <div
-                    class="w-fit cursor-pointer text-xs font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium lg:text-sm"
-                    @click="$inertia.get('/teacher/lesson-plan')"
-                >
-                    View All Lesson Plans
-                </div>
+                <LinkCell
+                    href="/teacher/lesson-plan"
+                    value="View All LessonPlans"
+                />
             </div>
         </div>
     </div>
@@ -128,9 +35,10 @@
 
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import moment from "moment";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import { computed } from "vue";
+import Items from "@/Views/Teacher/Home/LessonPlan/Items.vue";
+import LinkCell from "@/Components/LinkCell.vue";
 
 const lessonPlans = usePage().props.teacher.lesson_plans;
 
