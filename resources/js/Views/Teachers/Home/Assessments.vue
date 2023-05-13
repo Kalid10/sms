@@ -1,117 +1,22 @@
 <template>
     <div class="h-fit w-full rounded-lg">
+        <!--        Header-->
         <div class="flex w-full justify-between">
-            <div class="font-medium lg:text-2xl">Recent Assessments</div>
-            <div
-                class="flex w-fit items-center justify-center space-x-1 rounded-md px-3 text-[0.62rem] font-medium underline underline-offset-2 hover:scale-105 hover:cursor-pointer lg:text-sm"
-            >
-                SEE ALL
+            <div class="font-medium lg:text-xl 2xl:text-2xl">
+                Recent Assessments
+            </div>
+            <div class="flex w-fit items-center justify-center">
+                <LinkCell href="/teacher/assessments" value="SEE ALL" />
             </div>
         </div>
 
+        <!--        Content-->
         <div class="flex w-full flex-col">
             <div
                 v-if="teacher.assessments.length > 0"
                 class="mt-1 flex w-full flex-col justify-center divide-y-2 lg:mt-2 lg:py-2"
             >
-                <div
-                    v-for="(item, index) in teacher.assessments"
-                    :key="index"
-                    class="mt-1 flex items-center justify-evenly py-1.5 lg:mt-2 lg:py-2"
-                >
-                    <div
-                        class="hidden flex-col items-center justify-center text-center lg:flex lg:w-2/12"
-                    >
-                        <div
-                            class="flex h-10 w-10 items-center justify-center rounded-xl"
-                        >
-                            <component
-                                :is="
-                                    getIconAndColor(item.assessment_type.name)
-                                        .icon
-                                "
-                                :class="
-                                    getIconAndColor(item.assessment_type.name)
-                                        .color
-                                "
-                                class="w-4 lg:w-5"
-                            />
-                        </div>
-                        <div
-                            class="mt-1.5 text-[0.65rem] font-light uppercase lg:text-xs"
-                        >
-                            {{ item.batch_subject.batch.level.name }}
-                            {{ item.batch_subject.batch.section }}
-                        </div>
-                    </div>
-
-                    <div
-                        class="flex w-9/12 flex-col space-y-4 lg:w-8/12 lg:text-start"
-                    >
-                        <div
-                            class="flex w-full flex-col justify-between space-x-4"
-                        >
-                            <div class="text-xs font-medium lg:text-base">
-                                {{ item.title }}
-                            </div>
-                        </div>
-                        <div
-                            class="flex flex-col space-y-0.5 text-[0.65rem] font-light lg:flex-row lg:space-x-1.5 lg:space-y-0 lg:text-start lg:text-sm"
-                        >
-                            <div class="flex space-x-1">
-                                <div>
-                                    {{ item.batch_subject.subject.full_name }}
-                                </div>
-                                <div class="font-medium">
-                                    {{ item.assessment_type.name }}
-                                </div>
-                            </div>
-                            <div>
-                                On
-                                {{
-                                    moment(item.due_date).format("dddd MMMM Do")
-                                }}
-
-                                <span class="font-semibold lg:hidden"
-                                    ><span class="font-light">for </span
-                                    >{{ item.batch_subject.batch.level.name
-                                    }}{{
-                                        item.batch_subject.batch.section
-                                    }}</span
-                                >
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="flex w-2/12 flex-col items-center space-y-2 lg:items-end"
-                    >
-                        <div
-                            class="flex flex-col font-light uppercase lg:flex-row"
-                        >
-                            <div class="mr-2 text-2xl font-bold lg:text-3xl">
-                                {{ item.maximum_point }}
-                            </div>
-                            <div
-                                class="flex flex-col space-y-0.5 text-[0.6rem] font-light lg:text-xs lg:font-medium"
-                            >
-                                <div>MAX</div>
-                                <div>POINTS</div>
-                            </div>
-                        </div>
-                        <div
-                            class="hidden text-xs text-neutral-600 underline-offset-1 hover:cursor-pointer hover:text-black hover:underline lg:inline-block"
-                        >
-                            LessonPlan #{{ item.id }}
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="w-full cursor-pointer pt-4 text-end text-xs font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium lg:text-sm"
-                    @click="$inertia.get('/teacher/assessments')"
-                >
-                    View All Assessments
-                </div>
+                <Item :assessments="teacher.assessments" />
             </div>
             <div v-else class="flex flex-col items-center space-y-4">
                 <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
@@ -177,17 +82,11 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import DatePicker from "@/Components/DatePicker.vue";
 import TextInput from "@/Components/TextInput.vue";
 import TextArea from "@/Components/TextArea.vue";
-import {
-    BookOpenIcon,
-    ClipboardDocumentCheckIcon,
-    DocumentChartBarIcon,
-    DocumentTextIcon,
-    HomeIcon,
-    PencilIcon,
-} from "@heroicons/vue/24/solid";
+
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
-import moment from "moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import Item from "@/Views/Assessments/Item.vue";
+import LinkCell from "@/Components/LinkCell.vue";
 
 const showModal = ref(false);
 const teacher = usePage().props.teacher;
@@ -232,23 +131,6 @@ function handleSubmit() {
             showModal.value = false;
         },
     });
-}
-
-function getIconAndColor(name) {
-    switch (name) {
-        case "Tests":
-            return { icon: DocumentTextIcon, color: "fill-orange-500" };
-        case "Homework":
-            return { icon: ClipboardDocumentCheckIcon, color: "fill-red-500" };
-        case "Classwork":
-            return { icon: PencilIcon, color: "fill-cyan-600" };
-        case "Final Quarterly Exam":
-            return { icon: DocumentChartBarIcon, color: "fill-yellow-500" };
-        case "Final Exam":
-            return { icon: BookOpenIcon, color: "fill-teal-600" };
-        default:
-            return { icon: HomeIcon, color: "fill-emerald-600" };
-    }
 }
 </script>
 <style scoped></style>
