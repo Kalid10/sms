@@ -1,14 +1,16 @@
 <template>
-    <TableElement
-        class="h-full text-black"
-        :data="filteredAssessments"
-        :selectable="false"
-        :columns="config"
-    >
-        <template #filter>
-            <Filters />
-        </template>
-    </TableElement>
+    <div v-if="filteredAssessments">
+        <TableElement
+            class="h-full text-black"
+            :data="filteredAssessments"
+            :selectable="false"
+            :columns="config"
+        >
+            <template #filter>
+                <Filters />
+            </template>
+        </TableElement>
+    </div>
 </template>
 <script setup>
 import { usePage } from "@inertiajs/vue3";
