@@ -3,12 +3,12 @@
         v-if="lastAssessment"
         class="flex h-fit w-full flex-col items-center justify-between space-y-4 pt-3 lg:w-5/12"
         :class="{
-            'lg:w-full  lg:space-y-3 lg:pt-3': isSidebarOpenOnXlDevice,
+            'lg:w-full  lg:space-y-4 lg:pt-3': isSidebarOpenOnXlDevice,
             'lg:w-5/12  lg:space-y-6 lg:pt-0': !isSidebarOpenOnXlDevice,
         }"
     >
         <div
-            class="w-full text-center text-xs font-light opacity-60"
+            class="w-full text-center text-xs font-light opacity-70"
             :class="fontSize"
         >
             Last Assessment
@@ -32,7 +32,11 @@
                 {{ lastAssessment.title }}
             </div>
         </div>
-        <div class="text-xs font-light" :class="fontSizeSmall">
+        <div
+            v-if="!isSidebarOpenOnXlDevice"
+            class="text-xs font-light"
+            :class="fontSizeSmall"
+        >
             Due On
             {{ moment(lastAssessment.due_date).format(" dddd MMMM D  YYYY") }}
         </div>

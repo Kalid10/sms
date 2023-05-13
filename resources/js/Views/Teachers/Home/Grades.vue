@@ -1,8 +1,8 @@
 <template>
     <div class="flex w-full flex-col space-y-1 rounded-md lg:items-center">
-        <div class="font-medium lg:px-4 lg:text-2xl">Grades</div>
+        <div class="font-medium lg:px-4 2xl:text-2xl">Grades</div>
         <div
-            class="flex h-fit w-full items-center justify-evenly rounded-sm border-b border-gray-200 py-1 text-center text-xs font-medium lg:text-base lg:font-bold"
+            class="flex h-fit w-full items-center justify-evenly rounded-sm border-b border-gray-200 py-1 text-center text-xs font-medium lg:font-bold 2xl:text-base"
         >
             <div class="w-4/12">Grade</div>
             <div class="w-8/12">Subjects</div>
@@ -13,8 +13,10 @@
                 <div
                     v-for="(item, index) in grades"
                     :key="index"
-                    class="my-1 flex h-fit w-full items-center justify-evenly py-3 text-center text-xs lg:text-sm"
-                    :class="index % 2 === 1 ? 'bg-white' : 'bg-gray-50'"
+                    class="my-1 flex h-fit w-full items-center justify-evenly py-3 text-center text-xs 2xl:text-sm"
+                    :class="
+                        index % 2 === 1 ? 'bg-white' : 'bg-zinc-500 text-white'
+                    "
                 >
                     <div class="w-4/12">{{ item.class }}</div>
                     <div class="w-8/12">{{ item.subject }}</div>

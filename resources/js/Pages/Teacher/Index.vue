@@ -35,7 +35,12 @@
             <div class="grid h-fit w-full grid-cols-12 grid-rows-6">
                 <!--                 Welcome header-->
                 <div
-                    class="col-span-12 h-fit text-start font-light lg:col-span-7 lg:text-3xl 2xl:text-4xl"
+                    class="col-span-12 h-fit text-start font-light lg:text-3xl 2xl:text-4xl"
+                    :class="
+                        isSidebarOpenOnXlDevice
+                            ? ' lg:col-span-8'
+                            : ' lg:col-span-7'
+                    "
                 >
                     Welcome back,
 
@@ -44,7 +49,12 @@
                     >
                 </div>
                 <div
-                    class="col-start-8 row-span-6 hidden lg:col-span-5 lg:inline-flex"
+                    class="col-start-9 row-span-6 hidden lg:inline-flex"
+                    :class="
+                        isSidebarOpenOnXlDevice
+                            ? 'lg:col-span-4'
+                            : 'lg:col-span-5'
+                    "
                 >
                     <div
                         class="hidden h-full w-full items-center justify-center lg:flex"
@@ -52,20 +62,38 @@
                         <NextClass />
                     </div>
                 </div>
-                <div class="col-span-12 row-span-6 lg:col-span-6">
+                <div
+                    class="col-span-12 row-span-6"
+                    :class="
+                        isSidebarOpenOnXlDevice
+                            ? 'lg:col-span-7'
+                            : 'lg:col-span-6'
+                    "
+                >
                     <Assessments />
                 </div>
             </div>
 
             <!--                Students, LessonPlan, Feedback, Grades and SchoolSchedule-->
             <div
-                class="flex h-full w-full flex-col justify-between space-y-2 pt-2 lg:flex-row"
+                class="flex h-full flex-col justify-between space-y-2 pt-2 lg:flex-row"
             >
-                <Students class="w-full lg:w-3/12" />
-                <LessonPlans class="w-full lg:w-4/12" />
+                <Students
+                    class="w-full 2xl:w-4/12"
+                    :class="isSidebarOpenOnXlDevice ? 'lg:w-5/12' : 'lg:w-5/12'"
+                />
+
+                <SchoolSchedule
+                    class="hidden 2xl:hidden"
+                    :class="isSidebarOpenOnXlDevice ? 'lg:hidden' : 'lg:w-2/12'"
+                />
+                <LessonPlans
+                    class="w-full 2xl:w-5/12"
+                    :class="isSidebarOpenOnXlDevice ? 'lg:w-6/12' : 'lg:w-5/12'"
+                />
 
                 <div
-                    class="w-ful flex h-full flex-col justify-between space-y-5 lg:w-4/12"
+                    class="flex h-full w-full flex-col justify-between space-y-5 lg:hidden 2xl:w-4/12"
                 >
                     <div class="w-full lg:hidden">
                         <NextClass ref="nextClassSection" />
@@ -110,6 +138,7 @@ import moment from "moment/moment";
 import Feedbacks from "@/Views/Teachers/Home/Feedbacks.vue";
 import { ref } from "vue";
 import Assessments from "@/Views/Teachers/Home/Assessments.vue";
+import { isSidebarOpenOnXlDevice } from "@/utils";
 
 const teacher = usePage().props.teacher;
 

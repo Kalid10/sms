@@ -238,7 +238,7 @@ class TeacherController extends Controller
             'feedbacks.author:id,name',
             'batchSubjects.students.user',
             'assessments' => function ($query) {
-                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'desc')->limit(4);
+                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'desc')->limit(3);
             },
             'assessments.assessmentType',
             'assessments.batchSubject.batch:id,section,level_id',

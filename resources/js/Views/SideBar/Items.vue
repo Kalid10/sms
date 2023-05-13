@@ -1,5 +1,4 @@
 <template>
-    <!-- Main Items -->
     <div
         class="mt-1 flex w-full flex-col justify-evenly lg:mt-7 lg:space-y-1 2xl:mt-10"
     >

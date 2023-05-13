@@ -2,12 +2,12 @@
     <div
         class="flex h-fit w-full flex-col items-center justify-evenly space-y-4 py-3 lg:w-5/12"
         :class="{
-            'lg:w-full lg:space-y-3 lg:py-3': isSidebarOpenOnXlDevice,
+            'lg:w-full lg:space-y-4 lg:py-3': isSidebarOpenOnXlDevice,
             'lg:w-5/12 lg:space-y-6 lg:py-0': !isSidebarOpenOnXlDevice,
         }"
     >
         <div
-            class="w-full text-center text-xs font-light opacity-60"
+            class="w-full text-center text-xs font-light opacity-70"
             :class="fontSize"
         >
             Next Class
@@ -26,6 +26,7 @@
             {{ moment(nextClass.date).fromNow() }}</span
         >
         <div
+            v-if="!isSidebarOpenOnXlDevice"
             class="text-xs font-light hover:cursor-pointer hover:font-medium hover:underline"
             :class="fontSizeSmall"
         >

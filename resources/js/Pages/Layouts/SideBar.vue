@@ -63,6 +63,6 @@ const sidebarStore = useSidebarStore();
 const isOpen = computed(() => sidebarStore.isOpen);
 
 function toggleSidebar() {
-    sidebarStore.toggle();
+    if (isOpen.value) return sidebarStore.toggle();
 }
 </script>
