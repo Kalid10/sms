@@ -2,6 +2,8 @@
 
     <UsersStatistics/>
 
+    <Index :logs="activityLogs" :columns="header"/>
+
     <TableElement
         :columns="users_config"
         :data="users.data.map(user => { return { ...user, active: true } })"
@@ -133,6 +135,9 @@ import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import Register from "@/Views/RegisterUser.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import Index from "@/Views/ActivityLogs/Index.vue";
+
+const activityLogs = computed(() => usePage().props.activity_log);
 
 const showRegisterOptions = ref(false);
 
@@ -284,6 +289,21 @@ const users_config = [
         type: Boolean,
         class: 'w-fit'
     }
+]
+
+const header = [
+    {
+        name: 'name',
+    },
+    {
+        name: 'Description',
+    },
+    {
+        name: 'Event',
+    },
+    {
+        name: 'Updated At',
+    },
 ]
 
 const start_date = ref(null)

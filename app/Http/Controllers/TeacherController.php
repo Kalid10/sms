@@ -107,6 +107,12 @@ class TeacherController extends Controller
         $semesters = Semester::with('schoolYear')->get();
         $schoolYears = SchoolYear::all();
 
+        $schoolYearId = $request->input('school_year_id') ?? session('school_year_id');
+        $semesterId = $request->input('semester_id') ?? session('semester_id');
+        $quarterId = $request->input('quarter_id') ?? session('quarter_id', null);
+        $search = $request->input('search') ?? session('search', null);
+        $dueDate = $request->input('due_date') ?? session('due_date', null);
+
         $assessments = Assessment::where('batch_subject_id', $batchSubjectId)
             ->when($request->input('assessment_type_id'), function ($query) use ($request) {
                 return $query->where('assessment_type_id', $request->input('assessment_type_id'));
@@ -136,13 +142,21 @@ class TeacherController extends Controller
                 'quarter:id,name',
             ])
             ->orderBy('due_date', 'desc')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
         return Inertia::render('Teacher/Assessments/Index', [
             'assessments' => $assessments,
             'quarters' => $quarters,
             'semesters' => $semesters,
             'school_years' => $schoolYears,
+            'filters' => [
+                'school_year_id' => $schoolYearId,
+                'semester_id' => $semesterId,
+                'quarter_id' => $quarterId,
+                'search' => $search,
+                'due_date' => $dueDate,
+            ],
         ]);
     }
 

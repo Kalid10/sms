@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Activitylog\Models\Activity;
 
 class UserController extends Controller
 {
@@ -25,8 +26,14 @@ class UserController extends Controller
         // Get users
         $users = User::select('id', 'name', 'email', 'type', 'gender')->where('name', 'like', '%'.$searchKey.'%')->paginate($perPage);
 
+        // Get activity logs of users
+        $activityLog = Activity::where('log_name', 'user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return Inertia::render('Users/Index', [
             'users' => $users,
+            'activity_log' => $activityLog,
         ]);
     }
 
