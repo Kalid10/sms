@@ -1,5 +1,7 @@
 <template>
-    <div class="flex w-full flex-col space-y-3 p-1 lg:space-y-10 lg:px-12">
+    <div
+        class="flex w-full flex-col space-y-3 p-1 lg:space-y-3 lg:px-1 2xl:px-12"
+    >
         <!--                 Next Class Header On Mobile Devices-->
         <div
             v-if="nextClass"
@@ -27,26 +29,31 @@
         </div>
 
         <!--                 Content-->
-        <div class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-10">
-            <!--                 Welcome header-->
-            <div
-                class="flex items-center rounded-lg font-light lg:py-2 lg:pl-0 lg:text-4xl"
-                :class="nextClass ? 'py-1.5' : 'py-3'"
-            >
-                Welcome back,
-
-                <span class="ml-0.5 font-semibold lg:ml-2"
-                    >{{ teacher.user.name }}!</span
+        <div
+            class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-5 2xl:space-y-10"
+        >
+            <div class="grid h-fit w-full grid-cols-12 grid-rows-6">
+                <!--                 Welcome header-->
+                <div
+                    class="col-span-12 h-fit text-start font-light lg:col-span-7 lg:text-3xl 2xl:text-4xl"
                 >
-            </div>
+                    Welcome back,
 
-            <!--                Assessments and Next class-->
-            <div class="flex w-full flex-col justify-between lg:flex-row">
-                <div class="w-full lg:w-6/12">
-                    <Assessments class="" />
+                    <span class="ml-0.5 font-semibold lg:ml-2"
+                        >{{ teacher.user.name }}!</span
+                    >
                 </div>
-                <div class="hidden lg:inline-block lg:w-5/12">
-                    <NextClass />
+                <div
+                    class="col-start-8 row-span-6 hidden lg:col-span-5 lg:inline-flex"
+                >
+                    <div
+                        class="hidden h-full w-full items-center justify-center lg:flex"
+                    >
+                        <NextClass />
+                    </div>
+                </div>
+                <div class="col-span-12 row-span-6 lg:col-span-6">
+                    <Assessments />
                 </div>
             </div>
 
@@ -94,21 +101,20 @@
 
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import Assessments from "@/Views/Teachers/Home/Assessments.vue";
 import NextClass from "@/Views/Teachers/Home/NextClass/Index.vue";
 import Students from "@/Views/Teachers/Home/Students.vue";
 import LessonPlans from "@/Views/Teachers/Home/LessonPlans.vue";
 import Grades from "@/Views/Teachers/Home/Grades.vue";
 import SchoolSchedule from "@/Views/Teachers/Home/SchoolSchedule/Index.vue";
-import Feedbacks from "@/Views/Teachers/Home/Feedbacks.vue";
 import moment from "moment/moment";
+import Feedbacks from "@/Views/Teachers/Home/Feedbacks.vue";
 import { ref } from "vue";
+import Assessments from "@/Views/Teachers/Home/Assessments.vue";
 
 const teacher = usePage().props.teacher;
+
 const nextClass = usePage().props.teacher.next_batch_session;
-
 const nextClassSection = ref(null);
-
 const scrollToNextClass = () => {
     nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
 };

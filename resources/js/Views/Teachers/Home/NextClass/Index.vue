@@ -1,19 +1,24 @@
 <template>
     <div
-        class="flex h-full w-full flex-col items-center justify-evenly rounded-xl bg-black text-white lg:py-5"
+        class="flex h-fit flex-col items-center justify-evenly rounded-xl bg-black pb-2 text-white"
+        :class="
+            isSidebarOpenOnXlDevice ? 'lg:py-1.5 w-10/12' : 'lg:py-5 w-full'
+        "
     >
         <div
             v-if="nextClass"
-            class="flex w-full flex-col justify-evenly divide-y-2 divide-neutral-800 py-2 lg:flex-row lg:divide-y-0 lg:py-0"
+            :class="[
+                isSidebarOpenOnXlDevice
+                    ? 'flex w-full flex-col justify-evenly divide-y-2 divide-neutral-800 py-2'
+                    : 'flex w-full flex-col justify-evenly divide-y-2 divide-neutral-800 py-2 lg:flex-row lg:divide-y-0 lg:py-0',
+            ]"
         >
-            <NextClass />
-
-            <!--          Line Separator for LG and XL screens-->
+            <NextClassSection />
             <div
-                class="hidden h-full w-0.5 bg-neutral-600 lg:inline-block"
+                class="my-auto hidden w-0.5 bg-neutral-600 lg:inline-flex"
+                :class="isSidebarOpenOnXlDevice ? 'h-0' : 'h-56'"
             ></div>
-
-            <LastAssessment />
+            <LastAssessmentSection />
         </div>
 
         <!--        Fall back message-->
@@ -36,8 +41,9 @@
 
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import NextClass from "@/Views/Teachers/Home/NextClass/NextClass.vue";
-import LastAssessment from "@/Views/Teachers/Home/NextClass/LastAssessment.vue";
+import { isSidebarOpenOnXlDevice } from "@/utils";
+import NextClassSection from "@/Views/Teachers/Home/NextClass/NextClass.vue";
+import LastAssessmentSection from "@/Views/Teachers/Home/NextClass/LastAssessment.vue";
 
 const nextClass = usePage().props.teacher.next_batch_session;
 </script>
