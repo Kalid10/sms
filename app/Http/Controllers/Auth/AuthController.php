@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\SignupRequest;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,12 +15,12 @@ use Inertia\Response;
 
 class AuthController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Auth/Login');
     }
 
-    public function login(LoginRequest $request): JsonResponse|Response
+    public function login(LoginRequest $request): JsonResponse|Response|RedirectResponse
     {
         // Authenticate user
         $request->authenticate();
@@ -29,8 +30,11 @@ class AuthController extends Controller
             // Regenerate request session
             $request->session()->regenerate();
 
-            // Todo: Change page
-            return Inertia::render('Welcome');
+            return match (auth()->user()->type) {
+                User::TYPE_ADMIN => redirect()->route('admin.show'),
+                User::TYPE_TEACHER => redirect()->route('teacher.show'),
+                default => redirect()->route('login'),
+            };
         }
 
         // Handle API request
