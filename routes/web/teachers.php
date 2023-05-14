@@ -8,7 +8,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherFeedbackController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('teachers/')->middleware(['checkUserRole:manage-teachers'])->name('teachers.')->group(function () {
+Route::prefix('teachers/')->middleware(['checkUserRole:manage-teachers', 'auth'])->name('teachers.')->group(function () {
     Route::controller(HomeroomController::class)->group(function () {
         Route::get('homerooms', 'getHomeroomTeachers')->name('homeroom');
         Route::post('assign/homeroom', 'assignHomeroomTeacher')->name('assign.homeroom');
@@ -27,7 +27,7 @@ Route::controller(TeacherFeedbackController::class)->prefix('teacher/feedback/')
     Route::delete('delete/{id}', 'destroy')->name('feedback.delete');
 });
 
-Route::prefix('teacher/')->middleware(['checkUserType:teacher'])->name('teacher.')->group(function () {
+Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('teacher.')->group(function () {
     Route::controller(LessonPlanController::class)->prefix('lesson-plan/')->name('lesson-plan.')->group(function () {
         Route::get('', 'index')->name('index');
         Route::post('', 'updateOrCreate')->name('updateOrCreate');
