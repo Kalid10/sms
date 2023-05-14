@@ -71,6 +71,13 @@ const sidebarItems = computed(() => [
         route: "/teacher/assessments",
         active: directory.value === "assessments",
     },
+
+    {
+        name: "Students",
+        icon: UserIcon,
+        route: "/teacher/students/1",
+        active: directory.value === "students",
+    },
     {
         name: "Homerooms",
         icon: UserIcon,
@@ -83,12 +90,6 @@ const sidebarItems = computed(() => [
         icon: CalendarDaysIcon,
         route: "/teacher/subjects",
         active: directory.value === "subjects",
-    },
-    {
-        name: "Students",
-        icon: UserIcon,
-        route: "/teacher/students/1",
-        active: directory.value === "students",
     },
     {
         name: "Feedbacks",

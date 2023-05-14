@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-fit w-full flex-col items-center justify-evenly space-y-4 py-3 lg:w-5/12"
+        class="flex h-fit w-full flex-col items-center justify-evenly space-y-4 py-3"
         :class="{
             'lg:w-full lg:space-y-4 lg:py-3': isSidebarOpenOnXlDevice,
             'lg:w-5/12 lg:space-y-6 lg:py-0': !isSidebarOpenOnXlDevice,

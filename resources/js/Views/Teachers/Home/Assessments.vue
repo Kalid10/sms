@@ -8,9 +8,11 @@
             <div class="font-medium lg:text-xl 2xl:text-2xl">
                 Recent Assessments
             </div>
-            <div class="flex w-fit items-center justify-center">
-                <LinkCell href="/teacher/assessments" value="SEE ALL" />
-            </div>
+            <LinkCell
+                class="flex w-fit items-center justify-center"
+                href="/teacher/assessments"
+                value="SEE ALL"
+            />
         </div>
 
         <!--        Content-->
