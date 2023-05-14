@@ -5,7 +5,8 @@
         >
             <form
                 class="flex min-h-10 w-full max-w-lg flex-col gap-8"
-                @submit.prevent="submit">
+                @submit.prevent="submit"
+            >
                 <div class="flex items-center gap-3 lg:hidden">
                     <svg
                         fill="none"
@@ -45,9 +46,9 @@
                         Welcome Back! Sign In and Ignite The Learning Adventure
                     </h3>
                     <h3 class="text-gray-500">
-                        Reconnect with our collaborative platform to continue empowering your school and elevating
-                        educational experiences.
-
+                        Reconnect with our collaborative platform to continue
+                        empowering your school and elevating educational
+                        experiences.
                     </h3>
                 </div>
 
@@ -59,6 +60,7 @@
                             label="Your Email"
                             placeholder="johndoe@school.org"
                             required
+                            :error="form.errors.emailOrPhone"
                             type="email"
                         />
                         <TextInput
@@ -126,16 +128,21 @@
             </h1>
 
             <h3 class="max-w-xl font-medium text-white">
-                Maximize your school's potential with our all-inclusive management platform. Simplify operations, boost
-                communication, and create a teamwork-driven learning space for a brilliant future.
-                <span class="block py-3">Sign in to start your journey towards educational excellence.</span>
+                Maximize your school's potential with our all-inclusive
+                management platform. Simplify operations, boost communication,
+                and create a teamwork-driven learning space for a brilliant
+                future.
+                <span class="block py-3"
+                    >Sign in to start your journey towards educational
+                    excellence.</span
+                >
             </h3>
         </div>
     </div>
 </template>
 
 <script setup>
-import {useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 
 const form = useForm({
@@ -145,7 +152,13 @@ const form = useForm({
 
 // Submit form
 const submit = () => {
-    form.post("/login");
+    form.post("/login", {
+        onError: (errors) => {
+            if (errors.emailOrPhone) {
+                form.password = "";
+            }
+        },
+    });
 };
 </script>
 
