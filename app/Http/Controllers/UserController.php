@@ -23,13 +23,23 @@ class UserController extends Controller
         // For paginated data, get perPage value
         $perPage = $request->input('per_page', 10);
 
+        // For paginated data, get perPage value
+        $logsPerPage = (int) $request->input('logs_per_page', 15);
+
+        // Get page numbers
+        $userPage = $request->input('user_page', 1);
+        $logPage = (int) $request->input('log_page', 1);
+
         // Get users
-        $users = User::select('id', 'name', 'email', 'type', 'gender')->where('name', 'like', '%'.$searchKey.'%')->paginate($perPage);
+        $users = User::select('id', 'name', 'email', 'type', 'gender')
+            ->where('name', 'like', '%'.$searchKey.'%')
+            ->paginate($perPage, ['*'], 'user_page', $userPage);
 
         // Get activity logs of users
         $activityLog = Activity::where('log_name', 'user')
+            ->with('causer')
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate($logsPerPage, ['*'], 'log_page', $logPage);
 
         return Inertia::render('Users/Index', [
             'users' => $users,
