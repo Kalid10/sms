@@ -61,6 +61,9 @@
                 </template>
             </ul>
         </div>
+        <span v-if="error" class="text-xs text-negative-50">
+            * {{ error }}
+        </span>
     </div>
 </template>
 
@@ -102,6 +105,10 @@ const props = defineProps({
     direction: {
         type: String,
         default: "down",
+    },
+    error: {
+        type: String,
+        default: null,
     },
 });
 
