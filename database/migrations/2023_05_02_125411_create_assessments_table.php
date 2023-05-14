@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('assessment_type_id')->constrained()->cascadeOnDelete();
             $table->foreignId('batch_subject_id')->constrained()->cascadeOnDelete();
             $table->foreignId('quarter_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('lesson_plan_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->string('status')->default('draft');
             $table->dateTime('due_date');
             $table->softDeletes();
             $table->timestamps();
