@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assessment;
+use App\Models\AssessmentType;
 use App\Models\Batch;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
@@ -140,6 +141,8 @@ class TeacherController extends Controller
 
         return Inertia::render('Teacher/Assessments/Index', [
             'assessments' => $assessments,
+            'teacher' => $this->getTeacherDetails(auth()->user()->teacher->id),
+            'assessment_type' => AssessmentType::all(),
             'quarters' => $quarters,
             'semesters' => $semesters,
             'school_years' => $schoolYears,
