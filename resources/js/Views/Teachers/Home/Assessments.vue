@@ -1,7 +1,10 @@
 <template>
     <div class="h-fit w-full rounded-lg">
         <!--        Header-->
-        <div class="flex w-full justify-between">
+        <div
+            v-if="teacher.assessments.length > 0"
+            class="flex w-full justify-between"
+        >
             <div class="font-medium lg:text-xl 2xl:text-2xl">
                 Recent Assessments
             </div>
@@ -18,10 +21,16 @@
             >
                 <Item :assessments="teacher.assessments" />
             </div>
-            <div v-else class="flex flex-col items-center space-y-4">
+            <div
+                v-else
+                class="flex h-32 flex-col items-center justify-center space-y-4 lg:h-72"
+            >
                 <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
-                <div>No Assessments Found!</div>
-                <PrimaryButton>Go To Assessments</PrimaryButton>
+                <div class="text-xs lg:text-sm">No Assessments Found!</div>
+                <LinkCell
+                    href="/teacher/assessments"
+                    value="Go To Assessments"
+                />
             </div>
         </div>
 
@@ -84,7 +93,6 @@ import TextInput from "@/Components/TextInput.vue";
 import TextArea from "@/Components/TextArea.vue";
 
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Item from "@/Views/Assessments/Item.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 

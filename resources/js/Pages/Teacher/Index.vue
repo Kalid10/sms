@@ -32,7 +32,9 @@
         <div
             class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-5 2xl:space-y-10"
         >
-            <div class="grid h-fit w-full grid-cols-12 grid-rows-6">
+            <div
+                class="grid h-fit w-full grid-cols-12 grid-rows-6 gap-4 lg:gap-8 2xl:gap-10"
+            >
                 <!--                 Welcome header-->
                 <div
                     class="col-span-12 h-fit text-start font-light lg:text-3xl 2xl:text-4xl"
