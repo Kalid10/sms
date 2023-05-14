@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::prefix('login/')->middleware('guest')->name('login.')->group(function () {
-    Route::post('', [AuthController::class, 'login'])->name('login');
+    Route::post('', [AuthController::class, 'login'])->name('show');
     Route::get('', [AuthController::class, 'index']);
 });
 

@@ -63,7 +63,7 @@ class AuthController extends Controller
             // Regenerate CSRF token
             $request->session()->regenerateToken();
 
-            return redirect()->back()->with('success', 'You have successfully logged out.');
+            return redirect()->route('login.show');
         }
 
         // Revoke all tokens
