@@ -107,6 +107,12 @@ class TeacherController extends Controller
         $semesters = Semester::with('schoolYear')->get();
         $schoolYears = SchoolYear::all();
 
+        $schoolYearId = $request->input('school_year_id');
+        $semesterId = $request->input('semester_id');
+        $quarterId = $request->input('quarter_id');
+        $search = $request->input('search');
+        $dueDate = $request->input('due_date');
+
         $assessments = Assessment::where('batch_subject_id', $batchSubjectId)
             ->when($request->input('assessment_type_id'), function ($query) use ($request) {
                 return $query->where('assessment_type_id', $request->input('assessment_type_id'));
@@ -143,6 +149,13 @@ class TeacherController extends Controller
             'quarters' => $quarters,
             'semesters' => $semesters,
             'school_years' => $schoolYears,
+            'filters' => [
+                'school_year_id' => $schoolYearId,
+                'semester_id' => $semesterId,
+                'quarter_id' => $quarterId,
+                'search' => $search,
+                'due_date' => $dueDate,
+            ],
         ]);
     }
 
