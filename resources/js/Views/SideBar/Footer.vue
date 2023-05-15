@@ -5,8 +5,9 @@
         <div
             v-for="(item, index) in items"
             :key="index"
-            class="relative flex w-4/5 items-center lg:w-2/3"
+            class="relative flex w-4/5 cursor-pointer items-center lg:w-2/3"
             :class="isOpen ? 'justify-between' : 'justify-center'"
+            @click.stop="handleClick(item)"
         >
             <component :is="item.icon" class="h-4 lg:h-5" />
             <div
@@ -21,6 +22,7 @@
 <script setup>
 import { computed } from "vue";
 import { useSidebarStore } from "@/Store/sidebar";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     items: {
@@ -30,5 +32,11 @@ const props = defineProps({
 });
 
 const isOpen = computed(() => useSidebarStore().isOpen);
+
+function handleClick(item) {
+    if (!item.method) return router.get(item.route);
+
+    if (item.method === "POST") return router.post(item.route);
+}
 </script>
 <style scoped></style>

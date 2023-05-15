@@ -105,7 +105,9 @@ const sidebarItems = computed(() => [
     },
 ]);
 
-const footerItems = [{ icon: PowerIcon, name: "Logout" }];
+const footerItems = [
+    { icon: PowerIcon, name: "Logout", route: "/logout", method: "POST" },
+];
 </script>
 
 <style scoped></style>
