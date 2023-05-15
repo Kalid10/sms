@@ -17,10 +17,10 @@
     </div>
 </template>
 <script setup>
-import Table from "@/Views/Teachers/Assessments/Table/Index.vue";
+import Table from "@/Views/Teacher/Assessments/Table/Index.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Modal from "@/Components/Modal.vue";
-import Form from "@/Views/Assessments/Form.vue";
+import Form from "@/Views/Teacher/Assessments/Form.vue";
 import { ref } from "vue";
 
 const showModal = ref(false);

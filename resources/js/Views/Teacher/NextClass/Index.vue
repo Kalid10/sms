@@ -40,8 +40,8 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 import { isSidebarOpenOnXlDevice } from "@/utils";
-import NextClassSection from "@/Views/Teachers/Home/NextClass/NextClass.vue";
-import LastAssessmentSection from "@/Views/Teachers/Home/NextClass/LastAssessment.vue";
+import NextClassSection from "@/Views/Teacher/NextClass/NextClass.vue";
+import LastAssessmentSection from "@/Views/Teacher/NextClass/LastAssessment.vue";
 
 const nextClass = usePage().props.teacher.next_batch_session;
 </script>

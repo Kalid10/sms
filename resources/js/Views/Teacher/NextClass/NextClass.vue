@@ -81,7 +81,7 @@
             <span v-else> Add LessonPlan</span>
         </span>
         <span
-            v-else
+            v-else-if="!isTeacherView"
             class="flex w-full flex-col items-center break-words text-[0.65rem] font-light"
         >
             <div class="font-normal">Teacher</div>
@@ -134,9 +134,10 @@ const buttonWidth = computed(() =>
 );
 
 const isTeacherView = computed(() => props.view === "teacher");
-
-const isNextClassSubjectTeacher = computed(
-    () => nextClass.batch_subject.teacher.id === teacher.id
+const isNextClassSubjectTeacher = computed(() =>
+    !isTeacherView.value
+        ? nextClass.batch_subject.teacher.id === teacher.id
+        : false
 );
 </script>
 

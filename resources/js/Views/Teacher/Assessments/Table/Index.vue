@@ -17,7 +17,7 @@ import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import { computed } from "vue";
 import moment from "moment";
-import Filters from "@/Views/Teachers/Assessments/Table/Filters.vue";
+import Filters from "@/Views/Teacher/Assessments/Table/Filters.vue";
 
 const assessments = computed(() => usePage().props.assessments);
 const filteredAssessments = computed(() => {

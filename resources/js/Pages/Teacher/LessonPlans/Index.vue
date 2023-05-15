@@ -76,9 +76,9 @@
 import { computed, ref, watch } from "vue";
 import { Link, router, usePage } from "@inertiajs/vue3";
 import { parseLevel } from "@/utils.js";
-import LessonPlanFormModal from "@/Views/LessonPlans/LessonPlanFormModal.vue";
+import LessonPlanFormModal from "@/Views/Teacher/LessonPlans/LessonPlanFormModal.vue";
 import SelectInput from "@/Components/SelectInput.vue";
-import LessonPlanMonthViewer from "@/Views/LessonPlans/LessonPlanMonthViewer.vue";
+import LessonPlanMonthViewer from "@/Views/Teacher/LessonPlans/LessonPlanMonthViewer.vue";
 
 const batchSessions = computed(() => usePage().props["batch_sessions"]);
 const batch = computed(() => usePage().props.batch);

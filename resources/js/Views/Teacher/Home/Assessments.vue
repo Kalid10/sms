@@ -40,7 +40,7 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
-import Item from "@/Views/Assessments/Item.vue";
+import Item from "@/Views/Teacher/Home/Assessments/Item.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 
 const teacher = usePage().props.teacher;

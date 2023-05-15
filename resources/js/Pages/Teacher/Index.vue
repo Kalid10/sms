@@ -135,15 +135,15 @@
 
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import NextClass from "@/Views/Teachers/Home/NextClass/Index.vue";
-import Students from "@/Views/Teachers/Home/Students.vue";
-import LessonPlans from "@/Views/Teachers/Home/LessonPlans.vue";
-import Grades from "@/Views/Teachers/Home/Grades.vue";
-import SchoolSchedule from "@/Views/Teachers/Home/SchoolSchedule/Index.vue";
+import NextClass from "@/Views/Teacher/NextClass/Index.vue";
+import Students from "@/Views/Teacher/Home/Students.vue";
+import LessonPlans from "@/Views/Teacher/Home/LessonPlans.vue";
+import Grades from "@/Views/Teacher/Home/Grades.vue";
+import SchoolSchedule from "@/Views/Teacher/Home/SchoolSchedule/Index.vue";
 import moment from "moment/moment";
-import Feedbacks from "@/Views/Teachers/Home/Feedbacks.vue";
+import Feedbacks from "@/Views/Teacher/Home/Feedbacks.vue";
 import { ref } from "vue";
-import Assessments from "@/Views/Teachers/Home/Assessments.vue";
+import Assessments from "@/Views/Teacher/Home/Assessments.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 
 const teacher = usePage().props.teacher;
