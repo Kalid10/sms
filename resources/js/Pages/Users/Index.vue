@@ -2,33 +2,55 @@
 
     <UsersStatistics/>
 
-    <TableElement
-        :columns="users_config"
-        :data="users.data.map(user => { return { ...user, active: true } })"
-        actionable
-        row-actionable
-        selectable
-        subtitle="List of personnel registered on your system, with user types and contact information"
-        title="Users List"
-    >
+    <div class="flex w-full flex-col gap-4 lg:flex-row">
+        <div class="h-fit w-full lg:w-1/2">
+            <ActivityLog
+                title="Activity Logs"
+                subtitle="users activity logs"
+                :logs="activityLogs.data"
+                :columns="user_log_column">
 
-        <template #filter>
-            <TextInput v-model="query" placeholder="Search for Users by Name or Email"/>
-        </template>
+                <template #footer>
+                    <div class="flex w-full justify-end gap-3">
+                        <TertiaryButton
+                            class="w-full md:w-fit" title="Previous"
+                            @click="logPreviousPage"/>
+                        <TertiaryButton
+                            class="w-full md:w-fit" title="Next"
+                            @click="logNextPage"/>
+                    </div>
 
-        <template #action="{ selected }">
-            <div class="flex flex-row space-x-4">
-                <div v-if="selected.selected" class="flex items-center gap-2">
-                    <TertiaryButton
-                        title="Move Items"
-                        @click="moveItems(selected.items)"
-                    />
-                    <PrimaryButton
-                        title="Update Items"
-                        @click="updateItems(selected.items)"
-                    />
-                </div>
-                <PrimaryButton v-else title="Create New User" @click="createUserForm">
+                </template>
+            </ActivityLog>
+        </div>
+        <div class="h-fit w-full lg:w-1/2">
+            <TableElement
+                :columns="users_config"
+                :data="users.data.map(user => { return { ...user, active: true } })"
+                actionable
+                row-actionable
+                selectable
+                subtitle="List of personnel registered on your system, with user types and contact information"
+                title="Users List"
+            >
+
+                <template #filter>
+                    <TextInput v-model="query" placeholder="Search for Users by Name or Email"/>
+                </template>
+
+                <template #action="{ selected }">
+                    <div class="flex flex-row space-x-4">
+                        <div v-if="selected.selected" class="flex items-center gap-2">
+                            <TertiaryButton
+                                title="Move Items"
+                                @click="moveItems(selected.items)"
+                            />
+                            <PrimaryButton
+                                title="Update Items"
+                                @click="updateItems(selected.items)"
+                            />
+                        </div>
+                        <PrimaryButton v-else title="Create New User" @click="createUserForm">
                 <span class="flex items-center gap-2">
                     <CloudArrowDownIcon class="h-4 w-4 stroke-white stroke-2"/>
                     <span>
@@ -36,44 +58,47 @@
                         <span class="font-mono">CSV</span>
                     </span>
                 </span>
-                </PrimaryButton>
-                <PrimaryButton @click="openRegisterOptions">
-                    Add User
-                </PrimaryButton>
-            </div>
-        </template>
+                        </PrimaryButton>
+                        <PrimaryButton @click="openRegisterOptions">
+                            Add User
+                        </PrimaryButton>
+                    </div>
+                </template>
 
-        <template #row-actions="{ row }">
-            <Link :href="'/users/' + row.id" class="flex flex-col items-center gap-1">
-                <EyeIcon class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"/>
-            </Link>
-            <Link :href="'/users/' + row.id + '/edit'" class="flex flex-col items-center gap-1">
-                <ArrowPathIcon
-                    class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"/>
-            </Link>
-            <Link :href="'/users/' + row.id + '/delete'" class="flex flex-col items-center gap-1">
-                <ArchiveBoxXMarkIcon
-                    class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"/>
-            </Link>
-        </template>
+                <template #row-actions="{ row }">
+                    <Link :href="'/users/' + row.id" class="flex flex-col items-center gap-1">
+                        <EyeIcon class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"/>
+                    </Link>
+                    <Link :href="'/users/' + row.id + '/edit'" class="flex flex-col items-center gap-1">
+                        <ArrowPathIcon
+                            class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"/>
+                    </Link>
+                    <Link :href="'/users/' + row.id + '/delete'" class="flex flex-col items-center gap-1">
+                        <ArchiveBoxXMarkIcon
+                            class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"/>
+                    </Link>
+                </template>
 
-        <template #footer>
+                <template #footer>
 
-            <SelectInput
-                v-model="perPage" :options="perPageOptions" class="w-36" direction="up"
-                placeholder="Per page"/>
-            <div class="flex w-full justify-end gap-3">
-                <TertiaryButton
-                    :disabled="!users['prev_page_url']" class="w-full md:w-fit" title="Previous"
-                    @click="previousPage"/>
-                <TertiaryButton
-                    :disabled="!users['next_page_url']" class="w-full md:w-fit" title="Next"
-                    @click="nextPage"/>
-            </div>
+                    <SelectInput
+                        v-model="perPage" :options="perPageOptions" class="w-36" direction="up"
+                        placeholder="Per page"/>
+                    <div class="flex w-full justify-end gap-3">
+                        <TertiaryButton
+                            :disabled="!users['prev_page_url']" class="w-full md:w-fit" title="Previous"
+                            @click="previousPage"/>
+                        <TertiaryButton
+                            :disabled="!users['next_page_url']" class="w-full md:w-fit" title="Next"
+                            @click="nextPage"/>
+                    </div>
 
-        </template>
+                </template>
 
-    </TableElement>
+            </TableElement>
+        </div>
+    </div>
+
 
     <Register v-if="showRegisterOptions" :toggle="showRegisterOptions" :user-roles="userRoles"></Register>
 
@@ -133,6 +158,11 @@ import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import Register from "@/Views/RegisterUser.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import ActivityLog from "@/Views/ActivityLogs/Index.vue";
+
+const activityLogs = computed(() => {
+    return usePage().props.activity_log
+})
 
 const showRegisterOptions = ref(false);
 
@@ -213,6 +243,8 @@ const perPageOptions = [
     {value: 100, label: '100'},
 ]
 
+const logsPerPage = ref(15)
+
 function search() {
 
     router.get('/users', {
@@ -232,8 +264,9 @@ watch([query, perPage], () => {
 
 function previousPage() {
     router.get('/users', {
-        page: users.value['current_page'] - 1,
+        user_page: parseInt(users.value['current_page']) - 1,
         per_page: perPage.value,
+        log_page: activityLogs.value['current_page'],
     }, {
         preserveState: true,
         replace: true
@@ -242,13 +275,39 @@ function previousPage() {
 
 function nextPage() {
     router.get('/users', {
-        page: users.value['current_page'] + 1,
+        user_page: parseInt(users.value['current_page']) + 1,
         per_page: perPage.value,
+        log_page: activityLogs.value['current_page'],
     }, {
         preserveState: true,
         replace: true
     })
 }
+
+function logNextPage() {
+    router.get('/users', {
+        log_page: Number(activityLogs.value['current_page'] + 1),
+        logs_per_page: logsPerPage.value,
+        user_page: users.value['current_page'],
+    }, {
+        preserveState: true,
+        replace: true
+    })
+}
+
+function logPreviousPage() {
+    console.log(activityLogs)
+
+    router.get('/users', {
+        log_page: Number(activityLogs.value['current_page'] - 1),
+        logs_per_page: logsPerPage.value,
+        user_page: users.value['current_page'],
+    }, {
+        preserveState: true,
+        replace: true
+    })
+}
+
 
 // 'name', 'email', 'type', 'gender'
 const users_config = [
@@ -284,6 +343,18 @@ const users_config = [
         type: Boolean,
         class: 'w-fit'
     }
+]
+
+const user_log_column = [
+    {
+        name: 'Name',
+    },
+    {
+        name: 'Description',
+    },
+    {
+        name: 'Updated At',
+    },
 ]
 
 const start_date = ref(null)

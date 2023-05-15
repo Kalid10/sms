@@ -1,27 +1,27 @@
 <template>
-    <div class="flex w-full justify-between">
-        <div class="flex w-2/5 justify-evenly">
-            <TextInput v-model="search" placeholder="Search" class="w-2/5" />
-            <DatePicker v-model="dueDate" class="w-2/5" />
+    <div class="flex w-full flex-col justify-between gap-2 md:flex-row">
+        <div class="flex justify-evenly gap-2 md:w-2/5">
+            <TextInput v-model="search" placeholder="Search" class="md:w-2/5"/>
+            <DatePicker v-model="dueDate" class="md:w-2/5"/>
         </div>
-        <div class="flex w-3/5 justify-evenly">
+        <div class="flex flex-col justify-between gap-2 md:w-3/5 md:flex-row md:justify-evenly">
             <SelectInput
                 v-model="selectedSchoolYear"
-                class="w-3/12"
+                class="md:w-3/12"
                 :options="schoolYearOptions"
                 placeholder="Select SchoolYear"
             />
             <SelectInput
                 v-if="selectedSchoolYear"
                 v-model="selectedSemester"
-                class="w-4/12"
+                class="md:w-4/12"
                 :options="semesterOptions"
                 placeholder="Select Semester"
             />
             <SelectInput
                 v-if="selectedSemester"
                 v-model="selectedQuarter"
-                class="w-3/12"
+                class="md:w-3/12"
                 :options="quarterOptions"
                 placeholder="Select Quarter"
             />
@@ -29,8 +29,8 @@
     </div>
 </template>
 <script setup>
-import { computed, ref, watch } from "vue";
-import { router, usePage } from "@inertiajs/vue3";
+import {computed, ref, watch} from "vue";
+import {router, usePage} from "@inertiajs/vue3";
 import debounce from "lodash/debounce";
 import TextInput from "@/Components/TextInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
@@ -41,13 +41,15 @@ const {
     school_years: schoolYears,
     semesters,
     quarters,
+    filters,
 } = usePage().props;
+
 const assessments = computed(() => rawAssessments);
-const selectedQuarter = ref(null);
-const selectedSemester = ref(null);
-const selectedSchoolYear = ref(null);
-const search = ref("");
-const dueDate = ref(null);
+const selectedSchoolYear = ref(Number(filters.school_year_id)) ?? null;
+const selectedSemester = ref(Number(filters.semester_id)) ?? null;
+const selectedQuarter = ref(Number(filters.quarter_id)) ?? null;
+const search = ref(filters.search) ?? "";
+const dueDate = ref(filters.due_date ? new Date(filters.due_date) : null);
 
 function getOptions(items, selectedValue, labelCallback) {
     if (selectedValue) {
@@ -63,7 +65,7 @@ function getOptions(items, selectedValue, labelCallback) {
 }
 
 let schoolYearOptions = computed(() =>
-    schoolYears.map((item) => ({ label: item.name, value: item.id }))
+    schoolYears.map((item) => ({label: item.name, value: item.id}))
 );
 
 let semesterOptions = computed(() =>
