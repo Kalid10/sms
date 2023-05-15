@@ -14,7 +14,7 @@ class StudentAssessment extends Model
     protected $fillable = [
         'assessment_id',
         'student_id',
-        'score',
+        'point',
         'comment',
     ];
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('assessment_id')->constrained()->cascadeOnDelete();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
-            $table->unsignedTinyInteger('score')->nullable();
+            $table->unsignedTinyInteger('point')->nullable();
             $table->text('comment')->nullable();
             $table->softDeletes();
             $table->timestamps();
