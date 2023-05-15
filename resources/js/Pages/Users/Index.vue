@@ -164,22 +164,6 @@ const activityLogs = computed(() => {
     return usePage().props.activity_log
 })
 
-// const activityLogProperties = computed(() => {
-//     return activityLogs.value.map(log => {
-//         return {
-//             properties: {
-//                 attributes: {
-//                     name: log.properties.attributes.name,
-//                     type: log.properties.attributes.type,
-//                     email: log.properties.attributes.email,
-//                     username: log.properties.attributes.username,
-//                 }
-//             }
-//         }
-//
-//     })
-// })
-
 const showRegisterOptions = ref(false);
 
 function openRegisterOptions() {
