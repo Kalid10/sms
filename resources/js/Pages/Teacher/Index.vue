@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full flex-col space-y-3 p-1 lg:space-y-3 lg:px-1 2xl:px-12"
+        class="flex w-full flex-col space-y-3 p-1 lg:space-y-0 lg:px-1 2xl:px-12"
     >
         <!--                 Next Class Header On Mobile Devices-->
         <div
@@ -30,14 +30,14 @@
 
         <!--                 Content-->
         <div
-            class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-5 2xl:space-y-10"
+            class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-1 2xl:space-y-2"
         >
             <div
-                class="grid h-fit w-full grid-cols-12 grid-rows-6 gap-4 lg:gap-8 2xl:gap-10"
+                class="grid h-fit w-full grid-cols-12 grid-rows-6 gap-4 lg:gap-3 2xl:gap-2"
             >
                 <!--                 Welcome header-->
                 <div
-                    class="col-span-12 h-fit text-start font-light lg:text-3xl 2xl:text-4xl"
+                    class="col-span-12 h-fit py-2 text-start font-light lg:text-3xl 2xl:text-4xl"
                     :class="
                         isSidebarOpenOnXlDevice
                             ? ' lg:col-span-8'
@@ -78,11 +78,15 @@
 
             <!--                Students, LessonPlan, Feedback, Grades and SchoolSchedule-->
             <div
-                class="flex h-full flex-col justify-between space-y-2 pt-2 lg:flex-row"
+                class="flex h-full flex-col justify-between space-y-2 lg:flex-row"
             >
                 <Students
-                    class="w-full 2xl:w-4/12"
-                    :class="isSidebarOpenOnXlDevice ? 'lg:w-5/12' : 'lg:w-5/12'"
+                    class="h-fit w-full 2xl:mt-0 2xl:w-4/12"
+                    :class="
+                        isSidebarOpenOnXlDevice
+                            ? 'lg:w-5/12 lg:mt-[-3rem]'
+                            : 'lg:w-5/12 lg:mt-[-1rem]'
+                    "
                 />
 
                 <SchoolSchedule

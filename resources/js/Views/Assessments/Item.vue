@@ -48,19 +48,55 @@
             </div>
         </div>
 
-        <div class="flex w-2/12 flex-col items-center space-y-2 lg:items-end">
-            <div class="flex flex-col font-light uppercase lg:flex-row">
-                <div class="mr-2 text-2xl font-bold lg:text-2xl">
-                    {{ item.maximum_point }}
-                </div>
+        <div
+            class="flex flex-col items-center space-y-2 lg:items-end"
+            :class="view === 'teacher' ? 'w-2/12' : 'w-3/12 lg:w-z/12'"
+        >
+            <div
+                class="flex justify-center font-light uppercase lg:flex-row"
+                :class="
+                    view === 'teacher'
+                        ? 'flex-col lg:flex-row'
+                        : 'flex-row lg:text-center '
+                "
+            >
                 <div
-                    class="flex flex-col space-y-0.5 text-[0.6rem] font-light lg:font-medium"
+                    v-if="view === 'student'"
+                    class="mr-0.5 flex items-center text-3xl font-bold"
+                >
+                    <span v-if="!item.point" class="text-base font-light"
+                        >NM</span
+                    >
+                    <span>{{ item.point }}</span>
+                </div>
+                <div v-if="view === 'student'" class="text-4xl">/</div>
+                <div
+                    class="text-2xl lg:text-2xl"
+                    :class="
+                        view === 'teacher'
+                            ? 'font-bold mr-2'
+                            : 'font-medium flex items-end'
+                    "
+                >
+                    {{ item.maximum_point }}
+                    <span
+                        v-if="view === 'student'"
+                        class="pl-1 text-[0.7rem] font-light"
+                        >PTS</span
+                    >
+                </div>
+
+                <div
+                    v-if="view === 'teacher'"
+                    class="flex w-5/12 flex-col space-y-0.5 text-[0.6rem] font-light lg:font-basic"
                 >
                     <div>MAX</div>
                     <div>POINTS</div>
                 </div>
             </div>
+
             <div
+                v-if="view === 'teacher'"
                 class="hidden text-xs text-neutral-600 underline-offset-1 hover:cursor-pointer hover:text-black hover:underline lg:inline-block lg:text-[0.65rem]"
             >
                 LessonPlan #{{ item.id }}
@@ -84,6 +120,10 @@ defineProps({
     assessments: {
         type: Object,
         required: true,
+    },
+    view: {
+        type: String,
+        default: "teacher",
     },
 });
 

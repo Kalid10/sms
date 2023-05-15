@@ -7,7 +7,7 @@
                 class="flex h-fit w-full items-center justify-evenly rounded-sm bg-black py-2 text-center text-[0.65rem] font-medium text-white lg:py-3 lg:font-semibold 2xl:text-sm"
             >
                 <div class="w-4/12">Name</div>
-                <div class="w-2/12">Score</div>
+                <div class="w-2/12">Point</div>
                 <div class="w-2.5/12">Attendance %</div>
                 <div class="w-2.5/12">Conduct</div>
             </div>

@@ -14,7 +14,7 @@
             <NextClassSection />
             <div
                 class="my-auto hidden w-0.5 bg-neutral-600 lg:inline-flex"
-                :class="isSidebarOpenOnXlDevice ? 'h-0' : 'h-56'"
+                :class="isSidebarOpenOnXlDevice ? 'h-0' : 'h-60'"
             ></div>
             <LastAssessmentSection />
         </div>

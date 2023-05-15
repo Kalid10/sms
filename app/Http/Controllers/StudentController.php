@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BatchSubject;
 use App\Models\Level;
 use App\Models\Student;
 use Inertia\Inertia;
@@ -47,13 +46,16 @@ class StudentController extends Controller
         $student = $student->load('user');
         $studentBatch = $student->activeBatch([]);
 
-        $teacherStudentAssessment = BatchSubject::with('batch.level', 'subject', 'assessments.assessmentType')
-            ->where('batch_id', $studentBatch->id)->get();
+        $studentAssessment = $student->assessments()->get()->map(function ($studentAssessment) {
+            $studentAssessment->assessment->point = $studentAssessment->point;
+
+            return $studentAssessment->assessment;
+        });
 
         return Inertia::render('Teacher/Student', [
             'student' => $student->load('user'),
-            'assessments' => $teacherStudentAssessment,
-            'batchSessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod'])->get(),
+            'assessments' => $studentAssessment,
+            'batchSessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.subject', 'batchSchedule.batchSubject.teacher.user'])->get(),
         ]);
     }
 }

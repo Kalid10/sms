@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-fit w-full flex-col items-center justify-evenly space-y-4 py-3"
+        class="flex h-full w-full flex-col items-center justify-evenly space-y-4 py-3"
         :class="[
             view === 'student'
                 ? 'w-full space-y-2'
@@ -10,10 +10,19 @@
         ]"
     >
         <div
-            class="w-full text-center text-xs font-light opacity-70"
-            :class="fontSize"
+            class="w-full text-center font-light"
+            :class="[
+                !isTeacherView && isNextClassSubjectTeacher
+                    ? 'text-2xl opacity-90'
+                    : fontSize,
+            ]"
         >
-            Next Class
+            <span
+                v-if="isNextClassSubjectTeacher"
+                class="break-words text-sm font-light"
+                >Next Up Is Your Class</span
+            >
+            <span v-else>NextClass</span>
         </div>
 
         <!--         Teacher View-->
@@ -57,10 +66,12 @@
                 {{ moment(nextClass.date).fromNow() }}</span
             >
         </div>
-
         <!--            LessonPlan section-->
         <span
-            v-if="!isSidebarOpenOnXlDevice"
+            v-if="
+                (!isTeacherView && isNextClassSubjectTeacher) ||
+                (isTeacherView && !isSidebarOpenOnXlDevice)
+            "
             class="text-xs font-light hover:cursor-pointer hover:font-medium hover:underline"
             :class="fontSizeSmall"
         >
@@ -68,6 +79,15 @@
                 Lesson Plan #{{ nextClass.lesson_plan_id }}</span
             >
             <span v-else> Add LessonPlan</span>
+        </span>
+        <span
+            v-else
+            class="flex w-full flex-col items-center break-words text-[0.65rem] font-light"
+        >
+            <div class="font-normal">Teacher</div>
+            <div>
+                {{ nextClass.batch_subject.teacher.user.name }}
+            </div>
         </span>
         <PrimaryButton
             class="w-8/12 bg-neutral-800 lg:w-10/12 2xl:w-11/12"
@@ -95,10 +115,13 @@ const props = defineProps({
     },
 });
 const nextClass = props.nextClass ?? usePage().props.teacher.next_batch_session;
+const teacher = usePage().props.auth.user.teacher;
 
 // Computed properties for conditional styling
 const fontSize = computed(() =>
-    isSidebarOpenOnXlDevice.value ? "lg:text-xs" : "lg:text-sm"
+    isSidebarOpenOnXlDevice.value
+        ? "lg:text-xs opacity-70"
+        : "lg:text-sm opacity-70"
 );
 const fontSizeLarge = computed(() =>
     isSidebarOpenOnXlDevice.value ? "lg:text-3xl" : "lg:text-4xl"
@@ -111,6 +134,10 @@ const buttonWidth = computed(() =>
 );
 
 const isTeacherView = computed(() => props.view === "teacher");
+
+const isNextClassSubjectTeacher = computed(
+    () => nextClass.batch_subject.teacher.id === teacher.id
+);
 </script>
 
 <style scoped></style>
