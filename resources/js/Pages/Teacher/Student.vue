@@ -13,20 +13,8 @@
             class="flex w-full flex-col justify-center space-y-6 md:flex-row md:justify-between lg:space-y-0"
         >
             <div class="h-fit w-full rounded-lg md:w-1/2">
-                <div class="flex w-full justify-between pr-2">
-                    <div class="font-medium 2xl:text-2xl">
-                        Recent Assessments
-                    </div>
-
-                    <LinkCell
-                        class="flex w-fit items-center justify-center"
-                        href="/teacher/assessments"
-                        value="SEE ALL"
-                    />
-                </div>
-                <Item class="mt-3" :assessments="assessments" view="student" />
+                <Assessments />
             </div>
-
             <div
                 class="flex h-full w-2/3 flex-col items-center justify-evenly rounded-xl text-white md:w-4/12 lg:w-3/12"
                 :class="
@@ -44,12 +32,10 @@
 <script setup>
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import LinkCell from "@/Components/LinkCell.vue";
-import Item from "@/Views/Assessments/Item.vue";
-import NextClass from "@/Views/Teachers/Home/NextClass/NextClass.vue";
+import NextClass from "@/Views/Teacher/NextClass/NextClass.vue";
+import Assessments from "@/Views/Teacher/Student/Assessments.vue";
 
 const student = computed(() => usePage().props.student);
-const assessments = computed(() => usePage().props.assessments);
 const batchSessions = computed(() => usePage().props.batchSessions);
 const teacher = usePage().props.auth.user.teacher;
 
