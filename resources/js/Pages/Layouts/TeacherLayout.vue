@@ -12,7 +12,9 @@
                     :footer-items="footerItems"
                 />
                 <div
-                    :class="isOpen ? 'min-w-full lg:min-w-0 lg:blur-0' : ''"
+                    :class="
+                        isOpen ? 'min-w-full lg:min-w-0 lg:blur-0' : 'w-full'
+                    "
                     class="flex flex-col items-center overflow-x-hidden lg:w-full"
                 >
                     <slot />
@@ -60,6 +62,12 @@ const sidebarItems = computed(() => [
         active: directory.value === undefined,
     },
     {
+        name: "My Students",
+        icon: UserIcon,
+        route: "/teacher/students/1",
+        active: directory.value === "students",
+    },
+    {
         name: "Lesson Plan",
         icon: CalendarIcon,
         route: "/teacher/lesson-plan",
@@ -70,13 +78,6 @@ const sidebarItems = computed(() => [
         icon: ClipboardIcon,
         route: "/teacher/assessments",
         active: directory.value === "assessments",
-    },
-
-    {
-        name: "Students",
-        icon: UserIcon,
-        route: "/teacher/students/1",
-        active: directory.value === "students",
     },
     {
         name: "Homerooms",
