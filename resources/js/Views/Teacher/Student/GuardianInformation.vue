@@ -9,7 +9,7 @@
             <span>Guardian Info</span>
         </div>
 
-        <div class="flex w-9/12 flex-col space-y-2 pt-3 text-sm">
+        <div class="flex w-9/12 flex-col space-y-2 pt-3 text-xs 2xl:text-sm">
             <div
                 v-for="item in info"
                 :key="item.label"
@@ -43,7 +43,7 @@ const info = [
     },
     {
         label: "Address",
-        value: "123, Lorem Ipsum, Dolor Sit Amet",
+        value: "123, Lorem Ipsumit Amet",
     },
     {
         label: "Interaction",

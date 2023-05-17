@@ -1,5 +1,7 @@
 <template>
-    <div class="flex min-h-screen w-full justify-between">
+    <div
+        class="flex min-h-screen w-full justify-between bg-stone-100/70 2xl:px-5"
+    >
         <!--        Left side-->
         <div class="mx-10 flex w-8/12 grow flex-col space-y-4 py-4 2xl:py-6">
             <!--        Header-->
@@ -62,15 +64,16 @@
 
         <!--        Right side-->
         <div
-            class="flex min-h-screen w-4/12 flex-col items-center space-y-7 border-l pb-4 pt-5"
+            class="flex min-h-screen flex-col items-center space-y-7 border-l pb-4 pt-5"
+            :class="isSidebarOpenOnXlDevice ? 'w-4/12' : 'w-3/12'"
         >
             <Information />
 
-            <div class="h-[0.02rem] w-11/12 bg-gray-200/90"></div>
+            <div class="h-[0.02rem] w-11/12 bg-neutral-300"></div>
 
             <Rank />
 
-            <div class="h-[0.02rem] w-11/12 bg-gray-200/90"></div>
+            <div class="h-[0.02rem] w-11/12 bg-neutral-300"></div>
 
             <Notes />
         </div>
@@ -88,6 +91,7 @@ import Rank from "@/Views/Teacher/Student/Rank.vue";
 import StudentSemesterSchedule from "@/Views/Students/StudentSemesterSchedule.vue";
 import Notes from "@/Views/Teacher/Student/Notes.vue";
 import Information from "@/Views/Teacher/Student/GuardianInformation.vue";
+import { isSidebarOpenOnXlDevice } from "@/utils";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);

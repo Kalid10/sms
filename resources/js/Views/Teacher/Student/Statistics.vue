@@ -19,16 +19,17 @@
             :icon="HandThumbUpIcon"
         />
         <StatCard
-            title="Conduct"
+            title="Vitals"
             color="emerald"
-            value="C"
-            :icon="HandThumbUpIcon"
+            value="Norm"
+            :icon="BeakerIcon"
         />
     </div>
 </template>
 <script setup>
 import StatCard from "@/Components/StatCard.vue";
 import {
+    BeakerIcon,
     CalendarDaysIcon,
     ChartBarIcon,
     HandThumbUpIcon,

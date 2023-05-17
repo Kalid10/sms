@@ -18,10 +18,12 @@
                     :class="item.color"
                 ></div>
                 <div class="flex flex-col space-y-1">
-                    <div class="text-sm font-medium">
+                    <div class="2xltext-sm text-xs font-medium">
                         {{ item.title }}
                     </div>
-                    <div class="flex w-full justify-between text-xs">
+                    <div
+                        class="flex w-full justify-between text-[0.6rem] 2xl:text-xs"
+                    >
                         <div class="font-light">
                             {{ item.date }}
                         </div>
@@ -63,11 +65,6 @@ const notes = [
         title: "Kalid Abdu Seid has shown massive improvement",
         date: moment().format(" dddd MMMM D YYYY"),
         color: "bg-emerald-500",
-    },
-    {
-        title: "Kalid Abdu Seid has shown massive improvement",
-        date: moment().format(" dddd MMMM D YYYY"),
-        color: "bg-cyan-400",
     },
 ];
 </script>
