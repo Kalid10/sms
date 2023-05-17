@@ -3,7 +3,7 @@
         class="flex min-h-max w-full flex-col items-center justify-center py-4"
     >
         <Heading class="mb-1 text-center !font-normal text-black" size="md"
-            >Welcome to the
+        >Welcome to the
         </Heading>
 
         <div class="relative flex items-center">
@@ -29,18 +29,18 @@
         <div class="mt-8 flex">
             <h3 class="max-w-md text-center text-sm text-gray-500">
                 <span
-                    ><InformationCircleIcon
-                        class="mb-1 inline h-4 w-4 stroke-2"
+                ><InformationCircleIcon
+                    class="mb-1 inline h-4 w-4 stroke-2"
                 /></span>
                 Please enter the <span class="text-black">start date</span> of
                 the new school year and the
                 <span class="whitespace-nowrap text-black"
-                    >number of semesters</span
+                >number of semesters</span
                 >
                 it includes. You can also change the school year name by
                 clicking the
                 <span
-                    ><PencilIcon class="inline h-3 w-3 stroke-black stroke-2"
+                ><PencilIcon class="inline h-3 w-3 stroke-black stroke-2"
                 /></span>
                 icon on the right.
                 <span class="inline">
@@ -69,20 +69,29 @@
                 class="w-72"
                 placeholder="Number of Semesters"
             />
+            <SelectInput
+                v-model="formData.number_of_quarters"
+                :options="noOfQuarters"
+                :label="
+                    !!formData.number_of_quarters ? 'Number of Quarters with in a Semester' : ''
+                "
+                :label-location="!!formData.number_of_quarters ? 'inside' : ''"
+                placeholder="Number of Quarters in a Semester"
+                class="w-72"/>
             <PrimaryButton
                 :disabled="!formComplete"
                 class="w-72"
                 @click="handleSubmit"
-                >Create and Proceed
+            >Create and Proceed
             </PrimaryButton>
         </div>
     </form>
 </template>
 <script setup>
-import { computed, ref } from "vue";
-import { InformationCircleIcon, PencilIcon } from "@heroicons/vue/24/outline";
+import {computed, ref} from "vue";
+import {InformationCircleIcon, PencilIcon} from "@heroicons/vue/24/outline";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { useForm } from "@inertiajs/vue3";
+import {useForm} from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import Heading from "@/Components/Heading.vue";
@@ -90,11 +99,17 @@ import Heading from "@/Components/Heading.vue";
 const emits = defineEmits(["success"]);
 
 const noOfSemesters = [
-    { value: 1, label: 1 },
-    { value: 2, label: 2 },
-    { value: 3, label: 3 },
-    { value: 4, label: 4 },
-    { value: 5, label: 5 },
+    {value: 1, label: 1},
+    {value: 2, label: 2},
+    {value: 3, label: 3},
+    {value: 4, label: 4},
+    {value: 5, label: 5},
+];
+
+const noOfQuarters = [
+    {value: 2, label: 2},
+    {value: 3, label: 3},
+    {value: 4, label: 4},
 ];
 
 const schoolYearName = ref(null);
@@ -112,6 +127,7 @@ const formData = useForm({
     name: "2022/2023",
     number_of_semesters: 3,
     start_date: null,
+    number_of_quarters: 4,
 });
 
 const formComplete = computed(() => {

@@ -7,7 +7,7 @@
             grades you don't need, add new grades or edit the number of sections
             in each grade.
             <span class="inline-block"
-                >Click on the "Finish" to proceed, and "Next" to save and
+            >Click on the "Finish" to proceed, and "Next" to save and
                 proceed.</span
             >
         </h3>
@@ -18,8 +18,8 @@
             class="col-span1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
         >
             <span class="font-semibold text-black">{{
-                selectedGradeCount
-            }}</span>
+                    selectedGradeCount
+                }}</span>
             Grades Selected
         </span>
 
@@ -37,7 +37,7 @@
         class="flex flex-col gap-4"
     >
         <div class="flex items-center gap-2">
-            <div class="z-10 h-3.5 w-3.5 rounded-full" :class="colors[lc]" />
+            <div class="z-10 h-3.5 w-3.5 rounded-full" :class="colors[lc]"/>
             <Heading size="sm" class="font-normal text-gray-500">
                 {{
                     updatedLevels.filter(
@@ -86,8 +86,8 @@
                         <div class="flex items-baseline gap-1">
                             <span>Sections</span>
                             <span class="font-semibold">{{
-                                level.no_of_sections
-                            }}</span>
+                                    level.no_of_sections
+                                }}</span>
                             <button
                                 class="ml-2 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-neutral-200 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                                 @click="editSection(l)"
@@ -102,7 +102,7 @@
             </label>
         </div>
 
-        <Modal v-model:view="updateLevelSection">
+        <Modal v-model:view="updateLevelSection" :close-on-outside-click="false">
             <FormElement
                 v-model:show-modal="updateLevelSection"
                 modal
@@ -123,18 +123,18 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
-import { router, useForm } from "@inertiajs/vue3";
+import {computed, ref, watch} from "vue";
+import {router, useForm} from "@inertiajs/vue3";
 import Heading from "@/Components/Heading.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Card from "@/Components/Card.vue";
-import { PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import {PencilIcon, TrashIcon} from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DelegateLink from "@/Views/DelegateLink.vue";
-import { useGettingStartedStore } from "@/Store/getting-started";
+import {useGettingStartedStore} from "@/Store/getting-started";
 
 const emits = defineEmits(["success"]);
 
@@ -152,13 +152,13 @@ const levels = computed(() => gettingStartedStore.levels);
 
 const updatedLevels = ref(
     gettingStartedStore.levels.map((level) => {
-        return { ...level, selected: true, no_of_sections: 3 };
+        return {...level, selected: true, no_of_sections: 3};
     })
 );
 const formData = computed(() => {
     return updatedLevels.value.map((level) => {
         return {
-            level_id: level.isNew ? { name: level.name } : level.id,
+            level_id: level.isNew ? {name: level.name} : level.id,
             no_of_sections: level.no_of_sections,
         };
     });
