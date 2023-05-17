@@ -74,6 +74,7 @@
         <button class="h-14 bg-purple-500 p-1 text-white" @click="deleteAssessmentType">Test Delete Assessment Type
         </button>
         <button class="h-14 bg-purple-500 p-1 text-white" @click="getAssessmentTypes">Test Get Assessment Types</button>
+        <button class="h-14 bg-gray-900 p-1 text-white" @click="createStudentNote">Test Create Student Note</button>
     </div>
 
 </template>
@@ -184,7 +185,7 @@ function registerTeacher() {
 }
 
 // Admin: test@example.com
-function login(simulation=false, userType='admin') {
+function login(simulation = false, userType = 'admin') {
 
     let email = ''
     switch (userType) {
@@ -1147,6 +1148,23 @@ function getAssessmentTypes() {
             }
         })
 }
+
+function createStudentNote() {
+    router.post('students/' + 1 + '/notes/create', {
+            title: "This is a test note",
+            description: "This is a test note body",
+        },
+        {
+            onSuccess: () => {
+                console.log("Success")
+            },
+            onError: (error) => {
+                console.log("Error")
+                console.log(error)
+            }
+        })
+}
+
 
 </script>
 
