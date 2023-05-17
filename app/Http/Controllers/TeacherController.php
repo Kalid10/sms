@@ -6,10 +6,12 @@ use App\Models\Assessment;
 use App\Models\AssessmentType;
 use App\Models\Batch;
 use App\Models\BatchSubject;
+use App\Models\Level;
 use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Semester;
+use App\Models\Student;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -83,6 +85,53 @@ class TeacherController extends Controller
             'school_schedule' => $schoolSchedule,
             'school_schedule_date' => $schoolScheduleDate,
             'last_assessment' => $lastAssessment ?? null,
+        ]);
+    }
+
+    public function students(Request $request): Response
+    {
+        $request->validate([
+            'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
+            'search' => 'nullable|string',
+        ]);
+
+        $batchSubjectId = $request->input('batch_subject_id') ??
+            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+                ->whereHas('batch', function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                })->first()->id;
+
+        $students = $this->getStudents(auth()->user()->teacher->id, $batchSubjectId, $request->input('search'));
+
+        return Inertia::render('Teacher/Students', [
+            'students' => $students,
+        ]);
+    }
+
+    public function student(Student $student): Response
+    {
+        $student = $student->load('user');
+        $currentBatch = $student->activeBatch(['level']);
+
+        $studentAssessment = $student->assessments()->get()->map(function ($studentAssessment) {
+            $studentAssessment->assessment->point = $studentAssessment->point;
+
+            return $studentAssessment->assessment;
+        });
+
+        return Inertia::render('Teacher/Student', [
+            'student' => $student->load('user'),
+            'assessments' => $studentAssessment,
+            'current_batch' => $currentBatch,
+            'absentee' => $student->absenteePercentage(),
+            'schedule' => $student->activeBatch()->load(
+                'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',
+                'schedule.batchSubject:id,teacher_id,subject_id,weekly_frequency',
+                'schedule.batchSubject.subject',
+                'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id'
+            )->only('schedule')['schedule'],
+            'periods' => Level::find($student->activeBatch()->level->id)->levelCategory->schoolPeriods,
+            'batch_sessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.subject', 'batchSchedule.batchSubject.teacher.user'])->get(),
         ]);
     }
 

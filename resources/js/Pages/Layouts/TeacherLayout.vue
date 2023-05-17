@@ -64,7 +64,7 @@ const sidebarItems = computed(() => [
     {
         name: "My Students",
         icon: UserIcon,
-        route: "/teacher/students/1",
+        route: "/teacher/students",
         active: directory.value === "students",
     },
     {
