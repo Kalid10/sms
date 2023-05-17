@@ -12,13 +12,13 @@
         <div
             class="flex h-full w-5/12 items-center justify-center space-x-2.5 lg:w-8/12"
         >
-            <div class="text-4xl font-bold lg:text-5xl">
+            <div class="text-4xl font-bold 2xl:text-5xl">
                 {{ moment(selectedDate).format("ddd") }}
             </div>
             <div
                 class="flex h-full flex-col items-center justify-center space-y-1 text-xs font-semibold"
             >
-                <div class="w-full text-[0.65rem] lg:text-xs">
+                <div class="w-full text-[0.65rem] 2xl:text-xs">
                     {{ moment(selectedDate).format("MMMM D") }}
                 </div>
                 <div>{{ moment(selectedDate).format("YYYY") }}</div>

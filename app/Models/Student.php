@@ -97,4 +97,10 @@ class Student extends Model
             })
             ->orderBy('date', 'asc');
     }
+
+    public function assessments(): HasMany
+    {
+        return $this->hasMany(StudentAssessment::class)
+            ->with('assessment.assessmentType', 'assessment.batchSubject.batch.level', 'assessment.batchSubject.subject');
+    }
 }

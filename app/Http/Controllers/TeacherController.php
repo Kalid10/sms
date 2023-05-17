@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assessment;
+use App\Models\AssessmentType;
 use App\Models\Batch;
 use App\Models\BatchSubject;
+use App\Models\Level;
 use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Semester;
+use App\Models\Student;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -85,6 +88,88 @@ class TeacherController extends Controller
         ]);
     }
 
+    public function students(Request $request): Response
+    {
+        $request->validate([
+            'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
+            'search' => 'nullable|string',
+        ]);
+
+        $search = $request->input('search');
+        $batchSubjectId = $request->input('batch_subject_id');
+
+        $batchSubject = $batchSubjectId ?
+            BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
+            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+                ->whereHas('batch', function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                })->first()->load('subject', 'batch.level');
+
+        $students = $this->getStudents(auth()->user()->teacher->id, $batchSubject->id, $search);
+
+        $teacher = Teacher::find(auth()->user()->teacher->id);
+        $lessonPlan = $teacher->lessonPlans()
+            ->with('batchSchedule.batchSubject.subject', 'batchSchedule.batch.level')
+            ->get();
+
+        $lessonPlan = $lessonPlan->filter(function ($lessonPlan) use ($batchSubject) {
+            return $lessonPlan->batchSchedule->batchSubject->id == $batchSubject->id;
+        })->take(5);
+
+        $assessments = Assessment::where('batch_subject_id', $batchSubject->id)
+            ->where('quarter_id', Quarter::getActiveQuarter()->id)
+            ->with('assessmentType:id,name',
+                'batchSubject.batch:id,section,level_id',
+                'batchSubject.batch.level:id,name,level_category_id',
+                'batchSubject.subject:id,full_name')
+            ->get()->take(3);
+
+        $batch = Batch::find($batchSubject->batch_id)->load('level:id,name,level_category_id', 'level.levelCategory:id,name');
+        $schedule = Batch::find($batchSubject->batch_id)->load(
+            'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',
+            'schedule.batchSubject:id,teacher_id,subject_id,weekly_frequency',
+            'schedule.batchSubject.subject',
+            'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id',
+        )->only('schedule')['schedule'];
+
+        return Inertia::render('Teacher/Students', [
+            'students' => $students[0]['students'],
+            'batch_subject' => $batchSubject,
+            'search' => $search,
+            'lesson_plans' => $lessonPlan,
+            'assessments' => $assessments,
+            'schedule' => $schedule,
+            'periods' => Level::find($batch->level->id)->levelCategory->schoolPeriods,
+        ]);
+    }
+
+    public function student(Student $student): Response
+    {
+        $student = $student->load('user');
+        $currentBatch = $student->activeBatch(['level']);
+
+        $studentAssessment = $student->assessments()->get()->map(function ($studentAssessment) {
+            $studentAssessment->assessment->point = $studentAssessment->point;
+
+            return $studentAssessment->assessment;
+        });
+
+        return Inertia::render('Teacher/Student', [
+            'student' => $student->load('user'),
+            'assessments' => $studentAssessment,
+            'current_batch' => $currentBatch,
+            'absentee' => $student->absenteePercentage(),
+            'schedule' => $student->activeBatch()->load(
+                'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',
+                'schedule.batchSubject:id,teacher_id,subject_id,weekly_frequency',
+                'schedule.batchSubject.subject',
+                'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id'
+            )->only('schedule')['schedule'],
+            'periods' => Level::find($student->activeBatch()->level->id)->levelCategory->schoolPeriods,
+            'batch_sessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.subject', 'batchSchedule.batchSubject.teacher.user'])->get(),
+        ]);
+    }
+
     public function assessments(Request $request): Response
     {
         $request->validate([
@@ -146,6 +231,8 @@ class TeacherController extends Controller
 
         return Inertia::render('Teacher/Assessments/Index', [
             'assessments' => $assessments,
+            'teacher' => $this->getTeacherDetails(auth()->user()->teacher->id),
+            'assessment_type' => AssessmentType::all(),
             'quarters' => $quarters,
             'semesters' => $semesters,
             'school_years' => $schoolYears,
@@ -251,7 +338,7 @@ class TeacherController extends Controller
             'feedbacks.author:id,name',
             'batchSubjects.students.user',
             'assessments' => function ($query) {
-                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'desc')->limit(4);
+                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'desc')->limit(3);
             },
             'assessments.assessmentType',
             'assessments.batchSubject.batch:id,section,level_id',

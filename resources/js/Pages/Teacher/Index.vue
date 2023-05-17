@@ -1,5 +1,7 @@
 <template>
-    <div class="flex w-full flex-col space-y-3 p-1 lg:space-y-10 lg:px-12">
+    <div
+        class="flex w-full flex-col space-y-3 p-1 lg:space-y-0 lg:px-1 2xl:px-12"
+    >
         <!--                 Next Class Header On Mobile Devices-->
         <div
             v-if="nextClass"
@@ -27,38 +29,77 @@
         </div>
 
         <!--                 Content-->
-        <div class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-10">
-            <!--                 Welcome header-->
+        <div
+            class="flex w-full flex-col space-y-3 px-5 py-3 lg:space-y-1 2xl:space-y-2"
+        >
             <div
-                class="flex items-center rounded-lg font-light lg:py-2 lg:pl-0 lg:text-4xl"
-                :class="nextClass ? 'py-1.5' : 'py-3'"
+                class="grid h-fit w-full grid-cols-12 grid-rows-6 gap-4 lg:gap-3 2xl:gap-2"
             >
-                Welcome back,
-
-                <span class="ml-0.5 font-semibold lg:ml-2"
-                    >{{ teacher.user.name }}!</span
+                <!--                 Welcome header-->
+                <div
+                    class="col-span-12 h-fit py-2 text-start font-light lg:text-3xl 2xl:text-4xl"
+                    :class="
+                        isSidebarOpenOnXlDevice
+                            ? ' lg:col-span-8'
+                            : ' lg:col-span-7'
+                    "
                 >
-            </div>
+                    Welcome back,
 
-            <!--                Assessments and Next class-->
-            <div class="flex w-full flex-col justify-between lg:flex-row">
-                <div class="w-full lg:w-6/12">
-                    <Assessments class="" />
+                    <span class="ml-0.5 font-semibold lg:ml-2"
+                        >{{ teacher.user.name }}!</span
+                    >
                 </div>
-                <div class="hidden lg:inline-block lg:w-5/12">
-                    <NextClass />
+                <div
+                    class="col-start-9 row-span-6 hidden lg:inline-flex"
+                    :class="
+                        isSidebarOpenOnXlDevice
+                            ? 'lg:col-span-4'
+                            : 'lg:col-span-5'
+                    "
+                >
+                    <div
+                        class="hidden h-full w-full items-center justify-center lg:flex"
+                    >
+                        <NextClass />
+                    </div>
+                </div>
+                <div
+                    class="col-span-12 row-span-6"
+                    :class="
+                        isSidebarOpenOnXlDevice
+                            ? 'lg:col-span-7'
+                            : 'lg:col-span-6'
+                    "
+                >
+                    <Assessments />
                 </div>
             </div>
 
             <!--                Students, LessonPlan, Feedback, Grades and SchoolSchedule-->
             <div
-                class="flex h-full w-full flex-col justify-between space-y-2 pt-2 lg:flex-row"
+                class="flex h-full flex-col justify-between space-y-2 lg:flex-row"
             >
-                <Students class="w-full lg:w-3/12" />
-                <LessonPlans class="w-full lg:w-4/12" />
+                <Students
+                    class="h-fit w-full 2xl:mt-0 2xl:w-4/12"
+                    :class="
+                        isSidebarOpenOnXlDevice
+                            ? 'lg:w-5/12 lg:mt-[-3rem]'
+                            : 'lg:w-5/12 lg:mt-[-1rem]'
+                    "
+                />
+
+                <SchoolSchedule
+                    class="hidden 2xl:hidden"
+                    :class="isSidebarOpenOnXlDevice ? 'lg:hidden' : 'lg:w-2/12'"
+                />
+                <LessonPlans
+                    class="w-full 2xl:w-5/12"
+                    :class="isSidebarOpenOnXlDevice ? 'lg:w-6/12' : 'lg:w-5/12'"
+                />
 
                 <div
-                    class="w-ful flex h-full flex-col justify-between space-y-5 lg:w-4/12"
+                    class="flex h-full w-full flex-col justify-between space-y-5 lg:hidden 2xl:w-4/12"
                 >
                     <div class="w-full lg:hidden">
                         <NextClass ref="nextClassSection" />
@@ -94,21 +135,21 @@
 
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import Assessments from "@/Views/Teachers/Home/Assessments.vue";
-import NextClass from "@/Views/Teachers/Home/NextClass/Index.vue";
-import Students from "@/Views/Teachers/Home/Students.vue";
-import LessonPlans from "@/Views/Teachers/Home/LessonPlans.vue";
-import Grades from "@/Views/Teachers/Home/Grades.vue";
-import SchoolSchedule from "@/Views/Teachers/Home/SchoolSchedule/Index.vue";
-import Feedbacks from "@/Views/Teachers/Home/Feedbacks.vue";
+import NextClass from "@/Views/Teacher/NextClass/Index.vue";
+import Students from "@/Views/Teacher/Home/Students.vue";
+import LessonPlans from "@/Views/Teacher/Home/LessonPlans.vue";
+import Grades from "@/Views/Teacher/Home/Grades.vue";
+import SchoolSchedule from "@/Views/Teacher/Home/SchoolSchedule/Index.vue";
 import moment from "moment/moment";
+import Feedbacks from "@/Views/Teacher/Home/Feedbacks.vue";
 import { ref } from "vue";
+import Assessments from "@/Views/Teacher/Home/Assessments.vue";
+import { isSidebarOpenOnXlDevice } from "@/utils";
 
 const teacher = usePage().props.teacher;
+
 const nextClass = usePage().props.teacher.next_batch_session;
-
 const nextClassSection = ref(null);
-
 const scrollToNextClass = () => {
     nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
 };

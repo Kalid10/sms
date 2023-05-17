@@ -1,9 +1,12 @@
 <template>
-
-    <div class="flex w-full flex-col overflow-hidden rounded-t-md border bg-white shadow-sm">
-
+    <div
+        class="flex w-full flex-col overflow-hidden rounded-t-md bg-white shadow-sm"
+    >
         <slot name="table-header">
-            <div v-if="titleHeader" class="flex flex-col sm:flex-row sm:items-center">
+            <div
+                v-if="titleHeader"
+                class="flex flex-col sm:flex-row sm:items-center"
+            >
                 <div class="flex flex-col justify-center p-4 sm:grow">
                     <h3 class="font-semibold capitalize">{{ title }}</h3>
                     <h5 v-if="subtitle" class="text-sm text-gray-500">
@@ -12,21 +15,48 @@
                 </div>
 
                 <div v-if="actionable" class="mb-4 min-w-fit px-4 sm:mb-0">
-                    <slot :selected="{ selected: anySelected, items: selectedItems }" name="action">
-                        <PrimaryButton v-if="! anySelected" :click="() => {}" class="w-full" title="Download CSV"/>
+                    <slot
+                        :selected="{
+                            selected: anySelected,
+                            items: selectedItems,
+                        }"
+                        name="action"
+                    >
+                        <PrimaryButton
+                            v-if="!anySelected"
+                            :click="() => {}"
+                            class="w-full"
+                            title="Download CSV"
+                        />
                         <div v-else class="flex items-center gap-2">
-                            <TertiaryButton class="w-full whitespace-nowrap" title="Update Users" @click="() => {}"/>
-                            <PrimaryButton class="w-full whitespace-nowrap" title="Delete Users" @click="() => {}"/>
+                            <TertiaryButton
+                                class="w-full whitespace-nowrap"
+                                title="Update Users"
+                                @click="() => {}"
+                            />
+                            <PrimaryButton
+                                class="w-full whitespace-nowrap"
+                                title="Delete Users"
+                                @click="() => {}"
+                            />
                         </div>
                     </slot>
                 </div>
             </div>
         </slot>
-        <div v-if="! titleHeader && actionable" class="w-full py-2"></div>
+        <div v-if="!titleHeader && actionable" class="w-full py-2"></div>
 
-        <div v-if="filterable" :class="!titleHeader && 'mt-4'" class="mb-4 flex flex-col gap-4 px-4">
+        <div
+            v-if="filterable"
+            :class="!titleHeader && 'mt-4'"
+            class="mb-4 flex flex-col gap-4 px-4"
+        >
             <slot name="filter">
-                <TextInput v-model="query" class="lg:max-w-lg" placeholder="Search for [... attributes]"/>
+                <TextInput
+                    v-model="query"
+                    class="lg:max-w-lg"
+                    placeholder="Search for [... attributes]"
+                />
             </slot>
         </div>
 
@@ -35,70 +65,104 @@
                 <tr v-if="header && !emptyData">
                     <th
                         v-if="selectable"
-                        :class="[titleHeader || filterable ? 'border-y' : 'border-b']"
-                        class="h-10 w-[1%] bg-neutral-50 px-3">
-                        <Checkbox v-model="selectAll"/>
+                        :class="[
+                            titleHeader || filterable ? 'border-y' : 'border-b',
+                            headerStyle,
+                        ]"
+                        class="h-10 w-[1%] bg-neutral-50 px-3"
+                    >
+                        <Checkbox v-model="selectAll" />
                     </th>
                     <th
-                        v-for="(key, index) in (columns.length > 0 ? columns.map(item => item.name) : Object.keys(items[0]))"
+                        v-for="(key, index) in columns.length > 0
+                            ? columns.map((item) => item.name)
+                            : Object.keys(items[0])"
                         :key="index"
-                        :class="[columns.length > 0 && (columns[index].header?.align || align(columns[index].align)), titleHeader || filterable ? 'border-y' : 'border-b']"
-                        class="h-10 whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
+                        :class="[
+                            columns.length > 0 &&
+                                (columns[index].header?.align ||
+                                    align(columns[index].align)),
+                            titleHeader || filterable ? 'border-y' : 'border-b',
+                            headerStyle,
+                        ]"
+                        class="h-10 whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700"
+                    >
                         {{ key }}
                     </th>
                     <th
                         v-if="rowActionable"
-                        :class="titleHeader || filterable ? 'border-y' : 'border-b'"
-                        class="h-10 w-fit whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700">
+                        :class="[
+                            titleHeader || filterable ? 'border-y' : 'border-b',
+                            headerStyle,
+                        ]"
+                        class="h-10 w-fit whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700"
+                    >
                         Actions
                     </th>
                 </tr>
                 <tr
-                    v-for="(item, index) in items" :key="index"
-                    :class="{ 'first:border-t': (filterable && ! header) || ! header && titleHeader, 'last:border-b-0': ! footer }"
+                    v-for="(item, index) in items"
+                    :key="index"
+                    :class="{
+                        'first:border-t':
+                            (filterable && !header) || (!header && titleHeader),
+                        'last:border-b-0': !footer,
+                    }"
                     class="border-b"
                 >
-                    <th
-                        v-if="selectable"
-                        class="h-10 w-[1%] bg-white px-3">
-                        <Checkbox v-model="items[index].selected"/>
+                    <th v-if="selectable" class="h-10 w-[1%] bg-white px-3">
+                        <Checkbox v-model="items[index].selected" />
                     </th>
                     <template
-                        v-for="(key, i) in (columns.length > 0 ? columns.map(i => i.key) : Object.keys(item))"
+                        v-for="(key, i) in columns.length > 0
+                            ? columns.map((i) => i.key)
+                            : Object.keys(item)"
                         :key="i"
                     >
                         <td
                             :class="[
-                                columns.length > 0 && !! columns[i]?.link ?
-                                'cursor-pointer hover:underline hover:underline-offset-2' :
-                                '',
+                                columns.length > 0 && !!columns[i]?.link
+                                    ? 'cursor-pointer hover:underline hover:underline-offset-2'
+                                    : '',
                                 columns.length > 0 && columns[i].class,
-                                columns.length > 0 && align(columns[i].align)
+                                columns.length > 0 && align(columns[i].align),
                             ]"
                             class="h-10 whitespace-nowrap px-3 text-sm"
                         >
                             <component
                                 :is="cell(i, index).component"
-                                v-if="cell(i, index).component !== 'custom'" :value="item[key]"
+                                v-if="cell(i, index).component !== 'custom'"
+                                :value="item[key]"
                                 v-bind="{ ...cell(i, index).props }"
                             />
                             <template v-else>
-                                <slot :data="item[key]" :name="`${key}-column`"/>
+                                <slot
+                                    :data="item[key]"
+                                    :name="`${key}-column`"
+                                />
                             </template>
                         </td>
                     </template>
                     <td
                         v-if="rowActionable"
-                        class="flex h-10 min-w-fit items-center justify-center gap-2 text-center text-sm [&>*]:mr-3 [&>*]:text-xs [&>:nth-child(1)]:ml-3">
+                        class="flex h-10 min-w-fit items-center justify-center gap-2 text-center text-sm [&>*]:mr-3 [&>*]:text-xs [&>:nth-child(1)]:ml-3"
+                    >
                         <slot :row="item" name="row-actions">
                             <Link :href="'/' + item.id" class="">View</Link>
-                            <Link :href="'update/' + item.id" class="">Update</Link>
-                            <Link :href="'delete/' + item.id" class="">Delete</Link>
+                            <Link :href="'update/' + item.id" class=""
+                                >Update
+                            </Link>
+                            <Link :href="'delete/' + item.id" class=""
+                                >Delete
+                            </Link>
                         </slot>
                     </td>
                 </tr>
             </table>
-            <div v-if="emptyData" class="grid h-48 w-full place-items-center border-t">
+            <div
+                v-if="emptyData"
+                class="grid h-48 w-full place-items-center border-t"
+            >
                 <slot name="empty-data">
                     <p class="text-sm font-semibold text-gray-500">
                         No data found
@@ -107,26 +171,36 @@
             </div>
         </div>
 
-        <div v-if="footer && ! emptyData" class="flex gap-3 bg-neutral-50 p-4">
+        <div
+            v-if="footer && !emptyData"
+            class="flex gap-3 bg-neutral-50 p-4"
+            :class="footerStyle"
+        >
             <slot name="footer">
                 <div class="flex w-full items-center gap-3 lg:justify-end">
-                    <TertiaryButton :click="() => {}" class="w-full lg:w-fit lg:text-right" title="Previous"/>
-                    <TertiaryButton :click="() => {}" class="w-full lg:w-fit lg:text-right" title="Next"/>
+                    <TertiaryButton
+                        :click="() => {}"
+                        class="w-full lg:w-fit lg:text-right"
+                        title="Previous"
+                    />
+                    <TertiaryButton
+                        :click="() => {}"
+                        class="w-full lg:w-fit lg:text-right"
+                        title="Next"
+                    />
                 </div>
             </slot>
         </div>
-
     </div>
-
 </template>
 
 <script setup>
-import {ref, watch, computed, defineAsyncComponent} from "vue"
-import Checkbox from "@/Components/Checkbox.vue"
+import { computed, defineAsyncComponent, ref, watch } from "vue";
+import Checkbox from "@/Components/Checkbox.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
-import {Link} from '@inertiajs/vue3'
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     data: {
@@ -135,11 +209,11 @@ const props = defineProps({
     },
     title: {
         type: String,
-        default: null
+        default: null,
     },
     subtitle: {
         type: String,
-        default: null
+        default: null,
     },
     selectable: {
         type: Boolean,
@@ -147,19 +221,19 @@ const props = defineProps({
     },
     actionable: {
         type: Boolean,
-        default: false
+        default: false,
     },
     rowActionable: {
         type: Boolean,
-        default: false
+        default: false,
     },
     columns: {
         type: Array, // Array of objects of type { name: String, key: String, link: String }. opt: link
-        default: () => []
+        default: () => [],
     },
     header: {
         type: Boolean,
-        default: true
+        default: true,
     },
     footer: {
         type: Boolean,
@@ -167,103 +241,113 @@ const props = defineProps({
     },
     filterable: {
         type: Boolean,
-        default: true
-    }
-})
+        default: true,
+    },
+    headerStyle: {
+        type: String,
+        default: "",
+    },
+    footerStyle: {
+        type: String,
+        default: "",
+    },
+});
 
-const emits = defineEmits(['select'])
+const emits = defineEmits(["select"]);
 
-const titleHeader = computed(() => props.title || props.subtitle)
-const selectAll = ref(false)
-const anySelected = computed(() => items.value.some((item) => item.selected))
-const selectedItems = computed(() => items.value.filter((item) => item.selected))
-const items = computed(() => props.data)
+const titleHeader = computed(() => props.title || props.subtitle);
+const selectAll = ref(false);
+const anySelected = computed(() => items.value.some((item) => item.selected));
+const selectedItems = computed(() =>
+    items.value.filter((item) => item.selected)
+);
+const items = computed(() => props.data);
 
-const emptyData = computed(() => items.value.length === 0)
+const emptyData = computed(() => items.value.length === 0);
 
 function getLink(link, index) {
-    const matches = link?.match(/{(.*?)}/g) || []
-    let newLink = link
+    const matches = link?.match(/{(.*?)}/g) || [];
+    let newLink = link;
     matches.forEach((match) => {
-        const key = match.replace('{', '').replace('}', '')
-        newLink = newLink.replace(match, items.value[index][key])
-    })
-    return newLink
+        const key = match.replace("{", "").replace("}", "");
+        newLink = newLink.replace(match, items.value[index][key]);
+    });
+    return newLink;
 }
 
 watch(selectAll, () => {
     if (selectAll.value) {
         items.value.forEach((item) => {
-            item.selected = true
-        })
+            item.selected = true;
+        });
     } else {
         items.value.forEach((item) => {
-            item.selected = false
-        })
+            item.selected = false;
+        });
     }
-})
+});
 
 watch([anySelected, selectedItems], () => {
-    emits('select', {selected: anySelected, items: selectedItems})
-})
+    emits("select", { selected: anySelected, items: selectedItems });
+});
 
 function cell(columnIndex, rowIndex) {
-
     if (!!props.columns[columnIndex]?.link) {
         return {
-            component: defineAsyncComponent(() => import('@/Components/LinkCell.vue')),
+            component: defineAsyncComponent(() =>
+                import("@/Components/LinkCell.vue")
+            ),
             props: {
-                href: getLink(props.columns[columnIndex]?.link, rowIndex)
-            }
-        }
+                href: getLink(props.columns[columnIndex]?.link, rowIndex),
+            },
+        };
     }
 
     switch (props.columns[columnIndex]?.type) {
-
         case Boolean:
             return {
-                component: defineAsyncComponent(() => import('@/Components/BooleanCell.vue')),
+                component: defineAsyncComponent(() =>
+                    import("@/Components/BooleanCell.vue")
+                ),
             };
 
-        case 'enum':
+        case "enum":
             return {
-                component: defineAsyncComponent(() => import('@/Components/EnumCell.vue')),
+                component: defineAsyncComponent(() =>
+                    import("@/Components/EnumCell.vue")
+                ),
                 props: {
-                    options: props.columns[columnIndex]?.options
-                }
-            }
+                    options: props.columns[columnIndex]?.options,
+                },
+            };
 
-        case 'custom':
+        case "custom":
             return {
-                component: 'custom'
-            }
+                component: "custom",
+            };
 
         default:
             return {
-                component: defineAsyncComponent(() => import('@/Components/TextCell.vue')),
-            }
-
+                component: defineAsyncComponent(() =>
+                    import("@/Components/TextCell.vue")
+                ),
+            };
     }
 }
 
 function align(align) {
-
     switch (align) {
-
-        case 'left':
-            return 'text-left'
-        case 'right':
-            return 'text-right'
-        case 'center':
+        case "left":
+            return "text-left";
+        case "right":
+            return "text-right";
+        case "center":
         default:
-            return 'text-center'
+            return "text-center";
     }
-
 }
 
-const query = ref('')
+const query = ref("");
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

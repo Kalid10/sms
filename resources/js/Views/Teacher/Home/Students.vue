@@ -1,13 +1,13 @@
 <template>
     <div class="flex max-w-full flex-col space-y-1 rounded-md">
-        <div class="font-medium lg:px-4 lg:text-2xl">Students</div>
+        <div class="font-medium lg:px-4 2xl:text-2xl">Students</div>
         <div class="flex h-fit flex-col justify-evenly space-y-2 rounded-sm">
             <div
                 v-if="students.length > 0"
-                class="flex h-fit w-full items-center justify-evenly rounded-sm bg-black py-2 text-center text-[0.65rem] font-medium text-white lg:py-3 lg:text-sm lg:font-semibold"
+                class="flex h-fit w-full items-center justify-evenly rounded-sm bg-black py-2 text-center text-[0.65rem] font-medium text-white lg:py-3 lg:font-semibold 2xl:text-sm"
             >
                 <div class="w-4/12">Name</div>
-                <div class="w-2/12">Score</div>
+                <div class="w-2/12">Point</div>
                 <div class="w-2.5/12">Attendance %</div>
                 <div class="w-2.5/12">Conduct</div>
             </div>
@@ -36,7 +36,7 @@
             <div
                 v-for="(item, index) in students"
                 :key="index"
-                class="flex h-14 w-full items-center justify-evenly rounded-md text-center text-xs lg:text-sm"
+                class="flex h-14 w-full items-center justify-evenly rounded-md text-center text-xs 2xl:text-sm"
             >
                 <div
                     class="w-6/12 cursor-pointer font-medium hover:font-semibold hover:underline hover:underline-offset-2"
@@ -60,13 +60,11 @@
                 View All Students
             </PrimaryButton>
         </div>
-        <div
-            v-if="students.length > 0"
-            class="w-full cursor-pointer pr-3 text-end text-xs font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium lg:text-sm"
-            @click="$inertia.get('/teacher/students')"
-        >
-            View All Students
-        </div>
+        <LinkCell
+            class="flex w-full justify-end"
+            href="/teacher/students"
+            value="View All Students"
+        />
     </div>
 </template>
 
@@ -78,6 +76,7 @@ import debounce from "lodash/debounce";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
+import LinkCell from "@/Components/LinkCell.vue";
 
 const teacherSubjects = usePage().props.teacher.batch_subjects;
 

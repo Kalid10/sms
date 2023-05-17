@@ -12,6 +12,16 @@ class Assessment extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const STATUS_DRAFT = 'draft';
+
+    const STATUS_PUBLISHED = 'published';
+
+    const STATUS_CLOSED = 'closed';
+
+    const STATUS_MARKING = 'marking';
+
+    const STATUS_COMPLETED = 'completed';
+
     protected $fillable = [
         'assessment_type_id',
         'batch_subject_id',
@@ -20,6 +30,8 @@ class Assessment extends Model
         'title',
         'description',
         'maximum_point',
+        'lesson_plan_id',
+        'status',
     ];
 
     public function assessmentType(): BelongsTo

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BatchSubject;
 use App\Models\Level;
 use App\Models\Student;
 use Inertia\Inertia;
@@ -39,21 +38,6 @@ class StudentController extends Controller
                 'absentee_records' => $student->absenteeRecords()->get(),
             ],
             'periods' => Level::find($student->activeBatch()->level->id)->levelCategory->schoolPeriods,
-        ]);
-    }
-
-    public function teacherShow(Student $student): Response
-    {
-        $student = $student->load('user');
-        $studentBatch = $student->activeBatch([]);
-
-        $teacherStudentAssessment = BatchSubject::with('batch.level', 'subject', 'assessments.assessmentType')
-            ->where('batch_id', $studentBatch->id)->get();
-
-        return Inertia::render('Teacher/Student', [
-            'student' => $student->load('user'),
-            'assessments' => $teacherStudentAssessment,
-            'batchSessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod'])->get(),
         ]);
     }
 }
