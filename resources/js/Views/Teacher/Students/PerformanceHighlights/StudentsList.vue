@@ -1,13 +1,21 @@
 <template>
-    <div class="flex h-fit w-full flex-col space-y-3 py-2">
-        <div class="flex space-x-1.5 text-xl font-semibold">
-            <component :is="icon" class="w-7" />
-            <span>{{ title }}</span>
+    <div class="flex h-fit w-full flex-col items-center space-y-3 py-2">
+        <div class="flex w-full items-center justify-center space-x-1.5">
+            <component
+                :is="icon"
+                class="w-5"
+                :class="
+                    progressType === 'up'
+                        ? 'text-positive-100'
+                        : 'text-negative-100'
+                "
+            />
+            <span class="text-sm">{{ title }}</span>
         </div>
         <div
             v-for="(item, index) in progressingStudents"
             :key="index"
-            class="flex h-12 w-11/12 items-center space-x-2"
+            class="flex h-12 w-full items-center justify-center space-x-2"
         >
             <Item
                 :progress-type="progressType"

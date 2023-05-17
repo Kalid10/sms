@@ -95,16 +95,22 @@ class TeacherController extends Controller
             'search' => 'nullable|string',
         ]);
 
-        $batchSubjectId = $request->input('batch_subject_id') ??
+        $search = $request->input('search');
+        $batchSubjectId = $request->input('batch_subject_id');
+
+        $batchSubject = $batchSubjectId ?
+            BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
             BatchSubject::where('teacher_id', auth()->user()->teacher->id)
                 ->whereHas('batch', function ($query) {
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-                })->first()->id;
+                })->first()->load('subject', 'batch.level');
 
-        $students = $this->getStudents(auth()->user()->teacher->id, $batchSubjectId, $request->input('search'));
+        $students = $this->getStudents(auth()->user()->teacher->id, $batchSubject->id, $search);
 
         return Inertia::render('Teacher/Students', [
-            'students' => $students,
+            'students' => $students[0]['students'],
+            'batch_subject' => $batchSubject,
+            'search' => $search,
         ]);
     }
 
@@ -229,6 +235,7 @@ class TeacherController extends Controller
 
     private function getStudents(int $id, ?string $batchSubjectId, ?string $studentSearch)
     {
+        Log::info('Get students function called '.$studentSearch);
         // Get students of a teacher for specific batchSubjectId
         $batchSubjectId = $batchSubjectId ?? BatchSubject::where('teacher_id', $id)->first()->id;
 

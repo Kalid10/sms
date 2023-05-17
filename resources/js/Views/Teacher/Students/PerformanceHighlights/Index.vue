@@ -1,21 +1,20 @@
 <template>
-    <div class="flex w-full justify-between">
-        <div class="flex h-56 w-5/12 flex-col space-y-3 py-2">
-            <StudentsList
-                progress-type="up"
-                title="Best Progressing Students"
-                :icon="ArrowTrendingUpIcon"
-                :progressing-students="progressingStudents"
-            />
+    <div class="flex h-full w-full flex-col justify-evenly space-y-5">
+        <div class="py-1 text-center text-2xl font-medium">
+            Performance Highlight
         </div>
-        <div class="flex h-56 w-5/12 flex-col space-y-3 py-2">
-            <StudentsList
-                progress-type="down"
-                title="Students Falling Behind"
-                :icon="ArrowTrendingDownIcon"
-                :progressing-students="progressingStudents"
-            />
-        </div>
+        <StudentsList
+            progress-type="up"
+            title="Best Progressing Students"
+            :icon="ArrowTrendingUpIcon"
+            :progressing-students="progressingStudents"
+        />
+        <StudentsList
+            progress-type="down"
+            title="Students Falling Behind"
+            :icon="ArrowTrendingDownIcon"
+            :progressing-students="progressingStudents"
+        />
     </div>
 </template>
 <script setup>
