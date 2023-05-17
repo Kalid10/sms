@@ -107,10 +107,39 @@ class TeacherController extends Controller
 
         $students = $this->getStudents(auth()->user()->teacher->id, $batchSubject->id, $search);
 
+        $teacher = Teacher::find(auth()->user()->teacher->id);
+        $lessonPlan = $teacher->lessonPlans()
+            ->with('batchSchedule.batchSubject.subject', 'batchSchedule.batch.level')
+            ->get();
+
+        $lessonPlan = $lessonPlan->filter(function ($lessonPlan) use ($batchSubject) {
+            return $lessonPlan->batchSchedule->batchSubject->id == $batchSubject->id;
+        })->take(5);
+
+        $assessments = Assessment::where('batch_subject_id', $batchSubject->id)
+            ->where('quarter_id', Quarter::getActiveQuarter()->id)
+            ->with('assessmentType:id,name',
+                'batchSubject.batch:id,section,level_id',
+                'batchSubject.batch.level:id,name,level_category_id',
+                'batchSubject.subject:id,full_name')
+            ->get()->take(3);
+
+        $batch = Batch::find($batchSubject->batch_id)->load('level:id,name,level_category_id', 'level.levelCategory:id,name');
+        $schedule = Batch::find($batchSubject->batch_id)->load(
+            'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',
+            'schedule.batchSubject:id,teacher_id,subject_id,weekly_frequency',
+            'schedule.batchSubject.subject',
+            'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id',
+        )->only('schedule')['schedule'];
+
         return Inertia::render('Teacher/Students', [
             'students' => $students[0]['students'],
             'batch_subject' => $batchSubject,
             'search' => $search,
+            'lesson_plans' => $lessonPlan,
+            'assessments' => $assessments,
+            'schedule' => $schedule,
+            'periods' => Level::find($batch->level->id)->levelCategory->schoolPeriods,
         ]);
     }
 
@@ -235,7 +264,6 @@ class TeacherController extends Controller
 
     private function getStudents(int $id, ?string $batchSubjectId, ?string $studentSearch)
     {
-        Log::info('Get students function called '.$studentSearch);
         // Get students of a teacher for specific batchSubjectId
         $batchSubjectId = $batchSubjectId ?? BatchSubject::where('teacher_id', $id)->first()->id;
 
