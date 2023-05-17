@@ -10,7 +10,7 @@
         <span
             class="relative flex w-full items-center justify-between rounded-md border border-gray-200 bg-white py-2 px-3 placeholder:text-sm"
             :class="[labelLocation === 'inside' ? 'relative h-12' : 'h-10']"
-            @click="viewPanel = !viewPanel"
+            @click.prevent="viewPanel = !viewPanel"
         >
             <input
                 type="date"
@@ -38,7 +38,6 @@
             v-if="viewPanel"
             ref="panelViewer"
             class="absolute bottom-0 right-0 z-50 -mb-2 min-w-[282.98px] translate-y-full rounded-md border bg-white drop-shadow-md"
-            @click="elementClick"
         >
             <span class="flex min-w-fit flex-col overflow-hidden rounded-md">
                 <span
@@ -110,7 +109,7 @@
                         ]"
                         :disabled="isDateDisabled(i)"
                         class="relative grid place-items-center p-2.5 text-sm font-medium focus:outline-none disabled:opacity-50 disabled:hover:bg-transparent"
-                        @click="selectDate(i)"
+                        @click.prevent="selectDate(i)"
                     >
                         {{ i }}
                         <span

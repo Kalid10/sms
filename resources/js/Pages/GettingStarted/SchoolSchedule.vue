@@ -1,4 +1,5 @@
 <template>
+
     <Modal
         v-model:view="welcomeModal"
         center
@@ -9,12 +10,12 @@
             <div class="flex w-full flex-col items-center gap-6">
                 <div>
                     <Heading class="text-center" size="md"
-                        >Congratulations!
+                    >Congratulations!
                     </Heading>
                     <Heading
                         class="text-center !font-normal text-gray-500"
                         size="sm"
-                        >You're almost done...
+                    >You're almost done...
                     </Heading>
                 </div>
 
@@ -140,7 +141,86 @@
         </Card>
     </Modal>
 
-    <Calendar @select="addNewEvent" />
+    <div class="grid h-full max-h-full w-full grid-cols-12 border-t">
+
+        <div class="relative col-span-3 flex h-full flex-col items-center overflow-auto border-r">
+
+            <div class="flex h-[57px] w-full flex-col justify-center border-b pl-12">
+                <h3 class="font-semibold">Add new Event</h3>
+                <h3 class="text-sm leading-none text-gray-500">
+                    Add a new event to your school calendar.
+                </h3>
+            </div>
+
+            <div class="flex w-full flex-col gap-4 py-6 pl-12 pr-6">
+
+                <TextInput
+                    v-model="formData.title"
+                    required
+                    placeholder="Title for your new event"
+                    label="Event Name"
+                />
+
+                <label class="flex flex-col gap-1">
+            <span class="">
+                <span class="pl-0.5 text-sm font-semibold text-gray-500"
+                >Event Description</span
+                >
+                <span class="pl-0.5 text-xs text-red-600">*</span>
+            </span>
+                    <textarea
+                        v-model="formData.body"
+                        rows="5"
+                        required
+                        placeholder="What is your event about? Write your description here."
+                        class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-500"
+                    ></textarea>
+                </label>
+
+                <div class="flex w-full flex-col items-end gap-3">
+                    <div class="flex w-full items-start gap-3">
+                        <Toggle
+                            v-model="allDay"
+                            label-location="top"
+                            label="All Day"
+                            class="min-w-fit"
+                        />
+                        <DatePicker
+                            v-model:start-date="formData.start_date"
+                            v-model:end-date="formData.end_date"
+                            v-model="formData.start_date"
+                            required
+                            class="w-full"
+                            :range="!allDay"
+                            :label="
+                            allDay
+                                ? 'Day of Event'
+                                : 'Event\'s Starting and End Days'
+                        "
+                        />
+                    </div>
+                    <SelectInput
+                        v-model="formData.type"
+                        required
+                        class="w-full"
+                        :options="eventTypes"
+                        placeholder="Pick the type of Event"
+                        label="Event Type"
+                    />
+                </div>
+
+                <div class="flex items-center justify-end gap-3">
+                    <TertiaryButton @click="clear">Clear</TertiaryButton>
+                    <PrimaryButton @click="submit">Create Event</PrimaryButton>
+                </div>
+
+            </div>
+
+        </div>
+
+        <MonthView class="col-span-9 h-full" @select="addNewEvent" />
+
+    </div>
 
     <Modal
         v-model:view="isNewEventModalOpened"
@@ -162,7 +242,7 @@
             <label class="flex flex-col gap-1">
                 <span class="">
                     <span class="pl-0.5 text-sm font-semibold text-gray-500"
-                        >Event Description</span
+                    >Event Description</span
                     >
                     <span class="pl-0.5 text-xs text-red-600">*</span>
                 </span>
@@ -208,12 +288,13 @@
             </div>
         </FormElement>
     </Modal>
+
 </template>
 
 <script setup>
 import { ref } from "vue";
+import MonthView from "@/Views/Calendar/MonthView.vue";
 import { ArrowRightIcon } from "@heroicons/vue/24/outline";
-import Calendar from "@/Views/Calendar/Index.vue";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -223,6 +304,8 @@ import DatePicker from "@/Components/DatePicker.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Card from "@/Components/Card.vue";
 import Heading from "@/Components/Heading.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TertiaryButton from "@/Components/TertiaryButton.vue";
 
 const isNewEventModalOpened = ref(false);
 const welcomeModal = ref(true);
@@ -235,6 +318,14 @@ const formData = useForm({
     end_date: null,
     type: "",
 });
+
+function clear() {
+    formData.reset()
+}
+
+function submit() {
+    // TODO: Send POST request to backend
+}
 
 const eventTypes = [
     {
@@ -276,7 +367,8 @@ function goToDashboard() {
     router.get("/");
 }
 
-function addNewEvent() {
+function addNewEvent(date) {
     isNewEventModalOpened.value = true;
+    formData.start_date = date
 }
 </script>

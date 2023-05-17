@@ -1,5 +1,9 @@
 <template>
-    <form
+
+    <div
+        class="container mx-auto flex h-full max-h-full max-w-7xl flex-col gap-4 px-2 pt-6 md:px-6 md:pt-6"
+    >
+        <form
         class="flex min-h-max w-full flex-col items-center justify-center py-4"
     >
         <Heading class="mb-1 text-center !font-normal text-black" size="md"
@@ -86,6 +90,8 @@
             </PrimaryButton>
         </div>
     </form>
+    </div>
+
 </template>
 <script setup>
 import {computed, ref} from "vue";

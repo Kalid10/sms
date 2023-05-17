@@ -13,6 +13,19 @@ function parseLevel(level) {
     return isNaN(level) ? level : `Grade ${level}`
 }
 
+// take a number and add suffix to it
+function addSuffix(number) {
+    if (number % 10 === 1 && number !== 11) {
+        return number + 'st'
+    } else if (number % 10 === 2 && number !== 12) {
+        return number + 'nd'
+    } else if (number % 10 === 3 && number !== 13) {
+        return number + 'rd'
+    } else {
+        return number + 'th'
+    }
+}
+
 function unshift(array, value) {
     array.unshift(value)
     return array
@@ -37,4 +50,4 @@ const levelCategoryLabels = [
     'bg-blue-100 text-blue-600 border-blue-600',
 ]
 
-export { toHashTag, capitalize, parseLevel, unshift, subjectPriorityLabels, levelCategoryLabels, genderLabels }
+export { toHashTag, capitalize, parseLevel, unshift, addSuffix, subjectPriorityLabels, levelCategoryLabels, genderLabels }
