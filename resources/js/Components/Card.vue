@@ -1,6 +1,7 @@
 <template>
 
     <div
+        tabindex="0"
         class="flex w-full flex-col justify-between gap-3 rounded-md border bg-white p-4 shadow-sm md:w-1/2 md:max-w-xl">
 
         <div

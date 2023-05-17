@@ -20,7 +20,7 @@
           strokeWidth: (strokeWidth ?? diameter * 0.15) + 'px',
         }"
                 :class="[color, background ?? 'background']"
-                class="fill-none"
+                class="fill-none transition-colors duration-150"
                 :cx="(diameter + (strokeWidth ? strokeWidth / 2 : 0)) / 2"
                 :cy="(diameter + (strokeWidth ? strokeWidth / 2 : 0)) / 2"
                 :r="diameter * 0.4"
@@ -43,7 +43,7 @@
           strokeWidth: (strokeWidth ?? diameter * 0.15) + 'px',
         }"
                 :class="color"
-                class="value fill-none delay-500"
+                class="value fill-none transition-colors delay-500 duration-150"
                 :cx="(diameter + (strokeWidth ? strokeWidth / 2 : 0)) / 2"
                 :cy="(diameter + (strokeWidth ? strokeWidth / 2 : 0)) / 2"
                 :r="diameter * 0.4"
@@ -113,29 +113,29 @@ const coverageElapse = computed(() =>
 .negative.background {
     @apply stroke-negative-50/25;
 }
-.neutral.value {
-    @apply stroke-neutral-50;
+.default.value {
+    @apply stroke-default-100;
 }
-.neutral.background {
-    @apply stroke-neutral-50/25;
+.default.background {
+    @apply stroke-default-100/25;
 }
 .positive\/transparent.value {
     @apply stroke-positive-50;
 }
 .positive\/transparent.background {
-    @apply stroke-neutral-50/0;
+    @apply stroke-default-100/0;
 }
 .negative\/transparent.value {
     @apply stroke-negative-50;
 }
 .negative\/transparent.background {
-    @apply stroke-neutral-50/0;
+    @apply stroke-default-100/0;
 }
-.neutral\/transparent.value {
-    @apply stroke-neutral-50;
+.default\/transparent.value {
+    @apply stroke-default-100;
 }
-.neutral\/transparent.background {
-    @apply stroke-neutral-50/0;
+.default\/transparent.background {
+    @apply stroke-default-100/0;
 }
 circle.value {
     animation: load v-bind(coverageElapse) ease-in forwards;
