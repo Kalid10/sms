@@ -1,9 +1,17 @@
 <template>
     <div
-        class="flex min-h-screen w-full justify-between bg-stone-100/70 2xl:px-5"
+        class="flex min-h-screen w-full items-start justify-between bg-stone-100/70 2xl:px-5"
     >
+        <div
+            class="my-5 mx-2 cursor-pointer bg-black py-1.5 px-1"
+            @click="router.visit('/teacher/students')"
+        >
+            <ArrowLeftIcon class="w-4 text-white" />
+        </div>
         <!--        Left side-->
-        <div class="mx-10 flex w-8/12 grow flex-col space-y-4 py-4 2xl:py-6">
+        <div
+            class="ml-2 mr-5 flex w-8/12 grow flex-col space-y-4 py-4 2xl:py-6"
+        >
             <!--        Header-->
             <div
                 class="flex flex-col items-start justify-between space-y-1 rounded-lg"
@@ -82,7 +90,7 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/NextClass/NextClass.vue";
 import Assessments from "@/Views/Teacher/Student/Assessments.vue";
 import Statistics from "@/Views/Teacher/Student/Statistics.vue";
@@ -92,6 +100,7 @@ import StudentSemesterSchedule from "@/Views/Students/StudentSemesterSchedule.vu
 import Notes from "@/Views/Teacher/Student/Notes.vue";
 import Information from "@/Views/Teacher/Student/GuardianInformation.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
+import { ArrowLeftIcon } from "@heroicons/vue/20/solid";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);
