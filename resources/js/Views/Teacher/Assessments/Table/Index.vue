@@ -1,21 +1,23 @@
 <template>
-    <TableElement
-        class="h-full text-black"
-        :data="filteredAssessments"
-        :selectable="false"
-        :columns="config"
-    >
-        <template #filter>
-            <Filters />
-        </template>
-    </TableElement>
+    <div v-if="filteredAssessments">
+        <TableElement
+            class="h-full text-black"
+            :data="filteredAssessments"
+            :selectable="false"
+            :columns="config"
+        >
+            <template #filter>
+                <Filters />
+            </template>
+        </TableElement>
+    </div>
 </template>
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import { computed } from "vue";
 import moment from "moment";
-import Filters from "@/Views/Teachers/Assessments/Table/Filters.vue";
+import Filters from "@/Views/Teacher/Assessments/Table/Filters.vue";
 
 const assessments = computed(() => usePage().props.assessments);
 const filteredAssessments = computed(() => {

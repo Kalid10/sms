@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -32,7 +33,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user(),
+                'user' => $this->getUser(),
             ],
             'user_roles' => auth()->user() ? auth()->user()->roles()->get() : null,
             'ziggy' => function () use ($request) {
@@ -47,5 +48,26 @@ class HandleInertiaRequests extends Middleware
                 ];
             },
         ]);
+    }
+
+    private function getUser()
+    {
+        if (auth()->check()) {
+            $user = auth()->user();
+
+            $userTypeKey = match ($user->type) {
+                User::TYPE_TEACHER => 'teacher',
+                User::TYPE_STUDENT => 'student',
+                default => null,
+            };
+
+            if ($userTypeKey) {
+                $user->setAttribute($userTypeKey, $user->{$userTypeKey});
+            }
+
+            return $user;
+        }
+
+        return null;
     }
 }

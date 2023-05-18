@@ -85,7 +85,7 @@ class LessonPlanController extends Controller
             ];
         });
 
-        return Inertia::render('LessonPlans/Index', [
+        return Inertia::render('Teacher/LessonPlans/Index', [
             'batch_sessions' => $weeklyBatchSessions,
             'batch' => Batch::find($batchId)->load('level'),
             'subjects' => $teacherSubjects,

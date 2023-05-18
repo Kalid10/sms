@@ -7,7 +7,7 @@
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
         </label>
         <div
-            :class="[labelLocation === 'inside' ? 'h-12' : 'h-10']"
+            :class="[labelLocation === 'inside' ? 'h-12' : 'h-9']"
             class="relative flex w-full rounded-md border border-gray-200 bg-white"
             tabindex="0"
         >
@@ -23,7 +23,7 @@
                         :class="[
                             !!selectedLabel ? 'text-black' : 'text-gray-500',
                         ]"
-                        class="flex text-xs capitalize lg:text-sm"
+                        class="flex text-xs capitalize 2xl:text-sm"
                         >{{ selectedLabel ?? placeholder }}
                     </span>
                 </span>
@@ -50,7 +50,7 @@
                         class="flex items-center justify-between py-2 px-3"
                         @click="selectOption(option)"
                     >
-                        <span class="text-xs lg:text-sm">{{
+                        <span class="text-xs 2xl:text-sm">{{
                             option.label
                         }}</span>
                         <CheckCircleIcon
@@ -61,6 +61,9 @@
                 </template>
             </ul>
         </div>
+        <span v-if="error" class="text-xs text-negative-50">
+            * {{ error }}
+        </span>
     </div>
 </template>
 
@@ -102,6 +105,10 @@ const props = defineProps({
     direction: {
         type: String,
         default: "down",
+    },
+    error: {
+        type: String,
+        default: null,
     },
 });
 

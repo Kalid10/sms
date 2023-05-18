@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Assessment;
+use App\Observers\AssessmentObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
@@ -27,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Prevent lazy loading of Eloquent relationships
         Model::preventLazyLoading(! $this->app->isProduction());
+
+        Assessment::observe(AssessmentObserver::class);
     }
 }

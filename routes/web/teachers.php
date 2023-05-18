@@ -3,12 +3,11 @@
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\HomeroomController;
 use App\Http\Controllers\LessonPlanController;
-use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherFeedbackController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('teachers/')->middleware(['checkUserRole:manage-teachers'])->name('teachers.')->group(function () {
+Route::prefix('teachers/')->middleware(['checkUserRole:manage-teachers', 'auth'])->name('teachers.')->group(function () {
     Route::controller(HomeroomController::class)->group(function () {
         Route::get('homerooms', 'getHomeroomTeachers')->name('homeroom');
         Route::post('assign/homeroom', 'assignHomeroomTeacher')->name('assign.homeroom');
@@ -27,7 +26,7 @@ Route::controller(TeacherFeedbackController::class)->prefix('teacher/feedback/')
     Route::delete('delete/{id}', 'destroy')->name('feedback.delete');
 });
 
-Route::prefix('teacher/')->middleware(['checkUserType:teacher'])->name('teacher.')->group(function () {
+Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('teacher.')->group(function () {
     Route::controller(LessonPlanController::class)->prefix('lesson-plan/')->name('lesson-plan.')->group(function () {
         Route::get('', 'index')->name('index');
         Route::post('', 'updateOrCreate')->name('updateOrCreate');
@@ -38,9 +37,10 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher'])->name('teacher.
     Route::controller(TeacherController::class)->group(function () {
         Route::get('', 'show')->name('show');
         Route::get('assessments', 'assessments')->name('assessments');
-    });
 
-    Route::get('/students/{student}', [StudentController::class, 'teacherShow'])->name('teacherShow');
+        Route::get('students/{student}', 'student')->name('student.show');
+        Route::get('students/', [TeacherController::class, 'students'])->name('students.show');
+    });
 
     Route::controller(AssessmentController::class)->prefix('assessments/')->name('assessment.')->group(function () {
         Route::post('create', 'create')->name('create');
