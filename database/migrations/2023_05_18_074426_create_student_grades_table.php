@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_assessments', function (Blueprint $table) {
+        Schema::create('student_grades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('assessment_id')->constrained()->cascadeOnDelete();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
-            $table->unsignedTinyInteger('point')->nullable();
-            $table->text('comment')->nullable();
-            $table->softDeletes();
+            $table->bigInteger('gradable_id');
+            $table->string('gradable_type');
+            $table->foreignId('grade_scale_id')->constrained()->cascadeOnDelete();
+            $table->float('score');
             $table->timestamps();
 
-            $table->unique(['assessment_id', 'student_id']);
+            $table->unique(['student_id', 'gradable_id', 'gradable_type'], 'student_gradable_unique');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_assessments');
+        Schema::dropIfExists('student_grades');
     }
 };
