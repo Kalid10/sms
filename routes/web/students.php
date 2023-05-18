@@ -9,4 +9,4 @@ Route::controller(StudentController::class)->prefix('students/')->middleware(['c
     Route::get('', 'index')->name('index');
 });
 
-Route::post('students/{student}/notes/create', [StudentNoteController::class, 'create'])->name('create');
+Route::post('students/{student}/notes/create', [StudentNoteController::class, 'create'])->middleware('auth')->name('create');

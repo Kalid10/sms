@@ -13,6 +13,6 @@ class StudentNote extends Model
         'title',
         'description',
         'student_id',
-        'user_id',
+        'author_id',
     ];
 }

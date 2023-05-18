@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('body')->nullable();
             $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->timestamp('end_date')->nullable();
             $table->string('type');
             $table->json('tags')->nullable();
             $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();

@@ -1160,7 +1160,6 @@ function createStudentNote() {
             },
             onError: (error) => {
                 console.log("Error")
-                console.log(error)
             }
         })
 }

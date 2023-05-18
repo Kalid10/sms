@@ -126,24 +126,37 @@
                 <div v-if="!!selectedSubject" class="flex flex-col">
                     <Heading size="sm">{{ selectedSubject.full_name }} Classes</Heading>
                     <h3 class="text-sm text-gray-500">
-                        Select the classes that will be taking<span class="font-semibold">&nbsp;{{ selectedSubject.full_name }}</span>
+                        Select the classes that will be taking<span
+                        class="font-semibold">&nbsp;{{ selectedSubject.full_name }}</span>
                     </h3>
                 </div>
 
                 <div class="relative flex flex-col gap-4">
-                    <div v-if="!!!selectedSubject" class="absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center gap-8 bg-white/100">
+                    <div
+v-if="!!!selectedSubject"
+                         class="absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center gap-8 bg-white/100">
 
                         <div class="flex flex-col items-center justify-center">
                             <h3 class="font-semibold">First, Select a Subject</h3>
-                            <h3 class="text-center text-sm text-gray-500">Choose a subject from the list <span>on the left</span> <span class="block">to start assigning classes</span></h3>
+                            <h3 class="text-center text-sm text-gray-500">Choose a subject from the list <span>on the left</span>
+                                <span class="block">to start assigning classes</span></h3>
                         </div>
 
                         <div class="flex flex-col items-center gap-2">
                             <h3 class="text-sm text-gray-500">...or pick one of these subjects to start</h3>
                             <div class="flex gap-2">
-                                <button class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-gray-500" @click="selectSubjectByName('English')">English</button>
-                                <button class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-gray-500" @click="selectSubjectByName('Mathematics')">Mathematics</button>
-                                <button class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-gray-500" @click="selectSubjectByName('አማርኛ')">አማርኛ</button>
+                                <button
+                                    class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-gray-500"
+                                    @click="selectSubjectByName('English')">English
+                                </button>
+                                <button
+                                    class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-gray-500"
+                                    @click="selectSubjectByName('Mathematics')">Mathematics
+                                </button>
+                                <button
+                                    class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-gray-500"
+                                    @click="selectSubjectByName('አማርኛ')">አማርኛ
+                                </button>
                             </div>
                         </div>
 
@@ -194,10 +207,16 @@
                         <div class="flex flex-col gap-3">
                             <div class="flex w-full items-center justify-between">
                                 <h3 class="text-sm font-semibold">Select Individual Classes</h3>
-                                <button class="flex items-center gap-1" @click="isGroupSelected('All') ? deselectLevelGroups('All') : selectLevelGroups('All')">
-                                    <CheckCircleIcon v-if="!isGroupSelected('All')" class="h-4 w-4 stroke-gray-500 stroke-2" />
-                                    <MinusCircleIcon v-else class="h-4 w-4 stroke-negative-50 stroke-2" />
-                                    <span :class="isGroupSelected('All') ? 'text-negative-50' : 'text-gray-500'" class="text-sm font-semibold">
+                                <button
+class="flex items-center gap-1"
+                                        @click="isGroupSelected('All') ? deselectLevelGroups('All') : selectLevelGroups('All')">
+                                    <CheckCircleIcon
+v-if="!isGroupSelected('All')"
+                                                     class="h-4 w-4 stroke-gray-500 stroke-2"/>
+                                    <MinusCircleIcon v-else class="h-4 w-4 stroke-negative-50 stroke-2"/>
+                                    <span
+:class="isGroupSelected('All') ? 'text-negative-50' : 'text-gray-500'"
+                                          class="text-sm font-semibold">
                                         {{ isGroupSelected('All') ? 'Deselect All' : 'Select All' }}
                                     </span>
                                 </button>
@@ -243,9 +262,16 @@
                                                 <div
                                                     :class="showSectionsFor === level.id ? 'hidden' : 'group-hover:flex group-focus:flex'"
                                                     class="-ml-4 -mb-4 hidden h-[36px] w-[calc(100%+32px)] rounded-b-md py-2 transition-all duration-150">
-                                                    <button class="w-1/2 text-xs transition-transform duration-150 hover:scale-105 hover:font-semibold" @click="toggleAndSelectAll(level.id, selectedSubject?.id)">Select All Sections</button>
+                                                    <button
+                                                        class="w-1/2 text-xs transition-transform duration-150 hover:scale-105 hover:font-semibold"
+                                                        @click="toggleAndSelectAll(level.id, selectedSubject?.id)">
+                                                        Select All Sections
+                                                    </button>
                                                     <div class="h-full w-1 border-r border-black"></div>
-                                                    <button class="w-1/2 rounded-sm text-xs transition-transform duration-150 hover:scale-105 hover:font-semibold" @click="toggleShowSection(level.id)">List All Sections</button>
+                                                    <button
+                                                        class="w-1/2 rounded-sm text-xs transition-transform duration-150 hover:scale-105 hover:font-semibold"
+                                                        @click="toggleShowSection(level.id)">List All Sections
+                                                    </button>
                                                 </div>
                                                 <ul
                                                     :class="
@@ -336,8 +362,9 @@
                                                         class="flex h-full w-full items-center justify-center gap-1 border-t bg-neutral-100 px-2 text-right text-sm ring-gray-500 hover:shadow-md hover:ring-1"
                                                         @click="toggleShowSection(level)"
                                                     >
-                                                        <ChevronDoubleUpIcon class="h-3 w-3 stroke-2" />
-                                                        <span class="text-xs font-semibold text-gray-500">Collapse</span>
+                                                        <ChevronDoubleUpIcon class="h-3 w-3 stroke-2"/>
+                                                        <span
+                                                            class="text-xs font-semibold text-gray-500">Collapse</span>
                                                     </button>
                                                 </div>
                                                 <div
@@ -349,7 +376,9 @@
                                                     class="flex w-full items-center justify-between overflow-hidden rounded-md group-hover:hidden group-focus:hidden"
                                                 >
                                                     <div class="flex items-center gap-2">
-                                                        <span :class="selectedSectionsPercentage(selectedSubject, level) === 100 ? 'font-semibold' : ''" class="text-sm">
+                                                        <span
+                                                            :class="selectedSectionsPercentage(selectedSubject, level) === 100 ? 'font-semibold' : ''"
+                                                            class="text-sm">
                                                         {{
                                                                 selectedSectionsPercentage(selectedSubject, level) > 0 ?
                                                                     selectedSectionsPercentage(selectedSubject, level) === 100 ? 'All Sections Selected' : 'Some Sections Selected' : 'None Selected'
@@ -357,23 +386,23 @@
                                                     </span>
                                                     </div>
 
-                                        <ChevronDownIcon
-                                            class="h-4 w-4 -translate-y-1.5 stroke-black stroke-2 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-                                        />
-                                    </div>
+                                                    <ChevronDownIcon
+                                                        class="h-4 w-4 -translate-y-1.5 stroke-black stroke-2 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Card>
                                 </div>
                             </div>
-                        </Card>
+
+                            <div v-if="!!selectedSubject" class="flex items-center justify-between gap-3">
+                                <TertiaryButton @click="saveBatches">Save</TertiaryButton>
+                                <PrimaryButton @click="submitForm">Finish</PrimaryButton>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-
-                <div v-if="!!selectedSubject" class="flex items-center justify-between gap-3">
-                    <TertiaryButton @click="saveBatches">Save</TertiaryButton>
-                    <PrimaryButton @click="submitForm">Finish</PrimaryButton>
-                </div>
-            </div>
-
-        </div>
                 </div>
 
             </div>
@@ -384,12 +413,10 @@
 <script setup>
 
 
-
 import {router} from "@inertiajs/vue3";
 
-import {toHashTag} from "@/utils";
+import {parseLevel, toHashTag} from "@/utils";
 import {computed, onMounted, ref, watch} from "vue";
-import {parseLevel} from "@/utils";
 import {allLevels, sectionsOfLevel} from "@/fake";
 import {CheckCircleIcon, ChevronDoubleUpIcon, ChevronDownIcon, MinusCircleIcon,} from "@heroicons/vue/24/outline";
 import CircularProgress from "@/Components/CircularProgress.vue";
@@ -425,7 +452,8 @@ function selectSubjectByName(name) {
 const batchToSelectedSubject = computed(() => batchToSubjects.value.filter(batchToSubject => {
     return batchToSubject?.subject_id === selectedSubject.value?.id
 }))
-function selectLevelGroups(group, toggle=false, reset=true) {
+
+function selectLevelGroups(group, toggle = false, reset = true) {
 
     showSectionsFor.value = null
     if (reset) {
@@ -489,7 +517,7 @@ function selectedCount(subject) {
     });
 
     let levels = batches.reduce((acc, batchToSubject) => {
-        if (! acc.includes(batchToSubject['level_id'])) {
+        if (!acc.includes(batchToSubject['level_id'])) {
             acc.push(batchToSubject['level_id']);
         }
         return acc;
@@ -607,7 +635,7 @@ function isAllLevelSectionsSelectedForSubject(level_id, subject_id) {
         .every((batchToSubject) => batchToSubject?.selected);
 }
 
-function toggleSelectAllSectionsOfLevelToSubject(level_id, subject_id, toggle=true) {
+function toggleSelectAllSectionsOfLevelToSubject(level_id, subject_id, toggle = true) {
     if (!!!selectedSubject.value) {
         return;
     }

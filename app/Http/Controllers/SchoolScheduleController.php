@@ -23,7 +23,19 @@ class SchoolScheduleController extends Controller
             return redirect()->back()->with('error', 'No active school year found.');
         }
 
-        $schoolSchedule = SchoolSchedule::make($validated);
+        $startDate = Carbon::parse($validated['start_date'])->format('Y-m-d');
+
+        $endDate = Carbon::parse($validated['end_date'])->format('Y-m-d');
+
+        $schoolSchedule = SchoolSchedule::make([
+            'title' => $validated['title'],
+            'body' => $validated['body'],
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'type' => $validated['type'],
+            'tags' => $validated['tags'],
+            'id' => $schoolYear->id,
+        ]);
         $schoolSchedule->schoolYear()->associate($schoolYear);
         $schoolSchedule->save();
 
@@ -90,8 +102,8 @@ class SchoolScheduleController extends Controller
         return $request->validate([
             'title' => 'required|string|max:255',
             'body' => 'nullable',
-            'start_date' => 'required|date|before:end_date|after_or_equal:today',
-            'end_date' => 'required|date',
+            'start_date' => 'required|date|before_or_equal:end_date|after_or_equal:today',
+            'end_date' => 'nullable|date',
             'type' => 'required|in:closed,half_closed,not_closed',
             'tags' => 'nullable|array',
             'id' => $request->id ? 'sometimes|exists:school_schedules,id|integer|gt:0' : '',

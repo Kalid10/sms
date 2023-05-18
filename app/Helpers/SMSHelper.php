@@ -17,9 +17,9 @@ class SMSHelper
     public function __construct()
     {
         $this->client = new Client();
-        $this->apiUrl = 'https://hahu.io/api/send/sms'; // SMS API URL
-        $this->apiSecret = '47844c0925213f1c1f97c4a9528ee1370dbcc45a'; // Replace with your SMS API secret
-        $this->device = '00000000-0000-0000-5e6c-76a63bfcfab1'; // Replace with your device id
+        $this->apiUrl = env('SMS_API_URL');
+        $this->apiSecret = env('SMS_API_SECRET');
+        $this->device = env('SMS_DEVICE_ID');
     }
 
     public function send($phoneNumber, $message, $mode = 'devices', $sim = 1, $priority = 1)
@@ -39,7 +39,6 @@ class SMSHelper
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
-            // Log the error or handle it in a way that's best for your application
             return false;
         }
     }
