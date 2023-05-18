@@ -110,9 +110,14 @@
 
 <script setup>
 import moment from "moment/moment";
-import { usePage } from "@inertiajs/vue3";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 
-const lessonPlans = usePage().props.teacher.lesson_plans;
+const props = defineProps({
+    lessonPlans: {
+        type: Array,
+        default: null,
+    },
+});
+const lessonPlans = props.lessonPlans;
 </script>
 <style scoped></style>
