@@ -4,14 +4,19 @@
             v-if="!isLessonPlansEmpty"
             class="text-center font-medium 2xl:text-2xl"
         >
-            Recent Lesson Plans
+            {{ title }}
         </div>
         <div class="flex flex-col items-center justify-center">
             <div
                 v-if="!isLessonPlansEmpty"
                 class="flex flex-col items-center space-y-4 rounded-md py-4"
             >
-                <Items />
+                <Items
+                    v-for="(item, index) in lessonPlans"
+                    :key="index"
+                    :item="item"
+                    :view="view"
+                />
                 <LinkCell
                     class="flex w-full justify-end"
                     href="/teacher/lesson-plan"
@@ -36,15 +41,36 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
-import { computed } from "vue";
-import Items from "@/Views/Teacher/Home/LessonPlan/Items.vue";
+import { computed, watch } from "vue";
+import Items from "@/Views/Teacher/Home/LessonPlan/Index.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 
-const lessonPlans = usePage().props.teacher.lesson_plans;
+const props = defineProps({
+    propsLessonPlans: {
+        type: Array,
+        default: null,
+    },
+    title: {
+        type: String,
+        default: "Recent Lesson Plans",
+    },
+    view: {
+        type: String,
+        default: "teacher",
+    },
+});
+let lessonPlans =
+    props.propsLessonPlans ?? usePage().props.teacher.lesson_plans;
 
 const isLessonPlansEmpty = computed(() => {
     return lessonPlans.length === 0;
 });
+watch(
+    () => props.propsLessonPlans,
+    (newLessonPlans) => {
+        lessonPlans = newLessonPlans;
+    }
+);
 </script>
 
 <style scoped></style>
