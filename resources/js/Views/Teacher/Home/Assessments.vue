@@ -2,8 +2,17 @@
     <div class="h-fit w-full rounded-lg">
         <!--        Header-->
         <div v-if="assessments" class="flex w-full justify-between">
-            <div class="font-medium lg:text-xl 2xl:text-2xl">{{ title }}</div>
+            <div
+                :class="
+                    view === 'class'
+                        ? 'text-center w-full'
+                        : 'font-medium lg:text-xl 2xl:text-2xl'
+                "
+            >
+                {{ title }}
+            </div>
             <LinkCell
+                v-if="view !== 'class'"
                 class="flex w-fit items-center justify-center"
                 href="/teacher/assessments"
                 value="SEE ALL"
@@ -13,7 +22,7 @@
         <!--        Content-->
         <div class="flex w-full flex-col">
             <div
-                v-if="assessments"
+                v-if="assessments.length > 0"
                 class="mt-1 flex w-full flex-col justify-center divide-y-2 lg:mt-2 lg:py-2"
             >
                 <Item :assessments="assessments" :view="view" />
@@ -35,7 +44,7 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
-import Item from "@/Views/Teacher/Home/Assessments/Item.vue";
+import Item from "@/Views/Teacher/Home/Assessments/Item/Index.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 import { computed } from "vue";
 
@@ -54,7 +63,7 @@ const props = defineProps({
     },
 });
 const assessments = computed(() => {
-    return props.assessments ?? usePage().props.teacher;
+    return props.assessments ?? usePage().props.teacher.assessments;
 });
 </script>
 <style scoped></style>

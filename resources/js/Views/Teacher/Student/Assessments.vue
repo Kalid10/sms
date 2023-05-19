@@ -25,7 +25,7 @@
     </div>
 </template>
 <script setup>
-import Item from "@/Views/Teacher/Home/Assessments/Item.vue";
+import Item from "@/Views/Teacher/Home/Assessments/Item/Index.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import { computed } from "vue";
