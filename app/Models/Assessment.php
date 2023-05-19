@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -59,6 +60,23 @@ class Assessment extends Model
             'batch_subject_id',
             'teacher_id'
         );
+    }
+
+    // TODO: get all the assessments of a batch subject and/or an assessment type
+    public static function filter(
+        BatchSubject $batchSubject = null,
+        AssessmentType $assessmentType = null,
+        Quarter $quarter = null
+    ): Builder {
+        return self::when($batchSubject, function ($query) use ($batchSubject) {
+            return $query->where('batch_subject_id', $batchSubject->id);
+        })
+            ->when($assessmentType, function ($query) use ($assessmentType) {
+                return $query->where('assessment_type_id', $assessmentType->id);
+            })
+            ->when($quarter, function ($query) use ($quarter) {
+                return $query->where('quarter_id', $quarter->id);
+            });
     }
 
     protected $casts = [

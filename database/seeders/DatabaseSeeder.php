@@ -68,6 +68,7 @@ class DatabaseSeeder extends Seeder
             //            LessonPlanSeeder::class,
             AssessmentTypeSeeder::class,
             AssessmentSeeder::class,
+            GradeScaleSeeder::class,
         ]);
     }
 }
