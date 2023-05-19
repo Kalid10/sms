@@ -23,13 +23,13 @@ function parseLevel(level) {
 // take a number and add suffix to it
 function addSuffix(number) {
     if (number % 10 === 1 && number !== 11) {
-        return number + 'st'
+        return number + "st";
     } else if (number % 10 === 2 && number !== 12) {
-        return number + 'nd'
+        return number + "nd";
     } else if (number % 10 === 3 && number !== 13) {
-        return number + 'rd'
+        return number + "rd";
     } else {
-        return number + 'th'
+        return number + "th";
     }
 }
 
@@ -72,4 +72,5 @@ export {
     levelCategoryLabels,
     genderLabels,
     isSidebarOpenOnXlDevice,
+    addSuffix,
 };
