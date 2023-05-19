@@ -24,12 +24,15 @@ it('creates a school schedule in the current school year', function () {
     // Authenticate user
     $this->actingAs($user);
 
+    $startDate = Carbon::parse(now())->format('Y-m-d');
+    $endDate = Carbon::parse(now()->addDays(7))->format('Y-m-d');
+
     // Create a new school schedule
     $schoolScheduleData = [
         'title' => 'Test School Schedule',
         'body' => 'This is a test school schedule.',
-        'start_date' => now(),
-        'end_date' => now()->addDays(7),
+        'start_date' => $startDate,
+        'end_date' => $endDate,
         'type' => 'closed',
         'tags' => ['test'],
     ];

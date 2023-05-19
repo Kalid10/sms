@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StudentNote extends Model
+class StudentSubjectGrade extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'description',
-        'student_id',
-        'author_id',
+    protected $guarded = [
+        'created_at',
+        'updated_at',
     ];
 }

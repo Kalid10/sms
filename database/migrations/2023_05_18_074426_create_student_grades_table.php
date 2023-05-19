@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_notes', function (Blueprint $table) {
+        Schema::create('student_grades', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('title');
-            $table->string('description')->nullable();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
+            $table->bigInteger('gradable_id');
+            $table->string('gradable_type');
+            $table->foreignId('grade_scale_id')->constrained()->cascadeOnDelete();
+            $table->float('score');
+            $table->timestamps();
+
+            $table->unique(['student_id', 'gradable_id', 'gradable_type'], 'student_gradable_unique');
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_notes');
+        Schema::dropIfExists('student_grades');
     }
 };

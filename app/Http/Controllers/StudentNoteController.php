@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\StudentNote;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,31 +21,36 @@ class StudentNoteController extends Controller
 
         $user = Auth::user();
 
-        if ($user->type == User::TYPE_ADMIN || $user->type == User::TYPE_TEACHER) {
-            try {
-                $student = Student::findOrFail($student_id);
-            } catch (ModelNotFoundException $e) {
-                return redirect()->back()->with('error', 'Invalid student ID');
-            }
-
-            // Check if the student is enrolled in the batch that the teacher is assigned to
-            if ($user->type == User::TYPE_TEACHER) {
-                $teacherBatches = $user->teacher->batchSubjects()->pluck('batch_id');
-                if (! $teacherBatches->contains($student->activeBatch()->id)) {
-                    return redirect()->back()->with('error', 'Unauthorized action');
-                }
-            }
-
-            StudentNote::create([
-                'title' => $validated['title'],
-                'description' => $validated['description'],
-                'student_id' => $student_id,
-                'user_id' => $user->id,
-            ]);
-
-            return redirect()->back()->with('success', 'Student note created successfully');
-        } else {
+        if (! $user->type == User::TYPE_ADMIN || ! $user->type == User::TYPE_TEACHER) {
             return redirect()->back()->with('error', 'Unauthorized action');
         }
+
+        $student = Student::find($student_id);
+
+        if (! $student) {
+            return redirect()->back()->with('error', 'Student not found');
+        }
+
+        // Check if the student is enrolled in the batch that the teacher is assigned
+        if (! $user->type == User::TYPE_TEACHER) {
+            return redirect()->back()->with('error', 'Unauthorized action');
+        }
+
+        $teacherBatches = $user->teacher->batchSubjects()->get()->filter(function ($batchSubject) {
+            return $batchSubject->with('active');
+        })->pluck('id');
+
+        if (! $teacherBatches->contains($student->activeBatch()->id)) {
+            return redirect()->back()->with('error', 'Unauthorized action - student is not enrolled in your batch');
+        }
+
+        StudentNote::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'student_id' => $student_id,
+            'author_id' => $user->id,
+        ]);
+
+        return redirect()->back()->with('success', 'Student note created successfully');
     }
 }

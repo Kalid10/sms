@@ -15,6 +15,7 @@ it('creates a new school year with semesters', function () {
         'start_date' => $startDate,
         'number_of_semesters' => 2,
         'name' => '2023/2024 Academic Year',
+        'number_of_quarters' => 2,
     ];
 
     // Create user with roles attached
@@ -35,7 +36,7 @@ it('creates a new school year with semesters', function () {
     expect($schoolYear->name)->toBe($requestData['name']);
 
     // Check number of semesters
-    $semesters = Semester::all();
+    $semesters = Semester::with('quarters')->get();
     expect($semesters->count())->toBe($requestData['number_of_semesters']);
 
     // Check the semesters
@@ -46,6 +47,18 @@ it('creates a new school year with semesters', function () {
         //        expect($semester->start_date)->toBe($i === 1 ? $requestData['start_date'] : null);
         expect($semester->end_date)->toBe(null);
         expect($semester->status)->toBe($i === 1 ? Semester::STATUS_ACTIVE : Semester::STATUS_UPCOMING);
+    }
+
+    // Check the quarters of each semester
+    foreach ($semesters as $semester) {
+        $quarters = $semester->quarters;
+        expect($quarters->count())->toBe($requestData['number_of_quarters']);
+
+        for ($i = 1; $i <= $requestData['number_of_quarters']; $i++) {
+            $quarter = $quarters->where('name', "Quarter {$i}")->first();
+
+            expect($quarter->semester_id)->toBe($semester->id);
+        }
     }
 });
 
@@ -58,6 +71,7 @@ it('does not allow creating a new school year while another one is ongoing', fun
         'start_date' => now()->addDays(1)->format('Y-m-d'),
         'number_of_semesters' => 2,
         'name' => '2023/2024 Academic Year',
+        'number_of_quarters' => 2,
     ];
 
     // Create user with roles attached

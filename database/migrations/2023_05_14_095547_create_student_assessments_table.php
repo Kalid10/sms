@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('comment')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->unique(['assessment_id', 'student_id']);
         });
     }
 

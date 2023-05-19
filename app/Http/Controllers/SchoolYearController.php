@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Semester;
 use Carbon\Carbon;
@@ -19,6 +20,7 @@ class SchoolYearController extends Controller
             'start_date' => 'required|date|after_or_equal:today',
             'number_of_semesters' => 'required|integer|min:1',
             'name' => 'required|string',
+            'number_of_quarters' => 'required|integer|min:1',
         ]);
 
         // Check if there is an ongoing academic year
@@ -47,6 +49,19 @@ class SchoolYearController extends Controller
                     'end_date' => null,
                     'status' => $i === 1 ? Semester::STATUS_ACTIVE : Semester::STATUS_UPCOMING,
                 ]);
+            }
+
+            $semesters = $schoolYear->semesters;
+
+            foreach ($semesters as $semester) {
+                for ($i = 1; $i <= $request->number_of_quarters; $i++) {
+                    Quarter::create([
+                        'semester_id' => $semester->id,
+                        'name' => "Quarter {$i}",
+                        'start_date' => $i === 1 ? $semester->start_date : null,
+                        'end_date' => null,
+                    ]);
+                }
             }
 
             DB::commit();
