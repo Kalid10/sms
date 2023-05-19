@@ -33,8 +33,8 @@ import {
     ArrowTrendingDownIcon,
     ArrowTrendingUpIcon,
 } from "@heroicons/vue/24/outline";
-import StudentsList from "@/Views/Teacher/Students/PerformanceHighlights/StudentsList.vue";
-import BatchPerformance from "@/Views/Teacher/Students/BatchPerformance/Index.vue";
+import StudentsList from "@/Views/Teacher/Batches/PerformanceHighlights/StudentsList.vue";
+import BatchPerformance from "@/Views/Teacher/Batches/BatchPerformance/Index.vue";
 
 const progressingStudents = [
     {

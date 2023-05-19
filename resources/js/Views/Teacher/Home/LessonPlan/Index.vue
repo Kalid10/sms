@@ -1,9 +1,15 @@
 <template>
-    <div v-for="(item, index) in lessonPlans" :key="index">
+    <div>
         <div
-            class="flex h-20 w-full items-center justify-between rounded-r-lg bg-white shadow-sm hover:scale-105 2xl:h-24"
+            class="flex h-20 w-full items-center justify-between shadow-sm hover:scale-105 hover:shadow-lg 2xl:h-24"
+            :class="view === 'class' ? 'rounded-sm' : 'rounded-r-lg'"
         >
             <div
+                v-if="view === 'class'"
+                class="mr-1 h-5/6 w-0.5 bg-gray-600"
+            ></div>
+            <div
+                v-else
                 class="flex h-full w-3/12 flex-col items-center justify-evenly rounded-l-lg bg-black text-white"
                 :class="
                     isSidebarOpenOnXlDevice ? 'lg:w-3/12 lg:px-2' : 'lg:w-2/12'
@@ -32,15 +38,18 @@
             </div>
 
             <div
-                class="flex h-5/6 w-9/12 flex-col items-center justify-between space-y-2 text-center"
+                class="flex h-5/6 w-9/12 flex-col items-center space-y-2 text-center"
                 :class="
-                    isSidebarOpenOnXlDevice
+                    view === 'class'
+                        ? 'lg:w-full px-1.5'
+                        : isSidebarOpenOnXlDevice
                         ? 'lg:w-9/12 lg:px-2 lg:justify-center'
                         : 'lg:w-8/12 lg:px-1 lg:justify-between'
                 "
             >
                 <div
-                    class="pl-2 text-[0.65rem] font-medium lg:pl-0 2xl:text-sm"
+                    class="pl-2 text-[0.65rem] lg:pl-0 2xl:text-sm"
+                    :class="view === 'class' ? 'text-[0.6rem]' : 'font-medium'"
                 >
                     {{ item.lesson_plan.topic }}
                 </div>
@@ -53,8 +62,15 @@
                         <span class="hidden lg:inline-block">Updated</span>
                         {{ moment(item.lesson_plan.created_at).fromNow() }}
                     </div>
-
                     <div
+                        v-if="view === 'class'"
+                        class="pr-2 text-[0.55rem] font-light"
+                    >
+                        Scheduled For
+                        {{ moment(item.date).format("MMMM d YYYY") }}
+                    </div>
+                    <div
+                        v-else
                         class="pr-2 text-[0.55rem] font-light"
                         :class="
                             isSidebarOpenOnXlDevice
@@ -81,7 +97,9 @@
             <div
                 class="hidden h-full w-2/12 flex-col items-end justify-center space-y-1 text-center"
                 :class="
-                    isSidebarOpenOnXlDevice
+                    view === 'class'
+                        ? 'hidden'
+                        : isSidebarOpenOnXlDevice
                         ? 'hidden'
                         : 'lg:flex lg:items-center'
                 "
@@ -113,8 +131,12 @@ import moment from "moment/moment";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 
 const props = defineProps({
-    lessonPlans: {
+    item: {
         type: Array,
+        default: null,
+    },
+    view: {
+        type: String,
         default: null,
     },
 });

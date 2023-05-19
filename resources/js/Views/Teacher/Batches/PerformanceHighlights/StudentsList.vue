@@ -29,7 +29,7 @@
     </div>
 </template>
 <script setup>
-import Item from "@/Views/Teacher/Students/PerformanceHighlights/Item.vue";
+import Item from "@/Views/Teacher/Batches/PerformanceHighlights/Item.vue";
 
 defineProps({
     progressingStudents: {

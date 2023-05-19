@@ -41,7 +41,7 @@
     </div>
 </template>
 <script setup>
-import Item from "@/Views/Teacher/Students/BatchPerformance/Item.vue";
+import Item from "@/Views/Teacher/Batches/BatchPerformance/Item.vue";
 import {
     ArrowSmallDownIcon,
     ArrowSmallUpIcon,
