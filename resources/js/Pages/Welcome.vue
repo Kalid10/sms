@@ -75,6 +75,7 @@
         </button>
         <button class="h-14 bg-purple-500 p-1 text-white" @click="getAssessmentTypes">Test Get Assessment Types</button>
         <button class="h-14 bg-gray-900 p-1 text-white" @click="createStudentNote">Test Create Student Note</button>
+        <button class="h-14 bg-fuchsia-500 p-1 text-white" @click="insertStudentsAssessment">Test Create Student Note</button>
     </div>
 
 </template>
@@ -1164,6 +1165,28 @@ function createStudentNote() {
         })
 }
 
+function insertStudentsAssessment() {
+    router.post('student-assessments/17/insert', {
+        points: [
+            {
+                'student_id': 5,
+                'point': 80
+            },
+            {
+                'student_id': 308,
+                'point': 42
+            },
+            {
+                'student_id': 631,
+                'point': 24
+            },
+            {
+                'student_id': 453,
+                'point': 89
+            },
+        ]
+    })
+}
 
 </script>
 
