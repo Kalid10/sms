@@ -4,98 +4,113 @@
         class="container mx-auto flex h-full max-h-full max-w-7xl flex-col gap-4 px-2 pt-6 md:px-6 md:pt-6"
     >
         <form
-        class="flex min-h-max w-full flex-col items-center justify-center py-4"
-    >
-        <Heading class="mb-1 text-center !font-normal text-black" size="md"
-        >Welcome to the
-        </Heading>
+            class="flex min-h-max w-full flex-col items-center justify-center py-4"
+        >
+            <Heading class="mb-1 text-center !font-normal text-black" size="md"
+            >Welcome to the
+            </Heading>
 
-        <div class="relative flex items-center">
-            <input
-                ref="schoolYearName"
-                v-model="formData.name"
-                class="min-w-[205px] max-w-[212px] appearance-none border-none bg-transparent p-0 text-center text-4xl font-bold focus:outline-0 focus:ring-0"
-                type="text"
-            />
+            <div class="relative flex items-center">
+                <input
+                    ref="schoolYearName"
+                    v-model="formData.name"
+                    class="min-w-[205px] max-w-[212px] appearance-none border-none bg-transparent p-0 text-center text-4xl font-bold focus:outline-0 focus:ring-0"
+                    type="text"
+                />
 
-            <div
-                class="absolute top-0 right-0 -mr-4 flex translate-x-full flex-col gap-2"
-            >
-                <!--                <PencilIcon-->
-                <!--                    class="h-4 w-4 stroke-gray-500 stroke-2"-->
-                <!--                    @click="focusOnName"/>-->
-                <!--                <ArrowPathIcon class="h-4 w-4 stroke-gray-500 stroke-2" @click="resetName"/>-->
+                <div
+                    class="absolute top-0 right-0 -mr-4 flex translate-x-full flex-col gap-2"
+                >
+                    <PencilIcon
+                        class="h-3 w-3 stroke-gray-500 stroke-2"
+                        @click="focusOnName"/>
+                    <ArrowPathIcon class="h-3 w-3 stroke-gray-500 stroke-2" @click="resetName"/>
+                </div>
             </div>
-        </div>
 
-        <Heading class="mt-1 text-center !font-normal">School Year</Heading>
+            <Heading class="mt-1 text-center !font-normal">School Year</Heading>
 
-        <div class="mt-8 flex">
-            <h3 class="max-w-md text-center text-sm text-gray-500">
+            <div class="mt-8 flex">
+                <h3 class="max-w-md text-center text-sm text-gray-500">
                 <span
                 ><InformationCircleIcon
                     class="mb-1 inline h-4 w-4 stroke-2"
                 /></span>
-                Please enter the <span class="text-black">start date</span> of
-                the new school year and the
-                <span class="whitespace-nowrap text-black"
-                >number of semesters</span
-                >
-                it includes. You can also change the school year name by
-                clicking the
-                <span
-                ><PencilIcon class="inline h-3 w-3 stroke-black stroke-2"
-                /></span>
-                icon on the right.
-                <span class="inline">
+                    Please enter the <span class="text-black">start date</span> of
+                    the new school year and the
+                    <span class="whitespace-nowrap text-black"
+                    >number of semesters</span
+                    >
+                    it includes. You can also change the school year name by
+                    clicking the
+                    <span
+                    ><PencilIcon class="inline h-3 w-3 stroke-black stroke-2"
+                    /></span>
+                    icon on the right.
+                    <span class="inline">
                     You can always change this in the school year settings
                     later.
                 </span>
-            </h3>
-        </div>
+                </h3>
+            </div>
 
-        <div class="mt-8 flex flex-col gap-3">
-            <DatePicker
-                v-model="formData.start_date"
-                :label="!!formData.start_date ? 'Choose a Start Date' : ''"
-                :label-location="!!formData.start_date ? 'inside' : ''"
-                :minimum="new Date()"
-                class="w-72"
-                placeholder="Choose a Start Date"
-            />
-            <SelectInput
-                v-model="formData.number_of_semesters"
-                :label="
+            <div class="mt-8 flex flex-col gap-3">
+                <DatePicker
+                    v-model="formData.start_date"
+                    :label="!!formData.start_date ? 'Choose a Start Date' : ''"
+                    :label-location="!!formData.start_date ? 'inside' : ''"
+                    :minimum="new Date()"
+                    class="w-72"
+                    placeholder="Choose a Start Date"
+                />
+                <SelectInput
+                    v-model="formData.number_of_semesters"
+                    :label="
                     !!formData.number_of_semesters ? 'Number of Semesters' : ''
                 "
-                :label-location="!!formData.number_of_semesters ? 'inside' : ''"
-                :options="noOfSemesters"
-                class="w-72"
-                placeholder="Number of Semesters"
-            />
-            <SelectInput
-                v-model="formData.number_of_quarters"
-                :options="noOfQuarters"
-                :label="
-                    !!formData.number_of_quarters ? 'Number of Quarters with in a Semester' : ''
+                    :label-location="!!formData.number_of_semesters ? 'inside' : ''"
+                    :options="noOfSemesters"
+                    class="w-72"
+                    placeholder="Number of Semesters"
+                />
+                <SelectInput
+                    v-model="formData.number_of_quarters"
+                    :options="noOfQuarters"
+                    :label="
+                    !!formData.number_of_quarters ? 'Number of Quarters within a Semester' : ''
                 "
-                :label-location="!!formData.number_of_quarters ? 'inside' : ''"
-                placeholder="Number of Quarters in a Semester"
-                class="w-72"/>
-            <PrimaryButton
-                :disabled="!formComplete"
-                class="w-72"
-                @click="handleSubmit"
-            >Create and Proceed
-            </PrimaryButton>
-        </div>
-    </form>
+                    :label-location="!!formData.number_of_quarters ? 'inside' : ''"
+                    placeholder="Number of Quarters in a Semester"
+                    class="w-72"/>
+
+                <div class="mt-8 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center text-gray-500">
+                    <p class="text-xs">
+                        The upcoming academic year, <span class="font-bold text-gray-700">{{ formData.name }}</span>
+                        , will consist of
+                        <span class="font-bold text-gray-700">{{ formData.number_of_semesters }} semesters,</span>
+                        each divided into
+                        <span class="font-bold text-gray-700">
+                            {{ formData.number_of_quarters }} quarters,
+                        </span>
+                        resulting in a total of
+                        <span class="font-bold text-gray-700">{{ totalQuarters }}  quarters.</span>
+                    </p>
+                </div>
+
+                <PrimaryButton
+                    :disabled="!formComplete"
+                    class="w-72"
+                    @click="handleSubmit"
+                >Create and Proceed
+                </PrimaryButton>
+            </div>
+        </form>
     </div>
 
 </template>
 <script setup>
 import {computed, ref} from "vue";
-import {InformationCircleIcon, PencilIcon} from "@heroicons/vue/24/outline";
+import {ArrowPathIcon, InformationCircleIcon, PencilIcon} from "@heroicons/vue/24/outline";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
@@ -142,6 +157,10 @@ const formComplete = computed(() => {
         !!formData.number_of_semesters &&
         !!formData.start_date
     );
+});
+
+const totalQuarters = computed(() => {
+    return formData.number_of_semesters * formData.number_of_quarters;
 });
 
 function handleSubmit() {
