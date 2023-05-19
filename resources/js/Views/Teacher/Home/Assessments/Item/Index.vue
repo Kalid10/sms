@@ -21,7 +21,7 @@
                 v-if="view === 'class'"
                 class="flex cursor-pointer justify-center"
             >
-                <PencilIcon class="w-4 opacity-50 hover:opacity-100" />
+                <PencilIcon class="w-3 opacity-50 hover:opacity-100" />
             </div>
         </div>
     </div>

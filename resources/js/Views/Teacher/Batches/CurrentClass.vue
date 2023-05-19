@@ -2,7 +2,7 @@
     <div
         class="flex w-fit flex-col items-center justify-evenly rounded-md bg-black py-2.5 px-3 text-center text-xs text-white shadow-md shadow-gray-100"
     >
-        <div class="mb-1.5 text-[0.65rem] font-light">Current Class</div>
+        <div class="mb-1.5 text-[0.65rem] font-semibold">Current Class</div>
         <div class="break-words font-medium">
             Currently
             <span

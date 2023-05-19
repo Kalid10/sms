@@ -2,52 +2,27 @@
     <div class="grid w-full grid-cols-12 grid-rows-6 p-5">
         <div class="col-span-12 row-span-1 h-fit">
             <div class="flex h-full w-full justify-between">
-                <!--        Header-->
-                <div
-                    class="flex h-fit flex-col items-start justify-between space-y-1 rounded-lg 2xl:space-y-1.5"
-                >
-                    <span class="text-xl font-semibold lg:text-4xl">
-                        My Classes</span
-                    >
-                    <span class="text-xs font-light">{{
-                        moment().format(" dddd MMMM D YYYY")
-                    }}</span>
-                </div>
+                <div class="flex w-6/12 items-end justify-between">
+                    <!--        Header-->
+                    <Header />
 
-                <div
-                    class="flex h-16 w-fit flex-col items-center justify-evenly rounded-sm bg-emerald-500 px-3 text-center text-xs text-white shadow-md shadow-emerald-100"
-                >
-                    <div class="text-[0.65rem] font-light">Current Class</div>
-                    <div class="break-words font-medium">
-                        Currently (
-                        <span
-                            class="cursor-pointer font-bold underline-offset-2 hover:underline"
-                            >Period 4</span
-                        >
-                        ) attending
-                        <span
-                            class="cursor-pointer underline-offset-2 hover:underline"
-                            >Biology</span
-                        >
-                        with
-                        <div
-                            class="cursor-pointer font-bold underline-offset-2 hover:underline"
-                        >
-                            Mr.Todd Boehly
-                        </div>
+                    <!--        Select Batch-->
+                    <div class="flex h-full w-5/12 items-center">
+                        <SelectInput
+                            v-model="selectedBatchSubject"
+                            class="w-full"
+                            :options="batchSubjectOptions"
+                            rounded="rounded-full"
+                        />
                     </div>
                 </div>
-                <div class="w-3/12">
-                    <SelectInput
-                        v-model="selectedBatchSubject"
-                        :options="batchSubjectOptions"
-                        rounded="rounded-full"
-                    />
-                </div>
+
+                <!--        Current Class-->
+                <CurrentClass />
             </div>
         </div>
         <div
-            class="col-start-1 row-start-2 row-end-7 h-fit"
+            class="col-start-1 row-start-2 row-end-7 h-fit pt-4"
             :class="
                 isSidebarOpenOnXlDevice ? 'col-span-8 pr-4' : 'col-span-9 pr-10'
             "
@@ -55,7 +30,7 @@
             <PerformanceHighlight />
         </div>
         <div
-            class="row-start-2 row-end-7 h-fit"
+            class="row-start-2 row-end-7 h-fit pt-6"
             :class="
                 isSidebarOpenOnXlDevice
                     ? 'col-span-4 col-start-9 pl-5'
@@ -68,7 +43,7 @@
                 view="class"
             />
         </div>
-        <div class="col-span-6 row-start-7 -mt-4 pr-5">
+        <div class="col-span-6 row-start-7 -mt-8 pr-5">
             <!--        Table-->
             <TableElement
                 :data="filteredStudents"
@@ -120,7 +95,7 @@
             />
         </div>
         <div class="col-span-12 mt-7 min-h-screen">
-            <div class="h-4/6">
+            <div class="h-4/6 rounded-md bg-white p-7 text-black">
                 <StudentSemesterSchedule class="h-full" />
             </div>
         </div>
@@ -128,7 +103,6 @@
 </template>
 
 <script setup>
-import moment from "moment/moment";
 import PerformanceHighlight from "@/Views/Teacher/Batches/PerformanceHighlights/Index.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
@@ -140,6 +114,8 @@ import Assessment from "@/Views/Teacher/Home/Assessments.vue";
 import StudentSemesterSchedule from "@/Views/Students/StudentSemesterSchedule.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import SelectInput from "@/Components/SelectInput.vue";
+import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
+import Header from "@/Views/Teacher/Batches/Header.vue";
 
 const schedule = usePage().props.schedule;
 const batchSubjects = usePage().props.batch_subjects;

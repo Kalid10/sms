@@ -37,7 +37,9 @@ import {
     ClipboardIcon,
     Cog6ToothIcon,
     PowerIcon,
+    PuzzlePieceIcon,
     UserIcon,
+    UsersIcon,
 } from "@heroicons/vue/20/solid/index.js";
 import { usePage } from "@inertiajs/vue3";
 import { useSidebarStore } from "@/Store/sidebar";
@@ -63,13 +65,13 @@ const sidebarItems = computed(() => [
     },
     {
         name: "My Classes",
-        icon: UserIcon,
+        icon: PuzzlePieceIcon,
         route: "/teacher/class",
         active: directory.value === "class",
     },
     {
         name: "My Students",
-        icon: UserIcon,
+        icon: UsersIcon,
         route: "/teacher/students",
         active: directory.value === "students",
     },
