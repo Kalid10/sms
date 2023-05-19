@@ -41,7 +41,7 @@
             {{ moment(lastAssessment.due_date).format(" dddd MMMM D  YYYY") }}
         </div>
         <PrimaryButton
-            class="w-8/12 bg-neutral-800 lg:w-10/12 2xl:w-11/12"
+            class="w-8/12 bg-neutral-800 !text-xs lg:w-10/12 2xl:w-11/12"
             :class="buttonWidth"
             >View All Assessments
         </PrimaryButton>
