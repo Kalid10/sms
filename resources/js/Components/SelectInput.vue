@@ -84,7 +84,7 @@ const props = defineProps({
     },
     placeholder: {
         type: String,
-        required: true,
+        default: "Select an option",
     },
     required: {
         type: Boolean,
