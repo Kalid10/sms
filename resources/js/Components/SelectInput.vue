@@ -7,8 +7,8 @@
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
         </label>
         <div
-            :class="[labelLocation === 'inside' ? 'h-12' : 'h-9']"
-            class="relative flex w-full rounded-md border border-gray-200 bg-white"
+            :class="[labelLocation === 'inside' ? 'h-12' : 'h-9', rounded]"
+            class="relative flex w-full border border-gray-200 bg-white"
             tabindex="0"
         >
             <div class="flex h-full w-full" @click="toggleList">
@@ -109,6 +109,10 @@ const props = defineProps({
     error: {
         type: String,
         default: null,
+    },
+    rounded: {
+        type: String,
+        default: "rounded-md",
     },
 });
 

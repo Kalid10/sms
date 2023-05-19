@@ -18,6 +18,7 @@
                     <SelectInput
                         v-model="selectedBatchSubject"
                         :options="batchSubjectOptions"
+                        rounded="rounded-full"
                     />
                 </div>
             </div>
