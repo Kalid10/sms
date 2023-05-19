@@ -1,7 +1,7 @@
 <template>
     <div class="grid w-full grid-cols-12 grid-rows-6 p-5">
         <div class="col-span-12 row-span-1 h-fit">
-            <div class="flex w-full justify-between">
+            <div class="flex h-full w-full justify-between">
                 <!--        Header-->
                 <div
                     class="flex h-fit flex-col items-start justify-between space-y-1 rounded-lg 2xl:space-y-1.5"
@@ -14,7 +14,30 @@
                     }}</span>
                 </div>
 
-                <div class="w-4/12">
+                <div
+                    class="flex h-16 w-fit flex-col items-center justify-evenly rounded-sm bg-emerald-500 px-3 text-center text-xs text-white shadow-md shadow-emerald-100"
+                >
+                    <div class="text-[0.65rem] font-light">Current Class</div>
+                    <div class="break-words font-medium">
+                        Currently (
+                        <span
+                            class="cursor-pointer font-bold underline-offset-2 hover:underline"
+                            >Period 4</span
+                        >
+                        ) attending
+                        <span
+                            class="cursor-pointer underline-offset-2 hover:underline"
+                            >Biology</span
+                        >
+                        with
+                        <div
+                            class="cursor-pointer font-bold underline-offset-2 hover:underline"
+                        >
+                            Mr.Todd Boehly
+                        </div>
+                    </div>
+                </div>
+                <div class="w-3/12">
                     <SelectInput
                         v-model="selectedBatchSubject"
                         :options="batchSubjectOptions"
