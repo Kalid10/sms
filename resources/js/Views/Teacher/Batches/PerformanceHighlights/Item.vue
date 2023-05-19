@@ -52,10 +52,10 @@
 
         <!--                Rank section-->
         <div
-            class="flex h-11 w-3/12 items-center justify-center space-y-1 text-white"
+            class="flex h-11 w-2/12 items-center justify-center space-y-1 text-white"
         >
             <div
-                class="flex rounded-sm px-1 py-0.5 text-2xl font-semibold italic"
+                class="flex w-16 justify-center rounded-sm px-1 py-0.5 text-2xl font-semibold italic"
                 :class="progressType === 'up' ? 'bg-emerald-600' : 'bg-red-600'"
             >
                 {{ rank }} <span class="text-sm font-light">rd</span>

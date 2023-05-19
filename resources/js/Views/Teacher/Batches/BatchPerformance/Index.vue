@@ -32,12 +32,6 @@
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
-        <Item
-            title="Conduct"
-            value="80.2%"
-            value-style="text-negative-100"
-            :icon="ArrowSmallDownIcon"
-        />
     </div>
 </template>
 <script setup>

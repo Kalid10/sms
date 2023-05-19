@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full flex-col items-center space-y-6">
+    <div class="flex w-full flex-col items-center space-y-5">
         <div
             class="flex space-x-2 text-center text-xl font-semibold underline-offset-4"
         >
@@ -7,7 +7,7 @@
             <span>Notes</span>
         </div>
 
-        <div class="flex w-10/12 flex-col space-y-8">
+        <div class="flex w-10/12 flex-col space-y-6">
             <div
                 v-for="(item, index) in notes"
                 :key="index"

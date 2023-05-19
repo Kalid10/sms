@@ -21,7 +21,7 @@
                 v-if="view === 'class'"
                 class="flex cursor-pointer justify-center"
             >
-                <PencilIcon class="w-3 opacity-50 hover:opacity-100" />
+                <!--                <PencilIcon class="w-3 opacity-50 hover:opacity-100" />-->
             </div>
         </div>
     </div>
@@ -32,7 +32,6 @@
 import AssessmentIcon from "@/Views/Teacher/Home/Assessments/Item/AssessmentIcon.vue";
 import AssessmentDetails from "@/Views/Teacher/Home/Assessments/Item/AssessmentDetails.vue";
 import AssessmentScore from "@/Views/Teacher/Home/Assessments/Item/Score/Index.vue";
-import { PencilIcon } from "@heroicons/vue/24/solid";
 import { computed } from "vue";
 
 const props = defineProps({

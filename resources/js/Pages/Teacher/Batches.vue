@@ -4,7 +4,7 @@
             <div class="flex h-full w-full justify-between">
                 <div class="flex w-6/12 items-end justify-between">
                     <!--        Header-->
-                    <Header />
+                    <Header title="My Classes" />
 
                     <!--        Select Batch-->
                     <div class="flex h-full w-5/12 items-center">
@@ -115,7 +115,7 @@ import StudentSemesterSchedule from "@/Views/Students/StudentSemesterSchedule.vu
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import SelectInput from "@/Components/SelectInput.vue";
 import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
-import Header from "@/Views/Teacher/Batches/Header.vue";
+import Header from "@/Views/Teacher/Header.vue";
 
 const schedule = usePage().props.schedule;
 const batchSubjects = usePage().props.batch_subjects;

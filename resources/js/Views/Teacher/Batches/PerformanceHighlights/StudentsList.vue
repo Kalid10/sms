@@ -20,7 +20,7 @@
             <Item
                 :progress-type="progressType"
                 :name="item.name"
-                rank="3"
+                :rank="rand(1, 30)"
                 :attendance="item.attendance"
                 :progress="80"
                 grade="56/60"
@@ -30,6 +30,7 @@
 </template>
 <script setup>
 import Item from "@/Views/Teacher/Batches/PerformanceHighlights/Item.vue";
+import { rand } from "@vueuse/core";
 
 defineProps({
     progressingStudents: {
