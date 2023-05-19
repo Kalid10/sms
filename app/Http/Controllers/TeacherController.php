@@ -88,7 +88,7 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function students(Request $request): Response
+    public function batch(Request $request): Response
     {
         $request->validate([
             'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
@@ -107,15 +107,19 @@ class TeacherController extends Controller
 
         $students = $this->getStudents(auth()->user()->teacher->id, $batchSubject->id, $search);
 
+        // Get the teacher
         $teacher = Teacher::find(auth()->user()->teacher->id);
-        $lessonPlan = $teacher->lessonPlans()
-            ->with('batchSchedule.batchSubject.subject', 'batchSchedule.batch.level')
+        $batchSubjects = $teacher->batchSubjects()
+            ->whereHas('batch', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            })
+            ->with('subject:id,full_name', 'batch:id,section,level_id', 'batch.level:id,name')
             ->get();
 
-        $lessonPlan = $lessonPlan->filter(function ($lessonPlan) use ($batchSubject) {
-            return $lessonPlan->batchSchedule->batchSubject->id == $batchSubject->id;
-        })->take(5);
+        // Get lesson plan of the teacher and filter it by batch subject
+        $lessonPlan = $batchSubject->sessions()->whereHas('lessonPlan')->with('lessonPlan', 'batchSchedule.batch.level', 'batchSchedule.batchSubject.subject')->get()->take(3);
 
+        // Get assessments of the teacher and filter it by batch subject
         $assessments = Assessment::where('batch_subject_id', $batchSubject->id)
             ->where('quarter_id', Quarter::getActiveQuarter()->id)
             ->with('assessmentType:id,name',
@@ -132,9 +136,10 @@ class TeacherController extends Controller
             'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id',
         )->only('schedule')['schedule'];
 
-        return Inertia::render('Teacher/Students', [
+        return Inertia::render('Teacher/Batches', [
             'students' => $students[0]['students'],
             'batch_subject' => $batchSubject,
+            'batch_subjects' => $batchSubjects,
             'search' => $search,
             'lesson_plans' => $lessonPlan,
             'assessments' => $assessments,
@@ -338,7 +343,7 @@ class TeacherController extends Controller
             'feedbacks.author:id,name',
             'batchSubjects.students.user',
             'assessments' => function ($query) {
-                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'desc')->limit(3);
+                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'asc')->limit(3);
             },
             'assessments.assessmentType',
             'assessments.batchSubject.batch:id,section,level_id',
