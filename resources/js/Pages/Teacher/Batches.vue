@@ -80,31 +80,49 @@
                 header-style="!bg-black text-white !text-[0.65rem]"
             >
                 <template #filter>
-                    <TextInput
-                        v-model="searchText"
-                        placeholder="Search"
-                        class="w-5/12"
-                    />
+                    <div class="flex h-full w-full justify-between text-center">
+                        <TextInput
+                            v-model="searchText"
+                            placeholder="Search"
+                            class="w-5/12"
+                        />
+
+                        <div>
+                            <div class="mb-1 text-[0.55rem] font-light">
+                                Homeroom Teacher
+                            </div>
+                            <div
+                                class="cursor-pointer text-xs font-semibold underline-offset-2 hover:underline"
+                            >
+                                Mr.Bereket Gobeze
+                            </div>
+                        </div>
+                    </div>
                 </template>
             </TableElement>
         </div>
 
         <div
-            class="mt-12"
+            class="mt-12 flex flex-col items-center"
             :class="
                 isSidebarOpenOnXlDevice
                     ? 'col-span-6 col-start-7  ml-10'
                     : 'col-span-5 col-start-8'
             "
         >
+            <!--            <div-->
+            <!--                class="flex h-2/6 items-center justify-center rounded-sm bg-black text-white shadow-md"-->
+            <!--            ></div>-->
             <Assessment
                 title="Recent Assessments"
                 :assessments="assessments"
                 view="class"
             />
         </div>
-        <div class="col-span-12 row-span-4 mt-7 h-96">
-            <StudentSemesterSchedule class="h-full" />
+        <div class="col-span-12 mt-7 min-h-screen">
+            <div class="h-4/6">
+                <StudentSemesterSchedule class="h-full" />
+            </div>
         </div>
     </div>
 </template>
@@ -162,6 +180,7 @@ const batchSubjectOptions = computed(() => {
             value: batchSubject.id,
             label:
                 batchSubject.batch.level.name +
+                " " +
                 batchSubject.batch.section +
                 " " +
                 batchSubject.subject.full_name,
