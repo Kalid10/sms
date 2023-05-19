@@ -141,9 +141,10 @@
         </Card>
     </Modal>
 
-    <div class="grid h-full max-h-full w-full grid-cols-12 border-t">
+    <div class="grid h-screen w-full grid-cols-12 border-t md:max-h-full">
 
-        <div class="relative col-span-3 flex h-full flex-col items-center overflow-auto border-r">
+        <div
+            class="relative col-span-12 h-full w-full flex-col items-center border-r md:col-span-4 md:flex md:overflow-auto lg:col-span-3">
 
             <div class="flex h-[57px] w-full flex-col justify-center border-b pl-12">
                 <h3 class="font-semibold">Add new Event</h3>
@@ -162,12 +163,12 @@
                 />
 
                 <label class="flex flex-col gap-1">
-            <span class="">
-                <span class="pl-0.5 text-sm font-semibold text-gray-500"
-                >Event Description</span
-                >
-                <span class="pl-0.5 text-xs text-red-600">*</span>
-            </span>
+                    <span class="">
+                        <span class="pl-0.5 text-sm font-semibold text-gray-500"
+                        >Event Description</span
+                        >
+                        <span class="pl-0.5 text-xs text-red-600">*</span>
+                    </span>
                     <textarea
                         v-model="formData.body"
                         rows="5"
@@ -189,7 +190,6 @@
                             v-model:start-date="formData.start_date"
                             v-model:end-date="formData.end_date"
                             v-model="formData.start_date"
-                            required
                             class="w-full"
                             :range="!allDay"
                             :label="
@@ -207,19 +207,35 @@
                         placeholder="Pick the type of Event"
                         label="Event Type"
                     />
+                    <TextInput
+                        v-model="tags"
+                        label="Tags"
+                        class="w-full"
+                        placeholder="holiday, special day, event"/>
+
                 </div>
+
 
                 <div class="flex items-center justify-end gap-3">
                     <TertiaryButton @click="clear">Clear</TertiaryButton>
                     <PrimaryButton @click="submit">Create Event</PrimaryButton>
                 </div>
 
+
+            </div>
+
+            <div class="absolute bottom-0 w-full p-4">
+                <button
+class="h-12 w-full place-items-center rounded-md bg-black font-semibold text-white"
+                        @click="goToDashboard">Go to Dashboard
+                </button>
             </div>
 
         </div>
 
-        <MonthView class="col-span-9 h-full" @select="addNewEvent" />
-
+        <MonthView
+class="hidden h-full w-full  md:col-span-8 md:flex lg:col-span-9"
+                   @select="addNewEvent"/>
     </div>
 
     <Modal
@@ -292,13 +308,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import {ref, watch} from "vue";
 import MonthView from "@/Views/Calendar/MonthView.vue";
-import { ArrowRightIcon } from "@heroicons/vue/24/outline";
+import {ArrowRightIcon} from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { router, useForm } from "@inertiajs/vue3";
+import {router} from "@inertiajs/vue3";
 import Toggle from "@/Components/Toggle.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import SelectInput from "@/Components/SelectInput.vue";
@@ -311,7 +327,7 @@ const isNewEventModalOpened = ref(false);
 const welcomeModal = ref(true);
 const closeNewEventFormOnClick = ref(true);
 
-const formData = useForm({
+const formData = ref({
     title: "",
     body: "",
     start_date: null,
@@ -319,30 +335,47 @@ const formData = useForm({
     type: "",
 });
 
+const tags = ref('')
+
+watch(tags, (value) => {
+    console.log(value.split(","));
+    formData.value.tags = value.split(",");
+});
+
 function clear() {
-    formData.reset()
+    formData.value.reset()
 }
 
 function submit() {
-    // TODO: Send POST request to backend
+
+    if (formData.value.end_date === null) {
+        formData.value.end_date = formData.value.start_date;
+    }
+
+    router.post('/school-schedules/create', {...formData.value, tags: tags.value.split(', ')}, {
+        onSuccess: () => {
+            isNewEventModalOpened.value = false;
+            clear();
+            console.log('scuccess')
+        },
+        onError: () => {
+            console.log('error')
+        }
+    });
 }
 
 const eventTypes = [
     {
-        value: "holiday",
-        label: "Holiday",
+        value: "closed",
+        label: "No School Day",
     },
     {
-        value: "special-day",
-        label: "Special Day",
+        value: "half_closed",
+        label: "Half Day Closed",
     },
     {
-        value: "meeting",
-        label: "Meeting",
-    },
-    {
-        value: "academic",
-        label: "Academic Schedule",
+        value: "not_closed",
+        label: "School Day",
     },
 ];
 
@@ -351,10 +384,10 @@ const allDay = ref(false);
 function registerSemesterStartDate() {
     welcomeModal.value = false;
     isNewEventModalOpened.value = true;
-    formData.title = "First Semester Starts";
-    formData.body =
+    formData.value.title = "First Semester Starts";
+    formData.value.body =
         "This is the first day of the first semester of the school year. All students are expected to be in school for the commencement of the semester.";
-    formData.type = "academic";
+    formData.value.type = "academic";
     allDay.value = true;
     closeNewEventFormOnClick.value = false;
 }
@@ -369,6 +402,6 @@ function goToDashboard() {
 
 function addNewEvent(date) {
     isNewEventModalOpened.value = true;
-    formData.start_date = date
+    formData.value.start_date = date
 }
 </script>
