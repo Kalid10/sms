@@ -36,13 +36,12 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('
     // Teacher profile page routes
     Route::controller(TeacherController::class)->group(function () {
         Route::get('', 'show')->name('show');
-        Route::get('assessments', 'assessments')->name('assessments');
-
         Route::get('students/{student}', 'student')->name('student.show');
         Route::get('class/', 'batch')->name('batch.show');
     });
 
     Route::controller(AssessmentController::class)->prefix('assessments/')->name('assessment.')->group(function () {
         Route::post('create', 'create')->name('create');
+        Route::get('', 'teacherAssessments')->name('teacher');
     });
 });
