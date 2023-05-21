@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full flex-col space-y-3 pt-5">
+    <div class="flex w-full flex-col space-y-3">
         <div class="flex w-full items-center">
             <StudentsScoreSection
                 label="Exemplary"
