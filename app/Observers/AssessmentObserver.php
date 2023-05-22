@@ -23,6 +23,10 @@ class AssessmentObserver
 
     private function createStudentAssessments(Assessment $assessment): void
     {
+        if ($assessment->status !== Assessment::STATUS_PUBLISHED) {
+            return;
+        }
+
         // Fetch all students in the batch and create student assessments for each student
         $assessment->batchSubject->students->each(function ($student) use ($assessment) {
             StudentAssessment::create([
