@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
@@ -110,5 +111,18 @@ class Student extends Model
     {
         return $this->hasMany(StudentAssessment::class)
             ->with('assessment.assessmentType', 'assessment.batchSubject.batch.level', 'assessment.batchSubject.subject');
+    }
+
+    public function base_batches(): BelongsToMany
+    {
+        return $this->belongsToMany(Batch::class, 'batch_students')
+            ->withTimestamps();
+    }
+
+    public function currentBatch(): BelongsToMany
+    {
+        return $this->base_batches()->whereHas('schoolYear', function ($query) {
+            $query->where('end_date', null);
+        });
     }
 }
