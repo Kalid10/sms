@@ -35,7 +35,7 @@ class InsertStudentsAssessmentRequest extends FormRequest
     protected function withValidator($validator): void
     {
         $validator->after(function ($validator) {
-            $this->ensureAssessmentStatusIsPublished();
+            $this->ensureAssessmentStatusIsValid();
             $this->ensureAllStudentsCanTakeAssessments();
             $this->ensureStudentPointsDoesNotExceedMaximum();
         });
@@ -46,10 +46,10 @@ class InsertStudentsAssessmentRequest extends FormRequest
      *
      * Invalidate if the assessment is not "published"
      */
-    protected function ensureAssessmentStatusIsPublished(): void
+    protected function ensureAssessmentStatusIsValid(): void
     {
         // TODO: Check the appropriate status (PUBLISHED, CLOSED, MARKING, etc...)
-        if ($this->route('assessment')->status !== Assessment::STATUS_PUBLISHED) {
+        if ($this->route('assessment')->status !== Assessment::STATUS_MARKING) {
             $this->validator->errors()->add('assessment', 'Assessment is not ready for marking');
         }
     }
