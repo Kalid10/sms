@@ -11,6 +11,15 @@
             <template #filter>
                 <Filters />
             </template>
+
+            <template #assessment-column="{ data }">
+                <div
+                    class="cursor-pointer underline underline-offset-2"
+                    @click="click(data)"
+                >
+                    {{ data.title }}
+                </div>
+            </template>
         </TableElement>
     </div>
 </template>
@@ -21,15 +30,17 @@ import { capitalize, computed } from "vue";
 import moment from "moment";
 import Filters from "@/Views/Teacher/Assessments/Table/Filters.vue";
 
+const emit = defineEmits(["click"]);
 const assessments = computed(() => usePage().props.assessments);
 const filteredAssessments = computed(() => {
     return assessments.value.data.map((assessment) => {
         return {
-            title: assessment.title,
+            assessment: assessment,
             max_points: assessment.maximum_point,
             status: capitalize(assessment.status),
             due_date: moment(assessment.due_date).fromNow(),
             updated_at: moment(assessment.updated_at).fromNow(),
+            id: assessment.id,
         };
     });
 });
@@ -37,9 +48,9 @@ const filteredAssessments = computed(() => {
 const config = [
     {
         name: "Title",
-        key: "title",
+        key: "assessment",
+        type: "custom",
         class: "text-xs",
-        link: "/teacher/assessments/1",
     },
     {
         name: "Max Points",
@@ -64,6 +75,10 @@ const config = [
         class: "text-xs opacity-70",
     },
 ];
+
+function click(e) {
+    emit("click", e);
+}
 </script>
 
 <style scoped></style>
