@@ -31,12 +31,12 @@ import SideBar from "@/Pages/Layouts/SideBar.vue";
 import { computed } from "vue";
 import { HomeIcon } from "@heroicons/vue/24/solid/index.js";
 import {
+    ArrowLeftOnRectangleIcon,
     CalendarDaysIcon,
     CalendarIcon,
     ChatBubbleBottomCenterIcon,
     ClipboardIcon,
     Cog6ToothIcon,
-    PowerIcon,
     PuzzlePieceIcon,
     UserIcon,
     UsersIcon,
@@ -115,7 +115,12 @@ const sidebarItems = computed(() => [
 ]);
 
 const footerItems = [
-    { icon: PowerIcon, name: "Logout", route: "/logout", method: "POST" },
+    {
+        icon: ArrowLeftOnRectangleIcon,
+        name: "Logout",
+        route: "/logout",
+        method: "POST",
+    },
 ];
 </script>
 
