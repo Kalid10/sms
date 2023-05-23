@@ -87,7 +87,7 @@ class Student extends Model
             return 0;
         }
 
-        return ($absenteeRecords / $completedBatchSessions) * 100;
+        return round(($absenteeRecords / $completedBatchSessions) * 100, 1);
     }
 
     public function batchSessions(): HasManyThrough
