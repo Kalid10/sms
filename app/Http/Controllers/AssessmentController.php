@@ -6,9 +6,11 @@ use App\Http\Requests\Teachers\CreateAssessmentRequest;
 use App\Models\Assessment;
 use App\Models\AssessmentType;
 use App\Models\BatchSubject;
+use App\Models\GradeScale;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Semester;
+use App\Models\Student;
 use App\Services\TeacherService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -53,7 +55,6 @@ class AssessmentController extends Controller
         $student = null;
         if ($request->input('student_id')) {
             $student = Student::find($request->input('student_id'))->load('user:id,name');
-            Log::info($assessment->batch_subject_id);
             $student->absentee_percentage = $student->absenteePercentage();
         }
 
@@ -64,6 +65,23 @@ class AssessmentController extends Controller
                 'students.student:id,user_id', 'students.student.user:id,name'),
             'student' => $student,
         ]);
+    }
+
+    public function update(Request $request): RedirectResponse
+    {
+        $validatedData = $request->validate([
+            'assessment_id' => 'required|integer|exists:assessments,id',
+            'title' => 'nullable|string',
+            'description' => 'nullable|string',
+            'due_date' => 'nullable|date',
+            'maximum_point' => 'nullable|integer',
+            'status' => 'nullable|string|in:draft,published,closed,marking,completed',
+        ]);
+
+        $assessment = Assessment::find($validatedData['assessment_id']);
+        $assessment->update($validatedData);
+
+        return redirect()->back()->with('success', 'Assessment updated successfully!');
     }
 
     public function teacherAssessments(Request $request): Response

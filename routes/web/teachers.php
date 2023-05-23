@@ -44,5 +44,6 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('
         Route::get('mark/{assessment}', 'mark')->name('mark');
         Route::post('create', 'create')->name('create');
         Route::get('', 'teacherAssessments')->name('teacher');
+        Route::post('update', 'update')->name('update');
     });
 });
