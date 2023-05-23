@@ -25,7 +25,11 @@
                     v-if="showFinishMarkingButton"
                     class="w-full py-3 text-center font-semibold"
                 >
-                    <PrimaryButton title="Finish Marking" class="rounded-2xl" />
+                    <PrimaryButton
+                        title="Finish Marking"
+                        class="rounded-2xl"
+                        @click="insertStudentsAssessment"
+                    />
                 </div>
             </div>
         </div>
@@ -33,7 +37,7 @@
 </template>
 
 <script setup>
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { computed, reactive } from "vue";
 import MarkItem from "@/Views/Teacher/Assessments/Mark/MarkItem.vue";
 import MarkStat from "@/Views/Teacher/Assessments/Mark/MarkStat.vue";
@@ -50,7 +54,22 @@ function updatePoints(point) {
 }
 
 function getStudentDetail(studentId) {
-    console.log(studentId);
+    router.get(
+        "/teacher/assessments/mark/" + assessment.id,
+        {
+            student_id: studentId,
+        },
+        {
+            only: ["student"],
+            preserveState: true,
+        }
+    );
+}
+
+function insertStudentsAssessment() {
+    router.post("/student-assessments/" + assessment.id + "/insert", {
+        points: points,
+    });
 }
 
 const showFinishMarkingButton = computed(() => {

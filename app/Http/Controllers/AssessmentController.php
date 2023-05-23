@@ -26,7 +26,7 @@ class AssessmentController extends Controller
 
     public function create(CreateAssessmentRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
+        $request->validated();
 
         Assessment::create(array_merge(
             $request->validated(),
@@ -34,6 +34,36 @@ class AssessmentController extends Controller
         ));
 
         return redirect()->back()->with('success', 'Assessment created.');
+    }
+
+    public function mark(Request $request, Assessment $assessment): Response|RedirectResponse
+    {
+        $request->validate([
+            'student_id' => 'nullable|integer|exists:students,id',
+        ]);
+
+        // If status is published, change to marking
+        if ($assessment->status === Assessment::STATUS_PUBLISHED) {
+            $assessment->update(['status' => Assessment::STATUS_MARKING]);
+        }
+        if ($assessment->status !== Assessment::STATUS_MARKING) {
+            return redirect()->back()->with('error', 'Invalid assessment type.');
+        }
+
+        $student = null;
+        if ($request->input('student_id')) {
+            $student = Student::find($request->input('student_id'))->load('user:id,name');
+            Log::info($assessment->batch_subject_id);
+            $student->absentee_percentage = $student->absenteePercentage();
+        }
+
+        return Inertia::render('Teacher/Assessments/Mark', [
+            'assessment' => $assessment->load('assessmentType:id,name', 'batchSubject:id,batch_id,subject_id',
+                'batchSubject.subject:id,full_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
+                'students:id,student_id,assessment_id,point',
+                'students.student:id,user_id', 'students.student.user:id,name'),
+            'student' => $student,
+        ]);
     }
 
     public function teacherAssessments(Request $request): Response
@@ -65,35 +95,55 @@ class AssessmentController extends Controller
         $dueDate = $request->input('due_date');
 
         $assessments = Assessment::where('batch_subject_id', $batchSubjectId)
-            ->when($request->input('assessment_type_id'), function ($query) use ($request) {
-                return $query->where('assessment_type_id', $request->input('assessment_type_id'));
+            ->when($request->input('assessment_type_id'), function ($query, $value) {
+                return $query->where('assessment_type_id', $value);
             })
-            ->when($request->input('due_date'), function ($query) use ($request) {
-                return $query->whereDate('due_date', $request->input('due_date'));
+            ->when($dueDate, function ($query, $value) {
+                return $query->whereDate('due_date', $value);
             })
-            ->when($request->input('quarter_id'), function ($query) use ($request) {
-                return $query->where('quarter_id', $request->input('quarter_id'));
+            ->when($quarterId, function ($query, $value) {
+                return $query->where('quarter_id', $value);
             })
-            ->when($request->input('semester_id'), function ($query) use ($request) {
-                return $query->whereHas('quarter', function ($query) use ($request) {
-                    return $query->where('semester_id', $request->input('semester_id'));
+            ->when($semesterId, function ($query, $value) {
+                return $query->whereHas('quarter', function ($query) use ($value) {
+                    return $query->where('semester_id', $value);
                 });
             })
-            ->when($request->input('school_year_id'), function ($query) use ($request) {
-                return $query->whereHas('quarter.semester', function ($query) use ($request) {
-                    return $query->where('school_year_id', $request->input('school_year_id'));
+            ->when($schoolYearId, function ($query, $value) {
+                return $query->whereHas('quarter.semester', function ($query) use ($value) {
+                    return $query->where('school_year_id', $value);
                 });
             })
-            ->when($request->input('search'), function ($query) use ($request) {
-                return $query->where('title', 'like', "%{$request->input('search')}%");
+            ->when($search, function ($query, $value) {
+                return $query->where('title', 'like', "%{$value}%");
             })
             ->with([
                 'batchSubject:id,batch_id,subject_id,teacher_id',
+                'batchSubject.batch:id,section,level_id',
+                'batchSubject.batch.level:id,name',
+                'batchSubject.subject:id,full_name',
                 'assessmentType:id,name',
                 'quarter:id,name',
+                'students',
             ])
             ->orderBy('due_date', 'asc')
             ->paginate(15);
+
+        $assessments->each(function ($assessment) {
+            if ($assessment->status === Assessment::STATUS_PUBLISHED) {
+                $assessment->total_students = $assessment->students->count();
+            }
+
+            if ($assessment->status === Assessment::STATUS_COMPLETED) {
+                $assessment->averageScore = $assessment->students->avg('point');
+                $assessment->passingPercentage = $assessment->students->filter(function ($student) {
+                    return $student->point >= GradeScale::where([
+                        ['school_year_id' => SchoolYear::getActiveSchoolYear()->id],
+                        ['state' => 'pass'],
+                    ])->first()->minimum_score;
+                })->count() / max($assessment->students->count(), 1) * 100;
+            }
+        });
 
         return Inertia::render('Teacher/Assessments/Index', [
             'assessments' => $assessments,

@@ -33,7 +33,7 @@
             <div class="flex items-center justify-evenly text-xl font-semibold">
                 <input
                     :ref="(el) => (inputRefs[index] = el)"
-                    v-model.number="item.point"
+                    v-model.number="points[index].point"
                     :max="assessment.maximum_point"
                     type="number"
                     class="mr-2 w-16 rounded-md border-none bg-white text-xs text-black transition-transform focus:ring-black"
@@ -44,6 +44,7 @@
                     @focusin="handleFocusIn(index)"
                     @focusout="handleFocusOut()"
                     @keydown="onKeyDown($event, index, item)"
+                    @change="$emit('updatePoints', points)"
                 />
             </div>
         </div>
@@ -55,23 +56,14 @@ import { usePage } from "@inertiajs/vue3";
 
 const assessment = usePage().props.assessment;
 const focusedInputIndex = ref(null);
-const points = reactive([]);
+const points = reactive(
+    assessment.students.map((item) => ({
+        student_id: item.student.id,
+        point: item.point || null, // If there's a previously set point, use that. Otherwise, default to null
+    }))
+);
 
 const emit = defineEmits(["click", "updatePoints"]);
-const onInputChange = (studentId, point) => {
-    // Find index of the object where student_id matches
-    const index = points.findIndex((item) => item.student_id === studentId);
-
-    // If a match is found, update that item's point
-    if (index !== -1) {
-        points[index].point = point;
-    }
-    // If no match is found, add a new item to the array
-    else {
-        points.push({ student_id: studentId, point: point });
-    }
-    emit("updatePoints", points);
-};
 
 const inputRefs = reactive([]);
 const onKeyDown = (event, index, item) => {
@@ -91,9 +83,6 @@ const onKeyDown = (event, index, item) => {
         default:
             break;
     }
-
-    // Call onInputChange when the value changes
-    onInputChange(item.student.id, item.point);
 };
 const moveFocus = (currentIndex, direction) => {
     if (direction === "down" && currentIndex < assessment.students.length - 1) {
