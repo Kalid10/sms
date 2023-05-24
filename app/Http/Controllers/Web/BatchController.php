@@ -134,7 +134,7 @@ class BatchController extends Controller
             return redirect()->back()->withErrors(['school_year' => 'Active school year not found!']);
         }
 
-        return Inertia::render('GettingStarted/AssignSubjects', [
+        return Inertia::render('Admin/GettingStarted/AssignSubjects', [
             'batches' => Batch::active(['level', 'schoolYear']),
         ]);
     }

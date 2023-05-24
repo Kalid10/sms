@@ -41,7 +41,7 @@ class UserController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate($logsPerPage, ['*'], 'log_page', $logPage);
 
-        return Inertia::render('Users/Index', [
+        return Inertia::render('Admin/Users/Index', [
             'users' => $users,
             'activity_log' => $activityLog,
         ]);
@@ -49,7 +49,7 @@ class UserController extends Controller
 
     public function profile(): Response
     {
-        return Inertia::render('Users/Profile');
+        return Inertia::render('Admin/Users/Profile');
     }
 
     public function update(UpdateRequest $request): RedirectResponse
@@ -88,18 +88,18 @@ class UserController extends Controller
     {
         $levels = Level::all();
 
-        return Inertia::render('Users/Create/Student', [
+        return Inertia::render('Admin/Users/Create/Student', [
             'levels' => $levels,
         ]);
     }
 
     public function admin(): Response
     {
-        return Inertia::render('Users/Create/Admin');
+        return Inertia::render('Admin/Users/Create/Admin');
     }
 
     public function teacher(): Response
     {
-        return Inertia::render('Users/Create/Teacher');
+        return Inertia::render('Admin/Users/Create/Teacher');
     }
 }

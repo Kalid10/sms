@@ -17,12 +17,12 @@ class SemesterController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Semesters/Index');
+        return Inertia::render('Admin/Semesters/Index');
     }
 
     public function show(): Response
     {
-        return Inertia::render('Semesters/Single');
+        return Inertia::render('Admin/Semesters/Single');
     }
 
     public function create(CreateRequest $request): RedirectResponse
@@ -91,7 +91,7 @@ class SemesterController extends Controller
             $activeSchoolYearSemestersCount = $activeSchoolYearSemesters->count();
 
             // TODO: Change to the correct component
-            return Inertia::render('Semesters/Index', [
+            return Inertia::render('Admin/Semesters/Index', [
                 'semesters' => $semesters,
                 'activeSemester' => $activeSemester,
                 'activeSchoolYearSemesters' => $activeSchoolYearSemesters,
