@@ -12,10 +12,10 @@
             class="flex w-full items-center justify-between divide-x divide-gray-300"
         >
             <div class="w-4/12 text-center">
-                <div class="text-2xl font-bold">
+                <div v-if="student" class="text-2xl font-bold">
                     {{ 100 - student.absentee_percentage }}%
                 </div>
-                <div class="text-xs font-light">A
+                <div class="text-xs font-light">Attendance</div>
             </div>
             <div class="w-4/12 text-center">
                 <div class="text-2xl font-bold">90</div>
