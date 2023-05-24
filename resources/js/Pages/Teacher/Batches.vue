@@ -1,24 +1,24 @@
 <template>
     <div class="grid w-full grid-cols-12 grid-rows-6 p-5">
-        <div class="col-span-12 row-span-1 h-fit">
-            <div class="flex h-full w-full justify-between">
-                <div class="flex w-6/12 items-end justify-between">
+        <div class="col-span-12 row-span-1">
+            <div class="flex w-full justify-between">
+                <div class="flex w-10/12 items-end space-x-4">
                     <!--        Header-->
-                    <Header title="My Classes" />
+                    <Header title="My Classes" class="w-fit" />
 
-                    <!--        Select Batch-->
-                    <div class="flex h-full w-5/12 items-center">
+                    <div class="flex h-full w-8/12 items-center justify-evenly">
+                        <!--        Select Batch-->
                         <SelectInput
                             v-model="selectedBatchSubject"
-                            class="w-full"
+                            class="w-5/12"
                             :options="batchSubjectOptions"
                             rounded="rounded-full"
                         />
+                        <TextInput placeholder="Search" class="w-5/12" />
                     </div>
                 </div>
-
                 <!--        Current Class-->
-                <CurrentClass />
+                <CurrentClass class="py-3" />
             </div>
         </div>
         <div
@@ -30,7 +30,7 @@
             <PerformanceHighlight />
         </div>
         <div
-            class="row-start-2 row-end-7 h-fit pt-6"
+            class="row-start-2 row-end-7 h-fit pt-10"
             :class="
                 isSidebarOpenOnXlDevice
                     ? 'col-span-4 col-start-9 pl-5'
@@ -43,7 +43,7 @@
                 view="class"
             />
         </div>
-        <div class="col-span-6 row-start-7 -mt-8 pr-5">
+        <div class="col-span-6 row-start-7 -mt-20 pr-5">
             <!--        Table-->
             <TableElement
                 :data="filteredStudents"
@@ -78,7 +78,7 @@
         </div>
 
         <div
-            class="mt-12 flex flex-col items-center"
+            class="-mt-12 flex flex-col"
             :class="
                 isSidebarOpenOnXlDevice
                     ? 'col-span-6 col-start-7  ml-10'
