@@ -32,6 +32,18 @@ class InsertStudentsAssessmentRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'points.*.student_id.required' => 'Student ID is required.',
+            'points.*.student_id.exists' => 'Student ID does not exist.',
+            'points.*.point.required' => 'Point is required.',
+            'points.*.point.integer' => 'Point must be an integer.',
+            'points.*.point.min' => 'Point must be at least 0.',
+            'points.*.comment.string' => 'Comment must be a string.',
+        ];
+    }
+
     protected function withValidator($validator): void
     {
         $validator->after(function ($validator) {
@@ -82,11 +94,11 @@ class InsertStudentsAssessmentRequest extends FormRequest
     {
         $maxPoints = $this->route('assessment')->maximum_point;
 
-        foreach ($this->input('points') as $point) {
+        foreach ($this->input('points') as $key => $point) {
             if ($point['point'] > $maxPoints) {
                 $this->validator->errors()
                     ->add(
-                        'points.*.point',
+                        'points.'.$key.'.point',
                         Student::find($point['student_id'])->user->name.
                         '\'s  points cannot exceed '.
                         $maxPoints
