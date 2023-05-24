@@ -9,6 +9,7 @@ use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\ValidateSignature;
@@ -64,6 +65,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+            SetLocale::class,
         ],
 
         'api' => [
@@ -93,5 +95,12 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'checkUserType' => CheckUserType::class,
         'checkUserRole' => CheckUserRole::class,
+    ];
+
+    protected $middlewarePriority = [
+        // ...
+        StartSession::class,
+        SetLocale::class,
+        // ...
     ];
 }

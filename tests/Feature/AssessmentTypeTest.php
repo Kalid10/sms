@@ -102,3 +102,25 @@ it('it deletes an existing assessment type', function () {
     $response->assertStatus(302);
     $response->assertSessionHas('success', 'Assessment type deleted successfully.');
 });
+
+it('it can not create assessment type with out manage-assessment-types role', function () {
+    // Remove user role and re-authenticate without role attached
+    $this->admin->user->roles()->detach(['manage-assessment-types']);
+    $this->actingAs($this->admin->user);
+
+    // Create assessment type
+    $levelCategory = LevelCategory::first();
+    $data = [
+        'name' => 'Test Assessment Type',
+        'percentage' => 50,
+        'customizable' => false,
+        'min_assessments' => null,
+        'max_assessments' => null,
+        'level_category_id' => [$levelCategory->id],
+    ];
+
+    $response = $this->post(route('assessments.type.create'), $data);
+
+    // Assert that the user was redirected back with a forbidden message
+    $response->assertForbidden();
+});

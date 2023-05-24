@@ -87,3 +87,25 @@ it('deletes feedback', function () {
         'feedback' => $feedback->feedback,
     ]);
 });
+
+it('updates a teacher\'s feedback by a non-teacher user', function () {
+    $user = User::factory()->create();
+    $teacher = Teacher::factory()->create();
+    $author = User::factory()->create();
+
+    $feedback = TeacherFeedback::factory()->create([
+        'teacher_id' => $teacher->id,
+        'author_id' => $author->id,
+    ]);
+
+    $response = $this->actingAs($user)->post(route('teacher.feedback.update', $feedback->id), [
+        'feedback' => 'Updated feedback',
+    ]);
+
+    $response->assertRedirect();
+    $response->assertSessionHas('success', 'Feedback updated successfully.');
+    $this->assertDatabaseHas('teachers_feedback', [
+        'id' => $feedback->id,
+        'feedback' => 'Updated feedback',
+    ]);
+});
