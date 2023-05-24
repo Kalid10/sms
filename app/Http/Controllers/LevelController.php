@@ -39,7 +39,7 @@ class LevelController extends Controller
             },
         ])->get();
 
-        return Inertia::render('Levels/Index', [
+        return Inertia::render('Admin/Levels/Index', [
             'levels' => $levels,
         ]);
     }

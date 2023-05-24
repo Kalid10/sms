@@ -58,4 +58,14 @@ class SchoolPeriod extends Model
             ->where('is_custom', $custom)
             ->get();
     }
+
+    public function getActiveSchoolSchedule(): ?SchoolSchedule
+    {
+        $schoolYear = SchoolYear::getActiveSchoolYear();
+        if (! $schoolYear) {
+            return null;
+        }
+
+        return $this->getSchoolScheduleBySchoolYearId($schoolYear->id);
+    }
 }

@@ -1,19 +1,34 @@
 <template>
-    <div>
+    <div class="my-5 w-10/12">
         <TeacherTableElement
             :columns="config"
             :selectable="false"
             title="Teachers" subtitle="List of all teachers in the school system"
             :data="formattedTeachersData">
-            <template #subjects-column="{data}">
-                <div class="mx-auto max-w-sm overflow-hidden truncate lg:max-w-lg 2xl:max-w-3xl">
-                    {{ data }}
-                </div>
-            </template>
 
             <template #filter>
                 <div class="flex w-full gap-4">
                     <TextInput v-model="searchKey" class="w-full" placeholder="Search for a teacher by name"/>
+                </div>
+            </template>
+
+            <template #name-column="{ data }">
+                <div class="flex items-start gap-2">
+                    <span class="font-medium">{{ data }}</span>
+                </div>
+            </template>
+
+            <template #email-column="{ data }">
+                <div class="flex items-center gap-1">
+                    <span class="text-xs">
+                {{ data }}
+            </span>
+                </div>
+            </template>
+
+            <template #subjects-column="{data}">
+                <div class="flex text-xs">
+                    {{ data }}
                 </div>
             </template>
 
@@ -59,8 +74,10 @@ const formattedTeachersData = computed(() => {
         const subjects = Array.from(subjectsSet).join(', ');
 
         return {
+            id: teacher.id,
             name: teacher.user.name,
             email: teacher.user.email,
+            gender: teacher.user.gender,
             homerooms: teacher.homeroom.map(hr => `${hr.batch.level.name}${hr.batch.section}`).join(', '),
             subjects: subjects,
         };
@@ -88,19 +105,29 @@ const config = [
     {
         name: 'Name',
         key: 'name',
-        main: true
+        link: '/admin/teachers/{id}',
+        align: 'left',
+        type: 'custom',
     },
     {
         name: 'Email',
         key: 'email',
+        type: 'custom',
     },
     {
         name: 'Homerooms',
         key: 'homerooms',
     },
     {
+        name: 'Gender',
+        key: 'gender',
+        type: 'enum',
+        options: ['female', 'male']
+    },
+    {
         name: 'Subjects',
         key: 'subjects',
+        align: 'left',
         type: 'custom',
     },
 ]

@@ -1,15 +1,14 @@
 <template>
 
-    <SubjectsTable @new="isAddModalOpen = true" @archive="archiveConfirmation" @update="selectSubject" />
+    <SubjectsTable @new="isAddModalOpen = true" @archive="archiveConfirmation" @update="selectSubject"/>
 
-    <RegisterSubjectForm v-model:open="isAddModalOpen" />
+    <RegisterSubjectForm v-model:open="isAddModalOpen"/>
 
     <SubjectUpdate
         v-model:open="isUpdateModalOpen"
         :subject="selectedSubject"
     />
-
-    <DialogBox v-model:open="isDialogBoxOpen" type="archive" @confirm="archiveSubject" >
+    <DialogBox v-model:open="isDialogBoxOpen" type="archive" @confirm="archiveSubject">
         <template #description>
             You are about to archive this subject.
             Are you sure you want to continue?
@@ -33,6 +32,7 @@ const isUpdateModalOpen = ref(false);
 
 const selectedSubjectId = ref(null);
 const isDialogBoxOpen = ref(false);
+
 function archiveConfirmation(id) {
     selectedSubjectId.value = id;
     isDialogBoxOpen.value = !isDialogBoxOpen.value;
@@ -48,6 +48,7 @@ function archiveSubject() {
 }
 
 const selectedSubject = ref(null);
+
 function selectSubject(subject) {
     selectedSubject.value = subject;
     isUpdateModalOpen.value = true

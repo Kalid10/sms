@@ -55,9 +55,9 @@
     </Modal>
     <DialogBox
         v-if="isDialogBoxOpen"
+        open
         @close="isDialogBoxOpen = false"
-        @confirm="removeCategory"
-    />
+        @confirm="removeCategory"/>
 </template>
 <script setup>
 import CategoryPrimaryButton from "@/Components/PrimaryButton.vue";
