@@ -1,6 +1,6 @@
-import {useDeviceSize} from "@/Composables/device-size";
-import {computed} from "vue";
-import {useSidebarStore} from "@/Store/sidebar";
+import { useDeviceSize } from "@/Composables/device-size";
+import { computed } from "vue";
+import { useSidebarStore } from "@/Store/sidebar";
 
 // Take a string and replace all the whitespaces with underscores
 function toHashTag(string) {
@@ -38,7 +38,7 @@ function unshift(array, value) {
     return array;
 }
 
-const {deviceSize} = useDeviceSize();
+const { deviceSize } = useDeviceSize();
 const isSidebarOpenOnXlDevice = computed(() => {
     return deviceSize.value === "lg" || deviceSize.value === "xl"
         ? useSidebarStore().isOpen
@@ -72,5 +72,4 @@ export {
     levelCategoryLabels,
     genderLabels,
     isSidebarOpenOnXlDevice,
-    addSuffix,
 };

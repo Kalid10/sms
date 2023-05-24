@@ -111,7 +111,7 @@ import TextInput from "@/Components/TextInput.vue";
 import debounce from "lodash/debounce";
 import LessonPlan from "@/Views/Teacher/Home/LessonPlans.vue";
 import Assessment from "@/Views/Teacher/Home/Assessments.vue";
-import StudentSemesterSchedule from "@/Views/Students/StudentSemesterSchedule.vue";
+import StudentSemesterSchedule from "@/Views/Admin/Students/StudentSemesterSchedule.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import SelectInput from "@/Components/SelectInput.vue";
 import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
