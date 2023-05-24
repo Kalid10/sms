@@ -73,7 +73,7 @@ function insertStudentsAssessment() {
 }
 
 const showFinishMarkingButton = computed(() => {
-    return points.length === assessment.students.length;
+    return points.length && points.every((item) => item.point !== null);
 });
 </script>
 
