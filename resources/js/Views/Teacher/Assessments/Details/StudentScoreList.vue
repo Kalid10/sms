@@ -16,7 +16,7 @@
             />
         </div>
         <LinkCell
-            href="/score"
+            :href="'/teacher/assessments/mark/' + assessment.id"
             class="w-full pr-2 text-end"
             value="View All Results"
         />
@@ -30,6 +30,13 @@ import {
     ArrowTrendingUpIcon,
 } from "@heroicons/vue/24/outline";
 import LinkCell from "@/Components/LinkCell.vue";
+
+defineProps({
+    assessment: {
+        type: Object,
+        required: true,
+    },
+});
 
 const exemplaryStudents = [
     {

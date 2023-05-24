@@ -19,7 +19,7 @@
         <div v-if="assessment.status === 'completed'">
             <ResultStatistics />
 
-            <StudentScoreList />
+            <StudentScoreList :assessment="assessment" />
         </div>
 
         <transition name="fade" mode="out-in">
