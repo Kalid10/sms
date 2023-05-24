@@ -8,14 +8,15 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class LevelCategoryController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
         $levelCategories = LevelCategory::all();
 
-        return Inertia::render('Levels/LevelCategory', [
+        return Inertia::render('Admin/Levels/LevelCategory', [
             'level_categories' => $levelCategories,
         ]);
     }

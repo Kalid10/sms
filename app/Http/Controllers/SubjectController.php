@@ -42,7 +42,7 @@ class SubjectController extends Controller
 
         $batchSubjects = BatchSubject::where('batch_id', $batchId)->with('subject')->get();
 
-        return Inertia::render('Subjects/Index', [
+        return Inertia::render('Admin/Subjects/Index', [
             'subjects' => $subjects,
             'batch_subjects' => $batchSubjects,
             'batches' => $batches,
@@ -52,7 +52,7 @@ class SubjectController extends Controller
 
     public function show(Subject $subject, Request $request): Response
     {
-        return Inertia::render('Subjects/Single', [
+        return Inertia::render('Admin/Subjects/Single', [
             'subject' => $subject,
             'levels' => BatchSubject::where('subject_id', $subject->id)
                 ->whereIn('batch_id', Batch::active()->pluck('id'))

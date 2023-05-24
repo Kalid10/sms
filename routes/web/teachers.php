@@ -13,11 +13,6 @@ Route::prefix('teachers/')->middleware(['checkUserRole:manage-teachers', 'auth']
         Route::post('assign/homeroom', 'assignHomeroomTeacher')->name('assign.homeroom');
         Route::delete('remove/homeroom/{id}', 'removeHomeroomTeacher')->name('remove.homeroom');
     });
-
-    Route::controller(TeacherController::class)->group(function () {
-        Route::get('', 'index')->name('index');
-        Route::get('{id}', 'show')->name('show');
-    });
 });
 
 Route::controller(TeacherFeedbackController::class)->prefix('teacher/feedback/')->middleware(['auth'])->name('teacher.')->group(function () {
