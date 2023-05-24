@@ -1,6 +1,6 @@
-import {useDeviceSize} from "@/Composables/device-size";
-import {computed} from "vue";
-import {useSidebarStore} from "@/Store/sidebar";
+import { useDeviceSize } from "@/Composables/device-size";
+import { computed } from "vue";
+import { useSidebarStore } from "@/Store/sidebar";
 
 // Take a string and replace all the whitespaces with underscores
 function toHashTag(string) {
@@ -23,13 +23,13 @@ function parseLevel(level) {
 // take a number and add suffix to it
 export function addSuffix(number) {
     if (number % 10 === 1 && number !== 11) {
-        return number + 'st'
+        return number + "st";
     } else if (number % 10 === 2 && number !== 12) {
-        return number + 'nd'
+        return number + "nd";
     } else if (number % 10 === 3 && number !== 13) {
-        return number + 'rd'
+        return number + "rd";
     } else {
-        return number + 'th'
+        return number + "th";
     }
 }
 
@@ -38,7 +38,7 @@ function unshift(array, value) {
     return array;
 }
 
-const {deviceSize} = useDeviceSize();
+const { deviceSize } = useDeviceSize();
 const isSidebarOpenOnXlDevice = computed(() => {
     return deviceSize.value === "lg" || deviceSize.value === "xl"
         ? useSidebarStore().isOpen

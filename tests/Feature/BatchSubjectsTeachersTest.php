@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\BatchSubjectController;
+use App\Http\Controllers\Web\BatchSubjectController;
 use App\Http\Requests\Batches\AssignSubjectsRequest;
 use App\Http\Requests\Batches\AssignSubjectTeacherRequest;
 use App\Models\Batch;

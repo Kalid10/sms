@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('student_notes', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('title');
             $table->string('description')->nullable();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 

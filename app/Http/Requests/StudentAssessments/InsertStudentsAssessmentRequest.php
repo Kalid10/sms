@@ -32,10 +32,22 @@ class InsertStudentsAssessmentRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'points.*.student_id.required' => 'Student ID is required.',
+            'points.*.student_id.exists' => 'Student ID does not exist.',
+            'points.*.point.required' => 'Point is required.',
+            'points.*.point.integer' => 'Point must be an integer.',
+            'points.*.point.min' => 'Point must be at least 0.',
+            'points.*.comment.string' => 'Comment must be a string.',
+        ];
+    }
+
     protected function withValidator($validator): void
     {
         $validator->after(function ($validator) {
-            $this->ensureAssessmentStatusIsPublished();
+            $this->ensureAssessmentStatusIsValid();
             $this->ensureAllStudentsCanTakeAssessments();
             $this->ensureStudentPointsDoesNotExceedMaximum();
         });
@@ -46,10 +58,10 @@ class InsertStudentsAssessmentRequest extends FormRequest
      *
      * Invalidate if the assessment is not "published"
      */
-    protected function ensureAssessmentStatusIsPublished(): void
+    protected function ensureAssessmentStatusIsValid(): void
     {
         // TODO: Check the appropriate status (PUBLISHED, CLOSED, MARKING, etc...)
-        if ($this->route('assessment')->status !== Assessment::STATUS_PUBLISHED) {
+        if ($this->route('assessment')->status !== Assessment::STATUS_MARKING) {
             $this->validator->errors()->add('assessment', 'Assessment is not ready for marking');
         }
     }
@@ -82,11 +94,11 @@ class InsertStudentsAssessmentRequest extends FormRequest
     {
         $maxPoints = $this->route('assessment')->maximum_point;
 
-        foreach ($this->input('points') as $point) {
+        foreach ($this->input('points') as $key => $point) {
             if ($point['point'] > $maxPoints) {
                 $this->validator->errors()
                     ->add(
-                        'points.*.point',
+                        'points.'.$key.'.point',
                         Student::find($point['student_id'])->user->name.
                         '\'s  points cannot exceed '.
                         $maxPoints

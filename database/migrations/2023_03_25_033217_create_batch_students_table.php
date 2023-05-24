@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('batch_id')->constrained()->cascadeOnDelete();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
-            $table->unique(['batch_id', 'student_id']);
-            $table->timestamps();
             $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['batch_id', 'student_id']);
         });
     }
 

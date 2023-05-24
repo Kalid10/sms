@@ -9,6 +9,7 @@ use App\Models\StudentAssessmentsGrade;
 use App\Models\StudentGrade;
 use App\Models\StudentSubjectGrade;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -53,6 +54,10 @@ class StudentGradeHelper
             self::updateStudentSubjectQuarterGrades($student_points->pluck('student_id'), $assessment);
             self::updateStudentQuarterGrade($student_points->pluck('student_id'), $assessment);
 
+            $assessment->update([
+                'status' => Assessment::STATUS_COMPLETED,
+            ]);
+            $assessment->save();
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
@@ -179,12 +184,12 @@ class StudentGradeHelper
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Builder
      *
      * Query and return a student's assessments
      * for a given assessment type, class, and quarter
      */
-    private static function fetchStudentAssessmentsByType(int $student_id, Assessment $assessment): \Illuminate\Database\Eloquent\Collection
+    private static function fetchStudentAssessmentsByType(int $student_id, Assessment $assessment): Builder
     {
         return StudentAssessment::whereNotNull('point')
             ->where('student_id', $student_id)

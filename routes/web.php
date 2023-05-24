@@ -18,7 +18,11 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
-// Add routes from web folder
-foreach (glob(__DIR__.'/web/*.php') as $file) {
-    require $file;
+$directory = new RecursiveDirectoryIterator(__DIR__.'/web');
+$iterator = new RecursiveIteratorIterator($directory);
+
+foreach ($iterator as $file) {
+    if ($file->getExtension() === 'php') {
+        include $file->getPathname();
+    }
 }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->boolean('is_custom');
             $table->foreignId('school_year_id')->constrained()->cascadeOnDelete();
             $table->foreignId('level_category_id')->constrained()->cascadeOnDelete();
-            $table->unique(['name', 'school_year_id', 'level_category_id']);
             $table->timestamps();
+            $table->unique(['name', 'school_year_id', 'level_category_id']);
         });
     }
 

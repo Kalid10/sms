@@ -1,47 +1,47 @@
 <template>
-
     <div class="my-5 w-10/12">
-
         <div class="my-5 mb-8 flex flex-row items-center gap-2">
-            <QueueListIcon class="h-6 w-6"/>
-            <h1 class=" text-2xl font-semibold text-gray-900 dark:text-gray-100">Dashboard</h1>
+            <QueueListIcon class="h-6 w-6" />
+            <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                Dashboard
+            </h1>
         </div>
         <Statistics
             :teachers-count="teachersCount"
             :students-count="studentsCount"
             :subjects-count="subjectCount"
-            :admins-count="adminsCount"/>
+            :admins-count="adminsCount"
+        />
 
         <div class="flex w-full">
             <div class="mr-2 w-full rounded border shadow-sm">
                 <h1 class="p-2">Overview</h1>
-                <Graph/>
-
+                <Graph />
             </div>
 
             <div class="w-1/3 rounded border shadow-sm">
-                <LevelsTable :config="configLevels" :levels="levels"/>
+                <LevelsTable :config="configLevels" :levels="levels" />
             </div>
         </div>
 
-        <Management :user-roles="userRoles"/>
+        <Management :user-roles="userRoles" />
 
         <AdminsTable
-            :admins="admins" :config-admin="configAdmin"
-            class="border"/>
-
+            :admins="admins"
+            :config-admin="configAdmin"
+            class="border"
+        />
     </div>
-
 </template>
 <script setup>
-import {computed} from "vue";
+import { computed } from "vue";
 import moment from "moment/moment";
-import Statistics from "@/Pages/Analytics/Statistics.vue";
+import Statistics from "@/Pages/Admin/Analytics/Statistics.vue";
 import Management from "@/Pages/Admin/Management.vue";
-import Graph from "@/Pages/Analytics/Graph.vue";
-import {usePage} from "@inertiajs/vue3";
+import Graph from "@/Pages/Admin/Analytics/Graph.vue";
+import { usePage } from "@inertiajs/vue3";
 import LevelsTable from "@/Views/Admin/Levels/LevelsTable.vue";
-import {QueueListIcon} from "@heroicons/vue/24/solid";
+import { QueueListIcon } from "@heroicons/vue/24/solid";
 import AdminsTable from "@/Views/Admin/AdminsTable.vue";
 
 const teachersCount = computed(() => usePage().props.teachers_count);
@@ -64,7 +64,7 @@ const admins = computed(() => {
             // Role is not yet implemented it should be looped through the roles array
             // role: admin.roles,
             updated_at: moment(admin.updated_at).fromNow(),
-        }
+        };
     });
 });
 
@@ -76,88 +76,88 @@ const levels = computed(() => {
             level: {
                 id: level.id,
                 name: level.name,
-                category: level['level_category']
+                category: level["level_category"],
             },
             updated_at: moment(level.updated_at).fromNow(),
             created_at: level.created_at,
-        }
+        };
     });
 });
 
 const activityLogs = computed(() => {
-    return usePage().props.activity_logs
-})
+    return usePage().props.activity_logs;
+});
 
 const log_column = [
     {
-        name: 'Name',
+        name: "Name",
     },
     {
-        name: 'Description',
+        name: "Description",
     },
     {
-        name: 'Updated At',
+        name: "Updated At",
     },
-]
+];
 
 const configLevels = [
     {
-        name: 'Level Category',
-        key: 'level',
-        type: 'custom',
+        name: "Level Category",
+        key: "level",
+        type: "custom",
     },
     {
-        name: 'Sections',
-        key: 'batches',
-        type: 'custom',
+        name: "Sections",
+        key: "batches",
+        type: "custom",
     },
     {
-        name: 'Updated at',
-        key: 'updated_at',
-        type: 'custom',
+        name: "Updated at",
+        key: "updated_at",
+        type: "custom",
     },
-]
+];
 
 const configAdmin = [
     {
-        name: 'Name',
-        key: 'name',
-        type: 'custom',
+        name: "Name",
+        key: "name",
+        type: "custom",
     },
     {
-        name: 'Email',
-        key: 'email',
-        type: 'custom',
+        name: "Email",
+        key: "email",
+        type: "custom",
     },
     {
-        name: 'Role',
-        key: 'role',
-        type: 'custom',
+        name: "Role",
+        key: "role",
+        type: "custom",
     },
     {
-        name: 'Type',
-        key: 'type',
-        type: 'custom',
+        name: "Type",
+        key: "type",
+        type: "custom",
     },
     {
-        name: 'Updated at',
-        key: 'updated_at',
-        type: 'custom',
+        name: "Updated at",
+        key: "updated_at",
+        type: "custom",
     },
-]
+];
 
 const config = [
     {
-        key: 'name',
-        type: 'custom',
+        key: "name",
+        type: "custom",
     },
     {
-        key: 'statistics',
-        type: 'custom',
+        key: "statistics",
+        type: "custom",
     },
     {
-        key: 'last_updated',
-        type: 'custom',
+        key: "last_updated",
+        type: "custom",
     },
-]
+];
 </script>

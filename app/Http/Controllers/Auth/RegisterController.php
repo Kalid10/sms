@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Helpers\StudentHelper;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Imports\StudentsRegistrationImport;
 use App\Imports\TeachersRegistrationImport;
@@ -209,7 +209,7 @@ class RegisterController extends Controller
         ));
     }
 
-    public function checkRole($type)
+    public function checkRole($type): void
     {
         if (auth()->user()->hasRole('manage-users')) {
             return;

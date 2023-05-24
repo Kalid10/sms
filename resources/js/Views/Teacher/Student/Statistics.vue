@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full justify-between">
+    <div class="flex w-full justify-between space-x-8">
         <StatCard
             title="Grade"
             color="blue"

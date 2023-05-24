@@ -19,8 +19,8 @@ return new class extends Migration
             $table->date('expires_on');
             $table->json('target_group');
             $table->foreignId('school_year_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

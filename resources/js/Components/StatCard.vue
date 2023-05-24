@@ -1,20 +1,20 @@
 <template>
     <div
-        class="flex h-[4rem] w-2/12 items-center justify-evenly rounded-lg border border-white bg-neutral-200/40 px-0.5 shadow-sm shadow-gray-100"
+        class="flex h-[4rem] w-3/12 items-center justify-evenly rounded-lg border border-white bg-black/90 px-0.5 text-white shadow-sm shadow-gray-100"
     >
         <div
             class="flex h-full w-4/12 items-center justify-center p-0.5 font-light"
         >
             <div
-                class="flex items-center justify-center rounded-full bg-black p-2"
+                class="flex items-center justify-center rounded-full bg-gray-50 p-1.5"
             >
-                <component :is="icon" class="w-4 fill-white" />
+                <component :is="icon" class="w-6 fill-black" />
             </div>
         </div>
 
         <div class="flex h-full w-8/12 flex-col justify-evenly py-2">
             <div
-                class="text-[0.5rem] font-bold text-gray-400/80 2xl:text-[0.57rem]"
+                class="text-[0.5rem] font-bold text-gray-300/90 2xl:text-[0.57rem]"
             >
                 {{ title }}
             </div>

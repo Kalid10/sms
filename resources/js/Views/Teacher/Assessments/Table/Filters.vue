@@ -1,10 +1,23 @@
 <template>
     <div class="flex w-full flex-col justify-between gap-2 md:flex-row">
-        <div class="flex justify-evenly gap-2 md:w-2/5">
-            <TextInput v-model="search" placeholder="Search" class="md:w-2/5"/>
-            <DatePicker v-model="dueDate" class="md:w-2/5"/>
+        <div class="flex items-center justify-between gap-2 md:w-full">
+            <TextInput
+                v-model="search"
+                placeholder="Search"
+                class="md:w-4/12"
+            />
+            <DatePicker v-model="dueDate" class="md:w-4/12" />
+
+            <div
+                class="flex h-fit w-fit cursor-pointer items-center justify-center rounded-md px-2 py-1.5 text-xs underline underline-offset-2 hover:font-semibold"
+            >
+                <AdjustmentsHorizontalIcon class="w-4 text-white" />
+                <div class="px-0.5">Filters</div>
+            </div>
         </div>
-        <div class="flex flex-col justify-between gap-2 md:w-3/5 md:flex-row md:justify-evenly">
+        <div
+            class="hidden flex-col justify-between gap-2 md:w-1/5 md:flex-row md:justify-evenly"
+        >
             <SelectInput
                 v-model="selectedSchoolYear"
                 class="md:w-3/12"
@@ -29,12 +42,13 @@
     </div>
 </template>
 <script setup>
-import {computed, ref, watch} from "vue";
-import {router, usePage} from "@inertiajs/vue3";
+import { computed, ref, watch } from "vue";
+import { router, usePage } from "@inertiajs/vue3";
 import debounce from "lodash/debounce";
 import TextInput from "@/Components/TextInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import DatePicker from "@/Components/DatePicker.vue";
+import { AdjustmentsHorizontalIcon } from "@heroicons/vue/20/solid";
 
 const {
     assessments: rawAssessments,
@@ -65,7 +79,7 @@ function getOptions(items, selectedValue, labelCallback) {
 }
 
 let schoolYearOptions = computed(() =>
-    schoolYears.map((item) => ({label: item.name, value: item.id}))
+    schoolYears.map((item) => ({ label: item.name, value: item.id }))
 );
 
 let semesterOptions = computed(() =>
