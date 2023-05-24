@@ -23,26 +23,12 @@ class AdminController extends Controller
         $subjectsCount = Subject::all()->count();
         $adminsCount = User::where('type', 'admin')->count();
 
-        // Get active batch students and teachers count
-//        $activeBatchTeachersCount = User::with([
-//            'teacher.batches' => function ($query) {
-//                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-//            },
-//        ])->where('type', 'teacher')->count();
-
         $levels = Level::with([
             'levelCategory',
             'batches' => function ($query) {
                 $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
             },
         ])->get();
-
-        // Get active batch students count
-//        $activeBatchStudentsCount = User::with([
-//            'student.batches' => function ($query) {
-//                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-//            },
-//        ])->where('type', 'student')->count();
 
         $activeStudents = User::with('student.batches.activeBatch')->where('type', 'student')->count();
 
@@ -66,8 +52,6 @@ class AdminController extends Controller
             'subjects_count' => $subjectsCount,
             'admins_count' => $adminsCount,
             'levels' => $levels,
-            //            'active_batch_teachers_count' => $activeBatchTeachersCount,
-            //            'active_batch_students_count' => $activeBatchStudentsCount,
             'active_students' => $activeStudents,
             'absentee_records' => $absenteeRecords,
             'admins' => $admins,

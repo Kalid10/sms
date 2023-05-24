@@ -63,7 +63,7 @@ class StudentController extends Controller
             'batches.batch.level',
         );
 
-        return Inertia::render('Students/Single', [
+        return Inertia::render('Admin/Students/Single', [
             'student' => $student,
             'schedule' => $student->activeBatch()->load(
                 'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',
