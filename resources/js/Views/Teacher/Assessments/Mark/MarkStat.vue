@@ -66,13 +66,14 @@ import {
     ArrowTrendingUpIcon,
 } from "@heroicons/vue/24/solid";
 import { usePage } from "@inertiajs/vue3";
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const assessment = usePage().props.assessment;
+
 const props = defineProps({
     points: {
         type: Array,
-        required: true,
+        default: () => [],
     },
 });
 
@@ -80,42 +81,51 @@ defineEmits(["updateStudent"]);
 const highestScoringStudent = ref({});
 const lowestScoringStudent = ref({});
 const studentMap = new Map();
-assessment.students.forEach((s) => studentMap.set(s.student.id, s));
 
-watch(
-    () => props.points,
-    (newPoints) => {
-        let highestScoringStudentPoint = -Infinity;
-        let lowestScoringStudentPoint = Infinity;
-        let highestScoringStudentTemp = {};
-        let lowestScoringStudentTemp = {};
+assessment.students.forEach((s) => {
+    studentMap.set(s.student.id, s);
+    if (s.point != null) {
+        props.points.push({
+            student_id: s.student.id,
+            point: s.point,
+        });
+    }
+});
 
-        for (let p of newPoints) {
-            const currentStudent = studentMap.get(p.student_id);
-            if (p.point === null) continue;
-            if (+p.point > highestScoringStudentPoint) {
-                highestScoringStudentPoint = +p.point;
-                highestScoringStudentTemp = {
-                    name: currentStudent.student.user.name,
-                    id: currentStudent.student.id,
-                    point: p.point,
-                };
-            }
-            if (+p.point < lowestScoringStudentPoint) {
-                lowestScoringStudentPoint = +p.point;
-                lowestScoringStudentTemp = {
-                    name: currentStudent.student.user.name,
-                    id: currentStudent.student.id,
-                    point: p.point,
-                };
-            }
+const computeStats = () => {
+    let highestScoringStudentPoint = -Infinity;
+    let lowestScoringStudentPoint = Infinity;
+    let highestScoringStudentTemp = {};
+    let lowestScoringStudentTemp = {};
+
+    for (let p of props.points) {
+        const currentStudent = studentMap.get(p.student_id);
+        if (p.point === null) continue;
+        if (+p.point > highestScoringStudentPoint) {
+            highestScoringStudentPoint = +p.point;
+            highestScoringStudentTemp = {
+                name: currentStudent.student.user.name,
+                id: currentStudent.student.id,
+                point: p.point,
+            };
         }
+        if (+p.point < lowestScoringStudentPoint) {
+            lowestScoringStudentPoint = +p.point;
+            lowestScoringStudentTemp = {
+                name: currentStudent.student.user.name,
+                id: currentStudent.student.id,
+                point: p.point,
+            };
+        }
+    }
 
-        highestScoringStudent.value = highestScoringStudentTemp;
-        lowestScoringStudent.value = lowestScoringStudentTemp;
-    },
-    { deep: true }
-);
+    highestScoringStudent.value = highestScoringStudentTemp;
+    lowestScoringStudent.value = lowestScoringStudentTemp;
+};
+
+onMounted(computeStats);
+
+watch(() => props.points, computeStats, { deep: true });
 </script>
 
 <style scoped></style>
