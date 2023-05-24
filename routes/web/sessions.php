@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\BatchSessionController;
+use App\Http\Controllers\Web\BatchSessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(BatchSessionController::class)->prefix('sessions/')->middleware(['auth'])->name('session.')->group(function () {

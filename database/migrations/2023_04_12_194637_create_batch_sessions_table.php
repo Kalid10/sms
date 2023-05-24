@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamp('date');
             $table->foreignId('batch_schedule_id')->constrained('batch_schedules')->cascadeOnDelete();
             $table->foreignId('teacher_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('lesson_plan_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('status')->default('scheduled'); // 'scheduled', 'in_progress', 'completed
             $table->timestamps();
         });
