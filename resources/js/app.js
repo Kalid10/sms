@@ -9,6 +9,7 @@ import GettingStartedLayout from "./Pages/Layouts/GettingStartedLayout.vue";
 
 import {createPinia} from "pinia";
 import TeacherLayout from "@/Pages/Layouts/TeacherLayout.vue";
+import AdminLayout from "@/Pages/Layouts/AdminLayout.vue";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText ||
@@ -23,6 +24,8 @@ function getLayout(name, page) {
         case (name.startsWith('Teacher/')):
 
             return TeacherLayout;
+        case (name.startsWith('Admin/')):
+            return AdminLayout;
 
         case (name.startsWith('GettingStarted/')):
         case (name.startsWith('Auth/')):
@@ -55,4 +58,5 @@ createInertiaApp({
     progress: {
         color: "#4B5563",
     },
-}).then(() => {});
+}).then(() => {
+});

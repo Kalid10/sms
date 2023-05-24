@@ -99,7 +99,6 @@
         </div>
     </div>
 
-
     <Register v-if="showRegisterOptions" :toggle="showRegisterOptions" :user-roles="userRoles"></Register>
 
     <Modal v-model:view="showModal">

@@ -44,7 +44,7 @@ class TeacherController extends Controller
             })
             ->paginate(15);
 
-        return Inertia::render('Teachers/Index', [
+        return Inertia::render('Admin/Teachers/Index', [
             'teachers' => $teachers,
         ]);
     }
