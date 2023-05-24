@@ -54,6 +54,10 @@ class StudentGradeHelper
             self::updateStudentSubjectQuarterGrades($student_points->pluck('student_id'), $assessment);
             self::updateStudentQuarterGrade($student_points->pluck('student_id'), $assessment);
 
+            $assessment->update([
+                'status' => Assessment::STATUS_COMPLETED,
+            ]);
+            $assessment->save();
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
