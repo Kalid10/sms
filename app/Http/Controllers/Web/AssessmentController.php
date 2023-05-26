@@ -48,7 +48,7 @@ class AssessmentController extends Controller
         if ($assessment->status === Assessment::STATUS_PUBLISHED) {
             $assessment->update(['status' => Assessment::STATUS_MARKING]);
         }
-        if ($assessment->status !== Assessment::STATUS_MARKING) {
+        if ($assessment->status !== Assessment::STATUS_MARKING && $assessment->status !== Assessment::STATUS_COMPLETED) {
             return redirect()->back()->with('error', 'Invalid assessment type.');
         }
 
@@ -56,6 +56,7 @@ class AssessmentController extends Controller
         if ($request->input('student_id')) {
             $student = Student::find($request->input('student_id'))->load('user:id,name');
             $student->absentee_percentage = $student->absenteePercentage();
+            $student->assessment_quarter_grade = $student->fetchAssessmentsGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id);
         }
 
         return Inertia::render('Teacher/Assessments/Mark', [
@@ -71,11 +72,10 @@ class AssessmentController extends Controller
     {
         $validatedData = $request->validate([
             'assessment_id' => 'required|integer|exists:assessments,id',
-            'title' => 'nullable|string',
-            'description' => 'nullable|string',
-            'due_date' => 'nullable|date',
-            'maximum_point' => 'nullable|integer',
-            'status' => 'nullable|string|in:draft,published,closed,marking,completed',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'maximum_point' => 'required|integer',
+            'status' => 'required|string|in:draft,published,closed,marking,completed',
         ]);
 
         $assessment = Assessment::find($validatedData['assessment_id']);
