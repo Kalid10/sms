@@ -29,7 +29,8 @@ class StudentController extends Controller
             })->paginate(15);
 
         // Get all batches
-        $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level')->get();
+        $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->with('level', 'homeroomTeacher.teacher.user')->get();
 
         $request->validate([
             'batch_id' => 'nullable|exists:batches,id',
