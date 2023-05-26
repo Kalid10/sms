@@ -140,7 +140,7 @@ class AssessmentController extends Controller
                 'batchSubject.batch:id,section,level_id',
                 'batchSubject.batch.level:id,name',
                 'batchSubject.subject:id,full_name',
-                'assessmentType:id,name',
+                'assessmentType:id,name,percentage,min_assessments,max_assessments',
                 'quarter:id,name',
                 'students',
             ])
@@ -148,18 +148,24 @@ class AssessmentController extends Controller
             ->paginate(15);
 
         $assessments->each(function ($assessment) {
-            if ($assessment->status === Assessment::STATUS_PUBLISHED) {
+            if ($assessment->students()->count() > 0) {
                 $assessment->total_students = $assessment->students->count();
             }
 
             if ($assessment->status === Assessment::STATUS_COMPLETED) {
-                $assessment->averageScore = $assessment->students->avg('point');
-                $assessment->passingPercentage = $assessment->students->filter(function ($student) {
-                    return $student->point >= GradeScale::where([
-                        ['school_year_id' => SchoolYear::getActiveSchoolYear()->id],
-                        ['state' => 'pass'],
-                    ])->first()->minimum_score;
-                })->count() / max($assessment->students->count(), 1) * 100;
+                // Get average score and passing percentage
+                $assessment->average_score = round($assessment->students->avg('point'), 1);
+                $assessment->passing_percentage = round($assessment->students->filter(function ($student) use ($assessment) {
+                    return $student->point >= GradeScale::get($student->point, $assessment->maximum_point)->minimum_score;
+                })->count() / max($assessment->students->count(), 1) * 100, 1);
+
+                // Get highest and lowest score
+                $assessment->highest_score = $assessment->students->max('point');
+                $assessment->lowest_score = $assessment->students->min('point');
+
+                // Get top and bottom 3 students
+                $assessment->top_students = $assessment->students->sortByDesc('point')->values()->load('student.user')->take(4);
+                $assessment->bottom_students = $assessment->students->sortBy('point')->values()->load('student.user')->take(4);
             }
         });
 
