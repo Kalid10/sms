@@ -30,65 +30,42 @@ import {
     ArrowTrendingUpIcon,
 } from "@heroicons/vue/24/outline";
 import LinkCell from "@/Components/LinkCell.vue";
+import { watch } from "vue";
 
-defineProps({
+const props = defineProps({
     assessment: {
         type: Object,
         required: true,
     },
 });
 
-const exemplaryStudents = [
-    {
-        id: 1,
-        name: "Binyam Lemma",
-        score: "20",
-        total: "20",
-    },
-    {
-        id: 2,
-        name: "Kalid Abdu",
-        score: "18",
-        total: "20",
-    },
-    {
-        id: 3,
-        name: "Samuel Mesfin",
-        score: "18",
-        total: "20",
-    },
-    {
-        id: 4,
-        name: "Meron Tadesse",
-        score: "17",
-        total: "20",
-    },
-];
+let exemplaryStudents = [];
+let underAchievingStudents = [];
 
-const underAchievingStudents = [
-    {
-        id: 5,
-        name: "Tsega Molla",
-        score: "3",
-        total: "20",
+const mapStudentData = (students) => {
+    if (!students) return [];
+    const studentArray = Object.values(students);
+    return studentArray.map((student) => ({
+        id: student.student_id,
+        name: student.student?.user?.name,
+        score: student.point,
+        total: props.assessment.maximum_point,
+    }));
+};
+
+watch(
+    () => props.assessment.top_students,
+    (top_students) => {
+        exemplaryStudents = mapStudentData(top_students);
     },
-    {
-        id: 6,
-        name: "Fasil Tesfaye",
-        score: "4",
-        total: "20",
+    { immediate: true }
+);
+
+watch(
+    () => props.assessment.bottom_students,
+    (bottom_students) => {
+        underAchievingStudents = mapStudentData(bottom_students);
     },
-    {
-        id: 7,
-        name: "Kebede Getachew",
-        score: "7",
-        total: "20",
-    },
-    {
-        id: 8,
-        name: "Ermias Belay",
-        score: "10",
-        total: "20",
-    },
-];
+    { immediate: true }
+);
 </script>
