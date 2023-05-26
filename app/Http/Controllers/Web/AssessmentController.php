@@ -59,9 +59,9 @@ class AssessmentController extends Controller
         }
 
         return Inertia::render('Teacher/Assessments/Mark', [
-            'assessment' => $assessment->load('assessmentType:id,name', 'batchSubject:id,batch_id,subject_id',
-                'batchSubject.subject:id,full_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
-                'students:id,student_id,assessment_id,point',
+            'assessment' => $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments', 'batchSubject:id,batch_id,subject_id',
+                'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
+                'students:id,student_id,assessment_id,point,comment',
                 'students.student:id,user_id', 'students.student.user:id,name'),
             'student' => $student,
         ]);

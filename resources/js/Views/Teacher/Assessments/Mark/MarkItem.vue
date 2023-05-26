@@ -1,5 +1,8 @@
 <template>
-    <div class="flex w-full flex-col space-y-2 pb-6">
+    <div class="flex w-full flex-col items-center space-y-2 pb-6">
+        <div v-if="errors.assessment" class="w-11/12 py-3">
+            <Error :error="errors.assessment" />
+        </div>
         <div
             v-for="(item, index) in assessment.students"
             :key="index"
@@ -8,11 +11,15 @@
                 'blur-effect hover:bg-white':
                     isInputFocused && focusedInputIndex !== index,
 
-                'focus-effect bg-black text-white': focusedInputIndex === index,
+                'focus-effect bg-black text-white':
+                    focusedInputIndex === index &&
+                    selectedCommentInput === null,
                 'bg-zinc-100 ': index % 2 === 0 && !isInputFocused,
 
                 'bg-black text-white hover:bg-black':
-                    isInputFocused && focusedInputIndex === index,
+                    isInputFocused &&
+                    focusedInputIndex === index &&
+                    selectedCommentInput === null,
 
                 'border-2 border-red-500': errors[`points.${index}.point`],
             }"
@@ -26,41 +33,72 @@
                             isInputFocused && focusedInputIndex !== index,
                         ' text-sm font-semibold': focusedInputIndex === index,
                     }"
+                    @click="
+                        selectedCommentInput === index
+                            ? (selectedCommentInput = null)
+                            : (selectedCommentInput = index)
+                    "
                 >
                     <span class="font-semibold"> {{ index + 1 }}.</span>
                     <span>
                         {{ item.student.user.name }}
-                        {{ item.student.id }}
                     </span>
                 </div>
 
-                <div
-                    class="flex flex-col items-center justify-evenly text-xl font-semibold"
-                >
-                    <input
-                        :ref="
-                            (el) => {
-                                inputRefs[index] = el;
-                                rowRefs[index] = el;
-                            }
+                <div class="flex w-4/12 justify-end space-x-2 pr-2">
+                    <div
+                        class="flex flex-col items-center justify-evenly text-xl font-semibold"
+                    >
+                        <input
+                            :ref="
+                                (el) => {
+                                    inputRefs[index] = el;
+                                    rowRefs[index] = el;
+                                }
+                            "
+                            v-model.number="points[index].point"
+                            :max="Number(assessment.maximum_point)"
+                            type="number"
+                            class="mr-2 w-20 rounded-md border-none bg-white text-xs text-black transition-transform focus:ring-black"
+                            :class="{
+                                'bg-zinc-100 ': index % 2 === 0,
+                                'border-red-500':
+                                    errors[`points.${index}.point`],
+                            }"
+                            placeholder="-"
+                            @focusin="handleFocusIn(index)"
+                            @focusout="handleFocusOut()"
+                            @keydown="onKeyDown($event, index)"
+                            @change="$emit('updatePoints', points)"
+                        />
+                    </div>
+                    <ChatBubbleBottomCenterIcon
+                        class="w-5 hover:scale-125"
+                        :class="
+                            points[index].comment
+                                ? 'text-zinc-800'
+                                : 'text-gray-300'
                         "
-                        v-model.number="points[index].point"
-                        :max="Number(assessment.maximum_point)"
-                        type="number"
-                        class="mr-2 w-20 rounded-md border-none bg-white text-xs text-black transition-transform focus:ring-black"
-                        :class="{
-                            'bg-zinc-100 ': index % 2 === 0,
-                            'border-red-500': errors[`points.${index}.point`],
-                        }"
-                        placeholder="-"
-                        @focusin="handleFocusIn(index)"
-                        @focusout="handleFocusOut()"
-                        @keydown="onKeyDown($event, index, item)"
-                        @change="$emit('updatePoints', points)"
+                        @click="
+                            selectedCommentInput === index
+                                ? (selectedCommentInput = null)
+                                : (selectedCommentInput = index)
+                        "
                     />
                 </div>
             </div>
-
+            <div v-if="selectedCommentInput === index" class="p-4">
+                <TextArea
+                    v-model="points[index].comment"
+                    rows="4"
+                    label="Comment"
+                    :placeholder="
+                        'Please provide your assessment feedback for ' +
+                        item.student.user.name +
+                        '.\nNote: This feedback will be accessible to parents, teachers, and principals.'
+                    "
+                />
+            </div>
             <p
                 v-if="errors[`points.${index}.point`]"
                 class="pb-1 text-[0.6rem] font-medium text-red-500"
@@ -73,6 +111,9 @@
 <script setup>
 import { computed, nextTick, reactive, ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import { ChatBubbleBottomCenterIcon } from "@heroicons/vue/20/solid/index.js";
+import TextArea from "@/Components/TextArea.vue";
+import Error from "@/Components/Error.vue";
 
 const assessment = usePage().props.assessment;
 const focusedInputIndex = ref(null);
@@ -80,16 +121,17 @@ const points = reactive(
     assessment.students.map((item) => ({
         student_id: item.student.id,
         point: item.point || null, // If there's a previously set point, use that. Otherwise, default to null
+        comment: item.comment,
     }))
 );
 const errors = computed(() => {
     return usePage().props.errors;
 });
 const emit = defineEmits(["click", "updatePoints"]);
-
+const selectedCommentInput = ref(null);
 const inputRefs = reactive([]);
 const rowRefs = reactive([]);
-const onKeyDown = (event, index, item) => {
+const onKeyDown = (event, index) => {
     switch (event.key) {
         case "Enter":
         case "Tab":
@@ -141,7 +183,6 @@ const handleFocusOut = () => {
 };
 const handleRowClick = (index, studentId) => {
     focusedInputIndex.value = index;
-    nextTick(() => inputRefs[focusedInputIndex.value].focus());
     emit("click", studentId);
 };
 </script>
