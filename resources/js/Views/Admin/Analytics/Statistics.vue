@@ -1,8 +1,8 @@
 <template>
-    <div class="my-4 grid grid-cols-4 gap-4">
+    <div class="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card
             subtitle="subtitle"
-            title="Teachers" class="cursor-pointer md:col-span-1 md:row-span-1 md:w-full"
+            title="Teachers" class="cursor-pointer hover:bg-gray-100 md:col-span-1 md:row-span-1 md:w-full"
             icon
             @click="teachersLink"
         >
@@ -20,7 +20,7 @@
         </Card>
         <Card
             subtitle="subtitle"
-            title="Students" class="cursor-pointer md:col-span-1 md:row-span-1 md:w-full"
+            title="Students" class="cursor-pointer hover:bg-gray-100 md:col-span-1 md:row-span-1 md:w-full"
             icon
             @click="studentsLink"
         >
@@ -38,7 +38,7 @@
         </Card>
         <Card
             subtitle="subtitle"
-            title="Subjects" class="cursor-pointer md:col-span-1 md:row-span-1 md:w-full"
+            title="Subjects" class="cursor-pointer hover:bg-gray-100 md:col-span-1 md:row-span-1 md:w-full"
             icon
             @click="subjectsLink"
         >
@@ -53,7 +53,7 @@
         </Card>
         <Card
             subtitle="subtitle"
-            title="Administrators" class="cursor-pointer md:col-span-1 md:row-span-1 md:w-full"
+            title="Administrators" class="cursor-pointer hover:bg-gray-100 md:col-span-1 md:row-span-1 md:w-full"
             icon
             @click="teachersLink"
         >

@@ -35,7 +35,7 @@ class GettingStartedController extends Controller
             'levels' => Level::with('levelCategory')->get(),
             'batches' => Inertia::lazy(fn () => Batch::active(['level'])),
             'subjects' => Inertia::lazy(fn () => Subject::all()),
-            'level_categories' => Inertia::lazy(fn () => LevelCategory::all()),
+            'level_categories' => LevelCategory::all(),
             'school_periods' => SchoolPeriod::with('levelCategory')->get(),
             'school_schedule' => SchoolSchedule::all(),
         ]);

@@ -19,12 +19,12 @@ const props = defineProps({
 
 const currentLocale = ref('en')
 
-const selectable_locale = computed(() => {
+const selectableLocale = computed(() => {
     return currentLocale.value === props.currentLocale ? 'en' : props.currentLocale;
 })
 
 const changeLocale = () => {
-    const newLocale = selectable_locale.value;
+    const newLocale = selectableLocale.value;
     router.post('/set-locale/' + newLocale, {}, {
         preserveState: true,
         onSuccess: () => {

@@ -17,6 +17,9 @@ class StudentController extends Controller
     {
         $searchKey = $request->input('search');
 
+        // Get per page value
+        $perPage = $request->input('per_page', 15);
+
         $students = Student::with([
             'user:id,name,email,phone_number,gender',
             'batches.batch:id,section',
@@ -26,7 +29,7 @@ class StudentController extends Controller
                 return $query->whereHas('user', function ($query) use ($searchKey) {
                     return $query->where('name', 'like', "%{$searchKey}%");
                 });
-            })->paginate(15);
+            })->paginate($perPage);
 
         // Get all batches
         $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)

@@ -25,7 +25,7 @@ class CreateBulkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'batches' => 'required|array',
+            'batches' => 'required|array|min:1',
             'batches.*.level_id' => 'required',
             'batches.*.no_of_sections' => 'required|integer|min:1',
             'batches.*.min_students' => 'nullable|integer|min:5',

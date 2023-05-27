@@ -90,7 +90,7 @@
 <script setup>
 import {router} from "@inertiajs/vue3";
 import {ref} from "vue";
-import Localization from "@/Pages/Language/Localization.vue";
+import Localization from "@/Views/Admin/Language/Localization.vue";
 
 const title = ref('fr')
 
