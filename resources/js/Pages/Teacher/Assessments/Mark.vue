@@ -1,6 +1,7 @@
 <template>
-    <div class="flex min-h-screen w-full flex-col space-y-5 py-2 px-5">
+    <div class="flex min-h-screen w-full flex-col space-y-2 py-2 px-5">
         <div class="flex w-full justify-between">
+            <!--            Left Side-->
             <div class="just flex w-6/12 flex-col items-center">
                 <MarkHeader />
                 <div class="w-11/12">
@@ -11,7 +12,11 @@
                     />
                 </div>
             </div>
+
+            <!--            Divider -->
             <div class="min-h-screen w-[0.01rem] bg-gray-100"></div>
+
+            <!--            Right Side-->
             <div class="flex w-5/12 flex-col items-center space-y-10 pt-5">
                 <div
                     class="-skew-x-3 bg-zinc-800 px-3 py-1 text-3xl font-bold italic text-white"
@@ -19,6 +24,18 @@
                     {{ assessment.title }} Info
                 </div>
                 <MarkStat :points="points" @update-student="getStudentDetail" />
+                <div
+                    v-if="assessment.status === 'completed'"
+                    class="flex w-full flex-col space-y-2"
+                >
+                    <ResultStatistics :assessment="assessment" />
+
+                    <StudentScoreList
+                        :assessment="assessment"
+                        @student-clicked="getStudentDetail"
+                    />
+                </div>
+
                 <div class="h-[0.01rem] w-full bg-gray-100"></div>
 
                 <MarkStudentInfo ref="studentInfo" />
@@ -46,6 +63,8 @@ import MarkStat from "@/Views/Teacher/Assessments/Mark/MarkStat.vue";
 import MarkHeader from "@/Views/Teacher/Assessments/Mark/MarkHeader.vue";
 import MarkStudentInfo from "@/Views/Teacher/Assessments/Mark/MarkStudentInfo.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import StudentScoreList from "@/Views/Teacher/Assessments/Details/StudentScoreList.vue";
+import ResultStatistics from "@/Views/Teacher/Assessments/Details/ResultStatistics.vue";
 
 const assessment = usePage().props.assessment;
 
