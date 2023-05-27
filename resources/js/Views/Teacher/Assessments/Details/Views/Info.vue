@@ -17,7 +17,10 @@
                 <component
                     :is="statusIcon"
                     v-if="statusIcon"
-                    class="w-3.5 text-gray-100"
+                    class="w-3.5"
+                    :class="
+                        status === 'Completed' ? 'text-black' : 'text-gray-50'
+                    "
                 />
                 <div>{{ status }}</div>
             </div>
@@ -32,7 +35,12 @@
 
 <script setup>
 import { computed } from "vue";
-import { CheckCircleIcon, PencilIcon } from "@heroicons/vue/24/solid";
+import {
+    CheckCircleIcon,
+    CheckIcon,
+    ExclamationCircleIcon,
+    PencilIcon,
+} from "@heroicons/vue/24/solid";
 
 const props = defineProps({
     count: {
@@ -55,7 +63,6 @@ const statusClass = computed(() => {
             return "bg-emerald-500";
         case "Completed":
             return "bg-yellow-400";
-
         case "Published":
             return "bg-emerald-400 text-black";
         default:
@@ -66,9 +73,13 @@ const statusClass = computed(() => {
 const statusIcon = computed(() => {
     switch (props.status) {
         case "Marking":
-            return PencilIcon;
+            return ExclamationCircleIcon;
         case "Published":
             return CheckCircleIcon;
+        case "Completed":
+            return CheckIcon;
+        case "Draft":
+            return PencilIcon;
         default:
             return "";
     }
