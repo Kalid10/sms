@@ -1,47 +1,51 @@
 <template>
-    <div
-        v-if="assessment"
-        class="flex h-full w-full flex-col items-center space-y-8"
-    >
-        <Header
-            :title="title"
-            class="w-full text-start"
-            :formatted-date="
-                String(moment(assessment.due_date).format('dddd MMMM DD YYYY'))
-            "
-        />
+    <div v-if="assessment" class="flex h-full w-full justify-center">
+        <div class="flex w-full flex-col space-y-8 lg:w-10/12 2xl:w-9/12">
+            <Header
+                :title="title"
+                class="w-full text-center"
+                :formatted-date="
+                    String(
+                        moment(assessment.due_date).format('dddd MMMM DD YYYY')
+                    )
+                "
+            />
 
-        <AssessmentTypeDetailInfo
-            :assessment="assessment"
-            @update="showUpdateForm = true"
-        />
+            <AssessmentTypeDetailInfo
+                :assessment="assessment"
+                @update="showUpdateForm = true"
+            />
 
-        <Draft v-if="assessment.status === 'draft'" :assessment="assessment" />
-        <Published
-            v-if="assessment.status === 'published'"
-            :assessment="assessment"
-        />
-        <Completed
-            v-if="assessment.status === 'completed'"
-            :assessment="assessment"
-        />
-        <Marking
-            v-if="assessment.status === 'marking'"
-            :assessment="assessment"
-        />
-
-        <Modal v-model:view="showUpdateForm">
-            <UpdateAssessmentForm
-                v-if="assessment.status !== 'completed'"
+            <Draft
+                v-if="assessment.status === 'draft'"
                 :assessment="assessment"
             />
-        </Modal>
+            <Published
+                v-if="assessment.status === 'published'"
+                :assessment="assessment"
+            />
+            <Completed
+                v-if="assessment.status === 'completed'"
+                :assessment="assessment"
+            />
+            <Marking
+                v-if="assessment.status === 'marking'"
+                :assessment="assessment"
+            />
+
+            <Modal v-model:view="showUpdateForm">
+                <UpdateAssessmentForm
+                    v-if="assessment.status !== 'completed'"
+                    :assessment="assessment"
+                />
+            </Modal>
+        </div>
     </div>
     <div
         v-else
-        class="flex h-72 w-full items-center justify-center text-xs font-light"
+        class="flex h-2/3 w-full items-center justify-center px-2 text-center text-4xl font-bold italic"
     >
-        Click on any assessment to check details
+        Select any assessment for a detailed view!
     </div>
 </template>
 <script setup>

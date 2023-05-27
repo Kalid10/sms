@@ -37,7 +37,7 @@
 
             <div
                 v-if="assessment.status === 'draft'"
-                class="flex w-8/12 items-center justify-center rounded-2xl bg-emerald-400 text-white"
+                class="flex w-11/12 items-center justify-center rounded-2xl bg-emerald-400 text-white lg:w-8/12"
             >
                 <PencilIcon class="w-4 text-gray-700" />
                 <SecondaryButton
