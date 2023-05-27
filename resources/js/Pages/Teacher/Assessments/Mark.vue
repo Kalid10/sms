@@ -20,7 +20,9 @@
                 </div>
                 <MarkStat :points="points" @update-student="getStudentDetail" />
                 <div class="h-[0.01rem] w-full bg-gray-100"></div>
-                <MarkStudentInfo />
+
+                <MarkStudentInfo ref="studentInfo" />
+
                 <div
                     v-if="showFinishMarkingButton"
                     class="w-full py-3 text-center font-semibold"
@@ -38,7 +40,7 @@
 
 <script setup>
 import { router, usePage } from "@inertiajs/vue3";
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import MarkItem from "@/Views/Teacher/Assessments/Mark/MarkItem.vue";
 import MarkStat from "@/Views/Teacher/Assessments/Mark/MarkStat.vue";
 import MarkHeader from "@/Views/Teacher/Assessments/Mark/MarkHeader.vue";
@@ -62,6 +64,9 @@ function getStudentDetail(studentId) {
         {
             only: ["student"],
             preserveState: true,
+            onSuccess: () => {
+                scrollToStudentInfo();
+            },
         }
     );
 }
@@ -75,6 +80,12 @@ function insertStudentsAssessment() {
 const showFinishMarkingButton = computed(() => {
     return points.length && points.every((item) => item.point !== null);
 });
+
+const studentInfo = ref(null);
+const scrollToStudentInfo = () => {
+    studentInfo.value.$el.scrollIntoView({ behavior: "smooth" });
+    // TODO:: This is sticking the student info to the top of the screen, fix it
+};
 </script>
 
 <style scoped></style>
