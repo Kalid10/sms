@@ -61,7 +61,7 @@ class InsertStudentsAssessmentRequest extends FormRequest
     protected function ensureAssessmentStatusIsValid(): void
     {
         // TODO: Check the appropriate status (PUBLISHED, CLOSED, MARKING, etc...)
-        if ($this->route('assessment')->status !== Assessment::STATUS_MARKING) {
+        if ($this->route('assessment')->status !== Assessment::STATUS_MARKING && $this->route('assessment')->status !== Assessment::STATUS_COMPLETED) {
             $this->validator->errors()->add('assessment', 'Assessment is not ready for marking');
         }
     }
