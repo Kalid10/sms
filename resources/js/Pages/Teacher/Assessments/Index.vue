@@ -1,8 +1,10 @@
 <template>
-    <div class="flex min-h-screen w-full justify-between px-5 pb-4 pt-8">
+    <div
+        class="flex min-h-screen w-full justify-between bg-gray-100 px-2 lg:pl-5"
+    >
         <div
-            class="flex flex-col space-y-6 pl-2 pr-6"
-            :class="assessmentDetails ? 'w-7/12' : 'w-11/12'"
+            class="bg flex w-full flex-col space-y-6 py-8 lg:pl-2 lg:pr-6"
+            :class="assessmentDetails ? 'w-6/12' : 'w-11/12'"
         >
             <div class="font-medium lg:text-4xl">Assessments</div>
 
@@ -12,12 +14,16 @@
             >
                 Create Assessment
             </div>
-            <Modal v-model:view="showModal">
-                <Form @success="showModal = false" />
-            </Modal>
 
-            <div class="flex h-fit justify-between">
-                <Table class="w-full" @click="loadDetail" />
+            <div class="flex h-fit w-full">
+                <Table
+                    :class="{
+                        'w-full lg:w-10/12 xl:w-11/12 2xl:w-10/12':
+                            !assessmentDetails,
+                        'w-full': assessmentDetails,
+                    }"
+                    @click="loadDetail"
+                />
             </div>
         </div>
         <div
@@ -25,14 +31,17 @@
             :class="assessmentDetails ? '' : 'hidden'"
         ></div>
 
-        <div :class="assessmentDetails ? 'w-5/12 pl-5' : 'hidden'">
-            <Detail :assessment="assessmentDetails" />
+        <div :class="assessmentDetails ? 'w-5/12 bg-white/70' : 'hidden '">
+            <Detail class="px-4 pt-8 pb-4" :assessment="assessmentDetails" />
+        </div>
+
+        <div v-if="showModal" class="w-5/12 bg-white">
+            <Form class="border-none" @success="showModal = false" />
         </div>
     </div>
 </template>
 <script setup>
 import Table from "@/Views/Teacher/Assessments/Table/Index.vue";
-import Modal from "@/Components/Modal.vue";
 import Form from "@/Views/Teacher/Assessments/Form.vue";
 import { ref } from "vue";
 import Detail from "@/Views/Teacher/Assessments/Details/Index.vue";

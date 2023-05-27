@@ -1,7 +1,7 @@
 <template>
     <div class="flex w-full justify-between">
         <div class="flex h-20 w-6/12 flex-col items-center justify-evenly">
-            <div class="text-4xl font-bold">{{ count }}</div>
+            <div class="text-4xl font-bold">11</div>
             <div
                 class="cursor-pointer text-xs font-light underline-offset-2 hover:font-medium hover:underline"
             >
@@ -11,10 +11,14 @@
         <div class="h-full w-[0.01rem] bg-gray-200"></div>
         <div class="flex w-6/12 flex-col items-center justify-evenly">
             <div
-                class="flex w-fit justify-evenly space-x-0.5 rounded-xl px-2 py-1 text-end text-xs text-white"
+                class="flex w-fit justify-evenly space-x-0.5 rounded-xl px-2 py-1 text-end text-xs font-medium"
                 :class="statusClass"
             >
-                <component :is="statusIcon" v-if="statusIcon" class="w-3.5" />
+                <component
+                    :is="statusIcon"
+                    v-if="statusIcon"
+                    class="w-3.5 text-gray-100"
+                />
                 <div>{{ status }}</div>
             </div>
             <div
@@ -50,7 +54,10 @@ const statusClass = computed(() => {
         case "Marking":
             return "bg-emerald-500";
         case "Completed":
-            return "bg-blue-500";
+            return "bg-yellow-400";
+
+        case "Published":
+            return "bg-emerald-400 text-black";
         default:
             return "bg-gray-500";
     }

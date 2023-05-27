@@ -3,12 +3,22 @@
         <div
             class="flex w-full flex-col space-y-1 rounded-md border-2 border-black p-3"
         >
-            <div class="text-xl font-semibold">
-                {{ assessment.assessment_type.name }} (
-                <span class="text-base font-bold"
-                    >{{ assessment.assessment_type.percentage }}%</span
-                >)
+            <div class="flex w-full items-center justify-between">
+                <div class="w-8/12 text-xl font-semibold">
+                    {{ assessment.assessment_type.name }} (
+                    <span class="text-base font-bold"
+                        >{{ assessment.assessment_type.percentage }}%</span
+                    >)
+                </div>
+                <div
+                    v-if="assessment.status !== 'completed'"
+                    class="my-1 w-4/12 cursor-pointer text-end text-[0.65rem] text-black underline-offset-2 hover:font-medium hover:underline"
+                    @click="$emit('update')"
+                >
+                    UPDATE ASSESSMENT
+                </div>
             </div>
+
             <div
                 class="flex w-full justify-between divide-x divide-gray-200 py-2"
             >
@@ -43,5 +53,6 @@ defineProps({
         required: true,
     },
 });
+defineEmits("update");
 </script>
 <style scoped></style>

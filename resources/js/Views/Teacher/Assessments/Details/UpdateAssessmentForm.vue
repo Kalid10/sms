@@ -1,14 +1,7 @@
 <template>
     <div ref="parentDiv" class="w-full rounded-md p-2">
         <div
-            class="my-1 w-full cursor-pointer text-end text-xs text-zinc-800 underline underline-offset-2 hover:font-medium hover:text-black"
-        >
-            <span v-if="showUpdateForm">View Form</span>
-            <span v-else @click="showUpdateForm = false"> Hide Form</span>
-        </div>
-        <div
-            v-if="showUpdateForm"
-            class="flex w-full scale-95 flex-col space-y-5 rounded-md border p-3"
+            class="flex w-full scale-95 flex-col space-y-5 rounded-md border bg-white p-3"
         >
             <div class="font-semibold">Update Assessment</div>
             <Error
@@ -91,8 +84,6 @@ import DialogBox from "@/Components/DialogBox.vue";
 import Error from "@/Components/Error.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 
-import { onClickOutside } from "@vueuse/core";
-
 const props = defineProps({
     assessment: {
         type: Object,
@@ -119,7 +110,6 @@ watch(
     { immediate: true }
 );
 
-const showUpdateForm = ref(true);
 const showDialog = ref(false);
 
 const title = computed(
@@ -131,9 +121,6 @@ const title = computed(
 );
 
 const parentDiv = ref(null);
-onClickOutside(parentDiv, () => {
-    updateFormOpacity.value = 25;
-});
 
 function updateAssessment() {
     updateForm.status

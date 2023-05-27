@@ -20,13 +20,28 @@
                     {{ data.title }}
                 </div>
             </template>
+            <template #status-column="{ data }">
+                <div class="flex w-full items-center justify-center">
+                    <div
+                        class="w-full rounded-xl py-1 px-2 text-center text-[0.55rem] font-semibold md:w-10/12 lg:w-10/12 lg:px-2 xl:w-8/12 2xl:w-7/12"
+                        :class="{
+                            'bg-zinc-800 text-white': data === 'Draft',
+                            'bg-emerald-400': data === 'Published',
+                            'bg-blue-200': data === 'Marking',
+                            'bg-yellow-400': data === 'Completed',
+                        }"
+                    >
+                        {{ data.toUpperCase() }}
+                    </div>
+                </div>
+            </template>
         </TableElement>
     </div>
 </template>
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
-import { capitalize, computed } from "vue";
+import { capitalize, computed, ref, watch } from "vue";
 import moment from "moment";
 import Filters from "@/Views/Teacher/Assessments/Table/Filters.vue";
 
@@ -40,6 +55,7 @@ const filteredAssessments = computed(() => {
             status: capitalize(assessment.status),
             due_date: moment(assessment.due_date).fromNow(),
             updated_at: moment(assessment.updated_at).fromNow(),
+            assessment_type: capitalize(assessment.assessment_type.name),
             id: assessment.id,
         };
     });
@@ -50,7 +66,20 @@ const config = [
         name: "Title",
         key: "assessment",
         type: "custom",
+        class: "text-xs py-3.5",
+    },
+    {
+        name: "Type",
+        key: "assessment_type",
         class: "text-xs",
+        type: "enum",
+        options: [
+            "Homework",
+            "Classwork",
+            "Final Quarterly Exam",
+            "Final Exam",
+            "Test",
+        ],
     },
     {
         name: "Max Points",
@@ -60,8 +89,7 @@ const config = [
     {
         name: "Status",
         key: "status",
-        type: "enum",
-        options: ["Marking", "Completed", "Published", "Draft", "Closed"],
+        type: "custom",
         class: "text-xs",
     },
     {
@@ -76,7 +104,22 @@ const config = [
     },
 ];
 
+const selectedAssessment = ref();
+
+watch(assessments, (newValue) => {
+    if (selectedAssessment.value && newValue) {
+        let selected = newValue.data.find(
+            (assessment) => assessment.id === selectedAssessment.value
+        );
+        if (selected) {
+            emit("click", selected);
+            selectedAssessment.value = null;
+        }
+    }
+});
+
 function click(e) {
+    selectedAssessment.value = e.id;
     emit("click", e);
 }
 </script>
