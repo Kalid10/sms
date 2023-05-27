@@ -185,4 +185,12 @@ class AssessmentController extends Controller
             ],
         ]);
     }
+
+    public function publish(Assessment $assessment): RedirectResponse
+    {
+        $assessment->status = Assessment::STATUS_PUBLISHED;
+        $assessment->save();
+
+        return redirect()->back()->with('success', 'You have successfully published '.$assessment->title);
+    }
 }
