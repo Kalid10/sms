@@ -75,7 +75,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { capitalize, computed, ref } from "vue";
 import { router } from "@inertiajs/vue3";
 import Draft from "@/Views/Teacher/Assessments/Details/Draft/Index.vue";
-import UpdateAssessmentForm from "@/Views/Teacher/Assessments/Details/UpdateAssessmentForm.vue";
+import UpdateAssessmentForm from "@/Views/Teacher/Assessments/AssessmentForm.vue";
 import AssessmentTypeDetailInfo from "@/Views/Teacher/Assessments/Details/AssessmenTypeDetailInfo.vue";
 import Header from "@/Views/Teacher/Assessments/Details/Header.vue";
 import GeneralInfo from "@/Views/Teacher/Assessments/Details/Info.vue";

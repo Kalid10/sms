@@ -35,16 +35,17 @@
             <Detail class="px-4 pt-8 pb-4" :assessment="assessmentDetails" />
         </div>
 
-        <div v-if="showModal" class="w-5/12 bg-white">
+        <Modal v-model:view="showModal">
             <Form class="border-none" @success="showModal = false" />
-        </div>
+        </Modal>
     </div>
 </template>
 <script setup>
 import Table from "@/Views/Teacher/Assessments/Table/Index.vue";
-import Form from "@/Views/Teacher/Assessments/Form.vue";
+import Form from "@/Views/Teacher/Assessments/AssessmentForm.vue";
 import { ref } from "vue";
 import Detail from "@/Views/Teacher/Assessments/Details/Index.vue";
+import Modal from "@/Components/Modal.vue";
 
 const showModal = ref(false);
 const assessmentDetails = ref();
