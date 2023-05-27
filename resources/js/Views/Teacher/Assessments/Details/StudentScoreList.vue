@@ -6,13 +6,19 @@
                 :icon="ArrowTrendingUpIcon"
                 icon-color="text-emerald-500"
                 :students="exemplaryStudents"
+                @student-clicked="
+                    (student) => $emit('student-clicked', student)
+                "
             />
             <div class="h-full w-[0.01rem] bg-gray-200"></div>
             <StudentsScoreSection
                 label="UnderAchievers"
-                :icon="ArrowSmallDownIcon"
+                :icon="ArrowTrendingDownIcon"
                 icon-color="text-red-600"
                 :students="underAchievingStudents"
+                @student-clicked="
+                    (student) => $emit('student-clicked', student)
+                "
             />
         </div>
         <LinkCell
@@ -26,12 +32,13 @@
 <script setup>
 import StudentsScoreSection from "@/Views/Teacher/Assessments/Details/StudentsScoreSection.vue";
 import {
-    ArrowSmallDownIcon,
+    ArrowTrendingDownIcon,
     ArrowTrendingUpIcon,
 } from "@heroicons/vue/24/outline";
 import LinkCell from "@/Components/LinkCell.vue";
 import { watch } from "vue";
 
+defineEmits(["student-clicked"]);
 const props = defineProps({
     assessment: {
         type: Object,

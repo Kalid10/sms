@@ -59,7 +59,7 @@
                 :key="index"
                 class="flex w-full items-center justify-between space-x-2 rounded-md py-3"
                 :class="{
-                    'bg-gray-100': index % 2 !== 0,
+                    'bg-gray-100': index % 2 === 0,
                 }"
             >
                 <div class="w-7/12 text-center text-xs font-medium">
@@ -70,7 +70,7 @@
 
                 <div class="flex w-5/12 justify-center space-x-0.5 font-light">
                     <span class="w-5/12 text-center text-sm">
-                        {{ item.score }}%
+                        {{ item.score.toFixed(2) }}%
                     </span>
                     <span
                         class="flex h-5 w-5 items-center justify-center rounded-full text-center text-xs font-bold text-white"

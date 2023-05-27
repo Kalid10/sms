@@ -9,6 +9,7 @@
             :key="student.id"
             class="w-full"
             :class="index % 2 === 0 ? 'bg-gray-100/70' : ''"
+            @click="$emit('student-clicked', student.id)"
         >
             <div class="flex h-10 w-full items-center justify-evenly">
                 <div
@@ -29,6 +30,7 @@
 <script setup>
 import ResultCard from "@/Views/Teacher/Assessments/Details/ResultCard.vue";
 
+defineEmits(["student-clicked"]);
 defineProps({
     label: {
         type: String,
