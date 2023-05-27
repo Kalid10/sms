@@ -1,16 +1,19 @@
 <template>
     <label class="flex flex-col gap-1">
-                <span class="">
-                    <span class="pl-0.5 text-sm font-semibold text-gray-500"
-                    >{{ label }}</span
-                    >
-                    <span class="pl-0.5 text-xs text-red-600">*</span>
-                </span>
+        <span class="">
+            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{
+                label
+            }}</span>
+            <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
+        </span>
         <textarea
             :rows="rows"
-            :placeholder="placeholder" :disabled="disabled" :required="required" :value="modelValue"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            :required="required"
+            :value="modelValue"
             :class="leading"
-            class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-400"
+            class="w-full rounded-md border border-gray-200 text-sm placeholder:text-xs placeholder:text-gray-400 lg:text-xs"
             @input="$emit('update:modelValue', $event.target.value)"
         />
         <span v-if="error" class="text-xs text-negative-50">
@@ -19,19 +22,18 @@
     </label>
 </template>
 <script setup>
-
 const props = defineProps({
     label: {
         type: String,
-        required: true
+        required: true,
     },
     required: {
         type: Boolean,
-        default: false
+        default: false,
     },
     placeholder: {
         type: String,
-        required: true
+        required: true,
     },
     modelValue: {
         type: [String, Number],
@@ -43,17 +45,17 @@ const props = defineProps({
     },
     disabled: {
         type: Boolean,
-        default: false
+        default: false,
     },
     rows: {
         type: Number,
-        default: 5
+        default: 5,
     },
     leading: {
         type: String,
-        default: null
-    }
-})
+        default: null,
+    },
+});
 
-defineEmits(['update:modelValue'])
+defineEmits(["update:modelValue"]);
 </script>

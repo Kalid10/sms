@@ -1,7 +1,7 @@
 <template>
     <div>
         <FormElement
-            title="Assessment Name"
+            title="Create Assessment"
             class="my-2"
             @submit="handleSubmit"
         >

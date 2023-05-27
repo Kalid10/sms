@@ -4,7 +4,7 @@
             icon-class="icon-check text-green-500"
             title="Passed"
             :value="passedPercent"
-            :icon="ArrowTrendingUpIcon"
+            :icon="ArrowSmallUpIcon"
             type="positive"
         />
 
@@ -12,7 +12,7 @@
         <OutcomePercentageDisplay
             icon-class="icon-close text-red-500"
             title="Failed"
-            :value="failedPercent"
+            :value="100 - passedPercent"
             :icon="ArrowSmallDownIcon"
             type="negative"
         />
@@ -22,10 +22,7 @@
 <script setup>
 import { defineProps } from "vue";
 import OutcomePercentageDisplay from "./OutcomePercentageDisplay.vue";
-import {
-    ArrowSmallDownIcon,
-    ArrowTrendingUpIcon,
-} from "@heroicons/vue/24/solid";
+import { ArrowSmallDownIcon, ArrowSmallUpIcon } from "@heroicons/vue/24/solid";
 
 defineProps({
     passedPercent: {
