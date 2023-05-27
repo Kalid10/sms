@@ -1,10 +1,11 @@
 <template>
     <div>
         <FormElement
-            title="Create Assessment"
+            title="Assessment Form"
             class="my-2"
             @submit="handleSubmit"
         >
+            <!-- Form Fields -->
             <TextInput
                 v-model="form.title"
                 :error="form.errors.title"
@@ -42,7 +43,6 @@
                 :error="form.errors.assessment_type_id"
                 placeholder="Select type"
             />
-
             <SelectInput
                 v-model="form.status"
                 :options="statusOptions"
@@ -50,23 +50,63 @@
                 :error="form.errors.status"
             />
         </FormElement>
+
+        <DialogBox
+            v-model:open="showDialog"
+            type="update"
+            title="Submit Assessment"
+            @confirm="handleSubmit"
+        >
+            <template #description>
+                Performing this action will result significant change across the
+                entire subject, Are you sure you want to proceed?
+            </template>
+        </DialogBox>
     </div>
 </template>
+
 <script setup>
 import TextInput from "@/Components/TextInput.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import TextArea from "@/Components/TextArea.vue";
 import FormElement from "@/Components/FormElement.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
-import { computed, onMounted } from "vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import DialogBox from "@/Components/DialogBox.vue";
+import { useForm, usePage } from "@inertiajs/vue3";
+import { computed, ref, watch } from "vue";
 
-onMounted(() => {
-    form.assessment_type_id =
-        selectedBatchAssessmentTypes.value.length > 0
-            ? selectedBatchAssessmentTypes.value[0].value
-            : "";
+const props = defineProps({
+    assessment: {
+        type: Object,
+        default: null,
+    },
 });
+
+let form = useForm({
+    assessment_type_id: "",
+    batch_subject_id: "",
+    due_date: new Date(),
+    title: "",
+    description: "",
+    maximum_point: "",
+    status: "draft",
+});
+
+watch(
+    () => props.assessment,
+    (assessment) => {
+        if (assessment) {
+            form = useForm({
+                ...assessment,
+                due_date: new Date(assessment.due_date),
+                status: assessment.status === "published",
+            });
+        }
+    },
+    { immediate: true }
+);
+
+const showDialog = ref(false);
 
 const emit = defineEmits(["success"]);
 
@@ -93,6 +133,7 @@ const selectedBatchAssessmentTypes = computed(() => {
     }
     return [];
 });
+
 const batchSubjectOptions = computed(() => {
     return teacher.batch_subjects.map((batchSubject) => {
         return {
@@ -105,6 +146,7 @@ const batchSubjectOptions = computed(() => {
         };
     });
 });
+
 const statusOptions = [
     {
         label: "Draft",
@@ -116,26 +158,15 @@ const statusOptions = [
     },
 ];
 
-const form = useForm({
-    assessment_type_id: "",
-    batch_subject_id:
-        batchSubjectOptions.value.length > 0
-            ? batchSubjectOptions.value[0].value
-            : "",
-    due_date: new Date(),
-    title: "",
-    description: "",
-    maximum_point: "",
-    status: "draft",
-});
-
 function handleSubmit() {
-    form.post("/teacher/assessments/create", {
+    const url = form.assessment_id
+        ? "/teacher/assessments/update/"
+        : "/teacher/assessments/create";
+    form.post(url, {
+        preserveState: true,
         onSuccess: () => {
             emit("success");
         },
     });
 }
 </script>
-
-<style scoped></style>
