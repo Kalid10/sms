@@ -153,3 +153,50 @@ it('cannot create a new announcement if the user does not have the manage-announ
     // Assert that the user was redirected back with a forbidden message
     $response->assertForbidden();
 });
+
+it('cannot update an existing announcement if the user does not have the manage-announcements role', function () {
+    // Create a test announcement
+    $announcement = Announcement::factory()->create();
+
+    // Remove the manage-announcements role from the user
+    $this->admin->user->roles()->detach(['manage-announcements']);
+
+    // Update the announcement
+    $response = $this->post(route('announcements.update'), [
+        'title' => 'Updated announcement',
+        'body' => 'This is an updated test announcement',
+        'expires_on' => now()->addDays(14)->toDateString(),
+        'target_group' => ['all', 'teachers'],
+        'id' => $announcement->id,
+    ]);
+
+    // Assert that the announcement was not updated in the database
+    $this->assertDatabaseMissing('announcements', [
+        'id' => $announcement->id,
+        'title' => 'Updated announcement',
+        'body' => 'This is an updated test announcement',
+        'expires_on' => now()->addDays(14)->toDateString(),
+    ]);
+
+    // Assert that the user was redirected back with a forbidden message
+    $response->assertForbidden();
+});
+
+it('cannot delete an existing announcement if the user does not have the manage-announcements role', function () {
+    // Create a test announcement
+    $announcement = Announcement::factory()->create();
+
+    // Remove the manage-announcements role from the user
+    $this->admin->user->roles()->detach(['manage-announcements']);
+
+    // Delete the announcement
+    $response = $this->delete(route('announcements.destroy', $announcement->id));
+
+    // Assert that the announcement was not deleted from the database
+    $this->assertDatabaseHas('announcements', [
+        'id' => $announcement->id,
+    ]);
+
+    // Assert that the user was redirected back with a forbidden message
+    $response->assertForbidden();
+});

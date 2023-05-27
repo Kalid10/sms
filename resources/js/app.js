@@ -11,6 +11,8 @@ import { createPinia } from "pinia";
 import TeacherLayout from "@/Layouts/TeacherLayout.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
+import base from "./base";
+
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText ||
     "SchoolManagement";
@@ -46,9 +48,11 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(pinia)
+            .mixin(base)
             .mount(el);
     },
     progress: {
         color: "#4B5563",
     },
-}).then(() => {});
+}).then(() => {
+});
