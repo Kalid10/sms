@@ -59,6 +59,8 @@ class AssessmentController extends Controller
             $student->assessment_quarter_grade = $student->fetchAssessmentsGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id);
         }
 
+        $assessment = $this->populateAssessmentDetails(collect([$assessment]))->first();
+
         return Inertia::render('Teacher/Assessments/Mark', [
             'assessment' => $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments', 'batchSubject:id,batch_id,subject_id',
                 'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
@@ -147,27 +149,7 @@ class AssessmentController extends Controller
             ->orderBy('due_date', 'asc')
             ->paginate(15);
 
-        $assessments->each(function ($assessment) {
-            if ($assessment->students()->count() > 0) {
-                $assessment->total_students = $assessment->students->count();
-            }
-
-            if ($assessment->status === Assessment::STATUS_COMPLETED) {
-                // Get average score and passing percentage
-                $assessment->average_score = round($assessment->students->avg('point'), 1);
-                $assessment->passing_percentage = round($assessment->students->filter(function ($student) use ($assessment) {
-                    return $student->point >= GradeScale::get($student->point, $assessment->maximum_point)->minimum_score;
-                })->count() / max($assessment->students->count(), 1) * 100, 1);
-
-                // Get highest and lowest score
-                $assessment->highest_score = $assessment->students->max('point');
-                $assessment->lowest_score = $assessment->students->min('point');
-
-                // Get top and bottom 3 students
-                $assessment->top_students = $assessment->students->sortByDesc('point')->values()->load('student.user')->take(4);
-                $assessment->bottom_students = $assessment->students->sortBy('point')->values()->load('student.user')->take(4);
-            }
-        });
+        $assessments = $this->populateAssessmentDetails($assessments);
 
         return Inertia::render('Teacher/Assessments/Index', [
             'assessments' => $assessments,
@@ -192,5 +174,32 @@ class AssessmentController extends Controller
         $assessment->save();
 
         return redirect()->back()->with('success', 'You have successfully published '.$assessment->title);
+    }
+
+    private function populateAssessmentDetails($assessments)
+    {
+        $assessments->each(function ($assessment) {
+            if ($assessment->students()->count() > 0) {
+                $assessment->total_students = $assessment->students->count();
+            }
+
+            if ($assessment->status === Assessment::STATUS_COMPLETED) {
+                // Get average score and passing percentage
+                $assessment->average_score = round($assessment->students->avg('point'), 1);
+                $assessment->passing_percentage = round($assessment->students->filter(function ($student) use ($assessment) {
+                    return $student->point >= GradeScale::get($student->point, $assessment->maximum_point)->minimum_score;
+                })->count() / max($assessment->students->count(), 1) * 100, 1);
+
+                // Get highest and lowest score
+                $assessment->highest_score = $assessment->students->max('point');
+                $assessment->lowest_score = $assessment->students->min('point');
+
+                // Get top and bottom 3 students
+                $assessment->top_students = $assessment->students->sortByDesc('point')->values()->load('student.user')->take(4);
+                $assessment->bottom_students = $assessment->students->sortBy('point')->values()->load('student.user')->take(4);
+            }
+        });
+
+        return $assessments;
     }
 }
