@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -124,5 +125,50 @@ class Student extends Model
         return $this->base_batches()->whereHas('schoolYear', function ($query) {
             $query->where('end_date', null);
         });
+    }
+
+    public function studentAssessmentsGrades(): HasMany
+    {
+        return $this->hasMany(StudentAssessmentsGrade::class);
+    }
+
+    public function fetchAssessmentsGrade(
+        int $batchSubjectId = null,
+        int $quarterId = null,
+        int $semesterId = null,
+        int $schoolYearId = null,
+        int $assessmentTypeId = null,
+    ): Collection {
+        $query = $this->studentAssessmentsGrades();
+
+        $query->when($quarterId, function ($query) use ($quarterId) {
+            $query->where('gradable_type', Quarter::class)
+                ->where('gradable_id', $quarterId);
+        }
+        );
+
+        $query->when($assessmentTypeId, function ($query) use ($assessmentTypeId) {
+            $query->where('assessment_type_id', $assessmentTypeId);
+        }
+        );
+
+        $query->when($semesterId, function ($query) use ($semesterId) {
+            $query->where('gradable_type', Semester::class)
+                ->where('gradable_id', $semesterId);
+        }
+        );
+
+        $query->when($schoolYearId, function ($query) use ($schoolYearId) {
+            $query->where('gradable_type', SchoolYear::class)
+                ->where('gradable_id', $schoolYearId);
+        }
+        );
+
+        $query->when($batchSubjectId, function ($query) use ($batchSubjectId) {
+            $query->where('batch_subject_id', $batchSubjectId);
+        }
+        );
+
+        return $query->with('assessmentType', 'gradeScale')->get();
     }
 }
