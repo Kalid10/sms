@@ -29,7 +29,7 @@ const steps = {
     },
     // 5: {
     //     component: defineAsyncComponent(() =>
-    //         import("@/Views/GettingStarted/Index.vue")
+    //         import("@/Views/GettingStarted/Draft.vue")
     //     ),
     // },
 };

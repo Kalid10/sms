@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import ResultCard from "@/Views/Teacher/Assessments/Details/ResultCard.vue";
+import ResultCard from "@/Views/Teacher/Assessments/Details/Views/ResultCard.vue";
 
 defineEmits(["student-clicked"]);
 defineProps({

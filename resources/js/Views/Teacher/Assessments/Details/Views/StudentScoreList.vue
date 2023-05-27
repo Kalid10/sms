@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import StudentsScoreSection from "@/Views/Teacher/Assessments/Details/StudentsScoreSection.vue";
+import StudentsScoreSection from "@/Views/Teacher/Assessments/Details/Views/StudentsScoreSection.vue";
 import {
     ArrowTrendingDownIcon,
     ArrowTrendingUpIcon,

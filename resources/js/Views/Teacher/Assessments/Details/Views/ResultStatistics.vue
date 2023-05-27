@@ -28,8 +28,8 @@
 </template>
 
 <script setup>
-import ResultCard from "@/Views/Teacher/Assessments/Details/ResultCard.vue";
-import AssessmentOutcomePercentages from "@/Views/Teacher/Assessments/Details/AssessmentOutcomePercentages.vue";
+import ResultCard from "@/Views/Teacher/Assessments/Details/Views/ResultCard.vue";
+import AssessmentOutcomePercentages from "@/Views/Teacher/Assessments/Details/Views/AssessmentOutcomePercentages.vue";
 
 defineProps({
     assessment: {

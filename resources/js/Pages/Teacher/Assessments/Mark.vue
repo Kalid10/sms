@@ -63,8 +63,8 @@ import MarkStat from "@/Views/Teacher/Assessments/Mark/MarkStat.vue";
 import MarkHeader from "@/Views/Teacher/Assessments/Mark/MarkHeader.vue";
 import MarkStudentInfo from "@/Views/Teacher/Assessments/Mark/MarkStudentInfo.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import StudentScoreList from "@/Views/Teacher/Assessments/Details/StudentScoreList.vue";
-import ResultStatistics from "@/Views/Teacher/Assessments/Details/ResultStatistics.vue";
+import StudentScoreList from "@/Views/Teacher/Assessments/Details/Views/StudentScoreList.vue";
+import ResultStatistics from "@/Views/Teacher/Assessments/Details/Views/ResultStatistics.vue";
 
 const assessment = usePage().props.assessment;
 

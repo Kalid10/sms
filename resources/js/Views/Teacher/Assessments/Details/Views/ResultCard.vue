@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import ScoreDisplay from "@/Views/Teacher/Assessments/Details/ScoreDisplay.vue";
+import ScoreDisplay from "@/Views/Teacher/Assessments/Details/Views/ScoreDisplay.vue";
 
 defineProps({
     label: { type: String, default: "" },

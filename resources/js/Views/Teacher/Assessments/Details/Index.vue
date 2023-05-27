@@ -10,15 +10,6 @@
                 String(moment(assessment.due_date).format('dddd MMMM DD YYYY'))
             "
         />
-        <GeneralInfo
-            v-if="
-                assessment.status === 'completed' ||
-                assessment.status === 'published'
-            "
-            teacher-name="Bereket Gobeze"
-            :count="assessment.total_students"
-            :status="capitalize(assessment.status)"
-        />
 
         <AssessmentTypeDetailInfo
             :assessment="assessment"
@@ -26,33 +17,18 @@
         />
 
         <Draft v-if="assessment.status === 'draft'" :assessment="assessment" />
-
-        <div
+        <Published
+            v-if="assessment.status === 'published'"
+            :assessment="assessment"
+        />
+        <Completed
             v-if="assessment.status === 'completed'"
-            class="flex w-full flex-col space-y-2"
-        >
-            <ResultStatistics :assessment="assessment" />
-
-            <StudentScoreList :assessment="assessment" />
-        </div>
-
-        <div
-            v-if="
-                assessment.status === 'published' ||
-                assessment.status === 'marking'
-            "
-            class="flex w-full items-center justify-center"
-        >
-            <SecondaryButton
-                :title="
-                    assessment.status === 'marking'
-                        ? 'CONTINUE MARKING'
-                        : 'START MARKING'
-                "
-                class="w-44 rounded-xl bg-emerald-400 font-semibold"
-                @click="startMarking"
-            />
-        </div>
+            :assessment="assessment"
+        />
+        <Marking
+            v-if="assessment.status === 'marking'"
+            :assessment="assessment"
+        />
 
         <Modal v-model:view="showUpdateForm">
             <UpdateAssessmentForm
@@ -65,22 +41,21 @@
         v-else
         class="flex h-72 w-full items-center justify-center text-xs font-light"
     >
-        Click on a ny assessment to check details
+        Click on any assessment to check details
     </div>
 </template>
 <script setup>
-import ResultStatistics from "@/Views/Teacher/Assessments/Details/ResultStatistics.vue";
-import StudentScoreList from "@/Views/Teacher/Assessments/Details/StudentScoreList.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { capitalize, computed, ref } from "vue";
+import { computed, ref } from "vue";
 import { router } from "@inertiajs/vue3";
-import Draft from "@/Views/Teacher/Assessments/Details/Draft/Index.vue";
+import Draft from "@/Views/Teacher/Assessments/Details/Draft.vue";
 import UpdateAssessmentForm from "@/Views/Teacher/Assessments/AssessmentForm.vue";
-import AssessmentTypeDetailInfo from "@/Views/Teacher/Assessments/Details/AssessmenTypeDetailInfo.vue";
-import Header from "@/Views/Teacher/Assessments/Details/Header.vue";
-import GeneralInfo from "@/Views/Teacher/Assessments/Details/Info.vue";
+import AssessmentTypeDetailInfo from "@/Views/Teacher/Assessments/Details/Views/AssessmenTypeDetailInfo.vue";
+import Header from "@/Views/Teacher/Assessments/Details/Views/Header.vue";
 import moment from "moment";
 import Modal from "@/Components/Modal.vue";
+import Published from "@/Views/Teacher/Assessments/Details/Published.vue";
+import Completed from "@/Views/Teacher/Assessments/Details/Completed.vue";
+import Marking from "@/Views/Teacher/Assessments/Details/Marking.vue";
 
 const props = defineProps({
     assessment: {
