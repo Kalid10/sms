@@ -12,7 +12,7 @@
         >
             <div class="flex h-10 w-full items-center justify-evenly">
                 <div
-                    class="flex h-full w-6/12 cursor-pointer items-center justify-center text-[0.65rem] underline-offset-2 hover:font-semibold hover:underline"
+                    class="flex h-full w-6/12 cursor-pointer items-center justify-center text-center text-[0.65rem] underline-offset-2 hover:font-semibold hover:underline"
                 >
                     {{ student.name }}
                 </div>
