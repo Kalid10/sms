@@ -4,7 +4,14 @@
             class="flex w-full flex-col items-center justify-center space-y-1 rounded-md border-2 border-black p-3"
         >
             <div class="flex w-full items-center justify-between">
-                <div class="w-8/12 font-semibold 2xl:text-xl">
+                <div
+                    class="font-semibold"
+                    :class="
+                        assessment.status === 'completed'
+                            ? 'w-full text-center text-2xl'
+                            : 'w-8/12 2xl:text-xl'
+                    "
+                >
                     {{ assessment.assessment_type.name }} (
                     <span class="text-base font-bold"
                         >{{ assessment.assessment_type.percentage }}%</span
