@@ -9,7 +9,7 @@
             :footer="false"
         >
             <template #filter>
-                <Filters />
+                <Filters @create="$emit('create')" />
             </template>
 
             <template #assessment-column="{ data }">
@@ -23,7 +23,7 @@
             <template #status-column="{ data }">
                 <div class="flex w-full items-center justify-center">
                     <div
-                        class="w-full rounded-xl py-1 px-2 text-center text-[0.55rem] font-semibold md:w-10/12 lg:w-10/12 lg:px-2 xl:w-9/12 2xl:w-7/12"
+                        class="w-full rounded-xl py-1 px-2 text-center text-[0.55rem] font-semibold md:w-10/12 lg:w-10/12 lg:px-2 xl:w-9/12 2xl:w-8/12"
                         :class="{
                             'bg-zinc-800 text-white': data === 'Draft',
                             'bg-emerald-400': data === 'Published',
@@ -45,7 +45,7 @@ import { capitalize, computed, ref, watch } from "vue";
 import moment from "moment";
 import Filters from "@/Views/Teacher/Assessments/Table/Filters.vue";
 
-const emit = defineEmits(["click"]);
+const emit = defineEmits(["click", "create"]);
 const assessments = computed(() => usePage().props.assessments);
 const filteredAssessments = computed(() => {
     return assessments.value.data.map((assessment) => {

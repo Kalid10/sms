@@ -8,13 +8,11 @@
         >
             <div class="font-medium lg:text-4xl">Assessments</div>
 
-            <div
-                class="w-fit cursor-pointer px-2 text-xs underline underline-offset-2 hover:font-medium"
-                @click="showModal = true"
-            >
-                Create Assessment
-            </div>
-            <Table @click="loadDetail" />
+            <Table
+                class="min-h-screen"
+                @create="showModal = true"
+                @click="loadDetail"
+            />
         </div>
         <div
             :class="
