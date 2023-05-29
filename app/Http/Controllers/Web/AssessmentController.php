@@ -164,6 +164,8 @@ class AssessmentController extends Controller
                 'quarter_id' => $quarterId,
                 'search' => $search,
                 'due_date' => $dueDate,
+                'batch_subject_id' => $batchSubjectId,
+                'assessment_type_id' => $request->input('assessment_type_id'),
             ],
         ]);
     }
