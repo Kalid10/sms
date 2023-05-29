@@ -1,17 +1,17 @@
 <template>
-    <div v-if="filteredAssessments">
+    <div v-if="filteredAssessments" class="flex flex-col space-y-4">
+        <Filters @filter-enabled="setFilterValue" @create="$emit('create')" />
+
         <TableElement
             class="h-full bg-white text-black !shadow-none"
             :data="filteredAssessments"
+            :class="filterEnabled ? 'blur-lg' : 'blur-none'"
             :selectable="false"
             :columns="config"
-            header-style="!bg-black text-white text-xs"
+            header-style="!bg-zinc-800 text-white text-xs"
+            :filterable="false"
             :footer="false"
         >
-            <template #filter>
-                <Filters @create="$emit('create')" />
-            </template>
-
             <template #assessment-column="{ data }">
                 <div
                     class="cursor-pointer underline underline-offset-2"
@@ -43,7 +43,7 @@ import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import { capitalize, computed, ref, watch } from "vue";
 import moment from "moment";
-import Filters from "@/Views/Teacher/Assessments/Table/Filters.vue";
+import Filters from "@/Views/Teacher/Assessments/Table/Filters/Index.vue";
 
 const emit = defineEmits(["click", "create"]);
 const assessments = computed(() => usePage().props.assessments);
@@ -105,6 +105,7 @@ const config = [
 ];
 
 const selectedAssessment = ref();
+const filterEnabled = ref(false);
 
 watch(assessments, (newValue) => {
     if (selectedAssessment.value && newValue) {
@@ -122,6 +123,15 @@ function click(e) {
     selectedAssessment.value = e.id;
     emit("click", e);
 }
+
+function setFilterValue(value) {
+    filterEnabled.value = value;
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.non-blur-content {
+    /* Position it correctly so it overlaps the same content in the blur-container */
+    z-index: 2;
+}
+</style>
