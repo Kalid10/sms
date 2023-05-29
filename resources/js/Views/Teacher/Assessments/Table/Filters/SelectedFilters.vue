@@ -4,18 +4,25 @@
         :class="showFilter ? 'blur-sm' : 'blur-none'"
     >
         <FilterItem
-            v-if="search"
-            :value="search"
-            class-style="bg-purple-500 text-white"
-            icon-style="text-fuchsia-200 hover:text-black"
-            @remove="$emit('removeSearch')"
-        />
-        <FilterItem
             v-if="selectedBatchSubjectName"
             :value="selectedBatchSubjectName"
             class-style="bg-emerald-400"
             icon-style="text-black"
             :show-remove-icon="false"
+        />
+        <FilterItem
+            v-if="status"
+            :value="capitalize(status)"
+            class-style="bg-red-500 text-white"
+            icon-style="text-gray-200"
+            @remove="$emit('removeStatus')"
+        />
+        <FilterItem
+            v-if="search"
+            :value="search"
+            class-style="bg-purple-500 text-white"
+            icon-style="text-fuchsia-200 hover:text-black"
+            @remove="$emit('removeSearch')"
         />
         <FilterItem
             v-if="selectedAssessmentTypeName"
@@ -25,22 +32,22 @@
         <FilterItem
             v-if="selectedSchoolYear"
             :value="selectedSchoolYear"
-            class-style="bg-cyan-400"
-            icon-style="text-black"
+            class-style="bg-neutral-700 text-white"
+            icon-style="text-gray-200"
             @remove="$emit('removeSchoolYear')"
         />
         <FilterItem
             v-if="selectedSemester"
             :value="selectedSemester"
-            class-style="bg-red-500 text-white"
-            icon-style="text-gray-200"
+            class-style="bg-teal-400 text-black"
+            icon-style="text-black hover:text-black"
             @remove="$emit('removeSemester')"
         />
         <FilterItem
             v-if="selectedQuarter"
             :value="selectedQuarter"
-            class-style="bg-neutral-700 text-white"
-            icon-style="text-gray-200"
+            class-style="bg-cyan-400"
+            icon-style="text-black"
             @remove="$emit('removeQuarter')"
         />
         <PlusIcon
@@ -53,6 +60,7 @@
 <script setup>
 import FilterItem from "@/Views/Teacher/Assessments/Table/Filters/FilterItem.vue";
 import { PlusIcon } from "@heroicons/vue/20/solid";
+import { capitalize } from "vue";
 
 defineEmits([
     "show",
@@ -62,6 +70,7 @@ defineEmits([
     "removeAssessmentType",
     "removeBatchSubject",
     "removeSearch",
+    "removeStatus",
 ]);
 
 const props = defineProps({
@@ -90,6 +99,10 @@ const props = defineProps({
         default: null,
     },
     search: {
+        type: String,
+        default: null,
+    },
+    status: {
         type: String,
         default: null,
     },

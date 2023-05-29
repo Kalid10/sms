@@ -96,6 +96,7 @@ class AssessmentController extends Controller
             'semester_id' => 'nullable|integer|exists:semesters,id',
             'school_year_id' => 'nullable|integer|exists:school_years,id',
             'search' => 'nullable|string',
+            'status' => 'nullable|string|in:draft,published,closed,marking,completed',
         ]);
 
         $batchSubjectId = $request->input('batch_subject_id') ??
@@ -137,6 +138,9 @@ class AssessmentController extends Controller
             ->when($search, function ($query, $value) {
                 return $query->where('title', 'like', "%{$value}%");
             })
+            ->when($request->input('status'), function ($query, $value) {
+                return $query->where('status', $value);
+            })
             ->with([
                 'batchSubject:id,batch_id,subject_id,teacher_id',
                 'batchSubject.batch:id,section,level_id',
@@ -166,6 +170,7 @@ class AssessmentController extends Controller
                 'due_date' => $dueDate,
                 'batch_subject_id' => $batchSubjectId,
                 'assessment_type_id' => $request->input('assessment_type_id'),
+                'status' => $request->input('status'),
             ],
         ]);
     }

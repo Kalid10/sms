@@ -38,6 +38,7 @@
             :selected-school-year="selectedSchoolYearName"
             :selected-semester="selectedSemesterName"
             :selected-quarter="selectedQuarterName"
+            :status="selectedAssessmentStatus"
             @show="showFilter = true"
             @remove-batch-subject="selectedBatchSubjectId = null"
             @remove-assessment-type="selectedAssessmentTypeId = null"
@@ -52,6 +53,7 @@
             "
             @remove-quarter="selectedQuarter = null"
             @remove-search="search = ''"
+            @remove-status="selectedAssessmentStatus = null"
         />
         <div
             v-if="showFilter"
@@ -66,6 +68,11 @@
             </div>
 
             <div class="flex w-full flex-col space-y-4 px-2 py-4">
+                <SelectInput
+                    v-model="selectedAssessmentStatus"
+                    :options="assessmentStatusOptions"
+                    placeholder="Select Status"
+                />
                 <SelectInput
                     v-if="selectedBatchSubjectId"
                     v-model="selectedAssessmentTypeId"
@@ -157,6 +164,7 @@ const selectedAssessmentTypeId = ref(
     filters.assessment_type_id ? Number(filters.assessment_type_id) : null
 );
 const showFilter = ref(false);
+const selectedAssessmentStatus = ref(filters.status ?? null);
 
 // Functions
 const getOptions = (items, selectedValue, labelCallback) =>
@@ -212,6 +220,15 @@ const batchSubjectOptions = computed(() =>
         label: `${batchSubject.subject.full_name} ${batchSubject.batch.level.name} ${batchSubject.batch.section}`,
     }))
 );
+
+const assessmentStatusOptions = computed(() => [
+    { label: "All", value: null },
+    { label: "Published", value: "published" },
+    { label: "Completed", value: "completed" },
+    { label: "Marking", value: "marking" },
+    { label: "Draft", value: "draft" },
+    { label: "Cancelled", value: "cancelled" },
+]);
 
 // Selected Filter Values
 const selectedBatchSubject = computed(() => {
@@ -287,6 +304,7 @@ async function getAssessments() {
             batch_subject_id: selectedBatchSubjectId.value,
             search: search.value,
             due_date: dueDate.value,
+            status: selectedAssessmentStatus.value,
         },
         {
             preserveScroll: true,
