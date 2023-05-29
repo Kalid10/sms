@@ -1,6 +1,6 @@
 <template>
     <h1 class="my-4 text-lg font-semibold text-gray-900 dark:text-gray-100">Management</h1>
-    <div class="my-4 flex justify-between gap-2">
+    <div class="my-4 flex flex-col justify-between gap-2 md:flex-row">
 
         <Card
             class="group !h-fit cursor-pointer hover:border-black md:col-span-1 md:row-span-1 md:w-full"

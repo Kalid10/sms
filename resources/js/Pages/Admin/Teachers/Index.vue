@@ -32,6 +32,21 @@
                 </div>
             </template>
 
+            <template #footer>
+                <div class="flex w-full justify-end gap-3">
+                    <TertiaryButton
+                        class="w-full md:w-fit"
+                        title="Previous"
+                        @click="previousPage"
+                    />
+                    <TertiaryButton
+                        class="w-full md:w-fit"
+                        title="Next"
+                        @click="nextPage"
+                    />
+                </div>
+            </template>
+
             <template #empty-data>
                 <div class="flex flex-col items-center justify-center">
                     <ExclamationTriangleIcon class="mb-2 h-6 w-6 text-negative-50"/>
@@ -61,6 +76,7 @@ import TeacherTableElement from "@/Components/TableElement.vue";
 import {ExclamationTriangleIcon} from "@heroicons/vue/24/outline/index";
 import TextInput from "@/Components/TextInput.vue";
 import {debounce} from "lodash";
+import TertiaryButton from "@/Components/TertiaryButton.vue";
 
 const teachers = computed(() => {
     return usePage().props.teachers.data;
@@ -85,11 +101,15 @@ const formattedTeachersData = computed(() => {
 });
 
 const searchKey = ref('');
+const perPage = ref(15);
 
 const search = debounce(() => {
     router.get(
-        "/teachers/",
-        {search: searchKey.value},
+        "/admin/teachers/",
+        {
+            search: searchKey.value,
+            perPage: perPage.value,
+        },
         {
             only: ["teachers"],
             preserveState: true, replace: true
@@ -97,9 +117,43 @@ const search = debounce(() => {
     );
 }, 300);
 
-watch([searchKey], () => {
+watch([searchKey, perPage], () => {
     search()
 })
+
+
+const currentPage = ref(1);
+
+function nextPage() {
+    currentPage.value++;
+    router.get(
+        "/admin/teachers",
+        {
+            page: currentPage.value,
+            perPage: perPage.value,
+        },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
+}
+
+function previousPage() {
+    currentPage.value--;
+    router.get(
+        "/admin/teachers",
+        {
+            page: currentPage.value,
+            perPage: perPage.value,
+        },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
+}
+
 
 const config = [
     {
@@ -113,6 +167,7 @@ const config = [
         name: 'Email',
         key: 'email',
         type: 'custom',
+        align: 'left',
     },
     {
         name: 'Homerooms',

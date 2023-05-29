@@ -14,23 +14,23 @@
                 <div
                     :class="
                         openSideBar
-                            ? 'min-w-full lg:min-w-0 blur lg:blur-0'
+                            ? 'min-w-full lg:min-w-0 lg:blur-0'
                             : ''
                     "
                     class="m-5 flex flex-col items-center overflow-x-hidden lg:w-full"
                 >
-                    <slot />
+                    <slot/>
                 </div>
             </div>
         </div>
-        <Notification />
+        <Notification/>
     </div>
 </template>
 
 <script setup>
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
-import { computed, ref } from "vue";
+import {computed, ref} from "vue";
 import {
     ChatBubbleBottomCenterIcon,
     ClipboardIcon,
@@ -38,13 +38,9 @@ import {
     PowerIcon,
     UserIcon,
 } from "@heroicons/vue/20/solid/index.js";
-import { usePage } from "@inertiajs/vue3";
-import {
-    BookOpenIcon,
-    QueueListIcon,
-    UsersIcon,
-} from "@heroicons/vue/24/solid";
-import { UserCircleIcon } from "@heroicons/vue/24/outline";
+import {usePage} from "@inertiajs/vue3";
+import {BookOpenIcon, QueueListIcon, UsersIcon,} from "@heroicons/vue/24/solid";
+import {UserCircleIcon} from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     auth: {
@@ -109,8 +105,8 @@ const sidebarItems = computed(() => [
 ]);
 
 const footerItems = [
-    { icon: ChatBubbleBottomCenterIcon, name: "Chat" },
-    { icon: PowerIcon, name: "Logout" },
+    {icon: ChatBubbleBottomCenterIcon, name: "Chat"},
+    {icon: PowerIcon, name: "Logout"},
 ];
 </script>
 

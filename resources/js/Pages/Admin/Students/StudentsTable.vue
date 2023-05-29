@@ -46,6 +46,21 @@
             </div>
         </template>
 
+        <template #footer>
+            <div class="flex w-full justify-end gap-3">
+                <TertiaryButton
+                    class="w-full md:w-fit"
+                    title="Previous"
+                    @click="previousPage"
+                />
+                <TertiaryButton
+                    class="w-full md:w-fit"
+                    title="Next"
+                    @click="nextPage"
+                />
+            </div>
+        </template>
+
         <template #empty-data>
             <div class="flex flex-col items-center justify-center">
                 <ExclamationTriangleIcon class="mb-2 h-6 w-6 text-negative-50"/>
@@ -96,6 +111,7 @@ import {ArrowsRightLeftIcon, ExclamationTriangleIcon} from "@heroicons/vue/24/ou
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
+import TertiaryButton from "@/Components/TertiaryButton.vue";
 
 const isModalOpen = ref(false);
 
@@ -159,11 +175,15 @@ function submit() {
 }
 
 const searchKey = ref('');
+const perPage = ref(15);
 
 const search = debounce(() => {
     router.get(
         "/students/",
-        {search: searchKey.value},
+        {
+            search: searchKey.value,
+            perPage: perPage.value,
+        },
         {
             only: ["students"],
             preserveState: true, replace: true
@@ -171,9 +191,42 @@ const search = debounce(() => {
     );
 }, 300);
 
-watch([searchKey], () => {
+watch([searchKey, perPage], () => {
     search();
 })
+
+const currentPage = ref(1);
+
+function nextPage() {
+    currentPage.value++;
+    router.get(
+        "/students",
+        {
+            page: currentPage.value,
+            perPage: perPage.value,
+        },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
+}
+
+function previousPage() {
+    currentPage.value--;
+    router.get(
+        "/students",
+        {
+            page: currentPage.value,
+            perPage: perPage.value,
+        },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
+}
+
 
 const config = [
     {
