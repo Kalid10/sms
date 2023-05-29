@@ -8,6 +8,7 @@
                 {{ value }}
             </div>
             <XMarkIcon
+                v-if="showRemoveIcon"
                 class="hover:w-4.5 w-4 cursor-pointer"
                 :class="
                     iconStyle ? iconStyle : 'text-zinc-600 hover:text-black'
@@ -33,6 +34,10 @@ defineProps({
     iconStyle: {
         type: String,
         default: null,
+    },
+    showRemoveIcon: {
+        type: Boolean,
+        default: true,
     },
 });
 </script>

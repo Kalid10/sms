@@ -15,7 +15,7 @@
             :value="selectedBatchSubjectName"
             class-style="bg-emerald-400"
             icon-style="text-black"
-            @remove="$emit('removeBatchSubject')"
+            :show-remove-icon="false"
         />
         <FilterItem
             v-if="selectedAssessmentTypeName"
