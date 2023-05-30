@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Events\MarkAssessmentEvent;
 use App\Models\Assessment;
 use App\Models\GradeScale;
 use App\Models\StudentAssessment;
@@ -58,6 +59,9 @@ class StudentGradeHelper
                 'status' => Assessment::STATUS_COMPLETED,
             ]);
             $assessment->save();
+
+            event(new MarkAssessmentEvent('Assessment marked successfully!', 'success'));
+
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();

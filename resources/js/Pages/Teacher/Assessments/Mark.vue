@@ -3,7 +3,6 @@
         <div class="flex w-full justify-between">
             <!--            Left Side-->
             <div class="just flex w-6/12 flex-col items-center">
-                {{ assessment.status }}
                 <MarkHeader />
                 <div class="w-11/12">
                     <MarkItem
@@ -67,8 +66,19 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import StudentScoreList from "@/Views/Teacher/Assessments/Details/Views/StudentScoreList.vue";
 import ResultStatistics from "@/Views/Teacher/Assessments/Details/Views/ResultStatistics.vue";
 
-const assessment = computed(() => usePage().props.assessment);
+Echo.private("mark-assessment").listen(".mark-assessment", (e) => {
+    if (e.type === "success")
+        router.get(
+            "/teacher/assessments/mark/" + assessment.value.id,
+            {},
+            {
+                only: ["assessment"],
+                preserveState: true,
+            }
+        );
+});
 
+const assessment = computed(() => usePage().props.assessment);
 const points = reactive([]);
 
 function updatePoints(point) {

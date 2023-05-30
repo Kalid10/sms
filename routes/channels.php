@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -7,7 +8,7 @@ use Illuminate\Support\Facades\Broadcast;
 | Broadcast Channels
 |--------------------------------------------------------------------------
 |
-| Here you may register all of the event broadcasting channels that your
+| Here you may register all  the event broadcasting channels that your
 | application supports. The given channel authorization callbacks are
 | used to check if an authenticated user can listen to the channel.
 |
@@ -27,4 +28,8 @@ Broadcast::channel('teachers-import', function ($user) {
 
 Broadcast::channel('batch-schedule', function ($user) {
     return $user->hasRole('manage-batch-schedules');
+});
+
+Broadcast::channel('mark-assessment', function ($user) {
+    return $user->type === User::TYPE_TEACHER;
 });
