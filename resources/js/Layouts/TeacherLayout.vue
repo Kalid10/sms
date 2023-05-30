@@ -28,7 +28,7 @@
 <script setup>
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
-import { computed } from "vue";
+import { computed, provide, ref } from "vue";
 import { HomeIcon } from "@heroicons/vue/24/solid/index.js";
 import {
     ArrowLeftOnRectangleIcon,
@@ -50,6 +50,15 @@ const props = defineProps({
         required: true,
     },
 });
+const notificationData = ref(null);
+
+const showNotification = (data) => {
+    notificationData.value = data;
+};
+
+// TODO: Migrate the two providers
+provide("showNotification", showNotification);
+provide("notificationData", notificationData);
 
 const isOpen = computed(() => useSidebarStore().isOpen);
 

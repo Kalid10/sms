@@ -1,8 +1,12 @@
 <template>
-    <div class="flex min-h-screen w-full flex-col space-y-2 py-2 px-5">
+    <div
+        class="scrollbar-hide flex min-h-screen w-full flex-col space-y-2 py-2 px-5"
+    >
         <div class="flex w-full justify-between">
-            <!--            Left Side-->
-            <div class="just flex w-6/12 flex-col items-center">
+            <!--Left Side-->
+            <div
+                class="just scrollbar-hide sticky top-0 flex h-screen w-6/12 flex-col items-center overflow-auto"
+            >
                 <MarkHeader />
                 <div class="w-11/12">
                     <MarkItem
@@ -13,11 +17,16 @@
                 </div>
             </div>
 
-            <!--            Divider -->
+            <!--Divider -->
             <div class="min-h-screen w-[0.01rem] bg-gray-100"></div>
 
-            <!--            Right Side-->
-            <div class="flex w-5/12 flex-col items-center space-y-10 pt-5">
+            <!--Loading-->
+            <Loading v-if="isLoading" color="primary" is-full-screen />
+
+            <!--Right Side-->
+            <div
+                class="scrollbar-hide sticky top-0 flex h-screen w-5/12 flex-col items-center space-y-10 overflow-auto py-5"
+            >
                 <div
                     class="-skew-x-3 bg-zinc-800 px-3 py-1 text-3xl font-bold italic text-white"
                 >
@@ -29,24 +38,35 @@
                     class="flex w-full flex-col space-y-2"
                 >
                     <ResultStatistics :assessment="assessment" />
-
                     <StudentScoreList
                         :assessment="assessment"
                         @student-clicked="getStudentDetail"
                     />
                 </div>
-
                 <div class="h-[0.01rem] w-full bg-gray-100"></div>
-
                 <MarkStudentInfo ref="studentInfo" />
-
                 <div
                     v-if="showFinishMarkingButton"
-                    class="w-full py-3 text-center font-semibold"
+                    class="flex h-fit w-full flex-col items-center space-y-4 rounded-md border border-black px-2 py-3 text-center font-semibold"
                 >
-                    <PrimaryButton
+                    <div
+                        class="flex w-full items-center justify-center space-x-1 text-xs font-light"
+                    >
+                        <ExclamationTriangleIcon class="w-4 text-red-600" />
+                        <span>CAUTION</span>
+                    </div>
+                    <div class="text-xs font-light">
+                        Please note, upon clicking 'Finish Marking',
+                        notifications, emails and SMS will be sent to parents
+                        and relevant authorities regarding the students'
+                        performance. However, rest assured, you will retain the
+                        ability to make necessary adjustments to these
+                        assessments until the end of the current quarter or
+                        semester.
+                    </div>
+                    <SecondaryButton
                         title="Finish Marking"
-                        class="rounded-2xl"
+                        class="w-3/5 rounded-2xl bg-zinc-800 text-white"
                         @click="insertStudentsAssessment"
                     />
                 </div>
@@ -57,35 +77,54 @@
 
 <script setup>
 import { router, usePage } from "@inertiajs/vue3";
-import { computed, reactive, ref } from "vue";
+import { computed, inject, reactive, ref } from "vue";
 import MarkItem from "@/Views/Teacher/Assessments/Mark/MarkItem.vue";
 import MarkStat from "@/Views/Teacher/Assessments/Mark/MarkStat.vue";
 import MarkHeader from "@/Views/Teacher/Assessments/Mark/MarkHeader.vue";
 import MarkStudentInfo from "@/Views/Teacher/Assessments/Mark/MarkStudentInfo.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import StudentScoreList from "@/Views/Teacher/Assessments/Details/Views/StudentScoreList.vue";
 import ResultStatistics from "@/Views/Teacher/Assessments/Details/Views/ResultStatistics.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
+import Loading from "@/Components/Loading.vue";
 
-Echo.private("mark-assessment").listen(".mark-assessment", (e) => {
-    if (e.type === "success")
-        router.get(
-            "/teacher/assessments/mark/" + assessment.value.id,
-            {},
-            {
-                only: ["assessment"],
-                preserveState: true,
-            }
-        );
-});
-
+const showNotification = inject("showNotification");
+const isLoading = ref(false);
 const assessment = computed(() => usePage().props.assessment);
 const points = reactive([]);
+
+Echo.private("mark-assessment").listen(".mark-assessment", (e) => {
+    if (e.type === "success") isLoading.value = true;
+    router.get(
+        "/teacher/assessments/mark/" + assessment.value.id,
+        {},
+        {
+            only: ["assessment"],
+            preserveState: true,
+            onFinish: () => {
+                isLoading.value = false;
+            },
+            onSuccess: () => {
+                showNotification({
+                    type: "success",
+                    message: e.message,
+                    position: "top-center",
+                });
+            },
+        }
+    );
+});
 
 function updatePoints(point) {
     points.splice(0, points.length, ...point);
 }
 
 function getStudentDetail(studentId) {
+    showNotification({
+        type: "error",
+        message: "Select student fucker",
+        position: "top-center",
+    });
     router.get(
         "/teacher/assessments/mark/" + assessment.value.id,
         {
