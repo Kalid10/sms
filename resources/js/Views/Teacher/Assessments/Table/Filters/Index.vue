@@ -70,7 +70,7 @@
             </div>
 
             <div class="flex w-full flex-col space-y-4 px-2 py-4">
-                <div class="flex w-full justify-between">
+                <div class="group flex w-full justify-between">
                     <SelectInput
                         v-model="selectedAssessmentStatus"
                         :options="assessmentStatusOptions"
@@ -78,14 +78,14 @@
                         class="w-full"
                     />
                     <TrashIcon
-                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 group-hover:w-4 group-hover:opacity-100"
                         @click="selectedAssessmentStatus = null"
                     />
                 </div>
 
                 <div
                     v-if="selectedBatchSubjectId"
-                    class="flex w-full justify-between"
+                    class="group flex w-full justify-between"
                 >
                     <SelectInput
                         v-model="selectedAssessmentTypeId"
@@ -94,12 +94,12 @@
                         class="w-full"
                     />
                     <TrashIcon
-                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 group-hover:w-4 group-hover:opacity-100"
                         @click="selectedAssessmentTypeId = null"
                     />
                 </div>
 
-                <div class="flex w-full justify-between">
+                <div class="group flex w-full justify-between">
                     <SelectInput
                         v-model="selectedSchoolYear"
                         :options="schoolYearOptions"
@@ -107,13 +107,13 @@
                         placeholder="Select SchoolYear"
                     />
                     <TrashIcon
-                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 group-hover:w-4 group-hover:opacity-100"
                         @click="selectedSchoolYear = null"
                     />
                 </div>
                 <div
                     v-if="selectedSchoolYear"
-                    class="flex w-full justify-between"
+                    class="group flex w-full justify-between"
                 >
                     <SelectInput
                         v-model="selectedSemester"
@@ -122,13 +122,13 @@
                         placeholder="Select Semester"
                     />
                     <TrashIcon
-                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 group-hover:w-4 group-hover:opacity-100"
                         @click="selectedSemester = null"
                     />
                 </div>
                 <div
                     v-if="selectedSemester"
-                    class="flex w-full justify-between"
+                    class="group flex w-full justify-between"
                 >
                     <SelectInput
                         v-model="selectedQuarter"
@@ -137,7 +137,7 @@
                         placeholder="Select Quarter"
                     />
                     <TrashIcon
-                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 group-hover:w-4 group-hover:opacity-100"
                         @click="selectedQuarter = null"
                     />
                 </div>
