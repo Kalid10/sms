@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full flex-wrap space-x-2"
+        class="scrollbar-hide flex w-full space-x-2 overflow-x-auto lg:flex-wrap"
         :class="showFilter ? 'blur-sm' : 'blur-none'"
     >
         <FilterItem

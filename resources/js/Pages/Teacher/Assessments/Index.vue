@@ -3,10 +3,20 @@
         class="flex min-h-screen w-full flex-col justify-center px-4 lg:flex-row"
     >
         <div
-            class="bg flex flex-col space-y-6 py-8 lg:pl-2 lg:pr-6"
+            class="bg flex flex-col space-y-3 py-4 lg:space-y-6 lg:py-8 lg:pl-2 lg:pr-6"
             :class="isSidebarOpenOnXlDevice ? 'w-full' : ' w-full lg:w-7/12 '"
         >
-            <div class="font-medium lg:text-4xl">Assessments</div>
+            <div class="flex w-full justify-between">
+                <div class="text-xl font-semibold text-zinc-800 lg:text-4xl">
+                    Assessments
+                </div>
+                <div
+                    class="flex w-fit cursor-pointer items-center space-x-1 rounded-md px-2 text-[0.65rem] text-zinc-800 underline decoration-zinc-800 underline-offset-2 hover:font-semibold lg:hidden"
+                    @click="showModal = true"
+                >
+                    <div>Create Assessment</div>
+                </div>
+            </div>
 
             <Table
                 class="min-h-screen"

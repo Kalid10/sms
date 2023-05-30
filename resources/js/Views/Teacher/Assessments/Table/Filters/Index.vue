@@ -4,25 +4,27 @@
         class="flex w-full flex-col items-center justify-between space-y-3"
     >
         <div
-            class="flex items-center justify-between gap-2 pb-3 md:w-full"
+            class="flex w-full flex-col items-center justify-between gap-2 pb-3 lg:flex-row"
             :class="showFilter ? 'blur-sm' : 'blur-none'"
         >
-            <div class="flex w-8/12 justify-between">
+            <div
+                class="flex w-full flex-col justify-between space-y-4 lg:w-8/12 lg:flex-row lg:space-y-0"
+            >
+                <TextInput
+                    v-model="search"
+                    placeholder="Search Assessment Title"
+                    class="md:w-6/12"
+                    class-style="h-8 bg-white border-gray-300 text-black placeholder:text-gray-500 placeholder:text-xs focus:border-none focus:ring-violet-500"
+                />
                 <SelectInput
                     v-model="selectedBatchSubjectId"
                     :options="batchSubjectOptions"
                     placeholder="Select Subject"
-                    class="md:w-5/12"
-                />
-                <TextInput
-                    v-model="search"
-                    placeholder="Search Assessment Title"
-                    class="md:w-5/12"
-                    class-style="h-8 bg-white border-gray-300 text-black placeholder:text-gray-500 placeholder:text-xs focus:border-none focus:ring-violet-500"
+                    class="z-[100] w-full lg:w-5/12"
                 />
             </div>
             <div
-                class="flex w-fit cursor-pointer space-x-2 rounded-md bg-zinc-800 px-2 py-1.5 text-xs font-medium text-white hover:font-semibold"
+                class="hidden w-fit cursor-pointer space-x-2 rounded-md bg-zinc-800 px-2 py-1.5 text-xs font-medium text-white hover:font-semibold lg:flex"
                 @click="$emit('create')"
             >
                 <SquaresPlusIcon class="w-4" />
@@ -57,7 +59,7 @@
         />
         <div
             v-if="showFilter"
-            class="fixed z-50 ml-10 h-fit w-80 rounded-md bg-gradient-to-br from-zinc-200 via-zinc-200 to-zinc-100 p-2 shadow-md backdrop-blur-none"
+            class="fixed z-50 h-fit w-9/12 rounded-md bg-gradient-to-br from-zinc-200 via-zinc-200 to-zinc-100 py-2 px-1 shadow-md backdrop-blur-none lg:ml-10 lg:w-80"
         >
             <div class="flex w-full justify-between">
                 <div class="px-2 text-sm">Filters</div>
@@ -68,42 +70,82 @@
             </div>
 
             <div class="flex w-full flex-col space-y-4 px-2 py-4">
-                <SelectInput
-                    v-model="selectedAssessmentStatus"
-                    :options="assessmentStatusOptions"
-                    placeholder="Select Status"
-                />
-                <SelectInput
+                <div class="flex w-full justify-between">
+                    <SelectInput
+                        v-model="selectedAssessmentStatus"
+                        :options="assessmentStatusOptions"
+                        placeholder="Select Status"
+                        class="w-full"
+                    />
+                    <TrashIcon
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        @click="selectedAssessmentStatus = null"
+                    />
+                </div>
+
+                <div
                     v-if="selectedBatchSubjectId"
-                    v-model="selectedAssessmentTypeId"
-                    :options="selectedBatchAssessmentTypes"
-                    placeholder="Assessment Type"
-                />
-                <SelectInput
-                    v-model="selectedSchoolYear"
-                    :options="schoolYearOptions"
-                    class="w-full"
-                    placeholder="Select SchoolYear"
-                />
-                <SelectInput
+                    class="flex w-full justify-between"
+                >
+                    <SelectInput
+                        v-model="selectedAssessmentTypeId"
+                        :options="selectedBatchAssessmentTypes"
+                        placeholder="Assessment Type"
+                        class="w-full"
+                    />
+                    <TrashIcon
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        @click="selectedAssessmentTypeId = null"
+                    />
+                </div>
+
+                <div class="flex w-full justify-between">
+                    <SelectInput
+                        v-model="selectedSchoolYear"
+                        :options="schoolYearOptions"
+                        class="w-full"
+                        placeholder="Select SchoolYear"
+                    />
+                    <TrashIcon
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        @click="selectedSchoolYear = null"
+                    />
+                </div>
+                <div
                     v-if="selectedSchoolYear"
-                    v-model="selectedSemester"
-                    :options="semesterOptions"
-                    class="w-full"
-                    placeholder="Select Semester"
-                />
-                <SelectInput
+                    class="flex w-full justify-between"
+                >
+                    <SelectInput
+                        v-model="selectedSemester"
+                        :options="semesterOptions"
+                        class="w-full"
+                        placeholder="Select Semester"
+                    />
+                    <TrashIcon
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        @click="selectedSemester = null"
+                    />
+                </div>
+                <div
                     v-if="selectedSemester"
-                    v-model="selectedQuarter"
-                    :options="quarterOptions"
-                    class="w-full"
-                    placeholder="Select Quarter"
-                />
+                    class="flex w-full justify-between"
+                >
+                    <SelectInput
+                        v-model="selectedQuarter"
+                        :options="quarterOptions"
+                        class="w-full"
+                        placeholder="Select Quarter"
+                    />
+                    <TrashIcon
+                        class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 hover:w-5 hover:opacity-100"
+                        @click="selectedQuarter = null"
+                    />
+                </div>
             </div>
             <div class="flex justify-between px-2">
                 <div
                     v-if="showFilter"
-                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-black from-violet-600 to-fuchsia-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
+                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-zinc-800 from-violet-600 to-fuchsia-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
                     @click="showFilter = false"
                 >
                     <CheckCircleIcon class="w-3 text-gray-100" />
@@ -111,7 +153,7 @@
                 </div>
                 <div
                     v-if="showFilter"
-                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-black from-red-600 to-orange-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
+                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-zinc-800 from-red-600 to-orange-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
                     @click="clearFilters"
                 >
                     <TrashIcon class="w-3 text-gray-100" />
@@ -285,6 +327,7 @@ const watchers = [
     selectedBatchSubjectId,
     search,
     dueDate,
+    selectedAssessmentStatus,
 ];
 const debounceGetAssessments = debounce(getAssessments, 500);
 watchers.forEach((item) => watch(item, debounceGetAssessments));

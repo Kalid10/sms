@@ -1,12 +1,12 @@
 <template>
-    <div class="flex h-fit w-fit space-x-1.5">
+    <div class="inline-flex space-x-1.5 lg:my-1">
         <div
-            class="flex space-x-1 rounded-md px-2 py-1"
-            :class="classStyle ? classStyle : 'bg-yellow-400 '"
+            class="inline-flex items-center space-x-1 rounded-md px-2 py-1"
+            :class="classStyle ? classStyle : 'bg-yellow-400'"
         >
-            <div class="w-fit text-xs font-semibold">
+            <span class="truncate text-xs font-semibold">
                 {{ value }}
-            </div>
+            </span>
             <XMarkIcon
                 v-if="showRemoveIcon"
                 class="hover:w-4.5 w-4 cursor-pointer"
