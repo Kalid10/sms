@@ -12,6 +12,4 @@ class GuardianController extends Controller
     {
         return new GuardianResource(Auth::user()->load('guardian'));
     }
-
-    // Todo: Resources for all guardians children
 }
