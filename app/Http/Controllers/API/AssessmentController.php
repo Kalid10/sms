@@ -3,23 +3,25 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Resources\AssessmentResource;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AssessmentController extends Controller
 {
-    public function index(): AnonymousResourceCollection
+    public function index(): JsonResponse|Application|ResponseFactory|Response
     {
         $children = Auth::user()
             ->load('guardian.children.user', 'guardian.children.assessments')
             ->guardian->children;
 
-        return AssessmentResource::collection($children);
+        return response(AssessmentResource::collection($children));
     }
 
-    public function childAssessment($id): JsonResponse
+    public function childAssessment($id): JsonResponse|Application|ResponseFactory|Response
     {
         // Find the authenticated user (guardian)
         $guardian = Auth::user();
@@ -38,6 +40,6 @@ class AssessmentController extends Controller
             ], 404);
         }
 
-        return response()->json(new AssessmentResource($child));
+        return response(new AssessmentResource($child));
     }
 }
