@@ -224,7 +224,7 @@ const clearFilters = () => {
     selectedSemester.value = null;
     selectedQuarter.value = null;
     selectedAssessmentTypeId.value = null;
-    selectedBatchSubjectId.value = null;
+    selectedAssessmentStatus.value = null;
     dueDate.value = null;
     showFilter.value = false;
 };
