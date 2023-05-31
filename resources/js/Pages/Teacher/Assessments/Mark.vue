@@ -25,7 +25,7 @@
 
             <!--Right Side-->
             <div
-                class="scrollbar-hide sticky top-0 flex h-screen w-5/12 flex-col items-center space-y-10 overflow-auto py-5"
+                class="scrollbar-hide sticky top-0 flex h-screen w-5/12 flex-col items-center space-y-6 overflow-auto py-5"
             >
                 <div
                     class="-skew-x-3 bg-zinc-800 px-3 py-1 text-3xl font-bold italic text-white"
@@ -47,7 +47,7 @@
                 <MarkStudentInfo ref="studentInfo" />
                 <div
                     v-if="showFinishMarkingButton"
-                    class="flex h-fit w-full flex-col items-center space-y-4 rounded-md border border-black px-2 py-3 text-center font-semibold"
+                    class="flex h-fit w-full flex-col items-center space-y-4 rounded-md border-2 border-black px-2 py-3 text-center font-semibold"
                 >
                     <div
                         class="flex w-full items-center justify-center space-x-1 text-xs font-light"
@@ -120,11 +120,6 @@ function updatePoints(point) {
 }
 
 function getStudentDetail(studentId) {
-    showNotification({
-        type: "error",
-        message: "Select student fucker",
-        position: "top-center",
-    });
     router.get(
         "/teacher/assessments/mark/" + assessment.value.id,
         {

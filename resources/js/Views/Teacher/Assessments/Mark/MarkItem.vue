@@ -6,7 +6,7 @@
         <div
             v-for="(item, index) in assessment.students"
             :key="index"
-            class="flex w-full cursor-pointer flex-col justify-between rounded-md pl-2 text-sm hover:bg-gray-50"
+            class="flex w-full cursor-pointer flex-col justify-between rounded-md pl-2 text-sm text-black hover:bg-gray-50"
             :class="{
                 'blur-effect hover:bg-white':
                     isInputFocused && focusedInputIndex !== index,
