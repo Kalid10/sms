@@ -15,39 +15,19 @@
                 :class="`fixed ${positionClass} w-fit px-2 z-50`"
             >
                 <div
-                    v-if="error"
-                    class="m-10 rounded-lg bg-white p-4 shadow-lg sm:mb-10 sm:px-6 sm:py-4 md:h-auto"
+                    class="m-10 flex items-center justify-center gap-2 rounded-lg bg-white p-4 text-xs font-medium text-zinc-700 shadow-lg sm:mb-10 sm:px-6 md:h-auto lg:text-sm"
                 >
-                    <div class="text-xs font-medium text-zinc-700 lg:text-sm">
-                        <ExclamationTriangleIcon
-                            class="mt-1.5 min-h-[1.75rem] w-5 min-w-[1.75rem] stroke-red-500"
-                        />
-                        <div>{{ error }}</div>
-                    </div>
-                </div>
-                <div
-                    v-else-if="success"
-                    class="m-10 rounded-lg bg-white p-4 py-3 shadow-lg sm:mb-10 sm:px-6 sm:py-4 md:h-auto"
-                >
-                    <div class="text-xs font-medium text-zinc-700 lg:text-sm">
-                        <CheckCircleIcon class="w-5 stroke-green-500" />
-                        <div>{{ success }}</div>
-                    </div>
-                </div>
-                <div
-                    v-else
-                    class="m-10 max-w-md rounded-lg bg-white p-4 py-3 shadow-lg sm:mb-10 sm:px-6 sm:py-4 md:h-auto"
-                >
-                    <div
-                        class="flex flex-row items-center justify-center space-x-2"
-                    >
-                        <InformationCircleIcon class="w-5 stroke-sky-500" />
-                        <div
-                            class="text-xs font-medium text-zinc-700 lg:text-sm"
-                        >
-                            {{ info }}
-                        </div>
-                    </div>
+                    <component
+                        :is="notificationType.icon"
+                        class="h-6 w-6 stroke-2"
+                        :class="{
+                            'text-green-500':
+                                notificationType.type === 'success',
+                            'text-red-500': notificationType.type === 'error',
+                            'text-blue-500': notificationType.type === 'info',
+                        }"
+                    />
+                    <div>{{ notificationType.message }}</div>
                 </div>
             </div>
         </transition>
@@ -55,12 +35,7 @@
 </template>
 
 <script setup>
-import { computed, inject, ref, watch } from "vue";
-import {
-    CheckCircleIcon,
-    ExclamationTriangleIcon,
-    InformationCircleIcon,
-} from "@heroicons/vue/24/outline";
+import { computed, defineAsyncComponent, inject, ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
 const flashSuccess = computed(() => usePage().props.flash.success);
@@ -74,6 +49,33 @@ const success = computed(
 );
 const error = computed(() => flashError.value || localNotification.value.error);
 const info = computed(() => flashInfo.value || localNotification.value.info);
+
+const notificationType = computed(() => {
+    return {
+        type: !!success.value
+            ? "success"
+            : !!error.value
+            ? "error"
+            : !!info.value
+            ? "info"
+            : "",
+        message: success.value || error.value || info.value,
+        icon: success.value
+            ? defineAsyncComponent(() =>
+                  import("@heroicons/vue/24/outline/CheckCircleIcon.js")
+              )
+            : error.value
+            ? defineAsyncComponent(() =>
+                  import("@heroicons/vue/24/outline/ExclamationTriangleIcon.js")
+              )
+            : info.value
+            ? defineAsyncComponent(() =>
+                  import("@heroicons/vue/24/outline/InformationCircleIcon")
+              )
+            : "",
+        style: "text-green-500",
+    };
+});
 
 const showNotification = ref(false);
 
@@ -92,6 +94,7 @@ const notificationData = inject("notificationData");
 watch(notificationData, (newVal) => {
     if (newVal) {
         showNotification.value = true;
+        usePage().props.flash = { success: null, error: null, info: null };
         switch (newVal.type) {
             case "success":
                 localNotification.value.success = newVal.message;
@@ -142,15 +145,5 @@ const positionClass = computed(() => {
 .notification-enter,
 .notification-leave-to {
     opacity: 0;
-}
-
-@media (max-width: 767px) {
-    .fixed.top-0 {
-        top: 0;
-    }
-
-    .fixed.right-0 {
-        right: 0;
-    }
 }
 </style>
