@@ -38,6 +38,7 @@
                 placeholder="Select Subject"
             />
             <SelectInput
+                v-if="form.batch_subject_id"
                 v-model="form.assessment_type_id"
                 :options="selectedBatchAssessmentTypes"
                 :error="form.errors.assessment_type_id"
@@ -49,6 +50,23 @@
                 placeholder="Select Status"
                 :error="form.errors.status"
             />
+            <div
+                v-if="
+                    form.status === 'published' || form.status === 'scheduled'
+                "
+                class="flex w-full bg-gray-50 px-4 py-2 text-center text-[0.65rem] font-light"
+            >
+                <InformationCircleIcon class="mr-2 w-7 text-zinc-800" />
+
+                <div>
+                    Setting an assessment as
+                    <span class="font-semibold">" PUBLISHED "</span> or
+                    <span class="font-semibold">" SCHEDULED "</span>
+                    will trigger immediate notifications to guardians and
+                    principals. Detailed information about the assessment can be
+                    accessed for further insight.
+                </div>
+            </div>
         </FormElement>
 
         <DialogBox
@@ -74,6 +92,7 @@ import SelectInput from "@/Components/SelectInput.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
+import { InformationCircleIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     assessment: {
@@ -99,7 +118,8 @@ watch(
             form = useForm({
                 ...assessment,
                 due_date: new Date(assessment.due_date),
-                status: assessment.status === "published",
+                status: assessment.status,
+                assessment_id: assessment.id,
             });
         }
     },
@@ -151,6 +171,10 @@ const statusOptions = [
     {
         label: "Draft",
         value: "draft",
+    },
+    {
+        label: "Schedule",
+        value: "scheduled",
     },
     {
         label: "Publish",

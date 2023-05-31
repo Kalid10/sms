@@ -18,6 +18,8 @@ class Assessment extends Model
 
     const STATUS_PUBLISHED = 'published';
 
+    const STATUS_SCHEDULED = 'scheduled';
+
     const STATUS_CLOSED = 'closed';
 
     const STATUS_MARKING = 'marking';

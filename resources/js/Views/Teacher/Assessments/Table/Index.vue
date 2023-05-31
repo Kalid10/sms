@@ -29,6 +29,7 @@
                             'bg-emerald-400': data === 'Published',
                             'bg-blue-200': data === 'Marking',
                             'bg-yellow-400': data === 'Completed',
+                            'bg-cyan-400': data === 'Scheduled',
                         }"
                     >
                         {{ data.toUpperCase() }}

@@ -38,6 +38,22 @@ class AssessmentController extends Controller
         return redirect()->back()->with('success', 'Assessment created.');
     }
 
+    public function update(Request $request): RedirectResponse
+    {
+        $validatedData = $request->validate([
+            'assessment_id' => 'required|integer|exists:assessments,id',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'maximum_point' => 'required|integer',
+            'status' => 'required|string|in:draft,published,closed,marking,completed,scheduled',
+        ]);
+
+        $assessment = Assessment::find($validatedData['assessment_id']);
+        $assessment->update($validatedData);
+
+        return redirect()->back()->with('success', 'Assessment updated successfully!');
+    }
+
     public function mark(Request $request, Assessment $assessment): Response|RedirectResponse
     {
         $request->validate([
@@ -68,22 +84,6 @@ class AssessmentController extends Controller
                 'students.student:id,user_id', 'students.student.user:id,name'),
             'student' => $student,
         ]);
-    }
-
-    public function update(Request $request): RedirectResponse
-    {
-        $validatedData = $request->validate([
-            'assessment_id' => 'required|integer|exists:assessments,id',
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'maximum_point' => 'required|integer',
-            'status' => 'required|string|in:draft,published,closed,marking,completed',
-        ]);
-
-        $assessment = Assessment::find($validatedData['assessment_id']);
-        $assessment->update($validatedData);
-
-        return redirect()->back()->with('success', 'Assessment updated successfully!');
     }
 
     public function teacherAssessments(Request $request): Response
