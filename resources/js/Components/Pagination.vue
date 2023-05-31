@@ -1,5 +1,9 @@
 <template>
-    <div v-if="links.length" class="flex w-full" :class="paginationPosition">
+    <div
+        v-if="links.length > 3"
+        class="flex w-full"
+        :class="paginationPosition"
+    >
         <div class="flex flex-wrap items-center space-x-2">
             <template v-for="(link, p) in links" :key="p">
                 <Link
