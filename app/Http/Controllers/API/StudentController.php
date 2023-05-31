@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\API\AssessmentRequest;
 use App\Http\Requests\API\StudentRequest;
+use App\Http\Resources\StudentAssessmentCollection;
 use App\Http\Resources\StudentCollection;
 use App\Http\Resources\StudentNotesCollection;
 use App\Http\Resources\StudentResource;
@@ -50,5 +52,15 @@ class StudentController extends Controller
                     'batches.batch.schedule.batchSubject.subject',
                     'batches.batch.schedule.batchSubject.teacher.user'
                 )->pluck('batches')->flatten());
+    }
+
+    public function assessments(AssessmentRequest $request, ?Student $student): StudentAssessmentCollection
+    {
+        return $student->exists ?
+            new StudentAssessmentCollection($student->load('user', 'assessments')) :
+            new StudentAssessmentCollection(Auth::user()
+                ->load('guardian.children.user', 'guardian.children.assessments')
+                ->guardian->children
+            );
     }
 }
