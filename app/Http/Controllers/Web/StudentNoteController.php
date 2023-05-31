@@ -32,16 +32,14 @@ class StudentNoteController extends Controller
         }
 
         // Check if the student is enrolled in the batch that the teacher is assigned
-        if (! $user->type == User::TYPE_TEACHER) {
-            return redirect()->back()->with('error', 'Unauthorized action');
-        }
+        if ($user->type == User::TYPE_TEACHER) {
+            $teacherBatches = $user->teacher->batchSubjects()->get()->filter(function ($batchSubject) {
+                return $batchSubject->with('active');
+            })->pluck('id');
 
-        $teacherBatches = $user->teacher->batchSubjects()->get()->filter(function ($batchSubject) {
-            return $batchSubject->with('active');
-        })->pluck('id');
-
-        if (! $teacherBatches->contains($student->activeBatch()->id)) {
-            return redirect()->back()->with('error', 'Unauthorized action - student is not enrolled in your batch');
+            if (! $teacherBatches->contains($student->activeBatch()->id)) {
+                return redirect()->back()->with('error', 'Unauthorized action - student is not enrolled in your batch');
+            }
         }
 
         StudentNote::create([
