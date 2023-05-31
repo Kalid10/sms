@@ -7,7 +7,14 @@
             <div
                 class="just scrollbar-hide sticky top-0 flex h-screen w-6/12 flex-col items-center overflow-auto"
             >
-                <MarkHeader />
+                <div class="flex w-full justify-center">
+                    <BackButton
+                        link="/teacher/assessments"
+                        class="absolute left-0 mt-3"
+                    />
+
+                    <MarkHeader />
+                </div>
                 <div class="w-11/12">
                     <MarkItem
                         class="mt-5"
@@ -87,6 +94,7 @@ import ResultStatistics from "@/Views/Teacher/Assessments/Details/Views/ResultSt
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import Loading from "@/Components/Loading.vue";
+import BackButton from "@/Components/BackButton.vue";
 
 const showNotification = inject("showNotification");
 const isLoading = ref(false);
