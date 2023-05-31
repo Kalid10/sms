@@ -42,29 +42,6 @@
                 </div>
             </div>
 
-            <div
-                v-if="assessment.status === 'draft'"
-                class="flex w-11/12 items-center justify-center rounded-2xl bg-emerald-400 text-white lg:w-8/12"
-            >
-                <PencilIcon class="w-4 text-gray-700" />
-                <SecondaryButton
-                    title="Publish Assessment"
-                    class="w-fit font-semibold"
-                    @click="showDialog = true"
-                />
-                <DialogBox
-                    v-model:open="showDialog"
-                    type="update"
-                    title="Update Assessment"
-                    @confirm="updateAssessment"
-                >
-                    <template #description>
-                        Performing this action will result significant change
-                        across the entire subject, Are you sure you want to
-                        proceed?
-                    </template>
-                </DialogBox>
-            </div>
             <LinkCell
                 v-if="assessment.lesson_plan_id"
                 class="flex w-full justify-end"
@@ -76,11 +53,6 @@
 </template>
 <script setup>
 import LinkCell from "@/Components/LinkCell.vue";
-import DialogBox from "@/Components/DialogBox.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { router } from "@inertiajs/vue3";
-import { ref } from "vue";
-import { PencilIcon } from "@heroicons/vue/24/solid";
 
 defineEmits("update");
 
@@ -90,11 +62,5 @@ const props = defineProps({
         required: true,
     },
 });
-
-const showDialog = ref(false);
-
-function updateAssessment() {
-    router.post("/teacher/assessments/publish/" + props.assessment.id);
-}
 </script>
 <style scoped></style>

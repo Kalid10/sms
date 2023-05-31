@@ -46,6 +46,7 @@ class AssessmentController extends Controller
             'description' => 'required|string',
             'maximum_point' => 'required|integer',
             'status' => 'required|string|in:draft,published,closed,marking,completed,scheduled',
+            'due_date' => 'required|date',
         ]);
 
         $assessment = Assessment::find($validatedData['assessment_id']);
@@ -173,14 +174,6 @@ class AssessmentController extends Controller
                 'status' => $request->input('status'),
             ],
         ]);
-    }
-
-    public function publish(Assessment $assessment): RedirectResponse
-    {
-        $assessment->status = Assessment::STATUS_PUBLISHED;
-        $assessment->save();
-
-        return redirect()->back()->with('success', 'You have successfully published '.$assessment->title);
     }
 
     private function populateAssessmentDetails($assessments)
