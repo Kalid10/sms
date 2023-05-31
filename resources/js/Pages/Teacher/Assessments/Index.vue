@@ -2,6 +2,7 @@
     <div
         class="flex min-h-screen w-full flex-col justify-center px-4 lg:flex-row"
     >
+        <Loading v-if="isLoading" is-full-screen />
         <div
             class="bg flex flex-col space-y-3 py-4 lg:space-y-6 lg:py-8 lg:pl-2 lg:pr-6"
             :class="isSidebarOpenOnXlDevice ? 'w-full' : ' w-full lg:w-7/12 '"
@@ -40,9 +41,10 @@
             "
         >
             <Detail
+                v-if="!isLoading"
                 ref="assessmentDetailsRef"
                 class="pt-8 pb-4"
-                :assessment="assessmentDetails"
+                :assessment="selectedAssessment"
             />
         </div>
 
@@ -54,17 +56,38 @@
 <script setup>
 import Table from "@/Views/Teacher/Assessments/Table/Index.vue";
 import Form from "@/Views/Teacher/Assessments/AssessmentForm.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Detail from "@/Views/Teacher/Assessments/Details/Index.vue";
 import Modal from "@/Components/Modal.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
+import { router, usePage } from "@inertiajs/vue3";
+import Loading from "@/Components/Loading.vue";
 
 const showModal = ref(false);
-const assessmentDetails = ref();
+
+const selectedAssessment = computed(() => usePage().props.assessment);
+const isLoading = ref(false);
 
 function loadDetail(assessment) {
-    assessmentDetails.value = assessment;
-    scrollToAssessmentDetails();
+    isLoading.value = true;
+    router.get(
+        "/teacher/assessments/" + assessment.id,
+        {},
+        {
+            preserveState: true,
+            preserveScroll: true,
+            onStart: () => {
+                selectedAssessment.value = null;
+            },
+            onSuccess: () => {
+                scrollToAssessmentDetails();
+            },
+            onFinish: () => {
+                isLoading.value = false;
+            },
+            only: ["assessment"],
+        }
+    );
 }
 
 const assessmentDetailsRef = ref(null);

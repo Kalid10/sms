@@ -87,6 +87,30 @@ class AssessmentController extends Controller
         ]);
     }
 
+    public function detail(Assessment $assessment): Response
+    {
+        $assessment = $this->populateAssessmentDetails(collect([$assessment]))->first();
+
+        $completedAssessments = Assessment::where([
+            ['status', Assessment::STATUS_COMPLETED],
+            ['quarter_id', Quarter::getActiveQuarter()->id],
+            ['batch_subject_id', $assessment->batch_subject_id],
+            ['assessment_type_id', $assessment->assessment_type_id],
+        ])->get();
+
+        $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments,customizable', 'batchSubject:id,batch_id,subject_id',
+            'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
+            'students:id,student_id,assessment_id,point,comment',
+            'students.student:id,user_id', 'students.student.user:id,name');
+
+        $assessment->assessment_type_points_sum = $completedAssessments->sum('maximum_point');
+        $assessment->assessment_type_completed_count = $completedAssessments->count();
+
+        return Inertia::render('Teacher/Assessments/Index', [
+            'assessment' => $assessment,
+        ]);
+    }
+
     public function teacherAssessments(Request $request): Response
     {
         $request->validate([
@@ -153,8 +177,6 @@ class AssessmentController extends Controller
             ])
             ->orderBy('due_date', 'asc')
             ->paginate(15);
-
-        $assessments = $this->populateAssessmentDetails($assessments);
 
         return Inertia::render('Teacher/Assessments/Index', [
             'assessments' => $assessments,
