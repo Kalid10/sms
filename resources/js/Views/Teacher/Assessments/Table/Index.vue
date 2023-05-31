@@ -27,7 +27,7 @@
                         :class="{
                             'bg-zinc-800 text-white': data === 'Draft',
                             'bg-emerald-400': data === 'Published',
-                            'bg-blue-200': data === 'Marking',
+                            'bg-indigo-400 text-white': data === 'Marking',
                             'bg-yellow-400': data === 'Completed',
                             'bg-cyan-400': data === 'Scheduled',
                         }"

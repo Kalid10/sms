@@ -2,7 +2,7 @@
     <div class="flex w-full items-center justify-center">
         <SecondaryButton
             title="CONTINUE MARKING"
-            class="w-44 rounded-xl bg-emerald-400 font-semibold"
+            class="w-44 rounded-xl bg-indigo-400 font-semibold text-white lg:w-56"
             @click="startMarking"
         />
     </div>

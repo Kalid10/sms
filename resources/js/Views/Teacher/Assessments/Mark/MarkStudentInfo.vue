@@ -98,7 +98,7 @@
             </div>
             <div
                 v-if="student.assessment_quarter_grade.length === 0"
-                class="px-4 text-xs font-light lg:text-xs"
+                class="w-9/12 px-4 text-xs font-light lg:text-xs"
             >
                 At present,
                 <span

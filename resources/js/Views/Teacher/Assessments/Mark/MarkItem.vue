@@ -6,7 +6,7 @@
         <div
             v-for="(item, index) in assessment.students"
             :key="index"
-            class="flex w-full cursor-pointer flex-col justify-between rounded-md pl-2 text-sm text-black hover:bg-gray-50"
+            class="flex w-full cursor-pointer flex-col justify-between rounded-md pl-2 text-sm text-black"
             :class="{
                 'blur-effect hover:bg-white':
                     isInputFocused && focusedInputIndex !== index,
@@ -14,7 +14,8 @@
                 'focus-effect bg-black text-white':
                     focusedInputIndex === index &&
                     selectedCommentInput === null,
-                'bg-zinc-100 ': index % 2 === 0 && !isInputFocused,
+                'bg-zinc-100 hover:bg-gray-50':
+                    index % 2 === 0 && !isInputFocused,
 
                 'bg-black text-white hover:bg-black':
                     isInputFocused &&
@@ -97,6 +98,7 @@
                         item.student.user.name +
                         '.\nNote: This feedback will be accessible to parents, teachers, and principals.'
                     "
+                    @focusout="selectedCommentInput = null"
                 />
             </div>
             <p
