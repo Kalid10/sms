@@ -115,7 +115,7 @@ const showDialog = ref(false);
 
 function updateAssessment() {
     router.post("/teacher/assessments/update", {
-        title: title.value,
+        title: props.assessment.title,
         description: props.assessment.description,
         maximum_point: props.assessment.maximum_point,
         assessment_id: props.assessment.id,

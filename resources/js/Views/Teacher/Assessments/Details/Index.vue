@@ -20,6 +20,10 @@
                 v-if="assessment.status === 'draft'"
                 :assessment="assessment"
             />
+            <Scheduled
+                v-if="assessment.status === 'scheduled'"
+                :assessment="assessment"
+            />
             <Published
                 v-if="assessment.status === 'published'"
                 :assessment="assessment"
@@ -60,6 +64,7 @@ import Modal from "@/Components/Modal.vue";
 import Published from "@/Views/Teacher/Assessments/Details/Published.vue";
 import Completed from "@/Views/Teacher/Assessments/Details/Completed.vue";
 import Marking from "@/Views/Teacher/Assessments/Details/Marking.vue";
+import Scheduled from "@/Views/Teacher/Assessments/Details/Scheduled.vue";
 
 const props = defineProps({
     assessment: {

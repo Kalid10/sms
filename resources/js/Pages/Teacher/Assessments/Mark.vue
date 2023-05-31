@@ -40,11 +40,15 @@
                     {{ assessment.title }} Info
                 </div>
 
-                <MarkStat :points="points" @update-student="getStudentDetail" />
+                <MarkStat
+                    :points="points"
+                    class="animate-scale-up"
+                    @update-student="getStudentDetail"
+                />
 
                 <div
                     v-if="assessment.status === 'completed'"
-                    class="flex w-full flex-col space-y-2"
+                    class="flex w-full animate-scale-up flex-col space-y-2"
                 >
                     <ResultStatistics :assessment="assessment" />
                     <StudentScoreList
@@ -55,11 +59,11 @@
 
                 <div class="h-[0.01rem] w-full bg-gray-100"></div>
 
-                <MarkStudentInfo ref="studentInfo" />
+                <MarkStudentInfo ref="studentInfo" class="animate-scale-up" />
 
                 <div
                     v-if="showFinishMarkingButton"
-                    class="flex h-fit w-full flex-col items-center space-y-4 rounded-md border-2 border-black px-2 py-3 text-center font-semibold lg:w-10/12 2xl:w-9/12"
+                    class="flex h-fit w-full animate-scale-up flex-col items-center space-y-4 rounded-md border-2 border-black px-2 py-3 text-center font-semibold lg:w-10/12 2xl:w-9/12"
                 >
                     <div
                         class="flex w-full items-center justify-center space-x-1 text-xs font-light"
