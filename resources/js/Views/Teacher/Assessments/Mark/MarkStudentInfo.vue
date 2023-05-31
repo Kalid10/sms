@@ -55,7 +55,12 @@
                 <div class="text-xs font-light">Total Result</div>
             </div>
             <div class="w-4/12 text-center">
-                <div class="text-2xl font-bold">27</div>
+                <div class="text-2xl font-bold">
+                    <span v-if="student.batch_subject_rank">
+                        {{ student.batch_subject_rank }}
+                    </span>
+                    <span v-else> - </span>
+                </div>
                 <div class="text-[0.65rem] font-light">Rank</div>
             </div>
         </div>

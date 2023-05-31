@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Events\MarkAssessmentEvent;
 use App\Models\Assessment;
 use App\Models\GradeScale;
+use App\Models\Quarter;
 use App\Models\StudentAssessment;
 use App\Models\StudentAssessmentsGrade;
 use App\Models\StudentGrade;
@@ -54,6 +55,7 @@ class StudentGradeHelper
             self::updateStudentAssessmentsQuarterGrades($student_points->pluck('student_id'), $assessment);
             self::updateStudentSubjectQuarterGrades($student_points->pluck('student_id'), $assessment);
             self::updateStudentQuarterGrade($student_points->pluck('student_id'), $assessment);
+            self::updateStudentSubjectRank($assessment);
 
             $assessment->update([
                 'status' => Assessment::STATUS_COMPLETED,
@@ -185,6 +187,47 @@ class StudentGradeHelper
                 )->id,
             ]);
         });
+    }
+
+    /**
+     * @return void
+     *
+     * Calculate and update students' batch subject rank
+     * for a given assessment
+     */
+    private static function updateStudentSubjectRank(Assessment $assessment): void
+    {
+        // Get all the student scores for a given batch subject and quarter
+        $studentScores = StudentSubjectGrade::where([
+            'batch_subject_id' => $assessment->batch_subject_id,
+            'gradable_type' => Quarter::class,
+            'gradable_id' => $assessment->quarter_id,
+        ])
+            ->orderBy('score', 'desc')
+            ->get();
+
+        // Calculate rank and update
+        $rank = 0;
+        $lastScore = null;
+        $numWithSameScore = 0;
+
+        foreach ($studentScores as $studentScore) {
+            if ($lastScore !== $studentScore->score) {
+                // If current score is different from last score,
+                // increment rank by the number of students with the same score
+                $rank += $numWithSameScore + 1;
+                $numWithSameScore = 0;
+            } else {
+                // If current score is same as last score, increment the count
+                $numWithSameScore++;
+            }
+
+            // Update the rank
+            $studentScore->update(['rank' => $rank]);
+
+            // Update last score for next iteration
+            $lastScore = $studentScore->score;
+        }
     }
 
     /**
