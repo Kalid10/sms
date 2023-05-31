@@ -77,9 +77,10 @@
                         semester.
                     </div>
                     <SecondaryButton
+                        :is-disabled="isLoading"
                         title="Finish Marking"
                         class="w-3/5 rounded-2xl bg-zinc-800 text-white"
-                        @click="insertStudentsAssessment"
+                        @click.="insertStudentsAssessment"
                     />
                 </div>
             </div>
