@@ -32,5 +32,6 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('
         Route::get('', 'teacherAssessments')->name('teacher');
         Route::post('update', 'update')->name('update');
         Route::get('{assessment}', 'detail')->name('detail');
+        Route::delete('delete/{assessment}', 'delete')->name('delete');
     });
 });

@@ -55,6 +55,22 @@ class AssessmentController extends Controller
         return redirect()->back()->with('success', 'Assessment updated successfully!');
     }
 
+    public function delete(Assessment $assessment, Request $request): RedirectResponse
+    {
+        $confirmation = $request->query('confirmation');
+
+        if ($confirmation !== $assessment->title) {
+            return redirect()->back()->with('error', 'Incorrect confirmation text.');
+        }
+        if ($assessment->status === Assessment::STATUS_COMPLETED || $assessment->status === Assessment::STATUS_MARKING) {
+            return redirect()->back()->with('error', 'Cannot delete '.$assessment->status.' assessment.');
+        }
+
+        $assessment->delete();
+
+        return redirect()->to(route('teacher.assessment.teacher'))->with('success', 'Assessment deleted successfully!');
+    }
+
     public function mark(Request $request, Assessment $assessment): Response|RedirectResponse
     {
         $request->validate([

@@ -1,6 +1,8 @@
 <template>
     <div v-if="assessment" class="flex h-full w-full justify-center">
-        <div class="flex w-full flex-col space-y-8 lg:w-10/12 2xl:w-9/12">
+        <div
+            class="flex w-full flex-col items-center space-y-10 lg:w-10/12 2xl:w-9/12"
+        >
             <Header
                 :title="title"
                 class="w-full text-center"
@@ -37,6 +39,8 @@
                 :assessment="assessment"
             />
 
+            <DeleteAssessment :assessment="assessment" />
+
             <Modal v-model:view="showUpdateForm">
                 <UpdateAssessmentForm
                     v-if="assessment.status !== 'completed'"
@@ -54,7 +58,6 @@
 </template>
 <script setup>
 import { computed, ref } from "vue";
-import { router } from "@inertiajs/vue3";
 import Draft from "@/Views/Teacher/Assessments/Details/Draft.vue";
 import UpdateAssessmentForm from "@/Views/Teacher/Assessments/AssessmentForm.vue";
 import AssessmentTypeDetailInfo from "@/Views/Teacher/Assessments/Details/Views/AssessmenTypeDetailInfo.vue";
@@ -65,6 +68,7 @@ import Published from "@/Views/Teacher/Assessments/Details/Published.vue";
 import Completed from "@/Views/Teacher/Assessments/Details/Completed.vue";
 import Marking from "@/Views/Teacher/Assessments/Details/Marking.vue";
 import Scheduled from "@/Views/Teacher/Assessments/Details/Scheduled.vue";
+import DeleteAssessment from "@/Views/Teacher/Assessments/Details/Views/DeleteAssessment.vue";
 
 const props = defineProps({
     assessment: {
@@ -81,11 +85,5 @@ const title = computed(
         props.assessment.batch_subject.batch.level.name +
         props.assessment.batch_subject.batch.section
 );
-
-function startMarking() {
-    router.get("/teacher/assessments/mark/" + props.assessment.id, {
-        student_id: props.assessment.id,
-    });
-}
 </script>
 <style scoped></style>
