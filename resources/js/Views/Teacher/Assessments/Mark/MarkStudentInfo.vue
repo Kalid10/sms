@@ -46,7 +46,12 @@
                 <div class="text-xs font-light">Attendance</div>
             </div>
             <div class="w-4/12 text-center">
-                <div class="text-2xl font-bold">90</div>
+                <div class="text-2xl font-bold">
+                    <span v-if="student.total_batch_subject_grade">
+                        {{ student.total_batch_subject_grade?.toFixed(1) }}
+                    </span>
+                    <span v-else> - </span>
+                </div>
                 <div class="text-xs font-light">Total Result</div>
             </div>
             <div class="w-4/12 text-center">
@@ -80,7 +85,7 @@
 
                 <div class="flex w-5/12 justify-center space-x-0.5 font-light">
                     <span class="w-5/12 text-center text-sm">
-                        {{ item.score.toFixed(2) }}%
+                        {{ item.score?.toFixed(2) }}%
                     </span>
                     <span
                         class="flex h-5 w-5 items-center justify-center rounded-full text-center text-xs font-bold text-white"

@@ -127,7 +127,7 @@ class Student extends Model
         });
     }
 
-    public function studentAssessmentsGrades(): HasMany
+    public function assessmentsGrades(): HasMany
     {
         return $this->hasMany(StudentAssessmentsGrade::class);
     }
@@ -139,7 +139,7 @@ class Student extends Model
         int $schoolYearId = null,
         int $assessmentTypeId = null,
     ): Collection {
-        $query = $this->studentAssessmentsGrades();
+        $query = $this->assessmentsGrades();
 
         $query->when($quarterId, function ($query) use ($quarterId) {
             $query->where('gradable_type', Quarter::class)
@@ -170,5 +170,26 @@ class Student extends Model
         );
 
         return $query->with('assessmentType', 'gradeScale')->get();
+    }
+
+    public function studentSubjectGrades(): HasMany
+    {
+        return $this->hasMany(StudentSubjectGrade::class);
+    }
+
+    public function fetchBatchSubjectGrade(int $batchSubjectId = null, int $quarterId = null, int $semesterId = null): Collection
+    {
+        return $this->studentSubjectGrades()->where('batch_subject_id', $batchSubjectId)
+            ->when($quarterId, function ($query) use ($quarterId) {
+                $query->where('gradable_type', Quarter::class)
+                    ->where('gradable_id', $quarterId);
+            }
+            )
+            ->when($semesterId, function ($query) use ($semesterId) {
+                $query->where('gradable_type', Semester::class)
+                    ->where('gradable_id', $semesterId);
+            }
+            )
+            ->get();
     }
 }

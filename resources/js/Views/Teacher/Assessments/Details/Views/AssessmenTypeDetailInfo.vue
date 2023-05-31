@@ -12,7 +12,9 @@
                             : 'w-8/12 pl-4 text-black 2xl:text-xl'
                     "
                 >
-                    <span class="-skew-x-3 bg-yellow-400 px-2 py-0.5 italic">
+                    <span
+                        class="-skew-x-3 bg-zinc-800 px-2.5 py-0.5 italic text-white"
+                    >
                         {{ assessment.assessment_type.name }} (
 
                         <span
@@ -97,8 +99,6 @@
             <div
                 class="flex w-full items-center justify-center bg-gray-50 px-4 py-2 text-[0.65rem] font-light"
             >
-                <InformationCircleIcon class="mr-2 w-5 text-zinc-800" />
-
                 <div class="text-center">
                     At the conclusion of the quarter or semester, all the
 
@@ -115,7 +115,7 @@
             </div>
             <div
                 v-if="assessment.status !== 'completed'"
-                class="my-1 flex w-11/12 cursor-pointer justify-center rounded-2xl bg-zinc-800 py-1.5 text-center text-[0.6rem] font-semibold text-white lg:w-1/2 2xl:w-5/12 2xl:text-[0.65rem]"
+                class="my-1 flex w-11/12 cursor-pointer justify-center rounded-2xl bg-zinc-800 py-1.5 text-center text-[0.6rem] font-semibold text-white lg:w-1/2 2xl:w-5/12 2xl:text-xs"
                 @click="$emit('update')"
             >
                 UPDATE ASSESSMENT
@@ -131,7 +131,6 @@
 </template>
 <script setup>
 import LinkCell from "@/Components/LinkCell.vue";
-import { InformationCircleIcon } from "@heroicons/vue/24/outline";
 import { computed } from "vue";
 
 defineEmits("update");

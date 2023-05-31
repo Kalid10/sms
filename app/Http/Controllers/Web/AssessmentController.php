@@ -74,6 +74,7 @@ class AssessmentController extends Controller
             $student = Student::find($request->input('student_id'))->load('user:id,name');
             $student->absentee_percentage = $student->absenteePercentage();
             $student->assessment_quarter_grade = $student->fetchAssessmentsGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id);
+            $student->total_batch_subject_grade = $student->fetchBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->score;
         }
 
         $assessment = $this->populateAssessmentDetails(collect([$assessment]))->first();

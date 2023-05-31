@@ -11,8 +11,6 @@
         <div
             class="flex w-full bg-gray-50 px-4 py-2 text-center text-[0.65rem] font-light"
         >
-            <InformationCircleIcon class="mr-2 w-7 text-zinc-800" />
-
             <div>
                 Setting an assessment as
                 <span class="font-semibold">" PUBLISHED "</span> or
@@ -94,7 +92,6 @@ import {
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { router } from "@inertiajs/vue3";
 import DialogBox from "@/Components/DialogBox.vue";
-import { InformationCircleIcon } from "@heroicons/vue/24/outline";
 import DatePicker from "@/Components/DatePicker.vue";
 
 const props = defineProps({
