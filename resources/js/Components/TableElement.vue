@@ -173,23 +173,10 @@
 
         <div
             v-if="footer && !emptyData"
-            class="flex gap-3 bg-neutral-50 p-4"
+            class="flex gap-3 p-4"
             :class="footerStyle"
         >
-            <slot name="footer">
-                <div class="flex w-full items-center gap-3 lg:justify-end">
-                    <TertiaryButton
-                        :click="() => {}"
-                        class="w-full lg:w-fit lg:text-right"
-                        title="Previous"
-                    />
-                    <TertiaryButton
-                        :click="() => {}"
-                        class="w-full lg:w-fit lg:text-right"
-                        title="Next"
-                    />
-                </div>
-            </slot>
+            <slot name="footer"> </slot>
         </div>
     </div>
 </template>
