@@ -9,14 +9,22 @@ class AssessmentObserver
 {
     public function updated(Assessment $assessment): void
     {
-        if ($assessment->isDirty('status') && $assessment->status === Assessment::STATUS_PUBLISHED) {
+        if ($assessment->isDirty('status') && $assessment->status === Assessment::STATUS_SCHEDULED) {
             $this->createStudentAssessments($assessment);
+        }
+
+        if ($assessment->isDirty('status') && $assessment->status === Assessment::STATUS_DRAFT) {
+            $studentAssessments = StudentAssessment::where('assessment_id', $assessment->id)->whereNotNull('points')->get();
+            if ($studentAssessments->count() > 0) {
+                return;
+            }
+            StudentAssessment::where('assessment_id', $assessment->id)->delete();
         }
     }
 
     public function created(Assessment $assessment): void
     {
-        if ($assessment->status === Assessment::STATUS_PUBLISHED) {
+        if ($assessment->status === Assessment::STATUS_SCHEDULED) {
             $this->createStudentAssessments($assessment);
         }
     }
