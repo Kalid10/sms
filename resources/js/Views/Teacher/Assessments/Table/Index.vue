@@ -10,7 +10,7 @@
             :columns="config"
             header-style="!bg-zinc-800 text-white text-xs"
             :filterable="false"
-            :footer="false"
+            :footer="true"
         >
             <template #assessment-column="{ data }">
                 <div
@@ -35,6 +35,10 @@
                     </div>
                 </div>
             </template>
+
+            <template #footer>
+                <Pagination :links="assessments.links" position="center" />
+            </template>
         </TableElement>
     </div>
 </template>
@@ -44,6 +48,7 @@ import TableElement from "@/Components/TableElement.vue";
 import { capitalize, computed, ref, watch } from "vue";
 import moment from "moment";
 import Filters from "@/Views/Teacher/Assessments/Table/Filters/Index.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const emit = defineEmits(["click", "create"]);
 const assessments = computed(() => usePage().props.assessments);
