@@ -99,7 +99,7 @@ class AssessmentController extends Controller
         return Inertia::render('Teacher/Assessments/Mark', [
             'assessment' => $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments', 'batchSubject:id,batch_id,subject_id',
                 'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
-                'students:id,student_id,assessment_id,point,comment',
+                'students:id,student_id,assessment_id,point,comment,status',
                 'students.student:id,user_id', 'students.student.user:id,name'),
             'student' => $student,
         ]);
@@ -118,7 +118,7 @@ class AssessmentController extends Controller
 
         $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments,customizable', 'batchSubject:id,batch_id,subject_id',
             'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
-            'students:id,student_id,assessment_id,point,comment',
+            'students:id,student_id,assessment_id,point,comment,status',
             'students.student:id,user_id', 'students.student.user:id,name');
 
         $assessment->assessment_type_points_sum = $completedAssessments->sum('maximum_point');

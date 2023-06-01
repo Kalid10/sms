@@ -11,9 +11,7 @@ class StudentAssessment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const STATUS_VALID = 'valid';
-
-    const STATUS_INVALID = 'invalid';
+    const STATUS_VALID_REASSESSMENT = 'valid_reassessment';
 
     const STATUS_DISQUALIFIED = 'disqualified';
 

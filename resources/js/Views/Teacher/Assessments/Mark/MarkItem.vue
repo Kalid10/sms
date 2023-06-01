@@ -15,7 +15,7 @@
                     focusedInputIndex === index &&
                     selectedCommentInput === null,
                 'bg-zinc-100 hover:bg-gray-50':
-                    index % 2 === 0 && !isInputFocused,
+                    index % 2 === 0 && !isInputFocused && item.status === null,
 
                 'bg-black text-white hover:bg-black':
                     isInputFocused &&
@@ -23,6 +23,16 @@
                     selectedCommentInput === null,
 
                 'border-2 border-red-500': errors[`points.${index}.point`],
+
+                'bg-gradient-to-bl from-red-600 to-orange-500 text-white':
+                    item.status === 'misconduct' ||
+                    points[index].status === 'misconduct',
+                'bg-gradient-to-br from-yellow-400 to-orange-500 text-white':
+                    item.status === 'disqualified' ||
+                    points[index].status === 'disqualified',
+                'bg-gradient-to-bl from-purple-600 to-fuchsia-500  text-white':
+                    item.status === 'valid_reassessment' ||
+                    points[index].status === 'valid_reassessment',
             }"
             @click.stop="handleRowClick(index, item.student.id)"
         >
@@ -46,11 +56,15 @@
                     </span>
                 </div>
 
-                <div class="flex w-4/12 justify-end space-x-2 pr-2">
+                <div class="flex w-5/12 justify-end space-x-5 pr-2">
                     <div
                         class="flex flex-col items-center justify-evenly text-xl font-semibold"
                     >
                         <input
+                            v-if="
+                                item.status === null &&
+                                points[index].status === null
+                            "
                             :ref="
                                 (el) => {
                                     inputRefs[index] = el;
@@ -63,27 +77,71 @@
                             class="mr-2 w-20 rounded-md border-none bg-white text-xs text-black transition-transform focus:ring-black"
                             :class="{
                                 'bg-zinc-100 ': index % 2 === 0,
-                                'border-red-500':
+                                'border-red-600':
                                     errors[`points.${index}.point`],
+                                'bg-white opacity-20':
+                                    item.status !== null ||
+                                    points[index].status !== null,
                             }"
                             placeholder="-"
+                            :disabled="
+                                item.status !== null ||
+                                points[index].status !== null
+                            "
                             @focusin="handleFocusIn(index)"
                             @focusout="handleFocusOut()"
                             @keydown="onKeyDown($event, index)"
                             @change="$emit('updatePoints', points)"
                         />
                     </div>
+                    <ArrowPathRoundedSquareIcon
+                        class="w-5 hover:scale-125"
+                        :class="
+                            points[index].status === 'valid_reassessment'
+                                ? 'text-black'
+                                : 'text-gray-300 hover:text-purple-500'
+                        "
+                        @click="
+                            points[index].status = 'valid_reassessment';
+                            $emit('updatePoints', points);
+                        "
+                    />
+                    <ArchiveBoxXMarkIcon
+                        class="w-5 hover:scale-125"
+                        :class="
+                            points[index].status === 'disqualified'
+                                ? 'text-black'
+                                : 'text-gray-300 hover:text-black'
+                        "
+                        @click="
+                            points[index].status = 'disqualified';
+                            $emit('updatePoints', points);
+                        "
+                    />
+                    <BookmarkSlashIcon
+                        class="w-5 hover:scale-125"
+                        :class="
+                            points[index].status === 'misconduct'
+                                ? 'text-black'
+                                : 'text-gray-300 hover:text-black'
+                        "
+                        @click="
+                            points[index].status = 'misconduct';
+                            $emit('updatePoints', points);
+                        "
+                    />
                     <ChatBubbleBottomCenterIcon
                         class="w-5 hover:scale-125"
                         :class="
                             points[index].comment
-                                ? 'text-zinc-800'
-                                : 'text-gray-300'
+                                ? 'text-black'
+                                : 'text-gray-300 hover:text-black'
                         "
                         @click="
                             selectedCommentInput === index
                                 ? (selectedCommentInput = null)
-                                : (selectedCommentInput = index)
+                                : (selectedCommentInput = index);
+                            $emit('updatePoints', points);
                         "
                     />
                 </div>
@@ -113,7 +171,12 @@
 <script setup>
 import { computed, nextTick, reactive, ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import { ChatBubbleBottomCenterIcon } from "@heroicons/vue/20/solid/index.js";
+import {
+    ArchiveBoxXMarkIcon,
+    ArrowPathRoundedSquareIcon,
+    BookmarkSlashIcon,
+    ChatBubbleBottomCenterIcon,
+} from "@heroicons/vue/20/solid/index.js";
 import TextArea from "@/Components/TextArea.vue";
 import Error from "@/Components/Error.vue";
 
@@ -124,6 +187,7 @@ const points = reactive(
         student_id: item.student.id,
         point: item.point || null, // If there's a previously set point, use that. Otherwise, default to null
         comment: item.comment,
+        status: item.status,
     }))
 );
 const errors = computed(() => {
