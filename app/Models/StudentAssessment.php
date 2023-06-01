@@ -11,6 +11,14 @@ class StudentAssessment extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const STATUS_VALID = 'valid';
+
+    const STATUS_INVALID = 'invalid';
+
+    const STATUS_DISQUALIFIED = 'disqualified';
+
+    const STATUS_MISCONDUCT = 'misconduct';
+
     protected $fillable = [
         'assessment_id',
         'student_id',
