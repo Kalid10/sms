@@ -30,12 +30,12 @@ class GettingStartedController extends Controller
             $step = $step + 1;
         }
 
-        return Inertia::render('GettingStarted/Index', [
+        return Inertia::render('Admin/GettingStarted/Index', [
             'step' => $step,
             'levels' => Level::with('levelCategory')->get(),
             'batches' => Inertia::lazy(fn () => Batch::active(['level'])),
             'subjects' => Inertia::lazy(fn () => Subject::all()),
-            'level_categories' => Inertia::lazy(fn () => LevelCategory::all()),
+            'level_categories' => LevelCategory::all(),
             'school_periods' => SchoolPeriod::with('levelCategory')->get(),
             'school_schedule' => SchoolSchedule::all(),
         ]);
@@ -43,21 +43,21 @@ class GettingStartedController extends Controller
 
     public function schoolSchedule(): Response
     {
-        return Inertia::render('GettingStarted/SchoolSchedule', [
+        return Inertia::render('Admin/GettingStarted/SchoolSchedule', [
             'school_schedule' => SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->get(),
         ]);
     }
 
     public function schoolPeriod(): Response
     {
-        return Inertia::render('GettingStarted/SchoolPeriod', [
+        return Inertia::render('Admin/GettingStarted/SchoolPeriod', [
             'level_categories' => Inertia::lazy(fn () => LevelCategory::all()),
         ]);
     }
 
     public function classSchedule(): Response
     {
-        return Inertia::render('GettingStarted/ClassSchedule', [
+        return Inertia::render('Admin/GettingStarted/ClassSchedule', [
             'school_schedule' => SchoolSchedule::all(),
         ]);
     }

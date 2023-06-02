@@ -58,7 +58,7 @@ class LevelController extends Controller
         // Get section filter
         $sectionFilter = $request->input('section');
 
-        return Inertia::render('Levels/Single', [
+        return Inertia::render('Admin/Levels/Single', [
             'level' => $level->load([
                 'levelCategory',
                 'batches.schoolYear',

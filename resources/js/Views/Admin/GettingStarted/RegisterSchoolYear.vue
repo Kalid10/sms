@@ -73,29 +73,47 @@
                     class="w-72"
                     placeholder="Number of Semesters"
                 />
-                <SelectInput
-                    v-model="formData.number_of_quarters"
-                    :options="noOfQuarters"
-                    :label="
+
+
+                <div
+                    v-if="hideQuarter"
+                    class="flex w-72 flex-col"
+                >
+                    <SelectInput
+                        v-model="formData.number_of_quarters"
+                        :options="noOfQuarters"
+                        :label="
                     !!formData.number_of_quarters ? 'Number of Quarters within a Semester' : ''
                 "
-                    :label-location="!!formData.number_of_quarters ? 'inside' : ''"
-                    placeholder="Number of Quarters in a Semester"
-                    class="w-72"/>
+                        :label-location="!!formData.number_of_quarters ? 'inside' : ''"
+                        placeholder="Number of Quarters in a Semester"
+                        class="w-72"/>
 
-                <div class="mt-8 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center text-gray-500">
-                    <p class="text-xs">
-                        The upcoming academic year, <span class="font-bold text-gray-700">{{ formData.name }}</span>
-                        , will consist of
-                        <span class="font-bold text-gray-700">{{ formData.number_of_semesters }} semesters,</span>
-                        each divided into
-                        <span class="font-bold text-gray-700">
+                    <div class="p-2 text-xs text-gray-400">
+                        <span>
+                            If there is no quarter in your school system, you can remove the quarter ->
+                        </span>
+                        <span class="ml-2 cursor-pointer text-red-500" @click="hideQuarters">
+                             Remove Quarter
+                        </span>
+                    </div>
+
+                    <div
+                        class="mt-5 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center text-gray-500">
+                        <p class="text-xs">
+                            The upcoming academic year, <span class="font-bold text-gray-700">{{ formData.name }}</span>
+                            , will consist of
+                            <span class="font-bold text-gray-700">{{ formData.number_of_semesters }} semesters,</span>
+                            each divided into
+                            <span class="font-bold text-gray-700">
                             {{ formData.number_of_quarters }} quarters,
                         </span>
-                        resulting in a total of
-                        <span class="font-bold text-gray-700">{{ totalQuarters }}  quarters.</span>
-                    </p>
+                            resulting in a total of
+                            <span class="font-bold text-gray-700">{{ totalQuarters }}  quarters.</span>
+                        </p>
+                    </div>
                 </div>
+
 
                 <PrimaryButton
                     :disabled="!formComplete"
@@ -118,6 +136,13 @@ import DatePicker from "@/Components/DatePicker.vue";
 import Heading from "@/Components/Heading.vue";
 
 const emits = defineEmits(["success"]);
+
+const hideQuarter = ref(true);
+
+function hideQuarters() {
+    hideQuarter.value = false;
+    formData.number_of_quarters = null;
+}
 
 const noOfSemesters = [
     {value: 1, label: 1},
@@ -148,7 +173,7 @@ const formData = useForm({
     name: "2022/2023",
     number_of_semesters: 3,
     start_date: null,
-    number_of_quarters: 4,
+    number_of_quarters: 2,
 });
 
 const formComplete = computed(() => {

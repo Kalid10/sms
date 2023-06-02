@@ -1,7 +1,7 @@
 <template>
     <div class="my-5 w-10/12">
         <div class="my-5 mb-8 flex flex-row items-center gap-2">
-            <QueueListIcon class="h-6 w-6" />
+            <QueueListIcon class="h-6 w-6"/>
             <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
                 Dashboard
             </h1>
@@ -13,18 +13,18 @@
             :admins-count="adminsCount"
         />
 
-        <div class="flex w-full">
-            <div class="mr-2 w-full rounded border shadow-sm">
+        <div class="flex w-full flex-col gap-2 md:flex-row">
+            <div class="mr-2 w-full rounded border shadow-sm lg:w-2/3">
                 <h1 class="p-2">Overview</h1>
-                <Graph />
+                <Graph/>
             </div>
 
-            <div class="w-1/3 rounded border shadow-sm">
-                <LevelsTable :config="configLevels" :levels="levels" />
+            <div class="rounded border shadow-sm lg:w-1/3">
+                <LevelsTable :config="configLevels" :levels="levels"/>
             </div>
         </div>
 
-        <Management :user-roles="userRoles" />
+        <Management :user-roles="userRoles"/>
 
         <AdminsTable
             :admins="admins"
@@ -34,14 +34,14 @@
     </div>
 </template>
 <script setup>
-import { computed } from "vue";
+import {computed} from "vue";
 import moment from "moment/moment";
-import Statistics from "@/Pages/Admin/Analytics/Statistics.vue";
-import Management from "@/Pages/Admin/Management.vue";
-import Graph from "@/Pages/Admin/Analytics/Graph.vue";
-import { usePage } from "@inertiajs/vue3";
+import Statistics from "@/Views/Admin/Analytics/Statistics.vue";
+import Management from "@/Views/Admin/Management.vue";
+import Graph from "@/Views/Admin/Analytics/Graph.vue";
+import {usePage} from "@inertiajs/vue3";
 import LevelsTable from "@/Views/Admin/Levels/LevelsTable.vue";
-import { QueueListIcon } from "@heroicons/vue/24/solid";
+import {QueueListIcon} from "@heroicons/vue/24/solid";
 import AdminsTable from "@/Views/Admin/AdminsTable.vue";
 
 const teachersCount = computed(() => usePage().props.teachers_count);
@@ -83,22 +83,6 @@ const levels = computed(() => {
         };
     });
 });
-
-const activityLogs = computed(() => {
-    return usePage().props.activity_logs;
-});
-
-const log_column = [
-    {
-        name: "Name",
-    },
-    {
-        name: "Description",
-    },
-    {
-        name: "Updated At",
-    },
-];
 
 const configLevels = [
     {

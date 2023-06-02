@@ -78,7 +78,7 @@ class RoleController extends Controller
             ->paginate(10);
 
         // TODO: Change this route to the correct view
-        return Inertia::render('Roles/Index', [
+        return Inertia::render('Admin/Roles/Index', [
             'users' => $users,
         ]);
     }
@@ -100,7 +100,7 @@ class RoleController extends Controller
                 ];
             });
 
-        return Inertia::render('Roles/Detail', [
+        return Inertia::render('Admin/Roles/Detail', [
             'activities' => $activities,
         ]);
     }
@@ -110,7 +110,7 @@ class RoleController extends Controller
         // Get all roles
         $roles = Role::all();
 
-        return Inertia::render('Roles/Detail', [
+        return Inertia::render('Admin/Roles/Detail', [
             'roles' => $roles]);
     }
 
@@ -138,7 +138,7 @@ class RoleController extends Controller
                 });
 
             // TODO: Change this route to the correct view
-            return Inertia::render('Roles/Detail', [
+            return Inertia::render('Admin/Roles/Detail', [
                 'user_roles' => $user->roles,
                 'activities' => $activities,
                 'roles' => Role::all(),

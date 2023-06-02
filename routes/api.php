@@ -21,3 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+$directory = new RecursiveDirectoryIterator(__DIR__.'/api');
+$iterator = new RecursiveIteratorIterator($directory);
+
+foreach ($iterator as $file) {
+    if ($file->getExtension() === 'php') {
+        include $file->getPathname();
+    }
+}

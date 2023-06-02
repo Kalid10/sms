@@ -1,5 +1,12 @@
 <template>
     <div class="">Welcome</div>
+
+    <div>
+        <Localization :current-locale="title">
+            <div class="bg-pink-400 text-2xl">english</div>
+        </Localization>
+    </div>
+
     <div class="grid grid-cols-4 gap-6">
         <button class="h-14 bg-lime-500 " @click="registerBulkUser">Register Bulk User</button>
         <button class="h-14 bg-lime-500 " @click="registerAdmin">Register Admin</button>
@@ -75,13 +82,17 @@
         </button>
         <button class="h-14 bg-purple-500 p-1 text-white" @click="getAssessmentTypes">Test Get Assessment Types</button>
         <button class="h-14 bg-gray-900 p-1 text-white" @click="createStudentNote">Test Create Student Note</button>
-        <button class="h-14 bg-fuchsia-500 p-1 text-white" @click="insertStudentsAssessment">Test Create Student Note</button>
+        <button class="h-14 bg-fuchsia-500 p-1 text-white" @click="insertStudentsAssessment">Test Create Student Note
+        </button>
     </div>
 
 </template>
 <script setup>
 import {router} from "@inertiajs/vue3";
 import {ref} from "vue";
+import Localization from "@/Views/Admin/Language/Localization.vue";
+
+const title = ref('fr')
 
 // Listen for student import broadcast events
 Echo.private('students-import')

@@ -92,4 +92,9 @@ class User extends Authenticatable
     {
         return $this->type === self::TYPE_TEACHER;
     }
+
+    public function guardian(): HasOne
+    {
+        return $this->hasOne(Guardian::class);
+    }
 }

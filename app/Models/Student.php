@@ -192,4 +192,21 @@ class Student extends Model
             )
             ->get();
     }
+
+    public function studentNotes(): HasMany
+    {
+        return $this->hasMany(StudentNote::class);
+    }
+
+    public function subjects(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Subject::class,
+            'batch_subjects',
+            'batch_id',
+            'subject_id',
+            'id',
+            'id'
+        );
+    }
 }

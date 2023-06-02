@@ -30,6 +30,8 @@ class TeacherController extends Controller
     {
         $searchKey = $request->input('search');
 
+        $perPage = $request->input('per_page', 15);
+
         $teachers = Teacher::with([
             'user:id,name,email,phone_number,gender',
             'batchSubjects:id,subject_id,batch_id,teacher_id',
@@ -45,7 +47,7 @@ class TeacherController extends Controller
                     return $query->where('name', 'like', "%{$searchKey}%");
                 });
             })
-            ->paginate(15);
+            ->paginate($perPage);
 
         return Inertia::render('Admin/ /Index', [
             'teachers' => $teachers,

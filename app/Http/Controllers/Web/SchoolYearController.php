@@ -20,7 +20,7 @@ class SchoolYearController extends Controller
             'start_date' => 'required|date|after_or_equal:today',
             'number_of_semesters' => 'required|integer|min:1',
             'name' => 'required|string',
-            'number_of_quarters' => 'required|integer|min:1',
+            'number_of_quarters' => 'nullable|integer|min:1',
         ]);
 
         // Check if there is an ongoing academic year
@@ -42,7 +42,7 @@ class SchoolYearController extends Controller
 
             // Create semester records
             for ($i = 1; $i <= $request->number_of_semesters; $i++) {
-                Semester::create([
+                $semester = Semester::create([
                     'school_year_id' => $schoolYear->id,
                     'name' => "Semester {$i}",
                     'start_date' => $i === 1 ? $startDate : null,
@@ -54,7 +54,9 @@ class SchoolYearController extends Controller
             $semesters = $schoolYear->semesters;
 
             foreach ($semesters as $semester) {
-                for ($i = 1; $i <= $request->number_of_quarters; $i++) {
+                $numberOfQuarters = $request->number_of_quarters ?? 1;
+
+                for ($i = 1; $i <= $numberOfQuarters; $i++) {
                     Quarter::create([
                         'semester_id' => $semester->id,
                         'name' => "Quarter {$i}",

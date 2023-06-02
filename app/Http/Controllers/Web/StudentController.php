@@ -17,6 +17,9 @@ class StudentController extends Controller
     {
         $searchKey = $request->input('search');
 
+        // Get per page value
+        $perPage = $request->input('per_page', 15);
+
         $students = Student::with([
             'user:id,name,email,phone_number,gender',
             'batches.batch:id,section',
@@ -26,10 +29,11 @@ class StudentController extends Controller
                 return $query->whereHas('user', function ($query) use ($searchKey) {
                     return $query->where('name', 'like', "%{$searchKey}%");
                 });
-            })->paginate(15);
+            })->paginate($perPage);
 
         // Get all batches
-        $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level')->get();
+        $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->with('level', 'homeroomTeacher.teacher.user')->get();
 
         $request->validate([
             'batch_id' => 'nullable|exists:batches,id',
@@ -63,7 +67,7 @@ class StudentController extends Controller
             'batches.batch.level',
         );
 
-        return Inertia::render('Students/Single', [
+        return Inertia::render('Admin/Students/Single', [
             'student' => $student,
             'schedule' => $student->activeBatch()->load(
                 'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',

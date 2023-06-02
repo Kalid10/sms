@@ -63,4 +63,9 @@ class SchoolYear extends Model
     {
         return $this->hasMany(Announcement::class);
     }
+
+    public function assessmentTypes(): HasMany
+    {
+        return $this->hasMany(AssessmentType::class);
+    }
 }
