@@ -1,13 +1,15 @@
 <template>
-    <div class="flex h-fit w-full flex-col items-center space-y-2">
-        <div class="w-full text-start text-xl font-semibold">
+    <div
+        class="flex h-fit w-full flex-col items-center space-y-2 rounded-lg bg-white p-3 shadow-sm"
+    >
+        <div class="w-full pb-1 text-start text-2xl font-semibold">
             Class Performance
         </div>
         <div class="w-full pr-5">
             <BatchPerformance />
         </div>
         <div
-            class="flex w-full items-center justify-between divide-x divide-zinc-200 pt-5"
+            class="flex w-full items-center justify-between divide-x divide-zinc-300 pt-5"
         >
             <div class="w-1/2">
                 <StudentsList

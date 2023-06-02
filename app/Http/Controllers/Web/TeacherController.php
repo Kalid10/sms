@@ -122,7 +122,7 @@ class TeacherController extends Controller
             ->get();
 
         // Get lesson plan of the teacher and filter it by batch subject
-        $lessonPlan = $batchSubject->sessions()->whereHas('lessonPlan')->with('lessonPlan', 'batchSchedule.batch.level', 'batchSchedule.batchSubject.subject')->get()->take(3);
+        $lessonPlan = $batchSubject->sessions()->whereHas('lessonPlan')->with('lessonPlan', 'batchSchedule.batch.level', 'batchSchedule.batchSubject.subject')->get()->take(4);
 
         // Get assessments of the teacher and filter it by batch subject
         $assessments = Assessment::where('batch_subject_id', $batchSubject->id)
@@ -131,7 +131,7 @@ class TeacherController extends Controller
                 'batchSubject.batch:id,section,level_id',
                 'batchSubject.batch.level:id,name,level_category_id',
                 'batchSubject.subject:id,full_name')
-            ->get()->take(3);
+            ->get()->take(4);
 
         $batch = Batch::find($batchSubject->batch_id)->load('level:id,name,level_category_id', 'level.levelCategory:id,name');
         $schedule = Batch::find($batchSubject->batch_id)->load(

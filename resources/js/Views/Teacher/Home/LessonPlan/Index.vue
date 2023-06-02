@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="flex h-20 w-full items-center justify-between shadow-sm hover:scale-105 hover:shadow-lg 2xl:h-24"
+            class="flex h-20 w-full items-center justify-between hover:scale-105 hover:shadow-lg 2xl:h-24"
             :class="view === 'class' ? 'rounded-sm' : 'rounded-r-lg'"
         >
             <div

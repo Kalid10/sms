@@ -20,7 +20,7 @@
             <Item
                 :progress-type="progressType"
                 :name="item.name"
-                :rank="rand(1, 30)"
+                :rank="numberWithOrdinal(rand(1, 30))"
                 :attendance="item.attendance"
                 :progress="80"
                 grade="56/60"
@@ -31,6 +31,7 @@
 <script setup>
 import Item from "@/Views/Teacher/Batches/PerformanceHighlights/Item.vue";
 import { rand } from "@vueuse/core";
+import { numberWithOrdinal } from "@/utils";
 
 defineProps({
     progressingStudents: {

@@ -1,104 +1,100 @@
 <template>
-    <div class="grid w-full grid-cols-12 grid-rows-6 p-5">
-        <div class="col-span-12 row-span-1">
-            <div class="flex w-full justify-between">
-                <div class="flex w-10/12 items-end space-x-4">
-                    <!--        Header-->
-                    <Header title="My Classes" class="w-fit" />
+    <div class="flex w-full flex-col space-y-2">
+        <div class="flex w-full justify-between space-x-6 bg-gray-50">
+            <!--        Left Side-->
+            <div class="flex w-8/12 flex-col space-y-2 py-5 pl-5">
+                <div
+                    class="flex w-full items-center justify-between space-x-4 rounded-lg bg-gradient-to-bl from-neutral-700 to-zinc-800 py-6 pl-4 text-gray-200 shadow-sm"
+                >
+                    <Header title="My Classes" class="w-4/12" />
 
-                    <div class="flex h-full w-8/12 items-center justify-evenly">
-                        <!--        Select Batch-->
-                        <SelectInput
-                            v-model="selectedBatchSubject"
-                            class="w-5/12"
-                            :options="batchSubjectOptions"
-                            rounded="rounded-full"
-                        />
-                        <TextInput placeholder="Search" class="w-5/12" />
-                    </div>
-                </div>
-                <!--        Current Class-->
-                <CurrentClass class="py-3" />
-            </div>
-        </div>
-        <div
-            class="col-start-1 row-start-2 row-end-7 h-fit pt-4"
-            :class="
-                isSidebarOpenOnXlDevice ? 'col-span-8 pr-4' : 'col-span-9 pr-10'
-            "
-        >
-            <PerformanceHighlight />
-        </div>
-        <div
-            class="row-start-2 row-end-7 h-fit pt-10"
-            :class="
-                isSidebarOpenOnXlDevice
-                    ? 'col-span-4 col-start-9 pl-5'
-                    : 'col-span-3 col-start-10 mr-3'
-            "
-        >
-            <LessonPlan
-                title="Recent LessonPlans"
-                :props-lesson-plans="lessonPlans"
-                view="class"
-            />
-        </div>
-        <div class="col-span-6 row-start-7 -mt-20 pr-5">
-            <!--        Table-->
-            <TableElement
-                :data="filteredStudents"
-                :title="studentListTitle"
-                :selectable="false"
-                :columns="config"
-                class="!!text-[0.5rem] border-none bg-red-400"
-                :footer="false"
-                header-style="!bg-black text-white !text-[0.65rem]"
-            >
-                <template #filter>
-                    <div class="flex h-full w-full justify-between text-center">
-                        <TextInput
-                            v-model="searchText"
-                            placeholder="Search"
-                            class="w-5/12"
-                        />
-
-                        <div>
-                            <div class="mb-1 text-[0.55rem] font-light">
-                                Homeroom Teacher
-                            </div>
-                            <div
-                                class="cursor-pointer text-xs font-semibold underline-offset-2 hover:underline"
-                            >
-                                Mr.Bereket Gobeze
-                            </div>
+                    <div
+                        class="flex h-full items-center justify-between divide-x divide-white lg:w-8/12"
+                    >
+                        <div class="flex w-8/12 justify-center">
+                            <SelectInput
+                                v-model="selectedBatchSubject"
+                                class="w-10/12 text-black"
+                                :options="batchSubjectOptions"
+                                rounded="rounded-full"
+                            />
+                        </div>
+                        <div class="w-4/12 px-1">
+                            <CurrentClass />
                         </div>
                     </div>
-                </template>
-            </TableElement>
-        </div>
+                </div>
+                <div class="pt-4">
+                    <PerformanceHighlight />
+                </div>
+                <div class="flex w-full justify-between rounded-lg shadow-sm">
+                    <!--        Table-->
+                    <TableElement
+                        :data="filteredStudents"
+                        :title="studentListTitle"
+                        :selectable="false"
+                        :columns="config"
+                        class="!!text-[0.5rem] border-none bg-red-400"
+                        :footer="false"
+                        header-style="!bg-black text-white !text-[0.65rem]"
+                    >
+                        <template #filter>
+                            <div
+                                class="flex h-full w-full justify-between text-center"
+                            >
+                                <TextInput
+                                    v-model="searchText"
+                                    placeholder="Search"
+                                    class="w-5/12"
+                                />
 
-        <div
-            class="-mt-12 flex flex-col"
-            :class="
-                isSidebarOpenOnXlDevice
-                    ? 'col-span-6 col-start-7  ml-10'
-                    : 'col-span-5 col-start-8'
-            "
-        >
-            <!--            <div-->
-            <!--                class="flex h-2/6 items-center justify-center rounded-sm bg-black text-white shadow-md"-->
-            <!--            ></div>-->
-            <Assessment
-                title="Recent Assessments"
-                :assessments="assessments"
-                view="class"
-            />
-        </div>
-        <div class="col-span-12 mt-7 min-h-screen">
-            <div class="h-4/6 rounded-md bg-white p-7 text-black">
-                <StudentSemesterSchedule class="h-full" />
+                                <div>
+                                    <div class="mb-1 text-[0.55rem] font-light">
+                                        Homeroom Teacher
+                                    </div>
+                                    <div
+                                        class="cursor-pointer text-xs font-semibold underline-offset-2 hover:underline"
+                                    >
+                                        Mr.Bereket Gobeze
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </TableElement>
+                </div>
+            </div>
+
+            <!--        Right side-->
+            <div
+                class="flex w-4/12 flex-col items-center space-y-6 border-l bg-gray-50 px-3 py-5 pl-5"
+            >
+                <!--                <div class="w-11/12">-->
+                <!--                    <SchoolSchedule />-->
+                <!--                </div>-->
+                <div class="w-full rounded-lg bg-white p-2 shadow-sm">
+                    <Assessment
+                        class=""
+                        title="Recent Assessments"
+                        :assessments="assessments"
+                        view="class"
+                    />
+                </div>
+                <div class="rounded-lg bg-white px-3 pt-2 shadow-sm">
+                    <LessonPlan
+                        title="Recent LessonPlans"
+                        :props-lesson-plans="lessonPlans"
+                        view="class"
+                    />
+                </div>
             </div>
         </div>
+        <!--        <div class="flex h-screen justify-center">-->
+        <!--            <div-->
+        <!--                class="h-5/6 w-11/12 rounded-md bg-gradient-to-bl from-zinc-700 to-neutral-500 p-8 text-white"-->
+        <!--            >-->
+        <!--                <StudentSemesterSchedule class="h-full" />-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </template>
 
@@ -111,11 +107,9 @@ import TextInput from "@/Components/TextInput.vue";
 import debounce from "lodash/debounce";
 import LessonPlan from "@/Views/Teacher/Home/LessonPlans.vue";
 import Assessment from "@/Views/Teacher/Home/Assessments.vue";
-import StudentSemesterSchedule from "@/Views/Admin/Students/StudentSemesterSchedule.vue";
-import { isSidebarOpenOnXlDevice } from "@/utils";
 import SelectInput from "@/Components/SelectInput.vue";
-import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
 import Header from "@/Views/Teacher/Header.vue";
+import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
 
 const schedule = usePage().props.schedule;
 const batchSubjects = usePage().props.batch_subjects;

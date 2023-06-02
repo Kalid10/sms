@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full justify-between divide-x-2 divide-neutral-200 rounded-md py-3 shadow-md"
+        class="flex w-full justify-between divide-x divide-gray-500 rounded-md border-2 border-zinc-700 py-4"
     >
         <Item
             title="Average"
@@ -27,8 +27,8 @@
             :icon="ArrowSmallDownIcon"
         />
         <Item
-            title="Conduct"
-            value="80.2%"
+            title="Grade"
+            value="80"
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />

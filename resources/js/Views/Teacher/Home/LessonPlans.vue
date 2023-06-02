@@ -9,13 +9,14 @@
         <div class="flex flex-col items-center justify-center">
             <div
                 v-if="!isLessonPlansEmpty"
-                class="flex flex-col items-center space-y-4 rounded-md py-4"
+                class="flex w-full flex-col items-center space-y-4 rounded-md py-4"
             >
                 <Items
                     v-for="(item, index) in lessonPlans"
                     :key="index"
                     :item="item"
-                    :view="view"
+                    class="min-w-full"
+                    :class="view === 'class' ? '' : 'shadow-sm'"
                 />
                 <LinkCell
                     class="flex w-full justify-end"
