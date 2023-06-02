@@ -1,14 +1,13 @@
 <template>
-
     <div
-        class="container mx-auto flex h-full max-h-full max-w-7xl flex-col gap-4 px-2 pt-6 md:px-6 md:pt-6"
+        class="container mx-auto flex max-w-7xl flex-col gap-4 px-2 pt-6 md:p-6"
     >
-
         <div class="flex flex-col">
             <Heading>Register Subjects</Heading>
             <h3 class="text-sm text-gray-500">
-                We have selected a set predefined subjects for you. You can remove
-                the subjects you don't provide or add more subjects not listed here.
+                We have selected a set predefined subjects for you. You can
+                remove the subjects you don't provide or add more subjects not
+                listed here.
                 <span class="inline-block"
                     >Click on the "Finish" to proceed, and "Next" to save and
                     proceed.</span
@@ -51,10 +50,13 @@
                 class="flex flex-col gap-2"
             >
                 <div class="flex items-center gap-2">
-                    <div class="z-10 h-3.5 w-3.5 rounded-full" :class="colors[c]" />
-                    <Heading size="sm" class="font-normal text-gray-500">{{
-                        category
-                    }}</Heading>
+                    <div
+                        class="z-10 h-3.5 w-3.5 rounded-full"
+                        :class="colors[c]"
+                    />
+                    <Heading size="sm" class="font-normal text-gray-500"
+                        >{{ category }}
+                    </Heading>
                 </div>
                 <div
                     class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4"
@@ -114,7 +116,8 @@
                                         v-for="(label, l) in subject.tags"
                                         :key="l"
                                         :class="{
-                                            'bg-gray-300': filteredLabel === label,
+                                            'bg-gray-300':
+                                                filteredLabel === label,
                                         }"
                                         class="cursor-pointer whitespace-nowrap rounded-xl px-1.5 py-0.5 text-xs font-semibold leading-none transition duration-300 hover:scale-110 hover:bg-gray-300"
                                         @click="
@@ -138,8 +141,8 @@
                 <div class="flex items-center gap-2">
                     <div class="z-10 h-3.5 w-3.5 rounded-full bg-gray-300" />
                     <Heading size="sm" class="font-normal text-gray-500"
-                        >Other</Heading
-                    >
+                        >Other
+                    </Heading>
                 </div>
 
                 <div
@@ -149,7 +152,9 @@
                         class="flex min-h-[82px] flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed bg-white/75"
                         @click="openNewSubjectForm"
                     >
-                        <PlusCircleIcon class="h-5 w-5 stroke-gray-500 stroke-2" />
+                        <PlusCircleIcon
+                            class="h-5 w-5 stroke-gray-500 stroke-2"
+                        />
                         <span class="text-sm font-semibold text-gray-500"
                             >Create new Subject</span
                         >
@@ -191,51 +196,49 @@
         </div>
 
         <Modal v-model:view="isNewSubjectFormOpened">
-        <FormElement
-            v-model:show-modal="isNewSubjectFormOpened"
-            modal
-            title="New Subject"
-            subtitle="Create a new subject and assign it to a category"
-            @submit="addToSubjectsList"
-        >
-            <TextInput
-                v-model="newSubject.full_name"
-                required
-                placeholder="Name of the new Subject"
-                label="Subject Name"
-            />
-            <TextInput
-                v-model="newSubject.short_name"
-                required
-                placeholder="Short name for Subject"
-                label="Subject Short Name"
-            />
-            <TextInput
-                v-model="tags"
-                placeholder="Assign tags (separate multiple tags with comma)"
-                label="Subject Tags"
-            />
-            <SelectInput
-                v-if="!customCategory"
-                v-model="newSubject.category"
-                :options="categoryOptions"
-                required
-                placeholder="Category of the new Subject"
-                label="Subject Category"
-            />
-            <TextInput
-                v-else
-                id="categoryInput"
-                v-model="newSubject.category"
-                required
-                placeholder="Create a custom Category"
-                label="Subject Category"
-            />
-        </FormElement>
-    </Modal>
-
+            <FormElement
+                v-model:show-modal="isNewSubjectFormOpened"
+                modal
+                title="New Subject"
+                subtitle="Create a new subject and assign it to a category"
+                @submit="addToSubjectsList"
+            >
+                <TextInput
+                    v-model="newSubject.full_name"
+                    required
+                    placeholder="Name of the new Subject"
+                    label="Subject Name"
+                />
+                <TextInput
+                    v-model="newSubject.short_name"
+                    required
+                    placeholder="Short name for Subject"
+                    label="Subject Short Name"
+                />
+                <TextInput
+                    v-model="tags"
+                    placeholder="Assign tags (separate multiple tags with comma)"
+                    label="Subject Tags"
+                />
+                <SelectInput
+                    v-if="!customCategory"
+                    v-model="newSubject.category"
+                    :options="categoryOptions"
+                    required
+                    placeholder="Category of the new Subject"
+                    label="Subject Category"
+                />
+                <TextInput
+                    v-else
+                    id="categoryInput"
+                    v-model="newSubject.category"
+                    required
+                    placeholder="Create a custom Category"
+                    label="Subject Category"
+                />
+            </FormElement>
+        </Modal>
     </div>
-
 </template>
 
 <script setup>

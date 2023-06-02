@@ -47,7 +47,7 @@
 
                     <div class="flex w-full flex-col gap-2 md:flex-row">
                         <Card
-                            class="group !h-fit cursor-pointer hover:border-black"
+                            class="group cursor-pointer hover:border-black"
                             @click="registerSemesterStartDate"
                         >
                             <div
@@ -76,11 +76,11 @@
                             </div>
                         </Card>
                         <Card
-                            class="group !h-fit cursor-pointer hover:border-black"
+                            class="group cursor-pointer hover:border-black"
                             @click="viewCalendar"
                         >
                             <div
-                                class="flex h-full flex-col items-center justify-between gap-2"
+                                class="flex h-full flex-col items-center gap-2"
                             >
                                 <div
                                     class="flex w-full items-center justify-center"
@@ -98,14 +98,15 @@
                                 </div>
 
                                 <h3 class="text-center text-xs">
-                                    View your school calendar and add events
-                                    such as public holidays, school holidays and
-                                    more.
+                                    Use our school calendar to view and add all
+                                    important school events. This includes
+                                    public and school holidays, exams, and other
+                                    special days.
                                 </h3>
                             </div>
                         </Card>
                         <Card
-                            class="group !h-fit cursor-pointer hover:border-black"
+                            class="group cursor-pointer hover:border-black"
                             @click="goToDashboard"
                         >
                             <div

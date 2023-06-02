@@ -118,14 +118,18 @@
                     <button
                         type="button"
                         class="grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold text-gray-500"
-                        @click="isOtherDuration = true"
+                        @click="openOtherDurationForm"
                     >
                         <span class="mb-0.5 text-xl">+</span>
                     </button>
                 </div>
 
                 <div
-                    v-if="isOtherDuration && formStep === 2"
+                    v-if="
+                        isOtherDuration &&
+                        formStep === 2 &&
+                        !!!form.minutes_per_period
+                    "
                     class="relative flex w-full items-center justify-center gap-3"
                 >
                     <button
@@ -150,8 +154,8 @@
                     <TertiaryButton
                         :disabled="formStep !== 2"
                         @click="revertStep"
-                        >Back</TertiaryButton
-                    >
+                        >Back
+                    </TertiaryButton>
                     <PrimaryButton
                         :disabled="formStep !== 2 || !!!form.minutes_per_period"
                         @click="updateStep"
@@ -253,8 +257,8 @@
                     <TertiaryButton
                         :disabled="formStep !== 3"
                         @click="revertStep"
-                        >Back</TertiaryButton
-                    >
+                        >Back
+                    </TertiaryButton>
                     <PrimaryButton
                         :disabled="formStep !== 3 || !!!form.no_of_periods"
                         @click="updateStep"
@@ -340,7 +344,7 @@
 
                                 <button
                                     v-for="(minute, m) in [
-                                        30, 40, 45, 60, 90, 120,
+                                        15, 20, 30, 40, 45, 60,
                                     ]"
                                     :key="m"
                                     type="button"
@@ -537,6 +541,11 @@ function setPeriod(session) {
     form.value.no_of_periods = session;
 }
 
+function openOtherDurationForm() {
+    isOtherDuration.value = true;
+    form.value.minutes_per_period = null;
+}
+
 function setCustomPeriodDuration(index, minute) {
     form.value.custom_periods[index].duration = minute;
 }
@@ -568,13 +577,13 @@ function removeCustomPeriod(index) {
     form.value.custom_periods.splice(index, 1);
 }
 
-const durations = ref([30, 45, 60, 90, 120]);
+const durations = ref([30, 40, 45, 60, 90]);
 const otherDuration = ref(null);
 const isOtherDuration = ref(false);
 
 function setOtherDuration() {
     if (!!otherDuration.value) {
-        durations.value = [30, 45, 60, 90, 120];
+        durations.value = [30, 40, 45, 60, 90];
         durations.value.push(parseInt(otherDuration.value));
         durations.value = Array.from(new Set(durations.value));
 
