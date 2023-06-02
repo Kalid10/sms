@@ -160,7 +160,10 @@ function insertStudentsAssessment() {
 }
 
 const showFinishMarkingButton = computed(() => {
-    return points.length && points.every((item) => item.point !== null);
+    return (
+        points.length &&
+        points.every((item) => item.point !== null || item.status !== null)
+    );
 });
 
 const studentInfo = ref(null);

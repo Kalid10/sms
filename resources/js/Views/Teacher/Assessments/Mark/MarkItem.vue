@@ -30,7 +30,7 @@
                 'bg-gradient-to-br from-yellow-400 to-orange-500 text-white':
                     item.status === 'disqualified' ||
                     points[index].status === 'disqualified',
-                'bg-gradient-to-bl from-purple-600 to-fuchsia-500  text-white':
+                'bg-gradient-to-bl from-purple-400 to-fuchsia-400  text-white':
                     item.status === 'valid_reassessment' ||
                     points[index].status === 'valid_reassessment',
             }"
@@ -104,6 +104,7 @@
                         @click="
                             points[index].status = 'valid_reassessment';
                             $emit('updatePoints', points);
+                            points[index].point = 0;
                         "
                     />
                     <ArchiveBoxXMarkIcon
@@ -116,6 +117,7 @@
                         @click="
                             points[index].status = 'disqualified';
                             $emit('updatePoints', points);
+                            points[index].point = 0;
                         "
                     />
                     <BookmarkSlashIcon
@@ -128,6 +130,7 @@
                         @click="
                             points[index].status = 'misconduct';
                             $emit('updatePoints', points);
+                            points[index].point = 0;
                         "
                     />
                     <ChatBubbleBottomCenterIcon
@@ -149,6 +152,7 @@
             <div v-if="selectedCommentInput === index" class="p-4">
                 <TextArea
                     v-model="points[index].comment"
+                    label-style="pl-0.5 text-sm font-semibold text-black"
                     rows="4"
                     label="Comment"
                     :placeholder="
@@ -156,6 +160,7 @@
                         item.student.user.name +
                         '.\nNote: This feedback will be accessible to parents, teachers, and principals.'
                     "
+                    class="text-black"
                     @focusout="selectedCommentInput = null"
                 />
             </div>
