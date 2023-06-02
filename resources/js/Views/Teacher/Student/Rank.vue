@@ -9,7 +9,7 @@
         <div
             class="w-fit -skew-x-3 bg-black px-5 py-0.5 text-center text-6xl font-bold text-white"
         >
-            2nd
+            {{ numberWithOrdinal(rank) }}
         </div>
         <div class="text-sm text-gray-500">
             From
@@ -19,8 +19,14 @@
         </div>
     </div>
 </template>
+
 <script setup>
 import { ArrowTrendingUpIcon } from "@heroicons/vue/24/outline";
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
+import { numberWithOrdinal } from "@/utils";
+
+const rank = computed(() => usePage().props.batch_subject_rank);
 </script>
 
 <style scoped></style>

@@ -177,6 +177,7 @@ class TeacherController extends Controller
             )->only('schedule')['schedule'],
             'periods' => Level::find($student->activeBatch()->level->id)->levelCategory->schoolPeriods,
             'batch_sessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.subject', 'batchSchedule.batchSubject.teacher.user'])->get(),
+            'batch_subject_rank' => $student->fetchBatchSubjectGrade(1443, Quarter::getActiveQuarter()->id)->first()?->rank,
         ]);
     }
 

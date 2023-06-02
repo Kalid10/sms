@@ -6,7 +6,9 @@
         <div class="w-full pr-5">
             <BatchPerformance />
         </div>
-        <div class="flex w-full items-center justify-between pt-3">
+        <div
+            class="flex w-full items-center justify-between divide-x divide-zinc-200 pt-5"
+        >
             <div class="w-1/2">
                 <StudentsList
                     progress-type="up"
@@ -16,7 +18,6 @@
                 />
             </div>
 
-            <div class="h-full w-[0.01rem] bg-neutral-200"></div>
             <div class="w-1/2">
                 <StudentsList
                     progress-type="down"

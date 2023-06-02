@@ -32,7 +32,10 @@
                     <XMarkIcon class="h-fit w-3 text-red-600" />
                 </div>
             </div>
-            <div class="-skew-x-3 px-3 py-1 text-center text-4xl font-semibold">
+            <div
+                class="-skew-x-3 cursor-pointer px-3 py-1 text-center text-4xl font-semibold underline-offset-2 hover:underline"
+                @click="studentDetail(student.id)"
+            >
                 {{ student.user.name }}
             </div>
         </div>
@@ -57,7 +60,7 @@
             <div class="w-4/12 text-center">
                 <div class="text-2xl font-bold">
                     <span v-if="student.batch_subject_rank">
-                        {{ student.batch_subject_rank }}
+                        {{ numberWithOrdinal(student.batch_subject_rank) }}
                     </span>
                     <span v-else> - </span>
                 </div>
@@ -127,6 +130,8 @@ import { usePage } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 import { ChartBarIcon } from "@heroicons/vue/24/solid";
 import { InformationCircleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { Inertia } from "@inertiajs/inertia";
+import { numberWithOrdinal } from "../../../../utils";
 
 const student = computed(() => {
     return usePage().props.student;
@@ -136,5 +141,15 @@ const showInfo = ref(true);
 const assessment = computed(() => {
     return usePage().props.assessment;
 });
+
+const studentDetail = (studentId) => {
+    Inertia.get(
+        "/teacher/students/" + studentId,
+        {},
+        {
+            preserveState: true,
+        }
+    );
+};
 </script>
 <style scoped></style>

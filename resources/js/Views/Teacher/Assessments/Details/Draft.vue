@@ -57,7 +57,7 @@
 
                 <div
                     v-if="dueDate && status === 'scheduled'"
-                    class="flex h-8 w-10/12 items-center justify-center rounded-2xl bg-violet-500 shadow-md lg:w-9/12"
+                    class="flex h-8 w-10/12 items-center justify-center rounded-2xl bg-zinc-800 shadow-md lg:w-8/12"
                 >
                     <CheckCircleIcon class="w-4 text-zinc-100" />
                     <SecondaryButton

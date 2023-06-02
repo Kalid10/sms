@@ -39,7 +39,7 @@
                 :assessment="assessment"
             />
 
-            <DeleteAssessment :assessment="assessment" />
+            <!--            <DeleteAssessment :assessment="assessment" />-->
 
             <Modal v-model:view="showUpdateForm">
                 <UpdateAssessmentForm
@@ -68,7 +68,6 @@ import Published from "@/Views/Teacher/Assessments/Details/Published.vue";
 import Completed from "@/Views/Teacher/Assessments/Details/Completed.vue";
 import Marking from "@/Views/Teacher/Assessments/Details/Marking.vue";
 import Scheduled from "@/Views/Teacher/Assessments/Details/Scheduled.vue";
-import DeleteAssessment from "@/Views/Teacher/Assessments/Details/Views/DeleteAssessment.vue";
 
 const props = defineProps({
     assessment: {
