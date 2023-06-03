@@ -10,6 +10,7 @@ use App\Models\Level;
 use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
+use App\Models\Semester;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Services\TeacherService;
@@ -151,15 +152,26 @@ class TeacherController extends Controller
             'assessments' => $assessments,
             'schedule' => $schedule,
             'periods' => Level::find($batch->level->id)->levelCategory->schoolPeriods,
+            'batch_subject_grade' => $batchSubject->batchGrades()->where([
+                ['gradable_type', Quarter::class],
+                ['gradable_id', Quarter::getActiveQuarter()->id],
+            ])->first(),
         ]);
     }
 
-    public function student(Student $student): Response
+    public function student(Student $student, Request $request): Response
     {
-        $student = $student->load('user');
-        $currentBatch = $student->activeBatch(['level']);
+        $batchSubjectId = $request->query('batch_subject_id');
 
-        $studentAssessment = $student->assessments()->get()->map(function ($studentAssessment) {
+        $student = $student->load('user');
+        $currentBatch = $student->activeBatch(['level', 'subjects']);
+
+        $studentBatchSubjectIds = collect($currentBatch['subjects'])->pluck('id');
+        $commonBatchSubject = BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+            ->whereIn('id', $studentBatchSubjectIds)
+            ->with('subject:id,full_name', 'batch:id,section,level_id', 'batch.level:id,name')->get();
+
+        $studentAssessment = $student->assessments()->orderBy('updated_at', 'DESC')->get()->map(function ($studentAssessment) {
             $studentAssessment->assessment->point = $studentAssessment->point;
 
             return $studentAssessment->assessment;
@@ -167,9 +179,14 @@ class TeacherController extends Controller
 
         return Inertia::render('Teacher/Student', [
             'student' => $student->load('user'),
+            'guardian' => $student->load(
+                'guardian:id,user_id',
+                'guardian.user:id,name,email,phone_number,address_id',
+                'guardian.user.address:id,sub_city,city,country,woreda,house_number',
+            ),
             'assessments' => $studentAssessment,
             'current_batch' => $currentBatch,
-            'absentee' => $student->absenteePercentage(),
+            'attendance_percentage' => 100 - $student->absenteePercentage(),
             'schedule' => $student->activeBatch()->load(
                 'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',
                 'schedule.batchSubject:id,teacher_id,subject_id,weekly_frequency',
@@ -178,7 +195,11 @@ class TeacherController extends Controller
             )->only('schedule')['schedule'],
             'periods' => Level::find($student->activeBatch()->level->id)->levelCategory->schoolPeriods,
             'batch_sessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.subject', 'batchSchedule.batchSubject.teacher.user'])->get(),
-            'batch_subject_rank' => $student->fetchBatchSubjectGrade(1443, Quarter::getActiveQuarter()->id)->first()?->rank,
+            'batch_subject' => BatchSubject::find($batchSubjectId)->load('subject', 'batch.level'),
+            'batch_subjects' => $commonBatchSubject,
+            'batch_subject_grade' => $student->fetchBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first(),
+            'total_batch_students' => $student->activeBatch()->students()->count(),
+            'in_progress_session' => $currentBatch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user'),
         ]);
     }
 
@@ -206,8 +227,19 @@ class TeacherController extends Controller
             })
             ->paginate(10);
 
-        $batchStudents->getCollection()->transform(function ($student) {
+        $batchStudents->getCollection()->transform(function ($student) use ($batchSubject) {
             $student->attendance_percentage = 100 - $student->student->absenteePercentage();
+            $student->batch_subject_rank = $student->student->fetchBatchSubjectGrade($batchSubject->id, Quarter::getActiveQuarter()->id)->first()?->rank;
+            $student->quarterly_grade = $student->student->grades()->where([[
+                'gradable_type', Quarter::class,
+            ], [
+                'gradable_id', Quarter::getActiveQuarter()->id,
+            ]])->first();
+            $student->semester_grade = $student->student->grades()->where([[
+                'gradable_type', Semester::class,
+            ], [
+                'gradable_id', Semester::getActiveSemester()->id,
+            ]])->first();
 
             return $student;
         });
@@ -224,6 +256,10 @@ class TeacherController extends Controller
             'batch_subject' => $batchSubject,
             'batch_subjects' => $batchSubjects,
             'search' => $search,
+            'batch_subject_grade' => $batchSubject->batchGrades()->where([
+                ['gradable_type', Quarter::class],
+                ['gradable_id', Quarter::getActiveQuarter()->id],
+            ])->first(),
         ]);
     }
 }

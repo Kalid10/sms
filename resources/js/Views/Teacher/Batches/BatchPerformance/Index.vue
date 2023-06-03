@@ -4,13 +4,13 @@
     >
         <Item
             title="Average"
-            value="70.8%"
+            :value="batchSubjectGrade?.score"
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
         <Item
             title="Rank"
-            value="2 / 5"
+            :value="batchSubjectGrade?.rank"
             value-style="text-positive-100"
             :icon="ArrowSmallUpIcon"
         />
@@ -40,6 +40,10 @@ import {
     ArrowSmallDownIcon,
     ArrowSmallUpIcon,
 } from "@heroicons/vue/24/outline";
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
+
+const batchSubjectGrade = computed(() => usePage().props.batch_subject_grade);
 </script>
 
 <style scoped></style>

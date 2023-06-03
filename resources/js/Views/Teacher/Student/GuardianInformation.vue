@@ -9,14 +9,26 @@
             <span>Guardian Info</span>
         </div>
 
-        <div class="flex w-9/12 flex-col space-y-2 pt-3 text-xs 2xl:text-sm">
-            <div
-                v-for="item in info"
-                :key="item.label"
-                class="flex h-8 w-full items-center space-x-2"
-            >
-                <div class="font-semibold text-gray-500">{{ item.label }}</div>
-                <div class="text-gray-700">{{ item.value }}</div>
+        <div
+            class="flex w-11/12 flex-col items-center space-y-2 pt-3 text-center text-xs 2xl:text-xs"
+        >
+            <div class="flex h-8 w-full items-center justify-center space-x-2">
+                <div class="font-semibold text-gray-500">Name:</div>
+                <div class="text-gray-700">{{ guardian.user.name }}</div>
+            </div>
+            <div class="flex h-8 w-full items-center justify-center space-x-2">
+                <div class="font-semibold text-gray-500">Ralation:</div>
+                <div class="text-gray-700">{{ guardianRelation }}</div>
+            </div>
+            <div class="flex h-8 w-full items-center justify-center space-x-2">
+                <div class="font-semibold text-gray-500">Phone Number:</div>
+                <div class="text-gray-700">
+                    {{ guardian.user.phone_number }}
+                </div>
+            </div>
+            <div class="flex h-8 w-full items-center justify-center space-x-2">
+                <div class="font-semibold text-gray-500">Email:</div>
+                <div class="text-gray-700">{{ guardian.user.email }}</div>
             </div>
         </div>
     </div>
@@ -26,7 +38,10 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { UserGroupIcon } from "@heroicons/vue/24/outline";
 
-const student = computed(() => usePage().props.student);
+const guardian = computed(() => usePage().props.student.guardian);
+const guardianRelation = computed(
+    () => usePage().props.student.guardian_relation
+);
 
 const info = [
     {

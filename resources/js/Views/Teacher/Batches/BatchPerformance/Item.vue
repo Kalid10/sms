@@ -8,7 +8,7 @@
                 {{ value }}
             </div>
 
-            <div class="text-[0.6rem] font-light text-neutral-600">
+            <div class="text-[0.6rem] font-light uppercase text-neutral-600">
                 {{ title }}
             </div>
         </div>

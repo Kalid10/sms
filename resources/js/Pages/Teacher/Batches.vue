@@ -176,7 +176,10 @@ const config = [
         name: "Name",
         align: "center",
         class: "h-12  !text-[0.6rem]",
-        link: "/teacher/students/{id}",
+        link:
+            "/teacher/students/{id}" +
+            "?batch_subject_id=" +
+            selectedBatchSubject.value,
     },
     {
         key: "attendance",

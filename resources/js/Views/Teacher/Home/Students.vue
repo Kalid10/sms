@@ -40,7 +40,11 @@
             >
                 <div
                     class="w-6/12 cursor-pointer font-medium hover:font-semibold hover:underline hover:underline-offset-2"
-                    @click="$inertia.get(`/teacher/students/${item.id}`)"
+                    @click="
+                        $inertia.get(
+                            `/teacher/students/${item.id}?batch_subject_id=${selectedBatchSubject}`
+                        )
+                    "
                 >
                     {{ item.user.name }}
                 </div>

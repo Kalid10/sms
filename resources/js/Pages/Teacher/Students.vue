@@ -26,7 +26,9 @@
                         <div
                             class="flex flex-col justify-center space-y-4 text-center text-4xl font-bold shadow-sm"
                         >
-                            <div>{{ numberWithOrdinal(3) }}</div>
+                            <div>
+                                {{ numberWithOrdinal(batchSubjectGrade.rank) }}
+                            </div>
                             <span class="text-xs font-light">
                                 Class Rank From Total 5
                             </span>
@@ -129,7 +131,7 @@ import Pagination from "@/Components/Pagination.vue";
 import { numberWithOrdinal } from "../../utils";
 
 const students = computed(() => usePage().props.students);
-
+const batchSubjectGrade = computed(() => usePage().props.batch_subject_grade);
 const batchSubjects = usePage().props.batch_subjects;
 const searchText = ref(usePage().props.search);
 
@@ -141,8 +143,8 @@ const filteredStudents = computed(() => {
         return {
             name: student.student.user.name,
             attendance: student.attendance_percentage + "%",
-            grade: "50/60",
-            rank: student.student_id,
+            grade: student.quarterly_grade.score.toFixed(1),
+            rank: student.batch_subject_rank,
             id: student.student_id,
             conduct: "C",
         };
@@ -175,7 +177,9 @@ const config = [
         name: "Name",
         align: "center",
         class: "h-12  !text-[0.6rem]",
-        link: "/teacher/students/{id}",
+        link:
+            "/teacher/students/{id}?batch_subject_id=" +
+            selectedBatchSubject.value,
     },
     {
         key: "attendance",
