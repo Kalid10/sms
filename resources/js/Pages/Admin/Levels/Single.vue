@@ -1,33 +1,33 @@
 <template>
-    <div class="flex flex-col gap-3">
+    <div class="my-4 flex w-full flex-col gap-3">
         <div class="flex w-full flex-col">
             <h3 class="font-semibold">{{ parseLevel(level.name) }}</h3>
             <h3 class="text-sm text-gray-500">{{ activeSchoolYear }}</h3>
         </div>
 
-        <LevelStatistics />
+        <LevelStatistics/>
     </div>
 
     <TabElement :tabs="models">
         <template #sections>
-            <LevelSections />
+            <LevelSections/>
         </template>
 
         <template #subjects>
-            <LevelSubjects />
+            <LevelSubjects/>
         </template>
 
         <template #students>
-            <LevelStudents />
+            <LevelStudents/>
         </template>
     </TabElement>
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import {computed} from "vue";
+import {usePage} from "@inertiajs/vue3";
 import LevelStatistics from "@/Views/Admin/LevelStatistics.vue";
-import { parseLevel } from "@/utils.js";
+import {parseLevel} from "@/utils.js";
 import TabElement from "@/Components/TabElement.vue";
 import LevelSections from "@/Views/Admin/Levels/LevelSections.vue";
 import LevelSubjects from "@/Views/Admin/Levels/LevelSubjects.vue";

@@ -40,7 +40,6 @@ import {
 } from "@heroicons/vue/20/solid/index.js";
 import {usePage} from "@inertiajs/vue3";
 import {BookOpenIcon, QueueListIcon, UsersIcon,} from "@heroicons/vue/24/solid";
-import {UserCircleIcon} from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     auth: {
@@ -69,25 +68,19 @@ const sidebarItems = computed(() => [
     {
         name: "Students",
         icon: UsersIcon,
-        route: "/students",
+        route: "/admin/students",
         active: directory.value === "students",
     },
     {
         name: "Classes",
         icon: ClipboardIcon,
-        route: "/levels",
+        route: "/admin/levels",
         active: directory.value === "levels",
     },
     {
         name: "Subjects",
         icon: BookOpenIcon,
-        route: "/subjects",
-        active: directory.value === "subjects",
-    },
-    {
-        name: "Guardians",
-        icon: UserCircleIcon,
-        route: "/subjects",
+        route: "/admin/subjects",
         active: directory.value === "subjects",
     },
     {

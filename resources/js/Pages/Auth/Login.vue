@@ -120,11 +120,13 @@
                 </h3>
             </div>
 
-            <h1
-                class="text-3xl font-extrabold leading-none text-white lg:text-6xl"
-            >
-                <span> Inspire & Uplift: </span>
-                <span class="inline lg:block"> Empower Your School </span>
+            <h1 class="text-3xl font-extrabold leading-none text-white lg:text-6xl">
+                <transition name="fade" mode="out-in">
+                    <span :key="firstText">{{ firstText }}</span>
+                </transition>
+                <transition name="fade" mode="out-in">
+                    <span :key="secondText" class="inline lg:block">{{ secondText }}</span>
+                </transition>
             </h1>
 
             <h3 class="max-w-xl font-medium text-white">
@@ -133,7 +135,7 @@
                 and create a teamwork-driven learning space for a brilliant
                 future.
                 <span class="block py-3"
-                    >Sign in to start your journey towards educational
+                >Sign in to start your journey towards educational
                     excellence.</span
                 >
             </h3>
@@ -142,8 +144,9 @@
 </template>
 
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import {useForm} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
+import {onMounted, onUnmounted, ref} from "vue";
 
 const form = useForm({
     emailOrPhone: "",
@@ -160,6 +163,35 @@ const submit = () => {
         },
     });
 };
+
+const firstTexts = ['Innovate and Elevate:', 'Create and Inspire:', 'Dream and Achieve:'];
+const secondTexts = ['Empower Your School', 'Foster Creativity', 'Build Futures'];
+
+let index = 0;
+
+const firstText = ref(firstTexts[index]);
+const secondText = ref(secondTexts[index]);
+
+onMounted(() => {
+    const interval = setInterval(() => {
+        index = (index + 1) % firstTexts.length;  // loop back to 0 when we reach the end
+        firstText.value = firstTexts[index];
+        secondText.value = secondTexts[index];
+    }, 5000);  // change text every 3 seconds-->
+
+    // Clear the interval when the component is unmounted
+    onUnmounted(() => {
+        clearInterval(interval);
+    });
+});
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.2s;
+}
+
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+</style>

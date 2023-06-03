@@ -56,7 +56,7 @@ it('renders the levels page', function () {
 
     $admin->roles()->attach(['manage-levels']);
 
-    $response = $this->actingAs($admin)->get('/levels');
+    $response = $this->actingAs($admin)->get('admin/levels');
 
     // Assert successful response and correct data
     $response->assertInertia(function (AssertableInertia $page) {
