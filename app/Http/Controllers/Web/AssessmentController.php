@@ -92,6 +92,16 @@ class AssessmentController extends Controller
             $student->assessment_quarter_grade = $student->fetchAssessmentsGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id);
             $student->total_batch_subject_grade = $student->fetchBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->score;
             $student->batch_subject_rank = $student->fetchBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->rank;
+            $student->quarterly_grade = $student->grades()->where([[
+                'gradable_type', Quarter::class,
+            ], [
+                'gradable_id', Quarter::getActiveQuarter()->id,
+            ]])->first();
+            $student->semester_grade = $student->grades()->where([[
+                'gradable_type', Semester::class,
+            ], [
+                'gradable_id', Semester::getActiveSemester()->id,
+            ]])->first();
         }
 
         $assessment = $this->populateAssessmentDetails(collect([$assessment]))->first();
@@ -105,8 +115,12 @@ class AssessmentController extends Controller
         ]);
     }
 
-    public function detail(Assessment $assessment): Response
+    public function detail($id): RedirectResponse|Response
     {
+        $assessment = Assessment::find($id);
+        if (! $assessment) {
+            return redirect()->to(route('teacher.assessment.teacher'));
+        }
         $assessment = $this->populateAssessmentDetails(collect([$assessment]))->first();
 
         $completedAssessments = Assessment::where([
