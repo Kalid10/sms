@@ -57,7 +57,10 @@ class StudentGradeHelper
             self::updateStudentSubjectQuarterGrades($student_points->pluck('student_id'), $assessment);
             self::updateStudentQuarterGrade($student_points->pluck('student_id'), $assessment);
             self::updateStudentSemesterGrades($student_points->pluck('student_id'));
-            self::updateRank();
+            self::updateRank($student_points->pluck('student_id'));
+
+            // TODO:: Test it out very well
+            BatchStatisticsHelper::processBatchGrades($assessment->batchSubject);
 
             $assessment->update([
                 'status' => Assessment::STATUS_COMPLETED,
