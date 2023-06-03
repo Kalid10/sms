@@ -24,7 +24,7 @@ class StudentController extends Controller
     public function index(GetRequest $request, ?Student $student): Resource|Collection
     {
         return $student->exists ?
-            new Collection($student->load('guardian.children.user', 'guardian.children.user.address')) :
+            new Resource($student->load('user', 'user.address')) :
             new Collection(Auth::user()->load(
                 'guardian.children.user',
                 'guardian.children.user.address',
