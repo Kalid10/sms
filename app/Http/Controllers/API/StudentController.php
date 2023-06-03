@@ -12,29 +12,54 @@ use App\Http\Resources\Student\NoteCollection;
 use App\Http\Resources\Student\Resource;
 use App\Http\Resources\Student\ScheduleCollection;
 use App\Http\Resources\Student\SubjectCollection;
+use App\Http\Resources\Student\SubjectResource;
+use App\Models\Address;
 use App\Models\Student;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
     public function index(GetRequest $request, ?Student $student): Resource|Collection
     {
         return $student->exists ?
-            new Collection($student->load('guardian.children.user')) :
+            new Collection($student->load('guardian.children.user', 'guardian.children.user.address')) :
             new Collection(Auth::user()->load(
                 'guardian.children.user',
+                'guardian.children.user.address',
                 'guardian.children.currentBatch.homeRoomTeacher.teacher.user'
             )->guardian->children);
     }
 
     public function update(UpdateRequest $request, Student $student): Resource
     {
-        $user = $student->user;
+        try {
+            DB::beginTransaction();
 
-        $user->update($request->validated());
+            $user = $student->user;
 
-        return new Resource($student);
+            $user->update($request->only([
+                'name', 'email', 'date_of_birth', 'phone_number', 'gender',
+            ]));
+
+            $addressData = $request->only(['sub_city', 'woreda', 'house_number']);
+
+            if ($user->address) {
+                $user->address->update($addressData);
+            } else {
+                $address = new Address($addressData + ['city' => 'Addis Ababa', 'country' => 'Ethiopia']);
+                $user->address()->save($address);
+            }
+
+            DB::commit();
+
+            return new Resource($student);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            throw $e;
+        }
     }
 
     public function notes(GetRequest $request, ?Student $student): NoteCollection
@@ -42,13 +67,6 @@ class StudentController extends Controller
         return $student->exists ?
             new NoteCollection($student->load('studentNotes.author', 'studentNotes.student.user:id,name')->studentNotes) :
             new NoteCollection(Auth::user()->load('guardian.children')->guardian->children->load('studentNotes.author', 'studentNotes.student.user:id,name')->pluck('studentNotes')->flatten());
-    }
-
-    public function subjects(GetRequest $request, ?Student $student): SubjectCollection
-    {
-        return $student->exists ?
-            new SubjectCollection($student->load('subjects')->subjects) :
-            new SubjectCollection(Auth::user()->load('guardian.children')->guardian->children->load('subjects')->pluck('subjects')->flatten());
     }
 
     public function schedules(GetRequest $request, ?Student $student): ScheduleCollection
@@ -80,5 +98,20 @@ class StudentController extends Controller
                 )
                 ->guardian->children
             );
+    }
+
+    public function subjects(GetRequest $request, ?Student $student): SubjectResource|SubjectCollection
+    {
+        return $student->exists ?
+            new SubjectResource($student->load(
+                'user',
+                'batches.batch.subjects.subject',
+                'batches.batch.subjects.teacher.user'
+            )) :
+            new SubjectCollection(Auth::user()->load(
+                'guardian.children.user',
+                'guardian.children.batches.batch.subjects.subject',
+                'guardian.children.batches.batch.subjects.teacher.user'
+            )->guardian->children);
     }
 }
