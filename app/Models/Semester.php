@@ -38,6 +38,17 @@ class Semester extends Model
         return $this->hasMany(Quarter::class);
     }
 
+    public static function getActiveSemester(): ?Semester
+    {
+        $semester = Semester::firstWhere('end_date', null);
+
+        if (! $semester) {
+            return null;
+        }
+
+        return $semester;
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

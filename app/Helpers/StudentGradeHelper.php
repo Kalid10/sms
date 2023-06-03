@@ -189,6 +189,80 @@ class StudentGradeHelper
         });
     }
 
+    private static function updateStudentSemesterGrades(Collection $student_ids): void
+    {
+        $semester = Semester::getActiveSemester();
+        $quarters = Quarter::where('semester_id', $semester->id)->get();
+
+        $student_ids->each(function ($student_id) use ($semester, $quarters) {
+            $studentSubjects = StudentSubjectGrade::where('student_id', $student_id)->distinct('batch_subject_id')->pluck('batch_subject_id');
+
+            foreach ($studentSubjects as $subject_id) {
+                $totalSubjectScore = 0.0;
+
+                foreach ($quarters as $quarter) {
+                    if ($quarter->end_date != null) { // quarter has ended
+                        $totalSubjectScore += StudentSubjectGrade::where([
+                            'student_id' => $student_id,
+                            'batch_subject_id' => $subject_id,
+                            'gradable_type' => 'App\Models\Quarter',
+                            'gradable_id' => $quarter->id,
+                        ])->sum('score');
+                    } else { // quarter is ongoing
+                        // Adjust the calculation as needed for ongoing quarters
+                        $ongoingQuarterScore = StudentAssessmentsGrade::where([
+                            'student_id' => $student_id,
+                            'batch_subject_id' => $subject_id,
+                            'gradable_type' => 'App\Models\Quarter',
+                            'gradable_id' => $quarter->id,
+                        ])->sum('score');
+
+                        $totalSubjectScore += $ongoingQuarterScore;
+                    }
+                }
+
+                // update semester grade for the subject
+                StudentSubjectGrade::updateOrCreate(
+                    [
+                        'student_id' => $student_id,
+                        'batch_subject_id' => $subject_id,
+                        'gradable_type' => 'App\Models\Semester',
+                        'gradable_id' => $semester->id,
+                    ],
+                    [
+                        'score' => $totalSubjectScore / $quarters->count(),
+                        'grade_scale_id' => GradeScale::get(
+                            score: $totalSubjectScore,
+                            maximum: 100  // adjust the maximum as per your grading system
+                        )->id,
+                    ]
+                );
+            }
+
+            // update overall semester grade for the student
+            $totalSemesterScore = StudentSubjectGrade::where([
+                'student_id' => $student_id,
+                'gradable_type' => 'App\Models\Semester',
+                'gradable_id' => $semester->id,
+            ])->sum('score');
+
+            StudentGrade::updateOrCreate(
+                [
+                    'student_id' => $student_id,
+                    'gradable_type' => 'App\Models\Semester',
+                    'gradable_id' => $semester->id,
+                ],
+                [
+                    'score' => $totalSemesterScore / $studentSubjects->count(),
+                    'grade_scale_id' => GradeScale::get(
+                        score: $totalSemesterScore,
+                        maximum: 100  // adjust the maximum as per your grading system
+                    )->id,
+                ]
+            );
+        });
+    }
+
     /**
      * @return void
      *
