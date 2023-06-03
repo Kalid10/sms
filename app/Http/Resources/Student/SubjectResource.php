@@ -15,10 +15,27 @@ class SubjectResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'full_name' => $this->full_name,
-            'short_name' => $this->short_name,
-            'category' => $this->category,
-            'tags' => $this->tags,
+            'student_id' => $this->id,
+            'name' => $this->user->name,
+            'username' => $this->user->username,
+            'subjects' => $this->batches->flatMap(function ($batch) {
+                return $batch->batch->subjects->map(function ($subject) {
+                    return [
+                        'subject_id' => $subject->subject->id,
+                        'subject_full_name' => $subject->subject->full_name,
+                        'subject_short_name' => $subject->subject->short_name,
+                        'subject_category' => $subject->subject->category,
+                        'subject_tags' => $subject->subject->tags,
+                        'teacher' => [
+                            'id' => $subject->teacher->id,
+                            'name' => $subject->teacher->user->name,
+                            'email' => $subject->teacher->user->email,
+                            'gender' => $subject->teacher->user->gender,
+
+                        ],
+                    ];
+                });
+            }),
         ];
     }
 }

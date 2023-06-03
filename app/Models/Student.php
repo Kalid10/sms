@@ -130,16 +130,4 @@ class Student extends Model
     {
         return $this->hasMany(StudentNote::class);
     }
-
-    public function subjects(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Subject::class,
-            'batch_subjects',
-            'batch_id',
-            'subject_id',
-            'id',
-            'id'
-        );
-    }
 }
