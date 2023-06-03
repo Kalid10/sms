@@ -277,13 +277,13 @@ class StudentGradeHelper
      * Calculate and update students' batch subject rank
      * for a given assessment
      */
-    private static function updateRank(): void
+    private static function updateRank(Collection $student_ids): void
     {
-        self::calculateSubjectRanks(Quarter::class, Quarter::getActiveQuarter()->id);
-        self::calculateSubjectRanks(Semester::class, Semester::getActiveSemester()->id);
+        self::calculateSubjectRanks($student_ids, Quarter::class, Quarter::getActiveQuarter()->id);
+        self::calculateSubjectRanks($student_ids, Semester::class, Semester::getActiveSemester()->id);
 
-        self::calculateOverAllRanks(Quarter::class, Quarter::getActiveQuarter()->id);
-        self::calculateOverAllRanks(Semester::class, Semester::getActiveSemester()->id);
+        self::calculateOverAllRanks($student_ids, Quarter::class, Quarter::getActiveQuarter()->id);
+        self::calculateOverAllRanks($student_ids, Semester::class, Semester::getActiveSemester()->id);
     }
 
     /**
@@ -291,11 +291,12 @@ class StudentGradeHelper
      *
      * Calculate and update students' batch subject rank for quarter or semester
      */
-    private static function calculateSubjectRanks(string $gradableType, int $gradableId): void
+    private static function calculateSubjectRanks(Collection $student_ids, string $gradableType, int $gradableId): void
     {
         $students = DB::table('student_subject_grades')
             ->where('gradable_type', $gradableType)
             ->where('gradable_id', $gradableId)
+            ->whereIn('student_id', $student_ids)
             ->orderBy('batch_subject_id')
             ->orderByDesc('score')
             ->get();
@@ -327,11 +328,12 @@ class StudentGradeHelper
      *
      * Calculate and update students' batch rank for quarter or semester
      */
-    private static function calculateOverAllRanks(string $gradableType, int $gradableId): void
+    private static function calculateOverAllRanks(Collection $student_ids, string $gradableType, int $gradableId): void
     {
         $students = DB::table('student_grades')
             ->where('gradable_type', $gradableType)
             ->where('gradable_id', $gradableId)
+            ->whereIn('student_id', $student_ids)
             ->orderBy('gradable_id')
             ->orderByDesc('score')
             ->get();
