@@ -191,6 +191,12 @@ class StudentGradeHelper
         });
     }
 
+    /**
+     * @return void
+     *
+     * Recalculate and score students' semester
+     * grades for a given assessment
+     */
     private static function updateStudentSemesterGrades(Collection $student_ids): void
     {
         $semester = Semester::getActiveSemester();
@@ -273,68 +279,55 @@ class StudentGradeHelper
      */
     private static function updateRank(): void
     {
-        // For subject ranks
-        $quarterlySubjectStudents = DB::table('student_subject_grades')
-            ->where('gradable_type', Quarter::class)
-            ->where('gradable_id', Quarter::getActiveQuarter()->id)
-            ->orderBy('batch_subject_id')
-            ->orderByDesc('score')
-            ->get();
+        self::calculateSubjectRanks(Quarter::class, Quarter::getActiveQuarter()->id);
+        self::calculateSubjectRanks(Semester::class, Semester::getActiveSemester()->id);
 
-        $quarterlySubjectStudents->transform(function ($item, $key) use ($quarterlySubjectStudents) {
-            static $lastBatchSubjectId = null;
-            static $lastScore = null;
-            static $rank = 0;
-
-            if ($lastBatchSubjectId != $item->batch_subject_id || $lastScore != $item->score) {
-                $lastBatchSubjectId = $item->batch_subject_id;
-                $lastScore = $item->score;
-                $rank = $quarterlySubjectStudents->where('batch_subject_id', $item->batch_subject_id)->where('score', '>', $item->score)->count() + 1;
-            }
-
-            DB::table('student_subject_grades')
-                ->where('student_id', $item->student_id)
-                ->where('batch_subject_id', $item->batch_subject_id)
-                ->where('gradable_type', Quarter::class)
-                ->where('gradable_id', Quarter::getActiveQuarter()->id)
-                ->update(['rank' => $rank]);
-
-            return $item;
-        });
-
-        $semesterSubjectStudents = DB::table('student_subject_grades')
-            ->where('gradable_type', Semester::class)
-            ->where('gradable_id', Semester::getActiveSemester()->id)
-            ->orderBy('batch_subject_id')
-            ->orderByDesc('score')
-            ->get();
-
-        $semesterSubjectStudents->transform(function ($item, $key) use ($semesterSubjectStudents) {
-            static $lastBatchSubjectId = null;
-            static $lastScore = null;
-            static $rank = 0;
-
-            if ($lastBatchSubjectId != $item->batch_subject_id || $lastScore != $item->score) {
-                $lastBatchSubjectId = $item->batch_subject_id;
-                $lastScore = $item->score;
-                $rank = $semesterSubjectStudents->where('batch_subject_id', $item->batch_subject_id)->where('score', '>', $item->score)->count() + 1;
-            }
-
-            DB::table('student_subject_grades')
-                ->where('student_id', $item->student_id)
-                ->where('batch_subject_id', $item->batch_subject_id)
-                ->where('gradable_type', Semester::class)
-                ->where('gradable_id', Semester::getActiveSemester()->id)
-                ->update(['rank' => $rank]);
-
-            return $item;
-        });
-
-        self::calculateRanks(Quarter::class, Quarter::getActiveQuarter()->id);
-        self::calculateRanks(Semester::class, Semester::getActiveSemester()->id);
+        self::calculateOverAllRanks(Quarter::class, Quarter::getActiveQuarter()->id);
+        self::calculateOverAllRanks(Semester::class, Semester::getActiveSemester()->id);
     }
 
-    private static function calculateRanks(string $gradableType, int $gradableId): void
+    /**
+     * @return void
+     *
+     * Calculate and update students' batch subject rank for quarter or semester
+     */
+    private static function calculateSubjectRanks(string $gradableType, int $gradableId): void
+    {
+        $students = DB::table('student_subject_grades')
+            ->where('gradable_type', $gradableType)
+            ->where('gradable_id', $gradableId)
+            ->orderBy('batch_subject_id')
+            ->orderByDesc('score')
+            ->get();
+
+        $students->transform(function ($item, $key) use ($students, $gradableType) {
+            static $lastBatchSubjectId = null;
+            static $lastScore = null;
+            static $rank = 0;
+
+            if ($lastBatchSubjectId != $item->batch_subject_id || $lastScore != $item->score) {
+                $lastBatchSubjectId = $item->batch_subject_id;
+                $lastScore = $item->score;
+                $rank = $students->where('batch_subject_id', $item->batch_subject_id)->where('score', '>', $item->score)->count() + 1;
+            }
+
+            DB::table('student_subject_grades')
+                ->where('student_id', $item->student_id)
+                ->where('batch_subject_id', $item->batch_subject_id)
+                ->where('gradable_type', $gradableType)
+                ->where('gradable_id', $item->gradable_id)
+                ->update(['rank' => $rank]);
+
+            return $item;
+        });
+    }
+
+    /**
+     * @return void
+     *
+     * Calculate and update students' batch rank for quarter or semester
+     */
+    private static function calculateOverAllRanks(string $gradableType, int $gradableId): void
     {
         $students = DB::table('student_grades')
             ->where('gradable_type', $gradableType)
