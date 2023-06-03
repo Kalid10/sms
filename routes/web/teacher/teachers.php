@@ -23,6 +23,7 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('
     Route::controller(TeacherController::class)->group(function () {
         Route::get('', 'show')->name('show');
         Route::get('students/{student}', 'student')->name('student.show');
+        Route::get('students', 'students')->name('students.show');
         Route::get('class/', 'batch')->name('batch.show');
     });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Assessment;
 use App\Models\Batch;
+use App\Models\BatchStudent;
 use App\Models\BatchSubject;
 use App\Models\Level;
 use App\Models\Quarter;
@@ -187,12 +188,42 @@ class TeacherController extends Controller
             'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
             'search' => 'nullable|string',
         ]);
-        $students = Student::whereHas('batches', function ($query) {
-            $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-        })->with('user:id,first_name,last_name')->get();
+        $teacher = Teacher::find(auth()->user()->teacher->id);
+        $batchSubjectId = $request->input('batch_subject_id');
+        $search = $request->input('search');
+
+        $batchSubject = $batchSubjectId ?
+            BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
+            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+                ->whereHas('batch', function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                })->first()->load('subject', 'batch.level');
+
+        $batchStudents = BatchStudent::where('batch_id', $batchSubject->batch_id)
+            ->with('student.user', 'student.batches')
+            ->whereHas('student.user', function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%");
+            })
+            ->paginate(10);
+
+        $batchStudents->getCollection()->transform(function ($student) {
+            $student->attendance_percentage = 100 - $student->student->absenteePercentage();
+
+            return $student;
+        });
+
+        $batchSubjects = $teacher->batchSubjects()
+            ->whereHas('batch', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            })
+            ->with('subject:id,full_name', 'batch:id,section,level_id', 'batch.level:id,name')
+            ->get();
 
         return Inertia::render('Teacher/Students', [
-            'students' => $students,
+            'students' => $batchStudents,
+            'batch_subject' => $batchSubject,
+            'batch_subjects' => $batchSubjects,
+            'search' => $search,
         ]);
     }
 }
