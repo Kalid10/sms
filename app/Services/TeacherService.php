@@ -80,7 +80,11 @@ class TeacherService
     public function getStudents(int $id, ?string $batchSubjectId, ?string $studentSearch)
     {
         // Get students of a teacher for specific batchSubjectId
-        $batchSubjectId = $batchSubjectId ?? BatchSubject::where('teacher_id', $id)->first()->id;
+        $batchSubjectId = $batchSubjectId ??
+            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+                ->whereHas('batch', function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                })->first()->id;
 
         $students = Teacher::with([
             'batchSubjects' => function ($query) use ($batchSubjectId) {
@@ -97,7 +101,7 @@ class TeacherService
             ->where('id', $id)
             ->first()
             ->batchSubjects
-            ->map(function ($batchSubject) use ($studentSearch) {
+            ->map(function ($batchSubject) use ($studentSearch, $batchSubjectId) {
                 $students = $batchSubject->students->map(function ($student) {
                     $student->attendance_percentage = 100 - $student->absenteePercentage();
 
@@ -105,7 +109,7 @@ class TeacherService
                 });
 
                 return [
-                    'batch_subject_id' => $batchSubject->id,
+                    'batch_subject_id' => $batchSubjectId,
                     'students' => $students,
                     'search' => $studentSearch ?? '',
                 ];
