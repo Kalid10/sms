@@ -14,15 +14,19 @@ class ScheduleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $schedules = $this->batch['schedule'] ?? [];
+        $schedules = $this->currentBatch ? $this->currentBatch[0]->schedule : null;
 
         return [
-            'student_id' => $this->student_id,
+            'student_id' => $this->id,
+            'student_name' => $this->user->name,
             'schedules' => collect($schedules)->map(function ($schedule) {
                 return [
-                    'day_of_week' => $schedule['day_of_week'] ?? null,
-                    'subject' => $schedule->batchSubject->subject->full_name ?? null,
-                    'teacher' => $schedule->batchSubject->teacher->user->name ?? null,
+                    'day_of_week' => $schedule['day_of_week'],
+                    'subject_full_name' => $schedule->batchSubject->subject->full_name,
+                    'subject_short_name' => $schedule->batchSubject->subject->short_name,
+                    'subject_category' => $schedule->batchSubject->subject->category,
+                    'subject_tags' => $schedule->batchSubject->subject->tags,
+                    'teacher' => $schedule->batchSubject->teacher->user->name,
                 ];
             })->toArray(),
         ];

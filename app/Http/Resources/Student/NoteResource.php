@@ -15,14 +15,18 @@ class NoteResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'student_id' => $this->student_id,
-            'student_name' => $this->student->user->name,
-            'author' => $this->author->name,
-            'author_email' => $this->author->email,
-            'title' => $this->title,
-            'description' => $this->description,
-            'date' => $this->created_at->format('d-m-Y'),
+            'student_id' => $this->id,
+            'student_name' => $this->user->name,
+            'student_notes' => $this->studentNotes->map(function ($studentNote) {
+                return [
+                    'id' => $studentNote->id,
+                    'title' => $studentNote->title,
+                    'description' => $studentNote->description,
+                    'date' => $studentNote->created_at,
+                    'author' => $studentNote->author->name,
+                    'author_type' => $studentNote->author->type,
+                ];
+            }),
         ];
     }
 }
