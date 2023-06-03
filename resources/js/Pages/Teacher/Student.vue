@@ -6,35 +6,40 @@
         <div
             class="ml-2 mr-5 flex w-7/12 grow flex-col items-center space-y-7 py-4 2xl:py-6"
         >
-            <div class="flex w-full justify-between space-x-6">
-                <!--        Assessments and NextClass section-->
+            <!--        Assessments and NextClass section-->
+            <div
+                class="flex h-full w-full flex-col items-center justify-center space-y-6"
+            >
                 <div
-                    class="flex h-full w-9/12 flex-col items-center justify-center space-y-6"
+                    class="flex h-full w-full items-center justify-between space-x-4 rounded-lg bg-gradient-to-bl from-neutral-700 to-zinc-800 py-6 pl-4 text-gray-200 shadow-sm"
                 >
-                    <div
-                        class="flex h-full w-full items-center justify-between space-x-4 divide-x rounded-lg bg-gradient-to-bl from-neutral-700 to-zinc-800 py-6 pl-4 text-gray-200 shadow-sm"
-                    >
-                        <div class="flex h-full w-6/12 space-x-5">
-                            <img
-                                :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
-                                alt="avatar"
-                                class="w-20 rounded-md object-contain"
-                            />
-                            <Header :title="student.user.name + ' 11A'" />
-                        </div>
-                        <div class="w-4/12 px-1">
-                            <CurrentClass />
-                        </div>
+                    <div class="flex h-full w-6/12 space-x-5">
+                        <img
+                            :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
+                            alt="avatar"
+                            class="w-20 rounded-md object-contain"
+                        />
+                        <Header :title="student.user.name + ' 11A'" />
                     </div>
-                    <!--           Assessments section-->
-                    <div
-                        class="w-full rounded-lg bg-white py-3 pl-3 pr-10 lg:w-full"
-                    >
-                        <Assessments />
+                    <SelectInput
+                        v-model="selectedBatchSubject"
+                        class="w-4/12 text-black"
+                        :options="batchSubjectOptions"
+                        rounded="rounded-full"
+                    />
+                    <div class="w-4/12 border-l border-gray-500 px-1">
+                        <CurrentClass />
                     </div>
                 </div>
-                <div class="flex h-full w-3/12 flex-col">
-                    <GeneralReport />
+
+                <!--           Assessments section-->
+                <div class="flex w-full justify-between lg:w-full">
+                    <div class="w-9/12 rounded-lg bg-white py-3 pl-3 pr-10">
+                        <Assessments />
+                    </div>
+                    <div class="flex h-full w-2/12 flex-col">
+                        <GeneralReport />
+                    </div>
                 </div>
             </div>
 
@@ -60,7 +65,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import Assessments from "@/Views/Teacher/Student/Assessments.vue";
 import Rank from "@/Views/Teacher/Student/Rank.vue";
@@ -70,10 +75,28 @@ import { isSidebarOpenOnXlDevice } from "@/utils";
 import Header from "@/Views/Teacher/Header.vue";
 import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
 import GeneralReport from "@/Views/Teacher/Student/GeneralReport.vue";
+import SelectInput from "@/Components/SelectInput.vue";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);
 const teacher = usePage().props.auth.user.teacher;
+const batchSubject = computed(() => usePage().props.batch_subject);
+const batchSubjects = usePage().props.batch_subjects ?? [];
+const selectedBatchSubject = ref(batchSubject.value.id);
+
+const batchSubjectOptions = computed(() => {
+    return batchSubjects.map((batchSubject) => {
+        return {
+            value: batchSubject.id,
+            label:
+                batchSubject.batch.level.name +
+                " " +
+                batchSubject.batch.section +
+                " " +
+                batchSubject.subject.full_name,
+        };
+    });
+});
 
 // Get the first batch session from batchSessions where batchSubject id is not null
 const upcomingSession = computed(() => {
