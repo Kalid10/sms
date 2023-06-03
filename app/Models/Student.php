@@ -190,7 +190,7 @@ class Student extends Model
                     ->where('gradable_id', $semesterId);
             }
             )
-            ->get();
+            ->with('gradeScale')->get();
     }
 
     public function studentNotes(): HasMany

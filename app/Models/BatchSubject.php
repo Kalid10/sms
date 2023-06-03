@@ -106,4 +106,9 @@ class BatchSubject extends Model
     {
         return $this->hasMany(StudentSubjectGrade::class);
     }
+
+    public function batchGrades(): HasMany
+    {
+        return $this->hasMany(BatchSubjectGrade::class);
+    }
 }
