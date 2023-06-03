@@ -35,7 +35,7 @@
                         :selectable="false"
                         :columns="config"
                         class="!!text-[0.5rem] border-none bg-red-400"
-                        :footer="false"
+                        :footer="true"
                         header-style="!bg-black text-white !text-[0.65rem]"
                     >
                         <template #filter>
@@ -59,6 +59,13 @@
                                     </div>
                                 </div>
                             </div>
+                        </template>
+                        <template #footer>
+                            <LinkCell
+                                href="/teacher/students"
+                                value="View All Students"
+                                class="w-full text-end"
+                            />
                         </template>
                     </TableElement>
                 </div>
@@ -110,6 +117,7 @@ import Assessment from "@/Views/Teacher/Home/Assessments.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Header from "@/Views/Teacher/Header.vue";
 import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
+import LinkCell from "@/Components/LinkCell.vue";
 
 const schedule = usePage().props.schedule;
 const batchSubjects = usePage().props.batch_subjects;

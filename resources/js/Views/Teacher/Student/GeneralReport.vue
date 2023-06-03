@@ -1,5 +1,10 @@
 <template>
-    <div class="flex w-3/12 flex-col justify-between space-y-4">
+    <div class="flex w-full flex-col justify-between space-y-4">
+        <div
+            class="rounded-lg bg-positive-100 py-6 text-center text-7xl font-bold text-white shadow-sm"
+        >
+            A+
+        </div>
         <div
             class="flex flex-col justify-center space-y-4 rounded-lg bg-white py-5 text-center text-4xl shadow-sm"
         >

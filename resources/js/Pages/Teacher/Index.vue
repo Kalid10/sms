@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full flex-col space-y-3 p-1 lg:space-y-0 lg:px-1 2xl:px-12"
+        class="flex w-full flex-col space-y-3 bg-gray-50 p-1 lg:space-y-0 lg:px-1 2xl:pl-4 2xl:pr-12"
     >
         <!--                 Next Class Header On Mobile Devices-->
         <div
@@ -37,7 +37,7 @@
             >
                 <!--                 Welcome header-->
                 <div
-                    class="col-span-12 h-fit py-2 text-start font-light lg:text-3xl 2xl:text-4xl"
+                    class="col-span-12 h-fit text-start font-light lg:text-3xl 2xl:text-4xl"
                     :class="
                         isSidebarOpenOnXlDevice
                             ? ' lg:col-span-8'
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div
-                    class="col-span-12 row-span-6"
+                    class="col-span-12 row-span-6 rounded-lg bg-white shadow-sm 2xl:px-2"
                     :class="
                         isSidebarOpenOnXlDevice
                             ? 'lg:col-span-7'
@@ -81,7 +81,7 @@
                 class="flex h-full flex-col justify-between space-y-2 lg:flex-row"
             >
                 <Students
-                    class="h-fit w-full 2xl:mt-0 2xl:w-4/12"
+                    class="h-fit w-full rounded-lg bg-white p-3 shadow-sm 2xl:mt-10 2xl:w-6/12"
                     :class="
                         isSidebarOpenOnXlDevice
                             ? 'lg:w-5/12 lg:mt-[-3rem]'

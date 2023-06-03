@@ -1,12 +1,12 @@
 <template>
     <div>
         <div
-            class="flex h-20 w-full items-center justify-between hover:scale-105 hover:shadow-lg 2xl:h-24"
-            :class="view === 'class' ? 'rounded-sm' : 'rounded-r-lg'"
+            class="flex w-full items-center justify-between py-3 hover:scale-105 hover:shadow-lg"
+            :class="view === 'class' ? 'rounded-sm border-l' : 'rounded-r-lg'"
         >
             <div
                 v-if="view === 'class'"
-                class="mr-1 h-5/6 w-0.5 bg-gray-600"
+                class="mr-1 min-h-full w-0.5 bg-gray-600"
             ></div>
             <div
                 v-else
@@ -48,8 +48,12 @@
                 "
             >
                 <div
-                    class="pl-2 text-[0.65rem] lg:pl-0 2xl:text-sm"
-                    :class="view === 'class' ? 'text-[0.6rem]' : 'font-medium'"
+                    class="pl-2 lg:pl-0"
+                    :class="
+                        view === 'class'
+                            ? 'text-xs'
+                            : '2xl:text-sm text-[0.65rem] font-medium'
+                    "
                 >
                     {{ item.lesson_plan.topic }}
                 </div>

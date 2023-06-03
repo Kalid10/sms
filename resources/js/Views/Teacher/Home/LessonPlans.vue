@@ -15,6 +15,7 @@
                     v-for="(item, index) in lessonPlans"
                     :key="index"
                     :item="item"
+                    view="class"
                     class="min-w-full"
                     :class="view === 'class' ? '' : 'shadow-sm'"
                 />
