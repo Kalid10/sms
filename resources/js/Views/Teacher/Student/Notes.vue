@@ -1,5 +1,7 @@
 <template>
-    <div class="flex w-full flex-col items-center space-y-5">
+    <div
+        class="flex w-full flex-col items-center space-y-5 rounded-lg bg-white py-3 shadow-sm"
+    >
         <div
             class="flex space-x-2 text-center text-xl font-semibold underline-offset-4"
         >

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full flex-col items-center justify-center space-y-2 py-2"
+        class="flex w-full flex-col items-center justify-center space-y-2 rounded-lg bg-white py-3 shadow-sm"
     >
         <div
             class="flex space-x-2 text-center text-xl font-semibold underline-offset-4"

@@ -1,22 +1,33 @@
 <template>
     <div
-        class="flex min-h-screen w-full items-start justify-between pl-4 2xl:px-5"
+        class="flex min-h-screen w-full items-start justify-between bg-gray-50 pl-4 2xl:px-5"
     >
         <!--        Left side-->
         <div
-            class="ml-2 mr-5 flex w-8/12 grow flex-col items-center space-y-7 py-4 2xl:py-6"
+            class="ml-2 mr-5 flex w-7/12 grow flex-col items-center space-y-7 py-4 2xl:py-6"
         >
-            <div class="flex w-full justify-between">
-                <!--        Header-->
-                <Header :title="student.user.name + ' 11A'" />
+            <div class="flex w-full items-center justify-between space-x-6">
+                <div
+                    class="flex h-full w-9/12 items-center justify-between space-x-4 divide-x rounded-lg bg-gradient-to-bl from-neutral-700 to-zinc-800 py-6 pl-4 text-gray-200 shadow-sm"
+                >
+                    <div class="flex h-full w-6/12 space-x-5">
+                        <img
+                            :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
+                            alt="avatar"
+                            class="w-20 rounded-md object-contain"
+                        />
+                        <Header :title="student.user.name + ' 11A'" />
+                    </div>
+                    <div class="w-4/12 px-1">
+                        <CurrentClass />
+                    </div>
+                </div>
 
-                <CurrentClass />
-            </div>
-
-            <!--        Statistics-->
-            <div class="flex h-24 w-full items-center justify-center">
-                <!--                <Statistics />-->
-                <BatchPerformance />
+                <div
+                    class="h-full w-2/12 rounded-lg bg-positive-100 py-6 text-center text-7xl font-bold text-white shadow-sm"
+                >
+                    A+
+                </div>
             </div>
 
             <!--        Assessments and NextClass section-->
@@ -25,25 +36,31 @@
             >
                 <div class="flex w-full items-center justify-between pb-2">
                     <!--           Assessments section-->
-                    <div class="w-full rounded-md p-2 shadow-md lg:w-8/12">
+                    <div
+                        class="w-full rounded-lg bg-white py-3 pl-3 pr-10 lg:w-8/12"
+                    >
                         <Assessments />
                     </div>
+
+                    <GeneralReport />
                 </div>
+            </div>
+
+            <div
+                class="flex h-96 w-full items-center justify-center border-t text-8xl font-light text-gray-500"
+            >
+                Under construction
             </div>
         </div>
 
         <!--        Right side-->
         <div
-            class="flex min-h-screen flex-col items-center space-y-3 border-l pb-4 pt-2"
+            class="flex min-h-screen flex-col items-center space-y-8 border-l border-gray-200 bg-gray-100 py-4 pl-5"
             :class="isSidebarOpenOnXlDevice ? 'w-4/12' : 'w-3/12'"
         >
-            <Information />
-
-            <div class="h-[0.02rem] w-11/12 bg-neutral-300"></div>
-
             <Rank />
 
-            <div class="h-[0.02rem] w-11/12 bg-neutral-300"></div>
+            <Information />
 
             <Notes />
         </div>
@@ -59,8 +76,8 @@ import Notes from "@/Views/Teacher/Student/Notes.vue";
 import Information from "@/Views/Teacher/Student/GuardianInformation.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import Header from "@/Views/Teacher/Header.vue";
-import BatchPerformance from "@/Views/Teacher/Batches/BatchPerformance/Index.vue";
 import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
+import GeneralReport from "@/Views/Teacher/Student/GeneralReport.vue";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);

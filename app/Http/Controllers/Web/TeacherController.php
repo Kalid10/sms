@@ -162,7 +162,7 @@ class TeacherController extends Controller
             $studentAssessment->assessment->point = $studentAssessment->point;
 
             return $studentAssessment->assessment;
-        });
+        })->take(4);
 
         return Inertia::render('Teacher/Student', [
             'student' => $student->load('user'),
