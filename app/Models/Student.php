@@ -198,6 +198,11 @@ class Student extends Model
         return $this->hasMany(StudentNote::class);
     }
 
+    public function grades(): HasMany
+    {
+        return $this->hasMany(StudentGrade::class);
+    }
+
     public function subjects(): BelongsToMany
     {
         return $this->belongsToMany(
