@@ -25,6 +25,7 @@ class Resource extends JsonResource
             'email' => $this->user->email,
             'gender' => $this->user->gender,
             'date_of_birth' => $this->user->date_of_birth,
+            'address' => $this->user->address,
             'level' => $activeBatch ? $activeBatch->level->name : null,
             'section' => $section,
             'student_id' => $this->id,

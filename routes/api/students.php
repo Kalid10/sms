@@ -8,5 +8,6 @@ Route::controller(StudentController::class)->prefix('children/')->middleware('au
     Route::get('subjects/{student?}', 'subjects')->name('subjects');
     Route::get('schedules/{student?}', 'schedules')->name('schedules');
     Route::get('assessments/{student?}', 'assessments')->name('assessments');
+    Route::post('update/{student}', 'update')->name('update');
     Route::get('{student?}', 'index')->name('index');
 });

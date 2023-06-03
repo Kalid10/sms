@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\API;
+namespace App\Http\Requests\API\Students;
 
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class AssessmentRequest extends FormRequest
+class GetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class AssessmentRequest extends FormRequest
     public function authorize(): bool
     {
         if ($this->route('student')) {
-            return $this->user()->guardian->children->contains($this->route('student'));
+            return Auth::user()->guardian->id === $this->route('student')->guardian->id;
         }
 
         return true;
@@ -30,16 +30,5 @@ class AssessmentRequest extends FormRequest
         return [
             //
         ];
-    }
-
-    /**
-     * Handle a failed authorization attempt.
-     *
-     *
-     * @throws AuthorizationException
-     */
-    protected function failedAuthorization(): void
-    {
-        throw new AuthorizationException('This action is unauthorized.');
     }
 }

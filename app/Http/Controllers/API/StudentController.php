@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\API\AssessmentRequest;
-use App\Http\Requests\API\StudentRequest;
+use App\Http\Requests\API\Students\AssessmentRequest;
+use App\Http\Requests\API\Students\GetRequest;
+use App\Http\Requests\API\Students\UpdateRequest;
 use App\Http\Resources\Student\AssessmentCollection;
 use App\Http\Resources\Student\AssessmentResource;
 use App\Http\Resources\Student\Collection;
@@ -17,31 +18,40 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
-    public function index(StudentRequest $request, ?Student $student): Resource|Collection
+    public function index(GetRequest $request, ?Student $student): Resource|Collection
     {
         return $student->exists ?
-            new Resource($student->load('guardian.children.user')) :
+            new Collection($student->load('guardian.children.user')) :
             new Collection(Auth::user()->load(
                 'guardian.children.user',
                 'guardian.children.currentBatch.homeRoomTeacher.teacher.user'
             )->guardian->children);
     }
 
-    public function notes(StudentRequest $request, ?Student $student): NoteCollection
+    public function update(UpdateRequest $request, Student $student): Resource
+    {
+        $user = $student->user;
+
+        $user->update($request->validated());
+
+        return new Resource($student);
+    }
+
+    public function notes(GetRequest $request, ?Student $student): NoteCollection
     {
         return $student->exists ?
             new NoteCollection($student->load('studentNotes.author', 'studentNotes.student.user:id,name')->studentNotes) :
             new NoteCollection(Auth::user()->load('guardian.children')->guardian->children->load('studentNotes.author', 'studentNotes.student.user:id,name')->pluck('studentNotes')->flatten());
     }
 
-    public function subjects(StudentRequest $request, ?Student $student): SubjectCollection
+    public function subjects(GetRequest $request, ?Student $student): SubjectCollection
     {
         return $student->exists ?
             new SubjectCollection($student->load('subjects')->subjects) :
             new SubjectCollection(Auth::user()->load('guardian.children')->guardian->children->load('subjects')->pluck('subjects')->flatten());
     }
 
-    public function schedules(StudentRequest $request, ?Student $student): ScheduleCollection
+    public function schedules(GetRequest $request, ?Student $student): ScheduleCollection
     {
         return $student->exists ?
             new ScheduleCollection($student->load(
