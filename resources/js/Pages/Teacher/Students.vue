@@ -26,9 +26,10 @@
                         <div
                             class="flex flex-col justify-center space-y-4 text-center text-4xl font-bold shadow-sm"
                         >
-                            <div>
+                            <div v-if="batchSubjectGrade">
                                 {{ numberWithOrdinal(batchSubjectGrade.rank) }}
                             </div>
+                            <div v-else>-</div>
                             <span class="text-xs font-light">
                                 Class Rank From Total 5
                             </span>
@@ -143,8 +144,10 @@ const filteredStudents = computed(() => {
         return {
             name: student.student.user.name,
             attendance: student.attendance_percentage + "%",
-            grade: student.quarterly_grade.score.toFixed(1),
-            rank: student.batch_subject_rank,
+            grade: student.quarterly_grade
+                ? student.quarterly_grade.score.toFixed(1)
+                : "-",
+            rank: student.batch_subject_rank ?? "-",
             id: student.student_id,
             conduct: "C",
         };

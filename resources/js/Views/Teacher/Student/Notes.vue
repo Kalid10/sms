@@ -20,6 +20,12 @@
             class="flex w-11/12 flex-col items-center justify-center space-y-6 px-1"
         >
             <div
+                v-if="notes.length === 0"
+                class="py-5 px-3 text-center text-sm font-light"
+            >
+                No Notes Associated with {{ student.user.name }}
+            </div>
+            <div
                 v-for="(item, index) in notes"
                 :key="index"
                 class="flex w-full cursor-pointer justify-center space-x-3"
@@ -76,7 +82,7 @@
                 </div>
             </div>
         </Modal>
-        <LinkCell href="/cum" value="Show All Notes" />
+        <LinkCell v-if="notes.length" href="/cum" value="Show All Notes" />
     </div>
 </template>
 <script setup>
