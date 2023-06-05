@@ -1,16 +1,20 @@
 <template>
     <div>
         <div
-            class="flex w-full items-center justify-between py-3 hover:scale-105 hover:shadow-lg"
-            :class="view === 'class' ? 'rounded-sm border-l' : 'rounded-r-lg'"
+            class="5 flex w-full items-center justify-between hover:bg-zinc-800 hover:text-white hover:shadow-sm"
+            :class="
+                view === 'class'
+                    ? 'rounded-sm bg-gray-50 hover:rounded-lg py-2 border-l'
+                    : 'rounded-r-lg hover:rounded-lg h-full'
+            "
         >
             <div
                 v-if="view === 'class'"
-                class="mr-1 min-h-full w-0.5 bg-gray-600"
+                class="mr-1 min-h-full w-0.5 bg-gray-600 hover:bg-gray-100"
             ></div>
             <div
                 v-else
-                class="flex h-full w-3/12 flex-col items-center justify-evenly rounded-l-lg bg-black text-white"
+                class="flex h-full w-3/12 flex-col items-center justify-evenly rounded-l-lg bg-black py-6 text-white"
                 :class="
                     isSidebarOpenOnXlDevice ? 'lg:w-3/12 lg:px-2' : 'lg:w-2/12'
                 "
