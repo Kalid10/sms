@@ -3,19 +3,25 @@
         <div
             class="flex flex-col justify-center space-y-4 rounded-lg py-5 text-center shadow-sm"
             :class="{
-                'bg-positive-100 text-white': grade.grade_scale.label === 'A',
-                'bg-yellow-400': grade.grade_scale.label === 'B',
-                'bg-yellow-100': grade.grade_scale.label === 'C',
-                'bg-negative-50': grade.grade_scale.label === 'D',
-                'bg-negative-100 text-white': grade.grade_scale.label === 'F',
+                'bg-positive-100 text-white': grade?.grade_scale.label === 'A',
+                'bg-yellow-400': grade?.grade_scale.label === 'B',
+                'bg-yellow-100': grade?.grade_scale.label === 'C',
+                'bg-negative-50': grade?.grade_scale.label === 'D',
+                'bg-negative-100 text-white': grade?.grade_scale.label === 'F',
+                'bg-white': !grade,
             }"
         >
-            <span class="text-4xl font-semibold">
-                {{ grade.score }}
-                <span class="text-xl font-normal">{{
-                    grade.grade_scale.label
-                }}</span>
-            </span>
+            <div v-if="grade">
+                <span class="text-4xl font-semibold">
+                    {{ grade?.score }}
+                    <span class="text-xl font-normal">{{
+                        grade?.grade_scale.label
+                    }}</span>
+                </span>
+            </div>
+            <div v-else>
+                <span class="text-4xl font-semibold"> - </span>
+            </div>
             <span class="text-xs font-light">
                 {{ batchSubject.subject.short_name }} GRADE
             </span>
