@@ -11,7 +11,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\Activitylog\Models\Activity;
 
 class AdminController extends Controller
 {
@@ -38,13 +37,7 @@ class AdminController extends Controller
         // Get admins of active batch
         $admins = User::with('roles')->where('type', 'admin')->get();
 
-        // Get all activity log for the logged in user
-        $activityLogs = Activity::where('log_name', 'user')
-            ->with(['causer' => function ($query) {
-                $query->where('id', auth()->id());
-            }])
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
+        $schoolYear = SchoolYear::getActiveSchoolYear();
 
         return Inertia::render('Admin/Index', [
             'teachers_count' => $teachersCount,
@@ -55,7 +48,7 @@ class AdminController extends Controller
             'active_students' => $activeStudents,
             'absentee_records' => $absenteeRecords,
             'admins' => $admins,
-            'activity_logs' => $activityLogs,
+            'school_year' => $schoolYear,
         ]);
     }
 

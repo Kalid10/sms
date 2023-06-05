@@ -25,7 +25,7 @@ it('renders the admin index page', function () {
             ->has('user_roles')
             ->has('admins')
             ->has('levels')
-            ->has('activity_logs');
+            ->has('school_year');
     });
 });
 

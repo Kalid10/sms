@@ -55,7 +55,6 @@
             subtitle="subtitle"
             title="Administrators" class="cursor-pointer hover:bg-gray-100 md:col-span-1 md:row-span-1 md:w-full"
             icon
-            @click="teachersLink"
         >
             <h3 class="flex flex-col">
                 <slot>
@@ -95,7 +94,7 @@ const props = defineProps({
 });
 
 function studentsLink() {
-    router.get("students/");
+    router.get("admin/students/");
 }
 
 function teachersLink() {
@@ -103,7 +102,7 @@ function teachersLink() {
 }
 
 function subjectsLink() {
-    router.get("subjects/")
+    router.get("admin/subjects/")
 }
 
 
