@@ -69,6 +69,7 @@ class TeacherController extends Controller
             $lastAssessment = Assessment::where('batch_subject_id', $teacher->nextBatchSession->batchSubject->id)
                 ->where('quarter_id', Quarter::getActiveQuarter()->id)
                 ->orderBy('created_at', 'desc')
+                ->where('status', '!=', Assessment::STATUS_DRAFT)
                 ->first();
 
             if ($lastAssessment) {
@@ -128,7 +129,9 @@ class TeacherController extends Controller
 
         // Get assessments of the teacher and filter it by batch subject
         $assessments = Assessment::where('batch_subject_id', $batchSubject->id)
+            ->where('status', '!=', Assessment::STATUS_DRAFT)
             ->where('quarter_id', Quarter::getActiveQuarter()->id)
+            ->orderBy('updated_at', 'desc')
             ->with('assessmentType:id,name',
                 'batchSubject.batch:id,section,level_id',
                 'batchSubject.batch.level:id,name,level_category_id',

@@ -14,7 +14,7 @@
             </div>
         </div>
         <div
-            class="inline-block text-xs text-neutral-600 underline-offset-1 hover:cursor-pointer hover:text-black hover:underline lg:text-[0.65rem]"
+            class="inline-block text-xs text-neutral-600 underline-offset-1 hover:cursor-pointer hover:text-white hover:underline lg:text-[0.65rem]"
         >
             LessonPlan #{{ item.id }}
         </div>

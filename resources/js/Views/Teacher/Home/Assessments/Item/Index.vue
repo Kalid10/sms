@@ -2,11 +2,27 @@
     <div
         v-for="(item, index) in assessments"
         :key="index"
-        class="mt-1 flex items-center justify-between py-1.5 lg:mt-2 lg:py-1.5"
+        class="mt-1 flex cursor-pointer items-center justify-between rounded-lg py-1.5 hover:bg-zinc-800 hover:text-white lg:mt-2 lg:py-1.5"
+        @click="handleClick()"
     >
-        <div class="flex w-2/12 justify-center">
-            <AssessmentIcon :item="item" />
+        <div
+            class="flex min-h-full w-2/12 items-center justify-center font-bold"
+        >
+            <AssessmentIcon v-if="view !== 'class'" :item="item" />
+            <div
+                v-else
+                class="flex h-9 w-9 items-center justify-center rounded-full text-xl uppercase"
+                :class="{
+                    'bg-blue-400 text-white': item.status === 'marking',
+                    'bg-yellow-400 text-black': item.status === 'completed',
+                    'bg-emerald-400 text-white': item.status === 'published',
+                    'bg-neutral-700 text-white': item.status === 'scheduled',
+                }"
+            >
+                {{ item.status.slice(0, 1).toUpperCase() }}
+            </div>
         </div>
+
         <div
             class="flex justify-center"
             :class="isHomeOrAdminView ? 'w-9/12  lg:w-8/12' : 'w-7/12'"
@@ -28,11 +44,11 @@
 </template>
 
 <script setup>
-// ...
 import AssessmentIcon from "@/Views/Teacher/Home/Assessments/Item/AssessmentIcon.vue";
 import AssessmentDetails from "@/Views/Teacher/Home/Assessments/Item/AssessmentDetails.vue";
 import AssessmentScore from "@/Views/Teacher/Home/Assessments/Item/Score/Index.vue";
 import { computed } from "vue";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     assessments: {
@@ -46,4 +62,8 @@ const props = defineProps({
 });
 
 const isHomeOrAdminView = computed(() => props.view !== "class");
+
+function handleClick() {
+    router.visit("/teacher/assessments");
+}
 </script>
