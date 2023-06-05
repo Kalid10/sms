@@ -36,7 +36,7 @@ class CreateAssessmentRequest extends FormRequest
             'description' => 'string',
             'maximum_point' => 'required|integer|min:1|max:100',
             'lesson_plan_id' => 'nullable|exists:lesson_plans,id',
-            'status' => 'nullable|string|in:draft,published,closed,marking,completed,scheduled',
+            'status' => 'nullable|string|in:draft,published,scheduled',
         ];
     }
 
