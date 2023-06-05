@@ -177,7 +177,7 @@ class Student extends Model
         return $this->hasMany(StudentSubjectGrade::class);
     }
 
-    public function fetchBatchSubjectGrade(int $batchSubjectId = null, int $quarterId = null, int $semesterId = null): Collection
+    public function fetchStudentBatchSubjectGrade(int $batchSubjectId = null, int $quarterId = null, int $semesterId = null): Collection
     {
         return $this->studentSubjectGrades()->where('batch_subject_id', $batchSubjectId)
             ->when($quarterId, function ($query) use ($quarterId) {

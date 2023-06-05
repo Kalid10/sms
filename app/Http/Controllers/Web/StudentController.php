@@ -7,6 +7,7 @@ use App\Models\BatchStudent;
 use App\Models\Level;
 use App\Models\SchoolYear;
 use App\Models\Student;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -82,5 +83,29 @@ class StudentController extends Controller
             ],
             'periods' => Level::find($student->activeBatch()->level->id)->levelCategory->schoolPeriods,
         ]);
+    }
+
+    public function updateConduct(Request $request, Student $student): RedirectResponse
+    {
+        $request->validate([
+            'conduct' => 'required|in:A,B,C,D,F',
+            'batch_subject_id' => 'required|exists:batch_subjects,id',
+
+        ]);
+
+        $studentGrade = $student->studentSubjectGrades()->where(
+            'batch_subject_id',
+            $request->input('batch_subject_id')
+        );
+
+        if ($studentGrade->doesntExist()) {
+            return redirect()->back()->with('error', 'Currently you cannot update conduct for this subject');
+        }
+
+        $studentGrade->update([
+            'conduct' => $request->input('conduct'),
+        ]);
+
+        return redirect()->back()->with('success', 'Conduct updated successfully');
     }
 }

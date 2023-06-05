@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AssessmentController;
 use App\Http\Controllers\Web\LessonPlanController;
+use App\Http\Controllers\Web\StudentController;
 use App\Http\Controllers\Web\StudentNoteController;
 use App\Http\Controllers\Web\TeacherController;
 use App\Http\Controllers\Web\TeacherFeedbackController;
@@ -29,6 +30,10 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('
 
     Route::controller(StudentNoteController::class)->group(function () {
         Route::post('students/{student}/notes/create', 'create')->name('student.note.create ');
+    });
+
+    Route::controller(StudentController::class)->group(function () {
+        Route::post('students/{student}/conduct/update', 'updateConduct')->name('student.conduct.update ');
     });
 
     Route::controller(AssessmentController::class)->prefix('assessments/')->name('assessment.')->group(function () {

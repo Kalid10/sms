@@ -38,22 +38,66 @@
         <div
             class="flex flex-col justify-center space-y-4 rounded-lg bg-white py-5 text-center text-4xl font-bold shadow-sm"
         >
-            <div>B</div>
+            <div class="flex items-center justify-center space-x-2 pl-3">
+                <div class="">{{ student.conduct ?? "NC" }}</div>
+                <div @click="showConductModal = true">
+                    <PencilSquareIcon
+                        class="w-5 cursor-pointer text-gray-400 hover:scale-125 hover:text-black"
+                    />
+                </div>
+            </div>
             <span class="text-xs font-light"> CONDUCT </span>
         </div>
+        <Modal v-model:view="showConductModal">
+            <FormElement title="Update Conduct" @submit="submit">
+                <SelectInput
+                    v-model="conductForm.conduct"
+                    placeholder="Select Conduct"
+                    :options="[
+                        { label: 'A', value: 'A' },
+                        { label: 'B', value: 'B' },
+                        { label: 'C', value: 'C' },
+                        { label: 'D', value: 'D' },
+                        { label: 'F', value: 'F' },
+                    ]"
+                />
+            </FormElement>
+        </Modal>
     </div>
 </template>
 <script setup>
-import { computed } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { computed, ref } from "vue";
+import { useForm, usePage } from "@inertiajs/vue3";
+import { PencilSquareIcon } from "@heroicons/vue/24/outline";
+import Modal from "@/Components/Modal.vue";
+import FormElement from "@/Components/FormElement.vue";
+import SelectInput from "@/Components/SelectInput.vue";
 
 const attendancePercentage = computed(
     () => usePage().props.attendance_percentage
 );
 
 const grade = computed(() => usePage().props.batch_subject_grade);
-
 const batchSubject = computed(() => usePage().props.batch_subject);
+const student = computed(() => usePage().props.student);
+
+const showConductModal = ref(false);
+const conductForm = useForm({
+    conduct: student.value.conduct ?? "",
+    batch_subject_id: batchSubject.value.id,
+});
+
+const submit = () => {
+    conductForm.post(
+        "/teacher/students/" + student.value.id + "/conduct/update ",
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                showConductModal.value = false;
+            },
+        }
+    );
+};
 </script>
 
 <style scoped></style>

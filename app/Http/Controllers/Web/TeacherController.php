@@ -177,6 +177,11 @@ class TeacherController extends Controller
             return $studentAssessment->assessment;
         })->take(4);
 
+        $student->conduct = $student->studentSubjectGrades()->where(
+            'batch_subject_id',
+            $batchSubjectId
+        )->where('gradable_type', Quarter::class)->first()?->conduct;
+
         return Inertia::render('Teacher/Student', [
             'student' => $student->load('user'),
             'guardian' => $student->load(
@@ -197,7 +202,7 @@ class TeacherController extends Controller
             'batch_sessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.subject', 'batchSchedule.batchSubject.teacher.user'])->get(),
             'batch_subject' => BatchSubject::find($batchSubjectId)->load('subject', 'batch.level'),
             'batch_subjects' => $commonBatchSubject,
-            'batch_subject_grade' => $student->fetchBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first(),
+            'batch_subject_grade' => $student->fetchStudentBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first(),
             'total_batch_students' => $student->activeBatch()->students()->count(),
             'in_progress_session' => $currentBatch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user'),
             'student_notes' => $student->notes()->orderBy('updated_at', 'DESC')->with('author:name,id,email,phone_number,gender')->get()->take(5),
@@ -230,7 +235,7 @@ class TeacherController extends Controller
 
         $batchStudents->getCollection()->transform(function ($student) use ($batchSubject) {
             $student->attendance_percentage = 100 - $student->student->absenteePercentage();
-            $student->batch_subject_rank = $student->student->fetchBatchSubjectGrade($batchSubject->id, Quarter::getActiveQuarter()->id)->first()?->rank;
+            $student->batch_subject_rank = $student->student->fetchStudentBatchSubjectGrade($batchSubject->id, Quarter::getActiveQuarter()->id)->first()?->rank;
             $student->quarterly_grade = $student->student->grades()->where([[
                 'gradable_type', Quarter::class,
             ], [
