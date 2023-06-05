@@ -193,7 +193,7 @@ class Student extends Model
             ->with('gradeScale')->get();
     }
 
-    public function studentNotes(): HasMany
+    public function notes(): HasMany
     {
         return $this->hasMany(StudentNote::class);
     }

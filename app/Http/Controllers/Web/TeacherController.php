@@ -200,6 +200,7 @@ class TeacherController extends Controller
             'batch_subject_grade' => $student->fetchBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first(),
             'total_batch_students' => $student->activeBatch()->students()->count(),
             'in_progress_session' => $currentBatch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user'),
+            'student_notes' => $student->notes()->orderBy('updated_at', 'DESC')->with('author:name,id,email,phone_number,gender')->get()->take(5),
         ]);
     }
 

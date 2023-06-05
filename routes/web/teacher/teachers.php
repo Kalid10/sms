@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AssessmentController;
 use App\Http\Controllers\Web\LessonPlanController;
+use App\Http\Controllers\Web\StudentNoteController;
 use App\Http\Controllers\Web\TeacherController;
 use App\Http\Controllers\Web\TeacherFeedbackController;
 use Illuminate\Support\Facades\Route;
@@ -19,12 +20,15 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('
         Route::delete('delete/{id}', 'destroy')->name('delete');
     });
 
-    // Teacher profile page routes
     Route::controller(TeacherController::class)->group(function () {
         Route::get('', 'show')->name('show');
         Route::get('students/{student}', 'student')->name('student.show');
         Route::get('students', 'students')->name('students.show');
         Route::get('class/', 'batch')->name('batch.show');
+    });
+
+    Route::controller(StudentNoteController::class)->group(function () {
+        Route::post('students/{student}/notes/create', 'create')->name('student.note.create ');
     });
 
     Route::controller(AssessmentController::class)->prefix('assessments/')->name('assessment.')->group(function () {
