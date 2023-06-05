@@ -25,7 +25,7 @@ class AssessmentObserver
 
     public function created(Assessment $assessment): void
     {
-        if ($assessment->status === Assessment::STATUS_SCHEDULED) {
+        if ($assessment->status === Assessment::STATUS_SCHEDULED || $assessment->status === Assessment::STATUS_PUBLISHED) {
             $this->createStudentAssessments($assessment);
         }
     }
