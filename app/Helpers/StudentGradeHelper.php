@@ -132,13 +132,20 @@ class StudentGradeHelper
      */
     private static function updateStudentSubjectQuarterGrades(Collection $student_ids, Assessment $assessment): void
     {
-        $student_ids->each(function ($student_id) use ($assessment) {
-            $studentSubjectQuarterGrade = StudentAssessmentsGrade::where([
+        $assessmentType = $assessment->load('assessmentType')->assessmentType;
+        $student_ids->each(function ($student_id) use ($assessment, $assessmentType) {
+            $studentAssessmentGrade = StudentAssessmentsGrade::where([
                 'student_id' => $student_id,
                 'batch_subject_id' => $assessment->batch_subject_id,
                 'gradable_type' => 'App\Models\Quarter',
                 'gradable_id' => $assessment->quarter_id,
-            ])->sum('score');
+            ]);
+            $studentAssessmentGradeSum = $studentAssessmentGrade->sum('score');
+
+            $studentGradedAssessmentTypes = $studentAssessmentGrade->distinct('assessment_type_id')->pluck('assessment_type_id');
+            $studentTotalGradedPercentage = $studentGradedAssessmentTypes->map(function ($assessment_type_id) use ($assessmentType) {
+                return (int) $assessmentType->where('id', $assessment_type_id)->first()->percentage;
+            })->sum();
 
             StudentSubjectGrade::updateOrCreate(
                 [
@@ -152,10 +159,10 @@ class StudentGradeHelper
                     'batch_subject_id' => $assessment->batch_subject_id,
                     'gradable_type' => 'App\Models\Quarter',
                     'gradable_id' => $assessment->quarter_id,
-                    'score' => $studentSubjectQuarterGrade,
+                    'score' => $studentAssessmentGradeSum,
                     'grade_scale_id' => GradeScale::get(
-                        score: $studentSubjectQuarterGrade,
-                        maximum: 100
+                        score: $studentAssessmentGradeSum,
+                        maximum: $studentTotalGradedPercentage
                     )->id,
                 ]
             );
