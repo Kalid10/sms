@@ -133,23 +133,23 @@ class StudentController extends Controller
         return $student->exists ?
             new SessionResource($student->load(
                 'user',
-                'currentBatch.sessions.attendances',
-                'currentBatch.sessions.schoolPeriod',
-                'currentBatch.sessions.lessonPlan',
-                'currentBatch.sessions.batchSchedule',
-                'currentBatch.sessions.teacher.user',
-                'currentBatch.sessions.batchSubject.subject',
+                'currentBatch.weeklySessions.attendances',
+                'currentBatch.weeklySessions.schoolPeriod',
+                'currentBatch.weeklySessions.lessonPlan',
+                'currentBatch.weeklySessions.batchSchedule',
+                'currentBatch.weeklySessions.teacher.user',
+                'currentBatch.weeklySessions.batchSubject.subject',
             )) :
             new SessionCollection(Auth::user()
                 ->load('guardian.children')->guardian->children
                 ->load(
                     'user',
-                    'currentBatch.sessions.attendances',
-                    'currentBatch.sessions.schoolPeriod',
-                    'currentBatch.sessions.lessonPlan',
-                    'currentBatch.sessions.batchSchedule',
-                    'currentBatch.sessions.teacher.user',
-                    'currentBatch.sessions.batchSubject.subject',
+                    'currentBatch.weeklySessions.attendances',
+                    'currentBatch.weeklySessions.schoolPeriod',
+                    'currentBatch.weeklySessions.lessonPlan',
+                    'currentBatch.weeklySessions.batchSchedule',
+                    'currentBatch.weeklySessions.teacher.user',
+                    'currentBatch.weeklySessions.batchSubject.subject',
                 ));
     }
 }
