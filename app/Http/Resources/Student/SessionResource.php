@@ -20,7 +20,7 @@ class SessionResource extends JsonResource
             'student_id' => $this->user->id,
             'name' => $this->user->name,
             'username' => $this->user->username,
-            'weekly_sessions' => collect($sessions)->map(function ($weeklySession) {
+            'weekly_sessions' => $sessions->map(function ($weeklySession) {
                 return [
                     'session_id' => $weeklySession->id,
                     'session_status' => $weeklySession->status,
@@ -34,11 +34,8 @@ class SessionResource extends JsonResource
                     'lesson_plan_topic' => $weeklySession->lessonPlan?->topic,
                     'lesson_plan_description' => $weeklySession->lessonPlan?->description,
                     'schedule_day' => $weeklySession->batchSchedule->day_of_week,
-                    'absentee' => $weeklySession->attendances->map(function ($attendance) {
-                        return [
-                            'reason' => $attendance->reason,
-                        ];
-                    }),
+                    'absentee_reason' => $weeklySession->attendances
+                        ->where('user_id', $this->user->id)->first()?->reason,
                 ];
             })->toArray(),
         ];
