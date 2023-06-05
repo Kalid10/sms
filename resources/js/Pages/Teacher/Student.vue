@@ -34,10 +34,16 @@
 
                 <!--           Assessments section-->
                 <div class="flex w-full justify-between lg:w-full">
-                    <div class="w-9/12 rounded-lg bg-white py-3 pl-3 pr-10">
-                        <Assessments />
+                    <div class="w-9/12 pl-3 pr-10">
+                        <div
+                            class="mb-5 w-full rounded-lg bg-white py-3 pl-3 pr-10"
+                        >
+                            <Assessments />
+                        </div>
+
+                        <AssessmentBreakDown />
                     </div>
-                    <div class="flex h-full w-2/12 flex-col">
+                    <div class="flex h-full w-3/12 flex-col">
                         <GeneralReport />
                     </div>
                 </div>
@@ -76,6 +82,7 @@ import Header from "@/Views/Teacher/Header.vue";
 import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
 import GeneralReport from "@/Views/Teacher/Student/GeneralReport.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import AssessmentBreakDown from "@/Views/Teacher/Assessments/AssessmentBreakDown.vue";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);

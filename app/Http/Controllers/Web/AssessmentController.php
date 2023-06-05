@@ -90,8 +90,8 @@ class AssessmentController extends Controller
             $student = Student::find($request->input('student_id'))->load('user:id,name');
             $student->absentee_percentage = $student->absenteePercentage();
             $student->assessment_quarter_grade = $student->fetchAssessmentsGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id);
-            $student->total_batch_subject_grade = $student->fetchBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->score;
-            $student->batch_subject_rank = $student->fetchBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->rank;
+            $student->total_batch_subject_grade = $student->fetchStudentBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->score;
+            $student->batch_subject_rank = $student->fetchStudentBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->rank;
             $student->quarterly_grade = $student->grades()->where([[
                 'gradable_type', Quarter::class,
             ], [

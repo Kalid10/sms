@@ -182,6 +182,21 @@ class TeacherController extends Controller
             $batchSubjectId
         )->where('gradable_type', Quarter::class)->first()?->conduct;
 
+        $student->absentee_percentage = $student->absenteePercentage();
+        $student->assessment_quarter_grade = $student->fetchAssessmentsGrade($batchSubjectId, Quarter::getActiveQuarter()->id);
+        $student->total_batch_subject_grade = $student->fetchStudentBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first()?->score;
+        $student->batch_subject_rank = $student->fetchStudentBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first()?->rank;
+        $student->quarterly_grade = $student->grades()->where([[
+            'gradable_type', Quarter::class,
+        ], [
+            'gradable_id', Quarter::getActiveQuarter()->id,
+        ]])->first();
+        $student->semester_grade = $student->grades()->where([[
+            'gradable_type', Semester::class,
+        ], [
+            'gradable_id', Semester::getActiveSemester()->id,
+        ]])->first();
+
         return Inertia::render('Teacher/Student', [
             'student' => $student->load('user'),
             'guardian' => $student->load(
