@@ -102,8 +102,16 @@ class TeacherService
             ->first()
             ->batchSubjects
             ->map(function ($batchSubject) use ($studentSearch, $batchSubjectId) {
-                $students = $batchSubject->students->map(function ($student) {
+                $students = $batchSubject->students->map(function ($student) use ($batchSubjectId) {
+                    $studentBatchSubjectGrade = $student->fetchStudentBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first();
                     $student->attendance_percentage = 100 - $student->absenteePercentage();
+                    $student->batch_subject_rank = $studentBatchSubjectGrade?->rank;
+                    $student->conduct = $studentBatchSubjectGrade?->conduct;
+                    $student->quarterly_grade = $student->grades()->where([[
+                        'gradable_type', Quarter::class,
+                    ], [
+                        'gradable_id', Quarter::getActiveQuarter()->id,
+                    ]])->first();
 
                     return $student;
                 });

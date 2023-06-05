@@ -149,7 +149,7 @@ const filteredStudents = computed(() => {
                 : "-",
             rank: student.batch_subject_rank ?? "-",
             id: student.student_id,
-            conduct: "C",
+            conduct: student.conduct ?? "-",
         };
     });
 });

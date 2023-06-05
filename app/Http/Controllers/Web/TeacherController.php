@@ -249,8 +249,10 @@ class TeacherController extends Controller
             ->paginate(10);
 
         $batchStudents->getCollection()->transform(function ($student) use ($batchSubject) {
+            $studentBatchSubjectGrade = $student->student->fetchStudentBatchSubjectGrade($batchSubject->id, Quarter::getActiveQuarter()->id)->first();
             $student->attendance_percentage = 100 - $student->student->absenteePercentage();
-            $student->batch_subject_rank = $student->student->fetchStudentBatchSubjectGrade($batchSubject->id, Quarter::getActiveQuarter()->id)->first()?->rank;
+            $student->batch_subject_rank = $studentBatchSubjectGrade?->rank;
+            $student->conduct = $studentBatchSubjectGrade?->conduct;
             $student->quarterly_grade = $student->student->grades()->where([[
                 'gradable_type', Quarter::class,
             ], [

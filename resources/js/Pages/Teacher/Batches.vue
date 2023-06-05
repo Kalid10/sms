@@ -142,10 +142,12 @@ const filteredStudents = computed(() => {
         return {
             name: student.user.name,
             attendance: student.attendance_percentage + "%",
-            grade: "50/60",
-            rank: student.id,
+            grade: student.quarterly_grade
+                ? student.quarterly_grade.score.toFixed(1)
+                : "-",
+            rank: student.batch_subject_rank ?? "-",
             id: student.id,
-            conduct: "C",
+            conduct: student.conduct ?? "-",
         };
     });
 });

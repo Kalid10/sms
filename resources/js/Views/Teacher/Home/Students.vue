@@ -9,6 +9,7 @@
                 <div class="w-4/12">Name</div>
                 <div class="w-2/12">Point</div>
                 <div class="w-2.5/12">Attendance %</div>
+                <div class="w-2.5/12">Rank</div>
                 <div class="w-2.5/12">Conduct</div>
             </div>
             <div
@@ -49,9 +50,15 @@
                     {{ item.user.name }}
                 </div>
                 <!--                TODO:Add the calculated score-->
-                <div class="w-3/12">60</div>
+                <div class="w-3/12">
+                    <span v-if="item.quarterly_grade">
+                        {{ item.quarterly_grade?.score.toFixed(1) }}
+                    </span>
+                    <span v-else> - </span>
+                </div>
                 <div class="w-2/12">{{ item.attendance_percentage }}%</div>
-                <div class="w-2/12">C</div>
+                <div class="w-2/12">{{ item.batch_subject_rank ?? "-" }}</div>
+                <div class="w-2/12">{{ item.conduct ?? "-" }}</div>
             </div>
         </div>
         <div
