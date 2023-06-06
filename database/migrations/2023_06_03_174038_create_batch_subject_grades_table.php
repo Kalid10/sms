@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('grade_scale_id')->constrained()->cascadeOnDelete();
             $table->float('score');
             $table->smallInteger('rank')->nullable();
+            $table->char('conduct')->nullable();
             $table->timestamps();
 
             $table->unique(['batch_id', 'batch_subject_id', 'gradable_type', 'gradable_id'], 'batch_subject_unique');
