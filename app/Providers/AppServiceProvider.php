@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Assessment;
+use App\Models\StudentSubjectGrade;
 use App\Observers\AssessmentObserver;
+use App\Observers\ConductObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\App;
@@ -39,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         Model::preventLazyLoading(! $this->app->isProduction());
 
         Assessment::observe(AssessmentObserver::class);
+        StudentSubjectGrade::observe(ConductObserver::class);
 
         Inertia::share([
             'locale' => fn () => app()->getLocale(),

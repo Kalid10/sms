@@ -90,21 +90,18 @@ class StudentController extends Controller
         $request->validate([
             'conduct' => 'required|in:A,B,C,D,F',
             'batch_subject_id' => 'required|exists:batch_subjects,id',
-
         ]);
 
-        $studentGrade = $student->studentSubjectGrades()->where(
-            'batch_subject_id',
-            $request->input('batch_subject_id')
-        );
+        $studentGrade = $student->studentSubjectGrades()
+            ->where('batch_subject_id', $request->input('batch_subject_id'))
+            ->first();
 
-        if ($studentGrade->doesntExist()) {
+        if (! $studentGrade) {
             return redirect()->back()->with('error', 'Currently you cannot update conduct for this subject');
         }
 
-        $studentGrade->update([
-            'conduct' => $request->input('conduct'),
-        ]);
+        $studentGrade->conduct = $request->input('conduct');
+        $studentGrade->save();
 
         return redirect()->back()->with('success', 'Conduct updated successfully');
     }
