@@ -174,11 +174,12 @@ class TeacherController extends Controller
             ->whereIn('id', $studentBatchSubjectIds)
             ->with('subject:id,full_name', 'batch:id,section,level_id', 'batch.level:id,name')->get();
 
-        $studentAssessment = $student->assessments()->orderBy('updated_at', 'DESC')->get()->map(function ($studentAssessment) {
-            $studentAssessment->assessment->point = $studentAssessment->point;
+        $studentAssessment = $student->assessments()->orderBy('updated_at', 'DESC')
+            ->whereRelation('assessment', 'batch_subject_id', $batchSubjectId)->get()->map(function ($studentAssessment) {
+                $studentAssessment->assessment->point = $studentAssessment->point;
 
-            return $studentAssessment->assessment;
-        })->take(4);
+                return $studentAssessment->assessment;
+            })->take(4);
 
         $student->conduct = $student->studentSubjectGrades()->where(
             'batch_subject_id',
