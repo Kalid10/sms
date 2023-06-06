@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Assessment;
 use App\Models\Batch;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
@@ -42,7 +43,9 @@ class TeacherService
             'feedbacks.author:id,name',
             'batchSubjects.students.user',
             'assessments' => function ($query) {
-                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'asc')->limit(3);
+                $query->where('quarter_id', Quarter::getActiveQuarter()->id)
+                    ->where('status', '!=', Assessment::STATUS_DRAFT)
+                    ->orderBy('updated_at', 'DESC')->limit(3);
             },
             'assessments.assessmentType',
             'assessments.batchSubject.batch:id,section,level_id',
