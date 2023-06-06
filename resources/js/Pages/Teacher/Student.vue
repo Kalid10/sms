@@ -34,14 +34,64 @@
 
                 <!--           Assessments section-->
                 <div class="flex w-full justify-between lg:w-full">
-                    <div class="w-9/12 pl-3 pr-10">
-                        <div
-                            class="mb-5 w-full rounded-lg bg-white py-3 pl-3 pr-10"
-                        >
+                    <div class="flex w-9/12 flex-col space-y-6 pl-3 pr-10">
+                        <div class="w-full rounded-lg bg-white py-3 pl-3 pr-10">
                             <Assessments />
                         </div>
 
                         <AssessmentBreakDown />
+
+                        <div
+                            class="w-full rounded-lg bg-white p-4 text-black shadow-sm"
+                        >
+                            <div class="text-xl font-light">
+                                {{ student.user.name }}'s General Quarterly
+                                Statistics
+                            </div>
+                            <div
+                                class="flex w-full justify-between divide-x py-2 text-center"
+                            >
+                                <div class="w-4/12">
+                                    <div class="text-2xl font-bold">
+                                        <span v-if="student.quarterly_grade">
+                                            {{ student.quarterly_grade.score }}
+                                        </span>
+                                        <span v-else> - </span>
+                                    </div>
+                                    <div class="text-[0.65rem] font-light">
+                                        Quarter Grade
+                                    </div>
+                                </div>
+                                <div class="w-4/12">
+                                    <div class="text-2xl font-bold">
+                                        <span v-if="student.quarterly_grade">
+                                            {{
+                                                numberWithOrdinal(
+                                                    student.quarterly_grade.rank
+                                                )
+                                            }}
+                                        </span>
+                                        <span v-else> - </span>
+                                    </div>
+                                    <div class="text-[0.65rem] font-light">
+                                        Quarter Rank
+                                    </div>
+                                </div>
+                                <div class="w-4/12">
+                                    <div class="text-2xl font-bold">
+                                        <span v-if="student.quarterly_grade">
+                                            {{
+                                                student.quarterly_grade.conduct
+                                            }}
+                                        </span>
+                                        <span v-else> - </span>
+                                    </div>
+                                    <div class="text-[0.65rem] font-light">
+                                        Quarter Conduct
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex h-full w-3/12 flex-col">
                         <GeneralReport />
@@ -77,7 +127,7 @@ import Assessments from "@/Views/Teacher/Student/Assessments.vue";
 import Rank from "@/Views/Teacher/Student/Rank.vue";
 import Notes from "@/Views/Teacher/Student/Notes.vue";
 import Information from "@/Views/Teacher/Student/GuardianInformation.vue";
-import { isSidebarOpenOnXlDevice } from "@/utils";
+import { isSidebarOpenOnXlDevice, numberWithOrdinal } from "@/utils";
 import Header from "@/Views/Teacher/Header.vue";
 import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
 import GeneralReport from "@/Views/Teacher/Student/GeneralReport.vue";

@@ -13,7 +13,7 @@
         >
             <div v-if="grade">
                 <span class="text-4xl font-semibold">
-                    {{ grade?.score }}
+                    {{ grade?.score.toFixed(1) }}
                     <span class="text-xl font-normal">{{
                         grade?.grade_scale.label
                     }}</span>
