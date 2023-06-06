@@ -6,11 +6,10 @@
         @click="handleClick()"
     >
         <div
-            class="flex min-h-full w-2/12 items-center justify-center font-bold"
+            class="flex min-h-full w-2/12 flex-col items-center justify-center space-y-2 font-bold"
         >
-            <AssessmentIcon v-if="view !== 'class'" :item="item" />
+            <!--            <AssessmentIcon v-if="view !== 'class'" :item="item" />-->
             <div
-                v-else
                 class="flex h-9 w-9 items-center justify-center rounded-full text-xl uppercase"
                 :class="{
                     'bg-blue-400 text-white': item.status === 'marking',
@@ -20,6 +19,10 @@
                 }"
             >
                 {{ item.status.slice(0, 1).toUpperCase() }}
+            </div>
+            <div class="text-[0.65rem] font-light uppercase">
+                {{ item.batch_subject.batch.level.name }}
+                {{ item.batch_subject.batch.section }}
             </div>
         </div>
 
@@ -44,7 +47,6 @@
 </template>
 
 <script setup>
-import AssessmentIcon from "@/Views/Teacher/Home/Assessments/Item/AssessmentIcon.vue";
 import AssessmentDetails from "@/Views/Teacher/Home/Assessments/Item/AssessmentDetails.vue";
 import AssessmentScore from "@/Views/Teacher/Home/Assessments/Item/Score/Index.vue";
 import { computed } from "vue";
