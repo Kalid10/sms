@@ -16,10 +16,12 @@ return new class extends Migration
             $table->foreignId('batch_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('gradable_id');
             $table->string('gradable_type');
-            $table->foreignId('grade_scale_id')->constrained()->cascadeOnDelete();
-            $table->float('score');
+            $table->foreignId('grade_scale_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->float('score')->nullable();
             $table->smallInteger('rank')->nullable();
             $table->char('conduct')->nullable();
+            $table->smallInteger('attendance')->nullable();
+
             $table->timestamps();
 
             $table->unique(['batch_id', 'gradable_id', 'gradable_type'], 'student_gradable_unique');

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('teacher_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('lesson_plan_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('status')->default('scheduled'); // 'scheduled', 'in_progress', 'completed
+            $table->foreignId('quarter_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
