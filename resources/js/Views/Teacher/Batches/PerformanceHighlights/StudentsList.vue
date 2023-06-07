@@ -1,6 +1,8 @@
 <template>
     <div class="flex h-fit w-full flex-col items-center space-y-3 py-2">
-        <div class="flex w-full items-center justify-center space-x-1.5">
+        <div
+            class="flex w-7/12 -skew-x-3 items-center justify-center space-x-1.5 bg-zinc-700 py-1.5 text-white"
+        >
             <component
                 :is="icon"
                 class="w-5"
@@ -10,7 +12,7 @@
                         : 'text-negative-100'
                 "
             />
-            <span class="text-sm">{{ title }}</span>
+            <span class="text-sm uppercase">{{ title }}</span>
         </div>
         <div v-if="students.length" class="w-full">
             <div

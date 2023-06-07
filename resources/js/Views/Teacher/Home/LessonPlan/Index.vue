@@ -1,10 +1,10 @@
 <template>
     <div>
         <div
-            class="5 flex w-full items-center justify-between hover:bg-zinc-800 hover:text-white hover:shadow-sm"
+            class="flex w-full items-center justify-between hover:bg-zinc-800 hover:text-white hover:shadow-sm"
             :class="
                 view === 'class'
-                    ? 'rounded-sm bg-gray-50 hover:rounded-lg py-2 border-l'
+                    ? ' bg-white hover:rounded-lg py-3'
                     : 'rounded-r-lg hover:rounded-lg h-full'
             "
         >
