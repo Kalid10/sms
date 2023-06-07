@@ -1,15 +1,15 @@
 <template>
     <div class="flex w-full items-center justify-center space-x-0.5">
         <div class="mt-1.5 h-full">
-            <component
-                :is="icon"
-                v-if="value"
-                class="w-3.5"
-                :class="valueStyle"
-            />
+            <!--            <component-->
+            <!--                :is="icon"-->
+            <!--                v-if="value"-->
+            <!--                class="w-3.5"-->
+            <!--                :class="valueStyle"-->
+            <!--            />-->
         </div>
         <div class="flex flex-col items-center justify-center">
-            <div class="text-sm font-semibold">
+            <div class="text-2xl font-bold">
                 <span v-if="value">{{ value }}</span>
                 <span v-else>-</span>
             </div>

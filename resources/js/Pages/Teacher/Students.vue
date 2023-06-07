@@ -31,7 +31,7 @@
                             </div>
                             <div v-else>-</div>
                             <span class="text-xs font-light">
-                                Class Rank From Total 5
+                                Class Rank From Total {{ totalBatchesCount }}
                             </span>
                         </div>
                     </div>
@@ -89,9 +89,20 @@
                     <span class="text-xs font-light">CLASS ATTENDANCE </span>
                 </div>
                 <div
-                    class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg bg-red-600 py-5 text-center text-5xl font-bold text-white shadow-sm"
+                    :class="{
+                        'bg-positive-100 text-white':
+                            batchSubjectGrade.conduct === 'A',
+                        'bg-yellow-400': batchSubjectGrade.conduct === 'B',
+                        'bg-amber-300': batchSubjectGrade.conduct === 'C',
+                        'bg-red-500 text-white':
+                            batchSubjectGrade.conduct === 'D',
+                        'bg-negative-100 text-white':
+                            batchSubjectGrade.conduct === 'F',
+                        'bg-white text-black': !batchSubjectGrade.conduct,
+                    }"
+                    class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-5xl font-bold shadow-sm"
                 >
-                    <div>D</div>
+                    <div>{{ batchSubjectGrade?.conduct ?? "-" }}</div>
                     <span class="text-xs font-light">CLASS CONDUCT </span>
                 </div>
             </div>
@@ -135,6 +146,7 @@ const students = computed(() => usePage().props.students);
 const batchSubjectGrade = computed(() => usePage().props.batch_subject_grade);
 const batchSubjects = usePage().props.batch_subjects;
 const searchText = ref(usePage().props.search);
+const totalBatchesCount = ref(usePage().props.total_batches_count);
 
 const batchSubject = computed(() => {
     return usePage().props.batch_subject;

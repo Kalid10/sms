@@ -278,6 +278,8 @@ class TeacherController extends Controller
             ->with('subject:id,full_name', 'batch:id,section,level_id', 'batch.level:id,name')
             ->get();
 
+        $batchesCount = Batch::find($batchSubject->batch_id)->load('level')->level->batches()->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->count();
+
         return Inertia::render('Teacher/Students', [
             'students' => $batchStudents,
             'batch_subject' => $batchSubject,
@@ -287,6 +289,7 @@ class TeacherController extends Controller
                 ['gradable_type', Quarter::class],
                 ['gradable_id', Quarter::getActiveQuarter()->id],
             ])->first(),
+            'total_batches_count' => $batchesCount,
         ]);
     }
 }

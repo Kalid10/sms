@@ -22,13 +22,7 @@
         />
         <Item
             title="Conduct"
-            value="80.2%"
-            value-style="text-negative-100"
-            :icon="ArrowSmallDownIcon"
-        />
-        <Item
-            title="Grade"
-            value="80"
+            :value="batchSubjectGrade?.conduct"
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
