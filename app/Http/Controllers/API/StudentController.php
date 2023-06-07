@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\Students\AssessmentRequest;
+use App\Http\Requests\API\Students\GradeRequest;
 use App\Http\Requests\API\Students\Request;
 use App\Http\Requests\API\Students\UpdateRequest;
 use App\Http\Resources\Student\AssessmentCollection;
@@ -55,7 +56,9 @@ class StudentController extends Controller
                 $user->address->update($addressData);
             } else {
                 $address = new Address($addressData + ['city' => 'Addis Ababa', 'country' => 'Ethiopia']);
-                $user->address()->save($address);
+
+                $user->address()->associate($address);
+                $user->save();
             }
 
             DB::commit();
@@ -155,20 +158,30 @@ class StudentController extends Controller
                 ));
     }
 
-    public function grades(Request $request, ?Student $student): GradeResource|GradeCollection
+    public function grades(GradeRequest $request, ?Student $student): GradeResource|GradeCollection
     {
         return $student->exists ?
-            new GradeResource($student->load(
+            new GradeResource($student->load([
                 'user:id,name',
+                'studentGrades' => function ($query) use ($request) {
+                    $query->when($request->input('gradable_type'), function ($query) use ($request) {
+                        $query->where('gradable_type', $request->input('gradable_type'));
+                    });
+                },
                 'studentGrades.gradable:id,name',
                 'studentGrades.gradeScale:id,state,description',
-            )) :
+            ])) :
             new GradeCollection(Auth::user()
                 ->load('guardian.children')->guardian->children
-                ->load(
+                ->load([
                     'user:id,name',
+                    'studentGrades' => function ($query) use ($request) {
+                        $query->when($request->input('gradable_type'), function ($query) use ($request) {
+                            $query->where('gradable_type', $request->input('gradable_type'));
+                        });
+                    },
                     'studentGrades.gradable:id,name',
                     'studentGrades.gradeScale:id,state,description',
-                ));
+                ]));
     }
 }
