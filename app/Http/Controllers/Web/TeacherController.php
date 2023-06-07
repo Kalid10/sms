@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Assessment;
 use App\Models\Batch;
-use App\Models\BatchStudent;
 use App\Models\BatchSubject;
 use App\Models\Level;
 use App\Models\Quarter;
@@ -147,7 +146,7 @@ class TeacherController extends Controller
         )->only('schedule')['schedule'];
 
         return Inertia::render('Teacher/Batches', [
-            'students' => $students[0]['students'],
+            'students' => $students,
             'batch_subject' => $batchSubject,
             'batch_subjects' => $batchSubjects,
             'search' => $search,
@@ -159,8 +158,13 @@ class TeacherController extends Controller
                 ['gradable_type', Quarter::class],
                 ['gradable_id', Quarter::getActiveQuarter()->id],
             ])->first(),
+            'in_progress_session' => $batch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user', 'batchSchedule.batchSubject.batch.level'),
             'top_students' => $this->teacherService->getTopStudents($batchSubject),
             'bottom_students' => $this->teacherService->getBottomStudents($batchSubject),
+            'filters' => [
+                'batch_subject_id' => $batchSubjectId,
+                'search' => $search,
+            ],
         ]);
     }
 
@@ -236,6 +240,7 @@ class TeacherController extends Controller
             'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
             'search' => 'nullable|string',
         ]);
+
         $teacher = Teacher::find(auth()->user()->teacher->id);
         $batchSubjectId = $request->input('batch_subject_id');
         $search = $request->input('search');
@@ -247,31 +252,7 @@ class TeacherController extends Controller
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
                 })->first()->load('subject', 'batch.level');
 
-        $batchStudents = BatchStudent::where('batch_id', $batchSubject->batch_id)
-            ->with('student.user', 'student.batches')
-            ->whereHas('student.user', function ($query) use ($search) {
-                $query->where('name', 'like', "%$search%");
-            })
-            ->paginate(10);
-
-        $batchStudents->getCollection()->transform(function ($student) use ($batchSubject) {
-            $studentBatchSubjectGrade = $student->student->fetchStudentBatchSubjectGrade($batchSubject->id, Quarter::getActiveQuarter()->id)->first();
-            $student->attendance_percentage = 100 - $student->student->absenteePercentage();
-            $student->batch_subject_rank = $studentBatchSubjectGrade?->rank;
-            $student->conduct = $studentBatchSubjectGrade?->conduct;
-            $student->quarterly_grade = $student->student->grades()->where([[
-                'gradable_type', Quarter::class,
-            ], [
-                'gradable_id', Quarter::getActiveQuarter()->id,
-            ]])->first();
-            $student->semester_grade = $student->student->grades()->where([[
-                'gradable_type', Semester::class,
-            ], [
-                'gradable_id', Semester::getActiveSemester()->id,
-            ]])->first();
-
-            return $student;
-        });
+        $batchStudents = $this->teacherService->getStudents(auth()->user()->teacher->id, $batchSubject->id, $search);
 
         $batchSubjects = $teacher->batchSubjects()
             ->whereHas('batch', function ($query) {
