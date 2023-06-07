@@ -8,6 +8,8 @@ use App\Http\Requests\API\Students\UpdateRequest;
 use App\Http\Resources\Student\AssessmentCollection;
 use App\Http\Resources\Student\AssessmentResource;
 use App\Http\Resources\Student\Collection;
+use App\Http\Resources\Student\GradeCollection;
+use App\Http\Resources\Student\GradeResource;
 use App\Http\Resources\Student\NoteCollection;
 use App\Http\Resources\Student\NoteResource;
 use App\Http\Resources\Student\Resource;
@@ -150,6 +152,23 @@ class StudentController extends Controller
                     'currentBatch.weeklySessions.batchSchedule',
                     'currentBatch.weeklySessions.teacher.user',
                     'currentBatch.weeklySessions.batchSubject.subject',
+                ));
+    }
+
+    public function grades(Request $request, ?Student $student): GradeResource|GradeCollection
+    {
+        return $student->exists ?
+            new GradeResource($student->load(
+                'user:id,name',
+                'studentGrades.gradable:id,name',
+                'studentGrades.gradeScale:id,state,description',
+            )) :
+            new GradeCollection(Auth::user()
+                ->load('guardian.children')->guardian->children
+                ->load(
+                    'user:id,name',
+                    'studentGrades.gradable:id,name',
+                    'studentGrades.gradeScale:id,state,description',
                 ));
     }
 }
