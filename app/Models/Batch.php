@@ -101,6 +101,12 @@ class Batch extends Model
             ->where('date', '<=', Carbon::now()->endOfWeek());
     }
 
+    public function activeSession(): HasManyThrough
+    {
+        return $this->sessions()
+            ->where('status', BatchSession::STATUS_IN_PROGRESS);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

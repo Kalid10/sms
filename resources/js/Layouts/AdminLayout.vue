@@ -31,13 +31,7 @@
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
 import {computed, ref} from "vue";
-import {
-    ChatBubbleBottomCenterIcon,
-    ClipboardIcon,
-    Cog6ToothIcon,
-    PowerIcon,
-    UserIcon,
-} from "@heroicons/vue/20/solid/index.js";
+import {ChatBubbleBottomCenterIcon, Cog6ToothIcon, PowerIcon, UserIcon,} from "@heroicons/vue/20/solid/index.js";
 import {usePage} from "@inertiajs/vue3";
 import {BookOpenIcon, QueueListIcon, UsersIcon,} from "@heroicons/vue/24/solid";
 
@@ -70,12 +64,6 @@ const sidebarItems = computed(() => [
         icon: UsersIcon,
         route: "/admin/students",
         active: directory.value === "students",
-    },
-    {
-        name: "Classes",
-        icon: ClipboardIcon,
-        route: "/admin/levels",
-        active: directory.value === "levels",
     },
     {
         name: "Subjects",

@@ -200,7 +200,7 @@ onMounted(() => {
         index = (index + 1) % firstTexts.length;  // loop back to 0 when we reach the end
         firstText.value = firstTexts[index];
         secondText.value = secondTexts[index];
-    }, 5000);  // change text every 3 seconds-->
+    }, 5000);
 
     // Clear the interval when the component is unmounted
     onUnmounted(() => {
