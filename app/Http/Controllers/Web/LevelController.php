@@ -69,6 +69,10 @@ class LevelController extends Controller
                 'batches' => function ($query) {
                     $query
                         ->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+                        ->with('activeSession.batchSubject.subject')
+                        ->with('activeSession.teacher.user')
+                        ->with('homeRoomTeacher.teacher.user')
+                        ->with('activeSession.schoolPeriod')
                         ->withCount('students', 'subjects');
                 },
             ])
@@ -103,5 +107,10 @@ class LevelController extends Controller
                 ])
             ),
         ]);
+    }
+
+    public function section(Level $level): Response
+    {
+        return Inertia::render('Admin/Levels/Section');
     }
 }

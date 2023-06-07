@@ -17,11 +17,12 @@
         <div class="flex w-full flex-col gap-2 md:flex-row">
             <div class="mr-2 w-full rounded border shadow-sm lg:w-2/3">
                 <h1 class="p-2">Overview</h1>
+
                 <Graph/>
             </div>
 
-            <div class="rounded border shadow-sm lg:w-1/3">
-                <LevelsTable :config="configLevels" :levels="levels"/>
+            <div class="rounded border shadow-sm lg:w-2/3">
+                <LevelIndex/>
             </div>
         </div>
 
@@ -41,9 +42,9 @@ import Statistics from "@/Views/Admin/Analytics/Statistics.vue";
 import Management from "@/Views/Admin/Management.vue";
 import Graph from "@/Views/Admin/Analytics/Graph.vue";
 import {usePage} from "@inertiajs/vue3";
-import LevelsTable from "@/Views/Admin/Levels/LevelsTable.vue";
 import {QueueListIcon} from "@heroicons/vue/24/solid";
 import AdminsTable from "@/Views/Admin/AdminsTable.vue";
+import LevelIndex from "@/Pages/Admin/Levels/Index.vue";
 
 const teachersCount = computed(() => usePage().props.teachers_count);
 

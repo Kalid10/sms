@@ -25,6 +25,7 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
     Route::controller(LevelController::class)->prefix('levels/')->middleware(['checkUserRole:manage-levels'])->name('levels.')->group(function () {
         Route::get('', 'list')->name('list');
         Route::get('/{level}', 'show')->name('show');
+        Route::get('/{level}/{batch}, ', 'section')->name('section');
     });
     Route::controller(SubjectController::class)->prefix('subjects/')->middleware(['checkUserRole:manage-subjects'])->name('subjects.')->group(function () {
         Route::get('/', 'index')->name('index');
