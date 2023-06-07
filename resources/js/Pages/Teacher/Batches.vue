@@ -24,6 +24,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="pt-4">
                     <PerformanceHighlight />
                 </div>
@@ -61,10 +62,10 @@
                             </div>
                         </template>
                         <template #footer>
-                            <LinkCell
-                                href="/teacher/students"
-                                value="View All Students"
-                                class="w-full text-end"
+                            <Pagination
+                                :preserve-state="true"
+                                :links="students.links"
+                                position="center"
                             />
                         </template>
                     </TableElement>
@@ -78,6 +79,9 @@
                 <!--                <div class="w-11/12">-->
                 <!--                    <SchoolSchedule />-->
                 <!--                </div>-->
+                <div>
+                    <CurrentClass view="absentee" />
+                </div>
                 <div class="w-full rounded-lg bg-white p-2 shadow-sm">
                     <Assessment
                         class=""
@@ -117,11 +121,12 @@ import Assessment from "@/Views/Teacher/Home/Assessments.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Header from "@/Views/Teacher/Header.vue";
 import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
-import LinkCell from "@/Components/LinkCell.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const schedule = usePage().props.schedule;
 const batchSubjects = usePage().props.batch_subjects;
 const searchText = ref(usePage().props.search);
+const inProgressSession = computed(() => usePage().props.in_progress_session);
 
 const students = computed(() => {
     return usePage().props.students;
@@ -138,16 +143,16 @@ const batchSubject = computed(() => {
     return usePage().props.batch_subject;
 });
 const filteredStudents = computed(() => {
-    return students.value.map((student) => {
+    return students.value.data.map((item) => {
         return {
-            name: student.user.name,
-            attendance: student.attendance_percentage + "%",
-            grade: student.quarterly_grade
-                ? student.quarterly_grade.score.toFixed(1)
+            name: item.student.user.name,
+            attendance: item.attendance_percentage + "%",
+            grade: item.student.quarterly_grade
+                ? item.student.quarterly_grade.score.toFixed(1)
                 : "-",
-            rank: student.batch_subject_rank ?? "-",
-            id: student.id,
-            conduct: student.conduct ?? "-",
+            rank: item.student.batch_subject_rank ?? "-",
+            id: item.student.id,
+            conduct: item.student.conduct ?? "-",
         };
     });
 });
