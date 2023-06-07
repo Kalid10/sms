@@ -130,4 +130,9 @@ class Student extends Model
     {
         return $this->hasMany(StudentNote::class);
     }
+
+    public function studentGrades(): HasMany
+    {
+        return $this->hasMany(StudentGrade::class);
+    }
 }
