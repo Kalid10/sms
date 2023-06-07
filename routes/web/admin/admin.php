@@ -14,9 +14,9 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
         Route::get('schedules', 'schedule')->name('schedule');
     });
 
-    Route::controller(TeacherController::class)->group(function () {
-        Route::get('teachers', 'index')->name('index');
-        Route::get('teachers/{id}', 'show')->name('show');
+    Route::controller(TeacherController::class)->prefix('teachers/')->name('teachers.')->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::get('{id}', 'show')->name('show');
     });
     Route::controller(StudentController::class)->prefix('students/')->middleware(['checkUserRole:manage-students'])->name('students.')->group(function () {
         Route::get('{student}', 'show')->name('show');
@@ -33,6 +33,5 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
 
     Route::controller(SchoolScheduleController::class)->prefix('school-schedules/')->middleware(['checkUserRole:manage-school-schedules'])->name('school-schedule.')->group(function () {
         Route::post('create', 'create')->name('create');
-        Route::get('', 'list')->name('list');
     });
 });

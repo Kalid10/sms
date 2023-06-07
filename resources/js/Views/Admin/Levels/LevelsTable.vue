@@ -10,7 +10,7 @@
         subtitle="List of grades registered this year"
     >
         <template #level-column="{ data }">
-            <Link :href="`levels/${data.id}`" class="flex items-center gap-2">
+            <Link :href="`admin/levels/${data.id}`" class="flex items-center gap-2">
                 <div class="h-1.5 w-1.5 rounded-full" :class="categoryColors[data.category.name]"/>
                 <span class="font-medium">{{ parseLevel(data.name) }}</span>
             </Link>

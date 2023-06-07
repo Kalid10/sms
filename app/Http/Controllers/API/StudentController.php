@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\Students\AssessmentRequest;
-use App\Http\Requests\API\Students\GetRequest;
+use App\Http\Requests\API\Students\Request;
 use App\Http\Requests\API\Students\UpdateRequest;
 use App\Http\Resources\Student\AssessmentCollection;
 use App\Http\Resources\Student\AssessmentResource;
 use App\Http\Resources\Student\Collection;
 use App\Http\Resources\Student\NoteCollection;
+use App\Http\Resources\Student\NoteResource;
 use App\Http\Resources\Student\Resource;
 use App\Http\Resources\Student\ScheduleCollection;
+use App\Http\Resources\Student\ScheduleResource;
+use App\Http\Resources\Student\SessionCollection;
+use App\Http\Resources\Student\SessionResource;
 use App\Http\Resources\Student\SubjectCollection;
 use App\Http\Resources\Student\SubjectResource;
 use App\Models\Address;
@@ -21,7 +25,7 @@ use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
-    public function index(GetRequest $request, ?Student $student): Resource|Collection
+    public function index(Request $request, ?Student $student): Resource|Collection
     {
         return $student->exists ?
             new Resource($student->load('user', 'user.address')) :
@@ -62,25 +66,34 @@ class StudentController extends Controller
         }
     }
 
-    public function notes(GetRequest $request, ?Student $student): NoteCollection
+    public function notes(Request $request, ?Student $student): NoteResource|NoteCollection
     {
         return $student->exists ?
-            new NoteCollection($student->load('studentNotes.author', 'studentNotes.student.user:id,name')->studentNotes) :
-            new NoteCollection(Auth::user()->load('guardian.children')->guardian->children->load('studentNotes.author', 'studentNotes.student.user:id,name')->pluck('studentNotes')->flatten());
+            new NoteResource($student->load(
+                'user',
+                'studentNotes.author',
+            )) :
+            new NoteCollection(Auth::user()->load('guardian.children')
+                ->guardian->children->load(
+                    'user',
+                    'studentNotes.author',
+                ));
     }
 
-    public function schedules(GetRequest $request, ?Student $student): ScheduleCollection
+    public function schedules(Request $request, ?Student $student): ScheduleResource|ScheduleCollection
     {
         return $student->exists ?
-            new ScheduleCollection($student->load(
-                'batches.batch.schedule.batchSubject.subject',
-                'batches.batch.schedule.batchSubject.teacher.user')->batches) :
+            new ScheduleResource($student->load(
+                'user',
+                'currentBatch.schedule.batchSubject.subject',
+                'currentBatch.schedule.batchSubject.teacher.user')) :
             new ScheduleCollection(Auth::user()
                 ->load('guardian.children')->guardian->children
                 ->load(
-                    'batches.batch.schedule.batchSubject.subject',
-                    'batches.batch.schedule.batchSubject.teacher.user'
-                )->pluck('batches')->flatten());
+                    'user',
+                    'currentBatch.schedule.batchSubject.subject',
+                    'currentBatch.schedule.batchSubject.teacher.user'
+                ));
     }
 
     public function assessments(AssessmentRequest $request, ?Student $student): AssessmentResource|AssessmentCollection
@@ -100,7 +113,7 @@ class StudentController extends Controller
             );
     }
 
-    public function subjects(GetRequest $request, ?Student $student): SubjectResource|SubjectCollection
+    public function subjects(Request $request, ?Student $student): SubjectResource|SubjectCollection
     {
         return $student->exists ?
             new SubjectResource($student->load(
@@ -113,5 +126,30 @@ class StudentController extends Controller
                 'guardian.children.batches.batch.subjects.subject',
                 'guardian.children.batches.batch.subjects.teacher.user'
             )->guardian->children);
+    }
+
+    public function sessions(Request $request, ?Student $student): SessionResource|SessionCollection
+    {
+        return $student->exists ?
+            new SessionResource($student->load(
+                'user',
+                'currentBatch.weeklySessions.attendances',
+                'currentBatch.weeklySessions.schoolPeriod',
+                'currentBatch.weeklySessions.lessonPlan',
+                'currentBatch.weeklySessions.batchSchedule',
+                'currentBatch.weeklySessions.teacher.user',
+                'currentBatch.weeklySessions.batchSubject.subject',
+            )) :
+            new SessionCollection(Auth::user()
+                ->load('guardian.children')->guardian->children
+                ->load(
+                    'user',
+                    'currentBatch.weeklySessions.attendances',
+                    'currentBatch.weeklySessions.schoolPeriod',
+                    'currentBatch.weeklySessions.lessonPlan',
+                    'currentBatch.weeklySessions.batchSchedule',
+                    'currentBatch.weeklySessions.teacher.user',
+                    'currentBatch.weeklySessions.batchSubject.subject',
+                ));
     }
 }

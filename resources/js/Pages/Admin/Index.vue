@@ -2,9 +2,10 @@
     <div class="my-5 w-10/12">
         <div class="my-5 mb-8 flex flex-row items-center gap-2">
             <QueueListIcon class="h-6 w-6"/>
-            <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+            <h1 class="text-2xl font-semibold text-gray-900">
                 Dashboard
             </h1>
+            <h3 class="text-sm text-gray-500">({{ schoolYear.name }})</h3>
         </div>
         <Statistics
             :teachers-count="teachersCount"
@@ -80,9 +81,12 @@ const levels = computed(() => {
             },
             updated_at: moment(level.updated_at).fromNow(),
             created_at: level.created_at,
+
         };
     });
 });
+
+const schoolYear = computed(() => usePage().props.school_year)
 
 const configLevels = [
     {
