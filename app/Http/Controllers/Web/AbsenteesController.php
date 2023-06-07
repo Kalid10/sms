@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Helpers\AbsenteeHelper;
 use App\Models\Absentee;
 use App\Models\BatchSession;
 use App\Models\Student;
@@ -80,6 +81,16 @@ class AbsenteesController extends Controller
             Absentee::where('batch_session_id', $request->batch_session_id)->whereIn('user_id', $usersToRemove)->delete();
 
             DB::commit();
+
+            AbsenteeHelper::computeAbsenteeData($absentees, $batchSession);
+
+            // Map data and recalculate for the removed users
+            $usersToRemove = $existingAbsentRecords->diff($absentees->pluck('user_id'))
+                ->map(function ($userId) {
+                    return ['user_id' => $userId];
+                });
+
+            AbsenteeHelper::computeAbsenteeData($usersToRemove, $batchSession);
         } catch (Exception $e) {
             DB::rollBack();
 
