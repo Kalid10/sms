@@ -127,6 +127,7 @@ class TeacherService
             ['gradable_type', Quarter::class],
             ['gradable_id', Quarter::getActiveQuarter()->id],
         ])
+            ->whereNotNull('rank')
             ->orderBy('rank', 'ASC')
             ->with('student.user', 'student.batches')
             ->get()
@@ -142,6 +143,7 @@ class TeacherService
             ['gradable_type', Quarter::class],
             ['gradable_id', Quarter::getActiveQuarter()->id],
         ])
+            ->whereNotNull('rank')
             ->orderBy('rank', 'DESC')
             ->with('student.user', 'student.batches')
             ->get()
