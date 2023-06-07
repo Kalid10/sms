@@ -59,8 +59,18 @@ class TeacherController extends Controller
     {
         $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : abort(403));
 
+        $search = $request->input('search');
+        $batchSubjectId = $request->input('batch_subject_id');
+
+        $batchSubject = $batchSubjectId ?
+            BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
+            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+                ->whereHas('batch', function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                })->first()->load('subject', 'batch.level');
+
         $batches = $this->teacherService->getBatches($id);
-        $students = $this->teacherService->getStudents($id, $request->input('batch_subject_id'), $request->input('search'));
+        $students = $this->teacherService->getStudents(auth()->user()->teacher->id, $batchSubject->id, $search);
         $teacher = $this->teacherService->getTeacherDetails($id);
 
         if (isset($teacher->nextBatchSession)) {
@@ -92,6 +102,11 @@ class TeacherController extends Controller
             'school_schedule' => $schoolSchedule,
             'school_schedule_date' => $schoolScheduleDate,
             'last_assessment' => $lastAssessment ?? null,
+            'batch_subject' => $batchSubject,
+            'filters' => [
+                'batch_subject_id' => $batchSubjectId,
+                'search' => $search,
+            ],
         ]);
     }
 
@@ -267,7 +282,6 @@ class TeacherController extends Controller
             'students' => $batchStudents,
             'batch_subject' => $batchSubject,
             'batch_subjects' => $batchSubjects,
-            'search' => $search,
             'batch_subject_grade' => $batchSubject->batchGrades()->where([
                 ['gradable_type', Quarter::class],
                 ['gradable_id', Quarter::getActiveQuarter()->id],
@@ -275,6 +289,10 @@ class TeacherController extends Controller
             'total_batches_count' => $batchesCount,
             'top_students' => $this->teacherService->getTopStudents($batchSubject),
             'bottom_students' => $this->teacherService->getBottomStudents($batchSubject),
+            'filters' => [
+                'batch_subject_id' => $batchSubjectId,
+                'search' => $search,
+            ],
         ]);
     }
 }

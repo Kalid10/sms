@@ -80,8 +80,8 @@
             <div
                 class="flex h-full flex-col justify-between space-y-2 lg:flex-row"
             >
-                <Students
-                    class="h-fit w-full rounded-lg bg-white p-3 shadow-sm 2xl:mt-10 2xl:w-6/12"
+                <StudentsTable
+                    class="h-fit w-full rounded-lg bg-white px-3 py-1 shadow-sm 2xl:mt-10 2xl:w-6/12"
                     :class="
                         isSidebarOpenOnXlDevice
                             ? 'lg:w-5/12 lg:mt-[-3rem]'
@@ -136,7 +136,6 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/NextClass/Index.vue";
-import Students from "@/Views/Teacher/Home/Students.vue";
 import LessonPlans from "@/Views/Teacher/Home/LessonPlans.vue";
 import Grades from "@/Views/Teacher/Home/Grades.vue";
 import SchoolSchedule from "@/Views/Teacher/Home/SchoolSchedule/Index.vue";
@@ -145,6 +144,7 @@ import Feedbacks from "@/Views/Teacher/Home/Feedbacks.vue";
 import { ref } from "vue";
 import Assessments from "@/Views/Teacher/Home/Assessments.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
+import StudentsTable from "@/Views/Teacher/StudentsTable.vue";
 
 const teacher = usePage().props.teacher;
 
