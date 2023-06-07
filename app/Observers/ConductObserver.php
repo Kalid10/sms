@@ -100,7 +100,6 @@ class ConductObserver
         ]
         )->whereIn('student_id', $studentIds)->get()->pluck('conduct');
 
-        // Filter out null values
         $averageConduct = $this->getQuarterlyConduct($studentsConduct);
 
         $batchGrade = BatchSubjectGrade::where([
@@ -120,7 +119,6 @@ class ConductObserver
             ['batch_id', $batchId]]
         )->get()->pluck('conduct');
 
-        // Filter out null values
         $averageConduct = $this->getQuarterlyConduct($batchSubjectsConduct);
 
         $batchGrade = BatchGrade::where([
@@ -170,11 +168,19 @@ class ConductObserver
         $studentGrade->save();
     }
 
-    private function getQuarterlyConduct($batchSubjectsConduct): string|int
+    private function getQuarterlyConduct($batchSubjectsConduct): ?string
     {
-        $batchSubjectsConduct = $batchSubjectsConduct->filter(function ($value, $key) {
+        $totalCount = $batchSubjectsConduct->count();
+        $batchSubjectsConduct = $batchSubjectsConduct->filter(function ($value) {
             return ! is_null($value);
         });
+
+        $nonNullPercentage = ($batchSubjectsConduct->count() / $totalCount) * 100;
+
+        // To set batch conduct to null if 75% of the students have no conduct grade
+        if ($nonNullPercentage < 75) {
+            return null;
+        }
 
         // Mapping the conduct grades to numerical values
         $gradeMap = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
