@@ -14,9 +14,9 @@
             <div class="w-1/2">
                 <StudentsList
                     progress-type="up"
-                    title="Best Progressing Students"
+                    title="Top Students"
                     :icon="ArrowTrendingUpIcon"
-                    :progressing-students="progressingStudents"
+                    :students="topStudents"
                 />
             </div>
 
@@ -25,7 +25,7 @@
                     progress-type="down"
                     title="Students Falling Behind"
                     :icon="ArrowTrendingDownIcon"
-                    :progressing-students="progressingStudents"
+                    :students="bottomStudents"
                 />
             </div>
         </div>
@@ -38,24 +38,11 @@ import {
 } from "@heroicons/vue/24/outline";
 import StudentsList from "@/Views/Teacher/Batches/PerformanceHighlights/StudentsList.vue";
 import BatchPerformance from "@/Views/Teacher/Batches/BatchPerformance/Index.vue";
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
 
-const progressingStudents = [
-    {
-        name: "Kalid Abdu",
-        progress: 80,
-        attendance: 99,
-    },
-    {
-        name: "Biniyam Lemma",
-        progress: 85,
-        attendance: 100,
-    },
-    {
-        name: "Yoseph Seboka",
-        progress: 85,
-        attendance: 98,
-    },
-];
+const topStudents = computed(() => usePage().props.top_students);
+const bottomStudents = computed(() => usePage().props.bottom_students);
 </script>
 
 <style scoped></style>

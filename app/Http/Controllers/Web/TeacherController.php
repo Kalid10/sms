@@ -159,6 +159,8 @@ class TeacherController extends Controller
                 ['gradable_type', Quarter::class],
                 ['gradable_id', Quarter::getActiveQuarter()->id],
             ])->first(),
+            'top_students' => $this->teacherService->getTopStudents($batchSubject),
+            'bottom_students' => $this->teacherService->getBottomStudents($batchSubject),
         ]);
     }
 
@@ -290,6 +292,8 @@ class TeacherController extends Controller
                 ['gradable_id', Quarter::getActiveQuarter()->id],
             ])->first(),
             'total_batches_count' => $batchesCount,
+            'top_students' => $this->teacherService->getTopStudents($batchSubject),
+            'bottom_students' => $this->teacherService->getBottomStudents($batchSubject),
         ]);
     }
 }

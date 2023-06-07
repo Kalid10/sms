@@ -16,24 +16,10 @@
             </div>
 
             <div class="flex items-center space-x-3 font-light">
-                <div class="flex space-x-0.5">
-                    <ArrowTrendingUpIcon
-                        v-if="progressType === 'up'"
-                        class="w-3 text-positive-100"
-                    />
-                    <ArrowTrendingDownIcon
-                        v-else
-                        class="w-3 text-negative-100"
-                    />
-                    <div class="text-medium grow text-[0.6rem]">
-                        {{ progress }}%
-                    </div>
-                </div>
-
                 <div
                     class="flex items-center justify-center text-center text-[0.6rem]"
                 >
-                    {{ attendance }} % Att
+                    Attendance {{ attendance }} %
                 </div>
             </div>
         </div>
@@ -41,12 +27,9 @@
         <!--                Grade section-->
         <div class="flex h-11 w-3/12 flex-col justify-evenly">
             <div
-                class="flex w-full items-center justify-center py-1.5 text-[0.6rem]"
+                class="flex w-full items-center justify-center py-1.5 text-xs font-bold"
             >
-                {{ grade }}
-            </div>
-            <div class="py-1.5 text-center text-[0.55rem] text-neutral-600">
-                Grade
+                {{ grade }} / 50
             </div>
         </div>
 
@@ -64,11 +47,6 @@
     </div>
 </template>
 <script setup>
-import {
-    ArrowTrendingDownIcon,
-    ArrowTrendingUpIcon,
-} from "@heroicons/vue/24/outline";
-
 defineProps({
     name: {
         type: String,

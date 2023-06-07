@@ -138,4 +138,34 @@ class TeacherService
 
         return $students;
     }
+
+    public function getTopStudents($batchSubject)
+    {
+        return $batchSubject->studentGrades()->where([
+            ['gradable_type', Quarter::class],
+            ['gradable_id', Quarter::getActiveQuarter()->id],
+        ])
+            ->orderBy('rank', 'ASC')
+            ->with('student.user', 'student.batches')
+            ->get()
+            ->take(5)
+            ->each(function ($student) {
+                $student->attendance_percentage = 100 - $student->student->absenteePercentage();
+            });
+    }
+
+    public function getBottomStudents($batchSubject)
+    {
+        return $batchSubject->studentGrades()->where([
+            ['gradable_type', Quarter::class],
+            ['gradable_id', Quarter::getActiveQuarter()->id],
+        ])
+            ->orderBy('rank', 'DESC')
+            ->with('student.user', 'student.batches')
+            ->get()
+            ->take(5)
+            ->each(function ($student) {
+                $student->attendance_percentage = 100 - $student->student->absenteePercentage();
+            });
+    }
 }

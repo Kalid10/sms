@@ -91,14 +91,14 @@
                 <div
                     :class="{
                         'bg-positive-100 text-white':
-                            batchSubjectGrade.conduct === 'A',
-                        'bg-yellow-400': batchSubjectGrade.conduct === 'B',
-                        'bg-amber-300': batchSubjectGrade.conduct === 'C',
+                            batchSubjectGrade?.conduct === 'A',
+                        'bg-yellow-400': batchSubjectGrade?.conduct === 'B',
+                        'bg-amber-300': batchSubjectGrade?.conduct === 'C',
                         'bg-red-500 text-white':
-                            batchSubjectGrade.conduct === 'D',
+                            batchSubjectGrade?.conduct === 'D',
                         'bg-negative-100 text-white':
-                            batchSubjectGrade.conduct === 'F',
-                        'bg-white text-black': !batchSubjectGrade.conduct,
+                            batchSubjectGrade?.conduct === 'F',
+                        'bg-zinc-700 text-white': !batchSubjectGrade?.conduct,
                     }"
                     class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-5xl font-bold shadow-sm"
                 >
@@ -109,18 +109,18 @@
             <div class="w-11/12 rounded-lg bg-white py-2 shadow-sm">
                 <StudentsList
                     progress-type="up"
-                    title="Best Progressing Students"
+                    title="Top Students"
                     :icon="ArrowTrendingUpIcon"
-                    :progressing-students="progressingStudents"
+                    :students="topStudents"
                 />
             </div>
 
-            <div class="w-11/12 rounded-lg bg-white py-2 shadow-sm">
+            <div class="w-11/12 rounded-lg bg-white shadow-sm">
                 <StudentsList
                     progress-type="down"
                     title="Students Falling Behind"
                     :icon="ArrowTrendingDownIcon"
-                    :progressing-students="progressingStudents"
+                    :students="bottomStudents"
                 />
             </div>
         </div>
@@ -147,6 +147,8 @@ const batchSubjectGrade = computed(() => usePage().props.batch_subject_grade);
 const batchSubjects = usePage().props.batch_subjects;
 const searchText = ref(usePage().props.search);
 const totalBatchesCount = ref(usePage().props.total_batches_count);
+const topStudents = computed(() => usePage().props.top_students);
+const bottomStudents = computed(() => usePage().props.bottom_students);
 
 const batchSubject = computed(() => {
     return usePage().props.batch_subject;
