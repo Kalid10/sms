@@ -61,7 +61,7 @@ class BatchSession extends Model
         return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
-    public function attendances(): HasMany
+    public function absentees(): HasMany
     {
         return $this->hasMany(Absentee::class);
     }
