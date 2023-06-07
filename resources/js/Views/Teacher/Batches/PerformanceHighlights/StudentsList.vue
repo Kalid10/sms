@@ -26,7 +26,7 @@
                     :rank="numberWithOrdinal(item.rank)"
                     :attendance="item.attendance_percentage"
                     :progress="80"
-                    :grade="item?.score.toFixed(1)"
+                    :grade="item?.score?.toFixed(1)"
                     @click="
                         () =>
                             router.visit(

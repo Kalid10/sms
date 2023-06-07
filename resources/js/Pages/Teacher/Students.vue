@@ -26,7 +26,7 @@
                         <div
                             class="flex flex-col justify-center space-y-4 text-center text-4xl font-bold shadow-sm"
                         >
-                            <div v-if="batchSubjectGrade">
+                            <div v-if="batchSubjectGrade.rank">
                                 {{ numberWithOrdinal(batchSubjectGrade.rank) }}
                             </div>
                             <div v-else>-</div>
@@ -159,7 +159,9 @@ const filteredStudents = computed(() => {
             name: student.student.user.name,
             attendance: student.attendance_percentage + "%",
             grade: student.quarterly_grade
-                ? student.quarterly_grade.score.toFixed(1)
+                ? student.quarterly_grade.score
+                    ? student.quarterly_grade.score.toFixed(1)
+                    : "-"
                 : "-",
             rank: student.batch_subject_rank ?? "-",
             id: student.student_id,

@@ -16,7 +16,7 @@
         />
         <Item
             title="Attendance"
-            value="99.2%"
+            :value="batchSubjectGrade?.attendance + '%'"
             value-style="text-positive-100"
             :icon="ArrowSmallUpIcon"
         />
