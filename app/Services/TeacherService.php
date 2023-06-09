@@ -4,19 +4,18 @@ namespace App\Services;
 
 use App\Models\Assessment;
 use App\Models\Batch;
-use App\Models\BatchStudent;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
-use App\Models\Semester;
 use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class TeacherService
 {
-    public function getTeacherDetails(int $id): Model|Collection|Builder|array|null
+    public static function getTeacherDetails(int $id): Model|Collection|Builder|array|null
     {
         return Teacher::with([
             'user:id,name,email,phone_number,gender',
@@ -82,7 +81,7 @@ class TeacherService
             });
     }
 
-    public function getStudents(int $id, ?string $batchSubjectId, ?string $studentSearch)
+    public static function getStudents(int $batchSubjectId, ?string $studentSearch)
     {
         $batchSubject = $batchSubjectId ?
             BatchSubject::find($batchSubjectId)->load('subject', 'batch.level') :
@@ -91,65 +90,23 @@ class TeacherService
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
                 })->first()->load('subject', 'batch.level');
 
-        $batchStudents = BatchStudent::where('batch_id', $batchSubject->batch_id)
-            ->with('student.user.absentee', 'student.batches')
-            ->whereHas('student.user', function ($query) use ($studentSearch) {
-                $query->where('name', 'like', "%$studentSearch%");
-            })
-            ->paginate(10)
-            ->appends(['batch_subject_id' => $batchSubjectId]);
-
-        $batchStudents->getCollection()->transform(function ($student) use ($batchSubject) {
-            $studentBatchSubjectGrade = $student->student->fetchStudentBatchSubjectGrade($batchSubject->id, Quarter::getActiveQuarter()->id)->first();
-            $student->attendance_percentage = 100 - $student->student->absenteePercentage();
-            $student->batch_subject_rank = $studentBatchSubjectGrade?->rank;
-            $student->conduct = $studentBatchSubjectGrade?->conduct;
-            $student->quarterly_grade = $student->student->grades()->where([[
-                'gradable_type', Quarter::class,
-            ], [
-                'gradable_id', Quarter::getActiveQuarter()->id,
-            ]])->first();
-            $student->semester_grade = $student->student->grades()->where([[
-                'gradable_type', Semester::class,
-            ], [
-                'gradable_id', Semester::getActiveSemester()->id,
-            ]])->first();
-
-            return $student;
-        });
-
-        return $batchStudents;
+        return StudentService::getBatchStudents($batchSubject->batch_id, $studentSearch, $batchSubjectId);
     }
 
-    public function getTopStudents($batchSubject)
+    public static function prepareBatchSubject(Request $request): BatchSubject
     {
-        return $batchSubject->studentGrades()->where([
-            ['gradable_type', Quarter::class],
-            ['gradable_id', Quarter::getActiveQuarter()->id],
-        ])
-            ->whereNotNull('rank')
-            ->orderBy('rank', 'ASC')
-            ->with('student.user', 'student.batches')
-            ->get()
-            ->take(5)
-            ->each(function ($student) {
-                $student->attendance_percentage = 100 - $student->student->absenteePercentage();
-            });
-    }
+        $request->validate([
+            'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
+            'search' => 'nullable|string',
+        ]);
 
-    public function getBottomStudents($batchSubject)
-    {
-        return $batchSubject->studentGrades()->where([
-            ['gradable_type', Quarter::class],
-            ['gradable_id', Quarter::getActiveQuarter()->id],
-        ])
-            ->whereNotNull('rank')
-            ->orderBy('rank', 'DESC')
-            ->with('student.user', 'student.batches')
-            ->get()
-            ->take(5)
-            ->each(function ($student) {
-                $student->attendance_percentage = 100 - $student->student->absenteePercentage();
-            });
+        $batchSubjectId = $request->input('batch_subject_id');
+
+        return $batchSubjectId ?
+            BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
+            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+                ->whereHas('batch', function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                })->first()->load('subject', 'batch.level');
     }
 }
