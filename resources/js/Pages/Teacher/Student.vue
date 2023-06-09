@@ -10,27 +10,12 @@
             <div
                 class="flex h-full w-full flex-col items-center justify-center space-y-6"
             >
-                <div
-                    class="flex h-full w-full items-center justify-between space-x-4 rounded-lg bg-gradient-to-bl from-neutral-700 to-zinc-800 py-6 pl-4 text-gray-200 shadow-sm"
-                >
-                    <div class="flex h-full w-6/12 space-x-5">
-                        <img
-                            :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
-                            alt="avatar"
-                            class="w-20 rounded-md object-contain"
-                        />
-                        <Header :title="student.user.name + ' 11A'" />
-                    </div>
-                    <SelectInput
-                        v-model="selectedBatchSubject"
-                        class="w-4/12 text-black"
-                        :options="batchSubjectOptions"
-                        rounded="rounded-full"
-                    />
-                    <div class="w-4/12 border-l border-gray-500 px-1">
-                        <CurrentClass />
-                    </div>
-                </div>
+                <Header
+                    :title="student.user.name"
+                    :select-input-options="batchSubjectOptions"
+                    :selected-input="batchSubject.id"
+                    image="sd"
+                />
 
                 <!--           Assessments section-->
                 <div class="flex w-full justify-between lg:w-full">
@@ -55,6 +40,10 @@
                                     <div class="text-2xl font-bold">
                                         <span v-if="student.quarterly_grade">
                                             {{ student.quarterly_grade.score }}
+                                            {{
+                                                student.quarterly_grade
+                                                    .grade_scale_id
+                                            }}
                                         </span>
                                         <span v-else> - </span>
                                     </div>
@@ -88,6 +77,17 @@
                                     </div>
                                     <div class="text-[0.65rem] font-light">
                                         Quarter Conduct
+                                    </div>
+                                </div>
+                                <div class="w-4/12">
+                                    <div class="text-2xl font-bold">
+                                        <span v-if="student.semester_grade">
+                                            {{ student.semester_grade.conduct }}
+                                        </span>
+                                        <span v-else> - </span>
+                                    </div>
+                                    <div class="text-[0.65rem] font-light">
+                                        Semester Conduct
                                     </div>
                                 </div>
                             </div>
@@ -129,9 +129,7 @@ import Notes from "@/Views/Teacher/Student/Notes.vue";
 import Information from "@/Views/Teacher/Student/GuardianInformation.vue";
 import { isSidebarOpenOnXlDevice, numberWithOrdinal } from "@/utils";
 import Header from "@/Views/Teacher/Header.vue";
-import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
 import GeneralReport from "@/Views/Teacher/Student/GeneralReport.vue";
-import SelectInput from "@/Components/SelectInput.vue";
 import AssessmentBreakDown from "@/Views/Teacher/Assessments/AssessmentBreakDown.vue";
 
 const student = computed(() => usePage().props.student);

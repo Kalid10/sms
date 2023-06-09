@@ -3,41 +3,27 @@
         <div class="flex w-full justify-between space-x-6 bg-gray-50">
             <!--        Left Side-->
             <div class="flex w-8/12 flex-col space-y-2 py-5 pl-5">
-                <div
-                    class="flex w-full items-center justify-between space-x-4 rounded-lg bg-gradient-to-bl from-neutral-700 to-zinc-800 py-6 pl-4 text-gray-200 shadow-sm"
-                >
-                    <Header title="My Classes" class="w-4/12" />
-
-                    <div
-                        class="flex h-full items-center justify-between divide-x divide-white lg:w-8/12"
-                    >
-                        <div class="flex w-8/12 justify-center">
-                            <SelectInput
-                                v-model="selectedBatchSubject"
-                                class="w-10/12 text-black"
-                                :options="batchSubjectOptions"
-                                rounded="rounded-full"
-                            />
-                        </div>
-                        <div class="w-4/12 px-1">
-                            <CurrentClass />
-                        </div>
-                    </div>
-                </div>
+                <Header
+                    title="My Classes"
+                    :select-input-options="batchSubjectOptions"
+                    :selected-input="batchSubject.id"
+                    @change="updateBatchInfo"
+                />
 
                 <div class="pt-4">
                     <PerformanceHighlight />
                 </div>
-                <StudentsTable />
+                <StudentsTable
+                    :title="tableTitle"
+                    :table-model-value="batchSubject.id"
+                    @search="updateBatchInfo"
+                />
             </div>
 
             <!--        Right side-->
             <div
                 class="flex w-4/12 flex-col items-center space-y-6 border-l bg-gray-50 px-3 py-5 pl-5"
             >
-                <!--                <div class="w-11/12">-->
-                <!--                    <SchoolSchedule />-->
-                <!--                </div>-->
                 <div>
                     <CurrentClass view="absentee" />
                 </div>
@@ -58,31 +44,21 @@
                 </div>
             </div>
         </div>
-        <!--        <div class="flex h-screen justify-center">-->
-        <!--            <div-->
-        <!--                class="h-5/6 w-11/12 rounded-md bg-gradient-to-bl from-zinc-700 to-neutral-500 p-8 text-white"-->
-        <!--            >-->
-        <!--                <StudentSemesterSchedule class="h-full" />-->
-        <!--            </div>-->
-        <!--        </div>-->
     </div>
 </template>
 
 <script setup>
 import PerformanceHighlight from "@/Views/Teacher/Batches/PerformanceHighlights/Index.vue";
 import { router, usePage } from "@inertiajs/vue3";
-import { computed, ref, watch } from "vue";
-import debounce from "lodash/debounce";
+import { computed, ref } from "vue";
 import LessonPlan from "@/Views/Teacher/Home/LessonPlans.vue";
 import Assessment from "@/Views/Teacher/Home/Assessments.vue";
-import SelectInput from "@/Components/SelectInput.vue";
 import Header from "@/Views/Teacher/Header.vue";
 import CurrentClass from "@/Views/Teacher/Batches/CurrentClass.vue";
 import StudentsTable from "@/Views/Teacher/StudentsTable.vue";
 
 const schedule = usePage().props.schedule;
 const batchSubjects = usePage().props.batch_subjects;
-const searchText = ref(usePage().props.search);
 
 const students = computed(() => {
     return usePage().props.students;
@@ -99,8 +75,6 @@ const batchSubject = computed(() => {
     return usePage().props.batch_subject;
 });
 
-const selectedBatchSubject = ref(batchSubject.value.id);
-
 const batchSubjectOptions = computed(() => {
     return batchSubjects.map((batchSubject) => {
         return {
@@ -115,24 +89,23 @@ const batchSubjectOptions = computed(() => {
     });
 });
 
-const updateBatchInfo = () => {
+const tableTitle = computed(() => {
+    return `${batchSubject.value.batch.level.name} ${batchSubject.value.batch.section} - ${batchSubject.value.subject.full_name} Students List`;
+});
+
+const selectedBatchSubject = ref(batchSubject.value.id);
+const updateBatchInfo = (batchSubjectId, search) => {
+    if (batchSubjectId !== null) selectedBatchSubject.value = batchSubjectId;
     router.visit(
         "/teacher/class?batch_subject_id=" +
             selectedBatchSubject.value +
             "&search=" +
-            searchText.value,
+            search,
         {
             preserveState: true,
         }
     );
 };
-
-const debouncedUpdate = debounce(updateBatchInfo, 300);
-
-watch(selectedBatchSubject, () => {
-    searchText.value = "";
-    debouncedUpdate();
-});
 </script>
 
 <style scoped></style>
