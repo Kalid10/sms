@@ -3,7 +3,7 @@
         <!--        Table-->
         <TableElement
             :data="filteredStudents"
-            :title="studentListTitle"
+            :title="title"
             :selectable="false"
             :columns="config"
             class="!!text-[0.5rem] border-none bg-red-400"
@@ -18,7 +18,7 @@
                         class="w-5/12"
                     />
 
-                    <div>
+                    <div v-if="showHomeroomDetail">
                         <div class="mb-1 text-[0.55rem] font-light">
                             Homeroom Teacher
                         </div>
@@ -29,6 +29,14 @@
                         </div>
                     </div>
                 </div>
+            </template>
+            <template #name-column="{ data }">
+                <span
+                    class="cursor-pointer text-xs underline underline-offset-2 hover:font-semibold"
+                    @click="$emit('click', data.id)"
+                >
+                    {{ data.name }}
+                </span>
             </template>
             <template #footer>
                 <Pagination
@@ -45,24 +53,32 @@ import Pagination from "@/Components/Pagination.vue";
 import TextInput from "@/Components/TextInput.vue";
 import TableElement from "@/Components/TableElement.vue";
 import { computed, ref, watch } from "vue";
-import { router, usePage } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 import debounce from "lodash/debounce";
 
+const emit = defineEmits(["click", "search"]);
+const props = defineProps({
+    title: {
+        type: String,
+        default: "Students List",
+    },
+    showHomeroomDetail: {
+        type: Boolean,
+        default: true,
+    },
+});
 const searchText = ref(usePage().props.filters?.search);
 const students = computed(() => {
     return usePage().props.students;
 });
 
-const assessments = computed(() => {
-    return usePage().props.assessments;
-});
-const batchSubject = computed(() => {
-    return usePage().props.batch_subject;
-});
 const filteredStudents = computed(() => {
     return students.value.data.map((item) => {
         return {
-            name: item.student.user.name,
+            name: {
+                name: item.student.user.name,
+                id: item.student.id,
+            },
             attendance: item.attendance_percentage + "%",
             grade: item.student.quarterly_grade
                 ? item.student.quarterly_grade.score.toFixed(1)
@@ -74,60 +90,45 @@ const filteredStudents = computed(() => {
     });
 });
 
-const studentListTitle = computed(() => {
-    return `${batchSubject.value.batch.level.name} ${batchSubject.value.batch.section} - ${batchSubject.value.subject.full_name} Students List`;
-});
-
 const config = [
     {
         key: "name",
         name: "Name",
         align: "center",
-        class: "h-12  !text-[0.6rem]",
-        link:
-            "/teacher/students/{id}" +
-            "?batch_subject_id=" +
-            batchSubject.value.id,
+        class: "h-12 !text-[0.6rem]",
+        type: "custom",
     },
     {
         key: "attendance",
         name: "Attendance%",
         align: "center",
-        class: "h-12  !text-[0.65rem]",
+        class: "h-12 !text-[0.65rem]",
     },
     {
         key: "grade",
         name: "Grade",
         align: "center",
-        class: "h-12  !text-[0.65rem]",
+        class: "h-12 !text-[0.65rem]",
     },
     {
         key: "rank",
         name: "Rank",
         align: "center",
-        class: "h-12  !text-[0.65rem]",
+        class: "h-12 !text-[0.65rem]",
     },
     {
         key: "conduct",
         name: "Conduct",
         align: "center",
-        class: "h-12  !text-[0.65rem]",
+        class: "h-12 !text-[0.65rem]",
     },
 ];
 
-const updateBatchInfo = () => {
-    router.visit(
-        "/teacher/class?batch_subject_id=" +
-            batchSubject.value.id +
-            "&search=" +
-            searchText.value,
-        {
-            preserveState: true,
-        }
-    );
-};
+function emitSearch() {
+    emit("search", null, searchText.value);
+}
 
-const debouncedUpdate = debounce(updateBatchInfo, 300);
+const debouncedUpdate = debounce(emitSearch, 300);
 
 watch(searchText, () => {
     debouncedUpdate();
