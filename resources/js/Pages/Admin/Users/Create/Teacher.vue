@@ -1,6 +1,6 @@
 <template>
-    <div class="grid-rows-12 grid sm:grid-cols-12">
-        <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
+    <div class="grid-rows-12 grid sm:grid-cols-12 md:w-full">
+        <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0">
             <Heading
                 value="Register new teacher"/>
             <Heading

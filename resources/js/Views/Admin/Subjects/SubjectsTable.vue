@@ -30,8 +30,8 @@
 
                 <template #filter>
                     <TextInput
-v-model="query" class="w-full lg:max-w-lg"
-                               placeholder="Search for a subject by name or tags"/>
+                        v-model="query" class="w-full lg:max-w-lg"
+                        placeholder="Search for a subject by name or tags"/>
                 </template>
 
                 <template #empty-data>
@@ -52,8 +52,8 @@ v-model="query" class="w-full lg:max-w-lg"
 
                 <template #full_name-column="{data}">
                     <Link
-:href="`/subjects/${data['id']}`"
-                          class="font-semibold hover:underline hover:underline-offset-2">
+                        :href="`/admin/subjects/${data['id']}`"
+                        class="font-semibold hover:underline hover:underline-offset-2">
                         {{ data['full_name'] }}
                     </Link>
                 </template>
@@ -117,8 +117,8 @@ v-model="query" class="w-full lg:max-w-lg"
             <div class="my-2 flex flex-row">
                 <label class="mx-2 flex w-32 items-center text-sm text-gray-800">Select a grade:</label>
                 <SelectInput
-v-model="selectedBatchId" :options="batchOptions" placeholder="Select a batch"
-                             class="w-full cursor-pointer"/>
+                    v-model="selectedBatchId" :options="batchOptions" placeholder="Select a batch"
+                    class="w-full cursor-pointer"/>
             </div>
             <TableElement
                 :title="'Subjects List for ' + selectedBatchLabel"
@@ -215,7 +215,7 @@ const selectedBatchId = ref(usePage().props.selected_batch.id);
 
 watch(selectedBatchId, () => {
     router.get(
-        "/subjects",
+        "/admin/subjects",
         {batch_id: selectedBatchId.value},
         {preserveState: true, replace: true}
     );
@@ -240,7 +240,7 @@ const subjects = computed(() => {
 const query = ref(null);
 const search = debounce(() => {
     router.get(
-        "/subjects",
+        "/admin/subjects",
         {search: query.value},
         {preserveState: true, replace: true}
     );

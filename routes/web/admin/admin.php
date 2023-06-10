@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\SchoolScheduleController;
 use App\Http\Controllers\Web\StudentController;
 use App\Http\Controllers\Web\SubjectController;
 use App\Http\Controllers\Web\TeacherController;
+use App\Http\Controllers\Web\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->group(function () {
@@ -34,5 +35,9 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
 
     Route::controller(SchoolScheduleController::class)->prefix('school-schedules/')->middleware(['checkUserRole:manage-school-schedules'])->name('school-schedule.')->group(function () {
         Route::post('create', 'create')->name('create');
+    });
+
+    Route::controller(UserController::class)->prefix('users/')->middleware(['auth'])->name('users.')->group(function () {
+        Route::get('', 'index');
     });
 });

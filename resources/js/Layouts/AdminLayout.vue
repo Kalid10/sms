@@ -48,7 +48,7 @@ const directory = computed(() => usePage().url.split("/")[2]);
 // Populate sidebar items
 const sidebarItems = computed(() => [
     {
-        name: "Dashboard",
+        name: "Home",
         icon: QueueListIcon,
         route: "/admin",
         active: directory.value === undefined,
@@ -86,8 +86,8 @@ const sidebarItems = computed(() => [
 ]);
 
 const footerItems = [
-    {icon: ChatBubbleBottomCenterIcon, name: "Chat"},
-    {icon: PowerIcon, name: "Logout"},
+    {icon: ChatBubbleBottomCenterIcon, name: "Chat", route: "/sms"},
+    {icon: PowerIcon, name: "Logout", route: "/logout", method: "POST",},
 ];
 </script>
 

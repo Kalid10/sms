@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
             'id' => 'required|integer|exists:users,id',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users|email',
-            'username' => 'required|string|max:255|unique:users|username',
+            'username' => 'required|string|max:255|unique:users',
             'phone_number' => 'required|string|max:255|unique:users,phone_number',
             'gender' => 'required|string|max:255',
         ];
