@@ -1,6 +1,6 @@
 <template>
     <div class="relative flex w-full">
-        <PrimaryButton class="absolute right-0 mt-4" @click="levelCategoryLink">
+        <PrimaryButton class="invisible absolute right-0 lg:visible xl:mt-4 xl:mr-5" @click="levelCategoryLink">
             Go To Level Categories
         </PrimaryButton>
         <TableElement

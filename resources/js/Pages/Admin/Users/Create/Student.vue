@@ -102,9 +102,9 @@
         </div>
     </div>
 
-    <div class="grid-rows-12 grid sm:grid-cols-12">
+    <div class="grid-rows-12 my-5 grid sm:grid-cols-12 md:w-full">
         <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
-            <Heading value="Register student and parents in bulk" />
+            <Heading value="Register student and parents in bulk"/>
             <Heading
                 value="only upload an excel or csv file."
                 size="sm"
@@ -119,7 +119,7 @@
                 />
 
                 <div class="absolute right-0">
-                    <GuardianPrimaryButton title="Submit" />
+                    <GuardianPrimaryButton title="Submit"/>
                 </div>
             </div>
         </div>
@@ -131,17 +131,17 @@ import GuardianFormElement from "@/Components/FormElement.vue";
 import GuardianTextInput from "@/Components/TextInput.vue";
 import GuardianFileInput from "@/Components/FileInput.vue";
 import Heading from "@/Components/Heading.vue";
-import { useForm } from "@inertiajs/vue3";
+import {useForm} from "@inertiajs/vue3";
 import GuardianPrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianDatePicker from "@/Components/DatePicker.vue";
 import GuardianSelectInput from "@/Components/SelectInput.vue";
-import { value } from "lodash/seq";
+import {value} from "lodash/seq";
 
 defineEmits(["file-uploaded"]);
 
 const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
+    {value: "male", label: "Male"},
+    {value: "female", label: "Female"},
 ];
 
 const handleFileUploaded = (file) => {
@@ -150,27 +150,27 @@ const handleFileUploaded = (file) => {
 };
 
 const levelOptions = [
-    { value: "KG-1", label: "KG 1" },
-    { value: "KG-2", label: "KG 2" },
-    { value: "KG-3", label: "KG 3" },
-    { value: "1", label: "Grade 1" },
-    { value: "2", label: "Grade 2" },
-    { value: "3", label: "Grade 3" },
-    { value: "4", label: "Grade 4" },
-    { value: "5", label: "Grade 5" },
-    { value: "6", label: "Grade 6" },
-    { value: "7", label: "Grade 7" },
-    { value: "8", label: "Grade 8" },
-    { value: "9", label: "Grade 9" },
-    { value: "10", label: "Grade 10" },
-    { value: "11", label: "Grade 11" },
-    { value: "12", label: "Grade 12" },
+    {value: "KG-1", label: "KG 1"},
+    {value: "KG-2", label: "KG 2"},
+    {value: "KG-3", label: "KG 3"},
+    {value: "1", label: "Grade 1"},
+    {value: "2", label: "Grade 2"},
+    {value: "3", label: "Grade 3"},
+    {value: "4", label: "Grade 4"},
+    {value: "5", label: "Grade 5"},
+    {value: "6", label: "Grade 6"},
+    {value: "7", label: "Grade 7"},
+    {value: "8", label: "Grade 8"},
+    {value: "9", label: "Grade 9"},
+    {value: "10", label: "Grade 10"},
+    {value: "11", label: "Grade 11"},
+    {value: "12", label: "Grade 12"},
 ];
 
 const relationOptions = [
-    { value: "father", label: "Father" },
-    { value: "mother", label: "Mother" },
-    { value: "other", label: "Other" },
+    {value: "father", label: "Father"},
+    {value: "mother", label: "Mother"},
+    {value: "other", label: "Other"},
 ];
 
 const form = useForm({

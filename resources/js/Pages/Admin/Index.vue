@@ -3,22 +3,22 @@
         <div class="my-5 mb-8 flex flex-row items-center gap-2">
             <QueueListIcon class="h-6 w-6"/>
             <h1 class="text-2xl font-semibold text-gray-900">
-                Dashboard
+                Home
             </h1>
             <h3 class="text-sm text-gray-500">({{ schoolYear.name }})</h3>
         </div>
-        <Statistics
-            :teachers-count="teachersCount"
-            :students-count="studentsCount"
-            :subjects-count="subjectCount"
-            :admins-count="adminsCount"
-        />
 
         <div class="flex w-full flex-col gap-2 md:flex-row">
             <div class="mr-2 w-full rounded border shadow-sm lg:w-2/3">
                 <h1 class="p-2">Overview</h1>
-
                 <Graph/>
+
+                <Statistics
+                    :teachers-count="teachersCount"
+                    :students-count="studentsCount"
+                    :subjects-count="subjectCount"
+                    :admins-count="adminsCount"
+                />
             </div>
 
             <div class="rounded border shadow-sm lg:w-2/3">

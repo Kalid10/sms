@@ -37,20 +37,20 @@
                     >
                         <button
                             v-if="hasRole('manage-students')"
-                            class=" m-2 scale-75 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
+                            class=" m-2 scale-100 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
                             @click="studentRegistrationLink">
                             Student
                         </button>
 
                         <button
                             v-if="hasRole('manage-admins')"
-                            class=" m-2 scale-75 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
+                            class=" m-2 scale-100 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
                             @click="adminRegistrationLink">
                             Admin
                         </button>
                         <button
                             v-if="hasRole('manage-teachers')"
-                            class=" m-2 scale-75 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
+                            class=" m-2 scale-100 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
                             @click="teacherRegistrationLink">
                             Teacher
                         </button>
