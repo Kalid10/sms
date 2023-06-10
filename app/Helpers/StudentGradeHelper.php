@@ -311,7 +311,7 @@ class StudentGradeHelper
             ->orderByDesc('score')
             ->get();
 
-        $students->transform(function ($item, $key) use ($students, $gradableType) {
+        $students->transform(function ($item) use ($students, $gradableType) {
             static $lastBatchSubjectId = null;
             static $lastScore = null;
             static $rank = 0;
@@ -319,7 +319,11 @@ class StudentGradeHelper
             if ($lastBatchSubjectId != $item->batch_subject_id || $lastScore != $item->score) {
                 $lastBatchSubjectId = $item->batch_subject_id;
                 $lastScore = $item->score;
-                $rank = $students->where('batch_subject_id', $item->batch_subject_id)->where('score', '>', $item->score)->count() + 1;
+                if ($lastScore === null) {
+                    $rank = null;
+                } else {
+                    $rank = $students->where('batch_subject_id', $item->batch_subject_id)->where('score', '>', $item->score)->count() + 1;
+                }
             }
 
             DB::table('student_subject_grades')
@@ -348,7 +352,7 @@ class StudentGradeHelper
             ->orderByDesc('score')
             ->get();
 
-        $students->transform(function ($item, $key) use ($students, $gradableType) {
+        $students->transform(function ($item) use ($students, $gradableType) {
             static $lastGradableId = null;
             static $lastScore = null;
             static $rank = 0;
@@ -356,7 +360,11 @@ class StudentGradeHelper
             if ($lastGradableId != $item->gradable_id || $lastScore != $item->score) {
                 $lastGradableId = $item->gradable_id;
                 $lastScore = $item->score;
-                $rank = $students->where('gradable_id', $item->gradable_id)->where('score', '>', $item->score)->count() + 1;
+                if ($lastScore === null) {
+                    $rank = null;
+                } else {
+                    $rank = $students->where('gradable_id', $item->gradable_id)->where('score', '>', $item->score)->count() + 1;
+                }
             }
 
             DB::table('student_grades')
