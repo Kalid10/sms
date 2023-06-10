@@ -1,9 +1,14 @@
 <template>
     <label class="flex flex-col gap-1">
         <span class="">
-            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{
-                label
-            }}</span>
+            <span
+                :class="
+                    labelStyle
+                        ? labelStyle
+                        : 'pl-0.5 text-sm font-semibold text-gray-500'
+                "
+                >{{ label }}</span
+            >
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
         </span>
         <textarea
@@ -52,6 +57,10 @@ const props = defineProps({
         default: 5,
     },
     leading: {
+        type: String,
+        default: null,
+    },
+    labelStyle: {
         type: String,
         default: null,
     },

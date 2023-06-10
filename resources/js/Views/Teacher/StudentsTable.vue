@@ -80,12 +80,12 @@ const filteredStudents = computed(() => {
                 id: item.student.id,
             },
             attendance: item.attendance_percentage + "%",
-            grade: item.student.quarterly_grade
-                ? item.student.quarterly_grade.score.toFixed(1)
+            grade: item.quarterly_grade
+                ? item.quarterly_grade.score.toFixed(1)
                 : "-",
-            rank: item.student.batch_subject_rank ?? "-",
+            rank: item.rank ?? " -",
             id: item.student.id,
-            conduct: item.student.conduct ?? "-",
+            conduct: item.conduct ?? "-",
         };
     });
 });

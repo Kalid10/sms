@@ -1,6 +1,10 @@
 <template>
     <div v-if="filteredAssessments" class="flex flex-col space-y-4">
-        <Filters @filter-enabled="setFilterValue" @create="$emit('create')" />
+        <Filters
+            class="z-10"
+            @filter-enabled="setFilterValue"
+            @create="$emit('create')"
+        />
 
         <TableElement
             class="h-full bg-white text-black !shadow-none"
@@ -135,9 +139,4 @@ function setFilterValue(value) {
 }
 </script>
 
-<style scoped>
-.non-blur-content {
-    /* Position it correctly so it overlaps the same content in the blur-container */
-    z-index: 2;
-}
-</style>
+<style scoped></style>

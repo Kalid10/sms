@@ -11,7 +11,7 @@
     </div>
 </template>
 <script setup>
-import Header from "@/Views/Teacher/Header.vue";
+import Header from "@/Views/Teacher/Title.vue";
 import { usePage } from "@inertiajs/vue3";
 
 const assessment = usePage().props.assessment;

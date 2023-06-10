@@ -34,12 +34,9 @@
         </div>
 
         <!--                Rank section-->
-        <div
-            class="flex h-11 w-2/12 items-center justify-center space-y-1 text-white"
-        >
+        <div class="flex h-11 w-2/12 items-center justify-center space-y-1">
             <div
-                class="flex w-full justify-center px-1 py-0.5 font-semibold italic shadow-sm"
-                :class="progressType === 'up' ? 'bg-emerald-600' : 'bg-red-600'"
+                class="flex items-center justify-center rounded-lg bg-zinc-700 p-2 text-xl font-bold italic text-white"
             >
                 {{ rank }}
             </div>
