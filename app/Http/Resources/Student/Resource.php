@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Student;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StudentResource extends JsonResource
+class Resource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,6 +25,10 @@ class StudentResource extends JsonResource
             'email' => $this->user->email,
             'gender' => $this->user->gender,
             'date_of_birth' => $this->user->date_of_birth,
+            'city' => $this->user->address?->city,
+            'sub_city' => $this->user->address?->sub_city,
+            'woreda' => $this->user->address?->woreda,
+            'house_number' => $this->user->address?->house_number,
             'level' => $activeBatch ? $activeBatch->level->name : null,
             'section' => $section,
             'student_id' => $this->id,

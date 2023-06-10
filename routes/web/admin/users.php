@@ -4,10 +4,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Web\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::controller(UserController::class)->prefix('users/')->middleware(['auth'])->name('users.')->group(function () {
-    Route::get('/', 'index');
-});
-
 Route::controller(UserController::class)->prefix('register/')->middleware(['auth'])->name('user.')->group(function () {
     Route::get('student', 'student');
     Route::get('admin', 'admin');

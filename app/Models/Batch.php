@@ -94,6 +94,19 @@ class Batch extends Model
         };
     }
 
+    public function weeklySessions(): HasManyThrough
+    {
+        return $this->sessions()
+            ->where('date', '>=', Carbon::now()->startOfWeek())
+            ->where('date', '<=', Carbon::now()->endOfWeek());
+    }
+
+    public function activeSession(): HasManyThrough
+    {
+        return $this->sessions()
+            ->where('status', BatchSession::STATUS_IN_PROGRESS);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

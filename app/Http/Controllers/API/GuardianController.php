@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Resources\GuardianResource;
+use App\Http\Resources\Guardian\Resource;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class GuardianController extends Controller
 {
-    public function index(): GuardianResource
+    public function index(): Resource
     {
-        return new GuardianResource(Auth::user()->load('guardian'));
+        return new Resource(Auth::user()->load('guardian'));
     }
 }

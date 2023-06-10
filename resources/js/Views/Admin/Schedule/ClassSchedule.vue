@@ -30,7 +30,7 @@
                 v-if="filteredSchedules.length === 0"
                 class="mt-5 text-xl font-semibold text-gray-700"
             >
-                No school schedule this month
+                No school schedule in {{ months[month - 1].label }} {{ year }}
             </p>
             <div v-else class="mx-auto flex flex-col gap-2">
                 <h1
@@ -87,13 +87,13 @@
         </div>
     </div>
 
-    <SchoolSchedule v-if="showModal" />
+    <SchoolSchedule v-if="showModal"/>
 </template>
 
 <script setup>
-import { ref, watch, watchEffect } from "vue";
+import {ref, watch, watchEffect} from "vue";
 import SchoolSchedule from "@/Views/Admin/GettingStarted/Schedule/SchoolSchedule.vue";
-import { router } from "@inertiajs/vue3";
+import {router} from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";

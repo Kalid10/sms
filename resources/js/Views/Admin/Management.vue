@@ -1,9 +1,9 @@
 <template>
-    <h1 class="my-4 text-lg font-semibold text-gray-900 dark:text-gray-100">Management</h1>
-    <div class="my-4 flex flex-col justify-between gap-2 md:flex-row">
+    <h1 class="my-4 text-lg font-semibold text-gray-900">Management</h1>
+    <div class="my-4 flex flex-col justify-evenly gap-2 md:flex-row">
 
         <Card
-            class="group !h-fit cursor-pointer hover:border-black md:col-span-1 md:row-span-1 md:w-full"
+            class="group max-w-2xl cursor-pointer hover:border-black md:col-span-1 md:row-span-1 md:w-full"
             title="Schedule"
             icon
             @click="schedulesLink"
@@ -21,7 +21,7 @@
         </Card>
 
         <Card
-            class="group !h-fit hover:border-black md:col-span-1 md:row-span-1 md:w-full"
+            class="group max-w-2xl hover:border-black md:col-span-1 md:row-span-1 md:w-full"
         >
             <div
                 class="flex flex-col items-center justify-between gap-2"
@@ -37,20 +37,20 @@
                     >
                         <button
                             v-if="hasRole('manage-students')"
-                            class=" m-2 scale-75 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
+                            class=" m-2 scale-100 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
                             @click="studentRegistrationLink">
                             Student
                         </button>
 
                         <button
                             v-if="hasRole('manage-admins')"
-                            class=" m-2 scale-75 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
+                            class=" m-2 scale-100 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
                             @click="adminRegistrationLink">
                             Admin
                         </button>
                         <button
                             v-if="hasRole('manage-teachers')"
-                            class=" m-2 scale-75 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
+                            class=" m-2 scale-100 rounded-lg bg-gray-900 px-4 text-sm text-white transition-colors duration-150"
                             @click="teacherRegistrationLink">
                             Teacher
                         </button>
@@ -65,13 +65,28 @@
             </div>
         </Card>
 
+        <Card
+            class="group max-w-2xl cursor-pointer hover:border-black md:col-span-1 md:row-span-1 md:w-full"
+            title="SMS"
+            icon
+            @click="smsLink"
+        >
+            <h3 class="text-sm text-gray-500">
+                With a single click, you can instantly broadcast crucial message to any select teacher, parent, or any
+                stakeholder actively involved in the educational process.
+            </h3>
+            <template #icon>
+                <ChatBubbleBottomCenterTextIcon/>
+            </template>
+        </Card>
+
     </div>
 </template>
 <script setup>
 import Card from "@/Components/Card.vue";
 import {router} from "@inertiajs/vue3";
 import {computed} from "vue";
-import {CalendarDaysIcon} from "@heroicons/vue/24/outline";
+import {CalendarDaysIcon, ChatBubbleBottomCenterTextIcon} from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     userRoles: {
@@ -106,5 +121,9 @@ function teacherRegistrationLink() {
 
 function adminRegistrationLink() {
     router.get('register/admin')
+}
+
+function smsLink() {
+    router.get('/sms')
 }
 </script>

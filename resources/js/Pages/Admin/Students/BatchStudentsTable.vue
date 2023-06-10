@@ -8,7 +8,7 @@
         <button
             type="button"
             class="rounded text-xs font-light text-blue-600 underline">
-            <Link :href="'/levels/' + selectedBatchId">
+            <Link :href="'/admin/levels/' + selectedBatchId">
                 Full information on {{
                     selectedBatchLabel
                 }} =>
@@ -65,6 +65,7 @@ import SelectInput from "@/Components/SelectInput.vue";
 import {computed, ref, watch} from "vue";
 import {Link, router, usePage} from "@inertiajs/vue3";
 import {debounce} from "lodash";
+import {ExclamationTriangleIcon} from "@heroicons/vue/24/outline";
 
 const batchStudents = computed(() => {
     return usePage().props.batch_students;
@@ -103,7 +104,7 @@ const searchKey = ref('');
 
 watch(selectedBatchId, () => {
     router.get(
-        "/students",
+        "/admin/students",
         {batch_id: selectedBatchId.value},
         {preserveState: true, replace: true}
     );
@@ -111,7 +112,7 @@ watch(selectedBatchId, () => {
 
 const search = debounce(() => {
     router.get(
-        "/students/",
+        "/admin/students/",
         {search: searchKey.value},
         {
             only: ["students"],
@@ -127,7 +128,7 @@ const config = [
     {
         name: 'Name',
         key: 'name',
-        link: '/students/{id}',
+        link: '/admin/students/{id}',
         align: 'left',
         type: 'custom',
     },

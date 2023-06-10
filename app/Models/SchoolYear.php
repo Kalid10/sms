@@ -68,4 +68,15 @@ class SchoolYear extends Model
     {
         return $this->hasMany(AssessmentType::class);
     }
+
+    public function schoolSchedules(): HasMany
+    {
+        return $this->hasMany(SchoolSchedule::class);
+    }
+
+    // Active school year school schedules
+    public function activeSchoolSchedules(): HasMany
+    {
+        return $this->hasMany(SchoolSchedule::class)->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+    }
 }

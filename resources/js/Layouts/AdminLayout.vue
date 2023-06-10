@@ -31,16 +31,9 @@
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
 import {computed, ref} from "vue";
-import {
-    ChatBubbleBottomCenterIcon,
-    ClipboardIcon,
-    Cog6ToothIcon,
-    PowerIcon,
-    UserIcon,
-} from "@heroicons/vue/20/solid/index.js";
+import {ChatBubbleBottomCenterIcon, Cog6ToothIcon, PowerIcon, UserIcon,} from "@heroicons/vue/20/solid/index.js";
 import {usePage} from "@inertiajs/vue3";
 import {BookOpenIcon, QueueListIcon, UsersIcon,} from "@heroicons/vue/24/solid";
-import {UserCircleIcon} from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     auth: {
@@ -55,7 +48,7 @@ const directory = computed(() => usePage().url.split("/")[2]);
 // Populate sidebar items
 const sidebarItems = computed(() => [
     {
-        name: "Dashboard",
+        name: "Home",
         icon: QueueListIcon,
         route: "/admin",
         active: directory.value === undefined,
@@ -69,25 +62,13 @@ const sidebarItems = computed(() => [
     {
         name: "Students",
         icon: UsersIcon,
-        route: "/students",
+        route: "/admin/students",
         active: directory.value === "students",
-    },
-    {
-        name: "Classes",
-        icon: ClipboardIcon,
-        route: "/levels",
-        active: directory.value === "levels",
     },
     {
         name: "Subjects",
         icon: BookOpenIcon,
-        route: "/subjects",
-        active: directory.value === "subjects",
-    },
-    {
-        name: "Guardians",
-        icon: UserCircleIcon,
-        route: "/subjects",
+        route: "/admin/subjects",
         active: directory.value === "subjects",
     },
     {
@@ -105,8 +86,8 @@ const sidebarItems = computed(() => [
 ]);
 
 const footerItems = [
-    {icon: ChatBubbleBottomCenterIcon, name: "Chat"},
-    {icon: PowerIcon, name: "Logout"},
+    {icon: ChatBubbleBottomCenterIcon, name: "Chat", route: "/sms"},
+    {icon: PowerIcon, name: "Logout", route: "/logout", method: "POST",},
 ];
 </script>
 

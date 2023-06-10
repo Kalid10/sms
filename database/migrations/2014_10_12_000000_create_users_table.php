@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('gender');
             $table->date('date_of_birth')->nullable();
             $table->string('type');
+            $table->foreignId('address_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

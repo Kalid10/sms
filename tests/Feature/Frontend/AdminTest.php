@@ -25,7 +25,7 @@ it('renders the admin index page', function () {
             ->has('user_roles')
             ->has('admins')
             ->has('levels')
-            ->has('activity_logs');
+            ->has('school_year');
     });
 });
 
@@ -56,7 +56,7 @@ it('renders the levels page', function () {
 
     $admin->roles()->attach(['manage-levels']);
 
-    $response = $this->actingAs($admin)->get('/levels');
+    $response = $this->actingAs($admin)->get('admin/levels');
 
     // Assert successful response and correct data
     $response->assertInertia(function (AssertableInertia $page) {

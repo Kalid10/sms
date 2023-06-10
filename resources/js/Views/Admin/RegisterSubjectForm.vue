@@ -168,6 +168,12 @@ const submit = () => {
     router.post(route("subjects.create"), newSubject.value, {
         onSuccess: () => {
             isNewSubjectFormOpened.value = false;
+            newSubject.value = {
+                full_name: "",
+                category: "",
+                isNew: true,
+            };
+            tags.value = "";
         },
     });
 };

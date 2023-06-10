@@ -1,5 +1,5 @@
 <template>
-    <UsersStatistics />
+    <UsersStatistics/>
 
     <div class="flex w-full flex-col gap-4 lg:flex-row">
         <div class="h-fit w-full lg:w-1/2">
@@ -25,7 +25,7 @@
                 </template>
             </ActivityLog>
         </div>
-        <div class="h-fit w-full lg:w-1/2">
+        <div class="h-fit w-full rounded-t-lg border lg:w-1/2">
             <TableElement
                 :columns="users_config"
                 :data="
@@ -84,7 +84,7 @@
 
                 <template #row-actions="{ row }">
                     <Link
-                        :href="'/users/' + row.id"
+                        :href="'/admin/users/' + row.id"
                         class="flex flex-col items-center gap-1"
                     >
                         <EyeIcon
@@ -92,7 +92,7 @@
                         />
                     </Link>
                     <Link
-                        :href="'/users/' + row.id + '/edit'"
+                        :href="'/admin/users/' + row.id + '/edit'"
                         class="flex flex-col items-center gap-1"
                     >
                         <ArrowPathIcon
@@ -100,7 +100,7 @@
                         />
                     </Link>
                     <Link
-                        :href="'/users/' + row.id + '/delete'"
+                        :href="'/admin/users/' + row.id + '/delete'"
                         class="flex flex-col items-center gap-1"
                     >
                         <ArchiveBoxXMarkIcon
@@ -213,14 +213,9 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
-import {
-    ArchiveBoxXMarkIcon,
-    ArrowPathIcon,
-    CloudArrowDownIcon,
-    EyeIcon,
-} from "@heroicons/vue/24/outline";
-import { Link, router, usePage } from "@inertiajs/vue3";
+import {computed, ref, watch} from "vue";
+import {ArchiveBoxXMarkIcon, ArrowPathIcon, CloudArrowDownIcon, EyeIcon,} from "@heroicons/vue/24/outline";
+import {Link, router, usePage} from "@inertiajs/vue3";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -251,9 +246,9 @@ const formData = ref({
 });
 
 const roleOptions = [
-    { value: "admin", label: "Administrator" },
-    { value: "teacher", label: "Teacher" },
-    { value: "student", label: "Student" },
+    {value: "admin", label: "Administrator"},
+    {value: "teacher", label: "Teacher"},
+    {value: "student", label: "Student"},
 ];
 
 const userType = ref("admin");
@@ -320,17 +315,17 @@ function createUserForm() {
 const query = ref("");
 const perPage = ref(10);
 const perPageOptions = [
-    { value: 10, label: "10" },
-    { value: 25, label: "25" },
-    { value: 50, label: "50" },
-    { value: 100, label: "100" },
+    {value: 10, label: "10"},
+    {value: 25, label: "25"},
+    {value: 50, label: "50"},
+    {value: 100, label: "100"},
 ];
 
 const logsPerPage = ref(15);
 
 function search() {
     router.get(
-        "/users",
+        "/admin/users",
         {
             search: query.value,
             per_page: perPage.value,
@@ -349,7 +344,7 @@ watch([query, perPage], () => {
 
 function previousPage() {
     router.get(
-        "/users",
+        "/admin/users",
         {
             user_page: parseInt(users.value["current_page"]) - 1,
             per_page: perPage.value,
@@ -364,7 +359,7 @@ function previousPage() {
 
 function nextPage() {
     router.get(
-        "/users",
+        "/admin/users",
         {
             user_page: parseInt(users.value["current_page"]) + 1,
             per_page: perPage.value,
@@ -379,7 +374,7 @@ function nextPage() {
 
 function logNextPage() {
     router.get(
-        "/users",
+        "/admin/users",
         {
             log_page: Number(activityLogs.value["current_page"] + 1),
             logs_per_page: logsPerPage.value,
@@ -396,7 +391,7 @@ function logPreviousPage() {
     console.log(activityLogs);
 
     router.get(
-        "/users",
+        "/admin/users",
         {
             log_page: Number(activityLogs.value["current_page"] - 1),
             logs_per_page: logsPerPage.value,
@@ -414,7 +409,7 @@ const users_config = [
     {
         name: "Full Name",
         key: "name",
-        link: "/users/{id}",
+        link: "/admin/users/{id}",
         class: "w-[35%]",
         align: "left",
     },
