@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\Students;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class AssessmentRequest extends Request
+class GradeRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class AssessmentRequest extends Request
     public function rules(): array
     {
         return [
-            //
+            'gradable_type' => 'nullable|in:App\Models\Quarter,App\Models\Semester,App\Models\SchoolYear',
         ];
     }
 }
