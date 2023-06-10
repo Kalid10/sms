@@ -4,7 +4,8 @@
             v-if="!selectedHomeroom"
             class="pt-20 text-center text-8xl font-bold text-gray-400"
         >
-            You dont have have any homerooms, contact admin.
+            You currently do not have any assigned homerooms. Please get in
+            touch with the administration for assistance.
         </div>
 
         <div
