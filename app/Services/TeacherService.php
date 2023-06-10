@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Assessment;
 use App\Models\Batch;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
@@ -10,10 +11,11 @@ use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class TeacherService
 {
-    public function getTeacherDetails(int $id): Model|Collection|Builder|array|null
+    public static function getTeacherDetails(int $id): Model|Collection|Builder|array|null
     {
         return Teacher::with([
             'user:id,name,email,phone_number,gender',
@@ -42,7 +44,9 @@ class TeacherService
             'feedbacks.author:id,name',
             'batchSubjects.students.user',
             'assessments' => function ($query) {
-                $query->where('quarter_id', Quarter::getActiveQuarter()->id)->orderBy('created_at', 'asc')->limit(3);
+                $query->where('quarter_id', Quarter::getActiveQuarter()->id)
+                    ->where('status', '!=', Assessment::STATUS_DRAFT)
+                    ->orderBy('updated_at', 'DESC')->limit(3);
             },
             'assessments.assessmentType',
             'assessments.batchSubject.batch:id,section,level_id',
@@ -77,50 +81,32 @@ class TeacherService
             });
     }
 
-    public function getStudents(int $id, ?string $batchSubjectId, ?string $studentSearch)
+    public static function getStudents(int $batchSubjectId, ?string $studentSearch)
     {
-        // Get students of a teacher for specific batchSubjectId
-        $batchSubjectId = $batchSubjectId ?? BatchSubject::where('teacher_id', $id)->first()->id;
+        $batchSubject = $batchSubjectId ?
+            BatchSubject::find($batchSubjectId)->load('subject', 'batch.level') :
+            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+                ->whereHas('batch', function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                })->first()->load('subject', 'batch.level');
 
-        $students = Teacher::with([
-            'batchSubjects' => function ($query) use ($batchSubjectId) {
-                $query->where('id', $batchSubjectId);
-            },
-            'batchSubjects.students' => function ($query) use ($studentSearch) {
-                $query->whereHas('user', function ($userQuery) use ($studentSearch) {
-                    $userQuery->where('name', 'LIKE', '%'.$studentSearch.'%');
-                })->take(6);
-            },
-            'batchSubjects.students.user',
-            'batchSubjects.students.batches',
-        ])->select('id', 'user_id')
-            ->where('id', $id)
-            ->first()
-            ->batchSubjects
-            ->map(function ($batchSubject) use ($studentSearch) {
-                $students = $batchSubject->students->map(function ($student) {
-                    $student->attendance_percentage = 100 - $student->absenteePercentage();
+        return StudentService::getBatchStudents($batchSubject->batch_id, $studentSearch, $batchSubjectId);
+    }
 
-                    return $student;
-                });
+    public static function prepareBatchSubject(Request $request): BatchSubject
+    {
+        $request->validate([
+            'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
+            'search' => 'nullable|string',
+        ]);
 
-                return [
-                    'batch_subject_id' => $batchSubject->id,
-                    'students' => $students,
-                    'search' => $studentSearch ?? '',
-                ];
-            });
+        $batchSubjectId = $request->input('batch_subject_id');
 
-        if ($students->isEmpty()) {
-            return [
-                [
-                    'batch_subject_id' => (int) $batchSubjectId,
-                    'students' => [],
-                    'search' => $studentSearch ?? '',
-                ],
-            ];
-        }
-
-        return $students;
+        return $batchSubjectId ?
+            BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
+            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+                ->whereHas('batch', function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                })->first()->load('subject', 'batch.level');
     }
 }

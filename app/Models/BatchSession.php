@@ -24,6 +24,7 @@ class BatchSession extends Model
         'teacher_id',
         'status',
         'lesson_plan_id',
+        'quarter_id',
     ];
 
     public function batchSchedule(): BelongsTo
@@ -61,7 +62,7 @@ class BatchSession extends Model
         return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
-    public function attendances(): HasMany
+    public function absentees(): HasMany
     {
         return $this->hasMany(Absentee::class);
     }

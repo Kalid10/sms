@@ -12,7 +12,12 @@
             :required="required"
             :type="type"
             :value="modelValue"
-            class="h-9 w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-400"
+            class="h-9 w-full rounded-md outline-none"
+            :class="
+                classStyle
+                    ? classStyle
+                    : 'border border-gray-200 text-sm  placeholder:text-xs placeholder:text-gray-400'
+            "
             @input="$emit('update:modelValue', $event.target.value)"
             @focusin="toggleSubtext ? (showSubText = true) : null"
             @focusout="toggleSubtext ? (showSubText = false) : null"
@@ -73,6 +78,10 @@ const props = defineProps({
     toggleSubtext: {
         type: Boolean,
         default: false,
+    },
+    classStyle: {
+        type: String,
+        default: null,
     },
 });
 

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentNoteController extends Controller
 {
-    public function create(Request $request, $student_id): RedirectResponse
+    public function create(Request $request, Student $student): RedirectResponse
     {
         // Validate the request
         $validated = $request->validate([
@@ -25,17 +25,11 @@ class StudentNoteController extends Controller
             return redirect()->back()->with('error', 'Unauthorized action');
         }
 
-        $student = Student::find($student_id);
-
-        if (! $student) {
-            return redirect()->back()->with('error', 'Student not found');
-        }
-
         // Check if the student is enrolled in the batch that the teacher is assigned
         if ($user->type == User::TYPE_TEACHER) {
             $teacherBatches = $user->teacher->batchSubjects()->get()->filter(function ($batchSubject) {
                 return $batchSubject->with('active');
-            })->pluck('id');
+            })->pluck('batch_id');
 
             if (! $teacherBatches->contains($student->activeBatch()->id)) {
                 return redirect()->back()->with('error', 'Unauthorized action - student is not enrolled in your batch');
@@ -45,7 +39,7 @@ class StudentNoteController extends Controller
         StudentNote::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
-            'student_id' => $student_id,
+            'student_id' => $student->id,
             'author_id' => $user->id,
         ]);
 

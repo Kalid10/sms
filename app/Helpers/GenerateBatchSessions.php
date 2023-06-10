@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\BatchSession;
 use App\Models\Level;
+use App\Models\Quarter;
 
 class GenerateBatchSessions
 {
@@ -34,6 +35,7 @@ class GenerateBatchSessions
                                     'batch_schedule_id' => $schedule->id,
                                     'teacher_id' => $schedule->batchSubject->teacher_id ?? null,
                                     'status' => BatchSession::STATUS_SCHEDULED,
+                                    'quarter_id' => Quarter::getActiveQuarter()->id,
                                 ]);
                             }
                         }

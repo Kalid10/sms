@@ -1,16 +1,20 @@
 <template>
     <div>
         <div
-            class="flex h-20 w-full items-center justify-between shadow-sm hover:scale-105 hover:shadow-lg 2xl:h-24"
-            :class="view === 'class' ? 'rounded-sm' : 'rounded-r-lg'"
+            class="flex w-full items-center justify-between hover:bg-zinc-800 hover:text-white hover:shadow-sm"
+            :class="
+                view === 'class'
+                    ? ' bg-white hover:rounded-lg py-3'
+                    : 'rounded-r-lg hover:rounded-lg h-full'
+            "
         >
             <div
                 v-if="view === 'class'"
-                class="mr-1 h-5/6 w-0.5 bg-gray-600"
+                class="mr-1 min-h-full w-0.5 bg-gray-600 hover:bg-gray-100"
             ></div>
             <div
                 v-else
-                class="flex h-full w-3/12 flex-col items-center justify-evenly rounded-l-lg bg-black text-white"
+                class="flex h-full w-3/12 flex-col items-center justify-evenly rounded-l-lg bg-black py-6 text-white"
                 :class="
                     isSidebarOpenOnXlDevice ? 'lg:w-3/12 lg:px-2' : 'lg:w-2/12'
                 "
@@ -48,8 +52,12 @@
                 "
             >
                 <div
-                    class="pl-2 text-[0.65rem] lg:pl-0 2xl:text-sm"
-                    :class="view === 'class' ? 'text-[0.6rem]' : 'font-medium'"
+                    class="pl-2 lg:pl-0"
+                    :class="
+                        view === 'class'
+                            ? 'text-xs'
+                            : '2xl:text-sm text-[0.65rem] font-medium'
+                    "
                 >
                     {{ item.lesson_plan.topic }}
                 </div>

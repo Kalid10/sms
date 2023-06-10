@@ -78,7 +78,7 @@ class Batch extends Model
 
     public function inProgressSession(): BatchSession|null
     {
-        return $this->sessions->where('status', BatchSession::STATUS_IN_PROGRESS)->first();
+        return $this->sessions->where('status', BatchSession::STATUS_IN_PROGRESS)->first()?->load('absentees.user');
     }
 
     public function getSessions(string $span = 'now'): BatchSession|Collection|null
@@ -124,6 +124,11 @@ class Batch extends Model
         return static::with($with)
             ->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
             ->get();
+    }
+
+    public function grades(): HasMany
+    {
+        return $this->hasMany(BatchGrade::class);
     }
 
     protected $casts = [

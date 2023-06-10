@@ -9,10 +9,11 @@
             :key="student.id"
             class="w-full"
             :class="index % 2 === 0 ? 'bg-gray-100/70' : ''"
+            @click="$emit('student-clicked', student.id)"
         >
             <div class="flex h-10 w-full items-center justify-evenly">
                 <div
-                    class="flex h-full w-6/12 cursor-pointer items-center justify-center text-[0.65rem] underline-offset-2 hover:font-semibold hover:underline"
+                    class="flex h-full w-6/12 cursor-pointer items-center justify-center text-center text-[0.65rem] underline-offset-2 hover:font-semibold hover:underline"
                 >
                     {{ student.name }}
                 </div>
@@ -27,8 +28,9 @@
 </template>
 
 <script setup>
-import ResultCard from "@/Views/Teacher/Assessments/Details/ResultCard.vue";
+import ResultCard from "@/Views/Teacher/Assessments/Details/Views/ResultCard.vue";
 
+defineEmits(["student-clicked"]);
 defineProps({
     label: {
         type: String,

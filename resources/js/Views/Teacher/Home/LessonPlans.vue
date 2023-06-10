@@ -9,14 +9,20 @@
         <div class="flex flex-col items-center justify-center">
             <div
                 v-if="!isLessonPlansEmpty"
-                class="flex flex-col items-center space-y-4 rounded-md py-4"
+                class="flex w-full flex-col space-y-2 py-4"
             >
-                <Items
-                    v-for="(item, index) in lessonPlans"
-                    :key="index"
-                    :item="item"
-                    :view="view"
-                />
+                <div
+                    class="mb-1 flex w-full flex-col items-center divide-y divide-gray-50"
+                >
+                    <Items
+                        v-for="(item, index) in lessonPlans"
+                        :key="index"
+                        :item="item"
+                        :view="view"
+                        :class="view === 'class' ? 'mb-3' : 'mb-2'"
+                        class="min-w-full"
+                    />
+                </div>
                 <LinkCell
                     class="flex w-full justify-end"
                     href="/teacher/lesson-plan"

@@ -4,7 +4,7 @@
             class="flex w-full flex-row justify-end space-x-0.5 text-center font-light uppercase lg:text-center"
         >
             <div class="flex items-center text-3xl font-bold">
-                <span v-if="!item.point" class="text-base font-light">NM</span>
+                <span v-if="!item.point" class="text-xl font-light">-</span>
                 <span>{{ item.point }}</span>
             </div>
             <div class="text-4xl">/</div>

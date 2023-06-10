@@ -101,4 +101,19 @@ class BatchSubject extends Model
             'student_id' // Local key on BatchStudent table
         );
     }
+
+    public function studentGrades(): HasMany
+    {
+        return $this->hasMany(StudentSubjectGrade::class);
+    }
+
+    public function batchGrades(): HasMany
+    {
+        return $this->hasMany(BatchSubjectGrade::class);
+    }
+
+    public function assessmentsGrades(): HasMany
+    {
+        return $this->hasMany(StudentAssessmentsGrade::class, 'batch_subject_id', 'id');
+    }
 }

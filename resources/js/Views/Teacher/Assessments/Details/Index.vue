@@ -1,98 +1,81 @@
 <template>
-    <div v-if="assessment" class="flex h-full w-full flex-col space-y-8">
-        <Header
-            :title="title"
-            :formatted-date="
-                String(moment(assessment.due_date).format('dddd MMMM DD YYYY'))
-            "
-        />
-        <GeneralInfo
-            v-if="
-                assessment.status === 'completed' ||
-                assessment.status === 'published'
-            "
-            teacher-name="Bereket Gobeze"
-            :count="assessment.total_students"
-            :status="capitalize(assessment.status)"
-        />
-
-        <div v-if="assessment.status === 'completed'">
-            <ResultStatistics />
-
-            <StudentScoreList :assessment="assessment" />
-        </div>
-
-        <transition name="fade" mode="out-in">
-            <div
-                v-if="assessment.status === 'draft'"
-                class="flex h-full flex-col items-center space-y-4"
-            >
-                <div class="text-center text-sm font-light">
-                    The assessment is not yet published(active), you can change
-                    the status changing the switch below
-                </div>
-                <div
-                    class="flex w-2/5 items-center justify-center space-x-2 rounded-md py-2"
-                    :class="
-                        assessment.status === 'draft'
-                            ? 'bg-gray-100'
-                            : 'bg-positive-50'
-                    "
-                >
-                    <Toggle v-model="isPublished" />
-                    <DialogBox
-                        v-model:open="isPublished"
-                        type="update"
-                        title="Publish Assessment"
-                        @confirm="updateAssessment('published')"
-                    >
-                        <template #description>
-                            By changing the status of the assessment to
-                            published, parents, principals, and other
-                            responsible parties will receive notifications. Do
-                            you wish to proceed?
-                        </template>
-                    </DialogBox>
-                    <div>{{ capitalize(assessment.status) }}</div>
-                </div>
-            </div>
-        </transition>
+    <div v-if="assessment" class="flex h-full w-full justify-center">
         <div
-            v-if="assessment.status === 'published'"
-            class="flex w-full items-center justify-center"
+            class="flex w-full flex-col items-center space-y-10 lg:w-10/12 2xl:w-9/12"
         >
-            <SecondaryButton
-                title="Start Marking"
-                class="w-44 rounded-xl bg-blue-500 font-bold text-white"
-                @click="startMarking"
+            <Header
+                :title="title"
+                class="w-full text-center"
+                :formatted-date="
+                    String(
+                        moment(assessment.due_date).format('dddd MMMM DD YYYY')
+                    )
+                "
             />
+
+            <AssessmentTypeDetailInfo
+                :assessment="assessment"
+                @update="showUpdateForm = true"
+            />
+
+            <Draft
+                v-if="assessment.status === 'draft'"
+                :assessment="assessment"
+            />
+            <Scheduled
+                v-if="assessment.status === 'scheduled'"
+                :assessment="assessment"
+            />
+            <Published
+                v-if="assessment.status === 'published'"
+                :assessment="assessment"
+            />
+            <Completed
+                v-if="assessment.status === 'completed'"
+                :assessment="assessment"
+            />
+            <Marking
+                v-if="assessment.status === 'marking'"
+                :assessment="assessment"
+            />
+
+            <!--            <DeleteAssessment :assessment="assessment" />-->
+
+            <Modal v-model:view="showUpdateForm">
+                <UpdateAssessmentForm
+                    v-if="assessment.status !== 'completed'"
+                    :assessment="assessment"
+                />
+            </Modal>
         </div>
     </div>
     <div
         v-else
-        class="flex h-72 w-full items-center justify-center text-xs font-light"
+        class="flex h-2/3 w-full items-center justify-center px-5 text-center text-4xl font-bold italic"
     >
-        Click on a ny assessment to check details
+        Select any assessment for a detailed view!
     </div>
 </template>
 <script setup>
+import { computed, ref } from "vue";
+import Draft from "@/Views/Teacher/Assessments/Details/Draft.vue";
+import UpdateAssessmentForm from "@/Views/Teacher/Assessments/AssessmentForm.vue";
+import AssessmentTypeDetailInfo from "@/Views/Teacher/Assessments/Details/Views/AssessmenTypeDetailInfo.vue";
+import Header from "@/Views/Teacher/Assessments/Details/Views/Header.vue";
 import moment from "moment";
-import ResultStatistics from "@/Views/Teacher/Assessments/Details/ResultStatistics.vue";
-import StudentScoreList from "@/Views/Teacher/Assessments/Details/StudentScoreList.vue";
-import Header from "@/Views/Teacher/Assessments/Details/Header.vue";
-import GeneralInfo from "@/Views/Teacher/Assessments/Details/Info.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { capitalize, computed, ref } from "vue";
-import { router } from "@inertiajs/vue3";
-import Toggle from "@/Components/Toggle.vue";
-import DialogBox from "@/Components/DialogBox.vue";
+import Modal from "@/Components/Modal.vue";
+import Published from "@/Views/Teacher/Assessments/Details/Published.vue";
+import Completed from "@/Views/Teacher/Assessments/Details/Completed.vue";
+import Marking from "@/Views/Teacher/Assessments/Details/Marking.vue";
+import Scheduled from "@/Views/Teacher/Assessments/Details/Scheduled.vue";
 
 const props = defineProps({
     assessment: {
-        type: Array,
+        type: Object,
         required: true,
     },
 });
+const showUpdateForm = ref(false);
 
 const title = computed(
     () =>
@@ -101,49 +84,5 @@ const title = computed(
         props.assessment.batch_subject.batch.level.name +
         props.assessment.batch_subject.batch.section
 );
-
-const isPublished = ref(false);
-
-function updateAssessment(status) {
-    router.post(
-        "/teacher/assessments/update/",
-        {
-            status: status,
-            assessment_id: props.assessment.id,
-        },
-        {
-            preserveState: true,
-            onSuccess: () => {
-                props.assessment.status = status;
-            },
-        }
-    );
-}
-
-function startMarking() {
-    router.get("/teacher/assessments/mark/" + props.assessment.id, {
-        student_id: props.assessment.id,
-    });
-}
 </script>
-<style scoped>
-.slide-fade-enter-active {
-    transition: all 0.3s ease;
-}
-
-.slide-fade-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter,
-.slide-fade-leave-to {
-    transform: translateX(10%);
-    opacity: 0;
-}
-
-.slide-fade-leave,
-.slide-fade-enter-to {
-    transform: translateX(0);
-    opacity: 1;
-}
-</style>
+<style scoped></style>

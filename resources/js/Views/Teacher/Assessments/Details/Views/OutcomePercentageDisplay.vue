@@ -18,7 +18,7 @@
                         : ' text-negative-100'
                 "
             >
-                {{ value }}%
+                {{ value.toFixed(2) }}%
             </div>
         </div>
         <div class="text-[0.65rem] font-light">

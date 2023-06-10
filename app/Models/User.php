@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -92,6 +93,11 @@ class User extends Authenticatable
     public function isTeacher(): bool
     {
         return $this->type === self::TYPE_TEACHER;
+    }
+
+    public function absentee(): HasMany
+    {
+        return $this->hasMany(Absentee::class);
     }
 
     public function guardian(): HasOne

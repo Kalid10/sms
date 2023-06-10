@@ -4,6 +4,7 @@ namespace App\Http\Requests\StudentAssessments;
 
 use App\Models\Assessment;
 use App\Models\Student;
+use App\Models\StudentAssessment;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,6 +30,11 @@ class InsertStudentsAssessmentRequest extends FormRequest
             'points.*.student_id' => 'required|exists:students,id',
             'points.*.point' => 'required|integer|min:0',
             'points.*.comment' => 'nullable|string',
+            'points.*.status' => 'nullable|string|in:'.implode(',', [
+                StudentAssessment::STATUS_VALID_REASSESSMENT,
+                StudentAssessment::STATUS_DISQUALIFIED,
+                StudentAssessment::STATUS_MISCONDUCT,
+            ]),
         ];
     }
 
@@ -41,6 +47,12 @@ class InsertStudentsAssessmentRequest extends FormRequest
             'points.*.point.integer' => 'Point must be an integer.',
             'points.*.point.min' => 'Point must be at least 0.',
             'points.*.comment.string' => 'Comment must be a string.',
+            'points.*.status.string' => 'Status must be a string.',
+            'points.*.status.in' => 'Status must be one of the following: '.implode(', ', [
+                StudentAssessment::STATUS_VALID_REASSESSMENT,
+                StudentAssessment::STATUS_DISQUALIFIED,
+                StudentAssessment::STATUS_MISCONDUCT,
+            ]),
         ];
     }
 
@@ -61,7 +73,7 @@ class InsertStudentsAssessmentRequest extends FormRequest
     protected function ensureAssessmentStatusIsValid(): void
     {
         // TODO: Check the appropriate status (PUBLISHED, CLOSED, MARKING, etc...)
-        if ($this->route('assessment')->status !== Assessment::STATUS_MARKING) {
+        if ($this->route('assessment')->status !== Assessment::STATUS_MARKING && $this->route('assessment')->status !== Assessment::STATUS_COMPLETED) {
             $this->validator->errors()->add('assessment', 'Assessment is not ready for marking');
         }
     }

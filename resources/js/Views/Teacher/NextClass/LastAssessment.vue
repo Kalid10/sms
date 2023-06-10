@@ -43,17 +43,29 @@
         <PrimaryButton
             class="w-8/12 bg-neutral-800 !text-xs lg:w-10/12 2xl:w-11/12"
             :class="buttonWidth"
+            @click="router.visit('/teacher/assessments')"
             >View All Assessments
         </PrimaryButton>
+    </div>
+    <div
+        v-else
+        class="flex h-64 w-full flex-col items-center justify-center space-y-5 text-center font-light lg:w-5/12"
+    >
+        <div class="h-fit text-sm">
+            No previous assessments found. After your first evaluation, the most
+            recent assessment will be displayed here.
+        </div>
+        <LinkCell value="View Assessments" href="/teacher/assessments" />
     </div>
 </template>
 
 <script setup>
 import moment from "moment/moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import { computed } from "vue";
+import LinkCell from "@/Components/LinkCell.vue";
 
 const lastAssessment = usePage().props.last_assessment;
 

@@ -4,11 +4,12 @@ namespace Database\Factories;
 
 use App\Models\BatchSchedule;
 use App\Models\BatchSession;
+use App\Models\Quarter;
 use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BatchSession>
+ * @extends Factory<BatchSession>
  */
 class BatchSessionFactory extends Factory
 {
@@ -24,6 +25,7 @@ class BatchSessionFactory extends Factory
             'teacher_id' => Teacher::factory()->create()->id,
             'status' => BatchSession::STATUS_IN_PROGRESS,
             'date' => fake()->dateTimeBetween('-1 week', '+1 week'),
+            'quarter_id' => Quarter::factory()->create()->id,
         ];
     }
 }

@@ -1,5 +1,4 @@
 <template>
-
     <div
         class="container mx-auto flex h-full max-h-full max-w-7xl flex-col gap-4 px-2 pt-6 md:px-6 md:pt-6"
     >
@@ -7,7 +6,7 @@
             class="flex min-h-max w-full flex-col items-center justify-center py-4"
         >
             <Heading class="mb-1 text-center !font-normal text-black" size="md"
-            >Welcome to the
+                >Welcome to the
             </Heading>
 
             <div class="relative flex items-center">
@@ -23,8 +22,12 @@
                 >
                     <PencilIcon
                         class="h-3 w-3 stroke-gray-500 stroke-2"
-                        @click="focusOnName"/>
-                    <ArrowPathIcon class="h-3 w-3 stroke-gray-500 stroke-2" @click="resetName"/>
+                        @click="focusOnName"
+                    />
+                    <ArrowPathIcon
+                        class="h-3 w-3 stroke-gray-500 stroke-2"
+                        @click="resetName"
+                    />
                 </div>
             </div>
 
@@ -32,25 +35,27 @@
 
             <div class="mt-8 flex">
                 <h3 class="max-w-md text-center text-sm text-gray-500">
-                <span
-                ><InformationCircleIcon
-                    class="mb-1 inline h-4 w-4 stroke-2"
-                /></span>
-                    Please enter the <span class="text-black">start date</span> of
-                    the new school year and the
+                    <span
+                        ><InformationCircleIcon
+                            class="mb-1 inline h-4 w-4 stroke-2"
+                    /></span>
+                    Please enter the
+                    <span class="text-black">start date</span> of the new school
+                    year and the
                     <span class="whitespace-nowrap text-black"
-                    >number of semesters</span
+                        >number of semesters</span
                     >
                     it includes. You can also change the school year name by
                     clicking the
                     <span
-                    ><PencilIcon class="inline h-3 w-3 stroke-black stroke-2"
+                        ><PencilIcon
+                            class="inline h-3 w-3 stroke-black stroke-2"
                     /></span>
                     icon on the right.
                     <span class="inline">
-                    You can always change this in the school year settings
-                    later.
-                </span>
+                        You can always change this in the school year settings
+                        later.
+                    </span>
                 </h3>
             </div>
 
@@ -66,71 +71,93 @@
                 <SelectInput
                     v-model="formData.number_of_semesters"
                     :label="
-                    !!formData.number_of_semesters ? 'Number of Semesters' : ''
-                "
-                    :label-location="!!formData.number_of_semesters ? 'inside' : ''"
+                        !!formData.number_of_semesters
+                            ? 'Number of Semesters'
+                            : ''
+                    "
+                    :label-location="
+                        !!formData.number_of_semesters ? 'inside' : ''
+                    "
                     :options="noOfSemesters"
                     class="w-72"
                     placeholder="Number of Semesters"
                 />
 
-
-                <div
-                    v-if="hideQuarter"
-                    class="flex w-72 flex-col"
-                >
+                <div v-if="hideQuarter" class="flex w-72 flex-col">
                     <SelectInput
                         v-model="formData.number_of_quarters"
                         :options="noOfQuarters"
                         :label="
-                    !!formData.number_of_quarters ? 'Number of Quarters within a Semester' : ''
-                "
-                        :label-location="!!formData.number_of_quarters ? 'inside' : ''"
+                            !!formData.number_of_quarters
+                                ? 'Number of Quarters within a Semester'
+                                : ''
+                        "
+                        :label-location="
+                            !!formData.number_of_quarters ? 'inside' : ''
+                        "
                         placeholder="Number of Quarters in a Semester"
-                        class="w-72"/>
+                        class="w-72"
+                    />
 
                     <div class="p-2 text-xs text-gray-400">
                         <span>
-                            If there is no quarter in your school system, you can remove the quarter ->
+                            If there is no quarter in your school system, you
+                            can remove the quarter ?
                         </span>
-                        <span class="ml-2 cursor-pointer text-red-500" @click="hideQuarters">
-                             Remove Quarter
+                        <span
+                            class="ml-1 cursor-pointer text-red-500 underline-offset-2 hover:font-medium hover:underline"
+                            @click="hideQuarters"
+                        >
+                            Remove Quarter
                         </span>
                     </div>
 
                     <div
-                        class="mt-5 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center text-gray-500">
+                        class="mt-5 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center text-gray-500"
+                    >
                         <p class="text-xs">
-                            The upcoming academic year, <span class="font-bold text-gray-700">{{ formData.name }}</span>
+                            The upcoming academic year,
+                            <span class="font-bold text-gray-700">{{
+                                formData.name
+                            }}</span>
                             , will consist of
-                            <span class="font-bold text-gray-700">{{ formData.number_of_semesters }} semesters,</span>
+                            <span class="font-bold text-gray-700"
+                                >{{
+                                    formData.number_of_semesters
+                                }}
+                                semesters,</span
+                            >
                             each divided into
                             <span class="font-bold text-gray-700">
-                            {{ formData.number_of_quarters }} quarters,
-                        </span>
+                                {{ formData.number_of_quarters }} quarters,
+                            </span>
                             resulting in a total of
-                            <span class="font-bold text-gray-700">{{ totalQuarters }}  quarters.</span>
+                            <span class="font-bold text-gray-700"
+                                >{{ totalQuarters }} quarters.</span
+                            >
                         </p>
                     </div>
                 </div>
 
-
                 <PrimaryButton
-                    :disabled="!formComplete"
+                    v-if="formComplete"
                     class="w-72"
                     @click="handleSubmit"
-                >Create and Proceed
+                    >Create and Proceed
                 </PrimaryButton>
             </div>
         </form>
     </div>
-
 </template>
 <script setup>
-import {computed, ref} from "vue";
-import {ArrowPathIcon, InformationCircleIcon, PencilIcon} from "@heroicons/vue/24/outline";
+import { computed, ref } from "vue";
+import {
+    ArrowPathIcon,
+    InformationCircleIcon,
+    PencilIcon,
+} from "@heroicons/vue/24/outline";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import Heading from "@/Components/Heading.vue";
@@ -145,17 +172,17 @@ function hideQuarters() {
 }
 
 const noOfSemesters = [
-    {value: 1, label: 1},
-    {value: 2, label: 2},
-    {value: 3, label: 3},
-    {value: 4, label: 4},
-    {value: 5, label: 5},
+    { value: 1, label: 1 },
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+    { value: 4, label: 4 },
+    { value: 5, label: 5 },
 ];
 
 const noOfQuarters = [
-    {value: 2, label: 2},
-    {value: 3, label: 3},
-    {value: 4, label: 4},
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+    { value: 4, label: 4 },
 ];
 
 const schoolYearName = ref(null);

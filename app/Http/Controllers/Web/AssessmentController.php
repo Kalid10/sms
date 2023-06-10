@@ -38,6 +38,39 @@ class AssessmentController extends Controller
         return redirect()->back()->with('success', 'Assessment created.');
     }
 
+    public function update(Request $request): RedirectResponse
+    {
+        $validatedData = $request->validate([
+            'assessment_id' => 'required|integer|exists:assessments,id',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'maximum_point' => 'required|integer',
+            'status' => 'required|string|in:draft,published,closed,marking,completed,scheduled',
+            'due_date' => 'required|date',
+        ]);
+
+        $assessment = Assessment::find($validatedData['assessment_id']);
+        $assessment->update($validatedData);
+
+        return redirect()->back()->with('success', 'Assessment updated successfully!');
+    }
+
+    public function delete(Assessment $assessment, Request $request): RedirectResponse
+    {
+        $confirmation = $request->query('confirmation');
+
+        if ($confirmation !== $assessment->title) {
+            return redirect()->back()->with('error', 'Incorrect confirmation text.');
+        }
+        if ($assessment->status === Assessment::STATUS_COMPLETED || $assessment->status === Assessment::STATUS_MARKING) {
+            return redirect()->back()->with('error', 'Cannot delete '.$assessment->status.' assessment.');
+        }
+
+        $assessment->delete();
+
+        return redirect()->to(route('teacher.assessment.teacher'))->with('success', 'Assessment deleted successfully!');
+    }
+
     public function mark(Request $request, Assessment $assessment): Response|RedirectResponse
     {
         $request->validate([
@@ -48,7 +81,7 @@ class AssessmentController extends Controller
         if ($assessment->status === Assessment::STATUS_PUBLISHED) {
             $assessment->update(['status' => Assessment::STATUS_MARKING]);
         }
-        if ($assessment->status !== Assessment::STATUS_MARKING) {
+        if ($assessment->status !== Assessment::STATUS_MARKING && $assessment->status !== Assessment::STATUS_COMPLETED) {
             return redirect()->back()->with('error', 'Invalid assessment type.');
         }
 
@@ -56,32 +89,58 @@ class AssessmentController extends Controller
         if ($request->input('student_id')) {
             $student = Student::find($request->input('student_id'))->load('user:id,name');
             $student->absentee_percentage = $student->absenteePercentage();
+            $student->assessment_quarter_grade = $student->fetchAssessmentsGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id);
+            $student->total_batch_subject_grade = $student->fetchStudentBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->score;
+            $student->batch_subject_rank = $student->fetchStudentBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->rank;
+            $student->quarterly_grade = $student->grades()->where([[
+                'gradable_type', Quarter::class,
+            ], [
+                'gradable_id', Quarter::getActiveQuarter()->id,
+            ]])->first();
+            $student->semester_grade = $student->grades()->where([[
+                'gradable_type', Semester::class,
+            ], [
+                'gradable_id', Semester::getActiveSemester()->id,
+            ]])->first();
         }
 
+        $assessment = $this->populateAssessmentDetails(collect([$assessment]))->first();
+
         return Inertia::render('Teacher/Assessments/Mark', [
-            'assessment' => $assessment->load('assessmentType:id,name', 'batchSubject:id,batch_id,subject_id',
-                'batchSubject.subject:id,full_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
-                'students:id,student_id,assessment_id,point',
+            'assessment' => $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments', 'batchSubject:id,batch_id,subject_id',
+                'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
+                'students:id,student_id,assessment_id,point,comment,status',
                 'students.student:id,user_id', 'students.student.user:id,name'),
             'student' => $student,
         ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    public function detail($id): RedirectResponse|Response
     {
-        $validatedData = $request->validate([
-            'assessment_id' => 'required|integer|exists:assessments,id',
-            'title' => 'nullable|string',
-            'description' => 'nullable|string',
-            'due_date' => 'nullable|date',
-            'maximum_point' => 'nullable|integer',
-            'status' => 'nullable|string|in:draft,published,closed,marking,completed',
+        $assessment = Assessment::find($id);
+        if (! $assessment) {
+            return redirect()->to(route('teacher.assessment.teacher'));
+        }
+        $assessment = $this->populateAssessmentDetails(collect([$assessment]))->first();
+
+        $completedAssessments = Assessment::where([
+            ['status', Assessment::STATUS_COMPLETED],
+            ['quarter_id', Quarter::getActiveQuarter()->id],
+            ['batch_subject_id', $assessment->batch_subject_id],
+            ['assessment_type_id', $assessment->assessment_type_id],
+        ])->get();
+
+        $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments,customizable', 'batchSubject:id,batch_id,subject_id',
+            'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
+            'students:id,student_id,assessment_id,point,comment,status',
+            'students.student:id,user_id', 'students.student.user:id,name');
+
+        $assessment->assessment_type_points_sum = $completedAssessments->sum('maximum_point');
+        $assessment->assessment_type_completed_count = $completedAssessments->count();
+
+        return Inertia::render('Teacher/Assessments/Index', [
+            'assessment' => $assessment,
         ]);
-
-        $assessment = Assessment::find($validatedData['assessment_id']);
-        $assessment->update($validatedData);
-
-        return redirect()->back()->with('success', 'Assessment updated successfully!');
     }
 
     public function teacherAssessments(Request $request): Response
@@ -94,6 +153,7 @@ class AssessmentController extends Controller
             'semester_id' => 'nullable|integer|exists:semesters,id',
             'school_year_id' => 'nullable|integer|exists:school_years,id',
             'search' => 'nullable|string',
+            'status' => 'nullable|string|in:draft,published,closed,marking,completed',
         ]);
 
         $batchSubjectId = $request->input('batch_subject_id') ??
@@ -135,33 +195,20 @@ class AssessmentController extends Controller
             ->when($search, function ($query, $value) {
                 return $query->where('title', 'like', "%{$value}%");
             })
+            ->when($request->input('status'), function ($query, $value) {
+                return $query->where('status', $value);
+            })
             ->with([
                 'batchSubject:id,batch_id,subject_id,teacher_id',
                 'batchSubject.batch:id,section,level_id',
                 'batchSubject.batch.level:id,name',
                 'batchSubject.subject:id,full_name',
-                'assessmentType:id,name',
+                'assessmentType:id,name,percentage,min_assessments,max_assessments',
                 'quarter:id,name',
                 'students',
             ])
             ->orderBy('due_date', 'asc')
             ->paginate(15);
-
-        $assessments->each(function ($assessment) {
-            if ($assessment->status === Assessment::STATUS_PUBLISHED) {
-                $assessment->total_students = $assessment->students->count();
-            }
-
-            if ($assessment->status === Assessment::STATUS_COMPLETED) {
-                $assessment->averageScore = $assessment->students->avg('point');
-                $assessment->passingPercentage = $assessment->students->filter(function ($student) {
-                    return $student->point >= GradeScale::where([
-                        ['school_year_id' => SchoolYear::getActiveSchoolYear()->id],
-                        ['state' => 'pass'],
-                    ])->first()->minimum_score;
-                })->count() / max($assessment->students->count(), 1) * 100;
-            }
-        });
 
         return Inertia::render('Teacher/Assessments/Index', [
             'assessments' => $assessments,
@@ -176,7 +223,37 @@ class AssessmentController extends Controller
                 'quarter_id' => $quarterId,
                 'search' => $search,
                 'due_date' => $dueDate,
+                'batch_subject_id' => $batchSubjectId,
+                'assessment_type_id' => $request->input('assessment_type_id'),
+                'status' => $request->input('status'),
             ],
         ]);
+    }
+
+    private function populateAssessmentDetails($assessments)
+    {
+        $assessments->each(function ($assessment) {
+            if ($assessment->students()->count() > 0) {
+                $assessment->total_students = $assessment->students->count();
+            }
+
+            if ($assessment->status === Assessment::STATUS_COMPLETED) {
+                // Get average score and passing percentage
+                $assessment->average_score = round($assessment->students->avg('point'), 1);
+                $assessment->passing_percentage = round($assessment->students->filter(function ($student) use ($assessment) {
+                    return $student->point >= GradeScale::get($student->point, $assessment->maximum_point)->minimum_score;
+                })->count() / max($assessment->students->count(), 1) * 100, 1);
+
+                // Get highest and lowest score
+                $assessment->highest_score = $assessment->students->max('point');
+                $assessment->lowest_score = $assessment->students->min('point');
+
+                // Get top and bottom 3 students
+                $assessment->top_students = $assessment->students->sortByDesc('point')->values()->load('student.user')->take(4);
+                $assessment->bottom_students = $assessment->students->sortBy('point')->values()->load('student.user')->take(4);
+            }
+        });
+
+        return $assessments;
     }
 }

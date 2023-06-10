@@ -1,18 +1,17 @@
 <template>
-    <div class="h-fit w-full rounded-lg">
+    <div class="h-fit w-full p-2">
         <!--        Header-->
         <div v-if="assessments" class="flex w-full justify-between">
             <div
                 :class="
                     view === 'class'
-                        ? 'text-center w-full'
+                        ? 'pl-3 w-6/12'
                         : 'font-medium lg:text-xl 2xl:text-2xl'
                 "
             >
                 {{ title }}
             </div>
             <LinkCell
-                v-if="view !== 'class'"
                 class="flex w-fit items-center justify-center"
                 href="/teacher/assessments"
                 value="SEE ALL"
@@ -23,7 +22,7 @@
         <div class="flex w-full flex-col">
             <div
                 v-if="assessments.length > 0"
-                class="mt-1 flex w-full flex-col justify-center divide-y-2 lg:mt-2 lg:py-2"
+                class="mt-1 flex w-full flex-col justify-center divide-y lg:mt-2 lg:py-2"
             >
                 <Item :assessments="assessments" :view="view" />
             </div>
