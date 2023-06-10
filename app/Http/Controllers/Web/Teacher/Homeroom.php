@@ -29,17 +29,17 @@ class Homeroom extends Controller
         $batch = \App\Models\Batch::find($batchId);
         $search = $request->input('search');
 
-        $batchStudents = $batch->load('students')->students->pluck('student_id');
+        $batchStudents = $batch?->load('students')->students->pluck('student_id');
 
         return Inertia::render('Teacher/Homeroom', [
             'homeroom_classes' => $homeroomClasses,
             'students' => $batchId ? StudentService::getBatchStudents($batchId, $search) : null,
-            'top_students' => StudentService::getBatchTopStudents($batchStudents),
-            'bottom_students' => StudentService::getBatchBottomStudents($batchStudents),
-            'grade' => $batch->grades()->where([
+            'top_students' => $batchStudents ? StudentService::getBatchTopStudents($batchStudents) : [],
+            'bottom_students' => $batchStudents ? StudentService::getBatchBottomStudents($batchStudents) : [],
+            'grade' => $batch ? $batch->grades()->where([
                 ['gradable_type', Quarter::class],
                 ['gradable_id', Quarter::getActiveQuarter()->id],
-            ])->first(),
+            ])->first() : null,
             'student' => StudentService::getStudentDetail($request->input('student_id'), $batch),
             'filters' => [
                 'batch_id' => $batchId,
