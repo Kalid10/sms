@@ -113,6 +113,11 @@ class Batch extends Model
             ->get();
     }
 
+    public function grades(): HasMany
+    {
+        return $this->hasMany(BatchGrade::class);
+    }
+
     protected $casts = [
         'session_last_synced' => 'datetime',
     ];

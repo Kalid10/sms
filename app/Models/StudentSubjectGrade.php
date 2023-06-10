@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StudentSubjectGrade extends Model
 {
@@ -20,7 +21,7 @@ class StudentSubjectGrade extends Model
         return $this->belongsTo(Student::class);
     }
 
-    public function subject(): BelongsTo
+    public function batchSubject(): BelongsTo
     {
         return $this->belongsTo(BatchSubject::class);
     }
@@ -28,5 +29,10 @@ class StudentSubjectGrade extends Model
     public function gradeScale(): BelongsTo
     {
         return $this->belongsTo(GradeScale::class);
+    }
+
+    public function assessmentsGrade(): HasMany
+    {
+        return $this->hasMany(StudentAssessmentsGrade::class, 'batch_subject_id', 'batch_subject_id');
     }
 }

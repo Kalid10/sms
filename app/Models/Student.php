@@ -64,7 +64,7 @@ class Student extends Model
             });
     }
 
-    public function absenteePercentage(int $schoolYearId = null, int $batchSubjectId = null): float
+    public function absenteePercentage(int $batchSubjectId = null): float
     {
         $studentAttendance = $this->studentSubjectGrades()
             ->where([
