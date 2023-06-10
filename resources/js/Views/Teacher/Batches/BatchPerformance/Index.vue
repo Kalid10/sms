@@ -4,25 +4,25 @@
     >
         <Item
             title="Average"
-            :value="batchSubjectGrade?.score"
+            :value="grade?.score"
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
         <Item
             title="Rank"
-            :value="batchSubjectGrade?.rank"
+            :value="grade?.rank"
             value-style="text-positive-100"
             :icon="ArrowSmallUpIcon"
         />
         <Item
             title="Attendance"
-            :value="batchSubjectGrade?.attendance + '%'"
+            :value="grade.attendance ? grade?.attendance + '%' : '-'"
             value-style="text-positive-100"
             :icon="ArrowSmallUpIcon"
         />
         <Item
             title="Conduct"
-            :value="batchSubjectGrade?.conduct"
+            :value="grade?.conduct"
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
@@ -37,7 +37,14 @@ import {
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
-const batchSubjectGrade = computed(() => usePage().props.batch_subject_grade);
+const props = defineProps({
+    grade: {
+        type: Object,
+        default: null,
+    },
+});
+
+const grade = props.grade ?? computed(() => usePage().props.grade);
 </script>
 
 <style scoped></style>

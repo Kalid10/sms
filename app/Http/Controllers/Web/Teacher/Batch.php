@@ -62,7 +62,7 @@ class Batch extends Controller
             'assessments' => $assessments,
             'schedule' => $schedule,
             'periods' => Level::find($batch->level->id)->levelCategory->schoolPeriods,
-            'batch_subject_grade' => $batchSubject->batchGrades()->where([
+            'grade' => $batchSubject->batchGrades()->where([
                 ['gradable_type', Quarter::class],
                 ['gradable_id', Quarter::getActiveQuarter()->id],
             ])->first(),
