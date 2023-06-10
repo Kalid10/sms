@@ -1,17 +1,19 @@
 <template>
-    <div
-        class="flex w-full flex-col items-center space-y-4 rounded-lg bg-white px-4 py-5 shadow-sm"
-    >
+    <div class="flex w-full flex-col items-center space-y-5 bg-white px-4 py-5">
         <div
             class="flex w-fit -skew-x-3 bg-yellow-400 px-2 text-xl font-semibold"
         >
             <ChartBarIcon class="mr-1 w-5 text-black" />
-            Assessment BreakDown
+
+            <div>
+                <span v-if="student">{{ student.user.name }}'s</span>
+                Assessment BreakDown
+            </div>
         </div>
         <div
-            v-for="(item, index) in student.assessment_quarter_grade"
+            v-for="(item, index) in assessmentGrade"
             :key="index"
-            class="flex w-full items-center justify-between space-x-2 rounded-md py-3"
+            class="flex w-full items-center justify-between space-x-2 py-3"
             :class="{
                 'bg-gray-100': index % 2 === 0,
             }"
@@ -41,11 +43,12 @@
             </div>
         </div>
         <div
-            v-if="student.assessment_quarter_grade.length === 0"
+            v-if="assessmentGrade.length === 0"
             class="w-9/12 px-4 text-xs font-light lg:text-xs"
         >
             At present,
             <span
+                v-if="student"
                 class="cursor-pointer font-medium underline-offset-2 hover:font-semibold hover:underline"
                 >{{ student.user.name }}</span
             >
@@ -60,6 +63,18 @@ import { ChartBarIcon } from "@heroicons/vue/24/solid";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
-const student = computed(() => usePage().props.student);
+const props = defineProps({
+    assessmentGrade: {
+        type: Array,
+        default: null,
+    },
+    student: {
+        type: Array,
+        default: null,
+    },
+});
+const assessmentGrade =
+    props.assessmentGrade ??
+    computed(() => usePage().props.student.assessment_quarter_grade);
 </script>
 <style scoped></style>
