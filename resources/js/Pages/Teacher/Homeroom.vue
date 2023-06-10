@@ -2,7 +2,7 @@
     <div class="flex h-screen w-full flex-col space-y-2 bg-gray-50">
         <div
             v-if="!selectedHomeroom"
-            class="pt-20 text-center text-8xl font-bold text-gray-400"
+            class="pt-20 text-center text-6xl font-bold text-gray-500"
         >
             You currently do not have any assigned homerooms. Please get in
             touch with the administration for assistance.
