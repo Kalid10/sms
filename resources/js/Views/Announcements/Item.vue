@@ -1,12 +1,12 @@
 <template>
     <div
-        class="group flex w-full cursor-pointer justify-between p-3 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-50"
+        class="group flex w-full cursor-pointer justify-between p-3 hover:scale-105 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-50"
     >
-        <div class="flex w-full flex-col space-y-2 text-sm font-bold">
+        <div class="flex w-full flex-col space-y-2 text-xs font-semibold">
             <div>{{ announcement.title }}</div>
 
             <div
-                class="flex w-full justify-between text-[0.65rem] text-gray-500 group-hover:text-gray-50"
+                class="flex w-full justify-between text-[0.62rem] font-light text-black group-hover:text-gray-50"
             >
                 <div>
                     <div>

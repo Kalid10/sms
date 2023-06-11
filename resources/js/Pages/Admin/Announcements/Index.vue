@@ -1,5 +1,7 @@
 <template>
-    <div class="h-fit w-full space-y-2 rounded-lg bg-white p-4 shadow-sm">
+    <div
+        class="h-fit w-full space-y-2 rounded-lg bg-white px-4 pt-4 pb-2 shadow-sm"
+    >
         <div v-if="announcements.length" class="flex w-full justify-between">
             <div class="text-xl font-semibold lg:text-2xl">
                 Recent Announcements
@@ -15,15 +17,18 @@
                 link-url="/admin/announcements"
                 class="flex w-full justify-center py-2"
             />
-            <div v-else class="flex flex-col divide-y divide-gray-100">
-                <Item
-                    v-for="(item, index) in announcements"
-                    :key="index"
-                    :announcement="item"
-                    @click="handleClick(item)"
-                />
+            <div v-else>
+                <div class="flex flex-col divide-y divide-gray-100">
+                    <Item
+                        v-for="(item, index) in announcements"
+                        :key="index"
+                        :announcement="item"
+                        @click="handleClick(item)"
+                    />
+                </div>
+
                 <LinkCell
-                    class="flex w-full justify-center py-2"
+                    class="flex w-full justify-center py-3"
                     href="/admin/announcements"
                     value="Show All Announcements"
                 />
