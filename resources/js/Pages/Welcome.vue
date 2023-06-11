@@ -82,6 +82,7 @@
         </button>
         <button class="h-14 bg-purple-500 p-1 text-white" @click="getAssessmentTypes">Test Get Assessment Types</button>
         <button class="h-14 bg-gray-900 p-1 text-white" @click="createStudentNote">Test Create Student Note</button>
+        <button class="h-14 bg-gray-900 p-1 text-white" @click="updateStudentNote">Test Update Student Note</button>
         <button class="h-14 bg-fuchsia-500 p-1 text-white" @click="insertStudentsAssessment">Test Create Student Note
         </button>
     </div>
@@ -1165,6 +1166,21 @@ function createStudentNote() {
     router.post('students/' + 1 + '/notes/create', {
             title: "This is a test note",
             description: "This is a test note body",
+        },
+        {
+            onSuccess: () => {
+                console.log("Success")
+            },
+            onError: (error) => {
+                console.log("Error")
+            }
+        })
+}
+
+function updateStudentNote() {
+    router.post('teacher/students/' + 1 + '/notes/update/' + 1, {
+            title: "This is a test note for update",
+            description: "This is a test note body for update",
         },
         {
             onSuccess: () => {

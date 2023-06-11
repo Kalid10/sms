@@ -25,15 +25,9 @@ class StudentNoteController extends Controller
             return redirect()->back()->with('error', 'Unauthorized action');
         }
 
-        // Check if the student is enrolled in the batch that the teacher is assigned
-        if ($user->type == User::TYPE_TEACHER) {
-            $teacherBatches = $user->teacher->batchSubjects()->get()->filter(function ($batchSubject) {
-                return $batchSubject->with('active');
-            })->pluck('batch_id');
-
-            if (! $teacherBatches->contains($student->activeBatch()->id)) {
-                return redirect()->back()->with('error', 'Unauthorized action - student is not enrolled in your batch');
-            }
+        // Check if the student is enrolled in the batch that the teacher is assigned using the private function
+        if (! $this->checkIfStudentIsEnrolledInTeacherBatch($student)) {
+            return redirect()->back()->with('error', 'Unauthorized action - student is not enrolled in your batch');
         }
 
         StudentNote::create([
@@ -44,5 +38,55 @@ class StudentNoteController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Student note created successfully');
+    }
+
+    public function update(Request $request, Student $student, StudentNote $studentNote): RedirectResponse
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        if (! $this->checkIfStudentIsEnrolledInTeacherBatch($student)) {
+            return redirect()->back()->with('error', 'Unauthorized action - student is not enrolled in your batch');
+        }
+
+        $studentNote->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+        ]);
+
+        return redirect()->back()->with('success', 'Student note updated successfully');
+    }
+
+    public function delete(Student $student, StudentNote $studentNote): RedirectResponse
+    {
+        if (! $this->checkIfStudentIsEnrolledInTeacherBatch($student)) {
+            return redirect()->back()->with('error', 'Unauthorized action - student is not enrolled in your batch');
+        }
+
+        $studentNote->delete();
+
+        return redirect()->back()->with('success', 'Student note deleted successfully');
+    }
+
+    private function checkIfStudentIsEnrolledInTeacherBatch(Student $student): bool
+    {
+        $user = Auth::user();
+
+        if ($user->type != User::TYPE_TEACHER) {
+            return false;
+        }
+
+        $teacherBatches = $user->teacher->batchSubjects()->get()->filter(function ($batchSubject) {
+            return $batchSubject->with('active');
+        })->pluck('batch_id');
+
+        if (! $teacherBatches->contains($student->activeBatch()->id)) {
+            return false;
+        }
+
+        return true;
     }
 }
