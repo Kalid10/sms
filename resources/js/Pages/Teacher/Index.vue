@@ -36,20 +36,7 @@
                 class="grid h-fit w-full grid-cols-12 grid-rows-6 gap-4 lg:gap-3 2xl:gap-2"
             >
                 <!--                 Welcome header-->
-                <div
-                    class="col-span-12 h-fit text-start font-light lg:text-3xl 2xl:text-4xl"
-                    :class="
-                        isSidebarOpenOnXlDevice
-                            ? ' lg:col-span-8'
-                            : ' lg:col-span-7'
-                    "
-                >
-                    Welcome back,
-
-                    <span class="ml-0.5 font-semibold lg:ml-2"
-                        >{{ teacher.user.name }}!</span
-                    >
-                </div>
+                <WelcomeHeader />
                 <div
                     class="col-start-9 row-span-6 hidden lg:inline-flex"
                     :class="
@@ -146,6 +133,7 @@ import { computed, ref } from "vue";
 import Assessments from "@/Views/Teacher/Home/Assessments.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import StudentsTable from "@/Views/Teacher/StudentsTable.vue";
+import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 
 const teacher = usePage().props.teacher;
 const filters = computed(() => usePage().props.filters);
