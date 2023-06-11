@@ -3,6 +3,7 @@
         ref="parentDiv"
         class="flex w-full flex-col items-center justify-between space-y-3"
     >
+        <Loading v-if="isLoading" is-full-screen />
         <div
             class="flex w-full flex-col items-center justify-between gap-2 pb-3 lg:flex-row"
             :class="showFilter ? 'blur-sm' : 'blur-none'"
@@ -177,6 +178,7 @@ import SelectInput from "@/Components/SelectInput.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { onClickOutside } from "@vueuse/core";
 import SelectedFilters from "@/Views/Teacher/Assessments/Table/Filters/SelectedFilters.vue";
+import Loading from "@/Components/Loading.vue";
 
 const emit = defineEmits(["create", "filterEnabled"]);
 
@@ -190,13 +192,14 @@ const {
 } = pageProps;
 const teacher = pageProps.teacher;
 const assessmentTypes = pageProps.assessment_type;
+const isLoading = ref(false);
 
 const assessments = computed(() => rawAssessments);
 
 // Refs for selected values
-const selectedSchoolYear = ref(filters.school_year_id);
-const selectedSemester = ref(filters.semester_id);
-const selectedQuarter = ref(filters.quarter_id);
+const selectedSchoolYear = ref(filters.school_year_id ?? null);
+const selectedSemester = ref(filters.semester_id ?? null);
+const selectedQuarter = ref(filters.quarter_id ?? null);
 const search = ref(filters.search ?? "");
 const dueDate = ref(filters.due_date ? new Date(filters.due_date) : null);
 const selectedBatchSubjectId = ref(
@@ -292,6 +295,7 @@ const selectedBatchSubject = computed(() => {
 });
 
 const selectedAssessmentType = computed(() => {
+    if (!assessmentTypes) return null;
     return assessmentTypes.find(
         (type) => Number(type.id) === Number(selectedAssessmentTypeId.value)
     );
@@ -337,6 +341,7 @@ watch(showFilter, () => {
 });
 
 async function getAssessments() {
+    isLoading.value = true;
     await router.get(
         "/teacher/assessments",
         {
@@ -352,6 +357,9 @@ async function getAssessments() {
         {
             preserveScroll: true,
             preserveState: true,
+            onFinish: () => {
+                isLoading.value = false;
+            },
         }
     );
 }
