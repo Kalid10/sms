@@ -126,7 +126,7 @@ import { router, usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/NextClass/Index.vue";
 import LessonPlans from "@/Views/Teacher/Home/LessonPlans.vue";
 import Grades from "@/Views/Teacher/Home/Grades.vue";
-import SchoolSchedule from "@/Views/Teacher/Home/SchoolSchedule/Index.vue";
+import SchoolSchedule from "@/Views/SchoolSchedule/Index.vue";
 import moment from "moment/moment";
 import Feedbacks from "@/Views/Teacher/Home/Feedbacks.vue";
 import { computed, ref } from "vue";

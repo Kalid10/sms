@@ -18,10 +18,12 @@
         <div class="text-sm text-gray-300">
             From
             <span class="text-zinc-100">{{ totalStudents }}</span>
-            students in
-            <span class="font-semibold uppercase text-zinc-100">{{
-                batchSubject.subject.full_name
-            }}</span>
+            students
+            <span
+                v-if="batchSubject"
+                class="font-semibold uppercase text-zinc-100"
+                >in {{ batchSubject?.subject?.full_name }}</span
+            >
         </div>
     </div>
 </template>

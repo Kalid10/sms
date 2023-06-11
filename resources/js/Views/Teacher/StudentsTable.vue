@@ -81,7 +81,7 @@ const filteredStudents = computed(() => {
             },
             attendance: item.attendance_percentage + "%",
             grade: item.quarterly_grade
-                ? item.quarterly_grade.score.toFixed(1)
+                ? item.quarterly_grade?.score?.toFixed(1)
                 : "-",
             rank: item.rank ?? " -",
             id: item.student.id,

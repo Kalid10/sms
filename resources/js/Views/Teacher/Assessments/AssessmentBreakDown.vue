@@ -43,7 +43,7 @@
             </div>
         </div>
         <div
-            v-if="assessmentGrade.length === 0"
+            v-if="!assessmentGrade"
             class="w-9/12 px-4 text-xs font-light lg:text-xs"
         >
             At present,
