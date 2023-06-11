@@ -7,6 +7,7 @@ use App\Models\Level;
 use App\Models\Quarter;
 use App\Models\Semester;
 use App\Models\Student as StudentModel;
+use App\Models\StudentNote;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -18,6 +19,8 @@ class Student extends Controller
      */
     public function __invoke(StudentModel $student, Request $request): Response
     {
+        $studentNotes = StudentNote::where('student_id', $student->id)->with('author:name,id,email,phone_number,gender')->paginate(5)->appends($request->all());
+
         $batchSubjectId = $request->query('batch_subject_id');
 
         $student = $student->load('user');
@@ -72,12 +75,12 @@ class Student extends Controller
             )->only('schedule')['schedule'],
             'periods' => Level::find($student->activeBatch()->level->id)->levelCategory->schoolPeriods,
             'batch_sessions' => $student->upcomingSessions(['batchSchedule.batchSubject.batch.level', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.subject', 'batchSchedule.batchSubject.teacher.user'])->get(),
-            'batch_subject' => BatchSubject::find($batchSubjectId)->load('subject', 'batch.level'),
+            'batch_subject' => BatchSubject::find($batchSubjectId)?->load('subject', 'batch.level'),
             'batch_subjects' => $commonBatchSubject,
             'batch_subject_grade' => $student->fetchStudentBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first(),
             'total_batch_students' => $student->activeBatch()->students()->count(),
             'in_progress_session' => $currentBatch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user'),
-            'student_notes' => $student->notes()->orderBy('updated_at', 'DESC')->with('author:name,id,email,phone_number,gender')->get()->take(5),
+            'student_notes' => $studentNotes,
         ]);
     }
 }
