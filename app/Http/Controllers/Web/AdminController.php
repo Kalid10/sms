@@ -9,6 +9,7 @@ use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Subject;
 use App\Models\User;
+use App\Services\StudentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -63,6 +64,7 @@ class AdminController extends Controller
             'school_year' => $schoolYear,
             'announcements' => $announcements,
             'school_schedule' => $schoolSchedule,
+            'students' => StudentService::getAllStudents($request),
         ]);
     }
 

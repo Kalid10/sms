@@ -5,9 +5,12 @@ namespace App\Services;
 use App\Models\BatchStudent;
 use App\Models\Quarter;
 use App\Models\Semester;
+use App\Models\Student;
 use App\Models\StudentAssessmentsGrade;
 use App\Models\StudentGrade;
 use App\Models\StudentSubjectGrade;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 
 class StudentService
 {
@@ -57,6 +60,22 @@ class StudentService
         });
 
         return $batchStudents;
+    }
+
+    public static function getAllStudents(Request $request): LengthAwarePaginator
+    {
+        $searchKey = $request->input('search');
+        $perPage = $request->input('per_page', 15);
+
+        return Student::with([
+            'user:id,name,email,phone_number,gender',
+            'currentBatch.level',
+        ])->select('id', 'user_id')
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->whereHas('user', function ($query) use ($searchKey) {
+                    return $query->where('name', 'like', "%{$searchKey}%");
+                });
+            })->paginate($perPage);
     }
 
     public static function getStudentDetail($studentId, $batch)
