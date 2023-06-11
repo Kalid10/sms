@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\Absentee;
+use App\Models\Announcement;
 use App\Models\Level;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
@@ -39,6 +40,8 @@ class AdminController extends Controller
 
         $schoolYear = SchoolYear::getActiveSchoolYear();
 
+        $announcements = Announcement::where('school_year_id', $schoolYear?->id)->with('author.user')->get()->take(5);
+
         return Inertia::render('Admin/Index', [
             'teachers_count' => $teachersCount,
             'students_count' => $studentsCount,
@@ -49,6 +52,7 @@ class AdminController extends Controller
             'absentee_records' => $absenteeRecords,
             'admins' => $admins,
             'school_year' => $schoolYear,
+            'announcements' => $announcements,
         ]);
     }
 

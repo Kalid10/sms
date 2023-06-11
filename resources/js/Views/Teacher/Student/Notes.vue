@@ -101,10 +101,9 @@
                     <div class="flex items-center font-medium">
                         {{ selectedNote.title }}
                     </div>
-                    <div>
-                        <div class="flex items-center text-sm font-light">
-                            {{ selectedNote.description }}
-                        </div>
+
+                    <div class="flex items-center text-sm font-light">
+                        {{ selectedNote.description }}
                     </div>
 
                     <div

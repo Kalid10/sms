@@ -13,27 +13,34 @@
                 />
                 <div
                     :class="
-                        openSideBar
-                            ? 'min-w-full lg:min-w-0 lg:blur-0'
-                            : ''
+                        openSideBar ? 'min-w-full lg:min-w-0 lg:blur-0' : ''
                     "
-                    class="m-5 flex flex-col items-center overflow-x-hidden lg:w-full"
+                    class="flex flex-col items-center overflow-x-hidden p-2 lg:w-full"
                 >
-                    <slot/>
+                    <slot />
                 </div>
             </div>
         </div>
-        <Notification/>
+        <Notification />
     </div>
 </template>
 
 <script setup>
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
-import {computed, ref} from "vue";
-import {ChatBubbleBottomCenterIcon, Cog6ToothIcon, PowerIcon, UserIcon,} from "@heroicons/vue/20/solid/index.js";
-import {usePage} from "@inertiajs/vue3";
-import {BookOpenIcon, QueueListIcon, UsersIcon,} from "@heroicons/vue/24/solid";
+import { computed, ref } from "vue";
+import {
+    ChatBubbleBottomCenterIcon,
+    Cog6ToothIcon,
+    PowerIcon,
+    UserIcon,
+} from "@heroicons/vue/20/solid/index.js";
+import { usePage } from "@inertiajs/vue3";
+import {
+    BookOpenIcon,
+    QueueListIcon,
+    UsersIcon,
+} from "@heroicons/vue/24/solid";
 
 const props = defineProps({
     auth: {
@@ -86,8 +93,8 @@ const sidebarItems = computed(() => [
 ]);
 
 const footerItems = [
-    {icon: ChatBubbleBottomCenterIcon, name: "Chat", route: "/sms"},
-    {icon: PowerIcon, name: "Logout", route: "/logout", method: "POST",},
+    { icon: ChatBubbleBottomCenterIcon, name: "Chat", route: "/sms" },
+    { icon: PowerIcon, name: "Logout", route: "/logout", method: "POST" },
 ];
 </script>
 
