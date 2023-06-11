@@ -75,14 +75,16 @@ class StudentNoteController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->type == User::TYPE_TEACHER) {
-            $teacherBatches = $user->teacher->batchSubjects()->get()->filter(function ($batchSubject) {
-                return $batchSubject->with('active');
-            })->pluck('batch_id');
+        if ($user->type != User::TYPE_TEACHER) {
+            return false;
+        }
 
-            if (! $teacherBatches->contains($student->activeBatch()->id)) {
-                return false;
-            }
+        $teacherBatches = $user->teacher->batchSubjects()->get()->filter(function ($batchSubject) {
+            return $batchSubject->with('active');
+        })->pluck('batch_id');
+
+        if (! $teacherBatches->contains($student->activeBatch()->id)) {
+            return false;
         }
 
         return true;

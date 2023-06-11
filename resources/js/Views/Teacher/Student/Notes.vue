@@ -6,7 +6,7 @@
             <div
                 class="flex grow justify-center space-x-2 text-center text-xl font-semibold underline-offset-4"
             >
-                <BookOpenIcon class="w-6"/>
+                <BookOpenIcon class="w-6" />
                 <span>Notes</span>
             </div>
             <div class="flex w-1/12 justify-center">
@@ -36,12 +36,11 @@
                 ></div>
 
                 <div class="relative flex w-full flex-col space-y-1">
-
                     <div
-                        class="absolute right-0 top-0 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full hover:scale-110  hover:bg-gray-300"
+                        class="absolute right-0 top-0 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full hover:scale-110 hover:bg-gray-300"
                         @click.stop="deleteNote(item.id)"
                     >
-                        <TrashIcon class="w-4"/>
+                        <TrashIcon class="w-4" />
                     </div>
                     <div class="text-xs font-medium hover:font-semibold">
                         {{ item.title }}
@@ -54,10 +53,7 @@
                         </div>
                         <div>{{ item.author.name }}</div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
 
@@ -66,36 +62,38 @@
                 :title="'Add Note For ' + student.user.name"
                 @submit="submit"
             >
-                <TextInput v-model="form.title" placeholder="Title"/>
+                <TextInput v-model="form.title" placeholder="Title" />
                 <TextArea
                     v-model="form.description"
                     placeholder="description"
-                    label="Description"/>
+                    label="Description"
+                />
             </FormElement>
         </Modal>
 
         <Modal v-model:view="selectedNote">
-
             <FormElement
-
                 v-if="selectedNote.author.id === user.id"
                 :title="`Update ` + student.user.name + `'s note`"
-                @submit="update">
+                @submit="update"
+            >
                 <TextInput
                     v-model="form.title"
                     label="Title"
-                    placeholder="title">
-
+                    placeholder="title"
+                >
                 </TextInput>
                 <TextArea
                     v-model="form.description"
                     label="Description"
-                    placeholder="description"/>
+                    placeholder="description"
+                />
             </FormElement>
 
             <div
                 v-if="selectedNote.author.id !== user.id"
-                class="flex flex-col space-y-2 rounded-lg bg-white p-5">
+                class="flex flex-col space-y-2 rounded-lg bg-white p-5"
+            >
                 <div class="text-center text-xl font-semibold">
                     {{ student.user.name }}'s Note
                 </div>
@@ -109,14 +107,13 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col items-end space-y-1 text-sm font-light">
-
-
+                    <div
+                        class="flex flex-col items-end space-y-1 text-sm font-light"
+                    >
                         <div class="text-xs">
                             {{ moment(selectedNote.created_at).fromNow() }}
                         </div>
                         <div class="font-medium">
-
                             By {{ selectedNote.author.name }}
                         </div>
                     </div>
@@ -129,16 +126,18 @@
             :links="notes.links"
             position="center"
         />
-
-
     </div>
 </template>
 <script setup>
-import {BookOpenIcon, DocumentPlusIcon, TrashIcon} from "@heroicons/vue/24/outline";
+import {
+    BookOpenIcon,
+    DocumentPlusIcon,
+    TrashIcon,
+} from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";
-import {computed, ref} from "vue";
+import { computed, ref } from "vue";
 import FormElement from "@/Components/FormElement.vue";
-import {useForm, usePage} from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import moment from "moment";
 import Pagination from "@/Components/Pagination.vue";
@@ -182,15 +181,21 @@ function handleClicked(note) {
 }
 
 function update() {
-    form.post("/teacher/students/" + student.id + "/notes/update/" + selectedNote.value.id, {
-        onSuccess: () => {
-            form.reset();
-            selectedNote.value = false;
-        },
-        onFinish: () => {
-            showModal.value = false;
-        },
-    });
+    form.post(
+        "/teacher/students/" +
+            student.id +
+            "/notes/update/" +
+            selectedNote.value.id,
+        {
+            onSuccess: () => {
+                form.reset();
+                selectedNote.value = false;
+            },
+            onFinish: () => {
+                showModal.value = false;
+            },
+        }
+    );
 }
 
 function deleteNote(id) {
@@ -201,7 +206,6 @@ function deleteNote(id) {
         },
     });
 }
-
 </script>
 
 <style scoped></style>
