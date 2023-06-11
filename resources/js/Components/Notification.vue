@@ -35,14 +35,14 @@
 </template>
 
 <script setup>
-import { computed, defineAsyncComponent, inject, ref, watch } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import {computed, defineAsyncComponent, inject, ref, watch} from "vue";
+import {usePage} from "@inertiajs/vue3";
 
 const flashSuccess = computed(() => usePage().props.flash.success);
 const flashError = computed(() => usePage().props.flash.error);
 const flashInfo = computed(() => usePage().props.flash.info);
 
-const localNotification = ref({ success: null, error: null, info: null });
+const localNotification = ref({success: null, error: null, info: null});
 
 const success = computed(
     () => flashSuccess.value || localNotification.value.success
@@ -55,24 +55,24 @@ const notificationType = computed(() => {
         type: !!success.value
             ? "success"
             : !!error.value
-            ? "error"
-            : !!info.value
-            ? "info"
-            : "",
+                ? "error"
+                : !!info.value
+                    ? "info"
+                    : "",
         message: success.value || error.value || info.value,
         icon: success.value
             ? defineAsyncComponent(() =>
-                  import("@heroicons/vue/24/outline/CheckCircleIcon.js")
-              )
+                import("@heroicons/vue/24/outline/CheckCircleIcon.js")
+            )
             : error.value
-            ? defineAsyncComponent(() =>
-                  import("@heroicons/vue/24/outline/ExclamationTriangleIcon.js")
-              )
-            : info.value
-            ? defineAsyncComponent(() =>
-                  import("@heroicons/vue/24/outline/InformationCircleIcon")
-              )
-            : "",
+                ? defineAsyncComponent(() =>
+                    import("@heroicons/vue/24/outline/ExclamationTriangleIcon.js")
+                )
+                : info.value
+                    ? defineAsyncComponent(() =>
+                        import("@heroicons/vue/24/outline/InformationCircleIcon")
+                    )
+                    : "",
         style: "text-green-500",
     };
 });
@@ -85,7 +85,7 @@ watch(flash, () => {
     showNotification.value = true;
     setTimeout(() => {
         showNotification.value = false;
-        usePage().props.flash = { success: null, error: null, info: null };
+        usePage().props.flash = {success: null, error: null, info: null};
     }, 4000);
 });
 
@@ -94,7 +94,7 @@ const notificationData = inject("notificationData");
 watch(notificationData, (newVal) => {
     if (newVal) {
         showNotification.value = true;
-        usePage().props.flash = { success: null, error: null, info: null };
+        usePage().props.flash = {success: null, error: null, info: null};
         switch (newVal.type) {
             case "success":
                 localNotification.value.success = newVal.message;
@@ -119,7 +119,7 @@ watch(notificationData, (newVal) => {
 });
 
 const positionClass = computed(() => {
-    switch (notificationData.value?.position) {
+    switch (notificationData?.position) {
         case "top-left":
             return "top-0 left-5";
         case "top-right":

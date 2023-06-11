@@ -6,13 +6,13 @@
             <div
                 class="flex grow justify-center space-x-2 text-center text-xl font-semibold underline-offset-4"
             >
-                <BookOpenIcon class="w-6" />
+                <BookOpenIcon class="w-6"/>
                 <span>Notes</span>
             </div>
             <div class="flex w-1/12 justify-center">
                 <DocumentPlusIcon
                     class="w-5 cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
-                    @click="showModal = true"
+                    @click="handleAddNote"
                 />
             </div>
         </div>
@@ -20,21 +20,29 @@
             class="flex w-11/12 flex-col items-center justify-center space-y-6 px-1"
         >
             <div
-                v-if="notes.length === 0"
+                v-if="!notes.data"
                 class="py-5 px-3 text-center text-sm font-light"
             >
                 No Notes Associated with {{ student.user.name }}
             </div>
             <div
-                v-for="(item, index) in notes"
+                v-for="(item, index) in notes.data"
                 :key="index"
                 class="flex w-full cursor-pointer justify-center space-x-3"
-                @click="selectedNote = item"
+                @click="handleClicked(item)"
             >
                 <div
                     class="min-h-full w-[0.01rem] rounded-t-lg rounded-b-md bg-zinc-600 py-2"
                 ></div>
-                <div class="flex w-full flex-col space-y-1">
+
+                <div class="relative flex w-full flex-col space-y-1">
+
+                    <div
+                        class="absolute right-0 top-0 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full hover:scale-110  hover:bg-gray-300"
+                        @click.stop="deleteNote(item.id)"
+                    >
+                        <TrashIcon class="w-4"/>
+                    </div>
                     <div class="text-xs font-medium hover:font-semibold">
                         {{ item.title }}
                     </div>
@@ -46,7 +54,10 @@
                         </div>
                         <div>{{ item.author.name }}</div>
                     </div>
+
                 </div>
+
+
             </div>
         </div>
 
@@ -55,50 +66,90 @@
                 :title="'Add Note For ' + student.user.name"
                 @submit="submit"
             >
-                <TextInput v-model="form.title" placeholder="Title" />
-                <TextInput
+                <TextInput v-model="form.title" placeholder="Title"/>
+                <TextArea
                     v-model="form.description"
-                    placeholder="Description"
-                />
+                    placeholder="description"
+                    label="Description"/>
             </FormElement>
         </Modal>
 
         <Modal v-model:view="selectedNote">
-            <div class="flex flex-col space-y-2 rounded-lg bg-white p-5">
+
+            <FormElement
+
+                v-if="selectedNote.author.id === user.id"
+                :title="`Update ` + student.user.name + `'s note`"
+                @submit="update">
+                <TextInput
+                    v-model="form.title"
+                    label="Title"
+                    placeholder="title">
+
+                </TextInput>
+                <TextArea
+                    v-model="form.description"
+                    label="Description"
+                    placeholder="description"/>
+            </FormElement>
+
+            <div
+                v-if="selectedNote.author.id !== user.id"
+                class="flex flex-col space-y-2 rounded-lg bg-white p-5">
                 <div class="text-center text-xl font-semibold">
                     {{ student.user.name }}'s Note
                 </div>
-                <div class="text-xl font-medium">
-                    {{ selectedNote.title }}
-                </div>
-                <div>
-                    {{ selectedNote.description }}
-                </div>
+                <div class="flex flex-col gap-5 space-y-4 rounded-t-lg p-2">
+                    <div class="flex items-center font-medium">
+                        {{ selectedNote.title }}
+                    </div>
+                    <div>
+                        <div class="flex items-center text-sm font-light">
+                            {{ selectedNote.description }}
+                        </div>
+                    </div>
 
-                <div class="text-xs font-light"></div>
-                <div class="text-xs font-light">
-                    {{ moment(selectedNote.created_at).fromNow() }}
-                    By {{ selectedNote.author.name }}
+                    <div class="flex flex-col items-end space-y-1 text-sm font-light">
+
+
+                        <div class="text-xs">
+                            {{ moment(selectedNote.created_at).fromNow() }}
+                        </div>
+                        <div class="font-medium">
+
+                            By {{ selectedNote.author.name }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </Modal>
-        <LinkCell v-if="notes.length" href="/cum" value="Show All Notes" />
+
+        <Pagination
+            :preserve-state="true"
+            :links="notes.links"
+            position="center"
+        />
+
+
     </div>
 </template>
 <script setup>
-import { BookOpenIcon, DocumentPlusIcon } from "@heroicons/vue/24/outline";
-import LinkCell from "@/Components/LinkCell.vue";
+import {BookOpenIcon, DocumentPlusIcon, TrashIcon} from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";
-import { computed, ref } from "vue";
+import {computed, ref} from "vue";
 import FormElement from "@/Components/FormElement.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import moment from "moment";
+import Pagination from "@/Components/Pagination.vue";
+import TextArea from "@/Components/TextArea.vue";
 
 const showModal = ref(false);
 const student = usePage().props.student;
 const notes = computed(() => usePage().props.student_notes);
 const selectedNote = ref(null);
+
+const user = usePage().props.auth.user;
 
 const form = useForm({
     title: "",
@@ -116,6 +167,41 @@ function submit() {
         },
     });
 }
+
+function handleAddNote() {
+    showModal.value = true;
+    form.reset();
+}
+
+function handleClicked(note) {
+    selectedNote.value = note;
+    if (note.author.id === user.id) {
+        form.title = note.title;
+        form.description = note.description;
+    }
+}
+
+function update() {
+    form.post("/teacher/students/" + student.id + "/notes/update/" + selectedNote.value.id, {
+        onSuccess: () => {
+            form.reset();
+            selectedNote.value = false;
+        },
+        onFinish: () => {
+            showModal.value = false;
+        },
+    });
+}
+
+function deleteNote(id) {
+    form.delete("/teacher/students/" + student.id + "/notes/delete/" + id, {
+        onSuccess: () => {
+            form.reset();
+            showModal.value = false;
+        },
+    });
+}
+
 </script>
 
 <style scoped></style>
