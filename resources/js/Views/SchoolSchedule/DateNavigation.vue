@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-fit w-full items-center justify-evenly rounded-t-lg bg-black py-3 text-white"
+        class="flex h-fit w-full items-center justify-evenly rounded-t-lg bg-zinc-800 py-3 text-white"
     >
         <div class="flex w-1/12 items-center justify-center">
             <ChevronLeftIcon
@@ -12,14 +12,14 @@
         <div
             class="flex h-full w-5/12 items-end justify-center space-x-2.5 lg:w-8/12"
         >
-            <div class="text-4xl font-bold 2xl:text-4xl">
+            <div class="text-2xl font-bold 2xl:text-2xl">
                 {{ moment(selectedDate).format("dddd") }}
             </div>
             <div
                 :class="
                     isSidebarOpenOnXlDevice
                         ? 'text-xs bg-white font-light lg:bg-yellow-500 2xl:text-sm'
-                        : 'text-xl font-light 2xl:text-2xl'
+                        : 'font-light '
                 "
             >
                 {{ moment(selectedDate).format("MMMM D") }}
