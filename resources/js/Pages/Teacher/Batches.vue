@@ -17,6 +17,7 @@
                     :title="tableTitle"
                     :table-model-value="batchSubject.id"
                     @search="updateBatchInfo"
+                    @click="fetchStudent"
                 />
             </div>
 
@@ -106,6 +107,15 @@ const updateBatchInfo = (batchSubjectId, search) => {
         }
     );
 };
+
+function fetchStudent(studentId) {
+    router.get(
+        "/teacher/students/" +
+            studentId +
+            "?batch_subject_id=" +
+            selectedBatchSubject.value
+    );
+}
 </script>
 
 <style scoped></style>

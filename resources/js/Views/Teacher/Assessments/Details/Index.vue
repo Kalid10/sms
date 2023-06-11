@@ -1,7 +1,7 @@
 <template>
     <div v-if="assessment" class="flex h-full w-full justify-center">
         <div
-            class="flex w-full flex-col items-center space-y-10 lg:w-10/12 2xl:w-9/12"
+            class="flex w-full flex-col items-center space-y-10 lg:w-11/12 2xl:w-10/12"
         >
             <Header
                 :title="title"

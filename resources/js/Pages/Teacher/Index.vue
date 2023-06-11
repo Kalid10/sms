@@ -87,6 +87,7 @@
                             ? 'lg:w-5/12 lg:mt-[-3rem]'
                             : 'lg:w-5/12 lg:mt-[-1rem]'
                     "
+                    @click="fetchStudent"
                 />
 
                 <SchoolSchedule
@@ -134,25 +135,34 @@
 </template>
 
 <script setup>
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/NextClass/Index.vue";
 import LessonPlans from "@/Views/Teacher/Home/LessonPlans.vue";
 import Grades from "@/Views/Teacher/Home/Grades.vue";
 import SchoolSchedule from "@/Views/Teacher/Home/SchoolSchedule/Index.vue";
 import moment from "moment/moment";
 import Feedbacks from "@/Views/Teacher/Home/Feedbacks.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Assessments from "@/Views/Teacher/Home/Assessments.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import StudentsTable from "@/Views/Teacher/StudentsTable.vue";
 
 const teacher = usePage().props.teacher;
-
+const filters = computed(() => usePage().props.filters);
 const nextClass = usePage().props.teacher.next_batch_session;
 const nextClassSection = ref(null);
 const scrollToNextClass = () => {
     nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
 };
+
+function fetchStudent(studentId) {
+    router.get(
+        "/teacher/students/" +
+            studentId +
+            "?batch_subject_id=" +
+            filters.value.batch_subject_id
+    );
+}
 </script>
 
 <style scoped></style>

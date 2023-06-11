@@ -17,7 +17,7 @@
                 'bg-zinc-100 hover:bg-gray-50':
                     index % 2 === 0 && !isInputFocused && item.status === null,
 
-                'bg-black text-white hover:bg-black':
+                'bg-zinc-700 text-white hover:bg-zinc-700':
                     isInputFocused &&
                     focusedInputIndex === index &&
                     selectedCommentInput === null,
@@ -25,13 +25,10 @@
                 'border-2 border-red-500': errors[`points.${index}.point`],
 
                 'bg-gradient-to-bl from-red-600 to-orange-500 text-white':
-                    item.status === 'misconduct' ||
                     points[index].status === 'misconduct',
                 'bg-gradient-to-br from-yellow-400 to-orange-500 text-white':
-                    item.status === 'disqualified' ||
                     points[index].status === 'disqualified',
                 'bg-gradient-to-bl from-purple-400 to-fuchsia-400  text-white':
-                    item.status === 'valid_reassessment' ||
                     points[index].status === 'valid_reassessment',
             }"
             @click.stop="handleRowClick(index, item.student.id)"
@@ -61,10 +58,7 @@
                         class="flex flex-col items-center justify-evenly text-xl font-semibold"
                     >
                         <input
-                            v-if="
-                                item.status === null &&
-                                points[index].status === null
-                            "
+                            v-if="points[index].status === null"
                             :ref="
                                 (el) => {
                                     inputRefs[index] = el;
@@ -80,14 +74,10 @@
                                 'border-red-600':
                                     errors[`points.${index}.point`],
                                 'bg-white opacity-20':
-                                    item.status !== null ||
                                     points[index].status !== null,
                             }"
                             placeholder="-"
-                            :disabled="
-                                item.status !== null ||
-                                points[index].status !== null
-                            "
+                            :disabled="points[index].status !== null"
                             @focusin="handleFocusIn(index)"
                             @focusout="handleFocusOut()"
                             @keydown="onKeyDown($event, index)"
@@ -112,7 +102,7 @@
                         :class="
                             points[index].status === 'disqualified'
                                 ? 'text-black'
-                                : 'text-gray-300 hover:text-black'
+                                : 'text-gray-300 hover:text-orange-500'
                         "
                         @click="
                             points[index].status = 'disqualified';
@@ -125,7 +115,7 @@
                         :class="
                             points[index].status === 'misconduct'
                                 ? 'text-black'
-                                : 'text-gray-300 hover:text-black'
+                                : 'text-gray-300 hover:text-red-600'
                         "
                         @click="
                             points[index].status = 'misconduct';
@@ -147,6 +137,12 @@
                             $emit('updatePoints', points);
                         "
                     />
+                    <XMarkIcon
+                        v-if="points[index].status"
+                        class="w-5 cursor-pointer hover:scale-125"
+                        @click="points[index].status = null"
+                    />
+                    {{}}
                 </div>
             </div>
             <div v-if="selectedCommentInput === index" class="p-4">
@@ -181,6 +177,7 @@ import {
     ArrowPathRoundedSquareIcon,
     BookmarkSlashIcon,
     ChatBubbleBottomCenterIcon,
+    XMarkIcon,
 } from "@heroicons/vue/20/solid/index.js";
 import TextArea from "@/Components/TextArea.vue";
 import Error from "@/Components/Error.vue";
@@ -190,7 +187,7 @@ const focusedInputIndex = ref(null);
 const points = reactive(
     assessment.students.map((item) => ({
         student_id: item.student.id,
-        point: item.point || null, // If there's a previously set point, use that. Otherwise, default to null
+        point: item.point || "", // If there's a previously set point, use that. Otherwise, default to null
         comment: item.comment,
         status: item.status,
     }))
@@ -245,6 +242,7 @@ watch(errors, (newErrors) => {
 
 const handleFocusIn = (index) => {
     focusedInputIndex.value = index;
+    selectedCommentInput.value = null;
     isInputFocused.value = true;
 };
 

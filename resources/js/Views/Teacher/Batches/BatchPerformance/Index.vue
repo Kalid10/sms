@@ -16,7 +16,7 @@
         />
         <Item
             title="Attendance"
-            :value="grade.attendance ? grade?.attendance + '%' : '-'"
+            :value="grade?.attendance ? grade?.attendance + '%' : '-'"
             value-style="text-positive-100"
             :icon="ArrowSmallUpIcon"
         />

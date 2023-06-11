@@ -138,6 +138,7 @@ function updatePoints(point) {
 }
 
 function getStudentDetail(studentId) {
+    isLoading.value = true;
     router.get(
         "/teacher/assessments/mark/" + assessment.value.id,
         {
@@ -149,14 +150,26 @@ function getStudentDetail(studentId) {
             onSuccess: () => {
                 scrollToStudentInfo();
             },
+            onFinish: () => {
+                isLoading.value = false;
+            },
         }
     );
 }
 
 function insertStudentsAssessment() {
-    router.post("/student-assessments/" + assessment.value.id + "/insert", {
-        points: points,
-    });
+    isLoading.value = true;
+    router.post(
+        "/student-assessments/" + assessment.value.id + "/insert",
+        {
+            points: points,
+        },
+        {
+            onFinish: () => {
+                isLoading.value = false;
+            },
+        }
+    );
 }
 
 const showFinishMarkingButton = computed(() => {

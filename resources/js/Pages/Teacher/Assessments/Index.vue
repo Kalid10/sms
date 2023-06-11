@@ -19,11 +19,7 @@
                 </div>
             </div>
 
-            <Table
-                class="min-h-screen"
-                @create="showModal = true"
-                @click="loadDetail"
-            />
+            <Table @create="showModal = true" @click="loadDetail" />
         </div>
         <div
             :class="
@@ -56,7 +52,7 @@
 <script setup>
 import Table from "@/Views/Teacher/Assessments/Table/Index.vue";
 import Form from "@/Views/Teacher/Assessments/AssessmentForm.vue";
-import { computed, ref } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
 import Detail from "@/Views/Teacher/Assessments/Details/Index.vue";
 import Modal from "@/Components/Modal.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
@@ -64,9 +60,28 @@ import { router, usePage } from "@inertiajs/vue3";
 import Loading from "@/Components/Loading.vue";
 
 const showModal = ref(false);
-
 const selectedAssessment = computed(() => usePage().props.assessment);
 const isLoading = ref(false);
+
+onBeforeMount(() => {
+    // TODO:: Fix the double page bug
+    let ass = computed(() => usePage().props.assessments);
+    if (!ass.value) {
+        isLoading.value = true;
+        router.get(
+            "/teacher/assessments",
+            {},
+            {
+                preserveScroll: true,
+                preserveState: true,
+                only: ["assessments", "filters", "teacher"],
+                onFinish: () => {
+                    isLoading.value = false;
+                },
+            }
+        );
+    }
+});
 
 function loadDetail(assessment) {
     isLoading.value = true;

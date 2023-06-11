@@ -109,8 +109,10 @@
                     <span class="font-semibold"
                         >{{ assessment.assessment_type.percentage }}%</span
                     >
-                    of the final grade. Note: This does not include this
-                    assessment.
+                    of the final grade.
+                    <span v-if="assessment.assessment_type_completed_count > 0">
+                        Note: This does not include this assessment.
+                    </span>
                 </div>
             </div>
             <div

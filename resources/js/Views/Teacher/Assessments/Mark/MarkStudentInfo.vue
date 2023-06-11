@@ -62,38 +62,25 @@
                     {{ assessment.batch_subject.subject.short_name }} Result
                 </div>
             </div>
-            <div class="flex w-6/12 justify-between divide-x py-2 text-center">
-                <div class="w-4/12">
-                    <div class="text-2xl font-bold">
-                        <span v-if="student.batch_subject_rank">
-                            {{ numberWithOrdinal(student.batch_subject_rank) }}
-                        </span>
-                        <span v-else> - </span>
-                    </div>
-                    <div class="text-[0.65rem] font-light">
-                        {{ assessment.batch_subject.subject.short_name }} Rank
-                    </div>
+            <div class="w-3/12 text-center">
+                <div class="text-2xl font-bold">
+                    <span v-if="student.batch_subject_rank">
+                        {{ numberWithOrdinal(student.batch_subject_rank) }}
+                    </span>
+                    <span v-else> - </span>
                 </div>
-                <div class="w-4/12">
-                    <div class="text-2xl font-bold">
-                        <span v-if="student.quarterly_grade">
-                            {{
-                                numberWithOrdinal(student.quarterly_grade.rank)
-                            }}
-                        </span>
-                        <span v-else> - </span>
-                    </div>
-                    <div class="text-[0.65rem] font-light">Quarter Rank</div>
+                <div class="text-[0.65rem] font-light">
+                    {{ assessment.batch_subject.subject.short_name }} Rank
                 </div>
-                <div class="w-4/12">
-                    <div class="text-2xl font-bold">
-                        <span v-if="student.semester_grade">
-                            {{ numberWithOrdinal(student.semester_grade.rank) }}
-                        </span>
-                        <span v-else> - </span>
-                    </div>
-                    <div class="text-[0.65rem] font-light">Semester Rank</div>
+            </div>
+            <div class="w-3/12 py-2 text-center">
+                <div class="text-2xl font-bold">
+                    <span v-if="student.quarterly_grade">
+                        {{ numberWithOrdinal(student.quarterly_grade.rank) }}
+                    </span>
+                    <span v-else> - </span>
                 </div>
+                <div class="text-[0.65rem] font-light">Quarter Rank</div>
             </div>
         </div>
 
