@@ -40,10 +40,11 @@
         <WelcomeHeader />
 
         <div class="flex w-full justify-between">
-            <div class="w-6/12">
+            <div class="flex w-6/12 flex-col space-y-5">
                 <Announcements />
             </div>
-            <div class="w-5/12">
+            <div class="flex w-5/12 flex-col space-y-5">
+                <SchoolSchedule />
                 <Levels />
             </div>
         </div>
@@ -56,6 +57,7 @@ import { usePage } from "@inertiajs/vue3";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import Levels from "@/Pages/Admin/Levels/Index.vue";
 import Announcements from "@/Pages/Admin/Announcements/Index.vue";
+import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Index.vue";
 
 const teachersCount = computed(() => usePage().props.teachers_count);
 

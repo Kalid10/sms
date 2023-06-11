@@ -9,13 +9,14 @@ use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Subject;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class AdminController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
         // Get teachers, students, admins and subjects count
         $teachersCount = User::where('type', 'teacher')->count();
@@ -42,6 +43,14 @@ class AdminController extends Controller
 
         $announcements = Announcement::where('school_year_id', $schoolYear?->id)->with('author.user')->get()->take(5);
 
+        $schoolScheduleDate = $request->input('school_schedule_date') ?? now()->addDays(4);
+        $schoolSchedule = SchoolSchedule::where('school_year_id', $schoolYear?->id)
+            ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
+            ->whereDate('end_date', '>=', Carbon::parse($schoolScheduleDate))
+            ->orderBy('start_date', 'asc')
+            ->take(3)
+            ->get();
+
         return Inertia::render('Admin/Index', [
             'teachers_count' => $teachersCount,
             'students_count' => $studentsCount,
@@ -53,6 +62,7 @@ class AdminController extends Controller
             'admins' => $admins,
             'school_year' => $schoolYear,
             'announcements' => $announcements,
+            'school_schedule' => $schoolSchedule,
         ]);
     }
 
