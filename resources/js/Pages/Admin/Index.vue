@@ -44,7 +44,13 @@
                 <Announcements />
             </div>
             <div class="flex w-5/12 flex-col space-y-5">
-                <SchoolSchedule />
+                <div class="flex w-full justify-between space-x-5">
+                    <AbsentTeachers />
+
+                    <div class="w-9/12">
+                        <SchoolSchedule />
+                    </div>
+                </div>
                 <Levels />
             </div>
         </div>
@@ -58,6 +64,7 @@ import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import Levels from "@/Pages/Admin/Levels/Index.vue";
 import Announcements from "@/Pages/Admin/Announcements/Index.vue";
 import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Index.vue";
+import AbsentTeachers from "@/Views/Admin/AbsentTeachers.vue";
 
 const teachersCount = computed(() => usePage().props.teachers_count);
 
