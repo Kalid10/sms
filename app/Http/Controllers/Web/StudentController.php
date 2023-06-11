@@ -50,16 +50,18 @@ class StudentController extends Controller
             'batch_subject_id' => 'required|exists:batch_subjects,id',
         ]);
 
-        $studentGrade = $student->studentSubjectGrades()
+        $studentSubjectGrade = $student->studentSubjectGrades()
             ->where('batch_subject_id', $request->input('batch_subject_id'))
             ->first();
 
-        if (! $studentGrade) {
+        $studentGrade = $student->grades()->first();
+
+        if (! $studentGrade || ! $studentSubjectGrade) {
             return redirect()->back()->with('error', 'Currently you cannot update conduct for this subject');
         }
 
-        $studentGrade->conduct = $request->input('conduct');
-        $studentGrade->save();
+        $studentSubjectGrade->conduct = $request->input('conduct');
+        $studentSubjectGrade->save();
 
         return redirect()->back()->with('success', 'Conduct updated successfully');
     }
