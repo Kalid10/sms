@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Admin;
 use App\Models\Announcement;
+use App\Models\SchoolYear;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AnnouncementSeeder extends Seeder
@@ -13,16 +14,13 @@ class AnnouncementSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get all admin users
-        $admins = Admin::all();
+        $admin = User::find(1);
 
-        // Create 10 announcements for each admin
-        $admins->each(function ($admin) {
-            Announcement::factory()
-                ->count(10)
-                ->create([
-                    'author_id' => $admin->id,
-                ]);
-        });
+        Announcement::factory()
+            ->count(10)
+            ->create([
+                'author_id' => $admin->id,
+                'school_year_id' => SchoolYear::getActiveSchoolYear()?->id,
+            ]);
     }
 }
