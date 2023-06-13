@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Assessment;
 use App\Models\BatchStudent;
+use App\Models\BatchSubject;
 use App\Models\Level;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
@@ -100,6 +102,16 @@ class LevelController extends Controller
                 ['gradable_type', Quarter::class],
                 ['gradable_id', Quarter::getActiveQuarter()->id],
             ])->first();
+
+            $batchSubjectIds = BatchSubject::where('batch_id', $batch->id)->pluck('id');
+            $batch->assessments = Assessment::whereIn('batch_subject_id', $batchSubjectIds)
+                ->where('quarter_id', Quarter::getActiveQuarter()->id)
+                ->where('status', '!=', Assessment::STATUS_DRAFT)
+                ->orderBy('updated_at', 'DESC')
+                ->with('assessmentType', 'batchSubject.batch:id,section,level_id',
+                    'batchSubject.batch.level:id,name,level_category_id',
+                    'batchSubject.subject:id,full_name')
+                ->get()->take(3);
         });
 
         $students = BatchStudent::whereIn('batch_id', $level->batches->pluck('id'))

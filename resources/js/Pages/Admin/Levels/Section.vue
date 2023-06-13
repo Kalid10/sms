@@ -28,11 +28,14 @@
                 />
             </div>
         </div>
-        <div class="flex w-full justify-between">
-            <div class="h-full w-4/12 px-2 text-center text-lg font-light">
+        <div class="flex w-full justify-between space-x-10 divide-x">
+            <div
+                class="flex h-full w-5/12 flex-col space-y-4 divide-y px-2 text-center text-lg font-light"
+            >
                 <Homeroom :batch="batch" />
+                <Assessments class="pt-3" :assessments="batch?.assessments" />
             </div>
-            <div class="flex w-8/12 flex-col space-y-4 rounded-lg p-4">
+            <div class="flex w-7/12 flex-col space-y-4 rounded-lg p-4">
                 <Performance :batch="batch" />
             </div>
         </div>
@@ -42,11 +45,12 @@
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import CurrentDaySchedule from "@/Views/CurrentDaySchedule.vue";
-import Homeroom from "@/Views/Admin/Levels/Section/Homeroom.vue";
 import ActiveSession from "@/Views/Admin/Levels/Section/ActiveSession.vue";
 import AbsentStudents from "@/Views/Admin/Absentee.vue";
 import Performance from "@/Views/Admin/Levels/Section/Performance.vue";
 import TextInput from "@/Components/TextInput.vue";
+import Assessments from "@/Views/Teacher/Home/Assessments.vue";
+import Homeroom from "@/Views/Admin/Levels/Section/Homeroom.vue";
 
 const props = defineProps({
     batch: {

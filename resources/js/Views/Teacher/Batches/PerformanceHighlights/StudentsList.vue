@@ -41,10 +41,14 @@
         </div>
         <div v-else class="w-full px-3 py-4 text-center text-sm font-light">
             <div class="mb-4 w-full">
-                We're unable to provide a list currently. Begin assessments and
-                we'll promptly update.
+                We're unable to provide the list currently. Once the assessments
+                are completed, we'll be able to provide the list.
             </div>
-            <LinkCell href="/teacher/assessments" value="Go To Assessments" />
+            <LinkCell
+                v-if="showLink"
+                href="/teacher/assessments"
+                value="Go To Assessments"
+            />
         </div>
     </div>
 </template>
@@ -74,6 +78,10 @@ defineProps({
     progressType: {
         type: String,
         required: true,
+    },
+    showLink: {
+        type: Boolean,
+        default: true,
     },
 });
 </script>

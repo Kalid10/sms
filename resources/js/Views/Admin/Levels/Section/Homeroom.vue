@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-full w-full items-center justify-center rounded-lg bg-white"
+        class="flex h-fit w-full items-center justify-center rounded-lg bg-white py-3"
     >
         <div
             v-if="batch.home_room_teacher"

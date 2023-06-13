@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full flex-col space-y-4 rounded-lg p-4">
+    <div class="flex w-full flex-col space-y-4 rounded-lg py-4">
         <BatchPerformance class="my-4" :grade="batch?.grade" />
         <div
             class="flex w-full items-center justify-between divide-x divide-zinc-300"
@@ -10,6 +10,7 @@
                     title="Top Students"
                     :icon="ArrowTrendingUpIcon"
                     :students="batch?.top_students"
+                    :show-link="false"
                 />
             </div>
 
@@ -19,6 +20,7 @@
                     title="Students Falling Behind"
                     :icon="ArrowTrendingDownIcon"
                     :students="batch?.bottom_students"
+                    :show-link="false"
                 />
             </div>
         </div>
