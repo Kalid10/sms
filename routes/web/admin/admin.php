@@ -13,6 +13,7 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
     Route::controller(AdminController::class)->group(function () {
         Route::get('', 'index')->name('index');
         Route::get('schedules', 'schedule')->name('schedule');
+        Route::get('announcements', 'announcements')->name('announcements');
     });
 
     Route::controller(TeacherController::class)->prefix('teachers/')->name('teachers.')->group(function () {

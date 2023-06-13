@@ -104,17 +104,19 @@ const sidebarItems = computed(() => [
     },
 
     {
+        name: "Announcements",
+        icon: ChatBubbleBottomCenterIcon,
+        route: "/teacher/announcements",
+        active: directory.value === "feedbacks",
+    },
+
+    {
         name: "Schedule",
         icon: CalendarDaysIcon,
         route: "/teacher/subjects",
         active: directory.value === "subjects",
     },
-    {
-        name: "Feedbacks",
-        icon: ChatBubbleBottomCenterIcon,
-        route: "/teacher/feedbacks",
-        active: directory.value === "feedbacks",
-    },
+
     {
         name: "Settings",
         icon: Cog6ToothIcon,

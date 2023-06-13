@@ -41,7 +41,11 @@
 
         <div class="flex w-full justify-between">
             <div class="w-6/12">
-                <Announcements />
+                <Announcements
+                    class-style="px-3"
+                    url="/admin"
+                    title="Recent Announcements"
+                />
             </div>
             <div class="w-5/12">
                 <Levels />
