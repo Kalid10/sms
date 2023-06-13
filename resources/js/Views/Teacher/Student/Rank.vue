@@ -34,7 +34,7 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { numberWithOrdinal } from "@/utils";
 
-const rank = computed(() => usePage().props.batch_subject_grade?.rank);
+const rank = computed(() => usePage().props.grade?.rank);
 const totalStudents = computed(() => usePage().props.total_batch_students);
 const batchSubject = computed(() => usePage().props.batch_subject);
 </script>

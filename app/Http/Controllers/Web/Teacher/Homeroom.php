@@ -40,7 +40,7 @@ class Homeroom extends Controller
                 ['gradable_type', Quarter::class],
                 ['gradable_id', Quarter::getActiveQuarter()->id],
             ])->first() : null,
-            'student' => StudentService::getStudentDetail($request->input('student_id'), $batch),
+            'student.grades' => StudentService::getStudentDetail($request->input('student_id'), $batch),
             'filters' => [
                 'batch_id' => $batchId,
                 'search' => $search,
