@@ -5,7 +5,7 @@
             :selectable="false"
             :header="false"
             row-actionable
-            class="px-3"
+            class="px-3 py-2"
             :data="formattedStudentsData"
         >
             <template #filter>
@@ -19,8 +19,18 @@
             </template>
 
             <template #table-header>
-                <div>
-                    <div class="py-2 pl-4 text-xl font-semibold">Students</div>
+                <div class="flex w-full justify-between pb-4">
+                    <div class="pl-4">
+                        <div class="pb-2 text-xl font-semibold">Students</div>
+                        <div class="text-xs font-light text-gray-500">
+                            List of all students in the school
+                        </div>
+                    </div>
+                    <SecondaryButton
+                        class="h-fit !rounded-2xl bg-zinc-700 text-white"
+                        title="Register Student"
+                        @click="router.get('/register/student')"
+                    />
                 </div>
                 <div
                     class="flex w-full justify-between divide-x divide-gray-200 rounded-lg border p-3"
@@ -156,6 +166,7 @@ import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import Pagination from "@/Components/Pagination.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const isModalOpen = ref(false);
 
