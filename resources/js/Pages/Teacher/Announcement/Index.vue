@@ -4,6 +4,7 @@
             <!--        Announcements -->
             <div class="flex w-8/12 flex-col space-y-2 py-5 pl-5">
                 <Announcement
+                    class-style="px-3"
                     url="/teacher/announcements/"
                     title="Recent Announcements"
                     :show-tab="true"

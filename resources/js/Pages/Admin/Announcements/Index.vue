@@ -3,7 +3,7 @@
         :class="
             classStyle
                 ? classStyle
-                : 'h-fit w-full space-y-2 rounded-lg bg-white py-5 px-24 shadow-sm'
+                : 'h-fit w-full space-y-2 rounded-lg bg-white py-5 px-8 lg:px-24 shadow-sm'
         "
     >
         <div class="flex w-full flex-col space-y-4 rounded bg-gray-100 p-3">
