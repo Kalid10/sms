@@ -31,6 +31,8 @@ class Level extends Model
         $schoolYear = SchoolYear::getActiveSchoolYear();
 
         return $this->batches()
-            ->where('school_year_id', $schoolYear->id);
+            ->where('school_year_id', $schoolYear->id)->with(['schedule' => function ($query) {
+                $query->with('batchSubject', 'schoolPeriod');
+            }]);
     }
 }

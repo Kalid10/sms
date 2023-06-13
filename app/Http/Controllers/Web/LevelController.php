@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\BatchStudent;
 use App\Models\Level;
+use App\Models\Quarter;
 use App\Models\SchoolYear;
+use App\Services\StudentService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -72,6 +74,7 @@ class LevelController extends Controller
                     ->with('activeSession.teacher.user')
                     ->with('homeRoomTeacher.teacher.user')
                     ->with('activeSession.schoolPeriod')
+                    ->with('activeSession.absentees.user.student')
                     ->withCount('students', 'subjects');
             },
             'activeBatches.schedule' => function ($query) {
@@ -83,12 +86,21 @@ class LevelController extends Controller
                 })->with('schoolPeriod');
             },
             'activeBatches.schedule.batchSubject.subject',
-            'activeBatches.sessions',
         ])
             ->loadCount([
                 'activeBatches',
             ])
             ->only('id', 'name', 'level_category_id', 'updated_at', 'batches', 'batches_count');
+
+        $level->activeBatches->each(function ($batch) {
+            $batchStudentIds = $batch->load('students')->students->pluck('student_id');
+            $batch->top_students = StudentService::getBatchTopStudents($batchStudentIds);
+            $batch->bottom_students = StudentService::getBatchBottomStudents($batchStudentIds);
+            $batch->grade = $batch->grades()->where([
+                ['gradable_type', Quarter::class],
+                ['gradable_id', Quarter::getActiveQuarter()->id],
+            ])->first();
+        });
 
         $students = BatchStudent::whereIn('batch_id', $level->batches->pluck('id'))
             ->with(
