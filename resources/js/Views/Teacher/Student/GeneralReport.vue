@@ -6,7 +6,7 @@
                 'bg-positive-100 text-white': grade?.grade_scale?.label === 'A',
                 'bg-yellow-400': grade?.grade_scale?.label === 'B',
                 'bg-yellow-300': grade?.grade_scale?.label === 'C',
-                'bg-negative-50 text-white': grade?.grade_scale?.label === 'D',
+                'bg-yellow-400 text-black': grade?.grade_scale?.label === 'D',
                 'bg-negative-100 text-white': grade?.grade_scale?.label === 'F',
                 'bg-white': !grade,
             }"
@@ -64,7 +64,9 @@
                 <div @click="showConductModal = true">
                     <PencilSquareIcon
                         v-if="
-                            auth.user?.teacher?.id === batchSubject?.teacher_id
+                            auth.user?.teacher?.id ===
+                                batchSubject?.teacher_id &&
+                            auth.user.type === 'teacher'
                         "
                         class="w-5 cursor-pointer hover:scale-125 hover:text-black"
                     />
@@ -104,7 +106,7 @@ const attendancePercentage = computed(
     () => usePage().props.attendance_percentage
 );
 
-const grade = computed(() => usePage().props.batch_subject_grade);
+const grade = computed(() => usePage().props.grade);
 const batchSubject = computed(() => usePage().props.batch_subject);
 const student = computed(() => usePage().props.student);
 const auth = computed(() => usePage().props.auth);

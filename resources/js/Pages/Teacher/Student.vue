@@ -84,7 +84,17 @@
                     </div>
                 </div>
             </div>
-
+            <SecondaryButton
+                title="View Grade Report"
+                class="w-1/3 !rounded-2xl bg-zinc-700 text-white"
+                @click="showGrade = true"
+            />
+            <Modal v-model:view="showGrade">
+                <StudentGradeDetail
+                    :student-name="student"
+                    :student-grade="student.quarterly_grade"
+                />
+            </Modal>
             <div
                 class="flex h-96 w-full items-center justify-center border-t text-8xl font-light text-gray-500"
             >
@@ -115,8 +125,11 @@ import Notes from "@/Views/Teacher/Student/Notes.vue";
 import Information from "@/Views/Teacher/Student/GuardianInformation.vue";
 import { isSidebarOpenOnXlDevice, numberWithOrdinal } from "@/utils";
 import Header from "@/Views/Teacher/Header.vue";
-import GeneralReport from "@/Views/Teacher/Student/GeneralReport.vue";
 import AssessmentBreakDown from "@/Views/Teacher/Assessments/AssessmentBreakDown.vue";
+import StudentGradeDetail from "@/Views/Teacher/Homeroom/StudentGradeDetail.vue";
+import GeneralReport from "@/Views/Teacher/Student/GeneralReport.vue";
+import Modal from "@/Components/Modal.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);
@@ -125,6 +138,7 @@ const batchSubject = computed(() => usePage().props.batch_subject);
 const batchSubjects = usePage().props.batch_subjects ?? [];
 const selectedBatchSubject = ref(batchSubject.value?.id);
 const auth = computed(() => usePage().props.auth);
+const showGrade = ref(false);
 
 const batchSubjectOptions = computed(() => {
     let options = batchSubjects.map((batchSubject) => {
