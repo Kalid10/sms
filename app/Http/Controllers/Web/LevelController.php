@@ -6,13 +6,14 @@ use App\Models\BatchStudent;
 use App\Models\Level;
 use App\Models\SchoolYear;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class LevelController extends Controller
 {
-    public function create(Request $request)
+    public function create(Request $request): RedirectResponse
     {
         // Overwrite the default error message
         $messages = [
@@ -58,54 +59,65 @@ class LevelController extends Controller
         // Get section filter
         $sectionFilter = $request->input('section');
 
-        return Inertia::render('Admin/Levels/Single', [
-            'level' => $level->load([
-                'levelCategory',
-                'batches.schoolYear',
-                'batches.subjects.subject' => function ($query) {
-                    $query->withTrashed('subjects');
-                },
-                'batches.subjects.teacher.user',
-                'batches' => function ($query) {
-                    $query
-                        ->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
-                        ->with('activeSession.batchSubject.subject')
-                        ->with('activeSession.teacher.user')
-                        ->with('homeRoomTeacher.teacher.user')
-                        ->with('activeSession.schoolPeriod')
-                        ->withCount('students', 'subjects');
-                },
+        $level->load([
+            'levelCategory',
+            'activeBatches.schoolYear',
+            'activeBatches.subjects.subject' => function ($query) {
+                $query->withTrashed('subjects');
+            },
+            'activeBatches.subjects.teacher.user',
+            'activeBatches' => function ($query) {
+                $query
+                    ->with('activeSession.batchSubject.subject')
+                    ->with('activeSession.teacher.user')
+                    ->with('homeRoomTeacher.teacher.user')
+                    ->with('activeSession.schoolPeriod')
+                    ->withCount('students', 'subjects');
+            },
+            'activeBatches.schedule' => function ($query) {
+                $query->where([
+                    ['day_of_week', Carbon::now()->dayOfWeek],
+                ]
+                )->whereHas('schoolPeriod', function ($query) {
+                    $query->where('is_custom', false);
+                })->with('schoolPeriod');
+            },
+            'activeBatches.schedule.batchSubject.subject',
+            'activeBatches.sessions',
+        ])
+            ->loadCount([
+                'activeBatches',
             ])
-                ->loadCount([
-                    'batches' => function ($query) {
-                        $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-                    },
-                ])
-                ->only('id', 'name', 'level_category_id', 'updated_at', 'batches', 'batches_count'),
-            'batches' => $level->batches,
-            'students' => Inertia::lazy(fn () => BatchStudent::whereIn('batch_id', $level->batches->pluck('id'))
-                ->with(
-                    'student:id,user_id',
-                    'student.user:id,name,email,username,phone_number,gender,date_of_birth',
-                    'batch:id,section')
-                ->when($searchKey, function ($query) use ($searchKey) {
-                    return $query->whereHas('student.user', function ($query) use ($searchKey) {
-                        return $query->where('name', 'like', "%{$searchKey}%");
-                    });
-                })
-                ->when($sectionFilter, function ($query) use ($sectionFilter) {
-                    return $query->whereHas('batch', function ($query) use ($sectionFilter) {
-                        return $query->where('section', $sectionFilter);
-                    });
-                })
-                ->paginate($perPage, ['*'], 'page', $page)
-                ->map(fn ($batchStudent) => [
-                    ...$batchStudent->student->user->toArray(),
-                    'student_id' => $batchStudent->student->id,
-                    'section' => $batchStudent->batch->section,
-                    'updated_at' => $batchStudent->updated_at->diffForHumans(Carbon::now()),
-                ])
-            ),
+            ->only('id', 'name', 'level_category_id', 'updated_at', 'batches', 'batches_count');
+
+        $students = BatchStudent::whereIn('batch_id', $level->batches->pluck('id'))
+            ->with(
+                'student:id,user_id',
+                'student.user:id,name,email,username,phone_number,gender,date_of_birth',
+                'batch:id,section')
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->whereHas('student.user', function ($query) use ($searchKey) {
+                    return $query->where('name', 'like', "%{$searchKey}%");
+                });
+            })
+            ->when($sectionFilter, function ($query) use ($sectionFilter) {
+                return $query->whereHas('batch', function ($query) use ($sectionFilter) {
+                    return $query->where('section', $sectionFilter);
+                });
+            })
+            ->paginate($perPage, ['*'], 'page', $page)
+            ->map(fn ($batchStudent) => [
+                ...$batchStudent->student->user->toArray(),
+                'student_id' => $batchStudent->student->id,
+                'section' => $batchStudent->batch->section,
+                'updated_at' => $batchStudent->updated_at->diffForHumans(Carbon::now()),
+            ]);
+
+        return Inertia::render('Admin/Levels/Single', [
+            'level' => $level,
+            'batches' => $level->activeBatches,
+            'students' => Inertia::lazy(fn () => $students),
+            'school_year' => SchoolYear::getActiveSchoolYear(),
         ]);
     }
 
