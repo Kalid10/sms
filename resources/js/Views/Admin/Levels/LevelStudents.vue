@@ -8,7 +8,7 @@
                 'Students List'
             "
             :subtitle="`Students enrolled in ${parseLevel(level.name)} for ${
-                level.batches[0].school_year.name
+                schoolYear.name
             }`"
             class="w-fit"
             :row-actionable="true"
@@ -135,6 +135,7 @@ function changePage(url) {
 const level = computed(() => usePage().props.level);
 const students = computed(() => usePage().props.students || []);
 const batches = computed(() => usePage().props.batches);
+const schoolYear = computed(() => usePage().props.school_year);
 
 const selectedSection = ref();
 const sectionsRadioButtons = computed(() =>
