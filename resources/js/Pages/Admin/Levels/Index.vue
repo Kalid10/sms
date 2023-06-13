@@ -31,7 +31,7 @@
             </template>
             <template #level-column="{ data }">
                 <Link
-                    :href="`admin/levels/${data.id}`"
+                    :href="`/admin/levels/${data.id}`"
                     class="flex items-center gap-2"
                 >
                     <div
