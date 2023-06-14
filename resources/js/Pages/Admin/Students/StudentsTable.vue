@@ -1,11 +1,11 @@
 <template>
-    <div class="rounded-lg bg-yellow-400">
+    <div class="rounded-lg">
         <TableElement
             :columns="config"
             :selectable="false"
             :header="false"
             row-actionable
-            class="px-3 py-2"
+            class="px-3 pt-4 pb-2"
             :data="formattedStudentsData"
         >
             <template #filter>

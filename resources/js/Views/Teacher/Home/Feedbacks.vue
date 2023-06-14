@@ -14,13 +14,14 @@
             class="flex w-11/12 flex-col items-center justify-center space-y-6 px-1"
         >
             <div
-                v-if="!feedbacks.data"
+                v-if="!feedbacks?.data"
                 class="py-5 px-3 text-center text-sm font-light"
             >
                 No Feedbacks
             </div>
             <div
                 v-for="(item, index) in feedbacks.data"
+                v-else
                 :key="index"
                 class="flex w-full cursor-pointer justify-center space-x-3"
             >
@@ -46,8 +47,9 @@
         </div>
 
         <Pagination
+            v-if="feedbacks?.links"
             :preserve-state="true"
-            :links="feedbacks.links"
+            :links="feedbacks?.links"
             position="center"
         />
     </div>
