@@ -46,8 +46,14 @@
                     "
                 >
                     <div
-                        class="hidden h-full w-full items-center justify-center lg:flex"
+                        class="hidden h-full w-full items-center justify-center pt-3 lg:flex lg:flex-col"
                     >
+                        <div class="mb-8 h-fit w-full">
+                            <CurrentDaySchedule
+                                :schedule="teacherSchedule"
+                                class-style="px-4 py-2 space-y-2"
+                            />
+                        </div>
                         <NextClass />
                     </div>
                 </div>
@@ -65,15 +71,11 @@
 
             <!--                Students, LessonPlan, Feedback, Grades and SchoolSchedule-->
             <div
-                class="flex h-full flex-col justify-between space-y-2 lg:flex-row"
+                class="flex h-full flex-col justify-between space-y-4 lg:flex-row lg:space-y-0 2xl:pt-8"
             >
                 <StudentsTable
-                    class="h-fit w-full rounded-lg bg-white px-3 py-1 shadow-sm 2xl:mt-10 2xl:w-6/12"
-                    :class="
-                        isSidebarOpenOnXlDevice
-                            ? 'lg:w-5/12 lg:mt-[-3rem]'
-                            : 'lg:w-5/12 lg:mt-[-1rem]'
-                    "
+                    class="h-fit w-full rounded-lg bg-white px-3 shadow-sm 2xl:w-6/12"
+                    :class="isSidebarOpenOnXlDevice ? 'lg:w-5/12' : 'lg:w-5/12'"
                     @click="fetchStudent"
                 />
 
@@ -81,10 +83,12 @@
                     class="hidden 2xl:hidden"
                     :class="isSidebarOpenOnXlDevice ? 'lg:hidden' : 'lg:w-2/12'"
                 />
-                <LessonPlans
-                    class="w-full 2xl:w-5/12"
+                <div
+                    class="h-fit w-full rounded-lg bg-white p-4 shadow-sm 2xl:w-5/12"
                     :class="isSidebarOpenOnXlDevice ? 'lg:w-6/12' : 'lg:w-5/12'"
-                />
+                >
+                    <LessonPlans view="class" />
+                </div>
 
                 <div
                     class="flex h-full w-full flex-col justify-between space-y-5 lg:hidden 2xl:w-4/12"
@@ -134,11 +138,13 @@ import Assessments from "@/Views/Teacher/Home/Assessments.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import StudentsTable from "@/Views/Teacher/StudentsTable.vue";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
+import CurrentDaySchedule from "@/Views/CurrentDaySchedule.vue";
 
 const teacher = usePage().props.teacher;
 const filters = computed(() => usePage().props.filters);
 const nextClass = usePage().props.teacher.next_batch_session;
 const nextClassSection = ref(null);
+const teacherSchedule = computed(() => usePage().props.teacher_schedule);
 const scrollToNextClass = () => {
     nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
 };

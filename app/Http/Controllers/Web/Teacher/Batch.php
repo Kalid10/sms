@@ -21,7 +21,9 @@ class Batch extends Controller
      */
     public function __invoke(Request $request): Response
     {
-        $batchSubject = TeacherService::prepareBatchSubject($request);
+        $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id'));
+
+        $batchSubject = TeacherService::prepareBatchSubject($request, $id);
         $students = TeacherService::getStudents($batchSubject->id, $request->input('search'));
         $teacher = Teacher::find(auth()->user()->teacher->id);
 

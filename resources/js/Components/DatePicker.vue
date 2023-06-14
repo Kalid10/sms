@@ -8,6 +8,14 @@
         </span>
 
         <span
+            v-if="visible && labelLocation === 'inside'"
+            class="text-[0.7rem] text-gray-500"
+        >
+            {{ label }}
+        </span>
+
+        <span
+            v-if="!visible"
             class="relative flex w-full items-center justify-between rounded-md border border-gray-200 bg-white py-2 px-3 placeholder:text-sm"
             :class="[labelLocation === 'inside' ? 'relative h-12' : 'h-10']"
             @click.prevent="viewPanel = !viewPanel"
@@ -35,20 +43,24 @@
         </span>
 
         <span
-            v-if="viewPanel"
+            v-if="viewPanel || visible"
             ref="panelViewer"
-            class="absolute bottom-0 right-0 z-50 -mb-2 min-w-[282.98px] translate-y-full rounded-md border bg-white drop-shadow-md"
+            :class="{
+                'absolute bottom-0 right-0 z-50 -mb-2 translate-y-full drop-shadow-md':
+                    !visible,
+            }"
+            class="min-w-[282.98px] rounded-md border bg-white"
         >
             <span class="flex min-w-fit flex-col overflow-hidden rounded-md">
                 <span
-                    class="col-span-7 flex h-12 min-w-fit items-center justify-between border-b bg-neutral-50 p-2 shadow"
+                    class="col-span-7 flex h-12 min-w-fit items-center justify-between border-b bg-zinc-800 p-2 shadow"
                 >
                     <ChevronLeftIcon
                         class="h-4 w-4 min-w-fit cursor-pointer stroke-gray-500 stroke-[3]"
                         @click="previous"
                     />
                     <span
-                        class="flex min-w-fit select-none gap-1 text-sm font-semibold text-gray-500"
+                        class="flex min-w-fit select-none gap-1 font-light text-gray-100"
                     >
                         <button
                             v-if="panel === 'date'"
@@ -175,7 +187,7 @@
                 </span>
 
                 <span
-                    v-if="panel === 'date'"
+                    v-if="panel === 'date' && !visible"
                     class="grid place-items-center p-2"
                 >
                     <button
@@ -273,6 +285,10 @@ const props = defineProps({
     dateFormat: {
         type: String,
         default: "YYYY-MM-dd",
+    },
+    visible: {
+        type: Boolean,
+        default: false,
     },
 });
 

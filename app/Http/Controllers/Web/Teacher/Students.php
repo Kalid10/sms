@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web\Teacher;
 use App\Models\Batch;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
-use App\Models\Teacher;
 use App\Services\StudentService;
 use App\Services\TeacherService;
 use Illuminate\Http\Request;
@@ -24,8 +23,8 @@ class Students extends Controller
             'search' => 'nullable|string',
         ]);
 
-        $teacher = Teacher::find(auth()->user()->teacher->id);
-        $batchSubject = TeacherService::prepareBatchSubject($request);
+        $teacher = auth()->user()->teacher;
+        $batchSubject = TeacherService::prepareBatchSubject($request, $teacher->id);
 
         $batchStudents = TeacherService::getStudents($batchSubject->id, $request->input('search'));
 
