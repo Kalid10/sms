@@ -25,7 +25,11 @@
                                 {{ moment(endDate).format(" MMM DD YYYY") }}
                             </div>
                         </div>
-                        <TextInput class="w-4/5" placeholder="Search" />
+                        <TextInput
+                            v-model="query"
+                            class="w-4/5"
+                            placeholder="Search for schedule"
+                        />
                     </div>
 
                     <div
@@ -58,10 +62,13 @@
                 <SecondaryButton
                     title="Add Event"
                     class="w-7/12 rounded-lg bg-zinc-800 !py-2 text-white"
+                    @click="showModalToggle"
                 />
             </div>
         </div>
     </div>
+    <SchoolScheduleAdd v-if="showAddModal" />
+
     <Loading v-if="showLoading" is-full-screen />
 </template>
 <script setup>
@@ -76,6 +83,7 @@ import { debounce } from "lodash";
 import Loading from "@/Components/Loading.vue";
 import moment from "moment";
 import TextInput from "@/Components/TextInput.vue";
+import SchoolScheduleAdd from "@/Views/Admin/GettingStarted/Schedule/SchoolSchedule.vue";
 
 const schoolSchedule = computed(() => usePage().props.school_schedule);
 const filters = computed(() => usePage().props.filters);
@@ -83,9 +91,36 @@ const startDate = ref(new Date(filters.value?.start_date ?? moment()));
 const endDate = ref(
     new Date(filters.value?.end_date ?? moment(startDate.value).add(1, "week"))
 );
+
+const showAddModal = ref(false);
+
+function showModalToggle() {
+    showAddModal.value = !showAddModal.value;
+}
+
 const showLoading = ref(false);
 const scheduleForm = useForm({
     start_date: "",
+});
+
+const query = ref("");
+
+function search() {
+    router.get(
+        "/admin/schedules",
+        {
+            search: query.value,
+        },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
+}
+
+const key = ref(0);
+watch([query], () => {
+    search();
 });
 
 const filterSchedule = debounce(() => {
