@@ -75,12 +75,35 @@ class AdminController extends Controller
 
     public function schedule(Request $request): Response
     {
+        $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'search' => 'nullable|string',
+        ]);
         $searchKey = $request->input('search');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-        $schoolSchedule = SchoolSchedule::where('title', 'like', '%'.$searchKey.'%')->get();
+        $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()?->id)
+            ->when($startDate, function ($query) use ($startDate) {
+                return $query->whereDate('start_date', '>=', Carbon::parse($startDate));
+            })
+            ->when($endDate, function ($query) use ($endDate) {
+                return $query->whereDate('end_date', '<=', Carbon::parse($endDate));
+            })
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->where('title', 'like', "%{$searchKey}%");
+            })
+            ->orderBy('start_date', 'asc')
+            ->paginate(7)->appends(request()->query());
 
         return Inertia::render('Admin/Schedules/Index', [
             'school_schedule' => $schoolSchedule,
+            'filters' => [
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'search' => $searchKey,
+            ],
         ]);
     }
 
