@@ -109,4 +109,9 @@ class TeacherService
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
                 })->first()->load('subject', 'batch.level');
     }
+
+    public static function getTeacherFeedbacks(int $id, int $limit = 5)
+    {
+        return Teacher::findOrFail($id)->feedbacks()->with('author:id,name')->orderBy('created_at', 'desc')->paginate($limit)->appends(request()->query());
+    }
 }

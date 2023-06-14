@@ -19,6 +19,8 @@ class AdminController extends Controller
 {
     public function index(Request $request): Response
     {
+        $searchKey = $request->input('search');
+
         // Get teachers, students, admins and subjects count
         $teachersCount = User::where('type', 'teacher')->count();
         $studentsCount = User::where('type', 'student')->count();
@@ -42,7 +44,10 @@ class AdminController extends Controller
 
         $schoolYear = SchoolYear::getActiveSchoolYear();
 
-        $announcements = Announcement::where('school_year_id', $schoolYear?->id)->with('author.user')->get()->take(5);
+        $announcements = Announcement::where('school_year_id', $schoolYear?->id)->with('author.user')
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->where('title', 'like', "%{$searchKey}%");
+            })->get()->take(5);
 
         $schoolScheduleDate = $request->input('school_schedule_date') ?? now()->addDays(4);
         $schoolSchedule = SchoolSchedule::where('school_year_id', $schoolYear?->id)
@@ -76,6 +81,22 @@ class AdminController extends Controller
 
         return Inertia::render('Admin/Schedules/Index', [
             'school_schedule' => $schoolSchedule,
+        ]);
+    }
+
+    public function announcements(Request $request): Response
+    {
+        $searchKey = $request->input('search');
+
+        $schoolYear = SchoolYear::getActiveSchoolYear();
+
+        $announcements = Announcement::where('school_year_id', $schoolYear?->id)->with('author.user')
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->where('title', 'like', "%{$searchKey}%");
+            })->paginate(20);
+
+        return Inertia::render('Admin/Announcements/Index', [
+            'announcements' => $announcements,
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Announcement;
 use App\Models\SchoolYear;
+use App\Services\TeacherService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,14 +12,33 @@ use Inertia\Response;
 
 class AnnouncementController extends Controller
 {
-    public function index(): Response
+    public function __construct(TeacherService $teacherService)
     {
+        $this->teacherService = $teacherService;
+    }
+
+    public function index(Request $request): Response
+    {
+        $searchKey = $request->input('search');
+
         // Get all announcements
-        $announcements = Announcement::all();
+        $announcements = Announcement::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->
+        whereJsonContains('target_group', 'all')
+            ->orWhereJsonContains('target_group', 'teachers')
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->where('title', 'like', "%{$searchKey}%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->with('author.user:id,name')
+            ->paginate(10);
+
+        // Get teacher's feedbacks using teacher service getTeacherFeedbacks function
+        $feedbacks = $this->teacherService->getTeacherFeedbacks(auth()->user()->teacher->id);
 
         // TODO: change this to a view when the view is ready
-        return Inertia::render('Welcome', [
+        return Inertia::render('Teacher/Announcement/Index', [
             'announcements' => $announcements,
+            'feedbacks' => $feedbacks,
         ]);
     }
 
@@ -33,7 +53,7 @@ class AnnouncementController extends Controller
         ]);
 
         // Get the current authenticated user
-        $user = auth()->user()->id;
+        $user = auth()->user();
 
         // Get the current school year
         $schoolYear = SchoolYear::getActiveSchoolYear()->id;
