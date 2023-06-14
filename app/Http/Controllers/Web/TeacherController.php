@@ -9,9 +9,11 @@ use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
+use App\Models\User;
 use App\Services\StudentService;
 use App\Services\TeacherService;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -113,7 +115,13 @@ class TeacherController extends Controller
             ->take(5)
             ->get();
 
-        return Inertia::render('Teacher/Index', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'teacher' => $teacher,
             'batches' => $batches,
             'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),

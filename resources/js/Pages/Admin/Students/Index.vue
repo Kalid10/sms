@@ -20,7 +20,7 @@ import { debounce } from "lodash";
 import StudentsTable from "@/Pages/Admin/Students/StudentsTable.vue";
 import TabElement from "@/Components/TabElement.vue";
 import BatchStudentsTable from "@/Pages/Admin/Students/BatchStudentsTable.vue";
-import Title from "@/Views/Teacher/Title.vue";
+import Title from "@/Views/Teacher/Views/Title.vue";
 
 const models = ["Students", "Grades"];
 

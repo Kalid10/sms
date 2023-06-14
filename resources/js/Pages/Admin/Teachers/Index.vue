@@ -77,7 +77,7 @@ import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline/index";
 import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
 import Pagination from "@/Components/Pagination.vue";
-import Title from "@/Views/Teacher/Title.vue";
+import Title from "@/Views/Teacher/Views/Title.vue";
 
 const teachers = computed(() => {
     return usePage().props.teachers;

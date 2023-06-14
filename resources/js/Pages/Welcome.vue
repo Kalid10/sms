@@ -1105,7 +1105,7 @@ function createAnnouncement() {
     router.post(
         "/announcements/create",
         {
-            title: "New Teacher announcement",
+            title: "New Views announcement",
             body: "This is a test announcement",
             expires_on: "2020-12-13",
             target_group: ["teachers"],

@@ -54,7 +54,7 @@ import ActiveSession from "@/Views/Admin/Levels/Section/ActiveSession.vue";
 import AbsentStudents from "@/Views/Admin/Absentee.vue";
 import Performance from "@/Views/Admin/Levels/Section/Performance.vue";
 import TextInput from "@/Components/TextInput.vue";
-import Assessments from "@/Views/Teacher/Home/Assessments.vue";
+import Assessments from "@/Views/Teacher/Views/Home/Assessments.vue";
 import Homeroom from "@/Views/Admin/Levels/Section/Homeroom.vue";
 
 const props = defineProps({
