@@ -116,7 +116,7 @@
                 </div>
             </div>
             <div
-                v-if="assessment.status !== 'completed'"
+                v-if="assessment.status !== 'completed' && isTeacher()"
                 class="my-1 flex w-11/12 cursor-pointer justify-center rounded-2xl bg-zinc-800 py-1.5 text-center text-[0.6rem] font-semibold text-white lg:w-1/2 2xl:w-5/12 2xl:text-xs"
                 @click="$emit('update')"
             >
@@ -134,6 +134,7 @@
 <script setup>
 import LinkCell from "@/Components/LinkCell.vue";
 import { computed } from "vue";
+import { isTeacher } from "@/utils";
 
 defineEmits("update");
 

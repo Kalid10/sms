@@ -25,6 +25,7 @@
                 />
             </div>
             <div
+                v-if="isTeacher()"
                 class="hidden w-fit cursor-pointer space-x-2 rounded-md bg-zinc-800 px-2 py-1.5 text-xs font-medium text-white hover:font-semibold lg:flex"
                 @click="$emit('create')"
             >
@@ -179,6 +180,7 @@ import TextInput from "@/Components/TextInput.vue";
 import { onClickOutside } from "@vueuse/core";
 import SelectedFilters from "@/Views/Teacher/Assessments/Table/Filters/SelectedFilters.vue";
 import Loading from "@/Components/Loading.vue";
+import { isAdmin, isTeacher } from "@/utils";
 
 const emit = defineEmits(["create", "filterEnabled"]);
 
@@ -353,6 +355,7 @@ async function getAssessments() {
             search: search.value,
             due_date: dueDate.value,
             status: selectedAssessmentStatus.value,
+            teacher_id: isAdmin() ? teacher.id : null,
         },
         {
             preserveScroll: true,

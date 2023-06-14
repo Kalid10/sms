@@ -62,7 +62,7 @@
                 <MarkStudentInfo ref="studentInfo" class="animate-scale-up" />
 
                 <div
-                    v-if="showFinishMarkingButton"
+                    v-if="showFinishMarkingButton && isTeacher()"
                     class="flex h-fit w-full animate-scale-up flex-col items-center space-y-4 rounded-md border-2 border-black px-2 py-3 text-center font-semibold lg:w-10/12 2xl:w-9/12"
                 >
                     <div
@@ -105,6 +105,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import Loading from "@/Components/Loading.vue";
 import BackButton from "@/Components/BackButton.vue";
+import { isTeacher } from "@/utils";
 
 const showNotification = inject("showNotification");
 const isLoading = ref(false);

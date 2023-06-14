@@ -2,12 +2,9 @@
     <div
         class="group flex w-full cursor-pointer justify-between px-3 py-4 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-50"
     >
-        <p
-            class="flex shrink-0 items-center border-r px-2 text-[0.65rem] font-light hover:text-gray-100 sm:text-right"
+        <div
+            class="flex w-full flex-col space-y-2 border-l pl-3 text-xs font-semibold"
         >
-            {{ moment(announcement.created_at).fromNow() }}
-        </p>
-        <div class="flex w-full flex-col space-y-2 pl-3 text-xs font-semibold">
             <div>{{ announcement.title }}</div>
 
             <div
@@ -33,7 +30,8 @@
                 </div>
                 <div>
                     <div>
-                        Posted by Author - {{ announcement.author.user.name }}
+                        {{ announcement.author.user.name }}
+                        ( {{ moment(announcement.created_at).fromNow() }} )
                     </div>
                 </div>
             </div>

@@ -22,6 +22,7 @@
             />
         </div>
         <LinkCell
+            v-if="view === 'detail'"
             :href="'/teacher/assessments/mark/' + assessment.id"
             class="w-full pr-2 text-end"
             value="View All Results"
@@ -43,6 +44,10 @@ const props = defineProps({
     assessment: {
         type: Object,
         required: true,
+    },
+    view: {
+        type: String,
+        default: null,
     },
 });
 

@@ -77,7 +77,9 @@
                                     points[index].status !== null,
                             }"
                             placeholder="-"
-                            :disabled="points[index].status !== null"
+                            :disabled="
+                                points[index].status !== null || !isTeacher()
+                            "
                             @focusin="handleFocusIn(index)"
                             @focusout="handleFocusOut()"
                             @keydown="onKeyDown($event, index)"
@@ -91,11 +93,7 @@
                                 ? 'text-black'
                                 : 'text-gray-300 hover:text-purple-500'
                         "
-                        @click="
-                            points[index].status = 'valid_reassessment';
-                            $emit('updatePoints', points);
-                            points[index].point = 0;
-                        "
+                        @click="handleStatusClick(index, 'valid_reassessment')"
                     />
                     <ArchiveBoxXMarkIcon
                         class="w-5 hover:scale-125"
@@ -104,11 +102,7 @@
                                 ? 'text-black'
                                 : 'text-gray-300 hover:text-orange-500'
                         "
-                        @click="
-                            points[index].status = 'disqualified';
-                            $emit('updatePoints', points);
-                            points[index].point = 0;
-                        "
+                        @click="handleStatusClick(index, 'disqualified')"
                     />
                     <BookmarkSlashIcon
                         class="w-5 hover:scale-125"
@@ -117,11 +111,7 @@
                                 ? 'text-black'
                                 : 'text-gray-300 hover:text-red-600'
                         "
-                        @click="
-                            points[index].status = 'misconduct';
-                            $emit('updatePoints', points);
-                            points[index].point = 0;
-                        "
+                        @click="handleStatusClick(index, 'misconduct')"
                     />
                     <ChatBubbleBottomCenterIcon
                         class="w-5 hover:scale-125"
@@ -181,6 +171,7 @@ import {
 } from "@heroicons/vue/20/solid/index.js";
 import TextArea from "@/Components/TextArea.vue";
 import Error from "@/Components/Error.vue";
+import { isTeacher } from "@/utils";
 
 const assessment = usePage().props.assessment;
 const focusedInputIndex = ref(null);
@@ -253,6 +244,13 @@ const handleFocusOut = () => {
 const handleRowClick = (index, studentId) => {
     focusedInputIndex.value = index;
     emit("click", studentId);
+};
+const handleStatusClick = (index, status) => {
+    if (isTeacher()) {
+        points[index].status = status;
+        emit("updatePoints", points);
+        points[index].point = 0;
+    }
 };
 </script>
 <style scoped>

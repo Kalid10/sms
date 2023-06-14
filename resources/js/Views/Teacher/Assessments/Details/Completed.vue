@@ -8,7 +8,7 @@
     <div class="flex w-full flex-col space-y-2">
         <ResultStatistics :assessment="assessment" />
 
-        <StudentScoreList :assessment="assessment" />
+        <StudentScoreList :assessment="assessment" view="detail" />
     </div>
 </template>
 <script setup>

@@ -13,8 +13,8 @@
             </div>
             <LinkCell
                 class="flex w-fit items-center justify-center"
-                href="/teacher/assessments"
                 value="SEE ALL"
+                @click="fetchAssessments"
             />
         </div>
 
@@ -41,11 +41,12 @@
     </div>
 </template>
 <script setup>
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import Item from "@/Views/Teacher/Home/Assessments/Item/Index.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 import { computed } from "vue";
+import { isAdmin } from "@/utils";
 
 const props = defineProps({
     assessments: {
@@ -64,5 +65,30 @@ const props = defineProps({
 const assessments = computed(() => {
     return props.assessments ?? usePage().props.teacher.assessments;
 });
+const teacher = computed(() => {
+    return usePage().props.teacher;
+});
+
+function fetchAssessments() {
+    if (isAdmin()) {
+        return router.get(
+            "/teacher/assessments",
+            {
+                teacher_id: teacher.value.id,
+            },
+            {
+                preserveState: true,
+            }
+        );
+    }
+
+    return router.get(
+        "/teacher/assessments",
+        {},
+        {
+            preserveState: true,
+        }
+    );
+}
 </script>
 <style scoped></style>

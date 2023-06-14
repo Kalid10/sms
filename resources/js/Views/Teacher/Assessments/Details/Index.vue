@@ -19,7 +19,7 @@
             />
 
             <Draft
-                v-if="assessment.status === 'draft'"
+                v-if="assessment.status === 'draft' && isTeacher()"
                 :assessment="assessment"
             />
             <Scheduled
@@ -68,6 +68,7 @@ import Published from "@/Views/Teacher/Assessments/Details/Published.vue";
 import Completed from "@/Views/Teacher/Assessments/Details/Completed.vue";
 import Marking from "@/Views/Teacher/Assessments/Details/Marking.vue";
 import Scheduled from "@/Views/Teacher/Assessments/Details/Scheduled.vue";
+import { isTeacher } from "@/utils";
 
 const props = defineProps({
     assessment: {
