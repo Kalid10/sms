@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-fit w-full items-center justify-evenly rounded-t-lg bg-black py-2.5 text-white"
+        class="flex h-fit w-full items-center justify-evenly rounded-t-lg bg-zinc-800 py-3 text-white"
     >
         <div class="flex w-1/12 items-center justify-center">
             <ChevronLeftIcon
@@ -10,18 +10,20 @@
         </div>
 
         <div
-            class="flex h-full w-5/12 items-center justify-center space-x-2.5 lg:w-8/12"
+            class="flex h-full w-5/12 items-end justify-center space-x-2.5 lg:w-8/12"
         >
-            <div class="text-4xl font-bold 2xl:text-5xl">
-                {{ moment(selectedDate).format("ddd") }}
+            <div class="text-2xl font-bold 2xl:text-2xl">
+                {{ moment(selectedDate).format("dddd") }}
             </div>
             <div
-                class="flex h-full flex-col items-center justify-center space-y-1 text-xs font-semibold"
+                :class="
+                    isSidebarOpenOnXlDevice
+                        ? 'text-xs bg-white font-light lg:bg-yellow-500 2xl:text-sm'
+                        : 'font-light '
+                "
             >
-                <div class="w-full text-[0.65rem] 2xl:text-xs">
-                    {{ moment(selectedDate).format("MMMM D") }}
-                </div>
-                <div>{{ moment(selectedDate).format("YYYY") }}</div>
+                {{ moment(selectedDate).format("MMMM D") }}
+                {{ moment(selectedDate).format("YYYY") }}
             </div>
         </div>
 
@@ -38,8 +40,15 @@ import moment from "moment/moment";
 import { ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
+import { isSidebarOpenOnXlDevice } from "@/utils";
 
 const selectedDate = ref(usePage().props.school_schedule_date);
+const props = defineProps({
+    scheduleUrl: {
+        type: String,
+        default: "/teacher?school_schedule_date=",
+    },
+});
 
 const changeDate = (direction) => {
     if (direction === "up") {
@@ -53,7 +62,7 @@ const changeDate = (direction) => {
 
 watch(selectedDate, (newValue) => {
     const formattedDate = moment(newValue).format("YYYY-MM-DD");
-    router.visit("/teacher?school_schedule_date=" + formattedDate, {
+    router.visit(props.scheduleUrl + formattedDate, {
         only: ["school_schedule"],
         preserveState: true,
     });

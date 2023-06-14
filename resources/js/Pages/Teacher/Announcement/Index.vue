@@ -23,7 +23,7 @@
 <script setup>
 import Feedbacks from "@/Views/Teacher/Home/Feedbacks.vue";
 import { usePage } from "@inertiajs/vue3";
-import Announcement from "@/Pages/Admin/Announcements/Index.vue";
+import Announcement from "@/Views/Announcements/Index.vue";
 
 const feedbacks = usePage().props.feedbacks;
 </script>

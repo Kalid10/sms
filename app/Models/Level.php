@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,15 +26,13 @@ class Level extends Model
         return $this->hasMany(Batch::class);
     }
 
-    public function activeBatches(): Collection
+    public function activeBatches(): HasMany
     {
         $schoolYear = SchoolYear::getActiveSchoolYear();
 
         return $this->batches()
-            ->where('school_year_id', $schoolYear->id)
-            ->with(['schedule' => function ($query) {
+            ->where('school_year_id', $schoolYear->id)->with(['schedule' => function ($query) {
                 $query->with('batchSubject', 'schoolPeriod');
-            }])
-            ->get();
+            }]);
     }
 }

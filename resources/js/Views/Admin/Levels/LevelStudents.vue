@@ -1,11 +1,15 @@
 <template>
-
-    <div class="flex flex-col gap-3">
-
+    <div class="flex w-full flex-col gap-3">
         <TableElement
-            v-if="!! students"
-            :title="selectedSection && `Section ${selectedSection} Students List` || 'Students List'"
-            :subtitle="`Students enrolled in ${parseLevel(level.name)} for ${level.batches[0].school_year.name}`"
+            v-if="!!students"
+            :title="
+                (selectedSection &&
+                    `Section ${selectedSection} Students List`) ||
+                'Students List'
+            "
+            :subtitle="`Students enrolled in ${parseLevel(level.name)} for ${
+                schoolYear.name
+            }`"
             class="w-fit"
             :row-actionable="true"
             :selectable="false"
@@ -13,33 +17,44 @@
             :data="students"
         >
             <template #date_of_birth-column="{ data }">
-
-                {{ Math.abs(moment(data).diff(new Date(), 'years')) }}
-
+                {{ Math.abs(moment(data).diff(new Date(), "years")) }}
             </template>
 
             <template #filter>
                 <div class="flex w-full gap-4">
                     <div class="grow">
-                        <RadioGroup v-model="selectedSection" :options="sectionsRadioButtons" name="sections"/>
+                        <RadioGroup
+                            v-model="selectedSection"
+                            :options="sectionsRadioButtons"
+                            name="sections"
+                        />
                     </div>
-                    <TextInput v-model="searchKey" class="w-full" placeholder="Search for a student by name"/>
+                    <TextInput
+                        v-model="searchKey"
+                        class="w-full"
+                        placeholder="Search for a student by name"
+                    />
                 </div>
             </template>
 
             <template #empty-data>
                 <div class="flex flex-col items-center justify-center">
-                    <ExclamationTriangleIcon class="mb-2 h-6 w-6 text-negative-50"/>
-                    <p class="text-sm font-semibold">
-                        No data found
-                    </p>
+                    <ExclamationTriangleIcon
+                        class="mb-2 h-6 w-6 text-negative-50"
+                    />
+                    <p class="text-sm font-semibold">No data found</p>
                     <div v-if="searchKey.length">
-                        <p v-if="searchKey === null" class="text-sm text-gray-500">
+                        <p
+                            v-if="searchKey === null"
+                            class="text-sm text-gray-500"
+                        >
                             No student has been enrolled in this section
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
-                            Your search query "<span class="font-medium text-black">{{ searchKey }}</span>" did not
-                            match
+                            Your search query "<span
+                                class="font-medium text-black"
+                                >{{ searchKey }}</span
+                            >" did not match
                             <span class="block">any student's name</span>
                         </p>
                     </div>
@@ -47,148 +62,165 @@
             </template>
 
             <template #row-actions="{ row }">
-                <Link :href="'/students/' + row['student_id']" class="flex flex-col items-center gap-1">
-                    <EyeIcon class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"/>
+                <Link
+                    :href="'/students/' + row['student_id']"
+                    class="flex flex-col items-center gap-1"
+                >
+                    <EyeIcon
+                        class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"
+                    />
                 </Link>
-                <Link :href="'/users/' + row['student_id'] + '/edit'" class="flex flex-col items-center gap-1">
+                <Link
+                    :href="'/users/' + row['student_id'] + '/edit'"
+                    class="flex flex-col items-center gap-1"
+                >
                     <ArrowPathIcon
-                        class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"/>
+                        class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"
+                    />
                 </Link>
-                <Link :href="'/users/' + row['student_id'] + '/delete'" class="flex flex-col items-center gap-1">
+                <Link
+                    :href="'/users/' + row['student_id'] + '/delete'"
+                    class="flex flex-col items-center gap-1"
+                >
                     <ArchiveBoxXMarkIcon
-                        class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"/>
+                        class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"
+                    />
                 </Link>
             </template>
 
             <template #footer>
-
                 <SelectInput
-                    v-model="perPage" :options="perPageOptions" class="w-36" direction="up"
-                    placeholder="Per page"/>
-
-
+                    v-model="perPage"
+                    :options="perPageOptions"
+                    class="w-36"
+                    direction="up"
+                    placeholder="Per page"
+                />
             </template>
         </TableElement>
-
     </div>
-
 </template>
 
 <script setup>
-import {computed, onMounted, ref, watch} from "vue";
-import {Link, router, usePage} from "@inertiajs/vue3";
+import { computed, onMounted, ref, watch } from "vue";
+import { Link, router, usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import RadioGroup from "@/Components/RadioGroup.vue";
-import {parseLevel} from "@/utils.js";
-import {ArchiveBoxXMarkIcon, ArrowPathIcon, ExclamationTriangleIcon, EyeIcon} from "@heroicons/vue/24/outline/index.js";
+import { parseLevel } from "@/utils.js";
+import {
+    ArchiveBoxXMarkIcon,
+    ArrowPathIcon,
+    ExclamationTriangleIcon,
+    EyeIcon,
+} from "@heroicons/vue/24/outline/index.js";
 import moment from "moment";
 import TextInput from "@/Components/TextInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 
-
 const props = {
     pagination: {
         type: Object,
-        default: () => null
+        default: () => null,
     },
-}
+};
 
 function changePage(url) {
     router.get(url, {
         only: ["students"],
         preserveState: true,
-        replace: true
+        replace: true,
     });
 }
 
+const level = computed(() => usePage().props.level);
+const students = computed(() => usePage().props.students || []);
+const batches = computed(() => usePage().props.batches);
+const schoolYear = computed(() => usePage().props.school_year);
 
-const level = computed(() => usePage().props.level)
-const students = computed(() => usePage().props.students || [])
-const batches = computed(() => usePage().props.batches)
+const selectedSection = ref();
+const sectionsRadioButtons = computed(() =>
+    usePage().props.batches.map((batch) => {
+        return {
+            label: `Section ${batch.section}`,
+            value: batch.section,
+        };
+    })
+);
 
-const selectedSection = ref()
-const sectionsRadioButtons = computed(() => usePage().props.batches.map(batch => {
-    return {
-        label: `Section ${batch.section}`,
-        value: batch.section
-    }
-}))
-
-const searchKey = ref('');
-const perPage = ref(10)
+const searchKey = ref("");
+const perPage = ref(10);
 const perPageOptions = [
-    {value: 10, label: '10'},
-    {value: 25, label: '25'},
-    {value: 50, label: '50'},
-    {value: 100, label: '100'},
-]
+    { value: 10, label: "10" },
+    { value: 25, label: "25" },
+    { value: 50, label: "50" },
+    { value: 100, label: "100" },
+];
 
 const search = () => {
     const currentPage = usePage().props.page || 1; // Add this line
     router.get(
-        "/levels/" + level.value.id, {
+        "/admin/levels/" + level.value.id,
+        {
             search: searchKey.value,
             section: selectedSection.value,
             per_page: perPage.value,
             page: currentPage, // Add this line
-        }, {
+        },
+        {
             only: ["students"],
             preserveState: true,
-            replace: true
-        });
-}
+            replace: true,
+        }
+    );
+};
 
 const page = computed(() => usePage().props.page || 1);
 watch([selectedSection, searchKey, perPage, page], () => {
     search();
-})
-
+});
 
 const studentsConfig = [
     {
-        name: '',
-        key: 'name',
-        class: 'font-semibold',
-        align: 'right'
+        name: "",
+        key: "name",
+        class: "font-semibold",
+        align: "right",
     },
     {
-        name: '',
-        key: 'email',
-        class: 'text-gray-500 text-xs w-full',
-        align: 'left'
+        name: "",
+        key: "email",
+        class: "text-gray-500 text-xs w-full",
+        align: "left",
     },
     {
-        name: '',
-        key: 'username',
-        class: 'text-gray-500 text-xs font-semibold'
+        name: "",
+        key: "username",
+        class: "text-gray-500 text-xs font-semibold",
     },
     {
-        name: '',
-        key: 'gender',
-        type: 'enum',
-        options: ['male', 'female']
+        name: "",
+        key: "gender",
+        type: "enum",
+        options: ["male", "female"],
     },
     {
-        name: 'Age',
-        key: 'date_of_birth',
-        type: 'custom'
+        name: "Age",
+        key: "date_of_birth",
+        type: "custom",
     },
     {
-        name: 'Last updated',
-        key: 'updated_at',
-        class: 'text-gray-500 text-xs',
-        align: 'right'
-    }
-]
+        name: "Last updated",
+        key: "updated_at",
+        class: "text-gray-500 text-xs",
+        align: "right",
+    },
+];
 
 onMounted(() => {
-
     router.reload({
         only: ["students"],
-    })
-})
+    });
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

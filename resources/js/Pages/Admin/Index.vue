@@ -35,20 +35,44 @@
     <!--        />-->
     <!--    </div>-->
     <div
-        class="flex h-screen w-full flex-col gap-3 space-y-3 bg-gray-50 p-3 lg:space-y-3 lg:px-1 2xl:pl-4 2xl:pr-12"
+        class="flex min-h-screen w-full flex-col gap-3 space-y-6 bg-gray-50 py-8 px-5 lg:space-y-5 lg:px-1 2xl:px-10"
     >
-        <WelcomeHeader />
-
-        <div class="flex w-full justify-between">
-            <div class="w-6/12">
-                <Announcements
-                    class-style="px-3"
-                    url="/admin"
-                    title="Recent Announcements"
+        <div class="flex w-full justify-between space-x-5">
+            <WelcomeHeader />
+            <div class="w-5/12">
+                <TextInput
+                    placeholder="Search Student"
+                    class-style="h-8 bg-white border-gray-300 text-black placeholder:text-gray-500 placeholder:text-xs focus:border-none focus:ring-zinc-500"
                 />
             </div>
-            <div class="w-5/12">
+        </div>
+
+        <div class="flex w-full justify-between">
+            <div class="flex w-6/12 flex-col space-y-5">
+                <Announcements
+                    class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
+                />
+
+                <StudentsTable />
+            </div>
+            <div class="flex w-5/12 flex-col space-y-5">
+                <div class="flex w-full space-x-5">
+                    <div
+                        class="flex h-full w-4/12 flex-col justify-evenly space-y-4"
+                    >
+                        <AbsentTeachers value="4" title="Absent Teachers" />
+                        <AbsentTeachers value="15" title="Absent Students" />
+                    </div>
+                    <div class="w-9/12">
+                        <SchoolSchedule />
+                    </div>
+                </div>
                 <Levels />
+                <div
+                    class="flex h-full w-full items-center justify-center rounded-lg border border-black"
+                >
+                    homers
+                </div>
             </div>
         </div>
     </div>
@@ -59,7 +83,12 @@ import moment from "moment/moment";
 import { usePage } from "@inertiajs/vue3";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import Levels from "@/Pages/Admin/Levels/Index.vue";
-import Announcements from "@/Pages/Admin/Announcements/Index.vue";
+import Announcements from "@/Views/Announcements/Index.vue";
+import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Index.vue";
+import AbsentTeachers from "@/Views/Admin/Absentee.vue";
+import TextInput from "@/Components/TextInput.vue";
+
+import StudentsTable from "@/Pages/Admin/Students/StudentsTable.vue";
 
 const teachersCount = computed(() => usePage().props.teachers_count);
 

@@ -3,19 +3,19 @@
         <div
             class="flex flex-col justify-center space-y-4 rounded-lg py-5 text-center shadow-sm"
             :class="{
-                'bg-positive-100 text-white': grade?.grade_scale.label === 'A',
-                'bg-yellow-400': grade?.grade_scale.label === 'B',
-                'bg-yellow-300': grade?.grade_scale.label === 'C',
-                'bg-negative-50 text-white': grade?.grade_scale.label === 'D',
-                'bg-negative-100 text-white': grade?.grade_scale.label === 'F',
+                'bg-positive-100 text-white': grade?.grade_scale?.label === 'A',
+                'bg-yellow-400': grade?.grade_scale?.label === 'B',
+                'bg-yellow-300': grade?.grade_scale?.label === 'C',
+                'bg-yellow-400 text-black': grade?.grade_scale?.label === 'D',
+                'bg-negative-100 text-white': grade?.grade_scale?.label === 'F',
                 'bg-white': !grade,
             }"
         >
-            <div v-if="grade">
+            <div v-if="grade?.grade_scale">
                 <span class="text-4xl font-semibold">
-                    {{ grade?.score.toFixed(1) }}
+                    {{ grade?.score?.toFixed(1) }}
                     <span class="text-xl font-normal">{{
-                        grade?.grade_scale.label
+                        grade?.grade_scale?.label
                     }}</span>
                 </span>
             </div>
@@ -23,7 +23,7 @@
                 <span class="text-4xl font-semibold"> - </span>
             </div>
             <span class="text-xs font-light">
-                {{ batchSubject.subject.short_name }} GRADE
+                {{ batchSubject?.subject.short_name }} GRADE
             </span>
         </div>
 
@@ -44,7 +44,7 @@
         >
             <div>{{ attendancePercentage }}%</div>
             <span class="text-xs font-light">
-                {{ batchSubject.subject.short_name }} ATTENDANCE
+                {{ batchSubject?.subject?.short_name }} ATTENDANCE
             </span>
         </div>
 
@@ -63,12 +63,17 @@
                 <div class="">{{ student.conduct ?? "NC" }}</div>
                 <div @click="showConductModal = true">
                     <PencilSquareIcon
+                        v-if="
+                            auth.user?.teacher?.id ===
+                                batchSubject?.teacher_id &&
+                            auth.user.type === 'teacher'
+                        "
                         class="w-5 cursor-pointer hover:scale-125 hover:text-black"
                     />
                 </div>
             </div>
             <span class="text-xs font-light">
-                {{ batchSubject.subject.short_name }} CONDUCT
+                {{ batchSubject?.subject?.short_name }} CONDUCT
             </span>
         </div>
 
@@ -101,14 +106,15 @@ const attendancePercentage = computed(
     () => usePage().props.attendance_percentage
 );
 
-const grade = computed(() => usePage().props.batch_subject_grade);
+const grade = computed(() => usePage().props.grade);
 const batchSubject = computed(() => usePage().props.batch_subject);
 const student = computed(() => usePage().props.student);
+const auth = computed(() => usePage().props.auth);
 
 const showConductModal = ref(false);
 const conductForm = useForm({
     conduct: student.value.conduct ?? "",
-    batch_subject_id: batchSubject.value.id,
+    batch_subject_id: batchSubject.value?.id,
 });
 
 const submit = () => {

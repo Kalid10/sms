@@ -79,7 +79,10 @@
         </div>
     </div>
     <Modal v-model:view="showModal">
-        <StudentGradeDetail :student-detail="studentDetail" />
+        <StudentGradeDetail
+            :student-grade="studentDetail.quarterly_grade"
+            :student-name="studentDetail.student"
+        />
     </Modal>
 </template>
 <script setup>

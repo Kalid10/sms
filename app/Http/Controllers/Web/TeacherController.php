@@ -56,9 +56,17 @@ class TeacherController extends Controller
 
     public function show(Request $request, int $id = null): Response
     {
-        $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : abort(403));
+        $request->validate([
+            'teacher_id' => 'nullable|exists:teachers,id',
+        ]);
 
-        $batchSubject = $this->teacherService->prepareBatchSubject($request);
+        if (! auth()->user()->isTeacher() && ! $request->input('teacher_id')) {
+            abort(403);
+        }
+
+        $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id'));
+
+        $batchSubject = $this->teacherService->prepareBatchSubject($request, $id);
         $batches = $this->teacherService->getBatches($id);
         $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'));
         $teacher = $this->teacherService->getTeacherDetails($id);

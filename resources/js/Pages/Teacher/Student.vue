@@ -13,8 +13,9 @@
                 <Header
                     :title="student.user.name"
                     :select-input-options="batchSubjectOptions"
-                    :selected-input="batchSubject.id"
+                    :selected-input="batchSubject?.id ?? null"
                     image="sd"
+                    @change="updateBatchSubject"
                 />
 
                 <!--           Assessments section-->
@@ -24,12 +25,12 @@
                             <Assessments />
                         </div>
 
-                        <AssessmentBreakDown />
+                        <AssessmentBreakDown v-if="selectedBatchSubject" />
 
                         <div
                             class="w-full rounded-lg bg-white p-4 text-black shadow-sm"
                         >
-                            <div class="text-xl font-light">
+                            <div class="pb-2 text-xl font-light">
                                 {{ student.user.name }}'s General Quarterly
                                 Statistics
                             </div>
@@ -40,10 +41,6 @@
                                     <div class="text-2xl font-bold">
                                         <span v-if="student.quarterly_grade">
                                             {{ student.quarterly_grade.score }}
-                                            {{
-                                                student.quarterly_grade
-                                                    .grade_scale_id
-                                            }}
                                         </span>
                                         <span v-else> - </span>
                                     </div>
@@ -79,17 +76,6 @@
                                         Quarter Conduct
                                     </div>
                                 </div>
-                                <div class="w-4/12">
-                                    <div class="text-2xl font-bold">
-                                        <span v-if="student.semester_grade">
-                                            {{ student.semester_grade.conduct }}
-                                        </span>
-                                        <span v-else> - </span>
-                                    </div>
-                                    <div class="text-[0.65rem] font-light">
-                                        Semester Conduct
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -98,7 +84,17 @@
                     </div>
                 </div>
             </div>
-
+            <SecondaryButton
+                title="View Grade Report"
+                class="w-1/3 !rounded-2xl bg-zinc-700 text-white"
+                @click="showGrade = true"
+            />
+            <Modal v-model:view="showGrade">
+                <StudentGradeDetail
+                    :student-name="student"
+                    :student-grade="student.quarterly_grade"
+                />
+            </Modal>
             <div
                 class="flex h-96 w-full items-center justify-center border-t text-8xl font-light text-gray-500"
             >
@@ -122,27 +118,32 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import Assessments from "@/Views/Teacher/Student/Assessments.vue";
 import Rank from "@/Views/Teacher/Student/Rank.vue";
 import Notes from "@/Views/Teacher/Student/Notes.vue";
 import Information from "@/Views/Teacher/Student/GuardianInformation.vue";
 import { isSidebarOpenOnXlDevice, numberWithOrdinal } from "@/utils";
 import Header from "@/Views/Teacher/Header.vue";
-import GeneralReport from "@/Views/Teacher/Student/GeneralReport.vue";
 import AssessmentBreakDown from "@/Views/Teacher/Assessments/AssessmentBreakDown.vue";
+import StudentGradeDetail from "@/Views/Teacher/Homeroom/StudentGradeDetail.vue";
+import GeneralReport from "@/Views/Teacher/Student/GeneralReport.vue";
+import Modal from "@/Components/Modal.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);
 const teacher = usePage().props.auth.user.teacher;
 const batchSubject = computed(() => usePage().props.batch_subject);
 const batchSubjects = usePage().props.batch_subjects ?? [];
-const selectedBatchSubject = ref(batchSubject.value.id);
+const selectedBatchSubject = ref(batchSubject.value?.id);
+const auth = computed(() => usePage().props.auth);
+const showGrade = ref(false);
 
 const batchSubjectOptions = computed(() => {
-    return batchSubjects.map((batchSubject) => {
+    let options = batchSubjects.map((batchSubject) => {
         return {
-            value: batchSubject.id,
+            value: batchSubject?.id,
             label:
                 batchSubject.batch.level.name +
                 " " +
@@ -151,6 +152,15 @@ const batchSubjectOptions = computed(() => {
                 batchSubject.subject.full_name,
         };
     });
+
+    // If the auth is admin, add the option to select all batch subjects
+    if (auth.value.user.type === "admin") {
+        options.unshift({
+            value: null,
+            label: "All",
+        });
+    }
+    return options;
 });
 
 // Get the first batch session from batchSessions where batchSubject id is not null
@@ -172,6 +182,20 @@ const upcomingSession = computed(() => {
 const isNextClassSubjectTeacher = computed(
     () => upcomingSession.value.batch_subject.teacher.id === teacher.id
 );
+
+const updateBatchSubject = (batchSubjectId) => {
+    selectedBatchSubject.value = batchSubjectId;
+    router.get(
+        "/students/" + student.value.id,
+        {
+            batch_subject_id: batchSubjectId,
+        },
+        {
+            preserveState: true,
+            preserveScroll: true,
+        }
+    );
+};
 </script>
 
 <style scoped></style>

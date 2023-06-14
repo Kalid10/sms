@@ -18,10 +18,12 @@
         <div class="text-sm text-gray-300">
             From
             <span class="text-zinc-100">{{ totalStudents }}</span>
-            students in
-            <span class="font-semibold uppercase text-zinc-100">{{
-                batchSubject.subject.full_name
-            }}</span>
+            students
+            <span
+                v-if="batchSubject"
+                class="font-semibold uppercase text-zinc-100"
+                >in {{ batchSubject?.subject?.full_name }}</span
+            >
         </div>
     </div>
 </template>
@@ -32,7 +34,7 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { numberWithOrdinal } from "@/utils";
 
-const rank = computed(() => usePage().props.batch_subject_grade?.rank);
+const rank = computed(() => usePage().props.grade?.rank);
 const totalStudents = computed(() => usePage().props.total_batch_students);
 const batchSubject = computed(() => usePage().props.batch_subject);
 </script>

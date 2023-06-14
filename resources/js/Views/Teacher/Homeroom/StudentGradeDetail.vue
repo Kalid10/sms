@@ -7,7 +7,7 @@
                 @click="showSubjectDetail = false"
             />
             <span class="grow">
-                {{ studentDetail.student.user.name }}'s
+                {{ studentName.user.name }}'s
 
                 <span v-if="showSubjectDetail">
                     {{
@@ -19,10 +19,7 @@
             </span>
         </div>
 
-        <Statistics
-            v-if="!showSubjectDetail"
-            :grade="studentDetail.quarterly_grade"
-        />
+        <Statistics v-if="!showSubjectDetail" :grade="studentGrade" />
 
         <TableElement
             v-if="!showSubjectDetail"
@@ -67,13 +64,17 @@ import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
-    studentDetail: {
+    studentName: {
+        type: Object,
+        required: true,
+    },
+    studentGrade: {
         type: Object,
         required: true,
     },
 });
 
-const studentDetails = computed(() => usePage().props.student);
+const studentDetails = computed(() => usePage().props.student.grades);
 const selectedBatchSubject = ref(null);
 const showSubjectDetail = ref(false);
 const selectedBatchSubjectDetail = computed(() => {
@@ -91,9 +92,7 @@ const studentGrades = computed(() => {
                 id: item.batch_subject.id,
             },
             attendance: item.attendance ? item.attendance + "%" : "-",
-            grade: item.quarterly_grade
-                ? item.quarterly_grade.score.toFixed(1)
-                : "-",
+            grade: item?.score?.toFixed(1) ?? "-",
             rank: item.rank ?? " -",
             conduct: item.conduct ?? "-",
         };

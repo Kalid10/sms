@@ -9,6 +9,8 @@ use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Subject;
 use App\Models\User;
+use App\Services\StudentService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -45,7 +47,15 @@ class AdminController extends Controller
         $announcements = Announcement::where('school_year_id', $schoolYear?->id)->with('author.user')
             ->when($searchKey, function ($query) use ($searchKey) {
                 return $query->where('title', 'like', "%{$searchKey}%");
-            })->get()->take(5);
+            })->orderBy('updated_at', 'DESC')->get()->take(5);
+
+        $schoolScheduleDate = $request->input('school_schedule_date') ?? now()->addDays(4);
+        $schoolSchedule = SchoolSchedule::where('school_year_id', $schoolYear?->id)
+            ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
+            ->whereDate('end_date', '>=', Carbon::parse($schoolScheduleDate))
+            ->orderBy('start_date', 'asc')
+            ->take(3)
+            ->get();
 
         return Inertia::render('Admin/Index', [
             'teachers_count' => $teachersCount,
@@ -58,6 +68,8 @@ class AdminController extends Controller
             'admins' => $admins,
             'school_year' => $schoolYear,
             'announcements' => $announcements,
+            'school_schedule' => $schoolSchedule,
+            'students' => StudentService::getAllStudents($request),
         ]);
     }
 
@@ -81,7 +93,7 @@ class AdminController extends Controller
         $announcements = Announcement::where('school_year_id', $schoolYear?->id)->with('author.user')
             ->when($searchKey, function ($query) use ($searchKey) {
                 return $query->where('title', 'like', "%{$searchKey}%");
-            })->paginate(20);
+            })->paginate(10);
 
         return Inertia::render('Admin/Announcements/Index', [
             'announcements' => $announcements,

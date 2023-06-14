@@ -93,7 +93,7 @@ class TeacherService
         return StudentService::getBatchStudents($batchSubject->batch_id, $studentSearch, $batchSubjectId);
     }
 
-    public static function prepareBatchSubject(Request $request): BatchSubject
+    public static function prepareBatchSubject(Request $request, $teacherId): BatchSubject
     {
         $request->validate([
             'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
@@ -104,7 +104,7 @@ class TeacherService
 
         return $batchSubjectId ?
             BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
-            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+            BatchSubject::where('teacher_id', $teacherId)
                 ->whereHas('batch', function ($query) {
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
                 })->first()->load('subject', 'batch.level');
