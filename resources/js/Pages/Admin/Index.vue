@@ -49,18 +49,30 @@
 
         <div class="flex w-full justify-between">
             <div class="flex w-6/12 flex-col space-y-5">
-                <Announcements />
+                <Announcements
+                    class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
+                />
 
                 <StudentsTable />
             </div>
             <div class="flex w-5/12 flex-col space-y-5">
                 <div class="flex w-full space-x-5">
-                    <AbsentTeachers />
+                    <div
+                        class="flex h-full w-4/12 flex-col justify-evenly space-y-4"
+                    >
+                        <AbsentTeachers value="4" title="Absent Teachers" />
+                        <AbsentTeachers value="15" title="Absent Students" />
+                    </div>
                     <div class="w-9/12">
                         <SchoolSchedule />
                     </div>
                 </div>
                 <Levels />
+                <div
+                    class="flex h-full w-full items-center justify-center rounded-lg border border-black"
+                >
+                    homers
+                </div>
             </div>
         </div>
     </div>
@@ -71,9 +83,9 @@ import moment from "moment/moment";
 import { usePage } from "@inertiajs/vue3";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import Levels from "@/Pages/Admin/Levels/Index.vue";
-import Announcements from "@/Pages/Admin/Announcements/Index.vue";
+import Announcements from "@/Views/Announcements/Index.vue";
 import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Index.vue";
-import AbsentTeachers from "@/Views/Admin/AbsentTeachers.vue";
+import AbsentTeachers from "@/Views/Admin/Absentee.vue";
 import TextInput from "@/Components/TextInput.vue";
 
 import StudentsTable from "@/Pages/Admin/Students/StudentsTable.vue";
