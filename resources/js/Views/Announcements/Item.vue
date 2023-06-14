@@ -2,7 +2,12 @@
     <div
         class="group flex w-full cursor-pointer justify-between p-3 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-50"
     >
-        <div class="flex w-full flex-col space-y-2 text-sm font-bold">
+        <p
+            class="shrink-0 border-r-2 px-2 text-xs font-normal hover:text-gray-100 sm:text-right"
+        >
+            {{ moment(announcement.created_at).fromNow() }}
+        </p>
+        <div class="flex w-full flex-col space-y-2 pl-3 text-sm font-bold">
             <div>{{ announcement.title }}</div>
 
             <div
@@ -11,8 +16,12 @@
                 <div>
                     <div>
                         Post Targets
-                        <span class="capitalize">
-                            {{ announcement.target_group }}
+                        <span
+                            v-for="(target, index) in announcement.target_group"
+                            :key="index"
+                            class="mx-2 rounded-md bg-zinc-500 px-2 py-1 text-xs text-white"
+                        >
+                            {{ target }}
                         </span>
                         and expires
                         <span>
@@ -24,13 +33,7 @@
                 </div>
                 <div>
                     <div>
-                        Posted
-                        <span>
-                            {{
-                                moment(announcement.created_at).fromNow()
-                            }}</span
-                        >
-                        by Author - {{ announcement.author.user.name }}
+                        Posted by Author - {{ announcement.author.user.name }}
                     </div>
                 </div>
             </div>

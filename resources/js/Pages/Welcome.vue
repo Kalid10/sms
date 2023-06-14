@@ -8,138 +8,312 @@
     </div>
 
     <div class="grid grid-cols-4 gap-6">
-        <button class="h-14 bg-lime-500 " @click="registerBulkUser">Register Bulk User</button>
-        <button class="h-14 bg-lime-500 " @click="registerAdmin">Register Admin</button>
-        <button class="h-14 bg-lime-500 " @click="registerStudent">Register Student</button>
-        <input type="file" @change="handleFileUpload">
-        <button class="h-14 bg-lime-500 " @click="registerTeacher">Register Teacher</button>
-        <button class="h-14 bg-pink-900 text-white " @click="login">Test Login</button>
-        <button class="h-14 bg-pink-900 text-white " @click="login(false, 'teacher')">Test Login (Teacher)</button>
-        <button class="h-14 bg-pink-900 text-white " @click="login(true)">Test Login (Benji)</button>
-        <button class="h-14 bg-pink-900 text-white " @click="logout">Test Logout</button>
-        <button class="h-14  bg-gray-600 text-white " @click="assignRoles">Test Assign Role</button>
-        <button class="h-14  bg-gray-600 text-white " @click="removeRoles">Test Remove Role</button>
-        <button class="h-14 bg-gray-600 text-white " @click="showAllRoles">Get Roles</button>
-        <button class="h-14  bg-gray-600 text-white " @click="userDetails">User Details</button>
-        <button class="h-14 bg-red-600 text-white " @click="roleActivities">Test Role Activities</button>
-        <button class="h-14 bg-indigo-500 text-white " @click="addSubject">Test Add Subject</button>
-        <button class="h-14 bg-indigo-500 text-white " @click="addSubjects">Test Add Subjects</button>
-        <button class="h-14 bg-indigo-500 text-white " @click="deleteSubject">Test Delete Subject</button>
-        <button class="h-14 bg-fuchsia-400 " @click="addSchoolYear">Test Add School Year</button>
-        <button class="h-14 bg-emerald-500 " @click="addSemesters">Test Create Semester</button>
-        <button class="h-14 bg-emerald-500 " @click="updateSemester">Test Update Semester</button>
-        <button class="h-14 bg-emerald-500 " @click="listSemesters">Test List Semester</button>
-        <button class="h-14 bg-emerald-500 " @click="deleteSemester">Test Delete Semester</button>
-        <button class="h-14 bg-sky-400 " @click="addBatch">Test Add Batch</button>
-        <button class="h-14 bg-sky-400 " @click="addBatches">Test Add Batches</button>
-        <button class="h-14 bg-sky-400 " @click="getBatches">Test Get Batches</button>
-        <button class="h-14 bg-sky-400 " @click="activeBatches">Test Get Active Batches</button>
-        <button class="h-14 bg-amber-500 " @click="assignHomeRoomTeacher">Test Assign Homeroom Teacher</button>
-        <button class="h-14 bg-amber-500 " @click="removeHomeRoomTeacher">Test Remove Homeroom Teacher</button>
-        <button class="h-14 bg-amber-500 " @click="getHomeRoomTeachers">Test Get Homeroom Teachers</button>
-        <button class="h-14 bg-cyan-400 " @click="addStudentToBatch">Test Add Students To Batch</button>
-        <button class="h-14 bg-cyan-400 " @click="getBatchStudents">Test Get Batch Students</button>
-        <button class="h-14 bg-cyan-400 " @click="addBatchSubjects">Test Add Batch Subjects</button>
-        <button class="h-14 bg-purple-400 " @click="addLevel">Test Add Level</button>
-        <button class="h-14 bg-purple-400 " @click="getLevels">Test Get Level</button>
-        <button class="h-14 bg-yellow-400 " @click="assignBatchSubjectsTeachers">Test Assign Batch Subject Teachers
+        <button class="h-14 bg-lime-500" @click="registerBulkUser">
+            Register Bulk User
         </button>
-        <button class="h-14 bg-orange-400 " @click="addUserPosition">Test Add User Position</button>
-        <button class="h-14 bg-orange-400 " @click="updateUserPosition">Test Update User Position</button>
-        <button class="h-14 bg-orange-400 " @click="deleteUserPosition">Test Delete User Position</button>
-        <button class="h-14 bg-green-500 " @click="addSchoolSchedule">Test Add School Schedule</button>
-        <button class="h-14 bg-green-500 " @click="updateSchoolSchedule">Test Update School Schedule</button>
-        <button class="h-14 bg-green-500 " @click="getSchoolSchedules">Test Get School Schedule</button>
-        <button class="h-14 bg-green-500 " @click="deleteSchoolSchedule">Test Delete School Schedule</button>
-        <button class="h-14 bg-red-400 p-1" @click="getAnnouncements">Test get Announcements</button>
-        <button class="h-14 bg-red-400 p-1" @click="createAnnouncement">Create Announcement</button>
-        <button class="h-14 bg-red-400 p-1" @click="updateAnnouncement">Update Announcement</button>
-        <button class="h-14 bg-red-400 p-1" @click="deleteAnnouncement">Delete Announcement</button>
-        <button class="h-14 bg-stone-600 p-1 text-white" @click="createSchoolPeriod">Create School Period</button>
-        <button class="h-14 bg-stone-600 p-1 text-white" @click="createBatchSchedule">Create Batch Schedules</button>
-        <button class="h-14 bg-stone-600 p-1 text-white" @click="checkSchoolPeriod">Check Schedule</button>
-        <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="addStudentAbsentees">Test Add Student Absentees
+        <button class="h-14 bg-lime-500" @click="registerAdmin">
+            Register Admin
         </button>
-        <button class="h-14 bg-fuchsia-600 p-1 text-white" @click="getStudentAbsenteePercentage">Test Get Student
-            Absentees
+        <button class="h-14 bg-lime-500" @click="registerStudent">
+            Register Student
         </button>
-        <button class="h-14 bg-blue-600 p-1 text-white" @click="batchSessions">Test Get Batch Sessions</button>
-        <button class="h-14 bg-blue-600 p-1 text-white" @click="teacherSessions">Test Get Teacher Sessions</button>
-        <button class="h-14 bg-yellow-400 p-1" @click="addNotes">Test Add notes</button>
-        <button class="h-14 bg-yellow-400 p-1" @click="getNotes">Test Get notes</button>
+        <input type="file" @change="handleFileUpload" />
+        <button class="h-14 bg-lime-500" @click="registerTeacher">
+            Register Teacher
+        </button>
+        <button class="h-14 bg-pink-900 text-white" @click="login">
+            Test Login
+        </button>
+        <button
+            class="h-14 bg-pink-900 text-white"
+            @click="login(false, 'teacher')"
+        >
+            Test Login (Teacher)
+        </button>
+        <button class="h-14 bg-pink-900 text-white" @click="login(true)">
+            Test Login (Benji)
+        </button>
+        <button class="h-14 bg-pink-900 text-white" @click="logout">
+            Test Logout
+        </button>
+        <button class="h-14 bg-gray-600 text-white" @click="assignRoles">
+            Test Assign Role
+        </button>
+        <button class="h-14 bg-gray-600 text-white" @click="removeRoles">
+            Test Remove Role
+        </button>
+        <button class="h-14 bg-gray-600 text-white" @click="showAllRoles">
+            Get Roles
+        </button>
+        <button class="h-14 bg-gray-600 text-white" @click="userDetails">
+            User Details
+        </button>
+        <button class="h-14 bg-red-600 text-white" @click="roleActivities">
+            Test Role Activities
+        </button>
+        <button class="h-14 bg-indigo-500 text-white" @click="addSubject">
+            Test Add Subject
+        </button>
+        <button class="h-14 bg-indigo-500 text-white" @click="addSubjects">
+            Test Add Subjects
+        </button>
+        <button class="h-14 bg-indigo-500 text-white" @click="deleteSubject">
+            Test Delete Subject
+        </button>
+        <button class="h-14 bg-fuchsia-400" @click="addSchoolYear">
+            Test Add School Year
+        </button>
+        <button class="h-14 bg-emerald-500" @click="addSemesters">
+            Test Create Semester
+        </button>
+        <button class="h-14 bg-emerald-500" @click="updateSemester">
+            Test Update Semester
+        </button>
+        <button class="h-14 bg-emerald-500" @click="listSemesters">
+            Test List Semester
+        </button>
+        <button class="h-14 bg-emerald-500" @click="deleteSemester">
+            Test Delete Semester
+        </button>
+        <button class="h-14 bg-sky-400" @click="addBatch">
+            Test Add Batch
+        </button>
+        <button class="h-14 bg-sky-400" @click="addBatches">
+            Test Add Batches
+        </button>
+        <button class="h-14 bg-sky-400" @click="getBatches">
+            Test Get Batches
+        </button>
+        <button class="h-14 bg-sky-400" @click="activeBatches">
+            Test Get Active Batches
+        </button>
+        <button class="h-14 bg-amber-500" @click="assignHomeRoomTeacher">
+            Test Assign Homeroom Teacher
+        </button>
+        <button class="h-14 bg-amber-500" @click="removeHomeRoomTeacher">
+            Test Remove Homeroom Teacher
+        </button>
+        <button class="h-14 bg-amber-500" @click="getHomeRoomTeachers">
+            Test Get Homeroom Teachers
+        </button>
+        <button class="h-14 bg-cyan-400" @click="addStudentToBatch">
+            Test Add Students To Batch
+        </button>
+        <button class="h-14 bg-cyan-400" @click="getBatchStudents">
+            Test Get Batch Students
+        </button>
+        <button class="h-14 bg-cyan-400" @click="addBatchSubjects">
+            Test Add Batch Subjects
+        </button>
+        <button class="h-14 bg-purple-400" @click="addLevel">
+            Test Add Level
+        </button>
+        <button class="h-14 bg-purple-400" @click="getLevels">
+            Test Get Level
+        </button>
+        <button class="h-14 bg-yellow-400" @click="assignBatchSubjectsTeachers">
+            Test Assign Batch Subject Teachers
+        </button>
+        <button class="h-14 bg-orange-400" @click="addUserPosition">
+            Test Add User Position
+        </button>
+        <button class="h-14 bg-orange-400" @click="updateUserPosition">
+            Test Update User Position
+        </button>
+        <button class="h-14 bg-orange-400" @click="deleteUserPosition">
+            Test Delete User Position
+        </button>
+        <button class="h-14 bg-green-500" @click="addSchoolSchedule">
+            Test Add School Schedule
+        </button>
+        <button class="h-14 bg-green-500" @click="updateSchoolSchedule">
+            Test Update School Schedule
+        </button>
+        <button class="h-14 bg-green-500" @click="getSchoolSchedules">
+            Test Get School Schedule
+        </button>
+        <button class="h-14 bg-green-500" @click="deleteSchoolSchedule">
+            Test Delete School Schedule
+        </button>
+        <button class="h-14 bg-red-400 p-1" @click="getAnnouncements">
+            Test get Announcements
+        </button>
+        <button class="h-14 bg-red-400 p-1" @click="createAnnouncement">
+            Create Announcement
+        </button>
+        <button class="h-14 bg-red-400 p-1" @click="updateAnnouncement">
+            Update Announcement
+        </button>
+        <button class="h-14 bg-red-400 p-1" @click="deleteAnnouncement">
+            Delete Announcement
+        </button>
+        <button
+            class="h-14 bg-stone-600 p-1 text-white"
+            @click="createSchoolPeriod"
+        >
+            Create School Period
+        </button>
+        <button
+            class="h-14 bg-stone-600 p-1 text-white"
+            @click="createBatchSchedule"
+        >
+            Create Batch Schedules
+        </button>
+        <button
+            class="h-14 bg-stone-600 p-1 text-white"
+            @click="checkSchoolPeriod"
+        >
+            Check Schedule
+        </button>
+        <button
+            class="h-14 bg-fuchsia-600 p-1 text-white"
+            @click="addStudentAbsentees"
+        >
+            Test Add Student Absentees
+        </button>
+        <button
+            class="h-14 bg-fuchsia-600 p-1 text-white"
+            @click="getStudentAbsenteePercentage"
+        >
+            Test Get Student Absentees
+        </button>
+        <button class="h-14 bg-blue-600 p-1 text-white" @click="batchSessions">
+            Test Get Batch Sessions
+        </button>
+        <button
+            class="h-14 bg-blue-600 p-1 text-white"
+            @click="teacherSessions"
+        >
+            Test Get Teacher Sessions
+        </button>
+        <button class="h-14 bg-yellow-400 p-1" @click="addNotes">
+            Test Add notes
+        </button>
+        <button class="h-14 bg-yellow-400 p-1" @click="getNotes">
+            Test Get notes
+        </button>
 
-        <button class="h-14 bg-orange-800 p-1 text-white" @click="addTeacherFeedback">Test Add Teacher Feedback</button>
-        <button class="h-14 bg-orange-800 p-1 text-white" @click="updateTeacherFeedback">Test update Teacher Feedback
+        <button
+            class="h-14 bg-orange-800 p-1 text-white"
+            @click="addTeacherFeedback"
+        >
+            Test Add Teacher Feedback
         </button>
-        <button class="h-14 bg-orange-800 p-1 text-white" @click="deleteTeacherFeedback">Test delete Teacher Feedback
+        <button
+            class="h-14 bg-orange-800 p-1 text-white"
+            @click="updateTeacherFeedback"
+        >
+            Test update Teacher Feedback
         </button>
-        <button class="h-14 bg-blue-500 p-1 text-white" @click="transferStudent">Transfer Student</button>
-        <button class="h-14 bg-purple-500 p-1 text-white" @click="createAssessmentType">Test Create Assessment Type
+        <button
+            class="h-14 bg-orange-800 p-1 text-white"
+            @click="deleteTeacherFeedback"
+        >
+            Test delete Teacher Feedback
         </button>
-        <button class="h-14 bg-purple-500 p-1 text-white" @click="updateAssessmentType">Test Update Assessment Type
+        <button
+            class="h-14 bg-blue-500 p-1 text-white"
+            @click="transferStudent"
+        >
+            Transfer Student
         </button>
-        <button class="h-14 bg-purple-500 p-1 text-white" @click="deleteAssessmentType">Test Delete Assessment Type
+        <button
+            class="h-14 bg-purple-500 p-1 text-white"
+            @click="createAssessmentType"
+        >
+            Test Create Assessment Type
         </button>
-        <button class="h-14 bg-purple-500 p-1 text-white" @click="getAssessmentTypes">Test Get Assessment Types</button>
-        <button class="h-14 bg-gray-900 p-1 text-white" @click="createStudentNote">Test Create Student Note</button>
-        <button class="h-14 bg-gray-900 p-1 text-white" @click="updateStudentNote">Test Update Student Note</button>
-        <button class="h-14 bg-fuchsia-500 p-1 text-white" @click="insertStudentsAssessment">Test Create Student Note
+        <button
+            class="h-14 bg-purple-500 p-1 text-white"
+            @click="updateAssessmentType"
+        >
+            Test Update Assessment Type
+        </button>
+        <button
+            class="h-14 bg-purple-500 p-1 text-white"
+            @click="deleteAssessmentType"
+        >
+            Test Delete Assessment Type
+        </button>
+        <button
+            class="h-14 bg-purple-500 p-1 text-white"
+            @click="getAssessmentTypes"
+        >
+            Test Get Assessment Types
+        </button>
+        <button
+            class="h-14 bg-gray-900 p-1 text-white"
+            @click="createStudentNote"
+        >
+            Test Create Student Note
+        </button>
+        <button
+            class="h-14 bg-gray-900 p-1 text-white"
+            @click="updateStudentNote"
+        >
+            Test Update Student Note
+        </button>
+        <button
+            class="h-14 bg-fuchsia-500 p-1 text-white"
+            @click="insertStudentsAssessment"
+        >
+            Test Create Student Note
         </button>
     </div>
-
 </template>
 <script setup>
-import {router} from "@inertiajs/vue3";
-import {ref} from "vue";
+import { router } from "@inertiajs/vue3";
+import { ref } from "vue";
 import Localization from "@/Views/Admin/Language/Localization.vue";
 
-const title = ref('fr')
+const title = ref("fr");
 
 // Listen for student import broadcast events
-Echo.private('students-import')
-    .listen('.students-import', (e) => {
-        // Two variables are passed to the callback function
-        // Check the type to see if it is success or error
-        // e.message and e.type are the variables
-        console.log(e.type);
-        console.log(e.message);
-    });
+Echo.private("students-import").listen(".students-import", (e) => {
+    // Two variables are passed to the callback function
+    // Check the type to see if it is success or error
+    // e.message and e.type are the variables
+    console.log(e.type);
+    console.log(e.message);
+});
 
-Echo.private('teachers-import')
-    .listen('.teachers-import', (e) => {
-        // Two variables are passed to the callback function
-        // Check the type to see if it is success or error
-        // e.message and e.type are the variables
-        console.log(e.type);
-        console.log(e.message);
-    });
+Echo.private("teachers-import").listen(".teachers-import", (e) => {
+    // Two variables are passed to the callback function
+    // Check the type to see if it is success or error
+    // e.message and e.type are the variables
+    console.log(e.type);
+    console.log(e.message);
+});
 
-Echo.private('batch-schedule')
-    .listen('.batch-schedule', (e) => {
-        // Two variables are passed to the callback function
-        // Check the type to see if it is success or error
-        // e.message and e.type are the variables
-        console.log(e.type);
-        console.log(e.message);
-    });
+Echo.private("batch-schedule").listen(".batch-schedule", (e) => {
+    // Two variables are passed to the callback function
+    // Check the type to see if it is success or error
+    // e.message and e.type are the variables
+    console.log(e.type);
+    console.log(e.message);
+});
 
 // Register admin
 function registerAdmin() {
-    router.post('/register', {
-        name: "Biniyam Lemma",
-        email: "admin@gmaill.com",
-        position: "Principal",
-        gender: "male",
-        type: "admin"
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/register",
+        {
+            name: "Biniyam Lemma",
+            email: "admin@gmaill.com",
+            position: "Principal",
+            gender: "male",
+            type: "admin",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    });
+    );
 }
 
 const file = ref(null);
@@ -149,31 +323,35 @@ function handleFileUpload(event) {
 }
 
 function registerStudent() {
-    router.post('/register', {
-        name: "Kidist Andarge",
-        email: "K@gmails.com",
-        type: "student",
-        gender: "female",
-        date_of_birth: "03-07-2000",
-        level_id: 1,
-        guardian_name: "Kalid Abdu",
-        guardian_phone_number: "0963134321",
-        guardian_email: "k2@gmail.com",
-        guardian_gender: 'male',
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/register",
+        {
+            name: "Kidist Andarge",
+            email: "K@gmails.com",
+            type: "student",
+            gender: "female",
+            date_of_birth: "03-07-2000",
+            level_id: 1,
+            guardian_name: "Kalid Abdu",
+            guardian_phone_number: "0963134321",
+            guardian_email: "k2@gmail.com",
+            guardian_gender: "male",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    });
+    );
 }
 
 // Register student
 function registerBulkUser() {
-    router.post('/register-bulk', {
+    router.post("/register-bulk", {
         user_file: file.value,
         user_type: "student",
     });
@@ -181,919 +359,1098 @@ function registerBulkUser() {
 
 // Register teacher
 function registerTeacher() {
-    router.post('/register', {
-        name: "Yoseph Seboka",
-        phone_number: "0943104326",
-        gender: "male",
-        type: "teacher",
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/register",
+        {
+            name: "Yoseph Seboka",
+            phone_number: "0943104326",
+            gender: "male",
+            type: "teacher",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    });
+    );
 }
 
 // Admin: test@example.com
-function login(simulation = false, userType = 'admin') {
-
-    let email = ''
+function login(simulation = false, userType = "admin") {
+    let email = "";
     switch (userType) {
-        case 'teacher':
-            email = 'janedoe@example.com'
+        case "teacher":
+            email = "janedoe@example.com";
             break;
-        case 'admin':
+        case "admin":
         default:
-            email = 'test@example.com'
+            email = "test@example.com";
             break;
     }
 
-    router.post('/login', {
-        emailOrPhone: (simulation ? "biniyam.lemma@gibson.edu.et" : email),
-        password: "password"
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/login",
+        {
+            emailOrPhone: simulation ? "biniyam.lemma@gibson.edu.et" : email,
+            password: "password",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function logout() {
-    router.post('/logout', {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.post(
+        "/logout",
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function assignRoles() {
-    router.post('/roles/assign', {
-        user_id: 2,
-        roles: ["manage-roles", "manage-subjects"]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/roles/assign",
+        {
+            user_id: 2,
+            roles: ["manage-roles", "manage-subjects"],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function removeRoles() {
-    router.post('/roles/remove', {
-        user_id: 2,
-        roles: ["manage-roles", "manage-subjects"]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/roles/remove",
+        {
+            user_id: 2,
+            roles: ["manage-roles", "manage-subjects"],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function showAllRoles() {
-    router.get('/roles', {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.get(
+        "/roles",
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function userDetails() {
-    router.get('/roles/user/details', {
-        user_id: 1
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/roles/user/details",
+        {
+            user_id: 1,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function roleActivities() {
-    router.get('/roles/activities', {
-        roles: ["manage-roles"],
-        user_id: 3
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/roles/activities",
+        {
+            roles: ["manage-roles"],
+            user_id: 3,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addSubject() {
-    router.post('/subjects/create', {
-        full_name: "Test Subject",
-        short_name: "TS",
-        category: "test",
-        tags: ["test", "test2"]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/subjects/create",
+        {
+            full_name: "Test Subject",
+            short_name: "TS",
+            category: "test",
+            tags: ["test", "test2"],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addSubjects() {
-    router.post('/subjects/create-bulk', {
-        subjects: [
-            {
-                full_name: "Test Subject 1",
-                short_name: "TS1",
-                category: "test1",
-                tags: ["test", "test2"]
-
-            },
-            {
-                full_name: "Test Subject 2",
-                short_name: "TS2",
-                category: "test2",
-                tags: ["test", "test5"]
-            },
-            {
-                full_name: "Test Subject 3",
-                short_name: "TS3",
-                category: "test3",
-                tags: ["test4", "test2"]
-            },
-        ]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/subjects/create-bulk",
+        {
+            subjects: [
+                {
+                    full_name: "Test Subject 1",
+                    short_name: "TS1",
+                    category: "test1",
+                    tags: ["test", "test2"],
+                },
+                {
+                    full_name: "Test Subject 2",
+                    short_name: "TS2",
+                    category: "test2",
+                    tags: ["test", "test5"],
+                },
+                {
+                    full_name: "Test Subject 3",
+                    short_name: "TS3",
+                    category: "test3",
+                    tags: ["test4", "test2"],
+                },
+            ],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 // Change the id to the id of the subject you want to delete
 function deleteSubject() {
-    router.delete('/subject/delete/' + 2, {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.delete(
+        "/subject/delete/" + 2,
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 // To close a school year, set the end_date
 function addSchoolYear() {
-    router.post('/school-year/create', {
-        start_date: "2024-01-01",
-        number_of_semesters: 2,
-        name: "2023-2024"
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/school-year/create",
+        {
+            start_date: "2024-01-01",
+            number_of_semesters: 2,
+            name: "2023-2024",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 // Before creating a semester, you must have an active school year
 function addSemesters() {
-    router.post('/semester/create', {
-        semesters: [
-            {
-                name: "First Semester",
-                start_date: "2024-01-01",
-                end_date: "2024-06-30"
-            },
-            {
-                name: "Second Semester",
-                start_date: "2024-07-01",
-                end_date: "2024-12-31"
-            }
-        ]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/semester/create",
+        {
+            semesters: [
+                {
+                    name: "First Semester",
+                    start_date: "2024-01-01",
+                    end_date: "2024-06-30",
+                },
+                {
+                    name: "Second Semester",
+                    start_date: "2024-07-01",
+                    end_date: "2024-12-31",
+                },
+            ],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function updateSemester() {
-    router.post('/semester/update', {
-        id: 1,
-        name: "Second Updated Semester",
-        start_date: "2024-01-01",
-        end_date: "2024-06-30"
-
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/semester/update",
+        {
+            id: 1,
+            name: "Second Updated Semester",
+            start_date: "2024-01-01",
+            end_date: "2024-06-30",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function listSemesters() {
-    router.get('/semester/list', {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.get(
+        "/semester/list",
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function deleteSemester() {
-    router.delete('/semester/delete/' + 1, {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.delete(
+        "/semester/delete/" + 1,
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addBatch() {
-    router.post('/batches/create', {
-        level_id: 1,
-        section: "A",
-        min_students: 34,
-        max_students: 51
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/batches/create",
+        {
+            level_id: 1,
+            section: "A",
+            min_students: 34,
+            max_students: 51,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addBatches() {
-    router.post('/batches/create-bulk', {
+    router.post(
+        "/batches/create-bulk",
+        {
             batches: [
                 {
                     level_id: 1,
                     no_of_sections: 3,
                     min_students: 10,
-                    max_students: 20
+                    max_students: 20,
                 },
                 {
                     level_id: 2,
-                    no_of_sections: 2
-                }
-            ]
+                    no_of_sections: 2,
+                },
+            ],
         },
         {
             onSuccess: () => {
-                console.log("Success")
+                console.log("Success");
             },
             onError: (error) => {
-                console.log("Error")
-                console.log(error)
-            }
-        })
+                console.log("Error");
+                console.log(error);
+            },
+        }
+    );
 }
 
 // If there is no school year id, it will return all batches
 function getBatches() {
-    router.get('/batches', {
-        school_year_id: 1
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/batches",
+        {
+            school_year_id: 1,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function activeBatches() {
-    router.get('/batches/active', {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.get(
+        "/batches/active",
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function assignHomeRoomTeacher() {
-    router.post('/teachers/assign/homeroom', {
-        batch_id: 2,
-        teacher_id: 2,
-        replace: false
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/teachers/assign/homeroom",
+        {
+            batch_id: 2,
+            teacher_id: 2,
+            replace: false,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function removeHomeRoomTeacher() {
-    router.delete('/teachers/remove/homeroom/' + 1, {
+    router.delete("/teachers/remove/homeroom/" + 1, {
         onSuccess: () => {
-            console.log("Success")
+            console.log("Success");
         },
         onError: (error) => {
-            console.log("Error")
-            console.log(error)
-        }
-    })
+            console.log("Error");
+            console.log(error);
+        },
+    });
 }
 
 function getHomeRoomTeachers() {
-    router.get('/teachers/homerooms', {
-        teacher_id: 1
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/teachers/homerooms",
+        {
+            teacher_id: 1,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addStudentToBatch() {
-    router.post('/batches/students/add', {
-        batch_id: 10,
-        student_id: 5
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/batches/students/add",
+        {
+            batch_id: 10,
+            student_id: 5,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function getBatchStudents() {
-    router.get('/batches/students', {
-        batch_id: 10
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/batches/students",
+        {
+            batch_id: 10,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addBatchSubjects() {
-    router.post('/batches/subjects/assign', {
-        batches_subjects: [
-            {
-                batch_id: 10,
-                subject_ids: [1, 2]
-
-            },
-            {
-                batch_id: 11,
-                subject_ids: [1, 2]
-            }
-        ]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/batches/subjects/assign",
+        {
+            batches_subjects: [
+                {
+                    batch_id: 10,
+                    subject_ids: [1, 2],
+                },
+                {
+                    batch_id: 11,
+                    subject_ids: [1, 2],
+                },
+            ],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addUserPosition() {
-    router.post('/positions/create', {
-        name: "UnitLeader",
-        description: "Unit Leader",
-        role_names: ["manage-subjects", "manage-teachers"]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/positions/create",
+        {
+            name: "UnitLeader",
+            description: "Unit Leader",
+            role_names: ["manage-subjects", "manage-teachers"],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addLevel() {
-    router.post('/levels/create', {
-        name: "Grade 13",
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/levels/create",
+        {
+            name: "Grade 13",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function assignBatchSubjectsTeachers() {
-    router.post('/batches/subjects/assign/teacher', {
-        batch_subjects_teachers: [
-            {
-                batch_subject_id: 4,
-                teacher_id: 2
-            },
-            {
-                batch_subject_id: 3,
-                teacher_id: 3
-            }
-        ]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/batches/subjects/assign/teacher",
+        {
+            batch_subjects_teachers: [
+                {
+                    batch_subject_id: 4,
+                    teacher_id: 2,
+                },
+                {
+                    batch_subject_id: 3,
+                    teacher_id: 3,
+                },
+            ],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function getLevels() {
-    router.get('/levels', {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.get(
+        "/levels",
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function updateUserPosition() {
-    router.post('/positions/update/', {
-        name: "Leader",
-        description: "Leader",
-        role_names: ["manage-subjects", "manage-teachers"]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/positions/update/",
+        {
+            name: "Leader",
+            description: "Leader",
+            role_names: ["manage-subjects", "manage-teachers"],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function deleteUserPosition() {
-    router.delete('/positions/' + 1, {
+    router.delete("/positions/" + 1, {
         onSuccess: () => {
-            console.log("Success")
+            console.log("Success");
         },
         onError: (error) => {
-            console.log("Error")
-            console.log(error)
-        }
-    })
+            console.log("Error");
+            console.log(error);
+        },
+    });
 }
 
 function addSchoolSchedule() {
-    router.post('/school-schedules/create', {
-        start_date: "2024-01-01",
-        end_date: "2024-12-31",
-        title: "Easter",
-        type: "closed",
-        tags: ['Holiday'],
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/school-schedules/create",
+        {
+            start_date: "2024-01-01",
+            end_date: "2024-12-31",
+            title: "Easter",
+            type: "closed",
+            tags: ["Holiday"],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function updateSchoolSchedule() {
-    router.post('/school-schedules/update', {
-        start_date: "2024-01-01",
-        end_date: "2024-12-31",
-        title: "Teachers Parents meeting",
-        type: "not_closed",
-        tags: ['after school'],
-        id: 27
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/school-schedules/update",
+        {
+            start_date: "2024-01-01",
+            end_date: "2024-12-31",
+            title: "Teachers Parents meeting",
+            type: "not_closed",
+            tags: ["after school"],
+            id: 27,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 //- Filter by school_year, type, start_date, and end_date; if no filter is applied,
 // all schedules for the current school year are returned.
 function getSchoolSchedules() {
-    router.get('/school-schedules', {
-        school_year_id: 1,
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/school-schedules",
+        {
+            school_year_id: 1,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function deleteSchoolSchedule() {
-    router.delete('/school-schedules/' + 2, {
+    router.delete("/school-schedules/" + 2, {
         onSuccess: () => {
-            console.log("Success")
+            console.log("Success");
         },
         onError: (error) => {
-            console.log("Error")
-            console.log(error)
-        }
-    })
+            console.log("Error");
+            console.log(error);
+        },
+    });
 }
 
 function getAnnouncements() {
-    router.get('/announcements', {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.get(
+        "/announcements",
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function createAnnouncement() {
-    router.post('/announcements/create', {
-        title: 'New announcement',
-        body: 'This is a test announcement',
-        expires_on: '2020-12-13',
-        target_group: ['all', 'students'],
-
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/announcements/create",
+        {
+            title: "New Teacher announcement",
+            body: "This is a test announcement",
+            expires_on: "2020-12-13",
+            target_group: ["teachers"],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function updateAnnouncement() {
-    router.post('/announcements/update', {
-        id: 1,
-        title: "Announcement 2",
-        body: "Announcement 2 description",
-        expires_on: "2020-12-13",
-        target_group: ["teachers"],
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/announcements/update",
+        {
+            id: 1,
+            title: "Announcement 2",
+            body: "Announcement 2 description",
+            expires_on: "2020-12-13",
+            target_group: ["teachers"],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function deleteAnnouncement() {
-    router.delete('/announcements/' + 1, {
+    router.delete("/announcements/" + 1, {
         onSuccess: () => {
-            console.log("Success")
+            console.log("Success");
         },
         onError: (error) => {
-            console.log("Error")
-            console.log(error)
-        }
-    })
+            console.log("Error");
+            console.log(error);
+        },
+    });
 }
 
 function createSchoolPeriod() {
-    router.post('/school-periods/create', {
-        school_periods: [
-            {
-                no_of_periods: 8,
-                minutes_per_period: 40,
-                start_time: "02:30",
-                level_category_ids: [1, 3],
-                custom_periods: [
-                    {
-                        name: "HomeroomPeriod",
-                        duration: 10,
-                        before_period: 1,
-                    },
-                    {
-                        name: "BreakFast",
-                        duration: 20,
-                        before_period: 4,
-                    },
-                    {
-                        name: "Lunch",
-                        duration: 40,
-                        before_period: 6,
-                    }
-                ]
-
-            },
-            {
-                no_of_periods: 8,
-                minutes_per_period: 40,
-                start_time: "02:30",
-                level_category_ids: [2],
-                custom_periods: [
-                    {
-                        name: "HomeroomPeriod",
-                        duration: 10,
-                        before_period: 1
-                    },
-                    {
-                        name: "BreakFast",
-                        duration: 20,
-                        before_period: 3,
-                    },
-                    {
-                        name: "Lunch",
-                        duration: 40,
-                        before_period: 5,
-                    }
-                ]
-
-            },
-        ]
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/school-periods/create",
+        {
+            school_periods: [
+                {
+                    no_of_periods: 8,
+                    minutes_per_period: 40,
+                    start_time: "02:30",
+                    level_category_ids: [1, 3],
+                    custom_periods: [
+                        {
+                            name: "HomeroomPeriod",
+                            duration: 10,
+                            before_period: 1,
+                        },
+                        {
+                            name: "BreakFast",
+                            duration: 20,
+                            before_period: 4,
+                        },
+                        {
+                            name: "Lunch",
+                            duration: 40,
+                            before_period: 6,
+                        },
+                    ],
+                },
+                {
+                    no_of_periods: 8,
+                    minutes_per_period: 40,
+                    start_time: "02:30",
+                    level_category_ids: [2],
+                    custom_periods: [
+                        {
+                            name: "HomeroomPeriod",
+                            duration: 10,
+                            before_period: 1,
+                        },
+                        {
+                            name: "BreakFast",
+                            duration: 20,
+                            before_period: 3,
+                        },
+                        {
+                            name: "Lunch",
+                            duration: 40,
+                            before_period: 5,
+                        },
+                    ],
+                },
+            ],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function createBatchSchedule() {
-    router.post('/batch-schedules/create', {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.post(
+        "/batch-schedules/create",
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function checkSchoolPeriod() {
-    router.get('/batch-schedules/check', {}, {
-        onSuccess: () => {
-            console.log("Success")
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+    router.get(
+        "/batch-schedules/check",
+        {},
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addStudentAbsentees() {
-    router.post('/absentees/students/add', {
-        batch_session_id: 4,
-        user_type: "student",
-        absentees: [
-            {
-                user_id: 107,
-                reason: "Sick",
-            },
-            {
-                user_id: 109,
-                reason: "Sick",
-            },
-        ],
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/absentees/students/add",
+        {
+            batch_session_id: 4,
+            user_type: "student",
+            absentees: [
+                {
+                    user_id: 107,
+                    reason: "Sick",
+                },
+                {
+                    user_id: 109,
+                    reason: "Sick",
+                },
+            ],
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 // This function fetches batch sessions with the following filters:
 // batch_id, teacher_id, date, and status
 function batchSessions() {
-    router.get('/sessions/batch', {
-        batch_id: 1,
-        teacher_id: 25,
-        // date: "2023-04-24",
-        start_date: "2023-04-24",
-        end_date: "2023-04-25",
-
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/sessions/batch",
+        {
+            batch_id: 1,
+            teacher_id: 25,
+            // date: "2023-04-24",
+            start_date: "2023-04-24",
+            end_date: "2023-04-25",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function teacherSessions() {
-    router.get('/sessions/teacher', {
-        teacher_id: 26,
-        status: "scheduled",
-        // date: "2023-04-24",
-        start_date: "2023-04-24",
-        end_date: "2023-04-25",
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/sessions/teacher",
+        {
+            teacher_id: 26,
+            status: "scheduled",
+            // date: "2023-04-24",
+            start_date: "2023-04-24",
+            end_date: "2023-04-25",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function getStudentAbsenteePercentage() {
-    router.get('/absentees/student', {
-        student_id: 3,
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/absentees/student",
+        {
+            student_id: 3,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function addNotes() {
-    router.post('/notes/student/add', {
-        student_user_id: 107,
-        title: "This is a test note",
-        body: "This is a test note body",
-        batch_session_id: 1,
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/notes/student/add",
+        {
+            student_user_id: 107,
+            title: "This is a test note",
+            body: "This is a test note body",
+            batch_session_id: 1,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 // This function fetches notes with the following filters:
 // student_user_id, batch_session_id, batch_id, school_year_id and author_user_id
 function getNotes() {
-    router.get('/notes/student', {
-        student_user_id: 107,
-        school_year_id: 3,
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.get(
+        "/notes/student",
+        {
+            student_user_id: 107,
+            school_year_id: 3,
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 // Make sure the logged-in user is not teacher
 function addTeacherFeedback() {
-    router.post('/teacher/feedback/add', {
-        teacher_id: 26,
+    router.post("/teacher/feedback/add", {
+        teacher_id: 79,
         feedback: "This is a test feedback",
-    })
+    });
 }
-
 
 // Todo: Check if author is not the author of the feedback for the update and delete on the front-end pages
 function updateTeacherFeedback() {
-    router.post('/teacher/feedback/update/' + 1, {
-        id: 1,
-        feedback: "This is the updated test feedback",
-    }, {
-        onSuccess: () => {
-            console.log("Success")
+    router.post(
+        "/teacher/feedback/update/" + 1,
+        {
+            id: 1,
+            feedback: "This is the updated test feedback",
         },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
         }
-    })
+    );
 }
 
 function deleteTeacherFeedback() {
-    router.delete('teacher/feedback/delete/' + 1, {
+    router.delete("teacher/feedback/delete/" + 1, {
         onSuccess: () => {
-            console.log("Success")
+            console.log("Success");
         },
         onError: (error) => {
-            console.log("Error")
-            console.log(error)
-        }
-    })
+            console.log("Error");
+            console.log(error);
+        },
+    });
 }
 
 function transferStudent() {
-    router.post('batches/students/transfer', {
+    router.post(
+        "batches/students/transfer",
+        {
             destination_batch_id: 2,
             student_id: 21,
         },
         {
             onSuccess: () => {
-                console.log("Success")
+                console.log("Success");
             },
             onError: (error) => {
-                console.log("Error")
-                console.log(error)
-            }
-        })
+                console.log("Error");
+                console.log(error);
+            },
+        }
+    );
 }
 
 function createAssessmentType() {
-    router.post('assessments/type/create', {
+    router.post(
+        "assessments/type/create",
+        {
             name: "Test Create Assessment Type",
             percentage: 10,
             school_year_id: 4,
@@ -1104,17 +1461,20 @@ function createAssessmentType() {
         },
         {
             onSuccess: () => {
-                console.log("Success")
+                console.log("Success");
             },
             onError: (error) => {
-                console.log("Error")
-                console.log(error)
-            }
-        })
+                console.log("Error");
+                console.log(error);
+            },
+        }
+    );
 }
 
 function updateAssessmentType() {
-    router.post('assessments/type/update/' + 5, {
+    router.post(
+        "assessments/type/update/" + 5,
+        {
             name: "Zemmmm Update Assessment Type",
             percentage: 20,
             school_year_id: 4,
@@ -1125,98 +1485,105 @@ function updateAssessmentType() {
         },
         {
             onSuccess: () => {
-                console.log("Success")
+                console.log("Success");
             },
             onError: (error) => {
-                console.log("Error")
-                console.log(error)
-            }
-        })
+                console.log("Error");
+                console.log(error);
+            },
+        }
+    );
 }
 
 function deleteAssessmentType() {
-    router.delete('assessments/type/destroy/' + 16, {
+    router.delete("assessments/type/destroy/" + 16, {
         onSuccess: () => {
-            console.log("Success")
+            console.log("Success");
         },
         onError: (error) => {
-            console.log("Error")
-            console.log(error)
-        }
-    })
+            console.log("Error");
+            console.log(error);
+        },
+    });
 }
 
 function getAssessmentTypes() {
-    router.get('assessments/type/', {
+    router.get(
+        "assessments/type/",
+        {
             school_year_id: 4,
             level_category_id: 3,
         },
         {
             onSuccess: () => {
-                console.log("Success")
+                console.log("Success");
             },
             onError: (error) => {
-                console.log("Error")
-                console.log(error)
-            }
-        })
+                console.log("Error");
+                console.log(error);
+            },
+        }
+    );
 }
 
 function createStudentNote() {
-    router.post('students/' + 1 + '/notes/create', {
+    router.post(
+        "students/" + 1 + "/notes/create",
+        {
             title: "This is a test note",
             description: "This is a test note body",
         },
         {
             onSuccess: () => {
-                console.log("Success")
+                console.log("Success");
             },
             onError: (error) => {
-                console.log("Error")
-            }
-        })
+                console.log("Error");
+            },
+        }
+    );
 }
 
 function updateStudentNote() {
-    router.post('teacher/students/' + 1 + '/notes/update/' + 1, {
+    router.post(
+        "teacher/students/" + 1 + "/notes/update/" + 1,
+        {
             title: "This is a test note for update",
             description: "This is a test note body for update",
         },
         {
             onSuccess: () => {
-                console.log("Success")
+                console.log("Success");
             },
             onError: (error) => {
-                console.log("Error")
-            }
-        })
+                console.log("Error");
+            },
+        }
+    );
 }
 
 function insertStudentsAssessment() {
-    router.post('student-assessments/17/insert', {
+    router.post("student-assessments/17/insert", {
         points: [
             {
-                'student_id': 5,
-                'point': 80
+                student_id: 5,
+                point: 80,
             },
             {
-                'student_id': 308,
-                'point': 42
+                student_id: 308,
+                point: 42,
             },
             {
-                'student_id': 631,
-                'point': 24
+                student_id: 631,
+                point: 24,
             },
             {
-                'student_id': 453,
-                'point': 89
+                student_id: 453,
+                point: 89,
             },
-        ]
-    })
+        ],
+    });
 }
-
 </script>
 
-<style>
-</style>
-
+<style></style>
