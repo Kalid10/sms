@@ -10,7 +10,12 @@
         </div>
         <div class="flex w-full justify-between space-x-5 p-2">
             <div class="w-7/12">
-                <CurrentDaySchedule :batch="batch" />
+                <CurrentDaySchedule
+                    :schedule="batch?.schedule"
+                    :active-batch-schedule-id="
+                        batch?.active_session[0]?.batch_schedule_id
+                    "
+                />
             </div>
             <div class="flex w-2/12">
                 <ActiveSession :batch="batch" />
