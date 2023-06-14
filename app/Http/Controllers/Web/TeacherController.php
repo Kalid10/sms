@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Announcement;
 use App\Models\Assessment;
 use App\Models\BatchSchedule;
 use App\Models\Quarter;
@@ -61,11 +62,12 @@ class TeacherController extends Controller
             'teacher_id' => 'nullable|exists:teachers,id',
         ]);
 
-        if (! auth()->user()->isTeacher() && ! $request->input('teacher_id')) {
+        if (! auth()->user()->isTeacher() && ! $request->input('teacher_id') && ! $id) {
             abort(403);
         }
 
         $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id'));
+        $schoolYearId = SchoolYear::getActiveSchoolYear()?->id;
 
         $batchSubject = $this->teacherService->prepareBatchSubject($request, $id);
         $batches = $this->teacherService->getBatches($id);
@@ -101,6 +103,16 @@ class TeacherController extends Controller
             ->take(2)
             ->get();
 
+        $announcements = Announcement::where('school_year_id', $schoolYearId)
+            ->where(function ($query) {
+                $query->whereJsonContains('target_group', 'all')
+                    ->orWhereJsonContains('target_group', 'teachers');
+            })
+            ->with('author.user')
+            ->orderBy('updated_at', 'DESC')
+            ->take(5)
+            ->get();
+
         return Inertia::render('Teacher/Index', [
             'teacher' => $teacher,
             'batches' => $batches,
@@ -111,6 +123,7 @@ class TeacherController extends Controller
             'last_assessment' => $lastAssessment ?? null,
             'batch_subject' => $batchSubject,
             'teacher_schedule' => $teacherSchedules,
+            'announcements' => $announcements,
             'filters' => [
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),
