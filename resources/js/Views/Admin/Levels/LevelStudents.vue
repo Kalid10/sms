@@ -159,7 +159,7 @@ const perPageOptions = [
 const search = () => {
     const currentPage = usePage().props.page || 1; // Add this line
     router.get(
-        "/levels/" + level.value.id,
+        "/admin/levels/" + level.value.id,
         {
             search: searchKey.value,
             section: selectedSection.value,
