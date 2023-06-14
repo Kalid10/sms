@@ -104,49 +104,57 @@
         </Modal>
 
         <Modal v-model:view="showAddAnnouncement">
-            <FormElement
-                v-model:show-modal="showAddAnnouncement"
-                title="Add Announcement"
-                @submit="addAnnouncement"
-            >
+            <FormElement title="Add Announcement" @submit="addAnnouncement">
                 <TextInput
                     v-model="form.title"
+                    label="Title"
                     placeholder="Title"
                     class="w-full"
-                />
-                <TextInput
-                    v-model="form.body"
-                    placeholder="Body"
-                    class="w-full"
+                    :error="form.errors.title"
+                    required
                 />
 
-                <div class="">
+                <TextArea
+                    v-model="form.body"
+                    label="Body"
+                    placeholder="the body or description"
+                    class="w-full"
+                    :error="form.errors.body"
+                />
+
+                <div class="flex flex-col">
                     <label
                         for="target-group"
                         class="block text-sm font-medium text-gray-700"
                         >Select target group :</label
                     >
                     <div
-                        class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        class="mt-1 flex w-full justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     >
                         <div
                             v-for="target in targetGroupOptions"
                             :key="target"
                             :class="{
-                                'bg-blue-100 ':
+                                'bg-zinc-800 text-white':
                                     form.target_group.includes(target),
                             }"
-                            class="cursor-pointer border-b-2 p-2"
+                            class="flex cursor-pointer flex-row justify-between rounded bg-zinc-100 p-2 px-8 text-black"
                             @click="toggleSelection(target)"
                         >
                             {{ target }}
                         </div>
                     </div>
-                    <p class="mt-4">You selected: {{ form.target_group }}</p>
+                    <div
+                        v-if="form.errors.target_group"
+                        class="text-xs text-negative-50"
+                    >
+                        * {{ form.errors.target_group }}
+                    </div>
                 </div>
 
                 <DatePicker
                     v-model="form.expires_on"
+                    label="Expire date"
                     placeholder="Expires On"
                     class="w-full"
                 />
@@ -156,7 +164,7 @@
 </template>
 <script setup>
 import { computed, ref, toRefs, watch } from "vue";
-import { router, usePage } from "@inertiajs/vue3";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import Item from "@/Views/Announcements/Item.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 import Modal from "@/Components/Modal.vue";
@@ -168,6 +176,7 @@ import Pagination from "@/Components/Pagination.vue";
 import FormElement from "@/Components/FormElement.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import TextArea from "@/Components/TextArea.vue";
 
 const props = defineProps({
     url: {
@@ -183,6 +192,8 @@ const props = defineProps({
         default: null,
     },
 });
+
+const error = computed(() => usePage().props.errors);
 
 const { classStyle } = toRefs(props);
 
@@ -210,24 +221,23 @@ function toggleSelection(target) {
 
 const showAddAnnouncement = ref(false);
 
-const form = ref({
+const form = useForm({
     title: "",
     body: "",
     expires_on: new Date(),
     target_group: [],
-});
+}).transform((data) => ({
+    ...data,
+    expires_on: moment(data.expires_on).format("YYYY-MM-DD HH:mm:ss"),
+}));
 
 const addAnnouncement = () => {
-    form.value.expires_on = moment(form.value.expires_on).format("YYYY-MM-DD");
-    router.post("/announcements/create", form.value, {
+    form.post("/announcements/create", {
         onSuccess: () => {
             showAddAnnouncement.value = false;
-            form.value = {
-                title: "",
-                body: "",
-                expires_on: new Date(),
-                target_group: [],
-            };
+            // Reset the form but set expires_on back to a Date object
+            form.reset();
+            form.expires_on = new Date();
         },
     });
 };

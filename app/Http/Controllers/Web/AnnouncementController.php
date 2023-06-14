@@ -33,9 +33,8 @@ class AnnouncementController extends Controller
             ->paginate(10);
 
         // Get teacher's feedbacks using teacher service getTeacherFeedbacks function
-        $feedbacks = $this->teacherService->getTeacherFeedbacks(auth()->user()->teacher->id);
+        $feedbacks = $this->teacherService->getTeacherFeedbacks(auth()->user()->teacher);
 
-        // TODO: change this to a view when the view is ready
         return Inertia::render('Teacher/Announcement/Index', [
             'announcements' => $announcements,
             'feedbacks' => $feedbacks,
@@ -53,7 +52,7 @@ class AnnouncementController extends Controller
         ]);
 
         // Get the current authenticated user
-        $user = auth()->user();
+        $user = auth()->user()->id;
 
         // Get the current school year
         $schoolYear = SchoolYear::getActiveSchoolYear()->id;
