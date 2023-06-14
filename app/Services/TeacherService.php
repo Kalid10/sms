@@ -110,8 +110,8 @@ class TeacherService
                 })->first()->load('subject', 'batch.level');
     }
 
-    public static function getTeacherFeedbacks(int $id, int $limit = 5)
+    public static function getTeacherFeedbacks(Teacher $teacher, int $limit = 5)
     {
-        return Teacher::findOrFail($id)->feedbacks()->with('author:id,name')->orderBy('created_at', 'desc')->paginate($limit)->appends(request()->query());
+        return $teacher->feedbacks()->with('author:id,name')->orderBy('created_at', 'desc')->paginate($limit)->appends(request()->query());
     }
 }
