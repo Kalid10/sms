@@ -7,24 +7,26 @@
         "
     >
         <div class="flex w-full flex-col space-y-4 rounded p-3">
-            <div class="flex items-center gap-2">
-                <div class="grow text-xl font-semibold lg:text-2xl">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div
+                    class="text-xl font-semibold lg:text-2xl"
+                    :class="view === 'admin' ? 'w-7/12' : 'w-5/12'"
+                >
                     {{ title }}
                 </div>
                 <SecondaryButton
-                    v-if="isAdmin"
+                    v-if="isAdmin && view === 'admin'"
                     class="h-fit !rounded-2xl bg-zinc-700 text-white"
                     title="Add Announcement"
                     @click="showAddAnnouncement = true"
                 />
+                <TextInput
+                    v-model="searchKey"
+                    placeholder="Search Assessments"
+                    class="w-5/12"
+                    @keyup="search"
+                />
             </div>
-
-            <TextInput
-                v-model="searchKey"
-                placeholder="Search Assessments"
-                class="w-5/12"
-                @keyup="search"
-            />
         </div>
 
         <div>
@@ -190,6 +192,10 @@ const props = defineProps({
     classStyle: {
         type: String,
         default: null,
+    },
+    view: {
+        type: String,
+        default: "admin",
     },
 });
 
