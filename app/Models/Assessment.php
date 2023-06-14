@@ -38,6 +38,8 @@ class Assessment extends Model
         'status',
     ];
 
+    protected $appends = ['assessment_period_time'];
+
     public function assessmentType(): BelongsTo
     {
         return $this->belongsTo(AssessmentType::class);
@@ -85,6 +87,38 @@ class Assessment extends Model
     public function students(): HasMany
     {
         return $this->hasMany(StudentAssessment::class);
+    }
+
+    public function getAssessmentPeriodTime()
+    {
+        // Get the date of the assessment
+        $assessmentDate = $this->due_date;
+
+        // Query the BatchSchedule
+        $batchSchedule = BatchSchedule::where('batch_subject_id', $this->batch_subject_id)
+            ->whereHas('sessions', function ($query) use ($assessmentDate) {
+                $query->whereDate('date', $assessmentDate);
+            })
+            ->first();
+
+        if ($batchSchedule) {
+            $session = $batchSchedule->sessions()
+                ->whereDate('date', $assessmentDate)
+                ->first();
+
+            if ($session) {
+                $schoolPeriod = $session->schoolPeriod;
+
+                return $schoolPeriod;
+            }
+        }
+
+        return null;
+    }
+
+    public function getAssessmentPeriodTimeAttribute()
+    {
+        return $this->getAssessmentPeriodTime();
     }
 
     protected $casts = [
