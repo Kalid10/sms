@@ -11,7 +11,9 @@ use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Semester;
 use App\Models\Student;
+use App\Models\User;
 use App\Services\TeacherService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -138,7 +140,13 @@ class AssessmentController extends Controller
         $assessment->assessment_type_points_sum = $completedAssessments->sum('maximum_point');
         $assessment->assessment_type_completed_count = $completedAssessments->count();
 
-        return Inertia::render('Teacher/Assessments/Index', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'assessment' => $assessment,
         ]);
     }
@@ -216,7 +224,13 @@ class AssessmentController extends Controller
             ->orderBy('due_date', 'asc')
             ->paginate(15);
 
-        return Inertia::render('Teacher/Assessments/Index', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'assessments' => $assessments,
             'teacher' => $this->teacherService->getTeacherDetails($teacherId),
             'assessment_type' => AssessmentType::all(),

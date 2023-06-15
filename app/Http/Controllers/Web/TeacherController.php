@@ -64,13 +64,12 @@ class TeacherController extends Controller
             'teacher_id' => 'nullable|exists:teachers,id',
         ]);
 
-        if (! auth()->user()->isTeacher() && ! $request->input('teacher_id') && ! $id) {
+        $id = auth()->user()->isTeacher() ? auth()->user()->teacher->id : $id ?? $request->input('teacher_id');
+        if (! $id) {
             abort(403);
         }
 
-        $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id'));
         $schoolYearId = SchoolYear::getActiveSchoolYear()?->id;
-
         $batchSubject = $this->teacherService->prepareBatchSubject($request, $id);
         $batches = $this->teacherService->getBatches($id);
         $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'));

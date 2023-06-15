@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Web\Teacher;
 
 use App\Models\Quarter;
+use App\Models\Teacher;
+use App\Models\User;
 use App\Services\StudentService;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -19,9 +22,16 @@ class Homeroom extends Controller
             'batch_id' => 'nullable|integer|exists:batches,id',
             'search' => 'nullable|string',
             'student_id' => 'nullable|exists:students,id',
+            'teacher_id' => 'nullable|integer|exists:teachers,id',
         ]);
 
-        $homeroomClasses = auth()->user()->teacher->load(['homeroom.batch.level', 'homeroom.batch.students', 'homeroom.batch.grades' => function ($query) {
+        $teacher = auth()->user()->isTeacher() ? auth()->user()->teacher : Teacher::findOrFail($request->input('teacher_id'))->load('user');
+
+        if (! $teacher) {
+            abort(403);
+        }
+
+        $homeroomClasses = $teacher->load(['homeroom.batch.level', 'homeroom.batch.students', 'homeroom.batch.grades' => function ($query) {
             return $query->where('gradable_type', Quarter::class)
                 ->where('gradable_id', Quarter::getActiveQuarter()->id)->first();
         }])->homeroom;
@@ -31,7 +41,13 @@ class Homeroom extends Controller
 
         $batchStudents = $batch?->load('students')->students->pluck('student_id');
 
-        return Inertia::render('Teacher/Homeroom', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Homeroom',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'homeroom_classes' => $homeroomClasses,
             'students' => $batchId ? StudentService::getBatchStudents($batchId, $search) : null,
             'top_students' => $batchStudents ? StudentService::getBatchTopStudents($batchStudents) : [],
@@ -41,6 +57,7 @@ class Homeroom extends Controller
                 ['gradable_id', Quarter::getActiveQuarter()->id],
             ])->first() : null,
             'student.grades' => StudentService::getStudentDetail($request->input('student_id'), $batch),
+            'teacher' => $teacher,
             'filters' => [
                 'batch_id' => $batchId,
                 'search' => $search,

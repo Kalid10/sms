@@ -8,8 +8,10 @@ use App\Models\Level;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
+use App\Models\User;
 use App\Services\StudentService;
 use App\Services\TeacherService;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,11 +23,14 @@ class Batch extends Controller
      */
     public function __invoke(Request $request): Response
     {
-        $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id'));
+        $id = auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id');
+        if (! $id) {
+            abort(403);
+        }
 
         $batchSubject = TeacherService::prepareBatchSubject($request, $id);
         $students = TeacherService::getStudents($batchSubject->id, $request->input('search'));
-        $teacher = Teacher::find(auth()->user()->teacher->id);
+        $teacher = Teacher::find($id)->load('user');
 
         $batchSubjects = $teacher->batchSubjects()
             ->whereHas('batch', function ($query) {
@@ -56,7 +61,13 @@ class Batch extends Controller
             'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id',
         )->only('schedule')['schedule'];
 
-        return Inertia::render('Teacher/Batches', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Batches',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'students' => $students,
             'batch_subject' => $batchSubject,
             'batch_subjects' => $batchSubjects,
@@ -71,6 +82,7 @@ class Batch extends Controller
             'in_progress_session' => $batch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user', 'batchSchedule.batchSubject.batch.level'),
             'top_students' => StudentService::getBatchSubjectTopStudents($batchSubject),
             'bottom_students' => StudentService::getBatchSubjectBottomStudents($batchSubject),
+            'teacher' => $teacher,
             'filters' => [
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),
