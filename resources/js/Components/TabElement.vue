@@ -1,63 +1,61 @@
 <template>
-
     <div class="flex w-full flex-col gap-3">
-
         <ul class="flex w-full items-center gap-4 overflow-auto">
-
             <li
-                v-for="(tab, t) in tabs" :key="t"
-                :class="[ activeTab === tab ? 'bg-brand-50' : '' ]"
+                v-for="(tab, t) in tabs"
+                :key="t"
+                :class="[active === tab ? 'bg-brand-50' : '']"
                 class="rounded-full px-4 py-2 transition-colors duration-300"
             >
                 <button
-                    :class="[ activeTab === tab ? 'text-brand-100' : 'text-gray-500' ]"
+                    :class="[
+                        active === tab ? 'text-brand-100' : 'text-gray-500',
+                    ]"
                     class="w-full whitespace-nowrap text-sm font-semibold transition-colors duration-300"
                     @click="setActiveTab(tab)"
                 >
                     {{ tab }}
                 </button>
             </li>
-
         </ul>
 
         <div class="w-full rounded-lg p-2">
-            <slot v-if="! activeOnly" :name="toUnderscore(activeTab)">
-                {{ activeTab }}
+            <slot v-if="!activeOnly" :name="toUnderscore(active)">
+                {{ active }}
             </slot>
-            <slot v-else :active="{ tab: activeTab, index: tabs.indexOf(activeTab) }">
-                {{ activeTab }}
+            <slot v-else :active="{ tab: active, index: tabs.indexOf(active) }">
+                {{ active }}
             </slot>
         </div>
-
     </div>
-
 </template>
 
 <script setup>
-
-import {ref} from "vue";
-
 const props = defineProps({
     tabs: {
         type: Array,
-        required: true
+        required: true,
     },
     activeOnly: {
         type: Boolean,
-        default: false
-    }
-})
+        default: false,
+    },
+    active: {
+        type: String,
+        default: "Home",
+    },
+});
 
-const activeTab = ref(props.tabs[0])
+const emit = defineEmits(["click", "update:active"]);
 
 function setActiveTab(tab) {
-    activeTab.value = tab
+    emit("update:active");
+    emit("click", tab);
 }
 
 function toUnderscore(str) {
-    return str.replace(' ', '_').toLowerCase()
+    return str.replace(" ", "_").toLowerCase();
 }
-
 </script>
 
 <style scoped>
