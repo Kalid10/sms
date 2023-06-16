@@ -51,7 +51,7 @@ class Batch extends Controller
                 'batchSubject.batch:id,section,level_id',
                 'batchSubject.batch.level:id,name,level_category_id',
                 'batchSubject.subject:id,full_name')
-            ->get()->take(4);
+            ->get()->take(3);
 
         $batch = BatchModel::find($batchSubject->batch_id)->load('level:id,name,level_category_id', 'level.levelCategory:id,name');
         $schedule = BatchModel::find($batchSubject->batch_id)->load(

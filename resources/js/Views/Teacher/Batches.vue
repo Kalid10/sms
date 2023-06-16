@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-full w-full flex-col space-y-2">
         <div
-            class="flex h-full w-full justify-between space-x-6 divide-x divide-gray-50"
+            class="flex h-full w-full justify-between space-x-6 divide-x divide-gray-100"
         >
             <!--        Left Side-->
             <div
@@ -22,7 +22,15 @@
                 </div>
 
                 <div class="flex w-full justify-between space-x-10">
-                    <div class="flex h-full w-6/12 flex-col space-y-4">
+                    <div class="w-6/12">
+                        <StudentsTable
+                            :title="tableTitle"
+                            :table-model-value="batchSubject.id"
+                            @search="updateBatchInfo"
+                            @click="fetchStudent"
+                        />
+                    </div>
+                    <div class="flex h-full w-5/12 flex-col space-y-6">
                         <SummaryItem
                             class-style="bg-orange-100 text-black"
                             icon-style="bg-orange-500/20 text-white"
@@ -38,27 +46,24 @@
                             :icon="CalendarIcon"
                         />
                         <SummaryItem
-                            class-style="bg-zinc-100 text-black"
-                            icon-style="bg-zinc-500/20 text-white"
-                            :title="'Students'"
-                            value="75 Total Students"
-                            :icon="UsersIcon"
-                        />
-                        <SummaryItem
                             class-style="bg-red-50 text-black"
                             icon-style="bg-red-500/20 text-white"
                             :title="'Announcements'"
                             value="10 Announcements Today"
                             :icon="ChatBubbleBottomCenterIcon"
                         />
-                    </div>
-                    <div v-if="assessments?.length" class="w-6/12">
-                        <Assessment
-                            class=""
-                            title="Recent Assessments"
-                            :assessments="assessments"
-                            view="class"
-                        />
+
+                        <div
+                            v-if="assessments?.length"
+                            class="mt-5 w-full rounded-lg bg-white pt-2 shadow-sm"
+                        >
+                            <Assessment
+                                class=""
+                                title="Recent Assessments"
+                                :assessments="assessments"
+                                view="class"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,16 +71,14 @@
             <!--        Right side-->
             <div
                 class="flex w-4/12 flex-col px-3 pl-5"
-                :class="isTeacher() ? 'py-2' : ''"
+                :class="isTeacher() ? 'py-5' : ''"
             >
                 <CurrentClass view="absentee" />
 
                 <div
-                    class="flex h-full w-full flex-col items-center justify-evenly space-y-5 rounded-lg bg-white px-3 py-5"
+                    class="flex h-full w-full flex-col items-center space-y-6 px-3 py-5"
                 >
-                    <div
-                        class="w-full rounded-lg border border-gray-500 bg-gray-50/20 p-2 shadow-sm"
-                    >
+                    <div class="w-full">
                         <StudentsList
                             progress-type="up"
                             title="Top Students"
@@ -84,9 +87,7 @@
                         />
                     </div>
 
-                    <div
-                        class="w-full rounded-lg border border-gray-500 bg-gray-50/20 p-2 shadow-sm"
-                    >
+                    <div class="w-full">
                         <StudentsList
                             progress-type="down"
                             title="Students Falling Behind"
@@ -111,7 +112,6 @@ import {
     CalendarIcon,
     ChatBubbleBottomCenterIcon,
     ClipboardIcon,
-    UsersIcon,
 } from "@heroicons/vue/24/solid";
 import {
     ArrowTrendingDownIcon,
@@ -119,7 +119,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
-
+import StudentsTable from "@/Views/Teacher/Views/StudentsTable.vue";
 import Assessment from "@/Views/Teacher/Views/Home/Assessments.vue";
 
 const schedule = usePage().props.schedule;
@@ -166,6 +166,19 @@ const updateBatchInfo = (batchSubjectId, search) => {
         }
     );
 };
+
+const tableTitle = computed(() => {
+    return `${batchSubject.value.batch.level.name} ${batchSubject.value.batch.section} - ${batchSubject.value.subject.full_name}`;
+});
+
+function fetchStudent(studentId) {
+    router.get(
+        "/teacher/students/" +
+            studentId +
+            "?batch_subject_id=" +
+            selectedBatchSubject.value
+    );
+}
 </script>
 
 <style scoped></style>

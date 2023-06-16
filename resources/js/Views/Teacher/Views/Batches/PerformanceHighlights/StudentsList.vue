@@ -19,7 +19,7 @@
                 v-for="(item, index) in students"
                 :key="index"
                 class="flex h-fit w-full cursor-pointer items-center justify-center space-x-2 rounded-lg py-1.5 hover:bg-zinc-700 hover:text-white"
-                :class="index % 2 === 0 ? 'bg-zinc-50/90' : 'bg-white'"
+                :class="index % 2 === 0 ? 'bg-gray-50/70' : 'bg-white'"
             >
                 <Item
                     :progress-type="progressType"
