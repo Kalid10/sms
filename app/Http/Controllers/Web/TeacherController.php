@@ -98,10 +98,9 @@ class TeacherController extends Controller
 
         $schoolScheduleDate = $request->input('school_schedule_date') ?? now();
         $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
-            ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
-            ->whereDate('end_date', '>=', Carbon::parse($schoolScheduleDate))
+            ->whereDate('start_date', '>=', now())
             ->orderBy('start_date', 'asc')
-            ->take(2)
+            ->take(3)
             ->get();
 
         $announcements = Announcement::where('school_year_id', $schoolYearId)
@@ -111,7 +110,7 @@ class TeacherController extends Controller
             })
             ->with('author.user')
             ->orderBy('updated_at', 'DESC')
-            ->take(5)
+            ->take(3)
             ->get();
 
         $page = match (auth()->user()->type) {
@@ -134,6 +133,40 @@ class TeacherController extends Controller
             'filters' => [
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),
+            ],
+        ]);
+    }
+
+    public function schedule(Request $request): Response
+    {
+        $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'search' => 'nullable|string',
+        ]);
+        $searchKey = $request->input('search');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()?->id)
+            ->when($startDate, function ($query) use ($startDate) {
+                return $query->whereDate('start_date', '>=', Carbon::parse($startDate));
+            })
+            ->when($endDate, function ($query) use ($endDate) {
+                return $query->whereDate('end_date', '<=', Carbon::parse($endDate));
+            })
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->where('title', 'like', "%{$searchKey}%");
+            })
+            ->orderBy('start_date', 'asc')
+            ->paginate(7)->appends(request()->query());
+
+        return Inertia::render('Teacher/SchoolSchedule', [
+            'school_schedule' => $schoolSchedule,
+            'filters' => [
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'search' => $searchKey,
             ],
         ]);
     }
