@@ -1,7 +1,8 @@
 <template>
     <div
-        class="flex w-full items-center justify-between rounded-2xl py-4 px-5"
+        class="flex w-full cursor-pointer items-center justify-between rounded-2xl py-4 px-5 hover:scale-105"
         :class="classStyle"
+        @click="router.get(url)"
     >
         <div class="flex h-full flex-col justify-center space-y-3">
             <div class="text-sm font-medium uppercase">{{ title }}</div>
@@ -16,6 +17,8 @@
     </div>
 </template>
 <script setup>
+import { router } from "@inertiajs/vue3";
+
 defineProps({
     title: {
         type: String,
@@ -40,6 +43,10 @@ defineProps({
     iconStyle: {
         type: String,
         default: "",
+    },
+    url: {
+        type: String,
+        default: null,
     },
 });
 </script>
