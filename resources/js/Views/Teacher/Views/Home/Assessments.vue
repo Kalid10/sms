@@ -21,7 +21,7 @@
         <!--        Content-->
         <div class="flex w-full flex-col">
             <div
-                v-if="assessments.length > 0"
+                v-if="assessments?.length"
                 class="mt-1 flex w-full flex-col justify-center divide-y lg:mt-2 lg:py-2"
             >
                 <Item :assessments="assessments" :view="view" />
@@ -32,10 +32,7 @@
             >
                 <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
                 <div class="text-xs lg:text-sm">No Assessments Found!</div>
-                <LinkCell
-                    href="/teacher/assessments"
-                    value="Go To Assessments"
-                />
+                <LinkCell value="Go To Assessments" @click="fetchAssessments" />
             </div>
         </div>
     </div>
@@ -72,7 +69,7 @@ const teacher = computed(() => {
 function fetchAssessments() {
     if (isAdmin()) {
         return router.get(
-            "/teacher/assessments",
+            "/admin/teachers/assessments",
             {
                 teacher_id: teacher.value.id,
             },

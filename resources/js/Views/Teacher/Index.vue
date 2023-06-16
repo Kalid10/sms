@@ -1,6 +1,7 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col space-y-3 bg-gray-50 p-1 lg:space-y-3 lg:px-1 2xl:pl-4 2xl:pr-12"
+        class="flex min-h-screen w-full flex-col space-y-3 bg-gray-50"
+        :class="isTeacher() ? '2xl:pl-4 2xl:pr-12 p-1' : ''"
     >
         <!--                 Next Class Header On Mobile Devices-->
         <div
@@ -28,9 +29,12 @@
             </div>
         </div>
 
-        <div class="flex h-screen w-full justify-between py-3 px-5 pt-5">
+        <div
+            class="flex h-screen w-full justify-between"
+            :class="isTeacher() ? 'px-5 pt-5 py-3' : ''"
+        >
             <div class="flex w-6/12 flex-col space-y-8">
-                <WelcomeHeader />
+                <WelcomeHeader v-if="isTeacher()" />
 
                 <Announcements view="teacher" />
 
@@ -65,7 +69,7 @@ import NextClass from "@/Views/Teacher/Views/NextClass/Index.vue";
 import LessonPlans from "@/Views/Teacher/Views/Home/LessonPlans.vue";
 import moment from "moment/moment";
 import { computed, ref } from "vue";
-import { isSidebarOpenOnXlDevice } from "@/utils";
+import { isSidebarOpenOnXlDevice, isTeacher } from "@/utils";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import CurrentDaySchedule from "@/Views/CurrentDaySchedule.vue";
 import Announcements from "@/Views/Announcements/Index.vue";

@@ -63,6 +63,12 @@ const showModal = ref(false);
 const selectedAssessment = computed(() => usePage().props.assessment);
 const isLoading = ref(false);
 
+const props = defineProps({
+    teacherId: {
+        type: Number,
+        default: null,
+    },
+});
 onBeforeMount(() => {
     // TODO:: Fix the double page bug
     let ass = computed(() => usePage().props.assessments);
@@ -70,7 +76,9 @@ onBeforeMount(() => {
         isLoading.value = true;
         router.get(
             "/teacher/assessments",
-            {},
+            {
+                teacher_id: props.teacherId ?? null,
+            },
             {
                 preserveScroll: true,
                 preserveState: true,
@@ -87,7 +95,9 @@ function loadDetail(assessment) {
     isLoading.value = true;
     router.get(
         "/teacher/assessments/" + assessment.id,
-        {},
+        {
+            teacher_id: props.teacherId ?? null,
+        },
         {
             preserveState: true,
             preserveScroll: true,
