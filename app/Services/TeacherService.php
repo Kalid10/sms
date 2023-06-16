@@ -8,6 +8,7 @@ use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -102,15 +103,19 @@ class TeacherService
 
         $batchSubjectId = $request->input('batch_subject_id');
 
+        if (! $batchSubjectId && ! $teacherId) {
+            abort(403);
+        }
+
         return $batchSubjectId ?
             BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
             BatchSubject::where('teacher_id', $teacherId)
                 ->whereHas('batch', function ($query) {
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-                })->first()->load('subject', 'batch.level');
+                })->first()?->load('subject', 'batch.level');
     }
 
-    public static function getTeacherFeedbacks(Teacher $teacher, int $limit = 5)
+    public static function getTeacherFeedbacks(Teacher $teacher, int $limit = 5): LengthAwarePaginator
     {
         return $teacher->feedbacks()->with('author:id,name')->orderBy('created_at', 'desc')->paginate($limit)->appends(request()->query());
     }

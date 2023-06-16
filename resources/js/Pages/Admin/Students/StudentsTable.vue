@@ -189,9 +189,9 @@ const formattedStudentsData = computed(() => {
             email: student.user.email,
             gender: student.user.gender,
             grade:
-                student.current_batch[0].level.name +
+                student.current_batch[0]?.level.name +
                 "-" +
-                student.current_batch[0].section,
+                student.current_batch[0]?.section,
         };
     });
 });

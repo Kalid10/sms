@@ -8,7 +8,10 @@ use App\Models\BatchSession;
 use App\Models\BatchSubject;
 use App\Models\LessonPlan;
 use App\Models\SchoolYear;
+use App\Models\Teacher;
+use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,9 +24,14 @@ class LessonPlanController extends Controller
         $request->validate([
             'batch_subject_id' => 'nullable|exists:batch_subjects,id',
             'month' => 'nullable|date_format:"Y-m"',
+            'teacher_id' => 'nullable|exists:teachers,id',
         ]);
 
-        $teacherId = auth()->user()->teacher->id;
+        $teacherId = auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id');
+
+        if (! $teacherId) {
+            abort(403);
+        }
 
         $batchSubject = BatchSubject::with([
             'subject:id,full_name',
@@ -35,7 +43,7 @@ class LessonPlanController extends Controller
             $query->where('teacher_id', $teacherId);
         })->firstOrFail();
 
-        if ($batchSubject->teacher_id !== $teacherId) {
+        if ($batchSubject->teacher_id !== $teacherId && ! auth()->user()->type === User::TYPE_ADMIN) {
             return redirect()->back()->with('error', 'You are not assigned to this subject.');
         }
 
@@ -85,7 +93,13 @@ class LessonPlanController extends Controller
             ];
         });
 
-        return Inertia::render('Teacher/LessonPlans/Index', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/LessonPlans/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'batch_sessions' => $weeklyBatchSessions,
             'batch' => Batch::find($batchId)->load('level'),
             'subjects' => $teacherSubjects,
@@ -93,6 +107,7 @@ class LessonPlanController extends Controller
             'lesson_plan_subject' => $batchSubject,
             'months' => $months,
             'selected_month' => $currentMonth->format('Y-m'),
+            'teacher' => Teacher::find($teacherId)->load('user'),
         ]);
     }
 

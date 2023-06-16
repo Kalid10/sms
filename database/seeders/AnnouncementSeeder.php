@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Announcement;
-use App\Models\SchoolYear;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,7 +19,6 @@ class AnnouncementSeeder extends Seeder
             ->count(10)
             ->create([
                 'author_id' => $admin->id,
-                'school_year_id' => SchoolYear::getActiveSchoolYear()?->id,
             ]);
     }
 }

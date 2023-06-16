@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Announcement;
 use App\Models\Assessment;
 use App\Models\BatchSchedule;
 use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
+use App\Models\User;
 use App\Services\StudentService;
 use App\Services\TeacherService;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -61,12 +64,12 @@ class TeacherController extends Controller
             'teacher_id' => 'nullable|exists:teachers,id',
         ]);
 
-        if (! auth()->user()->isTeacher() && ! $request->input('teacher_id')) {
+        $id = auth()->user()->isTeacher() ? auth()->user()->teacher->id : $id ?? $request->input('teacher_id');
+        if (! $id) {
             abort(403);
         }
 
-        $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id'));
-
+        $schoolYearId = SchoolYear::getActiveSchoolYear()?->id;
         $batchSubject = $this->teacherService->prepareBatchSubject($request, $id);
         $batches = $this->teacherService->getBatches($id);
         $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'));
@@ -101,7 +104,23 @@ class TeacherController extends Controller
             ->take(2)
             ->get();
 
-        return Inertia::render('Teacher/Index', [
+        $announcements = Announcement::where('school_year_id', $schoolYearId)
+            ->where(function ($query) {
+                $query->whereJsonContains('target_group', 'all')
+                    ->orWhereJsonContains('target_group', 'teachers');
+            })
+            ->with('author.user')
+            ->orderBy('updated_at', 'DESC')
+            ->take(5)
+            ->get();
+
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'teacher' => $teacher,
             'batches' => $batches,
             'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),
@@ -111,6 +130,7 @@ class TeacherController extends Controller
             'last_assessment' => $lastAssessment ?? null,
             'batch_subject' => $batchSubject,
             'teacher_schedule' => $teacherSchedules,
+            'announcements' => $announcements,
             'filters' => [
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),

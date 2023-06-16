@@ -36,7 +36,7 @@ import SubjectUpdate from "@/Views/Admin/SubjectUpdate.vue";
 import RegisterSubjectForm from "@/Views/Admin/RegisterSubjectForm.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import SubjectsTable from "@/Views/Admin/Subjects/SubjectsTable.vue";
-import Title from "@/Views/Teacher/Title.vue";
+import Title from "@/Views/Teacher/Views/Title.vue";
 
 const isAddModalOpen = ref(false);
 const isUpdateModalOpen = ref(false);

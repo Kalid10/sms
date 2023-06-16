@@ -11,7 +11,7 @@
             <!--            <LevelStatistics />-->
         </div>
 
-        <TabElement :tabs="models">
+        <TabElement :tabs="tabs">
             <template #sections>
                 <LevelSections />
             </template>
@@ -43,5 +43,5 @@ import LevelStudents from "@/Views/Admin/Levels/LevelStudents.vue";
 const level = computed(() => usePage().props.level);
 const schoolYear = computed(() => usePage().props.school_year);
 
-const models = ["Sections", "Subjects", "Students"];
+const tabs = ["Sections", "Subjects", "Students"];
 </script>

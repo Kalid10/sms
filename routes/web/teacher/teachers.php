@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Teacher\Announcements;
 use App\Http\Controllers\Web\Teacher\Batch;
 use App\Http\Controllers\Web\Teacher\Homeroom;
 use App\Http\Controllers\Web\Teacher\Student;
@@ -7,7 +8,7 @@ use App\Http\Controllers\Web\Teacher\Students;
 use App\Http\Controllers\Web\TeacherController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('teacher.')->group(function () {
+Route::prefix('teacher/')->middleware(['checkUserType:teacher,admin', 'auth'])->name('teacher.')->group(function () {
     Route::controller(TeacherController::class)->group(function () {
         Route::get('', 'show')->name('show');
     });
@@ -16,4 +17,5 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher', 'auth'])->name('
     Route::get('homeroom', Homeroom::class)->name('homeroom.show');
     Route::get('students/{student}', Student::class)->name('student.show');
     Route::get('students', Students::class)->name('students.show');
+    Route::get('announcements', Announcements::class)->name('announcement.show');
 });

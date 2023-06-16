@@ -41,7 +41,7 @@
         </div>
         <div
             v-else
-            class="text-center text-2xl font-bold uppercase text-gray-600"
+            class="py-5 text-center text-2xl font-bold uppercase text-gray-600"
         >
             No schedule found!
         </div>

@@ -78,7 +78,7 @@ import DatePicker from "@/Components/DatePicker.vue";
 import Pagination from "@/Components/Pagination.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SchoolScheduleItem from "@/Views/Admin/Schedule/SchoolScheduleItem.vue";
-import Title from "@/Views/Teacher/Title.vue";
+import Title from "@/Views/Teacher/Views/Title.vue";
 import { debounce } from "lodash";
 import Loading from "@/Components/Loading.vue";
 import moment from "moment";

@@ -1,6 +1,7 @@
 import { useDeviceSize } from "@/Composables/device-size";
 import { computed } from "vue";
 import { useSidebarStore } from "@/Store/sidebar";
+import { usePage } from "@inertiajs/vue3";
 
 // Take a string and replace all the whitespaces with underscores
 function toHashTag(string) {
@@ -68,6 +69,16 @@ const numberWithOrdinal = (n) => {
         v = n % 100;
     return n + (s[(v - 20) % 10] || s[v] || s[0]);
 };
+
+// Check if the logged-in user is admin
+function isAdmin() {
+    return usePage().props.auth.user.type === "admin";
+}
+
+function isTeacher() {
+    return usePage().props.auth.user.type === "teacher";
+}
+
 export {
     toHashTag,
     capitalize,
@@ -78,4 +89,6 @@ export {
     genderLabels,
     isSidebarOpenOnXlDevice,
     numberWithOrdinal,
+    isAdmin,
+    isTeacher,
 };
