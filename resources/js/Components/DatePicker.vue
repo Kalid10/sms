@@ -187,7 +187,7 @@
                 </span>
 
                 <span
-                    v-if="panel === 'date' && !visible"
+                    v-if="panel === 'date'"
                     class="grid place-items-center p-2"
                 >
                     <button
