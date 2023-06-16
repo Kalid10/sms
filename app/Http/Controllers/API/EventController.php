@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\Event\Collection;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Student;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use PHPUnit\Event\EventCollection;
 
 class EventController extends Controller
 {
-    public function index(Student $student = null): EventCollection
+    public function index(Student $student = null): Collection
     {
-        $schoolSchedule = SchoolSchedule::where('school_year_id',
-            SchoolYear::getActiveSchoolYear()->id)->where('start_date', '>=', today()->toDateString())->get();
+        $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->where('start_date', '>=', today()->toDateString())
+            ->get();
 
         if ($student) {
             $children = collect([$student->load('batches.batch.subjects.assessments')]);
@@ -26,7 +27,11 @@ class EventController extends Controller
         $assessments = $children->flatMap(function ($student) {
             return $student->batches->flatMap(function ($batch) {
                 return $batch->batch->subjects->flatMap(function ($subject) {
-                    return $subject->assessments;
+                    return $subject->assessments->map(function ($assessment) {
+                        $assessment->assessment_period_time = $assessment->getAssessmentPeriodTime();
+
+                        return $assessment;
+                    });
                 });
             });
         });
@@ -39,6 +44,6 @@ class EventController extends Controller
             return $event->end_date ?? $event->due_date;
         });
 
-        return new EventCollection($sorted);
+        return new Collection($sorted->values());
     }
 }
