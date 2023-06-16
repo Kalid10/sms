@@ -49,7 +49,7 @@ const props = defineProps({
 const emit = defineEmits(["click", "update:active"]);
 
 function setActiveTab(tab) {
-    emit("update:active");
+    emit("update:active", tab);
     emit("click", tab);
 }
 
