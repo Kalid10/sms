@@ -62,7 +62,7 @@
                 <SecondaryButton
                     title="Add Event"
                     class="w-7/12 rounded-lg bg-zinc-800 !py-2 text-white"
-                    @click="showModalToggle"
+                    @click="showAddModal = true"
                 />
             </div>
         </div>
@@ -73,7 +73,7 @@
 </template>
 <script setup>
 import { computed, ref, watch } from "vue";
-import { router, useForm, usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import DatePicker from "@/Components/DatePicker.vue";
 import Pagination from "@/Components/Pagination.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
@@ -94,14 +94,7 @@ const endDate = ref(
 
 const showAddModal = ref(false);
 
-function showModalToggle() {
-    showAddModal.value = !showAddModal.value;
-}
-
 const showLoading = ref(false);
-const scheduleForm = useForm({
-    start_date: "",
-});
 
 const query = ref("");
 
