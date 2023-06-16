@@ -1,0 +1,14 @@
+{
+    "FormElementTitle": "አዲስ የትምህርት አይነት",
+    "FormElementSubtitle": "አዲስ የትምህርት አይነት ይፍጠሩ እና ለምድብ ያዛመኑት",
+    "fullNamePlaceholder": "የአዲሱ የትምህርት አይነት ስም",
+    "fullNameLabel": "የትምህርት አይነት ስም",
+    "shortNamePlaceholder": "ለትምህርት አይነት አጭር ስም",
+    "shortNameLabel": "የትምህርት አይነት አጭር ስም",
+    "tagsLabel": "የትምህርት አይነት ምልክቶች",
+    "tagsPlaceholder": "ምልክቶች ይመድቡ (ብዙ ምልክቶችን ከኮማ ጋር ያስለያዩ)",
+    "categoryLabel": "ምድብ ያስገቡ",
+    "categoryPlaceholder": "የትምህርት አይነት ምድብ",
+    "newCategoryPlaceholder": "አዲስ ምድብ",
+    "noCategoriesFound": "ምንም ምድቦች አልተገኙም"
+}

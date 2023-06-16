@@ -1,0 +1,25 @@
+{
+    "schedule": "ሰዓት ሰሌዳ",
+    "selectMonthPlaceholder": "ወር ይምረጡ",
+    "addScheduleTitle": "ሰዓት ሰሌዳ ያክሉ",
+    "noSchoolScheduleIn": "በዚህ ወር የትምህርት ቤት ሰዓት ሰሌዳ የለም",
+    "schedules": "ሰዓት ሰሌዳዎች",
+    "schedulesIn": "በዚህ ሰሌዳዎች",
+    "queryPlaceholder": "በርዕስ መሰረት ሰዓት ሰሌዳ ይፈልጉ",
+    "months": {
+        "january": "ጃንዩወሪ",
+        "february": "ፌብሩወሪ",
+        "march": "ማርች",
+        "april": "ኤፕሪል",
+        "may": "ሜይ",
+        "june": "ጁን",
+        "july": "ጁላይ",
+        "august": "ኦገስት",
+        "september": "ሴፕቴምበር",
+        "october": "ኦክቶበር",
+        "november": "ኖቬምበር",
+        "december": "ዲሴምበር"
+    }
+
+
+}

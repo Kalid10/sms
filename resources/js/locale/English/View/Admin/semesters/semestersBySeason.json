@@ -1,0 +1,8 @@
+{
+ "semesters": "Semesters",
+    "seasons" : {
+        "first": "First",
+        "second": "Second",
+        "third": "Third"
+    }
+}

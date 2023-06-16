@@ -1,0 +1,12 @@
+{
+    "listOfTeachers": "በ ውስጥ የመምህራን ዝርዝር",
+    "faculty": "ፋኩልቲ",
+    "searchKeyPlaceholder": "አስተማሪን በስም ፈልግ",
+    "noDataFound": "ምንም መረጃ አልተገኘም።",
+    "NoTeacherEnrolled": "ምንም አስተማሪ አልተመዘገበም።",
+    "searchQuery":"የፍለጋ ጥያቄህ",
+    "didNotMatch": "አልተዛመደም።",
+    "anyTeacherName": "የማንኛውም አስተማሪ ስም",
+    "teacher": "መምህር",
+    "grades": "ደረጃዎች"
+}

@@ -1,0 +1,8 @@
+{
+    "semestersCountTitle":"Semesters",
+    "semestersCountSubtitle":"Semesters tracked on the system",
+    "schoolYearsCountTitle":"School Years",
+    "schoolYearsCountSubtitle": "School Years registered on the system",
+    "activeSchoolYearSemestersCountTitle":"Current(Active) School year Semesters",
+    "activeSchoolYearSemestersCountSubtitle": "Semesters currently in progress"
+}

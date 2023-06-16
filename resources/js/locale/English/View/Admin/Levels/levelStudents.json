@@ -1,0 +1,19 @@
+{
+    "section": "Section",
+    "studentsList": "Students List",
+    "studentsEnrolledIn": "Students enrolled in",
+    "for": "for",
+    "years":"years",
+    "searchKeyPlaceHolder": "Search for a student by name",
+    "noDataFound": "No data found",
+    "noStudentEnrolled": "No student has been enrolled in this section",
+    "yourSearchQuery": "Your search query",
+    "didNotMatch": "did not match",
+    "anyStudentName": "any student's name",
+    "perPage": "Per page",
+    "subjectsConfig": {
+        "priorityName":"priority",
+        "subjectName":"Subject",
+        "": ""
+    }
+}

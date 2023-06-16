@@ -1,0 +1,12 @@
+{
+    "header": "Welcome to Subjects page",
+    "tableElementTitle": "Subjects List",
+    "tableElementSubtitle": "List of all subjects given at",
+    "newSubject": "New Subject",
+    "queryPlaceholder": "Search for a subject by name or tags",
+    "noStudentEnrolled": "No student has been enrolled in this section",
+    "searchQuery": "Your search query",
+    "didNotMatch": "did not match",
+    "anySubjectCategory": "any subject, category or tag",
+    "Select a grade": "Select a grade"
+}

@@ -1,0 +1,11 @@
+{
+    "UpdateFormElementTitle": "Update Subject",
+    "fullNameLabel": "Full Name",
+    "fullNamePlaceholder":"Full Name",
+    "shortNameLabel": "Short Name",
+    "shortNamePlaceholder":"Short Name",
+    "tagsLabel": "Subject Tags",
+    "tagsPlaceholder":"Assign tags (separate multiple tags with comma)",
+    "categoryPlaceholder": "Enter a category",
+    "categoryLabel": "Subject Category"
+}

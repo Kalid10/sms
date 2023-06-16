@@ -1,0 +1,10 @@
+{
+    "adminStaTitle": "አስተዳዳሪዎች",
+    "adminStatSubtitle": "በስርዓቱ ውስጥ የተመዘገቡ አስተዳዳሪዎች",
+    "studentsStatTitle": "ተማሪዎች",
+    "studentsStatSubtitle": "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ ተማሪዎች (ሁሉም ጊዜ)",
+    "teacherStatTitle": "አስተማሪዎች",
+    "teacherStatSubtitle": "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ አስተማሪዎች (ሁሉም ጊዜ)",
+    "newUsersStatTitle": "አዳዲስ ተጠቃሚዎች",
+    "newUserStatSubtitle": "አዳዲስ ተጠቃሚዎች (በመጨረሻው 30 ቀናት)"
+}

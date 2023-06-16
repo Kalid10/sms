@@ -1,0 +1,14 @@
+{
+    "FormElementTitle": "New Subject",
+    "FormElementSubtitle": "Create a new subject and assign it to a category",
+    "fullNamePlaceholder": "Name of the new Subject",
+    "fullNameLabel": "Subject Name",
+    "shortNamePlaceholder": "Short name for Subject",
+    "shortNameLabel": "Subject Short Name",
+    "tagsLabel": "Subject Tags",
+    "tagsPlaceholder":"Assign tags (separate multiple tags with comma)",
+    "categoryLabel": "Enter a category",
+    "categoryPlaceholder":"Subject Category",
+    "newCategoryPlaceholder":"New category",
+    "noCategoriesFound": "No categories found"
+}

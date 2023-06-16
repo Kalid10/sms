@@ -1,0 +1,12 @@
+{
+    "header": "እንኳን ወደ ትምህርት አይነቶች ገጽ በደህና መጡ",
+    "tableElementTitle": "የትምህርት አይነቶች ዝርዝር",
+    "tableElementSubtitle": "በዚህ ትምህርት ቤት የተሰጡትን ሁሉም የትምህርት አይነቶች ዝርዝር",
+    "newSubject": "አዲስ የትምህርት አይነት",
+    "queryPlaceholder": "በስም ወይም በምልክቶች ለመፈለግ",
+    "noStudentEnrolled": "ምንም ተማሪ በዚህ ክፍል አልተመዘገበም",
+    "searchQuery": "የእርስዎ የፍለጋ ጥያቄ",
+    "didNotMatch": "አልተገናኘም",
+    "anySubjectCategory": "ማንኛውም የትምህርት አይነት, ምድብ ወይም ምልክት",
+    "selectGrade": "ደረጃ ይምረጡ"
+}

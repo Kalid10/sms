@@ -1,0 +1,25 @@
+{
+    "schedule": "Schedule",
+    "selectMonthPlaceholder": "Select month",
+    "addScheduleTitle": "Add Schedule",
+    "noSchoolScheduleIn": "No school schedule in",
+    "schedules": "Schedules",
+    "schedulesIn": "Schedules in",
+    "queryPlaceholder": "Search for schedule by title",
+    "months": {
+        "january":"January",
+        "february":"February",
+        "march":"March",
+        "april":"April",
+        "may":"May",
+        "june":"June",
+        "july":"July",
+        "august":"August",
+        "september":"September",
+        "october":"October",
+        "november":"November",
+        "december":"December"
+    }
+
+
+}
