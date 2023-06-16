@@ -59,10 +59,7 @@ class Student extends Controller
         $student->absentee_percentage = $student->absenteePercentage();
         $student->quarterly_grade = $student->grades()->where([['gradable_type', Quarter::class], ['gradable_id', Quarter::getActiveQuarter()->id]])->first();
         $student->semester_grade = $student->grades()->where([['gradable_type', Semester::class], ['gradable_id', Semester::getActiveSemester()->id]])->first();
-
-        if (auth()->user()->type === User::TYPE_ADMIN) {
-            $student->grades = StudentService::getStudentDetail($student->id, $currenBatch);
-        }
+        $student->grades = StudentService::getStudentDetail($student->id, $currenBatch);
 
         return $student;
     }

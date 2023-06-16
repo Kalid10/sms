@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
-        <div class="flex justify-between py-3 text-2xl font-bold">
+        <div class="flex justify-between py-3 text-2xl font-medium">
             <ArrowLeftCircleIcon
                 v-if="showSubjectDetail"
                 class="w-6 cursor-pointer"
