@@ -31,7 +31,7 @@
 
         <div>
             <EmptyView
-                v-if="computedAnnouncements.length === 0"
+                v-if="!computedAnnouncements"
                 title="No Announcements Found!"
                 link-title="Go To Announcements"
                 link-url="/admin/announcements"
@@ -250,7 +250,7 @@ const addAnnouncement = () => {
 
 const announcements = computed(() => usePage().props.announcements);
 const computedAnnouncements = computed(() => {
-    if (announcements.value.data) {
+    if (announcements.value?.data) {
         return announcements.value.data;
     }
     return announcements.value;

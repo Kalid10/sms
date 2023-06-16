@@ -69,7 +69,7 @@ let lessonPlans =
     props.propsLessonPlans ?? usePage().props.teacher.lesson_plans;
 
 const isLessonPlansEmpty = computed(() => {
-    return lessonPlans.length === 0;
+    return !lessonPlans?.length;
 });
 watch(
     () => props.propsLessonPlans,
