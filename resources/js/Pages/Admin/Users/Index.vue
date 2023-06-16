@@ -1,5 +1,5 @@
 <template>
-    <UsersStatistics/>
+    <UsersStatistics />
 
     <div class="flex w-full flex-col gap-4 lg:flex-row">
         <div class="h-fit w-full lg:w-1/2">
@@ -213,9 +213,14 @@
 </template>
 
 <script setup>
-import {computed, ref, watch} from "vue";
-import {ArchiveBoxXMarkIcon, ArrowPathIcon, CloudArrowDownIcon, EyeIcon,} from "@heroicons/vue/24/outline";
-import {Link, router, usePage} from "@inertiajs/vue3";
+import { computed, ref, watch } from "vue";
+import {
+    ArchiveBoxXMarkIcon,
+    ArrowPathIcon,
+    CloudArrowDownIcon,
+    EyeIcon,
+} from "@heroicons/vue/24/outline";
+import { Link, router, usePage } from "@inertiajs/vue3";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -246,9 +251,9 @@ const formData = ref({
 });
 
 const roleOptions = [
-    {value: "admin", label: "Administrator"},
-    {value: "teacher", label: "Teacher"},
-    {value: "student", label: "Student"},
+    { value: "admin", label: "Administrator" },
+    { value: "teacher", label: "Views" },
+    { value: "student", label: "Student" },
 ];
 
 const userType = ref("admin");
@@ -262,7 +267,7 @@ const user_types = [
     {
         id: "teacher",
         value: "teacher",
-        label: "Teacher",
+        label: "Views",
         description:
             "Teachers employed by the school, tasked with taking over classes and managing students",
     },
@@ -315,10 +320,10 @@ function createUserForm() {
 const query = ref("");
 const perPage = ref(10);
 const perPageOptions = [
-    {value: 10, label: "10"},
-    {value: 25, label: "25"},
-    {value: 50, label: "50"},
-    {value: 100, label: "100"},
+    { value: 10, label: "10" },
+    { value: 25, label: "25" },
+    { value: 50, label: "50" },
+    { value: 100, label: "100" },
 ];
 
 const logsPerPage = ref(15);

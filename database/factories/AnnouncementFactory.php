@@ -28,7 +28,7 @@ class AnnouncementFactory extends Factory
             'author_id' => Admin::factory()->create()->id,
             'expires_on' => Carbon::now()->addDays($this->faker->numberBetween(1, 30)),
             'target_group' => $this->faker->randomElements(['all', 'students', 'teachers', 'parents', 'admins']),
-            'school_year_id' => SchoolYear::factory()->create(['end_date' => null])->id,
+            'school_year_id' => SchoolYear::getActiveSchoolYear()?->id ?? SchoolYear::factory()->create(['end_date' => null])->id,
         ];
     }
 }

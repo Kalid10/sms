@@ -11,7 +11,9 @@ use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Semester;
 use App\Models\Student;
+use App\Models\User;
 use App\Services\TeacherService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -138,7 +140,13 @@ class AssessmentController extends Controller
         $assessment->assessment_type_points_sum = $completedAssessments->sum('maximum_point');
         $assessment->assessment_type_completed_count = $completedAssessments->count();
 
-        return Inertia::render('Teacher/Assessments/Index', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'assessment' => $assessment,
         ]);
     }
@@ -154,10 +162,16 @@ class AssessmentController extends Controller
             'school_year_id' => 'nullable|integer|exists:school_years,id',
             'search' => 'nullable|string',
             'status' => 'nullable|string|in:draft,published,closed,marking,completed',
+            'teacher_id' => 'nullable|integer|exists:teachers,id',
         ]);
 
+        $teacherId = auth()->user()->teacher->id ?? $request->input('teacher_id');
+        if (! $teacherId) {
+            abort(403);
+        }
+
         $batchSubjectId = $request->input('batch_subject_id') ??
-            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+            BatchSubject::where('teacher_id', $teacherId)
                 ->whereHas('batch', function ($query) {
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
                 })->first()->id;
@@ -210,9 +224,15 @@ class AssessmentController extends Controller
             ->orderBy('due_date', 'asc')
             ->paginate(15);
 
-        return Inertia::render('Teacher/Assessments/Index', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'assessments' => $assessments,
-            'teacher' => $this->teacherService->getTeacherDetails(auth()->user()->teacher->id),
+            'teacher' => $this->teacherService->getTeacherDetails($teacherId),
             'assessment_type' => AssessmentType::all(),
             'quarters' => $quarters,
             'semesters' => $semesters,

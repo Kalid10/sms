@@ -1,13 +1,13 @@
 <template>
     <div
-        class="group flex h-full cursor-pointer items-center justify-between space-x-10 bg-white py-5 hover:scale-105 hover:rounded-lg hover:bg-zinc-800 hover:text-white"
+        class="group flex h-full cursor-pointer items-center justify-between space-x-10 bg-white py-4 hover:scale-105 hover:rounded-lg hover:bg-zinc-800 hover:text-white"
     >
         <div
             :class="{
                 'border-yellow-500': schoolSchedule.type === 'holiday',
                 'border-sky-500': schoolSchedule.type === 'event',
             }"
-            class="w-1/12 border-l px-3 text-center text-sm font-light uppercase group-hover:border-none group-hover:text-center"
+            class="w-1/12 border-l px-3 text-center text-xs font-light capitalize group-hover:border-none group-hover:text-center"
         >
             {{ schoolSchedule.type }}
         </div>

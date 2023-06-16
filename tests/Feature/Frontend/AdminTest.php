@@ -72,6 +72,10 @@ it('renders the teachers index page', function () {
         'type' => 'admin',
     ]);
 
+    // Create roles
+    $this->artisan('app:create-roles');
+    $admin->roles()->attach(['manage-teachers']);
+
     // When the user visits the teachers page
     $response = $this->actingAs($admin)->get('admin/teachers');
 

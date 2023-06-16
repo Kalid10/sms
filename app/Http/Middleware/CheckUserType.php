@@ -11,9 +11,9 @@ class CheckUserType
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Closure(Request): (Response) $next
      */
-    public function handle(Request $request, Closure $next, $userType): Response
+    public function handle(Request $request, Closure $next, ...$userTypes)
     {
         // If the current user is not authenticated, return with
         // '401 Unauthorized' error.
@@ -32,7 +32,7 @@ class CheckUserType
         $user = auth()->user();
 
         // Check the user type
-        if ($user->type !== $userType) {
+        if (! in_array($user->type, $userTypes)) {
             // Handle request from InertiaJS
             if ($request->header('X-Inertia')) {
                 abort(403, 'Access Denied!');

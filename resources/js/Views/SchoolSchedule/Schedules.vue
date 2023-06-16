@@ -22,7 +22,7 @@
         </div>
         <!--        <LinkCell href="/school-schedules" value="View All Schedules" />-->
         <SecondaryButton
-            title="Add Event"
+            title="View All Schedules"
             class="w-2/3 !rounded-2xl bg-zinc-700 text-white"
         />
     </div>
