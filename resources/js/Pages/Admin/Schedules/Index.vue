@@ -57,7 +57,7 @@
                     v-if="isAdmin()"
                     title="Add Event"
                     class="w-7/12 rounded-lg bg-zinc-800 !py-2 text-white"
-                    @click="showModalToggle"
+                    @click="showAddModal = true"
                 />
             </div>
         </div>

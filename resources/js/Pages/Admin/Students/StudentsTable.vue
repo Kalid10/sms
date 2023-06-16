@@ -168,12 +168,17 @@ import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import Pagination from "@/Components/Pagination.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
-defineProps({
+const props = defineProps({
+    url: {
+        type: String,
+        default: "/admin/students/",
+    },
     showTitle: {
         type: Boolean,
         default: true,
     },
 });
+
 const isModalOpen = ref(false);
 
 const students = computed(() => {
@@ -243,7 +248,7 @@ const perPage = ref(15);
 
 const search = debounce(() => {
     router.get(
-        "/students/",
+        props.url,
         {
             search: searchKey.value,
             perPage: perPage.value,

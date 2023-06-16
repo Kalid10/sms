@@ -4,7 +4,7 @@
 
         <TabElement v-model:active="activeTab" :tabs="tabs">
             <template #students>
-                <StudentsTable :show-title="false" />
+                <StudentsTable :show-title="false" @search="searchKey = $event" />
             </template>
             <template #grades>
                 <BatchStudentsTable />
@@ -31,7 +31,7 @@ const searchKey = ref("");
 
 watch(selectedBatchId, () => {
     router.get(
-        "/students",
+        "/admin/students",
         { batch_id: selectedBatchId.value },
         { preserveState: true, replace: true }
     );

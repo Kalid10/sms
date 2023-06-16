@@ -9,7 +9,6 @@ use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Subject;
 use App\Models\User;
-use App\Services\StudentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +16,7 @@ use Inertia\Response;
 
 class AdminController extends Controller
 {
-    public function index(Request $request): Response
+    public function show(Request $request): Response
     {
         $searchKey = $request->input('search');
 
@@ -69,7 +68,15 @@ class AdminController extends Controller
             'school_year' => $schoolYear,
             'announcements' => $announcements,
             'school_schedule' => $schoolSchedule,
-            'students' => StudentService::getAllStudents($request),
+            //            'students' => StudentService::getAllStudents($request),
+            'students' => Inertia::lazy(fn () => User::with('student.currentBatch')->where('type', 'student')
+                ->when($searchKey, function ($query) use ($searchKey) {
+                    return $query->where('name', 'like', "%{$searchKey}%");
+                })
+                ->orderBy('name', 'asc')
+                ->get()
+            ),
+
         ]);
     }
 
