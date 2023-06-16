@@ -39,7 +39,10 @@ class Announcements extends Controller
                 return $query->where('title', 'like', "%{$searchKey}%");
             })
             ->orderBy('created_at', 'desc')
-            ->with('author.user:id,name')
+            ->with([
+                'author.user:id,name,type',
+                'author.user.admin:id,user_id,position',
+            ])
             ->paginate(10);
 
         // Get teacher's feedbacks using teacher service getTeacherFeedbacks function

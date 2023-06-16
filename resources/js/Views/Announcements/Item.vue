@@ -1,9 +1,9 @@
 <template>
     <div
-        class="group flex w-full cursor-pointer justify-between px-3 py-4 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-50"
+        class="group flex w-full cursor-pointer justify-between p-3.5 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-50"
     >
         <div
-            class="flex w-full flex-col space-y-2 border-l pl-3 text-xs font-semibold"
+            class="flex w-full flex-col space-y-2 border-gray-100 pl-3 text-sm font-medium"
         >
             <div>{{ announcement.title }}</div>
 
@@ -16,7 +16,7 @@
                         <span
                             v-for="(target, index) in announcement.target_group"
                             :key="index"
-                            class="p-1 text-[0.6rem] font-bold uppercase"
+                            class="p-1 text-[0.6rem] font-medium uppercase"
                         >
                             {{ target }}
                         </span>

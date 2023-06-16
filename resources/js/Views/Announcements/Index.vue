@@ -6,10 +6,10 @@
                 : 'h-fit w-full space-y-2 py-4 rounded-lg bg-white px-2 shadow-sm'
         "
     >
-        <div class="flex w-full flex-col space-y-4 rounded p-3">
+        <div v-if="showHeader" class="w-full p-3">
             <div class="flex flex-wrap items-center justify-between gap-2">
                 <div
-                    class="text-xl font-semibold lg:text-2xl"
+                    class="text-xl font-medium lg:text-2xl"
                     :class="view === 'admin' ? 'w-7/12' : 'w-5/12'"
                 >
                     {{ title }}
@@ -22,7 +22,7 @@
                 />
                 <TextInput
                     v-model="searchKey"
-                    placeholder="Search Assessments"
+                    placeholder="Search Announcements"
                     class="w-5/12"
                     @keyup="search"
                 />
@@ -37,12 +37,13 @@
                 link-url="/admin/announcements"
                 class="flex w-full justify-center py-2"
             />
-            <div v-else>
-                <div class="flex flex-col divide-y divide-gray-100">
+            <div v-else class="flex flex-col space-y-2">
+                <div class="flex flex-col divide-y divide-gray-50">
                     <Item
                         v-for="(item, index) in computedAnnouncements"
                         :key="index"
                         :announcement="item"
+                        :class="index % 2 === 0 ? 'bg-gray-50/50' : ''"
                         @click="handleClick(item)"
                     />
                 </div>
@@ -50,6 +51,7 @@
                     v-if="announcements.links"
                     :links="announcements.links"
                     position="center"
+                    class="pt-3"
                 />
                 <LinkCell
                     v-else
@@ -62,12 +64,11 @@
 
         <Modal v-model:view="showAnnouncement">
             <div class="flex w-full flex-col space-y-4 rounded-lg bg-white p-5">
-                <div class="text-center text-2xl font-bold">
+                <div class="text-center text-2xl font-medium">
                     {{ selectedAnnouncement.title }}
                 </div>
 
                 <div class="text-sm font-medium">
-                    Post Targets :
                     <span
                         v-for="(
                             target, index
@@ -196,6 +197,10 @@ const props = defineProps({
     view: {
         type: String,
         default: "admin",
+    },
+    showHeader: {
+        type: Boolean,
+        default: true,
     },
 });
 
