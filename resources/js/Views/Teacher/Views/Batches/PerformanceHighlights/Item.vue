@@ -27,7 +27,7 @@
         <!--                Grade section-->
         <div class="flex h-11 w-3/12 flex-col justify-evenly">
             <div
-                class="flex w-full items-center justify-center py-1.5 text-xs font-bold"
+                class="flex w-full items-center justify-center py-1.5 text-xs font-medium"
             >
                 {{ grade }} / 50
             </div>
@@ -35,9 +35,7 @@
 
         <!--                Rank section-->
         <div class="flex h-11 w-2/12 items-center justify-center space-y-1">
-            <div
-                class="flex items-center justify-center rounded-lg bg-zinc-700 p-2 text-xl font-bold italic text-white"
-            >
+            <div class="flex items-center justify-center p-2 font-medium">
                 {{ rank }}
             </div>
         </div>

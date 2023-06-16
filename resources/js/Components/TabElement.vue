@@ -19,7 +19,7 @@
             </li>
         </ul>
 
-        <div class="w-full rounded-lg p-2">
+        <div class="w-full rounded-lg p-0">
             <slot v-if="!activeOnly" :name="toUnderscore(active)">
                 {{ active }}
             </slot>

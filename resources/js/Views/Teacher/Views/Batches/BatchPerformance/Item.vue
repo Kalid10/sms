@@ -8,13 +8,13 @@
             <!--                :class="valueStyle"-->
             <!--            />-->
         </div>
-        <div class="flex flex-col items-center justify-center">
-            <div class="text-2xl font-bold">
+        <div class="flex flex-col items-center justify-center space-y-2">
+            <div class="text-4xl font-medium">
                 <span v-if="value">{{ value }}</span>
                 <span v-else>-</span>
             </div>
 
-            <div class="text-[0.6rem] font-light uppercase text-neutral-600">
+            <div class="text-[0.65rem] uppercase text-neutral-600">
                 {{ title }}
             </div>
         </div>

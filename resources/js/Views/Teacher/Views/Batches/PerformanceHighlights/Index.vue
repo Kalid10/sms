@@ -1,6 +1,9 @@
 <template>
-    <div class="flex h-fit w-full flex-col items-center space-y-5">
-        <div class="w-full rounded-lg bg-white px-3 py-4 shadow-sm">
+    <div
+        class="flex h-fit w-full flex-col items-center"
+        :class="isTeacher() ? 'space-y-5' : 'space-y-14'"
+    >
+        <div class="w-full px-3 py-4">
             <div class="w-full pb-1 text-start text-2xl font-semibold">
                 Class Performance
             </div>
@@ -9,32 +12,24 @@
             </div>
         </div>
         <div
-            class="flex w-full flex-col space-y-2 rounded-lg bg-white p-3 shadow-sm"
+            class="flex w-full flex-col items-center justify-between divide-y divide-zinc-300 rounded-lg bg-white px-3 py-5"
         >
-            <div class="w-full pb-1 text-start text-2xl font-semibold">
-                Student Performance List
+            <div class="w-full">
+                <StudentsList
+                    progress-type="up"
+                    title="Top Students"
+                    :icon="ArrowTrendingUpIcon"
+                    :students="topStudents"
+                />
             </div>
 
-            <div
-                class="flex w-full items-center justify-between divide-x divide-zinc-300"
-            >
-                <div class="w-1/2">
-                    <StudentsList
-                        progress-type="up"
-                        title="Top Students"
-                        :icon="ArrowTrendingUpIcon"
-                        :students="topStudents"
-                    />
-                </div>
-
-                <div class="w-1/2">
-                    <StudentsList
-                        progress-type="down"
-                        title="Students Falling Behind"
-                        :icon="ArrowTrendingDownIcon"
-                        :students="bottomStudents"
-                    />
-                </div>
+            <div class="w-full">
+                <StudentsList
+                    progress-type="down"
+                    title="Students Falling Behind"
+                    :icon="ArrowTrendingDownIcon"
+                    :students="bottomStudents"
+                />
             </div>
         </div>
     </div>
@@ -48,6 +43,7 @@ import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/St
 import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import { isTeacher } from "@/utils";
 
 const topStudents = computed(() => usePage().props.top_students);
 const bottomStudents = computed(() => usePage().props.bottom_students);

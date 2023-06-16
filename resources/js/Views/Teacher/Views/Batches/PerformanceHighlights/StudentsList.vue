@@ -18,7 +18,8 @@
             <div
                 v-for="(item, index) in students"
                 :key="index"
-                class="flex h-fit w-full cursor-pointer items-center justify-center space-x-2 rounded-lg py-2 hover:bg-zinc-700 hover:text-white"
+                class="flex h-fit w-full cursor-pointer items-center justify-center space-x-2 rounded-lg py-1.5 hover:bg-zinc-700 hover:text-white"
+                :class="index % 2 === 0 ? 'bg-zinc-50/90' : 'bg-white'"
             >
                 <Item
                     :progress-type="progressType"
@@ -44,18 +45,17 @@
                 We're unable to provide the list currently. Once the assessments
                 are completed, we'll be able to provide the list.
             </div>
-            <LinkCell
-                v-if="showLink"
-                href="/teacher/assessments"
-                value="Go To Assessments"
-            />
+            <!--            <LinkCell-->
+            <!--                v-if="showLink"-->
+            <!--                href="/teacher/assessments"-->
+            <!--                value="Go To Assessments"-->
+            <!--            />-->
         </div>
     </div>
 </template>
 <script setup>
 import Item from "@/Views/Teacher/Views/Batches/PerformanceHighlights/Item.vue";
 import { numberWithOrdinal } from "@/utils";
-import LinkCell from "@/Components/LinkCell.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 
