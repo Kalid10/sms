@@ -117,6 +117,6 @@ class TeacherService
 
     public static function getTeacherFeedbacks(Teacher $teacher, int $limit = 5): LengthAwarePaginator
     {
-        return $teacher->feedbacks()->with('author:id,name')->orderBy('created_at', 'desc')->paginate($limit)->appends(request()->query());
+        return $teacher->feedbacks()->with('author:id,name', 'author.admin')->orderBy('created_at', 'desc')->paginate($limit)->appends(request()->query());
     }
 }

@@ -7,11 +7,11 @@
         </span>
 
         <span class="w-full text-3xl font-semibold">
-            {{ selectedAnnouncement.title }}</span
+            {{ selectedAnnouncement?.title }}</span
         >
 
         <span class="leading-7 text-gray-600"
-            >{{ selectedAnnouncement.body }}
+            >{{ selectedAnnouncement?.body }}
         </span>
         <span
             class="flex w-full cursor-pointer space-x-2 text-sm font-medium text-violet-600 hover:font-semibold hover:underline hover:underline-offset-2"
@@ -29,7 +29,7 @@
             </div>
 
             <div>
-                {{ selectedAnnouncement.author.user.name }} ,
+                {{ selectedAnnouncement?.author.user.name }} ,
                 {{ selectedAnnouncement?.author?.user?.admin?.position }}
             </div>
         </div>

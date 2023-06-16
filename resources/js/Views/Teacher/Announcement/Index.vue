@@ -31,13 +31,14 @@
             class="flex w-full flex-col items-center space-y-2 rounded-lg bg-white p-5 shadow-sm"
         >
             <div class="flex w-full items-center justify-between py-2 pr-5">
-                <Title class="w-5/12" title="Feedbacks" />
-                <TextInput placeholder="Search Feedbacks" class="w-5/12" />
+                <Title class="w-full" title="Feedbacks" />
             </div>
 
             <div
                 class="flex w-full justify-between divide-x divide-gray-100 py-6"
-            ></div>
+            >
+                <Feedbacks />
+            </div>
         </div>
     </div>
 </template>
@@ -48,6 +49,7 @@ import Announcement from "@/Views/Announcements/Index.vue";
 import { computed, ref } from "vue";
 import SelectedAnnouncementView from "@/Views/Announcements/SelectedAnnouncement.vue";
 import TextInput from "@/Components/TextInput.vue";
+import Feedbacks from "@/Views/Teacher/Views/Home/Feedbacks.vue";
 
 const announcements = computed(() => usePage().props.announcements);
 const selectedAnnouncement = ref(announcements.value?.data[0]);
