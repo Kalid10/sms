@@ -1,0 +1,15 @@
+{
+    "name": "name",
+    "percentage": "percentage",
+    "updateLevelCategories": "Update level categories",
+    "selectLevelCategories": "Select level categories",
+    "customizable": "Customizable",
+    "minimumAssessments": "Minimum Assessments",
+    "minimumAssessmentsPlaceHolder": "min assessment",
+    "maximumAssessments": "Maximum Assessments",
+    "maximumAssessmentsPlaceHolder": "max assessment",
+    "minMaxHint": "Min and max assessments are the minimum and maximum number of tests or exams that a student is required to take.",
+    "listOfAssessmentTypes": "List of Assessment Types",
+    "filterByLevelCategory": "filter by level category",
+    "addAssessmentType": "Add Assessment Type"
+}

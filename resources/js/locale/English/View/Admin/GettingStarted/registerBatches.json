@@ -1,0 +1,14 @@
+{
+    "registerGrades": "Register Grades",
+    "hintOne": "We have selected a set of default grades for you. You can remove grades you don't need, add new grades or edit the number of sections in each grade.",
+    "hintTwo": "Click on the \"Finish\" to proceed, and \"Next\" to save and proceed.",
+    "gradesSelected": "Grades Selected",
+    "sectionsSelected": "Sections Selected",
+    "buttonTitle":"Add New Grade",
+    "grade": "Grade",
+    "sections": "Sections",
+    "Finish": "Finish",
+    "updateLevelSectionTitle": "Number of Sections",
+    "updateLevelSectionSubtitle": "Update the number of Sections for Grade 7",
+    "updateLevelSectionInputPlaceholder": "Specify the number of sections for Grade 7"
+}

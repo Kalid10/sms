@@ -1,0 +1,38 @@
+{
+
+    "__comment__": "Some values in this component are duplicated So I discard the duplicate one ",
+
+    "congratulations": "Congratulations !",
+    "almostDone": "You're almost done...",
+    "successfullyRegisteredMessage": "You have successfully registered your school's grades,subjects and classes. Next, you may proceed to add your school's schedule for the current school year. We will guide you through the process.",
+    "firstStepHint":"As a first step, you may add the school year's first semester start date. This will be used to notify guardians and students of the start of the school year.Calendar events such as public holidays and school holidays can also be added here.",
+    "doNotWorryMessage": "Do not worry, if you are not sure of the exact dates,you can always add these events and more later. Once you are done here, we will finally take you to your Dashboard.",
+    "nextSteps":"Next Steps",
+    "registerSemesterStartDate": "Register Semester Start Date",
+    "AddStartOfSchoolSemester": "Add the start of the school semester in your calendar. Guardians, Teachers and Students will be notified once they are registered",
+    "ViewSchoolSchedule": "View your School Schedule",
+    "useSchoolCalenderMessage": "Use our school calendar to view and add all important school events. This includes public and school holidays, exams, and other special days.",
+    "proceedToDashboard": "Proceed to your Dashboard",
+    "youCanSkipMessage": "Alternatively, you can skip this step and proceed to your Dashboard. You can always view, add, update and delete events to your calendar later.",
+    "addNewEvent": "Add new Event",
+    "addEvent": "Add a new event to your school calendar.",
+
+    "eventTitlePlaceHolder": "Title for your new event",
+    "eventTitleLabel": "Event Name",
+    "eventDescription": "Event Description",
+    "eventBodyPlaceHolder": "What is your event about? Write your description here.",
+    "allDayLabel": "All Day",
+    "dayOfEvent":"Day of Event",
+    "eventStartAndEndDays":"Event\\'s Starting and End Days",
+    "pickTypeOfEventPlaceHolder":"Pick the type of Event",
+    "pickTypeOfEventLabel":"Event Type"
+    "tagsLabel": "Tags",
+    "tagsPlaceHolder": "holiday, special day, event",
+    "clear": "Clear",
+    "createEvent": "Create Event",
+    "goToDashboard": "Go to Dashboard",
+    "addNewEventFormTitle":"Add new Event",
+    "addNewEventFormSubtitle":"Add new Event"
+}
+
+

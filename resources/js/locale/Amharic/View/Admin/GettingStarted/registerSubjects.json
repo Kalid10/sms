@@ -1,0 +1,26 @@
+{
+    "registerSubjects": "የትምህርት አይነቶች መዝግብ",
+    "descriptionOne": "አስቀድሞ የተገለጹ የትምህርት አይነቶችን ለእርስዎ መርጠናል ።  የትምህርት አይነቶችን ማስወገድ ወይም እዚህ ያልተዘረዘሩ ተጨማሪ የትምህርት አይነቶችን ማከል ትችላለህ።",
+    "descriptionTwo": "ለመቀጠል 'ጨርስ' ላይ ጠቅ ያድርጉ እና ለማስቀመጥ እና ለመቀጠል 'ቀጥል' ላይ ጠቅ ያድርጉ።",
+    "totalSubjects": "ጠቅላላ ርዕሰ ጉዳዮች",
+    "subjectsSelected": "የተመረጡ ርዕሰ ጉዳዮች",
+    "New Subject": "አዲስ  የትምህርት አይነት",
+    "other": "ሌላ",
+    "createNewSubject": "አዲስ  የትምህርት አይነት ይፍጠሩ",
+    "createNewCategory": "አዲስ ምድብ ይፍጠሩ",
+    "finish": "ጨርስ",
+    "Reset": "አስጀምር",
+    "newSubjectTitle": "አዲስ የትምህርት አይነት",
+    "newSubjectSubtitle": "አዲስ የትምህርት አይነት ይፍጠሩ እና ወደ ምድብ ያስገቡት",
+    "subjectFullNamePlaceholder": "የአዲሱ ትምህርት አይነት ስም",
+    "newSubjectFullNameLabel": " የትምህርት አይነት ስም",
+    "subjectShortNamePlaceholder": "ለትምህርት አይነት አጭር ስም",
+    "subjectShortNameLabel": " የትምህርት አይነት አጭር ስም",
+    "subjectTagPlaceholder": "ታግ ያስመድቡ (የተለያዩ ታጎችን n',' ይለዩ)",
+    "subjectTagLabel": "የትምህርት አይነት ታጎች",
+    "subjectCategoryOptionsPlaceholder": "የአዲሱ የትምህርት አይነት ምድብ",
+    "subjectCategoryOptionsLabel": " የትምህርት አይነት ምድብ",
+    "subjectCategoryPlaceholder": "አዲስ/ልዩ የትምህርት አይነት ምድብ ይፍጠሩ",
+    "subjectCategoryLabel": " የትምህርት አይነት ምድብ"
+
+}

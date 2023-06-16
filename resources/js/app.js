@@ -11,7 +11,16 @@ import {createPinia} from "pinia";
 import TeacherLayout from "@/Layouts/TeacherLayout.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
+import  {useI18nStore} from './Store/lang.js'
+
+// Localization section
+// import { lang } from './Store/lang.js'
+import en from './locale/en.json'
+import am   from './locale/am.json'
+
+
 import base from "./base";
+import {createI18n, useI18n} from "vue-i18n";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText ||
@@ -45,15 +54,31 @@ createInertiaApp({
         return page;
     },
     setup({el, App, props, plugin}) {
-        return createApp({render: () => h(App, props)})
+        const app = createApp({render: () => h(App, props)})
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(pinia)
+
+        const langStore = useI18nStore()
+
+        const i18n = createI18n({
+            locale: "am",
+            globalInjection: true,
+            messages: {
+                en,
+                am,
+            },
+        })
+
+        app
+            .use(i18n)
             .mixin(base)
             .mount(el);
+
+        return app
     },
     progress: {
         color: "#4B5563",
     },
-}).then(() => {
-});
+})
+
