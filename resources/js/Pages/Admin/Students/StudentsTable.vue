@@ -19,7 +19,7 @@
             </template>
 
             <template #table-header>
-                <div class="flex w-full justify-between pb-4">
+                <div v-if="showTitle" class="flex w-full justify-between pb-4">
                     <div class="pl-4">
                         <div class="pb-2 text-xl font-semibold">Students</div>
                         <div class="text-xs font-light text-gray-500">
@@ -168,6 +168,12 @@ import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import Pagination from "@/Components/Pagination.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
+defineProps({
+    showTitle: {
+        type: Boolean,
+        default: true,
+    },
+});
 const isModalOpen = ref(false);
 
 const students = computed(() => {

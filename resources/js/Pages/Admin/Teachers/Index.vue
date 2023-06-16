@@ -1,18 +1,17 @@
 <template>
     <div class="my-5 w-10/12">
-        <Title class="pb-2" title="Teachers" />
         <TeacherTableElement
             :columns="config"
             :selectable="false"
-            title="Teachers"
-            subtitle="List of all teachers in the school system"
             :data="formattedTeachersData"
+            :filterable="false"
         >
-            <template #filter>
-                <div class="flex w-full gap-4">
+            <template #table-header>
+                <div class="flex w-full items-center justify-between pb-5">
+                    <Title title="Teachers" />
                     <TextInput
                         v-model="searchKey"
-                        class="w-full"
+                        class="w-5/12"
                         placeholder="Search for a teacher by name"
                     />
                 </div>

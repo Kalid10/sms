@@ -2,9 +2,9 @@
     <div class="my-5 w-10/12">
         <Title class="pb-8" title="Students" />
 
-        <TabElement :tabs="models">
+        <TabElement v-model:active="activeTab" :tabs="tabs">
             <template #students>
-                <StudentsTable />
+                <StudentsTable :show-title="false" />
             </template>
             <template #grades>
                 <BatchStudentsTable />
@@ -22,9 +22,10 @@ import TabElement from "@/Components/TabElement.vue";
 import BatchStudentsTable from "@/Pages/Admin/Students/BatchStudentsTable.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 
-const models = ["Students", "Grades"];
+const tabs = ["Students", "Grades"];
 
 const selectedBatchId = ref(usePage().props.selected_batch.id);
+const activeTab = ref("Students");
 
 const searchKey = ref("");
 

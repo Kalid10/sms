@@ -82,7 +82,7 @@ const sidebarItems = computed(() => [
         name: "Schedule",
         icon: QueueListIcon,
         route: "/admin/schedules",
-        active: directory.value === "students",
+        active: directory.value === "schedules",
     },
     {
         name: "Settings",
