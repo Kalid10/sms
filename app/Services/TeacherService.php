@@ -119,4 +119,15 @@ class TeacherService
     {
         return $teacher->feedbacks()->with('author:id,name', 'author.admin')->orderBy('created_at', 'desc')->paginate($limit)->appends(request()->query());
     }
+
+    public static function assignHomeroomTeacherData()
+    {
+        $searchKey = request()->query('search');
+
+        return Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->with('level', 'homeroomTeacher.teacher.user:id,name')
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->whereRelation('level', 'name', 'like', "%{$searchKey}%");
+            })->get();
+    }
 }

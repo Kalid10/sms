@@ -12,6 +12,7 @@
             <SecondaryButton
                 title="Assign Homeroom"
                 class="!rounded-2xl bg-zinc-800 text-white"
+                @click="showAssignModal = true"
             />
         </div>
 
@@ -91,6 +92,10 @@
             :student-name="studentDetail.student"
         />
     </Modal>
+
+    <Modal v-model:view="showAssignModal">
+        <AssignHomeroom />
+    </Modal>
 </template>
 <script setup>
 import { router, usePage } from "@inertiajs/vue3";
@@ -106,6 +111,7 @@ import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue
 import Modal from "@/Components/Modal.vue";
 import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetail.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 
 const homeroomClasses = computed(() => usePage().props.homeroom_classes);
 const selectedHomeroom = ref(usePage().props.filters.batch_id);
@@ -114,6 +120,7 @@ const topStudents = computed(() => usePage().props.top_students);
 const bottomStudents = computed(() => usePage().props.bottom_students);
 const grade = computed(() => usePage().props.grade);
 const showModal = ref(false);
+const showAssignModal = ref(false);
 const studentDetail = ref();
 const homeroomOptions = computed(() => {
     return homeroomClasses.value.map((homeroom) => {
