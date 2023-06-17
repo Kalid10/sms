@@ -119,6 +119,7 @@ import {
     ComboboxOption,
     ComboboxOptions,
 } from "@headlessui/vue";
+import { debounce } from "lodash";
 
 const teachersCount = computed(() => usePage().props.teachers_count);
 
@@ -183,7 +184,7 @@ async function handleSearch(event) {
     }
 }
 
-function fetchStudent() {
+const fetchStudent = debounce(async function () {
     router.get(
         "/admin/",
         {
@@ -195,11 +196,9 @@ function fetchStudent() {
             replace: true,
         }
     );
-}
+}, 500);
 
 const filteredStudents = computed(() => {
-    console.log(query.value);
-
     if (query.value === "") {
         return students.value || [];
     } else {
@@ -210,29 +209,6 @@ const filteredStudents = computed(() => {
             : [];
     }
 });
-
-// const filteredStudents = computed(() => {
-//     return query.value === ""
-//         ? students.value
-//         : students.value
-//         ? students.value.map((student) => {
-//               return student.name
-//                   .toLowerCase()
-//                   .includes(query.value.toLowerCase());
-//           })
-//         : [];
-// });
-// const filteredStudents = computed(() => {
-//     if (query.value === "") {
-//         return students.value || [];
-//     } else {
-//         return students.value
-//             ? students.value.filter((student) =>
-//                   student.name.toLowerCase().includes(query.value.toLowerCase())
-//               )
-//             : [];
-//     }
-// });
 
 const configLevels = [
     {
