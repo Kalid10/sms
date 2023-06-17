@@ -1,7 +1,7 @@
 <template>
     <div
         class="flex min-h-screen w-full flex-col space-y-3 bg-gray-50"
-        :class="isTeacher() ? '2xl:pl-4 2xl:pr-5 p-1' : ''"
+        :class="isTeacher() ? '2xl:pl-4 2xl:pr-2 p-1' : ''"
     >
         <!--                 Next Class Header On Mobile Devices-->
         <div
@@ -31,21 +31,17 @@
 
         <div
             class="flex h-screen w-full justify-between space-x-10"
-            :class="isTeacher() ? 'px-5 py-3' : ''"
+            :class="isTeacher() ? 'px-2 py-3' : ''"
         >
-            <div class="flex w-7/12 flex-col space-y-10">
+            <div class="flex w-8/12 flex-col space-y-10">
                 <WelcomeHeader v-if="isTeacher()" />
 
-                <CurrentDaySchedule
-                    :schedule="teacherSchedule"
-                    class-style="px-4 !h-fit py-2 space-y-2"
-                />
-
                 <div class="flex w-full justify-between">
-                    <div
-                        class="h-fit w-7/12 rounded-lg bg-white shadow-sm 2xl:px-2"
-                    >
-                        <Assessments />
+                    <div class="w-7/12">
+                        <Announcements
+                            url="/teacher/announcements"
+                            view="teacher"
+                        />
                     </div>
                     <div
                         class="flex w-5/12 flex-col justify-evenly space-y-4 pl-10"
@@ -74,44 +70,79 @@
                             :icon="CalendarIcon"
                             :url="'/teacher/lesson-plan'"
                         />
+                        <SummaryItem
+                            class-style="bg-green-100 text-black"
+                            icon-style="bg-green-500/20 text-white"
+                            :title="'Homeroom Classes'"
+                            value="10  /10 Completed"
+                            :icon="CalendarIcon"
+                            :url="'/teacher/lesson-plan'"
+                        />
                     </div>
                 </div>
+                <CurrentDaySchedule
+                    v-if="teacherSchedule?.length"
+                    :schedule="teacherSchedule"
+                    class-style="px-4 !h-fit py-2 space-y-2"
+                />
 
-                <div class="flex w-full justify-between space-x-6">
-                    <div
-                        class="min-h-full w-4/12 rounded-lg bg-gray-100 shadow-sm"
-                    ></div>
-
-                    <div class="w-8/12 rounded-lg bg-white p-3">
-                        <div class="flex w-full justify-between px-2">
-                            <div class="py-2 text-center text-xl font-medium">
-                                Upcoming Schedules
-                            </div>
-                            <LinkCell
-                                class="flex w-fit items-center justify-center"
-                                value="VIEW ALL"
-                                href="/teacher/school-schedule"
+                <div
+                    class="flex w-full items-center justify-between space-x-6"
+                ></div>
+            </div>
+            <div
+                class="flex h-full w-4/12 flex-col items-center space-y-8 p-0 px-3"
+            >
+                <div class="w-full rounded-lg bg-white p-3">
+                    <div class="flex w-full justify-between px-2">
+                        <div class="py-2 text-center text-xl font-medium">
+                            Upcoming Schedules
+                        </div>
+                        <LinkCell
+                            class="flex w-fit items-center justify-center"
+                            value="VIEW ALL"
+                            href="/teacher/school-schedule"
+                        />
+                    </div>
+                    <div class="flex w-full flex-col justify-center">
+                        <div
+                            v-for="(item, index) in schoolSchedule"
+                            :key="index"
+                            class="rounded-lg px-1"
+                            :class="index % 2 === 0 ? 'bg-gray-50/50 ' : ''"
+                        >
+                            <SchoolScheduleItem
+                                class="!py-2"
+                                :school-schedule="item"
                             />
                         </div>
-                        <div class="flex w-full flex-col justify-center">
-                            <div
-                                v-for="(item, index) in schoolSchedule"
-                                :key="index"
-                                class="rounded-lg px-1"
-                                :class="index % 2 === 0 ? 'bg-gray-50/50 ' : ''"
-                            >
-                                <SchoolScheduleItem
-                                    class="!py-2"
-                                    :school-schedule="item"
-                                />
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="flex h-full w-5/12 flex-col space-y-8 p-0 px-8">
-                <NextClass />
-                <Announcements url="/teacher/announcements" view="teacher" />
+                <div class="flex w-full items-center justify-between">
+                    <div class="flex h-full flex-col justify-between">
+                        <div
+                            class="flex h-fit w-fit flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
+                        >
+                            <div class="text-center text-6xl font-bold">
+                                100%
+                            </div>
+
+                            <div class="font-medium">Attendance</div>
+                        </div>
+                        <div
+                            class="flex h-fit w-fit flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
+                        >
+                            <div class="text-center text-6xl font-bold">
+                                100%
+                            </div>
+
+                            <div class="font-medium">Attendance</div>
+                        </div>
+                    </div>
+                    <div class="w-7/12">
+                        <NextClass />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -126,7 +157,6 @@ import { isTeacher } from "@/utils";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import CurrentDaySchedule from "@/Views/CurrentDaySchedule.vue";
 import Announcements from "@/Views/Announcements/Index.vue";
-import Assessments from "@/Views/Teacher/Views/Home/Assessments.vue";
 import {
     CalendarIcon,
     ClipboardIcon,

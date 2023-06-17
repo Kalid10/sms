@@ -1,7 +1,7 @@
 <template>
     <div
-        class="flex h-fit flex-col items-center justify-evenly rounded-xl bg-zinc-800 pb-2 text-white"
-        :class="isSidebarOpenOnXlDevice ? 'lg:py-3 w-full' : 'lg:py-5 w-full'"
+        class="flex h-fit w-full flex-col items-center rounded-xl bg-zinc-800 text-white"
+        :class="isSidebarOpenOnXlDevice ? 'lg:py-3' : 'lg:py-5'"
     >
         <div
             v-if="nextClass"
@@ -12,11 +12,11 @@
             ]"
         >
             <NextClassSection />
-            <div
-                class="my-auto hidden w-0.5 bg-neutral-600 lg:inline-flex"
-                :class="isSidebarOpenOnXlDevice ? 'h-0' : 'h-60'"
-            ></div>
-            <LastAssessmentSection />
+            <!--            <div-->
+            <!--                class="my-auto hidden w-0.5 bg-neutral-600 lg:inline-flex"-->
+            <!--                :class="isSidebarOpenOnXlDevice ? 'h-0' : 'h-60'"-->
+            <!--            ></div>-->
+            <!--            <LastAssessmentSection />-->
         </div>
 
         <!--        Fall back message-->
@@ -41,7 +41,7 @@
 import { usePage } from "@inertiajs/vue3";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import NextClassSection from "@/Views/Teacher/Views/NextClass/NextClass.vue";
-import LastAssessmentSection from "@/Views/Teacher/Views/NextClass/LastAssessment.vue";
+// import LastAssessmentSection from "@/Views/Teacher/Views/NextClass/LastAssessment.vue";
 
 const nextClass = usePage().props.teacher.next_batch_session;
 </script>
