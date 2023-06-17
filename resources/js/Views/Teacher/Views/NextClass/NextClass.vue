@@ -6,7 +6,7 @@
                 ? 'w-full space-y-2'
                 : isSidebarOpenOnXlDevice
                 ? 'lg:w-full lg:space-y-4 lg:py-3'
-                : 'lg:w-5/12 lg:space-y-6 lg:py-0',
+                : 'lg:w-full lg:space-y-6 lg:py-0',
         ]"
     >
         <div
@@ -32,7 +32,7 @@
         >
             <!--            Class text-->
             <span
-                class="text-center text-4xl font-bold 2xl:text-5xl"
+                class="text-center text-4xl font-semibold 2xl:text-5xl"
                 :class="fontSizeLarge"
             >
                 {{ nextClass.batch_subject.batch.level.name
@@ -40,7 +40,7 @@
             >
 
             <!--            Period and subject name section-->
-            <span class="text-center text-sm font-semibold" :class="fontSize"
+            <span class="text-center text-sm font-medium" :class="fontSize"
                 >{{ nextClass.batch_subject.subject.full_name }}
                 <span class="font-semibold">{{
                     nextClass.school_period.name
@@ -80,7 +80,7 @@
             >
             <span v-else> Add LessonPlan</span>
         </span>
-        <span
+        <div
             v-else-if="!isTeacherView"
             class="flex w-full flex-col items-center break-words text-[0.65rem] font-light"
         >
@@ -88,9 +88,9 @@
             <div>
                 {{ nextClass.batch_subject.teacher.user.name }}
             </div>
-        </span>
+        </div>
         <PrimaryButton
-            class="w-8/12 !border-none bg-zinc-700 !text-xs lg:w-10/12 2xl:w-11/12"
+            class="w-8/12 !border-none bg-zinc-700 !text-xs lg:w-10/12 2xl:w-10/12"
             :class="buttonWidth"
             >View Full Schedule
         </PrimaryButton>

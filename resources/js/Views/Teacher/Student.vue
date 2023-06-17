@@ -1,10 +1,10 @@
 <template>
     <div
-        class="flex min-h-screen w-full items-start justify-between bg-gray-50 pl-4 2xl:px-5"
+        class="flex min-h-screen w-full items-start justify-between bg-gray-50 pl-4 2xl:pr-5 2xl:pl-2"
     >
         <!--        Left side-->
         <div
-            class="ml-2 mr-5 flex w-7/12 grow flex-col items-center space-y-7 py-4 2xl:py-6"
+            class="ml-2 mr-5 flex w-7/12 grow flex-col items-center space-y-7 p-4 2xl:py-6"
         >
             <!--        Assessments and NextClass section-->
             <div
@@ -18,96 +18,50 @@
                     @change="updateBatchSubject"
                 />
 
+                <div class="flex h-full w-full flex-col">
+                    <GeneralReport />
+                </div>
                 <!--           Assessments section-->
                 <div class="flex w-full justify-between lg:w-full">
-                    <div class="flex w-9/12 flex-col space-y-6 pl-3 pr-10">
-                        <div class="w-full rounded-lg bg-white py-3 pl-3 pr-10">
+                    <div class="flex w-full justify-between space-x-7">
+                        <div class="w-8/12 rounded-lg bg-white p-3">
                             <Assessments />
                         </div>
 
-                        <AssessmentBreakDown v-if="selectedBatchSubject" />
-
-                        <div
-                            class="w-full rounded-lg bg-white p-4 text-black shadow-sm"
-                        >
-                            <div class="pb-2 text-xl font-light">
-                                {{ student.user.name }}'s General Quarterly
-                                Statistics
-                            </div>
-                            <div
-                                class="flex w-full justify-between divide-x py-2 text-center"
-                            >
-                                <div class="w-4/12">
-                                    <div class="text-2xl font-bold">
-                                        <span v-if="student.quarterly_grade">
-                                            {{ student.quarterly_grade.score }}
-                                        </span>
-                                        <span v-else> - </span>
-                                    </div>
-                                    <div class="text-[0.65rem] font-light">
-                                        Quarter Grade
-                                    </div>
-                                </div>
-                                <div class="w-4/12">
-                                    <div class="text-2xl font-bold">
-                                        <span v-if="student.quarterly_grade">
-                                            {{
-                                                numberWithOrdinal(
-                                                    student.quarterly_grade.rank
-                                                )
-                                            }}
-                                        </span>
-                                        <span v-else> - </span>
-                                    </div>
-                                    <div class="text-[0.65rem] font-light">
-                                        Quarter Rank
-                                    </div>
-                                </div>
-                                <div class="w-4/12">
-                                    <div class="text-2xl font-bold">
-                                        <span v-if="student.quarterly_grade">
-                                            {{
-                                                student.quarterly_grade.conduct
-                                            }}
-                                        </span>
-                                        <span v-else> - </span>
-                                    </div>
-                                    <div class="text-[0.65rem] font-light">
-                                        Quarter Conduct
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="w-4/12">
+                            <AssessmentBreakDown v-if="selectedBatchSubject" />
                         </div>
-                    </div>
-                    <div class="flex h-full w-3/12 flex-col">
-                        <GeneralReport />
                     </div>
                 </div>
             </div>
-            <SecondaryButton
-                title="View Grade Report"
-                class="w-1/3 !rounded-2xl bg-zinc-700 text-white"
-                @click="showGrade = true"
-            />
+
             <Modal v-model:view="showGrade">
                 <StudentGradeDetail
                     :student-name="student"
                     :student-grade="student.quarterly_grade"
                 />
             </Modal>
-            <div
-                class="flex h-96 w-full items-center justify-center border-t text-8xl font-light text-gray-500"
-            >
-                Under construction
-            </div>
         </div>
 
         <!--        Right side-->
         <div
-            class="flex min-h-screen flex-col items-center space-y-8 border-l border-gray-200 bg-gray-100 py-4 pl-5"
+            class="flex min-h-screen flex-col items-center space-y-8 border-l border-gray-200 py-4 pl-5"
             :class="isSidebarOpenOnXlDevice ? 'w-4/12' : 'w-3/12'"
         >
-            <Rank />
+            <div
+                class="flex h-36 w-full flex-col items-center justify-evenly rounded-lg bg-gradient-to-tl from-purple-500 to-violet-500 shadow-sm"
+            >
+                <div class="px-4 text-center text-white">
+                    Want to see how {{ student?.user.name }} is doing on other
+                    classes?
+                </div>
+
+                <SecondaryButton
+                    title="View Full Grade Report"
+                    class="w-2/3 !rounded-2xl !border-none bg-purple-100 font-semibold"
+                    @click="showGrade = true"
+                />
+            </div>
 
             <Information />
 
@@ -120,10 +74,9 @@
 import { computed, ref } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import Assessments from "@/Views/Teacher/Views/Student/Assessments.vue";
-import Rank from "@/Views/Teacher/Views/Student/Rank.vue";
 import Notes from "@/Views/Teacher/Views/Student/Notes.vue";
 import Information from "@/Views/Teacher/Views/Student/GuardianInformation.vue";
-import { isSidebarOpenOnXlDevice, numberWithOrdinal } from "@/utils";
+import { isSidebarOpenOnXlDevice } from "@/utils";
 import Header from "@/Views/Teacher/Views/Header.vue";
 import AssessmentBreakDown from "@/Views/Teacher/Views/Assessments/AssessmentBreakDown.vue";
 import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetail.vue";

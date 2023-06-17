@@ -76,7 +76,7 @@ class TeacherController extends Controller
         $teacher = $this->teacherService->getTeacherDetails($id);
         $teacherBatchSubjects = $teacher->batchSubjects->pluck('id');
         $teacherSchedules = BatchSchedule::whereIn('batch_subject_id', $teacherBatchSubjects)
-            ->where([['day_of_week', Carbon::now()->dayOfWeek]])
+            ->where([['day_of_week', Carbon::now()->subDays(4)->dayOfWeek]])
             ->with('batchSubject.subject', 'schoolPeriod', 'batch.level')
             ->get()
             ->sortBy(function ($schedule) {
@@ -100,7 +100,7 @@ class TeacherController extends Controller
         $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
             ->whereDate('start_date', '>=', now())
             ->orderBy('start_date', 'asc')
-            ->take(3)
+            ->take(4)
             ->get();
 
         $announcements = Announcement::where('school_year_id', $schoolYearId)
@@ -110,7 +110,7 @@ class TeacherController extends Controller
             })
             ->with('author.user')
             ->orderBy('updated_at', 'DESC')
-            ->take(3)
+            ->take(4)
             ->get();
 
         $page = match (auth()->user()->type) {

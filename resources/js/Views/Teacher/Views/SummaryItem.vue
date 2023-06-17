@@ -2,11 +2,11 @@
     <div
         class="flex w-full cursor-pointer items-center justify-between rounded-2xl py-4 px-5 hover:scale-105"
         :class="classStyle"
-        @click="router.get(url)"
+        @click="router.get(url, {}, { preserveState: true })"
     >
         <div class="flex h-full flex-col justify-center space-y-3">
             <div class="text-sm font-medium uppercase">{{ title }}</div>
-            <div class="text-center text-xs font-light">
+            <div class="w-fit text-center text-xs font-light">
                 {{ value }}
             </div>
         </div>
