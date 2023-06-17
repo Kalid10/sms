@@ -1,59 +1,71 @@
 <template>
     <div
-        class="flex w-full flex-col items-center space-y-5 rounded-lg bg-white py-3 shadow-sm"
+        class="flex w-full flex-col items-center space-y-2 rounded-lg bg-white py-3 shadow-sm"
     >
-        <div class="flex w-full justify-between px-5">
+        <div
+            v-if="notes?.data?.length"
+            class="flex w-full justify-between px-5"
+        >
             <div
                 class="flex grow justify-center space-x-2 text-center text-xl font-semibold underline-offset-4"
             >
-                <BookOpenIcon class="w-6" />
+                <DocumentChartBarIcon class="w-4" />
                 <span>Notes</span>
             </div>
             <div class="flex w-1/12 justify-center">
-                <DocumentPlusIcon
-                    class="w-5 cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
+                <PlusIcon
+                    class="w-4 cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
                     @click="handleAddNote"
                 />
             </div>
         </div>
         <div
-            class="flex w-11/12 flex-col items-center justify-center space-y-6 px-1"
+            class="flex w-full flex-col items-center justify-center space-y-2 px-2"
         >
-            <div
-                v-if="!notes.data"
-                class="py-5 px-3 text-center text-sm font-light"
-            >
-                No Notes Associated with {{ student.user.name }}
-            </div>
             <div
                 v-for="(item, index) in notes.data"
                 :key="index"
-                class="flex w-full cursor-pointer justify-center space-x-3"
+                class="flex w-full cursor-pointer justify-center space-x-3 rounded-lg p-2.5 hover:bg-zinc-700 hover:text-gray-50"
+                :class="index % 2 === 1 ? 'bg-gray-50' : ''"
                 @click="handleClicked(item)"
             >
                 <div
                     class="min-h-full w-[0.01rem] rounded-t-lg rounded-b-md bg-zinc-600 py-2"
                 ></div>
 
-                <div class="relative flex w-full flex-col space-y-1">
-                    <div
-                        class="absolute right-0 top-0 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full hover:scale-110 hover:bg-gray-300"
-                        @click.stop="deleteNote(item.id)"
-                    >
-                        <TrashIcon class="w-4" />
-                    </div>
+                <div class="relative flex w-full flex-col space-y-2 pt-1">
                     <div class="text-xs font-medium hover:font-semibold">
                         {{ item.title }}
                     </div>
                     <div
-                        class="flex w-full justify-between text-[0.6rem] 2xl:text-xs"
+                        class="flex w-full items-center justify-between text-[0.55rem] font-light 2xl:text-xs"
                     >
-                        <div class="font-light">
+                        <div class="w-5/12">
                             {{ moment(item.created_at).fromNow() }}
                         </div>
-                        <div>{{ item.author.name }}</div>
+                        <div class="w-6/12 text-center">
+                            {{ item.author.name }}
+                        </div>
+
+                        <TrashIcon
+                            class="w-3 text-red-600 hover:scale-110"
+                            @click.stop="deleteNote(item.id)"
+                        />
                     </div>
                 </div>
+            </div>
+            <div
+                v-if="!notes?.data.length"
+                class="flex w-full flex-col items-center py-2"
+                @click="showModal = true"
+            >
+                <EmptyView
+                    :title="'No notes found for ' + student?.user.name"
+                />
+                <SecondaryButton
+                    title="Add Note"
+                    class="mt-4 w-9/12 !rounded-2xl border-none bg-zinc-700 text-white"
+                />
             </div>
         </div>
 
@@ -129,8 +141,8 @@
 </template>
 <script setup>
 import {
-    BookOpenIcon,
-    DocumentPlusIcon,
+    DocumentChartBarIcon,
+    PlusIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";
@@ -141,6 +153,8 @@ import TextInput from "@/Components/TextInput.vue";
 import moment from "moment";
 import Pagination from "@/Components/Pagination.vue";
 import TextArea from "@/Components/TextArea.vue";
+import EmptyView from "@/Views/EmptyView.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const showModal = ref(false);
 const student = usePage().props.student;

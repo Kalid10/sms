@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full flex-col items-center space-y-3 rounded-lg bg-gradient-to-tl from-neutral-600 to-zinc-800 py-2 text-white shadow-sm"
+        class="flex w-full flex-col items-center space-y-3 rounded-lg bg-zinc-100 py-2 text-white shadow-sm"
     >
         <div
             class="flex space-x-2 text-center text-xl font-semibold underline-offset-4"
