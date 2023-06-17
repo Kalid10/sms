@@ -116,7 +116,11 @@
         </Modal>
 
         <Modal v-model:view="showAddAnnouncement">
-            <FormElement title="Add Announcement" @submit="addAnnouncement">
+            <FormElement
+                title="Add Announcement"
+                @submit="addAnnouncement"
+                @cancel="form.reset()"
+            >
                 <TextInput
                     v-model="form.title"
                     label="Title"

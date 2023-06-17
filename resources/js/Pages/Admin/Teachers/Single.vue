@@ -1,28 +1,61 @@
 <template>
-    <div class="flex min-h-screen w-full flex-col space-y-2 bg-gray-50">
-        <Title :title="teacher.user.name" />
+    <div class="flex min-h-screen w-full flex-col pl-5">
+        <Title
+            class="w-full rounded-t-md bg-violet-600 px-3 !py-6 text-white shadow-sm"
+            :title="teacher.user.name"
+        />
         <TabElement
             v-model:active="activeTab"
+            background-color="bg-violet-600"
+            in-active-tab-text="text-gray-300"
             :tabs="tabs"
-            active-only
-            @click="handleTabClick"
         >
-            <Home v-if="activeTab === 'Home'" />
+            <template #home>
+                <Home
+                    v-if="activeTab === 'Home' && !showLoading"
+                    class="bg-white"
+                />
+            </template>
 
-            <Batches v-if="activeTab === 'Classes'" />
+            <template #classes>
+                <Batches
+                    v-if="activeTab === 'Classes' && !showLoading"
+                    class="bg-white p-4"
+                />
+            </template>
 
-            <Students v-if="activeTab === 'Students'" />
+            <template #students>
+                <Students
+                    v-if="activeTab === 'Students' && !showLoading"
+                    class="bg-white"
+                />
+            </template>
 
-            <LessonPlans v-if="activeTab === 'LessonPlans'" />
+            <template #lessonplans>
+                <LessonPlans
+                    v-if="activeTab === 'LessonPlans' && !showLoading"
+                    class="rounded-lg border border-black p-4"
+                />
+            </template>
 
-            <Assessments
-                v-if="activeTab === 'Assessments'"
-                :teacher-id="teacher.id"
-            />
+            <template #assessments>
+                <Assessments
+                    v-if="activeTab === 'Assessments' && !showLoading"
+                    class="bg-white"
+                    :teacher-id="teacher.id"
+                />
+            </template>
 
-            <Homeroom v-if="activeTab === 'Homerooms'" />
+            <template #homerooms>
+                <Homeroom v-if="activeTab === 'Homerooms' && !showLoading" />
+            </template>
 
-            <Announcement v-if="activeTab === 'Announcements'" />
+            <template #announcements>
+                <Announcement
+                    v-if="activeTab === 'Announcements' && !showLoading"
+                    class="bg-white"
+                />
+            </template>
         </TabElement>
         <Loading v-if="showLoading" is-full-screen />
     </div>
@@ -44,6 +77,7 @@ import Loading from "@/Components/Loading.vue";
 const showLoading = ref(false);
 const teacher = computed(() => usePage().props.teacher);
 const activeTab = ref("Home");
+
 const location = computed(() => usePage().props.ziggy.location);
 watch(location, (location) => {
     const tab = location.split("/").pop();
@@ -52,6 +86,9 @@ watch(location, (location) => {
     }
 });
 
+watch(activeTab, (tab) => {
+    handleTabClick(tab);
+});
 const tabs = [
     "Home",
     "Classes",
