@@ -31,7 +31,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             return match (auth()->user()->type) {
-                User::TYPE_ADMIN => redirect()->route('admin.index'),
+                User::TYPE_ADMIN => redirect()->route('admin.show'),
                 User::TYPE_TEACHER => redirect()->route('teacher.show'),
                 default => redirect()->route('login'),
             };
