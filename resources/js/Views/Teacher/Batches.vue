@@ -37,6 +37,12 @@
                             :title="'Assessments'"
                             value="10 /10 Completed"
                             :icon="ClipboardIcon"
+                            :url="
+                                isTeacher()
+                                    ? '/teacher/assessments'
+                                    : '/admin/teachers/assessments?teacher_id=' +
+                                      teacher.id
+                            "
                         />
                         <SummaryItem
                             class-style="bg-fuchsia-100 text-black"
@@ -44,6 +50,25 @@
                             :title="'LessonPlans'"
                             value="10 /10 Completed"
                             :icon="CalendarIcon"
+                            :url="
+                                isTeacher()
+                                    ? '/teacher/lesson-plan'
+                                    : '/admin/teachers/lesson-plan?teacher_id=' +
+                                      teacher.id
+                            "
+                        />
+                        <SummaryItem
+                            class-style="bg-zinc-100 text-black"
+                            icon-style="bg-zinc-500/20 text-white"
+                            :title="'Students'"
+                            value="75 Total Students"
+                            :icon="UsersIcon"
+                            :url="
+                                isTeacher()
+                                    ? '/teacher/students'
+                                    : '/admin/teachers/students?teacher_id=' +
+                                      teacher.id
+                            "
                         />
                         <SummaryItem
                             class-style="bg-red-50 text-black"
@@ -51,6 +76,12 @@
                             :title="'Announcements'"
                             value="10 Announcements Today"
                             :icon="ChatBubbleBottomCenterIcon"
+                            :url="
+                                isTeacher()
+                                    ? '/teacher/announcements'
+                                    : '/admin/teachers/announcements?teacher_id=' +
+                                      teacher.id
+                            "
                         />
 
                         <div
@@ -105,13 +136,14 @@
 import { router, usePage } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 import Header from "@/Views/Teacher/Views/Header.vue";
-import { isTeacher } from "@/utils";
+import { isAdmin, isTeacher } from "@/utils";
 import CurrentClass from "@/Views/Teacher/Views/Batches/CurrentClass.vue";
 import SummaryItem from "@/Views/Teacher/Views/SummaryItem.vue";
 import {
     CalendarIcon,
     ChatBubbleBottomCenterIcon,
     ClipboardIcon,
+    UsersIcon,
 } from "@heroicons/vue/24/solid";
 import {
     ArrowTrendingDownIcon,
@@ -122,6 +154,7 @@ import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Ind
 import StudentsTable from "@/Views/Teacher/Views/StudentsTable.vue";
 import Assessment from "@/Views/Teacher/Views/Home/Assessments.vue";
 
+const teacher = usePage().props.teacher;
 const schedule = usePage().props.schedule;
 const batchSubjects = usePage().props.batch_subjects;
 
@@ -156,14 +189,16 @@ const batchSubjectOptions = computed(() => {
 const selectedBatchSubject = ref(batchSubject.value.id);
 const updateBatchInfo = (batchSubjectId, search) => {
     if (batchSubjectId !== null) selectedBatchSubject.value = batchSubjectId;
-    router.visit(
-        "/teacher/class?batch_subject_id=" +
-            selectedBatchSubject.value +
-            "&search=" +
-            search,
-        {
-            preserveState: true,
-        }
+    router.get(
+        isAdmin()
+            ? "/admin/teachers"
+            : "/teacher" +
+                  "/class?batch_subject_id=" +
+                  selectedBatchSubject.value +
+                  "&search=" +
+                  search,
+        {},
+        { preserveState: true }
     );
 };
 

@@ -52,7 +52,12 @@
                             :title="'Assessments'"
                             value="10 /10 Completed"
                             :icon="ClipboardIcon"
-                            :url="'/teacher/assessments'"
+                            :url="
+                                isTeacher()
+                                    ? '/teacher/assessments'
+                                    : '/admin/teachers/assessments?teacher_id=' +
+                                      teacher.id
+                            "
                         />
                         <SummaryItem
                             class-style="bg-zinc-100 text-black"
@@ -60,7 +65,12 @@
                             :title="'Students'"
                             value="75 Total Students"
                             :icon="UsersIcon"
-                            :url="'/teacher/students'"
+                            :url="
+                                isTeacher()
+                                    ? '/teacher/students'
+                                    : '/admin/teachers/students?teacher_id=' +
+                                      teacher.id
+                            "
                         />
                         <SummaryItem
                             class-style="bg-fuchsia-100 text-black"
@@ -68,15 +78,25 @@
                             :title="'LessonPlans'"
                             value="10 /10 Completed"
                             :icon="CalendarIcon"
-                            :url="'/teacher/lesson-plan'"
+                            :url="
+                                isTeacher()
+                                    ? '/teacher/lesson-plan'
+                                    : '/admin/teachers/lesson-plan?teacher_id=' +
+                                      teacher.id
+                            "
                         />
                         <SummaryItem
                             class-style="bg-green-100 text-black"
                             icon-style="bg-green-500/20 text-white"
                             :title="'Homeroom Classes'"
-                            value="10  /10 Completed"
+                            value="10 /10 Completed"
                             :icon="CalendarIcon"
-                            :url="'/teacher/lesson-plan'"
+                            :url="
+                                isTeacher()
+                                    ? '/teacher/homeroom'
+                                    : '/admin/teachers/homeroom?teacher_id=' +
+                                      teacher.id
+                            "
                         />
                     </div>
                 </div>
@@ -93,7 +113,7 @@
             <div
                 class="flex h-full w-4/12 flex-col items-center space-y-8 p-0 px-3"
             >
-                <div class="w-full rounded-lg bg-white p-3">
+                <div class="w-full rounded-lg bg-white p-3 shadow-sm">
                     <div class="flex w-full justify-between px-2">
                         <div class="py-2 text-center text-xl font-medium">
                             Upcoming Schedules
@@ -114,25 +134,26 @@
                             <SchoolScheduleItem
                                 class="!py-2"
                                 :school-schedule="item"
+                                view="teacher"
                             />
                         </div>
                     </div>
                 </div>
                 <div class="flex w-full items-center justify-between">
-                    <div class="flex h-full flex-col justify-between">
+                    <div class="flex h-full w-4/12 flex-col justify-between">
                         <div
-                            class="flex h-fit w-fit flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
+                            class="flex h-fit w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
                         >
-                            <div class="text-center text-6xl font-bold">
+                            <div class="text-center text-5xl font-bold">
                                 100%
                             </div>
 
                             <div class="font-medium">Attendance</div>
                         </div>
                         <div
-                            class="flex h-fit w-fit flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
+                            class="flex h-fit w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
                         >
-                            <div class="text-center text-6xl font-bold">
+                            <div class="text-center text-5xl font-bold">
                                 100%
                             </div>
 

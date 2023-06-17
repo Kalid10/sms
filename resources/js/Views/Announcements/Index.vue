@@ -15,12 +15,13 @@
                     {{ title }}
                 </div>
                 <SecondaryButton
-                    v-if="isAdmin && view === 'admin'"
+                    v-if="isAdmin() && view === 'admin'"
                     class="h-fit !rounded-2xl bg-zinc-700 text-white"
                     title="Add Announcement"
                     @click="showAddAnnouncement = true"
                 />
                 <TextInput
+                    v-if="!(view === 'teacher' && isAdmin())"
                     v-model="searchKey"
                     placeholder="Search Announcements"
                     class="w-5/12"
@@ -54,7 +55,7 @@
                     class="pt-3"
                 />
                 <LinkCell
-                    v-else
+                    v-else-if="!(view === 'teacher' && isAdmin())"
                     class="flex w-full justify-center py-2"
                     :href="url"
                     value="Show All Announcements"
@@ -193,6 +194,7 @@ import FormElement from "@/Components/FormElement.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextArea from "@/Components/TextArea.vue";
+import { isAdmin } from "@/utils";
 
 const props = defineProps({
     url: {
@@ -222,9 +224,6 @@ const error = computed(() => usePage().props.errors);
 const { classStyle } = toRefs(props);
 
 const Announcements = ["all", "students", "teachers", "guardians", "admins"];
-
-const user = usePage().props.auth.user;
-const isAdmin = computed(() => user.type === "admin");
 
 const targetGroupOptions = [
     "all",
