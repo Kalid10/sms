@@ -4,13 +4,13 @@
     >
         <Item
             title="Class Average"
-            :value="grade?.score"
+            :value="grade?.score ?? '-'"
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
         <Item
             title="Class Rank"
-            :value="grade?.rank"
+            :value="grade?.rank ?? '-'"
             value-style="text-positive-100"
             :icon="ArrowSmallUpIcon"
         />
@@ -22,7 +22,7 @@
         />
         <Item
             title="Class Conduct"
-            :value="grade?.conduct"
+            :value="grade?.conduct ?? '-'"
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
@@ -44,7 +44,9 @@ const props = defineProps({
     },
 });
 
-const grade = props.grade ?? computed(() => usePage().props.grade);
+const grade = computed(() => {
+    return props.grade ?? usePage().props.grade;
+});
 </script>
 
 <style scoped></style>

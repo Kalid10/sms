@@ -1,5 +1,6 @@
 <template>
-    <div class="flex w-full items-center rounded-lg bg-white p-2 shadow-sm">
+    <div class="my-5 flex min-h-full w-10/12 flex-col rounded-lg">
+        <Title class="pb-8" title="Grades" />
         <TableElement
             :columns="config"
             :data="levels"
@@ -8,23 +9,18 @@
             :selectable="false"
             :header="false"
             class="!shadow-none"
-            subtitle="List of grades registered this year"
         >
             <template #table-header>
-                <div class="flex items-center justify-between p-2">
-                    <div>
-                        <h1 class="font-semibold">Grades</h1>
-                        <p class="mt-0.5 text-xs font-light text-gray-500">
-                            List of grades registered this year
-                        </p>
-                    </div>
-                    <div class="flex w-5/12 flex-col items-end space-y-2">
+                <div class="flex items-center justify-between">
+                    <div
+                        class="flex w-full items-center justify-between space-x-5 pb-4"
+                    >
                         <!--    TODO: Implement Search-->
-                        <TextInput placeholder="Search Grades" class="w-full" />
-                        <LinkCell
-                            class="!text-xs"
-                            href="/level-categories"
+                        <TextInput placeholder="Search Grades" class="w-6/12" />
+                        <SecondaryButton
+                            title="Go to Level Categories"
                             value=" Go To Level Categories"
+                            class="!rounded-2xl bg-zinc-700 text-white"
                         />
                     </div>
                 </div>
@@ -69,8 +65,9 @@ import { Link, usePage } from "@inertiajs/vue3";
 import { parseLevel } from "@/utils.js";
 import { computed } from "vue";
 import moment from "moment/moment";
-import LinkCell from "@/Components/LinkCell.vue";
 import TextInput from "@/Components/TextInput.vue";
+import Title from "@/Views/Teacher/Views/Title.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const levels = computed(() => {
     return usePage().props.levels.map((level) => {

@@ -1,6 +1,7 @@
 <template>
     <div
         class="group flex h-full cursor-pointer items-center space-x-10 py-4 hover:scale-105 hover:rounded-lg hover:bg-zinc-800 hover:text-white"
+        :class="isTeacher() ? 'justify-evenly' : ''"
     >
         <div
             :class="{
@@ -27,7 +28,10 @@
                 }}</span>
             </div>
         </div>
-        <div v-if="isAdmin()" class="flex w-2/12 justify-evenly">
+        <div
+            v-if="view === 'admin' && isAdmin()"
+            class="flex w-2/12 justify-evenly"
+        >
             <TrashIcon
                 v-if="moment(schoolSchedule.start_date).isAfter(moment())"
                 class="group-hover:text-ref-500 w-4 cursor-pointer text-red-600 hover:scale-110"
@@ -103,7 +107,7 @@ import Modal from "@/Components/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { router, useForm } from "@inertiajs/vue3";
 import DialogBox from "@/Components/DialogBox.vue";
-import { isAdmin } from "@/utils";
+import { isAdmin, isTeacher } from "@/utils";
 
 const isDialogBoxOpen = ref(false);
 
@@ -111,6 +115,10 @@ const props = defineProps({
     schoolSchedule: {
         type: Object,
         required: true,
+    },
+    view: {
+        type: String,
+        default: "admin",
     },
 });
 const showUpdateModal = ref(false);

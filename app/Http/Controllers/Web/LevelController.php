@@ -111,7 +111,7 @@ class LevelController extends Controller
                 ->with('assessmentType', 'batchSubject.batch:id,section,level_id',
                     'batchSubject.batch.level:id,name,level_category_id',
                     'batchSubject.subject:id,full_name')
-                ->get()->take(3);
+                ->paginate(4);
         });
 
         $students = BatchStudent::whereIn('batch_id', $level->batches->pluck('id'))

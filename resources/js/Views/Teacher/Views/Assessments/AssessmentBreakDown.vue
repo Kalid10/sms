@@ -1,9 +1,13 @@
 <template>
-    <div class="flex w-full flex-col items-center space-y-5 bg-white px-4 py-5">
+    <div
+        class="flex w-full flex-col items-center space-y-5 rounded-lg bg-white px-4 py-5 shadow-sm"
+        :class="!assessmentGrade?.length ? 'h-full' : 'h-fit'"
+    >
         <div
-            class="flex w-fit -skew-x-3 bg-yellow-400 px-2 text-xl font-semibold"
+            v-if="assessmentGrade?.length"
+            class="flex w-fit px-2 text-xl font-semibold"
         >
-            <ChartBarIcon class="mr-1 w-5 text-black" />
+            <ChartBarIcon class="mr-1 w-4 text-black" />
 
             <div>
                 <span v-if="student">{{ student.user.name }}'s</span>
@@ -13,9 +17,9 @@
         <div
             v-for="(item, index) in assessmentGrade"
             :key="index"
-            class="flex w-full items-center justify-between space-x-2 py-3"
+            class="flex w-full items-center justify-between space-x-2 rounded-lg py-3"
             :class="{
-                'bg-gray-100': index % 2 === 0,
+                'bg-gray-50': index % 2 === 1,
             }"
         >
             <div class="w-7/12 text-center text-xs font-medium">
@@ -43,18 +47,10 @@
             </div>
         </div>
         <div
-            v-if="!assessmentGrade"
-            class="w-9/12 px-4 text-xs font-light lg:text-xs"
+            v-if="!assessmentGrade?.length"
+            class="flex h-full w-9/12 items-center justify-center text-xs font-light lg:text-xs"
         >
-            At present,
-            <span
-                v-if="student"
-                class="cursor-pointer font-medium underline-offset-2 hover:font-semibold hover:underline"
-                >{{ student.user.name }}</span
-            >
-            has no associated grades. As grades are recorded and registered,
-            they will become visible in this space, segregated based on the type
-            of assessment.
+            <EmptyView :title="'No Grades Recorded!'" />
         </div>
     </div>
 </template>
@@ -62,6 +58,7 @@
 import { ChartBarIcon } from "@heroicons/vue/24/solid";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import EmptyView from "@/Views/EmptyView.vue";
 
 const props = defineProps({
     assessmentGrade: {
