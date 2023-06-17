@@ -1,10 +1,10 @@
 <template>
     <div
-        class="flex min-h-full w-full flex-col items-center justify-evenly rounded-lg bg-gradient-to-bl from-violet-500 to-purple-500 py-2 text-center uppercase text-white shadow-sm"
+        class="flex min-h-full w-full flex-col items-center justify-center rounded-lg bg-gradient-to-bl from-violet-500 to-purple-500 py-2 text-center uppercase text-white shadow-sm"
     >
         <div
             v-if="batch.active_session.length > 0"
-            class="flex h-full flex-col items-center justify-evenly"
+            class="flex h-full flex-col items-center space-y-1.5"
         >
             <div class="text-[0.65rem] font-light">Attending</div>
 

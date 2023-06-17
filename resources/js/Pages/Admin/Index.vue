@@ -78,7 +78,7 @@
         <div class="flex w-full justify-between">
             <div class="flex w-6/12 flex-col space-y-5">
                 <Announcements
-                    url="/admin"
+                    url="/admin/announcements"
                     class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
                 />
             </div>
@@ -94,12 +94,6 @@
                         <SchoolSchedule />
                     </div>
                 </div>
-                <Levels />
-                <div
-                    class="flex h-full w-full items-center justify-center rounded-lg border border-black"
-                >
-                    homers
-                </div>
             </div>
         </div>
     </div>
@@ -109,7 +103,6 @@ import { computed, ref } from "vue";
 import moment from "moment/moment";
 import { router, usePage } from "@inertiajs/vue3";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
-import Levels from "@/Pages/Admin/Levels/Index.vue";
 import Announcements from "@/Views/Announcements/Index.vue";
 import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Index.vue";
 import AbsentTeachers from "@/Views/Admin/Absentee.vue";
@@ -120,16 +113,6 @@ import {
     ComboboxOptions,
 } from "@headlessui/vue";
 import { debounce } from "lodash";
-
-const teachersCount = computed(() => usePage().props.teachers_count);
-
-const studentsCount = computed(() => usePage().props.students_count);
-
-const subjectCount = computed(() => usePage().props.subjects_count);
-
-const adminsCount = computed(() => usePage().props.admins_count);
-
-const userRoles = computed(() => usePage().props.user_roles);
 
 const students = computed(() => usePage().props.students);
 
@@ -209,53 +192,6 @@ const filteredStudents = computed(() => {
             : [];
     }
 });
-
-const configLevels = [
-    {
-        name: "Level Category",
-        key: "level",
-        type: "custom",
-    },
-    {
-        name: "Sections",
-        key: "batches",
-        type: "custom",
-    },
-    {
-        name: "Updated at",
-        key: "updated_at",
-        type: "custom",
-    },
-];
-
-const configAdmin = [
-    {
-        name: "Name",
-        key: "name",
-        type: "custom",
-    },
-    {
-        name: "Email",
-        key: "email",
-        type: "custom",
-    },
-    {
-        name: "Role",
-        key: "role",
-        type: "custom",
-    },
-    {
-        name: "Type",
-        key: "type",
-        type: "custom",
-    },
-    {
-        name: "Updated at",
-        key: "updated_at",
-        type: "custom",
-    },
-];
-
 const config = [
     {
         key: "name",

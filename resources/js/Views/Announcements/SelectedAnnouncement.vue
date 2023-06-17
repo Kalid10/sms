@@ -2,7 +2,7 @@
     <div
         class="flex flex-col items-center space-y-6 rounded-lg bg-gray-50/50 p-3"
     >
-        <span class="w-full text-sm font-thin text-gray-600">
+        <span class="w-full text-sm font-thin text-gray-800">
             {{ moment().format("ddd MMM DD, YYYY") }}
         </span>
 

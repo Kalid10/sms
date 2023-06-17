@@ -2,13 +2,12 @@
     <div
         v-for="(item, index) in assessments"
         :key="index"
-        class="mt-1 flex cursor-pointer items-center justify-between rounded-lg py-1.5 hover:bg-zinc-800 hover:pr-4 hover:text-white lg:mt-2 lg:py-1.5"
+        class="mt-1 flex cursor-pointer items-center justify-between space-y-2 py-1.5 hover:rounded-lg hover:bg-zinc-800 hover:pr-4 hover:text-white lg:mt-2 lg:py-1.5"
         @click="handleClick()"
     >
         <div
             class="flex min-h-full w-2/12 flex-col items-center justify-center space-y-2 font-bold"
         >
-            <!--            <AssessmentIcon v-if="view !== 'class'" :item="item" />-->
             <div
                 class="flex h-9 w-9 items-center justify-center rounded-full text-xl uppercase"
                 :class="{
@@ -27,21 +26,14 @@
         </div>
 
         <div
-            class="flex justify-center"
-            :class="isHomeOrAdminView ? 'w-9/12  lg:w-8/12' : 'w-7/12'"
+            class="flex h-full justify-center"
+            :class="isHomeOrAdminView ? 'w-9/12  lg:w-9/12 lg:pl-2' : 'w-7/12'"
         >
             <AssessmentDetails :item="item" :view="view" />
         </div>
 
         <div class="flex w-3/12 items-center justify-center text-center">
-            <AssessmentScore :item="item" :view="view" />
-
-            <div
-                v-if="view === 'class'"
-                class="flex cursor-pointer justify-center"
-            >
-                <!--                <PencilIcon class="w-3 opacity-50 hover:opacity-100" />-->
-            </div>
+            <AssessmentScore class="" :item="item" :view="view" />
         </div>
     </div>
 </template>
