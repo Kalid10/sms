@@ -32,15 +32,15 @@ import { computed, ref } from "vue";
 import {
     ChatBubbleBottomCenterIcon,
     Cog6ToothIcon,
-    PowerIcon,
     UserIcon,
 } from "@heroicons/vue/20/solid/index.js";
 import { usePage } from "@inertiajs/vue3";
+import { BookOpenIcon, UsersIcon } from "@heroicons/vue/24/solid";
 import {
-    BookOpenIcon,
-    QueueListIcon,
-    UsersIcon,
-} from "@heroicons/vue/24/solid";
+    ArrowLeftOnRectangleIcon,
+    CalendarDaysIcon,
+} from "@heroicons/vue/20/solid/index";
+import { HomeIcon } from "@heroicons/vue/24/solid/index";
 
 const props = defineProps({
     auth: {
@@ -56,7 +56,7 @@ const directory = computed(() => usePage().url.split("/")[2]);
 const sidebarItems = computed(() => [
     {
         name: "Home",
-        icon: QueueListIcon,
+        icon: HomeIcon,
         route: "/admin",
         active: directory.value === undefined,
     },
@@ -79,22 +79,32 @@ const sidebarItems = computed(() => [
         active: directory.value === "subjects",
     },
     {
+        name: "Announcements",
+        icon: ChatBubbleBottomCenterIcon,
+        route: "/admin/announcements",
+        active: directory.value === "announcements",
+    },
+    {
         name: "Schedule",
-        icon: QueueListIcon,
+        icon: CalendarDaysIcon,
         route: "/admin/schedules",
         active: directory.value === "schedules",
     },
+]);
+
+const footerItems = [
     {
         name: "Settings",
         icon: Cog6ToothIcon,
         route: "/user/profile",
         // active: directory.value === 'settings'
     },
-]);
-
-const footerItems = [
-    { icon: ChatBubbleBottomCenterIcon, name: "Chat", route: "/sms" },
-    { icon: PowerIcon, name: "Logout", route: "/logout", method: "POST" },
+    {
+        icon: ArrowLeftOnRectangleIcon,
+        name: "Logout",
+        route: "/logout",
+        method: "POST",
+    },
 ];
 </script>
 
