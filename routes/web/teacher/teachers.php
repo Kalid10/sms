@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('teacher/')->middleware(['checkUserType:teacher,admin', 'auth'])->name('teacher.')->group(function () {
     Route::controller(TeacherController::class)->group(function () {
         Route::get('', 'show')->name('show');
+        Route::get('school-schedule', 'schedule')->name('school-schedule.show');
     });
 
     Route::get('class', Batch::class)->name('batch.show');

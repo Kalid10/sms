@@ -5,7 +5,7 @@
                 :class="
                     view === 'class'
                         ? 'text-xs'
-                        : 'text-xs font-medium lg:text-sm'
+                        : 'text-xs font-semibold lg:text-sm'
                 "
             >
                 {{ item.title }}
@@ -19,7 +19,9 @@
                 :class="view === 'class' ? 'text-[0.6rem]' : ''"
             >
                 <span>{{ item.batch_subject.subject.full_name }}</span>
-                <span class="font-medium">{{ item.assessment_type.name }}</span>
+                <span class="font-normal">{{
+                    item.assessment_type.name + " ,"
+                }}</span>
             </span>
             <span :class="view === 'class' ? 'text-[0.6rem]' : ''">
                 On {{ moment(item.due_date).format("dddd MMMM Do") }}

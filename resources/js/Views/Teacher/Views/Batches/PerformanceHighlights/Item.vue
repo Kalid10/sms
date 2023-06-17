@@ -10,32 +10,25 @@
         </div>
 
         <!--                Name and Progress section-->
-        <div class="flex h-11 w-5/12 flex-col justify-evenly text-start">
-            <div class="grow text-[0.65rem] font-medium">
+        <div class="flex h-11 w-9/12 flex-col justify-evenly text-start">
+            <div class="grow text-sm">
                 {{ name }}
             </div>
 
-            <div class="flex items-center space-x-3 font-light">
+            <div class="flex items-center space-x-3">
                 <div
-                    class="flex items-center justify-center text-center text-[0.6rem]"
+                    class="flex items-center justify-center text-center text-xs font-light"
                 >
-                    Attendance {{ attendance }} %
+                    {{ grade }} / 50
                 </div>
             </div>
         </div>
 
-        <!--                Grade section-->
-        <div class="flex h-11 w-3/12 flex-col justify-evenly">
-            <div
-                class="flex w-full items-center justify-center py-1.5 text-xs font-medium"
-            >
-                {{ grade }} / 50
-            </div>
-        </div>
-
         <!--                Rank section-->
-        <div class="flex h-11 w-2/12 items-center justify-center space-y-1">
-            <div class="flex items-center justify-center p-2 font-medium">
+        <div class="flex w-11 items-center justify-center space-y-1 rounded-lg">
+            <div
+                class="flex h-10 w-11 items-center justify-center rounded-full text-sm"
+            >
                 {{ rank }}
             </div>
         </div>

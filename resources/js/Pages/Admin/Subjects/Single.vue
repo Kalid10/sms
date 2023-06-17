@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <TabElement :tabs="subjectTabs">
+    <TabElement v-model:active="activeTab" :tabs="subjectTabs">
         <template #teachers>
             <SubjectTeachers />
         </template>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TabElement from "@/Components/TabElement.vue";
 import { subjectPriorityLabels, toHashTag } from "@/utils.js";
@@ -43,6 +43,7 @@ import SubjectGrades from "@/Views/Admin/Subjects/SubjectGrades.vue";
 const subject = computed(() => usePage().props.subject);
 
 const subjectTabs = ["Grades", "Teachers"];
+const activeTab = ref("Grades");
 </script>
 
 <style scoped></style>

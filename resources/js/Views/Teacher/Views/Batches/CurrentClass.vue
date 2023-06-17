@@ -25,10 +25,10 @@
     <div v-else-if="view === 'absentee'">
         <div
             v-if="inProgressSession"
-            class="flex h-full w-full items-center justify-between space-y-2 divide-x divide-fuchsia-50 rounded-lg border-2 border-black bg-gradient-to-tl from-zinc-600 to-neutral-600 p-5 text-white shadow-sm"
+            class="flex h-full w-full items-center justify-between space-y-2 divide-x divide-fuchsia-50 rounded-lg border-2 border-black bg-gradient-to-tl from-zinc-600 to-neutral-600 px-5 py-3 text-white shadow-sm"
         >
             <div
-                class="flex h-full w-6/12 flex-col items-center justify-center space-y-5"
+                class="flex h-full w-6/12 flex-col items-center justify-between space-y-4"
             >
                 <div class="w-full text-center font-light">
                     You are now having

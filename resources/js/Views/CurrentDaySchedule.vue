@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-full w-full flex-col justify-center rounded-lg border border-zinc-700 shadow-sm"
+        class="flex h-full w-full flex-col justify-center rounded-lg bg-white shadow-sm"
         :class="classStyle ? classStyle : ' p-5 space-y-3 bg-white'"
     >
         <div v-if="schedule" class="text-xl font-semibold text-gray-700">

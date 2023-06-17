@@ -5,21 +5,12 @@
             :selectable="false"
             :header="false"
             row-actionable
+            :filterable="false"
             class="px-3 pt-4 pb-2"
             :data="formattedStudentsData"
         >
-            <template #filter>
-                <div class="flex w-full">
-                    <TextInput
-                        v-model="searchKey"
-                        class="w-7/12"
-                        placeholder="Search for a student by name"
-                    />
-                </div>
-            </template>
-
             <template #table-header>
-                <div class="flex w-full justify-between pb-4">
+                <div v-if="showTitle" class="flex w-full justify-between pb-4">
                     <div class="pl-4">
                         <div class="pb-2 text-xl font-semibold">Students</div>
                         <div class="text-xs font-light text-gray-500">
@@ -32,8 +23,13 @@
                         @click="router.get('/register/student')"
                     />
                 </div>
+                <TextInput
+                    v-model="searchKey"
+                    class="w-7/12"
+                    placeholder="Search for a student by name"
+                />
                 <div
-                    class="flex w-full justify-between divide-x divide-gray-200 rounded-lg border p-3"
+                    class="mt-3 flex w-full justify-between divide-x divide-gray-200 rounded-lg border bg-gray-50 p-3"
                 >
                     <div class="w-3/12 text-center">
                         <div class="text-xl font-semibold text-gray-900">
@@ -172,6 +168,10 @@ const props = defineProps({
     url: {
         type: String,
         default: "/admin/students/",
+    },
+    showTitle: {
+        type: Boolean,
+        default: true,
     },
 });
 

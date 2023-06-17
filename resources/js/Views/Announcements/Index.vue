@@ -34,7 +34,7 @@
                 v-if="!computedAnnouncements"
                 title="No Announcements Found!"
                 link-title="Go To Announcements"
-                link-url="/admin/announcements"
+                :link-url="url"
                 class="flex w-full justify-center py-2"
             />
             <div v-else class="flex flex-col space-y-2">
@@ -56,7 +56,7 @@
                 <LinkCell
                     v-else
                     class="flex w-full justify-center py-2"
-                    href="/admin/announcements"
+                    :href="url"
                     value="Show All Announcements"
                 />
             </div>
@@ -116,7 +116,11 @@
         </Modal>
 
         <Modal v-model:view="showAddAnnouncement">
-            <FormElement title="Add Announcement" @submit="addAnnouncement">
+            <FormElement
+                title="Add Announcement"
+                @submit="addAnnouncement"
+                @cancel="form.reset()"
+            >
                 <TextInput
                     v-model="form.title"
                     label="Title"

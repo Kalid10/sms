@@ -2,10 +2,17 @@
     <div class="flex h-screen w-full flex-col space-y-2 bg-gray-50">
         <div
             v-if="!selectedHomeroom"
-            class="pt-20 text-center text-6xl font-bold text-gray-500"
+            class="flex h-96 flex-col items-center justify-center space-y-5"
         >
-            You currently do not have any assigned homerooms. Please get in
-            touch with the administration for assistance.
+            <div class="">404</div>
+            <div class="w-6/12 text-center text-3xl font-semibold text-black">
+                No homeroom classes found!
+            </div>
+
+            <SecondaryButton
+                title="Assign Homeroom"
+                class="!rounded-2xl bg-zinc-800 text-white"
+            />
         </div>
 
         <div
@@ -98,6 +105,7 @@ import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/St
 import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import Modal from "@/Components/Modal.vue";
 import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetail.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const homeroomClasses = computed(() => usePage().props.homeroom_classes);
 const selectedHomeroom = ref(usePage().props.filters.batch_id);

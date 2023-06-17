@@ -1,15 +1,15 @@
 <template>
-    <div class="flex w-full flex-col gap-3">
+    <div class="flex w-full flex-col gap-3" :class="backgroundColor">
         <ul class="flex w-full items-center gap-4 overflow-auto">
             <li
                 v-for="(tab, t) in tabs"
                 :key="t"
                 :class="[active === tab ? 'bg-brand-50' : '']"
-                class="rounded-full px-4 py-2 transition-colors duration-300"
+                class="mx-2 rounded-full px-4 py-2 transition-colors duration-300"
             >
                 <button
                     :class="[
-                        active === tab ? 'text-brand-100' : 'text-gray-500',
+                        active === tab ? 'text-gray-900' : inActiveTabText,
                     ]"
                     class="w-full whitespace-nowrap text-sm font-semibold transition-colors duration-300"
                     @click="setActiveTab(tab)"
@@ -44,13 +44,20 @@ const props = defineProps({
         type: String,
         default: "Home",
     },
+    inActiveTabText: {
+        type: String,
+        default: "text-gray-500",
+    },
+    backgroundColor: {
+        type: String,
+        default: "",
+    },
 });
 
 const emit = defineEmits(["click", "update:active"]);
 
 function setActiveTab(tab) {
-    emit("update:active");
-    emit("click", tab);
+    emit("update:active", tab);
 }
 
 function toUnderscore(str) {

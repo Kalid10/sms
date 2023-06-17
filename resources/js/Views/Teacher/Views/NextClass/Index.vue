@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-fit flex-col items-center justify-evenly rounded-xl bg-black pb-2 text-white"
+        class="flex h-fit flex-col items-center justify-evenly rounded-xl bg-zinc-800 pb-2 text-white"
         :class="isSidebarOpenOnXlDevice ? 'lg:py-3 w-full' : 'lg:py-5 w-full'"
     >
         <div
