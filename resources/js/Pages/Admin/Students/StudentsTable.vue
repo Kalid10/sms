@@ -135,7 +135,7 @@
             @submit="submit"
         >
             <p class="text-xs text-gray-500">
-                Transferring a student will remove theStum from their current
+                Transferring a student will remove them from their current
                 section and add them to the selected section.
             </p>
 
@@ -192,6 +192,8 @@ const formattedStudentsData = computed(() => {
                 student.current_batch[0]?.level.name +
                 "-" +
                 student.current_batch[0]?.section,
+            batch_id: student.current_batch[0]?.batch_id,
+            level_id: student.current_batch[0]?.level.id,
         };
     });
 });
@@ -215,7 +217,7 @@ const transferOptions = computed(() => {
                 id: b,
                 value: batch.id,
                 label: batch.level.name + "-" + batch.section,
-                description: `Homeroom Teacher: ${batch.homeroom_teacher.teacher.user.name}`,
+                description: `Homeroom Teacher: ${batch.homeroom_teacher?.teacher.user.name}`,
             };
         });
 });
