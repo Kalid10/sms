@@ -22,7 +22,7 @@ class Student extends Controller
     public function __invoke(StudentModel $student, Request $request): Response
     {
         $batchSubjectId = $request->query('batch_subject_id');
-        $studentAssessment = $this->prepareStudentAssessment($student, $batchSubjectId);
+        $studentAssessment = $this->prepareStudentAssessments($student, $batchSubjectId);
         $currentBatch = $this->getCurrentBatch($student);
         $student = $this->loadStudentData($student, $batchSubjectId, $currentBatch);
         $batchSubjects = $this->getBatchSubjects($currentBatch, $student, $batchSubjectId);
@@ -64,23 +64,23 @@ class Student extends Controller
         return $student;
     }
 
-    private function prepareStudentAssessment($student, $batchSubjectId)
+    private function prepareStudentAssessments($student, $batchSubjectId, $perPage = 5)
     {
         $studentAssessment = $student->assessments()->orderBy('updated_at', 'DESC');
 
         if (auth()->user()->type === User::TYPE_ADMIN && ! $batchSubjectId) {
-            $studentAssessment = $studentAssessment->get()->map(function ($studentAssessment) {
-                $studentAssessment->assessment->point = $studentAssessment->point;
-
-                return $studentAssessment->assessment;
-            })->take(4);
+            $studentAssessment = $studentAssessment->paginate($perPage);
         } else {
-            $studentAssessment = $studentAssessment->whereRelation('assessment', 'batch_subject_id', $batchSubjectId)->get()->map(function ($studentAssessment) {
-                $studentAssessment->assessment->point = $studentAssessment->point;
-
-                return $studentAssessment->assessment;
-            })->take(4);
+            $studentAssessment = $studentAssessment->whereRelation('assessment', 'batch_subject_id', $batchSubjectId)
+                ->paginate($perPage);
         }
+
+        // Transform the items directly
+        $studentAssessment->getCollection()->transform(function ($studentAssessment) {
+            $studentAssessment->assessment->point = $studentAssessment->point;
+
+            return $studentAssessment->assessment;
+        });
 
         return $studentAssessment;
     }
