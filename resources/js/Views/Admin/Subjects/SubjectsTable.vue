@@ -1,9 +1,7 @@
 <template>
-    <TabElement :tabs="models">
+    <TabElement v-model:active="activeTab" :tabs="tabs">
         <template #subjects>
             <TableElement
-                title="Subjects List"
-                :subtitle="`List of all subjects given at ${schoolName}`"
                 :columns="config"
                 :row-actionable="true"
                 :actionable="true"
@@ -138,11 +136,10 @@
                     v-model="selectedBatchId"
                     :options="batchOptions"
                     placeholder="Select a batch"
-                    class="w-full cursor-pointer"
+                    class="max-h-28 w-4/12 cursor-pointer"
                 />
             </div>
             <TableElement
-                :title="'Subjects List for ' + selectedBatchLabel"
                 :row-actionable="false"
                 :actionable="false"
                 :selectable="false"
@@ -202,7 +199,8 @@ import TableElement from "@/Components/TableElement.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import TabElement from "@/Components/TabElement.vue";
 
-const models = ["Subjects", "Grades"];
+const tabs = ["Subjects", "Grades"];
+const activeTab = ref("Subjects");
 
 // Map the batch_subjects data
 const batchSubjects = computed(() => {

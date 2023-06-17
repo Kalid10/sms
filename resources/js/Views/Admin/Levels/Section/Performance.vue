@@ -1,10 +1,10 @@
 <template>
-    <div class="flex w-full flex-col space-y-4 rounded-lg py-4">
-        <BatchPerformance class="my-4" :grade="batch?.grade" />
+    <div class="flex w-full flex-col space-y-6 rounded-lg">
+        <BatchPerformance :grade="batch?.grade" />
         <div
-            class="flex w-full items-center justify-between divide-x divide-zinc-300"
+            class="flex w-full items-center justify-between divide-x divide-gray-100"
         >
-            <div class="w-1/2">
+            <div class="w-6/12">
                 <StudentsList
                     progress-type="up"
                     title="Top Students"
@@ -14,7 +14,7 @@
                 />
             </div>
 
-            <div class="w-1/2">
+            <div class="w-6/12">
                 <StudentsList
                     progress-type="down"
                     title="Students Falling Behind"
