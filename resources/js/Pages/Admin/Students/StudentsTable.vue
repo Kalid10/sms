@@ -33,22 +33,30 @@
                 >
                     <div class="w-3/12 text-center">
                         <div class="text-xl font-semibold text-gray-900">
-                            1243
+                            {{ studentsCount }}
                         </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
                             Total Students
                         </div>
                     </div>
                     <div class="w-3/12 text-center">
-                        <div class="text-xl font-semibold text-gray-900">
-                            10
+                        <div
+                            class="cursor-pointer text-xl font-semibold text-gray-900"
+                            @click="showAbsentees = true"
+                        >
+                            {{ todayAbsentees.length }}
                         </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
                             Absentees Today
                         </div>
                     </div>
                     <div class="w-3/12 text-center">
-                        <div class="text-xl font-semibold text-gray-900">4</div>
+                        <div
+                            class="cursor-pointer text-xl font-semibold text-gray-900"
+                            @click="showLatestPeriodAbsentees = true"
+                        >
+                            {{ latestPeriodAbsentees.length }}
+                        </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
                             Latest Period Absentees
                         </div>
@@ -147,6 +155,46 @@
             />
         </FormElement>
     </Modal>
+
+    <Modal v-model:view="showAbsentees">
+        <div class="lex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
+            <div>
+                <Title title="Today's Absentees" />
+            </div>
+
+            <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
+                <div
+                    v-for="(absentee, index) in todayAbsentees"
+                    :key="index"
+                    class="flex w-full flex-col justify-start"
+                >
+                    <span class="font-semibold">
+                        Name: {{ absentee.user.name }} ({{ absentee.reason }}),
+                    </span>
+                </div>
+            </div>
+        </div>
+    </Modal>
+
+    <Modal v-model:view="showLatestPeriodAbsentees">
+        <div class="lex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
+            <div>
+                <Title title="Latest Period Absentees" />
+            </div>
+
+            <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
+                <div
+                    v-for="(absentee, index) in latestPeriodAbsentees"
+                    :key="index"
+                    class="flex w-full flex-col justify-start"
+                >
+                    <span class="font-semibold">
+                        Name: {{ absentee.user.name }} ({{ absentee.reason }}),
+                    </span>
+                </div>
+            </div>
+        </div>
+    </Modal>
 </template>
 <script setup>
 import TableElement from "@/Components/TableElement.vue";
@@ -163,6 +211,7 @@ import FormElement from "@/Components/FormElement.vue";
 import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import Pagination from "@/Components/Pagination.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Title from "@/Views/Teacher/Views/Title.vue";
 
 const props = defineProps({
     url: {
@@ -175,10 +224,26 @@ const props = defineProps({
     },
 });
 
+const showAbsentees = ref(false);
+
+const showLatestPeriodAbsentees = ref(false);
+
 const isModalOpen = ref(false);
 
 const students = computed(() => {
     return usePage().props.students;
+});
+
+const studentsCount = computed(() => {
+    return usePage().props.students_count;
+});
+
+const todayAbsentees = computed(() => {
+    return usePage().props.today_absentees;
+});
+
+const latestPeriodAbsentees = computed(() => {
+    return usePage().props.latest_period_absentees;
 });
 
 const formattedStudentsData = computed(() => {
