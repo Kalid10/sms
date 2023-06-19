@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('type');
             $table->foreignId('address_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->json('fcm_tokens')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

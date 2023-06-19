@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -36,6 +37,7 @@ class User extends Authenticatable
         'address_id',
         'gender',
         'date_of_birth',
+        'fcm_tokens',
     ];
 
     protected $hidden = [
@@ -46,6 +48,7 @@ class User extends Authenticatable
     protected $casts = [
         'date_of_birth' => 'date:Y-m-d',
         'email_verified_at' => 'datetime',
+        'fcm_tokens' => 'array',
     ];
 
     public function roles(): BelongsToMany
@@ -103,5 +106,24 @@ class User extends Authenticatable
     public function guardian(): HasOne
     {
         return $this->hasOne(Guardian::class);
+    }
+
+    /**
+     * Mutate attribute to avoid null return,
+     * and always return type array
+     */
+    public function fcmTokens(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ? json_decode($value) : []
+        );
+    }
+
+    /**
+     * Specifies the user's FCM tokens
+     */
+    public function routeNotificationForFcm(): array
+    {
+        return $this->fcm_tokens;
     }
 }
