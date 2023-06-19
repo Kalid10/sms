@@ -22,7 +22,7 @@
         <!--        Fall back message-->
         <div
             v-else
-            class="flex h-32 w-11/12 flex-col justify-center text-center text-sm font-light leading-relaxed lg:h-44 lg:w-10/12 lg:text-xl"
+            class="flex h-32 w-11/12 flex-col justify-center text-center text-sm font-light leading-relaxed lg:h-44 lg:w-10/12 lg:text-base"
         >
             <div>
                 No upcoming classes found! Please check your schedule or contact

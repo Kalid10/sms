@@ -142,7 +142,7 @@
                 <div class="flex w-full items-center justify-between">
                     <div class="flex h-full w-4/12 flex-col justify-between">
                         <div
-                            class="flex h-fit w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
+                            class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
                         >
                             <div class="text-center text-5xl font-bold">
                                 100%
@@ -151,7 +151,7 @@
                             <div class="font-medium">Attendance</div>
                         </div>
                         <div
-                            class="flex h-fit w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
+                            class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
                         >
                             <div class="text-center text-5xl font-bold">
                                 100%
