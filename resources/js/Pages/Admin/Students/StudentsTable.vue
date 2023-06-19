@@ -166,11 +166,18 @@
                 <div
                     v-for="(absentee, index) in todayAbsentees"
                     :key="index"
-                    class="flex w-full flex-col justify-start"
+                    class="flex w-full flex-col justify-start rounded-lg py-2"
+                    :class="index % 2 === 0 ? 'bg-gray-50' : ''"
                 >
-                    <span class="font-semibold">
-                        Name: {{ absentee.user.name }} ({{ absentee.reason }}),
-                    </span>
+                    <div class="flex w-full px-4 text-sm font-medium">
+                        <div class="">
+                            {{ index + 1 }}.
+                            {{ absentee.user.name }}
+                        </div>
+                        <div v-if="absentee?.reason">
+                            ({{ absentee.reason }}),
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -188,9 +195,15 @@
                     :key="index"
                     class="flex w-full flex-col justify-start"
                 >
-                    <span class="font-semibold">
-                        Name: {{ absentee.user.name }} ({{ absentee.reason }}),
-                    </span>
+                    <div class="flex w-full px-4 text-sm font-medium">
+                        <div class="">
+                            {{ index + 1 }}.
+                            {{ absentee.user.name }}
+                        </div>
+                        <div v-if="absentee?.reason">
+                            ({{ absentee.reason }}),
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -216,7 +229,7 @@ import Title from "@/Views/Teacher/Views/Title.vue";
 const props = defineProps({
     url: {
         type: String,
-        default: "/admin/students/",
+        default: "/admin/students",
     },
     showTitle: {
         type: Boolean,
@@ -332,7 +345,7 @@ const config = [
     {
         name: "Name",
         key: "name",
-        link: "/students/{id}",
+        link: "/admin/teachers/students/{id}",
         align: "left",
         type: "custom",
     },
