@@ -31,12 +31,20 @@
                 <div class="text-gray-700">{{ guardian.user.email }}</div>
             </div>
         </div>
+
+        <div class="flex w-full justify-center py-1">
+            <SecondaryButton
+                title="Request Meeting"
+                class="mt-3 w-8/12 !rounded-2xl bg-zinc-700 py-1 text-white"
+            />
+        </div>
     </div>
 </template>
 <script setup>
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { UserGroupIcon } from "@heroicons/vue/24/outline";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const guardian = computed(() => usePage().props.student.guardian);
 const guardianRelation = computed(

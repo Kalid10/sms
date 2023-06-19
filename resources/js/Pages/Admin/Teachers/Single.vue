@@ -1,12 +1,12 @@
 <template>
     <div class="flex min-h-screen w-full flex-col pl-5">
         <Title
-            class="w-full rounded-t-md bg-violet-600 px-3 !py-6 text-white shadow-sm"
+            class="w-full rounded-t-md bg-gradient-to-r from-violet-600 to-purple-700 px-3 !py-6 text-white shadow-sm"
             :title="teacher.user.name"
         />
         <TabElement
             v-model:active="activeTab"
-            background-color="bg-violet-600"
+            background-color="bg-gradient-to-r from-violet-600 to-purple-700"
             in-active-tab-text="text-gray-300"
             :tabs="tabs"
         >
@@ -47,7 +47,10 @@
             </template>
 
             <template #homerooms>
-                <Homeroom v-if="activeTab === 'Homerooms' && !showLoading" />
+                <Homeroom
+                    v-if="activeTab === 'Homerooms' && !showLoading"
+                    class="bg-white"
+                />
             </template>
 
             <template #announcements>
@@ -62,7 +65,7 @@
 </template>
 <script setup>
 import Title from "@/Views/Teacher/Views/Title.vue";
-import { capitalize, computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import TabElement from "@/Components/TabElement.vue";
 import Home from "@/Views/Teacher/Index.vue";
@@ -80,12 +83,12 @@ const activeTab = ref("Home");
 
 const location = computed(() => usePage().props.ziggy.location);
 watch(location, (location) => {
-    const tab = location.split("/").pop();
-    if (tabs.includes(capitalize(tab))) {
-        activeTab.value = capitalize(tab);
-    }
+    checkUrl();
 });
 
+onMounted(() => {
+    checkUrl();
+});
 watch(activeTab, (tab) => {
     handleTabClick(tab);
 });
@@ -150,5 +153,35 @@ const fetchData = (url, tab) => {
         }
     );
 };
+
+function checkUrl() {
+    const tab = location.value.split("/").pop();
+
+    switch (tab) {
+        case "home":
+            activeTab.value = "Home";
+            break;
+        case "class":
+            activeTab.value = "Classes";
+            break;
+        case "students":
+            activeTab.value = "Students";
+            break;
+        case "lesson-plan":
+            activeTab.value = "LessonPlans";
+            break;
+        case "assessments":
+            activeTab.value = "Assessments";
+            break;
+        case "homeroom":
+            activeTab.value = "Homerooms";
+            break;
+        case "announcements":
+            activeTab.value = "Announcements";
+            break;
+        default:
+            break;
+    }
+}
 </script>
 <style scoped></style>

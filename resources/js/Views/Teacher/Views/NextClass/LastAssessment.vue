@@ -52,8 +52,8 @@
         class="flex h-64 w-full flex-col items-center justify-center space-y-5 text-center font-light lg:w-5/12"
     >
         <div class="h-fit text-sm">
-            No previous assessments found. After your first evaluation, the most
-            recent assessment will be displayed here.
+            No previous assessments found for this class. The most recent
+            assessment will be displayed here.
         </div>
         <LinkCell value="View Assessments" href="/teacher/assessments" />
     </div>

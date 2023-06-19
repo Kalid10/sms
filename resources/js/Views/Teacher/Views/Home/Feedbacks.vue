@@ -2,50 +2,50 @@
     <div
         class="flex w-full flex-col items-center space-y-5 rounded-lg bg-white py-3 shadow-sm"
     >
-        <div class="flex w-full justify-between px-5">
-            <div
-                class="flex grow justify-center space-x-2 text-center text-xl font-semibold underline-offset-4"
-            >
-                <BookmarkSquareIcon class="w-6" />
-                <span>Feedbacks</span>
-            </div>
-        </div>
         <div
-            class="flex w-11/12 flex-col items-center justify-center space-y-6 px-1"
+            v-if="!feedbacks.data.length"
+            class="py-5 px-3 text-center text-sm font-light"
         >
-            <div
-                v-if="!feedbacks?.data"
-                class="py-5 px-3 text-center text-sm font-light"
-            >
-                No Feedbacks
-            </div>
-            <div
-                v-for="(item, index) in feedbacks.data"
-                v-else
-                :key="index"
-                class="flex w-full cursor-pointer justify-center space-x-3"
-            >
-                <div
-                    class="min-h-full w-[0.01rem] rounded-t-lg rounded-b-md py-2"
-                    :class="colors[Math.floor(Math.random() * colors.length)]"
-                ></div>
+            No Feedbacks
+        </div>
 
-                <div class="relative flex w-full flex-col space-y-1">
-                    <div class="text-xs font-medium hover:font-semibold">
-                        {{ item.feedback }}
+        <div
+            v-else
+            class="flex w-full items-center justify-between gap-y-5 px-5"
+        >
+            <div v-for="(item, index) in feedbacks.data" :key="index">
+                <div class="flex w-full flex-col items-start">
+                    <div class="text-xs text-gray-500">
+                        {{ moment(item.created_at).format("MMMM Do YYYY") }}
                     </div>
-                    <div
-                        class="flex w-full justify-between text-[0.6rem] 2xl:text-xs"
-                    >
-                        <div class="font-light">
-                            {{ moment(item.created_at).fromNow() }}
+                    <div>
+                        <p
+                            class="line-clamp-3 mt-5 w-full text-sm leading-6 text-gray-600"
+                        >
+                            {{ item.feedback }}
+                        </p>
+                    </div>
+                    <div class="relative mt-8 flex items-center gap-x-4">
+                        <img
+                            src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt=""
+                            class="h-10 w-10 rounded-full bg-gray-50"
+                        />
+                        <div class="text-sm leading-6">
+                            <p class="font-semibold text-gray-900">
+                                <a href="#">
+                                    <span class="absolute inset-0"></span>
+                                    {{ item.author.name }}
+                                </a>
+                            </p>
+                            <p class="text-gray-600">
+                                {{ item.author.admin?.position }}
+                            </p>
                         </div>
-                        <div>{{ item.author.name }}</div>
                     </div>
                 </div>
             </div>
         </div>
-
         <Pagination
             v-if="feedbacks?.links"
             :preserve-state="true"
@@ -57,23 +57,11 @@
 
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import moment from "moment/moment";
-import { BookmarkSquareIcon } from "@heroicons/vue/24/outline";
-import Pagination from "@/Components/Pagination.vue";
 import { computed } from "vue";
+import Pagination from "@/Components/Pagination.vue";
+import moment from "moment";
 
 const feedbacks = computed(() => usePage().props.feedbacks);
-
-const colors = [
-    "bg-pink-500",
-    "bg-yellow-500",
-    "bg-green-500",
-    "bg-blue-500",
-    "bg-indigo-500",
-    "bg-purple-500",
-    "bg-violet-500",
-    "bg-red-500",
-];
 </script>
 
 <style scoped></style>

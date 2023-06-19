@@ -1,13 +1,12 @@
 <template>
     <div
-        v-for="(item, index) in assessments"
+        v-for="(item, index) in assessments.data"
         :key="index"
-        class="mt-1 flex cursor-pointer items-center justify-between space-y-2 py-1.5 hover:rounded-lg hover:bg-zinc-800 hover:pr-4 hover:text-white lg:mt-2 lg:py-1.5"
-        @click="handleClick()"
+        class="mt-1 flex cursor-pointer items-center justify-between space-y-2 rounded-lg py-1.5 px-4 hover:bg-zinc-800 hover:pr-4 hover:text-white lg:mt-2 lg:py-1.5"
+        :class="index % 2 === 1 ? 'bg-gray-50' : ''"
+        @click="handleClick(item.id)"
     >
-        <div
-            class="flex min-h-full w-2/12 flex-col items-center justify-center space-y-2 font-bold"
-        >
+        <div class="flex min-h-full w-2/12 flex-col space-y-2 font-bold">
             <div
                 class="flex h-9 w-9 items-center justify-center rounded-full text-xl uppercase"
                 :class="{
@@ -27,7 +26,7 @@
 
         <div
             class="flex h-full justify-center"
-            :class="isHomeOrAdminView ? 'w-9/12  lg:w-9/12 lg:pl-2' : 'w-7/12'"
+            :class="isHomeOrAdminView ? 'w-9/12  lg:w-9/12' : 'w-7/12'"
         >
             <AssessmentDetails :item="item" :view="view" />
         </div>
@@ -36,6 +35,7 @@
             <AssessmentScore class="" :item="item" :view="view" />
         </div>
     </div>
+    <Pagination class="pt-4" :links="assessments.links" position="center" />
 </template>
 
 <script setup>
@@ -43,6 +43,7 @@ import AssessmentDetails from "@/Views/Teacher/Views/Home/Assessments/Item/Asses
 import AssessmentScore from "@/Views/Teacher/Views/Home/Assessments/Item/Score/Index.vue";
 import { computed } from "vue";
 import { router } from "@inertiajs/vue3";
+import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
     assessments: {
@@ -57,7 +58,7 @@ const props = defineProps({
 
 const isHomeOrAdminView = computed(() => props.view !== "class");
 
-function handleClick() {
-    router.visit("/teacher/assessments");
+function handleClick(id) {
+    router.visit("/teacher/assessments/mark/" + id);
 }
 </script>

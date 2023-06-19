@@ -112,6 +112,7 @@ import {
     ComboboxOption,
     ComboboxOptions,
 } from "@headlessui/vue";
+import { debounce } from "lodash";
 
 const students = computed(() => usePage().props.students);
 
@@ -166,7 +167,7 @@ async function handleSearch(event) {
     }
 }
 
-function fetchStudent() {
+const fetchStudent = debounce(async function () {
     router.get(
         "/admin/",
         {
@@ -178,11 +179,9 @@ function fetchStudent() {
             replace: true,
         }
     );
-}
+}, 500);
 
 const filteredStudents = computed(() => {
-    console.log(query.value);
-
     if (query.value === "") {
         return students.value || [];
     } else {

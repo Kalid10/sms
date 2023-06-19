@@ -8,21 +8,22 @@
                 :selectable="false"
                 :data="subjects"
             >
-                <template #action>
-                    <PrimaryButton @click="$emit('new')">
-                        <span class="flex items-center gap-2">
-                            <PlusIcon class="h-4 w-4 stroke-white stroke-2" />
-                            <span>New Subject</span>
-                        </span>
-                    </PrimaryButton>
-                </template>
-
                 <template #filter>
-                    <TextInput
-                        v-model="query"
-                        class="w-full lg:max-w-lg"
-                        placeholder="Search for a subject by name or tags"
-                    />
+                    <div class="flex justify-between gap-2">
+                        <TextInput
+                            v-model="query"
+                            class="w-full lg:max-w-lg"
+                            placeholder="Search for a subject by name or tags"
+                        />
+                        <PrimaryButton @click="$emit('new')">
+                            <span class="flex gap-2">
+                                <PlusIcon
+                                    class="h-4 w-4 stroke-white stroke-2"
+                                />
+                                <span>New Subject</span>
+                            </span>
+                        </PrimaryButton>
+                    </div>
                 </template>
 
                 <template #empty-data>
@@ -34,7 +35,7 @@
                             No data found
                         </p>
                         <p v-if="query === null" class="text-sm text-gray-500">
-                            No student has been enrolled in this section
+                            No subject has been enrolled in this section
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
                             Your search query "<span

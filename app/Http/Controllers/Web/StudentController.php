@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Absentee;
 use App\Models\Batch;
+use App\Models\BatchSession;
 use App\Models\BatchStudent;
 use App\Models\SchoolYear;
 use App\Models\Student;
@@ -17,6 +19,16 @@ class StudentController extends Controller
     public function index(Request $request): Response
     {
         $students = StudentService::getAllStudents($request);
+
+        $studentsCount = Student::with('currentBatch')->count();
+
+        $todayAbsentees = Absentee::with('user')->whereHas('batchSession', function ($query) {
+            $query->whereDate('date', today());
+        })->get();
+
+        $latestPeriodAbsentees = Absentee::whereHas('batchSession', function ($query) {
+            $query->where('status', BatchSession::STATUS_IN_PROGRESS);
+        })->with('user', 'batchSession')->get();
 
         // Get all batches
         $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
@@ -40,6 +52,9 @@ class StudentController extends Controller
             'batches' => $batches,
             'selected_batch' => $selectedBatch,
             'batch_students' => $batchStudents,
+            'students_count' => $studentsCount,
+            'today_absentees' => $todayAbsentees,
+            'latest_period_absentees' => $latestPeriodAbsentees,
         ]);
     }
 
