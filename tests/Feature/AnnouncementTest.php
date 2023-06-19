@@ -26,7 +26,7 @@ it('can create a new announcement', function () {
         'title' => 'New announcement',
         'body' => 'This is a test announcement',
         'expires_on' => now()->addDays(7)->toDateString(),
-        'target_group' => ['all', 'students'],
+        'target_group' => ['all'],
     ]);
 
     // Assert that the announcement was created in the database
