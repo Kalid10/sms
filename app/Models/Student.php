@@ -66,15 +66,19 @@ class Student extends Model
 
     public function absenteePercentage(int $batchSubjectId = null): float
     {
-        $studentAttendance = $this->studentSubjectGrades()
-            ->where([
-                ['gradable_type', Quarter::class],
-                ['gradable_id', Quarter::getActiveQuarter()->id],
-            ])->when($batchSubjectId, function ($query) use ($batchSubjectId) {
+        if ($batchSubjectId) {
+            $completedSessionsCount = BatchSession::whereHas('batchSchedule', function ($query) use ($batchSubjectId) {
                 $query->where('batch_subject_id', $batchSubjectId);
-            })->first()?->attendance;
+            })->whereIn('status', [BatchSession::STATUS_COMPLETED, BatchSession::STATUS_IN_PROGRESS])->count();
+        } else {
+            $completedSessionsCount = $this->activeBatch()->sessions()->whereIn('status', [BatchSession::STATUS_COMPLETED, BatchSession::STATUS_IN_PROGRESS])->count();
+        }
 
-        return isset($studentAttendance) ? 100 - $studentAttendance : 0;
+        $completedSessionsCount = $completedSessionsCount === 0 ? 1 : $completedSessionsCount;
+
+        $studentAttendance = $this->absenteeRecords(SchoolYear::getActiveSchoolYear()->id, $batchSubjectId)->count() / $completedSessionsCount * 100;
+
+        return round($studentAttendance, 1) ?? 0;
     }
 
     public function batchSessions(): HasManyThrough
