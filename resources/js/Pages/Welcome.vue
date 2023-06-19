@@ -1108,7 +1108,8 @@ function createAnnouncement() {
             title: "New Views announcement",
             body: "This is a test announcement",
             expires_on: "2020-12-13",
-            target_group: ["teachers"],
+            target_group: ["guardians"],
+            target_batches: [1,2,3,4,30]
         },
         {
             onSuccess: () => {

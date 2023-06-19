@@ -2,19 +2,19 @@
 
 namespace App\Providers;
 
-use App\SDK\Ethiopian;
+use App\SDK\FirebaseCloudMessaging;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
-class EthiopianServiceProvider extends ServiceProvider
+class FirebaseCloudMessagingServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
      */
     public function register(): void
     {
-        App::bind('ethiopian', function () {
-            return new Ethiopian;
+        App::bind('firebaseCloudMessaging', function () {
+            return new FirebaseCloudMessaging;
         });
     }
 
