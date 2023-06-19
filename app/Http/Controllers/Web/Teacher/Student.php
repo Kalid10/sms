@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Teacher;
 use App\Models\BatchSubject;
 use App\Models\Level;
 use App\Models\Quarter;
+use App\Models\SchoolYear;
 use App\Models\Semester;
 use App\Models\Student as StudentModel;
 use App\Models\StudentNote;
@@ -32,7 +33,7 @@ class Student extends Controller
             'guardian' => $this->loadGuardianData($student),
             'assessments' => $studentAssessment,
             'current_batch' => $currentBatch,
-            'attendance_percentage' => 100 - $student->absenteePercentage(),
+            'attendance_percentage' => 100 - $student->absenteePercentage($batchSubjectId),
             'schedule' => $this->getSchedule($student),
             'periods' => Level::find($student->activeBatch()->level->id)->levelCategory->schoolPeriods,
             'batch_sessions' => $this->getBatchSessions($student),
@@ -42,6 +43,7 @@ class Student extends Controller
             'total_batch_students' => $student->activeBatch()->students()->count(),
             'in_progress_session' => $currentBatch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user'),
             'student_notes' => StudentNote::where('student_id', $student->id)->with('author:name,id,email,phone_number,gender')->paginate(5)->appends($request->all()),
+            'absentee_records' => $student->absenteeRecords(SchoolYear::getActiveSchoolYear()->id, $batchSubjectId)->with('batchSession.batchSchedule.batchSubject.subject', 'batchSession.schoolPeriod', 'batchSession.teacher.user')->paginate(5)->appends($request->all()),
         ]);
     }
 
