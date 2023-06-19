@@ -49,12 +49,13 @@
                             :error="form.errors.email"
                             required
                         />
-                        <TeacherTextInput
+                        <TeacherSelectInput
                             v-model="form.gender"
-                            class="w-full"
+                            class="w-full cursor-pointer"
                             label="Gender"
-                            placeholder="gender"
+                            placeholder="Select Gender"
                             :error="form.errors.gender"
+                            :options="genderOptions"
                             required
                         />
                     </div>
@@ -67,8 +68,14 @@
 <script setup>
 import TeacherFormElement from "@/Components/FormElement.vue";
 import TeacherTextInput from "@/Components/TextInput.vue";
+import TeacherSelectInput from "@/Components/SelectInput.vue";
 import Heading from "@/Components/Heading.vue";
 import { useForm } from "@inertiajs/vue3";
+
+const genderOptions = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+];
 
 const form = useForm({
     name: "",
