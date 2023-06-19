@@ -6,6 +6,7 @@ use App\Models\Quarter;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Services\StudentService;
+use App\Services\TeacherService;
 use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,6 +14,8 @@ use Inertia\Response;
 
 class Homeroom extends Controller
 {
+    protected TeacherService $teacherService;
+
     /**
      * Handle the incoming request.
      */
@@ -25,7 +28,7 @@ class Homeroom extends Controller
             'teacher_id' => 'nullable|integer|exists:teachers,id',
         ]);
 
-        $teacher = auth()->user()->isTeacher() ? auth()->user()->teacher : Teacher::findOrFail($request->input('teacher_id'))->load('user');
+        $teacher = auth()->user()->isTeacher() ? auth()->user()->teacher : Teacher::findOrFail($request->input('teacher_id'))->load('user', 'homeroom.batch');
 
         if (! $teacher) {
             abort(403);
@@ -58,6 +61,7 @@ class Homeroom extends Controller
             ])->first() : null,
             'student.grades' => StudentService::getStudentDetail($request->input('student_id'), $batch),
             'teacher' => $teacher,
+            'batches' => TeacherService::assignHomeroomTeacherData(),
             'filters' => [
                 'batch_id' => $batchId,
                 'search' => $search,
