@@ -13,6 +13,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -32,16 +33,18 @@ class LessonPlanController extends Controller
         if (! $teacherId) {
             abort(403);
         }
-
+        $batchSubjectId = $request->input('batch_subject_id') ?? BatchSubject::where('teacher_id', $teacherId)
+            ->whereHas('batch', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            })->first()?->id;
         $batchSubject = BatchSubject::with([
             'subject:id,full_name',
             'batch:id,section,level_id',
             'batch.level:id,name',
-        ])->when($request->input('batch_subject_id'), function ($query, $batchSubjectId) {
-            $query->where('id', $batchSubjectId);
-        }, function ($query) use ($teacherId) {
-            $query->where('teacher_id', $teacherId);
-        })->firstOrFail();
+        ])->where([
+            ['id', $batchSubjectId],
+            ['teacher_id', $teacherId],
+        ])->firstOrFail();
 
         if ($batchSubject->teacher_id !== $teacherId && ! auth()->user()->type === User::TYPE_ADMIN) {
             return redirect()->back()->with('error', 'You are not assigned to this subject.');
@@ -77,6 +80,8 @@ class LessonPlanController extends Controller
 
                 return 'week'.max($weekNumber, 1);
             });
+
+        Log::info($batchSessionsWithLessonPlans);
 
         $weeksInMonth = (int) ($currentMonth->daysInMonth / 7) + ($currentMonth->daysInMonth % 7 != 0 ? 1 : 0);
 
