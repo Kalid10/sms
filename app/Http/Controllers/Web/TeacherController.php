@@ -45,6 +45,11 @@ class TeacherController extends Controller
             'homeroom:id,batch_id,teacher_id',
             'homeroom.batch:id,section,level_id',
             'homeroom.batch.level:id,name',
+            'batchSessions.teacher.user',
+            'batchSessions' => function ($query) {
+                $query->where('status', 'in_progress');
+            },
+
         ])->select('id', 'user_id')
             ->when($searchKey, function ($query) use ($searchKey) {
                 return $query->whereHas('user', function ($query) use ($searchKey) {
