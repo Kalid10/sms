@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-full w-full gap-4 bg-white px-8 pt-4">
+    <div class="flex h-full w-full gap-4 px-4 pt-4">
         <LessonPlanWeekCard
             v-for="w in weeksInMonth"
             :key="w"

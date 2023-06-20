@@ -36,8 +36,10 @@
                     attendancePercentage > 85 && attendancePercentage < 95,
                 'bg-orange-500 text-white':
                     attendancePercentage < 85 && attendancePercentage > 75,
-                'bg-red-600 text-white':
-                    attendancePercentage > 75 && attendancePercentage < 65,
+                'bg-red-500 text-white':
+                    attendancePercentage < 75 && attendancePercentage > 65,
+                'bg-gradient-to-b from-orange-500 to-red-500 text-white':
+                    attendancePercentage < 65,
                 'bg-zinc-100': !attendancePercentage,
             }"
             class="flex w-3/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm"
