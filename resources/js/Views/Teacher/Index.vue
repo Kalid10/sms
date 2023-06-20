@@ -121,7 +121,11 @@
                         <LinkCell
                             class="flex w-fit items-center justify-center"
                             value="VIEW ALL"
-                            href="/teacher/school-schedule"
+                            :href="
+                                isAdmin()
+                                    ? '/admin/schedules'
+                                    : '/teacher/school-schedule'
+                            "
                         />
                     </div>
                     <div class="flex w-full flex-col justify-center">
@@ -142,7 +146,7 @@
                 <div class="flex w-full items-center justify-between">
                     <div class="flex h-full w-4/12 flex-col justify-between">
                         <div
-                            class="flex h-fit w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
+                            class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
                         >
                             <div class="text-center text-5xl font-bold">
                                 100%
@@ -151,7 +155,7 @@
                             <div class="font-medium">Attendance</div>
                         </div>
                         <div
-                            class="flex h-fit w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 py-5 px-3 text-center text-sm shadow-sm"
+                            class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
                         >
                             <div class="text-center text-5xl font-bold">
                                 100%
@@ -174,7 +178,7 @@ import { usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/Views/NextClass/Index.vue";
 import moment from "moment/moment";
 import { computed, ref } from "vue";
-import { isTeacher } from "@/utils";
+import { isAdmin, isTeacher } from "@/utils";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import CurrentDaySchedule from "@/Views/CurrentDaySchedule.vue";
 import Announcements from "@/Views/Announcements/Index.vue";

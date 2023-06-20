@@ -22,9 +22,7 @@ class StudentController extends Controller
 
         $studentsCount = Student::with('currentBatch')->count();
 
-        $todayAbsentees = Absentee::with('user')->whereHas('batchSession', function ($query) {
-            $query->whereDate('date', today());
-        })->get();
+        $todayAbsentees = Absentee::whereDate('created_at', today())->with('user', 'batchSession')->get();
 
         $latestPeriodAbsentees = Absentee::whereHas('batchSession', function ($query) {
             $query->where('status', BatchSession::STATUS_IN_PROGRESS);

@@ -18,9 +18,11 @@
                     @change="updateBatchSubject"
                 />
 
+                <!--           General report section, i.e: grade, rank, conduct, ....-->
                 <div class="flex h-full w-full flex-col">
                     <GeneralReport />
                 </div>
+
                 <!--           Assessments section-->
                 <div class="flex w-full justify-between lg:w-full">
                     <div class="flex w-full justify-between space-x-7">
@@ -31,6 +33,12 @@
                         <div class="w-4/12">
                             <AssessmentBreakDown v-if="selectedBatchSubject" />
                         </div>
+                    </div>
+                </div>
+
+                <div class="w-full pr-3">
+                    <div class="w-7/12 rounded-lg bg-white p-3 shadow-sm">
+                        <AbsenteeRecords />
                     </div>
                 </div>
             </div>
@@ -83,6 +91,7 @@ import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetai
 import GeneralReport from "@/Views/Teacher/Views/Student/GeneralReport.vue";
 import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import AbsenteeRecords from "@/Views/AbsenteeRecords.vue";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);

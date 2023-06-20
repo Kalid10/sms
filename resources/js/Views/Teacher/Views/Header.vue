@@ -9,12 +9,15 @@
             class="w-20 rounded-md object-contain"
         />
 
-        <Title :title="title" class="w-4/12" />
+        <Title :title="title" :class="showCurrentClass ? 'w-4/12' : 'w-6/12'" />
 
         <div
             class="flex h-full items-center justify-between divide-x divide-white lg:w-8/12"
         >
-            <div class="flex w-8/12 justify-center">
+            <div
+                class="flex justify-center"
+                :class="showCurrentClass ? 'w-8/12' : 'w-9/12'"
+            >
                 <SelectInput
                     v-model="selectedInput"
                     class="w-10/12 text-black"
@@ -35,7 +38,7 @@
                     </span>
                 </div>
             </div>
-            <div v-else class="w-4/12 px-1">
+            <div v-else-if="showCurrentClass" class="w-4/12 px-1">
                 <CurrentClass />
             </div>
         </div>
@@ -73,6 +76,10 @@ const props = defineProps({
     image: {
         type: String,
         default: null,
+    },
+    showCurrentClass: {
+        type: Boolean,
+        default: true,
     },
 });
 

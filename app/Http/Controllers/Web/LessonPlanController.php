@@ -10,16 +10,19 @@ use App\Models\LessonPlan;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Services\OpenAIService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use OpenAI\Laravel\Facades\OpenAI;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class LessonPlanController extends Controller
 {
-    public function index(Request $request): Response|\Illuminate\Http\RedirectResponse
+    public function index(Request $request, OpenAIService $openAIService): Response|\Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'batch_subject_id' => 'nullable|exists:batch_subjects,id',
@@ -32,16 +35,18 @@ class LessonPlanController extends Controller
         if (! $teacherId) {
             abort(403);
         }
-
+        $batchSubjectId = $request->input('batch_subject_id') ?? BatchSubject::where('teacher_id', $teacherId)
+            ->whereHas('batch', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            })->first()?->id;
         $batchSubject = BatchSubject::with([
             'subject:id,full_name',
             'batch:id,section,level_id',
             'batch.level:id,name',
-        ])->when($request->input('batch_subject_id'), function ($query, $batchSubjectId) {
-            $query->where('id', $batchSubjectId);
-        }, function ($query) use ($teacherId) {
-            $query->where('teacher_id', $teacherId);
-        })->firstOrFail();
+        ])->where([
+            ['id', $batchSubjectId],
+            ['teacher_id', $teacherId],
+        ])->firstOrFail();
 
         if ($batchSubject->teacher_id !== $teacherId && ! auth()->user()->type === User::TYPE_ADMIN) {
             return redirect()->back()->with('error', 'You are not assigned to this subject.');
@@ -93,6 +98,7 @@ class LessonPlanController extends Controller
             ];
         });
 
+        $prompt = $request->input('prompt') ?? null;
         $page = match (auth()->user()->type) {
             User::TYPE_TEACHER => 'Teacher/LessonPlans/Index',
             User::TYPE_ADMIN => 'Admin/Teachers/Single',
@@ -108,6 +114,7 @@ class LessonPlanController extends Controller
             'months' => $months,
             'selected_month' => $currentMonth->format('Y-m'),
             'teacher' => Teacher::find($teacherId)->load('user'),
+            'questions' => $prompt ? Inertia::lazy(fn () => $openAIService->lessonPlanHelper($prompt, $batchSubject)) : null,
         ]);
     }
 
@@ -137,5 +144,46 @@ class LessonPlanController extends Controller
         LessonPlan::find($id)->delete();
 
         return redirect()->back()->with('success', 'Lesson plan deleted successfully');
+    }
+
+    public function noteSuggestions(Request $request, OpenAIService $openAIService): StreamedResponse
+    {
+        $prompt = $request->input('prompt');
+        $batchSubject = BatchSubject::find($request->input('batch_subject_id'));
+        $grade = 8;
+        $subject = 'Biology';
+        $explanationPrompt = "The lesson plan title is '{$prompt}' for a '{$grade}' level class in the subject of '{$subject}'. Provide a brief 2-5 paragraph explanation of '{$prompt}'.";
+
+//        $explanationPrompt = "I want you to act as a lesson plan advisor.The subject is '{$subject}' for grade '{$grade}' provide a brief 2-5 paragraphs explaining this lesson plan title: '{$prompt}";
+        return response()->stream(function () use ($explanationPrompt) {
+            $stream = OpenAI::completions()->createStreamed([
+                'model' => 'text-davinci-003',
+                'prompt' => $explanationPrompt,
+                'max_tokens' => 400,
+            ]);
+
+            foreach ($stream as $response) {
+                $text = $response->choices[0]->text;
+                if (connection_aborted()) {
+                    break;
+                }
+
+                echo "event: update\n";
+                echo 'data: '.$text;
+                echo "\n\n";
+                ob_flush();
+                flush();
+            }
+
+            echo "event: update\n";
+            echo 'data: <END_STREAMING_SSE>';
+            echo "\n\n";
+            ob_flush();
+            flush();
+        }, 200, [
+            'Cache-Control' => 'no-cache',
+            'X-Accel-Buffering' => 'no',
+            'Content-Type' => 'text/event-stream',
+        ]);
     }
 }
