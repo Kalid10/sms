@@ -13,7 +13,7 @@
             <template #home>
                 <Home
                     v-if="activeTab === 'Home' && !showLoading"
-                    class="bg-white"
+                    class="bg-white py-3"
                 />
             </template>
 
@@ -34,7 +34,6 @@
             <template #lessonplans>
                 <LessonPlans
                     v-if="activeTab === 'LessonPlans' && !showLoading"
-                    class="rounded-lg border border-black p-4"
                 />
             </template>
 
