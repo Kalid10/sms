@@ -1,15 +1,19 @@
 <template>
     <Modal v-model:view="openForm" background-color="transparent">
-        <div class="fixed top-0 left-0 grid h-screen w-full grid-cols-12">
+        <div
+            class="fixed top-0 left-0 grid h-screen w-full"
+            :class="isTeacher() ? 'grid-cols-12' : 'grid-cols-5'"
+        >
             <div
                 class="col-span-1 min-h-full animate-darken delay-150"
                 @click="closeForm"
             ></div>
 
             <div
-                class="relative col-span-11 col-start-2 flex h-full w-full animate-slide-left space-x-5 border-l bg-white pl-3 pt-8 shadow-sm"
+                class="relative col-start-2 flex h-full w-full animate-slide-left space-x-5 border-l bg-white pl-3 pt-8 shadow-sm"
+                :class="isTeacher() ? 'col-span-11' : 'col-span-4'"
             >
-                <div class="h-5/6 w-5/12">
+                <div v-if="isTeacher()" class="h-5/6 w-5/12">
                     <LessonPlanCopilot
                         :topic="form.topic"
                         :generate-note-suggestions="generateNoteSuggestions"
@@ -24,7 +28,10 @@
                         "
                     />
                 </div>
-                <div class="flex h-full w-8/12 flex-col gap-4">
+                <div
+                    class="flex h-full flex-col gap-4"
+                    :class="isTeacher() ? ' w-8/12' : 'w-full px-5'"
+                >
                     <div class="flex w-full flex-col">
                         <div
                             class="flex w-full origin-left items-center justify-between pr-8"
@@ -369,7 +376,7 @@
 
 <script setup>
 import moment from "moment";
-import { parseLevel } from "@/utils.js";
+import { isTeacher, parseLevel } from "@/utils.js";
 import {
     CalendarIcon,
     ClockIcon,

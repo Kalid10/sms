@@ -121,7 +121,11 @@
                         <LinkCell
                             class="flex w-fit items-center justify-center"
                             value="VIEW ALL"
-                            href="/teacher/school-schedule"
+                            :href="
+                                isAdmin()
+                                    ? '/admin/schedules'
+                                    : '/teacher/school-schedule'
+                            "
                         />
                     </div>
                     <div class="flex w-full flex-col justify-center">
@@ -174,7 +178,7 @@ import { usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/Views/NextClass/Index.vue";
 import moment from "moment/moment";
 import { computed, ref } from "vue";
-import { isTeacher } from "@/utils";
+import { isAdmin, isTeacher } from "@/utils";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import CurrentDaySchedule from "@/Views/CurrentDaySchedule.vue";
 import Announcements from "@/Views/Announcements/Index.vue";
