@@ -15,8 +15,8 @@ import  {useI18nStore} from './Store/lang.js'
 
 // Localization section
 // import { lang } from './Store/lang.js'
-import en from './locale/en.json'
-import am   from './locale/am.json'
+import en from './locale/en.js'
+import am from './locale/am.js'
 
 
 import base from "./base";

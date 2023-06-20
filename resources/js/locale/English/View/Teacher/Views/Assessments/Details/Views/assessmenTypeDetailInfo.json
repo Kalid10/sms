@@ -1,0 +1,16 @@
+{
+    "youHave": "You have",
+    "assessmentsRemaining": "assessments remaining for this quarter.",
+    "maxPts": "MAX PTS",
+    "previous": "Previous",
+    "count": "COUNT",
+    "previous": "Previous",
+    "totalPts": "TOTAL PTS",
+    "assessmentCompleted": "You have successfully completed this assessment, and as a result, any further modifications or creation of new assessments are no longer permitted.",
+    "hintAssessmentAdministered": "This assessment is administered on a quarterly basis, so please ensure that you are taking the appropriate actions accordingly.",
+    "atTheConclusion": "At the conclusion of the quarter or semester, all the",
+    "willBeConverted": "will be converted to account for",
+    "ofTheFinalGrade.": "of the final grade.",
+    "note": "Note: This does not include this assessment.",
+    "updateAssessment": "UPDATE ASSESSMENT"
+}

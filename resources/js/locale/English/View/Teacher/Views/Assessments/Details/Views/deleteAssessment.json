@@ -1,0 +1,7 @@
+{
+    "buttonTitle":"DELETE ASSESSMENT",
+    "deleteAssessment": "DELETE ASSESSMENT",
+    "deleteMessage": "You are about to delete this assessment. This action is irreversible!",
+    "pleaseTypeAssessment": "Please type the assessment title correctly to confirm deletion",
+
+}

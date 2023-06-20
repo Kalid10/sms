@@ -1,7 +1,4 @@
 {
-
-    "__comment__": "Some values in this component are duplicated So I discard the duplicate one ",
-
     "congratulations": "Congratulations !",
     "almostDone": "You're almost done...",
     "successfullyRegisteredMessage": "You have successfully registered your school's grades,subjects and classes. Next, you may proceed to add your school's schedule for the current school year. We will guide you through the process.",
@@ -23,9 +20,9 @@
     "eventBodyPlaceHolder": "What is your event about? Write your description here.",
     "allDayLabel": "All Day",
     "dayOfEvent":"Day of Event",
-    "eventStartAndEndDays":"Event\\'s Starting and End Days",
+    "eventStartAndEndDays":"Event's Starting and End Days",
     "pickTypeOfEventPlaceHolder":"Pick the type of Event",
-    "pickTypeOfEventLabel":"Event Type"
+    "pickTypeOfEventLabel":"Event Type",
     "tagsLabel": "Tags",
     "tagsPlaceHolder": "holiday, special day, event",
     "clear": "Clear",

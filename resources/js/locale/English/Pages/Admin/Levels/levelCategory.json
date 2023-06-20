@@ -1,0 +1,11 @@
+{
+    "CategoryTableSubtitle": "list of level categories",
+    "CategoryTableTitle": "Level Category",
+    "CategoryPrimaryButtonTitle":"Add Level Category",
+    "addLevelCategoryTitle": "Add Level Category",
+    "addCategoryNameLabel": "Category",
+    "addCategoryNamePlaceholder": "ex: ElementarySchool",
+    "updateLevelCategory": "Update Level Category",
+    "updateCategory":"Update Category"
+
+}

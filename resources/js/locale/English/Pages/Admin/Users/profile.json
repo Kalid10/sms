@@ -1,0 +1,21 @@
+{
+    "hello": "Hello",
+    "description": "Welcome to your profile page, where you can view and update your personal information and security settings. Enjoy your journey with us!",
+    "headingOne": "Profile",
+    "headingTwo": "Update your personal information and make sure your profile accurately reflects who you are.",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "usernameLabel": "User Name",
+    "phoneNumberLabel": "Phone number",
+    "phoneNUmberPlaceholder": "'e.g. 09123456789'",
+    "genderLabel": "Gender",
+    "genderPlaceholder": "select gender",
+    "currentPasswordLabel": "Current Password",
+    "currentPasswordPlaceholder": "enter your current password",
+    "passwordLabel": "New Password",
+    "passwordPlaceholder": "enter your new password",
+    "passwordConfirmationLabel":"Confirm Password",
+    "passwordConfirmationPlaceholder":"confirm your new password",
+    "Male": "Male",
+    "Female":"Female"
+}

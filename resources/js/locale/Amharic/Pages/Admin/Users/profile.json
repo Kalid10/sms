@@ -1,0 +1,21 @@
+{
+    "hello": "ሰላም",
+    "description": "እንኳን ወደ የመገለጫ ገጽዎ በደህና መጡ፣ የግል መረጃዎን እና የደህንነት ቅንብሮችዎን ማየት እና ማዘመን ይችላሉ። ከእኛ ጋር በጉዞዎ ይደሰቱ!",
+    "headingOne": "ፕሮፋይል",
+    "headingTwo": "የግል መረጃዎን ያዘምኑ እና መገለጫዎ እርስዎ ማን እንደሆኑ በትክክል እንደሚያንጸባርቅ ያረጋግጡ።",
+    "nameLabel": "ስም",
+    "emailLabel": "ኢሜይል",
+    "usernameLabel": "የተጠቃሚ ስም",
+    "phoneNumberLabel": "ስልክ ቁጥር",
+    "phoneNUmberPlaceholder": "ለምሳሌ 09123456789",
+    "genderLabel": "ፆታ",
+    "genderPlaceholder": "ፆታ ይምረጡ",
+    "currentPasswordLabel": "አሁን ያለው ይለፍ ቃል",
+    "currentPasswordPlaceholder": "አሁን ያለዎትን ይለፍ ቃል ያስገቡ",
+    "passwordLabel": "አዲስ ይለፍ ቃል",
+    "passwordPlaceholder": "አዲስ ይለፍ ቃልዎን ያስገቡ",
+    "passwordConfirmationLabel":"የአዲስ ይለፍ ቃል ማረጋገጫ",
+    "passwordConfirmationPlaceholder":"አዲስ ይለፍ ቃልዎን ያረጋግጡ",
+    "Male": "ወንድ",
+    "Female":"ሴት"
+}

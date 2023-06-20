@@ -1,0 +1,14 @@
+{
+    "title": "Title",
+    "type": "Type",
+    "homework": "Homework",
+    "classwork": "Classwork",
+    "finalQuarterlyExam": "Final Quarterly Exam",
+    "finalExam": "Final Exam",
+    "test": "Test",
+    "maxPoints":"Max Points",
+    "status": "Status",
+    "dueDate": "Due Date",
+    "lastUpdate": "Last Update"
+
+}

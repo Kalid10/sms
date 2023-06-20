@@ -1,0 +1,14 @@
+{
+    "headerOne": "Register new teacher",
+    "headerTwo": "Fill in the information required.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Full name of new teacher",
+    "usernameLabel": "User Name",
+    "usernamePlaceholder": "username",
+    "phoneNumberLabel": "Phone number",
+    "phoneNUmberPlaceholder": "Phone number",
+    "emailLabel": "Email",
+    "emailPlaceholder": "email",
+    "genderLabel": "Gender",
+    "genderPlaceholder": "Gender"
+}

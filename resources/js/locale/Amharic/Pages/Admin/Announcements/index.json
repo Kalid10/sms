@@ -1,6 +1,8 @@
 {
+    "announcements": "መግለጫዎች",
+    "searchAnnouncements": "መግለጫዎችን ይፈልጉ",
+
     "recentAnnouncements": "የቅርብ ጊዜ ማስታወቂያዎች",
-    "searchAssessments": "ግምገማዎችን ይፈልጉ",
     "emptyViewTitle": "ምንም ማስታወቂያዎች አልተገኙም!",
     "emptyViewLinkTitle": "ወደ ማስታወቂያዎች ሂድ",
     "linkCellValue": "ሁሉንም ማስታወቂያዎች ያሳዩ",

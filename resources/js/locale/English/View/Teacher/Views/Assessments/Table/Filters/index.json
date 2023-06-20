@@ -1,0 +1,13 @@
+{
+    "searchPlaceholder": "Search Assessment Title",
+    "selectSubjectPlaceholder": "Select Subject",
+    "createAssessment": "Create Assessment",
+    "filters": "Filters",
+    "selectedAssessmentStatusPlaceholder": "Select Status",
+    "selectedAssessmentTypeIdPlaceholder": "Assessment Type",
+    "selectedSchoolYearPlaceholder": "Select SchoolYear",
+    "selectedSemesterPlaceholder": "Select Semester",
+    "selectedQuarterPlaceholder": "Select Quarter",
+    "done": "DONE",
+    "clearALL": "CLEAR ALL"
+}

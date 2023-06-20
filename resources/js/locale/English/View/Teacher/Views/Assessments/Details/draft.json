@@ -1,0 +1,22 @@
+{
+    "currently": "Currently, this assessment is in",
+    "draft": "DRAFT",
+    "stateYouCan": "state! You can",
+    "settingAnAssessment": "Setting an assessment as",
+    "published": "PUBLISHED",
+    "or": "or",
+    "scheduled": "SCHEDULED",
+    "willTrigger":"will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
+    "publishAssessment": "Publish Assessment",
+    "OR": "OR",
+    "scheduleAssessment": "Schedule Assessment",
+    "finishUpdating": "FINISH UPDATING",
+    "updateAssessment": "Update Assessment",
+    "alertMessage": "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?"
+
+
+
+
+
+
+}

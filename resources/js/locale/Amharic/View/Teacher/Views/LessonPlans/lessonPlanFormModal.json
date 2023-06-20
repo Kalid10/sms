@@ -1,0 +1,16 @@
+{
+    "Period": "ክፍለ ጊዜ",
+    "NewLessonPlan": "አዲስ የትምህርት መርሃ-ግብር",
+    "addTopicAndDescription": "ለክፍለ ጊዜው የትምህርቱን እቅድ ርዕስ እና መግለጫ እዚህ ያክሉ",
+    "topicLabel": "ርዕስ",
+    "topicPlaceholder": "የትምህርት መርሃ-ግብሩ ርዕስ",
+    "descriptionLabel": "መግለጫ",
+    "descriptionPlaceholder": "የትምህርት መርሃ-ግብርዎን መግለጫ ያክሉ",
+    "submit": "አስገባ",
+    "edit": "አርትዕ",
+    "previousLessonPlans":"ቀደም ሲል የነበሩ የትምህርት እቅዶች",
+    "otherLessonPlans": "ከዚህ በፊት ባሉ የክፍል ክፍለ-ጊዜዎች ላይ ሌሎች የትምህርት እቅዶች",
+    "noPreviousLessonPlans": "ምንም የቀደሙ የትምህርት እቅዶች የሉም",
+    "noPreviousLessonPlansMessage": "ለዚህ ክፍለ ጊዜ የቀደሙት የትምህርት እቅዶች አልተጨመሩም። እነሱን ለማየት የትምህርት ዕቅዶችዎን እንደሞሉ ያረጋግጡ።",
+    "period": "ክፍለ ጊዜ"
+}
