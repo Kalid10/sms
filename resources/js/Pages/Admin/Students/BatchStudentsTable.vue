@@ -1,22 +1,21 @@
 <template>
-    <div class="justify-betweens my-2 flex flex-row gap-4">
-        <label class="mx-2 flex w-32 items-center text-sm text-gray-800"
-            >Select a grade:</label
-        >
-        <SelectInput
-            v-model="selectedBatchId"
-            :options="batchOptions"
-            placeholder="Select a batch"
-            class="w-full cursor-pointer"
+    <div class="my-2 flex w-full flex-row gap-4">
+        <div class="flex w-full items-center">
+            <label class="mx-2 flex w-32 items-center text-sm text-gray-800"
+                >Select a grade:</label
+            >
+            <SelectInput
+                v-model="selectedBatchId"
+                :options="batchOptions"
+                placeholder="Select a batch"
+                class="w-4/12 cursor-pointer"
+            />
+        </div>
+        <SecondaryButton
+            :title="'Go To Grade ' + selectedBatchLevel"
+            class="!rounded-2xl bg-zinc-700 text-white"
+            @click="levelDetailLink"
         />
-        <button
-            type="button"
-            class="rounded text-xs font-light text-blue-600 underline"
-        >
-            <Link :href="'/admin/levels/' + selectedBatchId">
-                Full information on {{ selectedBatchLabel }} =>
-            </Link>
-        </button>
     </div>
 
     <TableElement
@@ -68,9 +67,10 @@
 import TableElement from "@/Components/TableElement.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import { computed, ref, watch } from "vue";
-import { Link, router, usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { debounce } from "lodash";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const batchStudents = computed(() => {
     return usePage().props.batch_students;
@@ -107,7 +107,15 @@ const selectedBatchLabel = computed(() => {
     );
 });
 
+const selectedBatchLevel = computed(() => {
+    return usePage().props.selected_batch.level.name;
+});
+
 const selectedBatchId = ref(usePage().props.selected_batch.id);
+
+function levelDetailLink() {
+    router.get("/admin/levels/" + selectedBatchId.value);
+}
 
 const searchKey = ref("");
 

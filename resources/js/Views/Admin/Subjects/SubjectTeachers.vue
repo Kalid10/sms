@@ -56,7 +56,7 @@
 
         <template #teacher-column="{ data }">
             <Link
-                :href="`/teachers/${data['teacher_id']}`"
+                :href="`/admin/teachers/${data['teacher_id']}`"
                 class="group flex items-center gap-3"
             >
                 <div class="flex flex-col">
@@ -137,7 +137,7 @@ const searchKey = ref("");
 // Debounce is used to send search request 300ms just after the user has stopped typing
 const search = debounce(() => {
     router.get(
-        "/subjects/" + subject.value.id,
+        "/admin/subjects/" + subject.value.id,
         { search: searchKey.value },
         {
             only: ["teacher"],

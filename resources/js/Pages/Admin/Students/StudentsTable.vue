@@ -31,7 +31,7 @@
                 <div
                     class="mt-3 flex w-full justify-between divide-x divide-gray-200 rounded-lg border bg-gray-50 p-3"
                 >
-                    <div class="w-3/12 text-center">
+                    <div class="w-4/12 text-center">
                         <div class="text-xl font-semibold text-gray-900">
                             {{ studentsCount }}
                         </div>
@@ -39,7 +39,7 @@
                             Total Students
                         </div>
                     </div>
-                    <div class="w-3/12 text-center">
+                    <div class="w-4/12 text-center">
                         <div
                             class="cursor-pointer text-xl font-semibold text-gray-900"
                             @click="showAbsentees = true"
@@ -50,7 +50,7 @@
                             Absentees Today
                         </div>
                     </div>
-                    <div class="w-3/12 text-center">
+                    <div class="w-4/12 text-center">
                         <div
                             class="cursor-pointer text-xl font-semibold text-gray-900"
                             @click="showLatestPeriodAbsentees = true"
@@ -59,13 +59,6 @@
                         </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
                             Latest Period Absentees
-                        </div>
-                    </div>
-
-                    <div class="w-3/12 text-center">
-                        <div class="text-xl font-semibold text-gray-900">3</div>
-                        <div class="text-[0.65rem] font-medium text-gray-500">
-                            Suspended Students
                         </div>
                     </div>
                 </div>
