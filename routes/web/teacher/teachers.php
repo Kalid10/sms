@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\CopilotController;
 use App\Http\Controllers\Web\Teacher\Announcements;
 use App\Http\Controllers\Web\Teacher\Batch;
 use App\Http\Controllers\Web\Teacher\Homeroom;
@@ -19,4 +20,6 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher,admin', 'auth'])->
     Route::get('students/{student}', Student::class)->name('student.show');
     Route::get('students', Students::class)->name('students.show');
     Route::get('announcements', Announcements::class)->name('announcement.show');
+    Route::get('/copilot', [CopilotController::class, 'show']);
+    Route::get('/copilot/search', [CopilotController::class, 'search']);
 });

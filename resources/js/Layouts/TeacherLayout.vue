@@ -38,6 +38,7 @@ import {
     ClipboardIcon,
     Cog6ToothIcon,
     PuzzlePieceIcon,
+    SparklesIcon,
     UserIcon,
     UsersIcon,
 } from "@heroicons/vue/20/solid/index.js";
@@ -97,9 +98,15 @@ const sidebarItems = computed(() => [
         active: directory.value === "assessments",
     },
     {
+        name: "Copilot",
+        icon: SparklesIcon,
+        route: "/teacher/copilot",
+        active: directory.value === "copilot",
+    },
+    {
         name: "Homerooms",
         icon: UserIcon,
-        route: "/teacher/homeroom",
+        route: "/teacher/copilot",
         active: directory.value === "homeroom",
     },
 
