@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Announcement;
 use App\Models\Assessment;
+use App\Models\BatchSchedule;
 use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
+use App\Models\User;
 use App\Services\StudentService;
 use App\Services\TeacherService;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -41,6 +45,11 @@ class TeacherController extends Controller
             'homeroom:id,batch_id,teacher_id',
             'homeroom.batch:id,section,level_id',
             'homeroom.batch.level:id,name',
+            'batchSessions.teacher.user',
+            'batchSessions' => function ($query) {
+                $query->where('status', 'in_progress');
+            },
+
         ])->select('id', 'user_id')
             ->when($searchKey, function ($query) use ($searchKey) {
                 return $query->whereHas('user', function ($query) use ($searchKey) {
@@ -56,12 +65,28 @@ class TeacherController extends Controller
 
     public function show(Request $request, int $id = null): Response
     {
-        $id = $id ?? (auth()->user()->isTeacher() ? auth()->user()->teacher->id : abort(403));
+        $request->validate([
+            'teacher_id' => 'nullable|exists:teachers,id',
+        ]);
 
-        $batchSubject = $this->teacherService->prepareBatchSubject($request);
+        $id = auth()->user()->isTeacher() ? auth()->user()->teacher->id : $id ?? $request->input('teacher_id');
+        if (! $id) {
+            abort(403);
+        }
+
+        $schoolYearId = SchoolYear::getActiveSchoolYear()?->id;
+        $batchSubject = $this->teacherService->prepareBatchSubject($request, $id);
         $batches = $this->teacherService->getBatches($id);
         $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'));
         $teacher = $this->teacherService->getTeacherDetails($id);
+        $teacherBatchSubjects = $teacher->batchSubjects->pluck('id');
+        $teacherSchedules = BatchSchedule::whereIn('batch_subject_id', $teacherBatchSubjects)
+            ->where([['day_of_week', Carbon::now()->subDays(4)->dayOfWeek]])
+            ->with('batchSubject.subject', 'schoolPeriod', 'batch.level')
+            ->get()
+            ->sortBy(function ($schedule) {
+                return (int) $schedule->schoolPeriod->name;
+            })->values();
 
         if (isset($teacher->nextBatchSession)) {
             // Get the last assessment of the next batch session using the batch subject id
@@ -78,13 +103,28 @@ class TeacherController extends Controller
 
         $schoolScheduleDate = $request->input('school_schedule_date') ?? now();
         $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
-            ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
-            ->whereDate('end_date', '>=', Carbon::parse($schoolScheduleDate))
+            ->whereDate('start_date', '>=', now())
             ->orderBy('start_date', 'asc')
-            ->take(2)
+            ->take(4)
             ->get();
 
-        return Inertia::render('Teacher/Index', [
+        $announcements = Announcement::where('school_year_id', $schoolYearId)
+            ->where(function ($query) {
+                $query->whereJsonContains('target_group', 'all')
+                    ->orWhereJsonContains('target_group', 'teachers');
+            })
+            ->with('author.user')
+            ->orderBy('updated_at', 'DESC')
+            ->take(4)
+            ->get();
+
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'teacher' => $teacher,
             'batches' => $batches,
             'assessment_type' => $batches->unique()->pluck('level.levelCategory.assessmentTypes')->unique()->flatten(),
@@ -93,9 +133,45 @@ class TeacherController extends Controller
             'school_schedule_date' => $schoolScheduleDate,
             'last_assessment' => $lastAssessment ?? null,
             'batch_subject' => $batchSubject,
+            'teacher_schedule' => $teacherSchedules,
+            'announcements' => $announcements,
             'filters' => [
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),
+            ],
+        ]);
+    }
+
+    public function schedule(Request $request): Response
+    {
+        $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'search' => 'nullable|string',
+        ]);
+        $searchKey = $request->input('search');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $schoolSchedule = SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()?->id)
+            ->when($startDate, function ($query) use ($startDate) {
+                return $query->whereDate('start_date', '>=', Carbon::parse($startDate));
+            })
+            ->when($endDate, function ($query) use ($endDate) {
+                return $query->whereDate('end_date', '<=', Carbon::parse($endDate));
+            })
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->where('title', 'like', "%{$searchKey}%");
+            })
+            ->orderBy('start_date', 'asc')
+            ->paginate(7)->appends(request()->query());
+
+        return Inertia::render('Teacher/SchoolSchedule', [
+            'school_schedule' => $schoolSchedule,
+            'filters' => [
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'search' => $searchKey,
             ],
         ]);
     }

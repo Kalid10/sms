@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Facades\FirebaseCloudMessaging;
 use App\Http\Controllers\Web\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\SignupRequest;
@@ -31,7 +32,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             return match (auth()->user()->type) {
-                User::TYPE_ADMIN => redirect()->route('admin.index'),
+                User::TYPE_ADMIN => redirect()->route('admin.show'),
                 User::TYPE_TEACHER => redirect()->route('teacher.show'),
                 default => redirect()->route('login'),
             };
@@ -40,6 +41,11 @@ class AuthController extends Controller
         // Handle API request
         // Create token for user
         $token = auth()->user()->createToken(auth()->user()->name);
+
+        // Add FCM token
+        if ($request->has('fcmToken')) {
+            FirebaseCloudMessaging::addUserToken(auth()->user(), $request->input('fcmToken'));
+        }
 
         // Return token with user
         return response()
@@ -69,6 +75,11 @@ class AuthController extends Controller
         // Revoke all tokens
         auth()->user()->tokens()->delete();
 
+        // Revoke FCM token
+        if ($request->has('fcmToken')) {
+            FirebaseCloudMessaging::removeUserToken(auth()->user(), $request->input('fcmToken'));
+        }
+
         // Return response from API
         return response()->json([
             'message' => 'You have successfully logged out.',
@@ -91,5 +102,31 @@ class AuthController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'You have successfully logged in');
+    }
+
+    private function addFcmToken($user, $token): void
+    {
+        $currentTokens = collect($user->fcm_tokens) ?? collect([]);
+        $currentTokens = $currentTokens->add($token)->unique()->toArray();
+
+        $user->update([
+            'fcm_tokens' => $currentTokens,
+        ]);
+    }
+
+    private function removeFcmToken($user, $token): void
+    {
+        $currentTokens = collect($user->fcm_tokens);
+        if ($currentTokens->count() === 0) {
+            return;
+        }
+
+        $currentTokens = $currentTokens->filter(function ($item) use ($token) {
+            return $item !== $token;
+        })->toArray();
+
+        $user->update([
+            'fcm_tokens' => $currentTokens,
+        ]);
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Jobs\SendAnnouncementNotification;
 use App\Models\Announcement;
 use App\Models\SchoolYear;
+use App\Services\TeacherService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,14 +13,32 @@ use Inertia\Response;
 
 class AnnouncementController extends Controller
 {
-    public function index(): Response
+    public function __construct(TeacherService $teacherService)
     {
-        // Get all announcements
-        $announcements = Announcement::all();
+        $this->teacherService = $teacherService;
+    }
 
-        // TODO: change this to a view when the view is ready
-        return Inertia::render('Welcome', [
+    public function index(Request $request): Response
+    {
+        $searchKey = $request->input('search');
+
+        // Get all announcements
+        $announcements = Announcement::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->
+        whereJsonContains('target_group', 'all')
+            ->orWhereJsonContains('target_group', 'teachers')
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->where('title', 'like', "%{$searchKey}%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->with('author.user:id,name')
+            ->paginate(10);
+
+        // Get teacher's feedbacks using teacher service getTeacherFeedbacks function
+        $feedbacks = $this->teacherService->getTeacherFeedbacks(auth()->user()->teacher);
+
+        return Inertia::render('Teacher/Announcement/Index', [
             'announcements' => $announcements,
+            'feedbacks' => $feedbacks,
         ]);
     }
 
@@ -29,7 +49,10 @@ class AnnouncementController extends Controller
             'title' => 'required|string|max:255',
             'body' => 'required|string',
             'expires_on' => 'required|date',
-            'target_group' => 'required|array|min:1|in:all,students,teachers,guardians,admins',
+            'target_group' => 'required|array|min:1',
+            'target_group.*' => 'string|in:all,teachers,guardians,admins',
+            'target_batches' => 'nullable|array',
+            'target_batches.*' => 'integer|exists:batches,id',
         ]);
 
         // Get the current authenticated user
@@ -48,6 +71,8 @@ class AnnouncementController extends Controller
         $announcement->schoolYear()->associate($schoolYear);
         $announcement->save();
 
+        SendAnnouncementNotification::dispatch($announcement);
+
         return redirect()->back()->with('success', 'Announcement created successfully');
     }
 
@@ -59,7 +84,10 @@ class AnnouncementController extends Controller
             'body' => 'string',
             'expires_on' => 'date',
             'id' => 'required|integer|exists:announcements,id',
-            'target_group' => 'required|array|min:1|in:all,students,teachers,guardians,admins',
+            'target_group' => 'required|array|min:1',
+            'target_group.*' => 'string|in:all,teachers,guardians,admins',
+            'target_batches' => 'nullable|array',
+            'target_batches.*' => 'integer|exists:batches,id',
         ]);
 
         // TODO:: Check if the logged-in user is the author of the announcement or is able to edit announcements

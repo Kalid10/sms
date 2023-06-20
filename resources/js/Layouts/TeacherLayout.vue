@@ -15,7 +15,7 @@
                     :class="
                         isOpen ? 'min-w-full lg:min-w-0 lg:blur-0' : 'w-full'
                     "
-                    class="flex flex-col items-center overflow-x-hidden lg:w-full"
+                    class="flex flex-col items-center overflow-x-hidden bg-gray-50/50 lg:w-full"
                 >
                     <slot />
                 </div>
@@ -104,17 +104,19 @@ const sidebarItems = computed(() => [
     },
 
     {
+        name: "Announcements",
+        icon: ChatBubbleBottomCenterIcon,
+        route: "/teacher/announcements",
+        active: directory.value === "announcements",
+    },
+
+    {
         name: "Schedule",
         icon: CalendarDaysIcon,
-        route: "/teacher/subjects",
-        active: directory.value === "subjects",
+        route: "/teacher/school-schedule",
+        active: directory.value === "school-schedule",
     },
-    {
-        name: "Feedbacks",
-        icon: ChatBubbleBottomCenterIcon,
-        route: "/teacher/feedbacks",
-        active: directory.value === "feedbacks",
-    },
+
     {
         name: "Settings",
         icon: Cog6ToothIcon,

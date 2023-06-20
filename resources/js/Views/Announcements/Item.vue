@@ -1,18 +1,24 @@
 <template>
     <div
-        class="group flex w-full cursor-pointer justify-between p-3 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-50"
+        class="group flex w-full cursor-pointer justify-between p-3.5 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-50"
     >
-        <div class="flex w-full flex-col space-y-2 text-sm font-bold">
+        <div
+            class="flex w-full flex-col space-y-2 border-gray-100 pl-3 text-sm font-medium"
+        >
             <div>{{ announcement.title }}</div>
 
             <div
-                class="flex w-full justify-between text-[0.65rem] text-gray-500 group-hover:text-gray-50"
+                class="flex w-full justify-between text-[0.62rem] font-light text-black group-hover:text-gray-50"
             >
                 <div>
                     <div>
                         Post Targets
-                        <span class="capitalize">
-                            {{ announcement.target_group }}
+                        <span
+                            v-for="(target, index) in announcement.target_group"
+                            :key="index"
+                            class="p-1 text-[0.6rem] font-medium uppercase"
+                        >
+                            {{ target }}
                         </span>
                         and expires
                         <span>
@@ -24,13 +30,8 @@
                 </div>
                 <div>
                     <div>
-                        Posted
-                        <span>
-                            {{
-                                moment(announcement.created_at).fromNow()
-                            }}</span
-                        >
-                        by Author - {{ announcement.author.user.name }}
+                        {{ announcement.author.user.name }}
+                        ( {{ moment(announcement.created_at).fromNow() }} )
                     </div>
                 </div>
             </div>

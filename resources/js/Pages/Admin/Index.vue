@@ -35,37 +35,86 @@
     <!--        />-->
     <!--    </div>-->
     <div
-        class="flex h-screen w-full flex-col gap-3 space-y-3 bg-gray-50 p-3 lg:space-y-3 lg:px-1 2xl:pl-4 2xl:pr-12"
+        class="flex min-h-screen w-full flex-col gap-3 space-y-6 bg-gray-50 py-8 px-5 lg:space-y-5 lg:px-1 2xl:px-10"
     >
-        <WelcomeHeader />
+        <div class="flex w-full justify-between space-x-5">
+            <WelcomeHeader />
+            <div class="relative w-4/12">
+                <Combobox v-model="selectedStudents">
+                    <ComboboxInput
+                        class="w-full rounded-lg"
+                        @change="handleSearch"
+                    />
+                    <transition
+                        enter-active-class="transition duration-100 ease-out"
+                        enter-from-class="transform scale-95 opacity-0"
+                        enter-to-class="transform scale-100 opacity-100"
+                        leave-active-class="transition duration-75 ease-out"
+                        leave-from-class="transform scale-100 opacity-100"
+                        leave-to-class="transform scale-95 opacity-0"
+                    >
+                        <ComboboxOptions
+                            class="absolute z-50 w-full cursor-pointer border-2"
+                        >
+                            <ComboboxOption
+                                v-for="(student, index) in filteredStudents"
+                                :key="student.id"
+                                :value="student"
+                                class="py-2"
+                                :class="
+                                    index % 2 === 0
+                                        ? 'bg-gray-100 px-10 hover:bg-gray-300'
+                                        : 'bg-white px-10 hover:bg-gray-300'
+                                "
+                            >
+                                {{ student.name }}
+                            </ComboboxOption>
+                        </ComboboxOptions>
+                    </transition>
+                </Combobox>
+            </div>
+        </div>
 
         <div class="flex w-full justify-between">
-            <div class="w-6/12">
-                <Announcements />
+            <div class="flex w-6/12 flex-col space-y-5">
+                <Announcements
+                    url="/admin/announcements"
+                    class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
+                />
             </div>
-            <div class="w-5/12">
-                <Levels />
+            <div class="flex w-5/12 flex-col space-y-5">
+                <div class="flex w-full space-x-5">
+                    <div
+                        class="flex h-full w-4/12 flex-col justify-evenly space-y-4"
+                    >
+                        <AbsentTeachers value="4" title="Absent Teachers" />
+                        <AbsentTeachers value="15" title="Absent Students" />
+                    </div>
+                    <div class="w-9/12">
+                        <SchoolSchedule />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import moment from "moment/moment";
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
-import Levels from "@/Pages/Admin/Levels/Index.vue";
-import Announcements from "@/Pages/Admin/Announcements/Index.vue";
+import Announcements from "@/Views/Announcements/Index.vue";
+import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Index.vue";
+import AbsentTeachers from "@/Views/Admin/Absentee.vue";
+import {
+    Combobox,
+    ComboboxInput,
+    ComboboxOption,
+    ComboboxOptions,
+} from "@headlessui/vue";
+import { debounce } from "lodash";
 
-const teachersCount = computed(() => usePage().props.teachers_count);
-
-const studentsCount = computed(() => usePage().props.students_count);
-
-const subjectCount = computed(() => usePage().props.subjects_count);
-
-const adminsCount = computed(() => usePage().props.admins_count);
-
-const userRoles = computed(() => usePage().props.user_roles);
+const students = computed(() => usePage().props.students);
 
 const admins = computed(() => {
     return usePage().props.admins.map((admin) => {
@@ -99,52 +148,50 @@ const levels = computed(() => {
 
 const schoolYear = computed(() => usePage().props.school_year);
 
-const configLevels = [
-    {
-        name: "Level Category",
-        key: "level",
-        type: "custom",
-    },
-    {
-        name: "Sections",
-        key: "batches",
-        type: "custom",
-    },
-    {
-        name: "Updated at",
-        key: "updated_at",
-        type: "custom",
-    },
-];
+const selectedStudents = ref([]);
 
-const configAdmin = [
-    {
-        name: "Name",
-        key: "name",
-        type: "custom",
-    },
-    {
-        name: "Email",
-        key: "email",
-        type: "custom",
-    },
-    {
-        name: "Role",
-        key: "role",
-        type: "custom",
-    },
-    {
-        name: "Type",
-        key: "type",
-        type: "custom",
-    },
-    {
-        name: "Updated at",
-        key: "updated_at",
-        type: "custom",
-    },
-];
+const query = ref("");
 
+async function handleSearch(event) {
+    query.value = event.target.value;
+    if (query.value && query.value.trim() !== "") {
+        // Fetch data from the backend.
+        const response = await fetchStudent();
+        if (response) {
+            // Update selectedStudents.
+            selectedStudents.value = await response.json();
+        }
+    } else {
+        // If the search query is empty, clear the selectedStudents.
+        selectedStudents.value = [];
+    }
+}
+
+const fetchStudent = debounce(async function () {
+    router.get(
+        "/admin/",
+        {
+            search: query.value,
+        },
+        {
+            only: ["students"],
+            preserveState: true,
+            replace: true,
+        }
+    );
+}, 500);
+
+const filteredStudents = computed(() => {
+    if (query.value === "") {
+        return students.value || [];
+    } else {
+        return students.value
+            ? students.value.filter((student) =>
+                  student.name.toLowerCase().includes(query.value.toLowerCase())
+              )
+            : [];
+    }
+});
 const config = [
     {
         key: "name",

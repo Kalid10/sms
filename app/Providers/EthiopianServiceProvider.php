@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Fake\Ethiopian;
+use App\SDK\Ethiopian;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 

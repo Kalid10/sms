@@ -1,27 +1,32 @@
 <template>
-    <SubjectsTable
-        @new="isAddModalOpen = true"
-        @archive="archiveConfirmation"
-        @update="selectSubject"
-    />
+    <div class="w-10/12 py-5">
+        <Title class="pb-8" title="Subjects" />
 
-    <RegisterSubjectForm v-model:open="isAddModalOpen" />
+        <SubjectsTable
+            @new="isAddModalOpen = true"
+            @archive="archiveConfirmation"
+            @update="selectSubject"
+        />
 
-    <SubjectUpdate
-        v-model:open="isUpdateModalOpen"
-        :subject="selectedSubject"
-    />
-    <DialogBox
-        v-model:open="isDialogBoxOpen"
-        type="archive"
-        @confirm="archiveSubject"
-    >
-        <template #description>
-            You are about to archive this subject. Are you sure you want to
-            continue? Do not worry, all the batches and students under this
-            subject will be available, and you can restore this subject anytime.
-        </template>
-    </DialogBox>
+        <RegisterSubjectForm v-model:open="isAddModalOpen" />
+
+        <SubjectUpdate
+            v-model:open="isUpdateModalOpen"
+            :subject="selectedSubject"
+        />
+        <DialogBox
+            v-model:open="isDialogBoxOpen"
+            type="archive"
+            @confirm="archiveSubject"
+        >
+            <template #description>
+                You are about to archive this subject. Are you sure you want to
+                continue? Do not worry, all the batches and students under this
+                subject will be available, and you can restore this subject
+                anytime.
+            </template>
+        </DialogBox>
+    </div>
 </template>
 
 <script setup>
@@ -31,6 +36,7 @@ import SubjectUpdate from "@/Views/Admin/SubjectUpdate.vue";
 import RegisterSubjectForm from "@/Views/Admin/RegisterSubjectForm.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import SubjectsTable from "@/Views/Admin/Subjects/SubjectsTable.vue";
+import Title from "@/Views/Teacher/Views/Title.vue";
 
 const isAddModalOpen = ref(false);
 const isUpdateModalOpen = ref(false);

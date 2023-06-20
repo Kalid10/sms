@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Announcement>
+ * @extends Factory<Announcement>
  */
 class AnnouncementFactory extends Factory
 {
@@ -27,8 +27,8 @@ class AnnouncementFactory extends Factory
             'body' => $this->faker->paragraph,
             'author_id' => Admin::factory()->create()->id,
             'expires_on' => Carbon::now()->addDays($this->faker->numberBetween(1, 30)),
-            'target_group' => $this->faker->randomElement(['all', 'students', 'teachers', 'parents', 'admins']),
-            'school_year_id' => SchoolYear::factory()->create(['end_date' => null])->id,
+            'target_group' => $this->faker->randomElements(['all', 'students', 'teachers', 'parents', 'admins']),
+            'school_year_id' => SchoolYear::getActiveSchoolYear()?->id ?? SchoolYear::factory()->create(['end_date' => null])->id,
         ];
     }
 }

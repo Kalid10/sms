@@ -8,6 +8,7 @@ use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -93,7 +94,7 @@ class TeacherService
         return StudentService::getBatchStudents($batchSubject->batch_id, $studentSearch, $batchSubjectId);
     }
 
-    public static function prepareBatchSubject(Request $request): BatchSubject
+    public static function prepareBatchSubject(Request $request, $teacherId): BatchSubject
     {
         $request->validate([
             'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
@@ -102,11 +103,31 @@ class TeacherService
 
         $batchSubjectId = $request->input('batch_subject_id');
 
+        if (! $batchSubjectId && ! $teacherId) {
+            abort(403);
+        }
+
         return $batchSubjectId ?
             BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
-            BatchSubject::where('teacher_id', auth()->user()->teacher->id)
+            BatchSubject::where('teacher_id', $teacherId)
                 ->whereHas('batch', function ($query) {
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-                })->first()->load('subject', 'batch.level');
+                })->first()?->load('subject', 'batch.level');
+    }
+
+    public static function getTeacherFeedbacks(Teacher $teacher, int $limit = 5): LengthAwarePaginator
+    {
+        return $teacher->feedbacks()->with('author:id,name', 'author.admin')->orderBy('created_at', 'desc')->paginate($limit)->appends(request()->query());
+    }
+
+    public static function assignHomeroomTeacherData()
+    {
+        $searchKey = request()->query('search');
+
+        return Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->with('level', 'homeroomTeacher.teacher.user:id,name')
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->whereRelation('level', 'name', 'like', "%{$searchKey}%");
+            })->get();
     }
 }

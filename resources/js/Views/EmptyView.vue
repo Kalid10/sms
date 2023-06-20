@@ -1,9 +1,7 @@
 <template>
-    <div
-        class="flex h-fit flex-col items-center justify-center space-y-4 py-10"
-    >
-        <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
-        <div class="text-xs lg:text-sm">{{ title }}</div>
+    <div class="flex h-fit flex-col items-center justify-center space-y-4">
+        <div class="text-xl font-light">404</div>
+        <div class="text-sm font-medium">{{ title }}</div>
         <LinkCell
             v-if="linkTitle && linkUrl"
             :href="linkUrl"
@@ -12,7 +10,6 @@
     </div>
 </template>
 <script setup>
-import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import LinkCell from "@/Components/LinkCell.vue";
 
 defineProps({

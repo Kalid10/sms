@@ -1,152 +1,136 @@
 <template>
-    <div class="my-2 flex w-full border-t-2">
-        <div class="flex w-4/12 flex-col items-start p-8">
-            <h1 class="text-center text-xl font-medium text-gray-700"> Section A details </h1>
-            <p class="text-center text-lg font-light text-gray-500">
-                <span class="text-sm ">
-                    Homeroom teacher:
-                    <span class="text-sm text-gray-700">
-                        {{ batch.home_room_teacher.teacher.user.name }}
-                    </span>
+    <div
+        class="flex h-full w-full justify-between space-x-5 divide-x divide-gray-100 py-4 px-2"
+    >
+        <div class="flex h-fit w-5/12 flex-col space-y-5">
+            <div class="text-2xl font-semibold uppercase text-gray-700">
+                Section {{ batch.section }}
+                <span v-if="batch?.home_room_teacher" class="font-light">
+                    ( {{ batch.home_room_teacher.teacher.user.name }} )
                 </span>
-            </p>
-        </div>
-        <div class="w-8/12">
-            <div class="m-2 grid grid-cols-1 rounded-md border-2 border-gray-100 py-3 md:grid-cols-2 lg:grid-cols-4">
-                <div class="relative mb-12 px-3 lg:mb-0">
-                    <div class="mb-2 flex justify-center">
-                          <span class="">
-                         <BookOpenIcon class="h-10 w-10"/>
-                          </span>
-                    </div>
-                    <h5 class="mb-6 flex justify-center text-sm font-bold">A+</h5>
-                    <h6 class="mb-0 flex justify-center text-xs text-black">Conduct</h6>
-                    <div
-                        class="absolute right-0 top-0 hidden h-full min-h-[1em] w-px self-stretch border-t-0 bg-gradient-to-tr from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100 lg:block"></div>
+            </div>
+            <div class="flex w-full justify-between space-x-5">
+                <div class="h-32 w-6/12">
+                    <ActiveSession :batch="batch" />
                 </div>
-                <div class="relative mb-12 px-3 lg:mb-0">
-                    <div class="mb-2 flex justify-center">
-                          <span class="">
-                         <BookOpenIcon class="h-10 w-10"/>
-                          </span>
-                    </div>
-                    <h5 class="mb-6 flex justify-center text-sm font-bold">Biology test</h5>
-                    <h6 class="mb-0 flex justify-center text-xs text-black">Upcoming Assessment</h6>
-                    <div
-                        class="absolute right-0 top-0 hidden h-full min-h-[1em] w-px self-stretch border-t-0 bg-gradient-to-tr from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100 lg:block"></div>
-                </div>
-                <div class="relative mb-12 px-3 lg:mb-0">
-                    <div class="mb-2 flex justify-center">
-                          <span class="">
-                         <AcademicCapIcon class="h-10 w-10"/>
-                          </span>
-                    </div>
-                    <h5 class="mb-6 flex justify-center text-sm font-bold">Biniyam Lemma </h5>
-                    <h6 class="mb-0 flex justify-center text-xs text-black">Section's Best</h6>
-                    <div
-                        class="absolute right-0 top-0 hidden h-full min-h-[1em] w-px self-stretch border-t-0 bg-gradient-to-tr from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100 lg:block"></div>
-                </div>
-                <div class="relative mb-12 px-3 lg:mb-0">
-                    <div class="mb-2 flex justify-center">
-                          <span class="">
-                         <AcademicCapIcon class="h-10 w-10"/>
-                          </span>
-                    </div>
-                    <h5 class="mb-6 flex justify-center text-sm font-bold">Biniyam Lemma </h5>
-                    <h6 class="mb-0 flex justify-center text-xs text-black">Section's Best</h6>
+                <div class="h-32 w-6/12">
+                    <AbsentStudents
+                        :value="
+                            batch.active_session[0]
+                                ? batch.active_session[0].absentees.length
+                                : 0
+                        "
+                        :batch="batch"
+                        title="Absent Students"
+                        class-style="bg-red-600"
+                    />
                 </div>
             </div>
+            <div class="flex h-full w-full flex-col space-y-6">
+                <SummaryItem
+                    class-style="bg-orange-100 text-black"
+                    icon-style="bg-orange-500/20 text-white"
+                    :title="'Assessments'"
+                    value="10 /10 Completed"
+                    :icon="ClipboardIcon"
+                    :url="
+                        isTeacher()
+                            ? '/teacher/assessments'
+                            : '/admin/teachers/assessments?teacher_id='
+                    "
+                />
+                <SummaryItem
+                    class-style="bg-fuchsia-100 text-black"
+                    icon-style="bg-fuchsia-500/20 text-white"
+                    :title="'LessonPlans'"
+                    value="10 /10 Completed"
+                    :icon="CalendarIcon"
+                    :url="
+                        isTeacher()
+                            ? '/teacher/lesson-plan'
+                            : '/admin/teachers/lesson-plan?teacher_id='
+                    "
+                />
+                <SummaryItem
+                    class-style="bg-zinc-100 text-black"
+                    icon-style="bg-zinc-500/20 text-white"
+                    :title="'Students'"
+                    value="75 Total Students"
+                    :icon="UsersIcon"
+                    :url="
+                        isTeacher()
+                            ? '/teacher/students'
+                            : '/admin/teachers/students?teacher_id='
+                    "
+                />
+                <SummaryItem
+                    class-style="bg-red-50 text-black"
+                    icon-style="bg-red-500/20 text-white"
+                    :title="'Announcements'"
+                    value="10 Announcements Today"
+                    :icon="ChatBubbleBottomCenterIcon"
+                    :url="
+                        isTeacher()
+                            ? '/teacher/announcements'
+                            : '/admin/teachers/announcements?teacher_id='
+                    "
+                />
+            </div>
         </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3">
-        <div v-if="activeSession !== null && activeSession.session.length > 0" class="p-8">
+        <div class="flex h-full w-8/12 flex-col justify-evenly px-8">
+            <BatchPerformance :grade="batch?.grade" />
             <div
-                class="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 text-indigo-500 shadow-2xl">
-                <BookOpenIcon class="h-8 w-8"/>
+                class="flex w-full items-center justify-between divide-x divide-gray-200 rounded-lg bg-gray-50 shadow-sm"
+            >
+                <div class="w-6/12">
+                    <StudentsList
+                        progress-type="up"
+                        title="Top Students"
+                        :icon="ArrowTrendingUpIcon"
+                        :students="batch?.top_students ?? null"
+                        :show-link="false"
+                    />
+                </div>
+
+                <div class="w-6/12">
+                    <StudentsList
+                        progress-type="down"
+                        title="Students Falling Behind"
+                        :icon="ArrowTrendingDownIcon"
+                        :students="batch?.bottom_students ?? null"
+                        :show-link="false"
+                    />
+                </div>
             </div>
-            <h2 class="mt-6 mb-3 font-medium">
-                Active Session
-            </h2>
-            <p
-                v-if="activeSession.session.length > 0"
-                class="my-2 mb-3 text-sm font-light text-gray-500">
-                Subject: {{ activeSession.session[0].subject }}
-            </p>
-            <p
-                v-if="activeSession.session.length > 0"
-                class="my-2 mb-3 text-sm font-light text-gray-500">
-                Status: {{ activeSession.session[0].status }}
-            </p>
-
-            <p
-                v-if="activeSession.session.length > 0"
-                class="my-2 mb-3 text-sm font-light text-gray-500">
-                Teacher: {{ activeSession.session[0].teacher }}
-            </p>
-
-            <p
-                v-if="activeSession.session.length > 0"
-                class="my-2 mb-3 text-sm font-light text-gray-500">
-                Period: {{ activeSession.session[0].period }}
-            </p>
-
         </div>
-
-        <div v-else class="p-8">
-            <div
-                class="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 text-indigo-500 shadow-2xl">
-                <BookOpenIcon class="h-8 w-8"/>
-                <XMarkIcon class="h-8 w-8"/>
-            </div>
-            <h2 class="mt-6 mb-3 font-medium">
-                No Active Sessions
-            </h2>
-            <p class="my-2 mb-3 text-sm font-light text-gray-500">
-                There are currently no active sessions.
-            </p>
-        </div>
-        <div class="p-8">
-            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-500 shadow-2xl">
-                <ClipboardDocumentCheckIcon class="h-8 w-8"/>
-
-            </div>
-            <h2 class="mt-6 mb-3 font-medium "> Notes </h2>
-            <p class="mb-3 text-sm font-light text-gray-500">
-                Notes for this section...
-            </p>    <a
-            class="flex items-center text-green-500 hover:text-green-600" href="/public"> More
-
-        </a></div>
-        <div class="p-8">
-            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-500 shadow-2xl">
-                <Cog6ToothIcon class="h-8 w-8"/>
-
-            </div>
-            <h2 class="mt-6 mb-3 font-medium"> Social conversations </h2>
-            <p class="mb-3 text-sm font-light text-gray-500"> We get .......</p>    <a
-            class="flex items-center text-red-500 hover:text-red-600" href="/public"> More
-
-        </a></div>
     </div>
 </template>
 <script setup>
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
+import ActiveSession from "@/Views/Admin/Levels/Section/ActiveSession.vue";
+import AbsentStudents from "@/Views/Admin/Absentee.vue";
+import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import {
-    AcademicCapIcon,
-    BookOpenIcon,
-    ClipboardDocumentCheckIcon,
-    Cog6ToothIcon,
-    XMarkIcon
-} from "@heroicons/vue/20/solid/index.js";
-import {computed} from "vue";
-import {usePage} from "@inertiajs/vue3";
+    CalendarIcon,
+    ChatBubbleBottomCenterIcon,
+    ClipboardIcon,
+    UsersIcon,
+} from "@heroicons/vue/24/solid";
+import { isTeacher } from "@/utils";
+import SummaryItem from "@/Views/Teacher/Views/SummaryItem.vue";
+import {
+    ArrowTrendingDownIcon,
+    ArrowTrendingUpIcon,
+} from "@heroicons/vue/24/outline";
+import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 
 const props = defineProps({
     batch: {
         type: Object,
         required: true,
     },
-})
+});
 
 const level = computed(() => {
     return usePage().props.level;
@@ -155,7 +139,7 @@ const level = computed(() => {
 const activeSession = computed(() => {
     if (props.batch.active_session) {
         return {
-            session: props.batch.active_session.map(s => {
+            session: props.batch.active_session.map((s) => {
                 return {
                     id: s.id,
                     name: s.name,
@@ -163,12 +147,11 @@ const activeSession = computed(() => {
                     subject: s.batch_subject.subject.full_name,
                     teacher: s.teacher.user.name,
                     period: s.school_period.name,
-                }
-            })
-        }
+                };
+            }),
+        };
     }
     return null;
-})
-
+});
 </script>
 <style scoped></style>

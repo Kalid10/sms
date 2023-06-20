@@ -1,93 +1,143 @@
 <template>
-
-    <TableElement
-        :columns="config"
-        :selectable="false"
-        :header="false"
-        row-actionable
-        title="Students"
-        subtitle="List of all students in the school system"
-        :data="formattedStudentsData">
-
-        <template #filter>
-            <div class="flex w-full gap-4">
-                <TextInput v-model="searchKey" class="w-full" placeholder="Search for a student by name"/>
-            </div>
-        </template>
-
-        <template #row-actions="{ row }">
-            <div class="flex flex-col items-center gap-1">
-                <button @click="transferStudent(row)">
-                    <ArrowsRightLeftIcon
-                        class="h-4 w-4 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"/>
-                </button>
-            </div>
-        </template>
-
-        <template #name-column="{ data }">
-            <div class="flex items-start gap-2">
-                <span class="font-medium">{{ data }}</span>
-            </div>
-        </template>
-
-        <template #email-column="{ data }">
-            <div class="flex items-center gap-1">
-                <span class="text-xs">
-                {{ data }}
-            </span>
-            </div>
-        </template>
-
-        <template #grade-column="{ data }">
-            <div class="flex items-center gap-1">
-                    <span class="text-xs font-semibold">
-                {{ data }}
-            </span>
-            </div>
-        </template>
-
-        <template #footer>
-            <div class="flex w-full justify-end gap-3">
-                <TertiaryButton
-                    class="w-full md:w-fit"
-                    title="Previous"
-                    @click="previousPage"
-                />
-                <TertiaryButton
-                    class="w-full md:w-fit"
-                    title="Next"
-                    @click="nextPage"
-                />
-            </div>
-        </template>
-
-        <template #empty-data>
-            <div class="flex flex-col items-center justify-center">
-                <ExclamationTriangleIcon class="mb-2 h-6 w-6 text-negative-50"/>
-                <p class="text-sm font-semibold">
-                    No data found
-                </p>
-                <div v-if="searchKey.length">
-                    <p v-if="searchKey === null" class="text-sm text-gray-500">
-                        No student has been enrolled
-                    </p>
-                    <p v-else class="text-center text-sm text-gray-500">
-                        Your search query "<span class="font-medium text-black">{{ searchKey }}</span>" did not
-                        match
-                        <span class="block">any student's name</span>
-                    </p>
+    <div class="rounded-lg">
+        <TableElement
+            :columns="config"
+            :selectable="false"
+            :header="false"
+            row-actionable
+            :filterable="false"
+            class="px-3 pt-4 pb-2"
+            :data="formattedStudentsData"
+        >
+            <template #table-header>
+                <div v-if="showTitle" class="flex w-full justify-between pb-4">
+                    <div class="pl-4">
+                        <div class="pb-2 text-xl font-semibold">Students</div>
+                        <div class="text-xs font-light text-gray-500">
+                            List of all students in the school
+                        </div>
+                    </div>
+                    <SecondaryButton
+                        class="h-fit !rounded-2xl bg-zinc-700 text-white"
+                        title="Register Student"
+                        @click="router.get('/register/student')"
+                    />
                 </div>
-            </div>
-        </template>
-    </TableElement>
+                <TextInput
+                    v-model="searchKey"
+                    class="w-7/12"
+                    placeholder="Search for a student by name"
+                />
+                <div
+                    class="mt-3 flex w-full justify-between divide-x divide-gray-200 rounded-lg border bg-gray-50 p-3"
+                >
+                    <div class="w-4/12 text-center">
+                        <div class="text-xl font-semibold text-gray-900">
+                            {{ studentsCount }}
+                        </div>
+                        <div class="text-[0.65rem] font-medium text-gray-500">
+                            Total Students
+                        </div>
+                    </div>
+                    <div class="w-4/12 text-center">
+                        <div
+                            class="cursor-pointer text-xl font-semibold text-gray-900"
+                            @click="showAbsentees = true"
+                        >
+                            {{ todayAbsentees.length }}
+                        </div>
+                        <div class="text-[0.65rem] font-medium text-gray-500">
+                            Absentees Today
+                        </div>
+                    </div>
+                    <div class="w-4/12 text-center">
+                        <div
+                            class="cursor-pointer text-xl font-semibold text-gray-900"
+                            @click="showLatestPeriodAbsentees = true"
+                        >
+                            {{ latestPeriodAbsentees.length }}
+                        </div>
+                        <div class="text-[0.65rem] font-medium text-gray-500">
+                            Latest Period Absentees
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template #row-actions="{ row }">
+                <div class="flex flex-col items-center gap-1">
+                    <button @click="transferStudent(row)">
+                        <ArrowsRightLeftIcon
+                            class="h-4 w-4 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"
+                        />
+                    </button>
+                </div>
+            </template>
 
+            <template #name-column="{ data }">
+                <div class="flex items-start gap-2">
+                    <span class="font-medium">{{ data }}</span>
+                </div>
+            </template>
+
+            <template #email-column="{ data }">
+                <div class="flex items-center gap-1">
+                    <span class="text-xs">
+                        {{ data }}
+                    </span>
+                </div>
+            </template>
+
+            <template #grade-column="{ data }">
+                <div class="flex items-center gap-1">
+                    <span class="text-xs font-semibold">
+                        {{ data }}
+                    </span>
+                </div>
+            </template>
+
+            <template #footer>
+                <Pagination :links="students.links" position="center" />
+            </template>
+
+            <template #empty-data>
+                <div class="flex flex-col items-center justify-center">
+                    <ExclamationTriangleIcon
+                        class="mb-2 h-6 w-6 text-negative-50"
+                    />
+                    <p class="text-sm font-semibold">No data found</p>
+                    <div v-if="searchKey.length">
+                        <p
+                            v-if="searchKey === null"
+                            class="text-sm text-gray-500"
+                        >
+                            No student has been enrolled
+                        </p>
+                        <p v-else class="text-center text-sm text-gray-500">
+                            Your search query "<span
+                                class="font-medium text-black"
+                                >{{ searchKey }}</span
+                            >" did not match
+                            <span class="block">any student's name</span>
+                        </p>
+                    </div>
+                </div>
+            </template>
+        </TableElement>
+    </div>
     <Modal v-model:view="isModalOpen">
         <FormElement
-            :title="'Transfer Student ' + selectedStudentForTransfer.name + ' from ' + ' Grade ' + selectedStudentForTransfer.grade"
+            :title="
+                'Transfer Student ' +
+                selectedStudentForTransfer.name +
+                ' from ' +
+                ' Grade ' +
+                selectedStudentForTransfer.grade
+            "
             @submit="submit"
         >
             <p class="text-xs text-gray-500">
-                Transferring a student will remove them from their current section and add them to the selected section.
+                Transferring a student will remove them from their current
+                section and add them to the selected section.
             </p>
 
             <RadioGroupPanel
@@ -96,39 +146,112 @@
                 label="Select Destination Section"
                 name="sections"
             />
-
         </FormElement>
     </Modal>
 
+    <Modal v-model:view="showAbsentees">
+        <div class="lex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
+            <div>
+                <Title title="Today's Absentees" />
+            </div>
+
+            <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
+                <div
+                    v-for="(absentee, index) in todayAbsentees"
+                    :key="index"
+                    class="flex w-full flex-col justify-start"
+                >
+                    <span class="font-semibold">
+                        Name: {{ absentee.user.name }} ({{ absentee.reason }}),
+                    </span>
+                </div>
+            </div>
+        </div>
+    </Modal>
+
+    <Modal v-model:view="showLatestPeriodAbsentees">
+        <div class="lex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
+            <div>
+                <Title title="Latest Period Absentees" />
+            </div>
+
+            <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
+                <div
+                    v-for="(absentee, index) in latestPeriodAbsentees"
+                    :key="index"
+                    class="flex w-full flex-col justify-start"
+                >
+                    <span class="font-semibold">
+                        Name: {{ absentee.user.name }} ({{ absentee.reason }}),
+                    </span>
+                </div>
+            </div>
+        </div>
+    </Modal>
 </template>
 <script setup>
 import TableElement from "@/Components/TableElement.vue";
-import {computed, ref, watch} from "vue";
-import {router, useForm, usePage} from "@inertiajs/vue3";
-import {debounce} from "lodash";
+import { computed, ref, watch } from "vue";
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import { debounce } from "lodash";
 import TextInput from "@/Components/TextInput.vue";
-import {ArrowsRightLeftIcon, ExclamationTriangleIcon} from "@heroicons/vue/24/outline";
+import {
+    ArrowsRightLeftIcon,
+    ExclamationTriangleIcon,
+} from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
-import TertiaryButton from "@/Components/TertiaryButton.vue";
+import Pagination from "@/Components/Pagination.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Title from "@/Views/Teacher/Views/Title.vue";
+
+const props = defineProps({
+    url: {
+        type: String,
+        default: "/admin/students/",
+    },
+    showTitle: {
+        type: Boolean,
+        default: true,
+    },
+});
+
+const showAbsentees = ref(false);
+
+const showLatestPeriodAbsentees = ref(false);
 
 const isModalOpen = ref(false);
 
 const students = computed(() => {
-    return usePage().props.students.data;
+    return usePage().props.students;
+});
+
+const studentsCount = computed(() => {
+    return usePage().props.students_count;
+});
+
+const todayAbsentees = computed(() => {
+    return usePage().props.today_absentees;
+});
+
+const latestPeriodAbsentees = computed(() => {
+    return usePage().props.latest_period_absentees;
 });
 
 const formattedStudentsData = computed(() => {
-    return students.value.map(student => {
+    return students.value.data.map((student) => {
         return {
             id: student.id,
             name: student.user.name,
             email: student.user.email,
             gender: student.user.gender,
-            batch_id: student.batches[0].batch_id,
-            level_id: student.batches[0].level.id,
-            grade: student.batches.map(ba => `${ba.level.name}-${ba.batch.section}`).join(', '),
+            grade:
+                student.current_batch[0]?.level.name +
+                "-" +
+                student.current_batch[0]?.section,
+            batch_id: student.current_batch[0]?.batch_id,
+            level_id: student.current_batch[0]?.level.id,
         };
     });
 });
@@ -140,20 +263,22 @@ const batches = computed(() => {
 const selectedStudentForTransfer = ref(null);
 
 const transferOptions = computed(() => {
-
-    return batches.value.filter((batch) => {
-        return (batch.level_id === selectedStudentForTransfer.value.level_id) &&
-            (batch.id !== selectedStudentForTransfer.value.batch_id)
-    }).map((batch, b) => {
-        return {
-            id: b,
-            value: batch.id,
-            label: batch.level.name + '-' + batch.section,
-            description: `Homeroom Teacher: ${batch.homeroom_teacher.teacher.user.name}`
-        }
-    })
-
-})
+    return batches.value
+        .filter((batch) => {
+            return (
+                batch.level_id === selectedStudentForTransfer.value.level_id &&
+                batch.id !== selectedStudentForTransfer.value.batch_id
+            );
+        })
+        .map((batch, b) => {
+            return {
+                id: b,
+                value: batch.id,
+                label: batch.level.name + "-" + batch.section,
+                description: `Homeroom Teacher: ${batch.homeroom_teacher?.teacher.user.name}`,
+            };
+        });
+});
 
 function transferStudent(row) {
     selectedStudentForTransfer.value = row;
@@ -167,94 +292,59 @@ const transferForm = useForm({
 });
 
 function submit() {
-    transferForm.post('/batches/students/transfer', {
+    transferForm.post("/batches/students/transfer", {
         onSuccess: () => {
             isModalOpen.value = false;
-        }
+        },
     });
 }
 
-const searchKey = ref('');
+const searchKey = ref("");
 const perPage = ref(15);
 
 const search = debounce(() => {
     router.get(
-        "/students/",
+        props.url,
         {
             search: searchKey.value,
             perPage: perPage.value,
         },
         {
             only: ["students"],
-            preserveState: true, replace: true
+            preserveState: true,
+            replace: true,
         }
     );
 }, 300);
 
 watch([searchKey, perPage], () => {
     search();
-})
-
-const currentPage = ref(1);
-
-function nextPage() {
-    currentPage.value++;
-    router.get(
-        "/students",
-        {
-            page: currentPage.value,
-            perPage: perPage.value,
-        },
-        {
-            preserveState: true,
-            replace: true,
-        }
-    );
-}
-
-function previousPage() {
-    currentPage.value--;
-    router.get(
-        "/students",
-        {
-            page: currentPage.value,
-            perPage: perPage.value,
-        },
-        {
-            preserveState: true,
-            replace: true,
-        }
-    );
-}
-
+});
 
 const config = [
     {
-        name: 'Name',
-        key: 'name',
-        link: '/students/{id}',
-        align: 'left',
-        type: 'custom',
+        name: "Name",
+        key: "name",
+        link: "/students/{id}",
+        align: "left",
+        type: "custom",
     },
     {
-        name: 'Email',
-        key: 'email',
-        type: 'custom',
+        name: "Email",
+        key: "email",
+        type: "custom",
     },
     {
-        name: 'Gender',
-        key: 'gender',
-        type: 'enum',
-        options: ['female', 'male'],
+        name: "Gender",
+        key: "gender",
+        type: "enum",
+        options: ["female", "male"],
     },
     {
-        name: 'Grade',
-        key: 'grade',
-        type: 'custom',
-        align: 'right',
-
+        name: "Grade",
+        key: "grade",
+        type: "custom",
+        align: "right",
     },
-]
-
-
+];
 </script>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\EthiopianServiceProvider;
+use App\Providers\FirebaseCloudMessagingServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -200,6 +201,7 @@ return [
          * Custom Service Providers...
          */
         EthiopianServiceProvider::class,
+        FirebaseCloudMessagingServiceProvider::class,
 
     ],
 

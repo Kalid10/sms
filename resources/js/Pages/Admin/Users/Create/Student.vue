@@ -1,125 +1,136 @@
 <template>
-    <div class="grid-rows-12 grid sm:grid-cols-12">
-        <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
-            <Heading
-                value="Register new
+    <div class="flex h-screen flex-col px-5 pt-10 pl-10">
+        <div class="grid-rows-12 grid sm:grid-cols-12">
+            <div
+                class="col-span-4 col-start-1 mb-6 flex shrink-0 flex-col px-3 md:mb-0 md:w-full"
+            >
+                <Heading
+                    value="Register new
                     Student and parents"
-            />
-            <Heading
-                value="Register students and parents to efficiently manage academic progress, track achievements, and
+                />
+                <Heading
+                    value="Register students and parents to efficiently manage academic progress, track achievements, and
                 facilitate communications."
-                size="sm"
-                class="text-xs font-light text-gray-500"
-            />
-        </div>
-        <div class="col-span-8">
-            <div class="w-full max-w-4xl rounded-lg bg-white">
-                <GuardianFormElement title="Guardian's form" @submit="submit">
-                    <div class="flex gap-3">
-                        <GuardianTextInput
-                            v-model="form.name"
-                            class="w-full"
-                            label="Student's name"
-                            placeholder="name"
-                            :error="form.errors.name"
-                            required
-                        />
-                    </div>
-                    <div class="flex gap-3">
-                        <GuardianSelectInput
-                            v-model="form.level_id"
-                            class="w-full cursor-pointer"
-                            :options="levelOptions"
-                            placeholder="select students level(grade)"
-                            label="Student's level"
-                            required
-                        />
-                        <GuardianSelectInput
-                            v-model="form.gender"
-                            class="w-full cursor-pointer"
-                            :options="genderOptions"
-                            placeholder="select student's gender"
-                            label="Student's gender"
-                            required
-                        />
-                    </div>
+                    size="sm"
+                    class="text-xs !font-light text-gray-500"
+                />
+            </div>
+            <div class="col-span-7 col-start-5">
+                <div class="w-full max-w-4xl rounded-lg bg-white">
+                    <GuardianFormElement
+                        title="Guardian's form"
+                        @submit="submit"
+                    >
+                        <div class="flex gap-3">
+                            <GuardianTextInput
+                                v-model="form.name"
+                                class="w-full"
+                                label="Student's name"
+                                placeholder="Name"
+                                :error="form.errors.name"
+                                required
+                            />
+                        </div>
+                        <div class="flex gap-3">
+                            <GuardianSelectInput
+                                v-model="form.level_id"
+                                class="w-full cursor-pointer"
+                                :options="levelOptions"
+                                placeholder="Select students level(grade)"
+                                label="Student's level"
+                                required
+                            />
+                            <GuardianSelectInput
+                                v-model="form.gender"
+                                class="w-full cursor-pointer"
+                                :options="genderOptions"
+                                placeholder="Select Student's Gender"
+                                label="Student's gender"
+                                required
+                            />
+                        </div>
 
-                    <div class="flex gap-3">
-                        <GuardianDatePicker
-                            v-model="form.date_of_birth"
-                            label="Student's date of birth"
-                            class="w-full cursor-pointer"
-                        />
-                        <GuardianSelectInput
-                            v-model="form.guardian_relation"
-                            class="w-full cursor-pointer"
-                            :options="relationOptions"
-                            placeholder="select parent's relation"
-                            label="Parent's relation"
-                            required
-                        />
-                    </div>
+                        <div class="flex gap-3">
+                            <GuardianDatePicker
+                                v-model="form.date_of_birth"
+                                label="Student's Date Of Birth"
+                                class="w-full cursor-pointer"
+                            />
+                            <GuardianSelectInput
+                                v-model="form.guardian_relation"
+                                class="w-full cursor-pointer"
+                                :options="relationOptions"
+                                placeholder="Select Parent's Relation"
+                                label="Parent's relation"
+                                required
+                            />
+                        </div>
 
-                    <div class="flex gap-3">
-                        <GuardianTextInput
-                            v-model="form.guardian_name"
-                            class="w-full"
-                            label="Guardian's name"
-                            placeholder="name"
-                            :error="form.errors.guardian_name"
-                            required
-                        />
-                        <GuardianTextInput
-                            v-model="form.guardian_phone_number"
-                            class="w-full"
-                            label="Guardian's phone number"
-                            type="number"
-                            placeholder="phone number"
-                            :error="form.errors.guardian_phone_number"
-                            required
-                        />
-                    </div>
-                    <div class="flex gap-3">
-                        <GuardianTextInput
-                            v-model="form.guardian_email"
-                            type="email"
-                            class="w-full"
-                            label="Guardian's email"
-                            placeholder="email"
-                            :error="form.errors.guardian_email"
-                        />
-                        <GuardianSelectInput
-                            v-model="form.guardian_gender"
-                            class="w-full cursor-pointer"
-                            :options="genderOptions"
-                            placeholder="select guardian's gender"
-                            label="Guardian's gender"
-                            required
-                        />
-                    </div>
-                </GuardianFormElement>
+                        <div class="flex gap-3">
+                            <GuardianTextInput
+                                v-model="form.guardian_name"
+                                class="w-full"
+                                label="Guardian's name"
+                                placeholder="Name"
+                                :error="form.errors.guardian_name"
+                                required
+                            />
+                            <GuardianTextInput
+                                v-model="form.guardian_phone_number"
+                                class="w-full"
+                                label="Guardian's phone number"
+                                type="number"
+                                placeholder="Phone Number"
+                                :error="form.errors.guardian_phone_number"
+                                required
+                            />
+                        </div>
+                        <div class="flex gap-3">
+                            <GuardianTextInput
+                                v-model="form.guardian_email"
+                                type="email"
+                                class="w-full"
+                                label="Guardian's email"
+                                placeholder="Email"
+                                :error="form.errors.guardian_email"
+                            />
+                            <GuardianSelectInput
+                                v-model="form.guardian_gender"
+                                class="w-full cursor-pointer"
+                                :options="genderOptions"
+                                placeholder="Select Guardian's Gender"
+                                label="Guardian's gender"
+                                required
+                            />
+                        </div>
+                    </GuardianFormElement>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="grid-rows-12 my-5 grid sm:grid-cols-12 md:w-full">
-        <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full">
-            <Heading value="Register student and parents in bulk"/>
-            <Heading
-                value="only upload an excel or csv file."
-                size="sm"
-                class="text-xs font-light text-gray-500"
-            />
-        </div>
-        <div class="col-span-8">
-            <div class="relative w-full max-w-4xl flex-col rounded-lg bg-white">
-                <GuardianFileInput
-                    max-file-size="10000000"
-                    @file-uploaded="handleFileUploaded"
+        <div class="grid-rows-12 mt-10 mb-4 grid sm:grid-cols-12 md:w-full">
+            <div
+                class="col-span-4 col-start-1 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full"
+            >
+                <Heading value="Register student and parents in bulk" />
+                <Heading
+                    value="only upload an excel or csv file."
+                    size="sm"
+                    class="text-xs !font-light text-gray-500"
                 />
+            </div>
+            <div class="col-span-7 col-start-5">
+                <div
+                    class="relative w-full max-w-4xl flex-col rounded-lg bg-white"
+                >
+                    <GuardianFileInput
+                        max-file-size="10000000"
+                        @file-uploaded="handleFileUploaded"
+                    />
 
-                <div class="absolute right-0">
-                    <GuardianPrimaryButton title="Submit"/>
+                    <div class="absolute right-0 mt-4">
+                        <GuardianPrimaryButton title="Submit" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,17 +142,17 @@ import GuardianFormElement from "@/Components/FormElement.vue";
 import GuardianTextInput from "@/Components/TextInput.vue";
 import GuardianFileInput from "@/Components/FileInput.vue";
 import Heading from "@/Components/Heading.vue";
-import {useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import GuardianPrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianDatePicker from "@/Components/DatePicker.vue";
 import GuardianSelectInput from "@/Components/SelectInput.vue";
-import {value} from "lodash/seq";
+import { value } from "lodash/seq";
 
 defineEmits(["file-uploaded"]);
 
 const genderOptions = [
-    {value: "male", label: "Male"},
-    {value: "female", label: "Female"},
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
 ];
 
 const handleFileUploaded = (file) => {
@@ -150,27 +161,27 @@ const handleFileUploaded = (file) => {
 };
 
 const levelOptions = [
-    {value: "KG-1", label: "KG 1"},
-    {value: "KG-2", label: "KG 2"},
-    {value: "KG-3", label: "KG 3"},
-    {value: "1", label: "Grade 1"},
-    {value: "2", label: "Grade 2"},
-    {value: "3", label: "Grade 3"},
-    {value: "4", label: "Grade 4"},
-    {value: "5", label: "Grade 5"},
-    {value: "6", label: "Grade 6"},
-    {value: "7", label: "Grade 7"},
-    {value: "8", label: "Grade 8"},
-    {value: "9", label: "Grade 9"},
-    {value: "10", label: "Grade 10"},
-    {value: "11", label: "Grade 11"},
-    {value: "12", label: "Grade 12"},
+    { value: "KG-1", label: "KG 1" },
+    { value: "KG-2", label: "KG 2" },
+    { value: "KG-3", label: "KG 3" },
+    { value: "1", label: "Grade 1" },
+    { value: "2", label: "Grade 2" },
+    { value: "3", label: "Grade 3" },
+    { value: "4", label: "Grade 4" },
+    { value: "5", label: "Grade 5" },
+    { value: "6", label: "Grade 6" },
+    { value: "7", label: "Grade 7" },
+    { value: "8", label: "Grade 8" },
+    { value: "9", label: "Grade 9" },
+    { value: "10", label: "Grade 10" },
+    { value: "11", label: "Grade 11" },
+    { value: "12", label: "Grade 12" },
 ];
 
 const relationOptions = [
-    {value: "father", label: "Father"},
-    {value: "mother", label: "Mother"},
-    {value: "other", label: "Other"},
+    { value: "father", label: "Father" },
+    { value: "mother", label: "Mother" },
+    { value: "other", label: "Other" },
 ];
 
 const form = useForm({
