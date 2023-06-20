@@ -188,10 +188,7 @@ const form = useForm({
 });
 
 const markTeacherAsAbsent = () => {
-    console.log(selectedBatchSessionId.value);
-    console.log(selectedTeacherUserId.value);
-
-    form.post(`/absentee/staff/add`, {
+    form.post("/absentee/staff/add", {
         onSuccess: () => {
             isDialogBoxOpen.value = false;
             form.reset();
