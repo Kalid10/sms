@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Jobs\SendAnnouncementNotification;
 use App\Models\Announcement;
 use App\Models\SchoolYear;
 use App\Services\TeacherService;
@@ -48,7 +49,10 @@ class AnnouncementController extends Controller
             'title' => 'required|string|max:255',
             'body' => 'required|string',
             'expires_on' => 'required|date',
-            'target_group' => 'required|array|min:1|in:all,students,teachers,guardians,admins',
+            'target_group' => 'required|array|min:1',
+            'target_group.*' => 'string|in:all,teachers,guardians,admins',
+            'target_batches' => 'nullable|array',
+            'target_batches.*' => 'integer|exists:batches,id',
         ]);
 
         // Get the current authenticated user
@@ -67,6 +71,8 @@ class AnnouncementController extends Controller
         $announcement->schoolYear()->associate($schoolYear);
         $announcement->save();
 
+        SendAnnouncementNotification::dispatch($announcement);
+
         return redirect()->back()->with('success', 'Announcement created successfully');
     }
 
@@ -78,7 +84,10 @@ class AnnouncementController extends Controller
             'body' => 'string',
             'expires_on' => 'date',
             'id' => 'required|integer|exists:announcements,id',
-            'target_group' => 'required|array|min:1|in:all,students,teachers,guardians,admins',
+            'target_group' => 'required|array|min:1',
+            'target_group.*' => 'string|in:all,teachers,guardians,admins',
+            'target_batches' => 'nullable|array',
+            'target_batches.*' => 'integer|exists:batches,id',
         ]);
 
         // TODO:: Check if the logged-in user is the author of the announcement or is able to edit announcements
