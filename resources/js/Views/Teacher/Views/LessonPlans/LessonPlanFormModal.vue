@@ -1,15 +1,30 @@
 <template>
     <Modal v-model:view="openForm" background-color="transparent">
-        <div class="fixed top-0 left-0 grid h-screen w-full grid-cols-3">
+        <div class="fixed top-0 left-0 grid h-screen w-full grid-cols-12">
             <div
                 class="col-span-1 min-h-full animate-darken delay-150"
                 @click="closeForm"
             ></div>
 
             <div
-                class="relative col-span-2 col-start-2 h-full w-full animate-slide-left border-l bg-white pl-8 pt-8 shadow-sm"
+                class="relative col-span-11 col-start-2 flex h-full w-full animate-slide-left space-x-5 border-l bg-white pl-3 pt-8 shadow-sm"
             >
-                <div class="flex h-full w-full flex-col gap-4">
+                <div class="h-5/6 w-5/12">
+                    <LessonPlanCopilot
+                        :topic="form.topic"
+                        :generate-note-suggestions="generateNoteSuggestions"
+                        :description="form.description"
+                        :generate-question-suggestions="
+                            generateQuestionSuggestions
+                        "
+                        @selected-text="updateSelectedText"
+                        @finish="
+                            generateQuestionSuggestions = false;
+                            generateNoteSuggestions = false;
+                        "
+                    />
+                </div>
+                <div class="flex h-full w-8/12 flex-col gap-4">
                     <div class="flex w-full flex-col">
                         <div
                             class="flex w-full origin-left items-center justify-between pr-8"
@@ -117,21 +132,45 @@
                                     </h3>
                                 </div>
 
-                                <TextInput
-                                    v-model="form.topic"
-                                    required
-                                    label="Topic"
-                                    placeholder="Topic of the Lesson Plan"
-                                />
-
-                                <TextArea
-                                    v-model="form.description"
-                                    label="Description"
-                                    rows="20"
-                                    leading="leading-loose"
-                                    placeholder="Add your Lesson Plan description"
-                                />
-
+                                <div
+                                    class="flex w-full items-end justify-between space-x-4"
+                                >
+                                    <TextInput
+                                        v-model="form.topic"
+                                        required
+                                        label="Topic"
+                                        placeholder="Topic of the Lesson Plan"
+                                        class="w-full"
+                                    />
+                                    <div class="flex h-8 items-center">
+                                        <SparklesIcon
+                                            class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
+                                            @click="
+                                                generateNoteSuggestions = true
+                                            "
+                                        />
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex w-full justify-between space-x-4"
+                                >
+                                    <TextArea
+                                        v-model="form.description"
+                                        label="Description"
+                                        rows="30"
+                                        leading="leading-loose"
+                                        class="w-full"
+                                        placeholder="Add your Lesson Plan description"
+                                    />
+                                    <div class="mt-8 flex h-8 items-center">
+                                        <SparklesIcon
+                                            class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
+                                            @click="
+                                                generateQuestionSuggestions = true
+                                            "
+                                        />
+                                    </div>
+                                </div>
                                 <div class="flex w-full justify-end">
                                     <PrimaryButton
                                         title="Submit"
@@ -344,6 +383,8 @@ import { computed, ref, watch } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import ReadMoreLess from "@/Components/ReadMoreLess.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import LessonPlanCopilot from "@/Views/Teacher/Views/LessonPlans/LessonPlanCopilot.vue";
+import { SparklesIcon } from "@heroicons/vue/20/solid";
 
 const props = defineProps({
     batchSession: {
@@ -357,7 +398,6 @@ const props = defineProps({
 });
 
 const emits = defineEmits(["update:view"]);
-
 const batch = computed(() => usePage().props.batch);
 const selectedBatchSession = computed(() => props.batchSession);
 const batchSessions = computed(() => usePage().props["batch_sessions"]);
@@ -378,6 +418,8 @@ const previousBatchSessionsWithLessonPlans = computed(() => {
     }
     return [];
 });
+const generateNoteSuggestions = ref(false);
+const generateQuestionSuggestions = ref(false);
 
 const openForm = computed({
     get() {
@@ -455,6 +497,10 @@ function handleSubmit() {
 watch(selectedBatchSession, () => {
     prepareForm(selectedBatchSession.value.id);
 });
+
+const updateSelectedText = (text) => {
+    form.description += " " + text;
+};
 </script>
 
 <style scoped></style>
