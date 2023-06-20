@@ -1,6 +1,10 @@
 {
+    "announcements":"Announcements",
+    "searchAnnouncements": "Search Announcements",
+
+
+
     "recentAnnouncements": " Recent Announcements",
-    "searchAssessments": "Search Assessments",
     "emptyViewTitle": "No Announcements Found!",
     "emptyViewLinkTitle": "Go To Announcements",
     "linkCellValue": "Show All Announcements",

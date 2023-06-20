@@ -37,7 +37,7 @@
                 <div
                     class="-skew-x-3 bg-zinc-800 px-3 py-1 text-3xl font-bold italic text-white"
                 >
-                    {{ assessment.title }} Info
+                    {{ assessment.title }} {{ $t('views.teacher.assessments.assessmentsMark.info') }}
                 </div>
 
                 <MarkStat
@@ -69,20 +69,23 @@
                         class="flex w-full items-center justify-center space-x-1 text-xs font-light"
                     >
                         <ExclamationTriangleIcon class="w-4 text-red-600" />
-                        <span>CAUTION</span>
+                        <span>
+                        {{ $t('views.teacher.assessments.assessmentsMark.caution') }}
+                        </span>
                     </div>
                     <div class="text-xs font-light">
-                        Please note, upon clicking 'Finish Marking',
-                        notifications, emails and SMS will be sent to parents
-                        and relevant authorities regarding the students'
-                        performance. However, rest assured, you will retain the
-                        ability to make necessary adjustments to these
-                        assessments until the end of the current quarter or
-                        semester.
+<!--                        Please note, upon clicking 'Finish Marking',-->
+<!--                        notifications, emails and SMS will be sent to parents-->
+<!--                        and relevant authorities regarding the students'-->
+<!--                        performance. However, rest assured, you will retain the-->
+<!--                        ability to make necessary adjustments to these-->
+<!--                        assessments until the end of the current quarter or-->
+<!--                        semester.-->
+                        {{ $t('views.teacher.assessments.assessmentsMark.message') }}
                     </div>
                     <SecondaryButton
                         :is-disabled="isLoading"
-                        title="Finish Marking"
+                        :title="$t('views.teacher.assessments.assessmentsMark.finishMarking')"
                         class="w-3/5 rounded-2xl bg-zinc-800 text-white"
                         @click.="insertStudentsAssessment"
                     />
@@ -106,6 +109,7 @@ import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import Loading from "@/Components/Loading.vue";
 import BackButton from "@/Components/BackButton.vue";
 import { isTeacher } from "@/utils";
+import TextInput from "@/Components/TextInput.vue";
 
 const showNotification = inject("showNotification");
 const isLoading = ref(false);

@@ -42,13 +42,14 @@
                 </div>
 
                 <div class="flex flex-col gap-4">
-                    <h3 class="text-xl font-semibold">
-                        Welcome Back! Sign In and Ignite The Learning Adventure
+
+
+                    <h3 class="text-xl font-semibold" v-html="$t('pages.auth.login.welcomeBack')">
                     </h3>
-                    <h3 class="text-gray-500">
-                        Reconnect with our collaborative platform to continue
-                        empowering your school and elevating educational
-                        experiences.
+
+
+                    <h3 class="text-gray-500" v-html="$t('pages.auth.login.messageOne')">
+
                     </h3>
                 </div>
 
@@ -57,7 +58,7 @@
                         <TextInput
                             v-model="form.emailOrPhone"
                             class="w-full"
-                            label="Your Email"
+                            :label="$t('pages.auth.login.emailOrPhoneLabel')"
                             placeholder="johndoe@school.org"
                             required
                             :error="form.errors.emailOrPhone"
@@ -66,7 +67,7 @@
                         <TextInput
                             v-model="form.password"
                             class="w-full"
-                            label="Password"
+                            :label="$t('pages.auth.login.passwordLabel')"
                             placeholder="**********"
                             required
                             type="password"
@@ -76,9 +77,9 @@
                     <button
                         class="h-10 w-full rounded-md border-brand-50 bg-brand-100 text-center font-semibold text-white"
                         type="submit"
-                    >
-                        Log In
+                        v-html="$t('pages.auth.login.logIn')"                    >
                     </button>
+
                 </fieldset>
             </form>
         </div>
@@ -129,14 +130,13 @@
                 </transition>
             </h1>
 
-            <h3 class="max-w-xl font-medium text-white">
-                Maximize your school's potential with our all-inclusive
-                management platform. Simplify operations, boost communication,
-                and create a teamwork-driven learning space for a brilliant
-                future.
-                <span class="block py-3"
-                >Sign in to start your journey towards educational
-                    excellence.</span
+            <h3 class="max-w-xl font-medium text-white"
+            >
+                {{ $t('pages.auth.login.messageTwo') }}
+                <span
+class="block py-3"
+                      v-html="$t('pages.auth.login.signIn')"
+                ></span
                 >
             </h3>
         </div>
@@ -147,7 +147,6 @@
 import {useForm} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import {onMounted, onUnmounted, ref} from "vue";
-
 const form = useForm({
     emailOrPhone: "",
     password: "",
