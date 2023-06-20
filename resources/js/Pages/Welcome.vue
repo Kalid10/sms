@@ -259,6 +259,13 @@
         >
             Test Create Student Note
         </button>
+
+        <button
+            class="h-14 bg-pink-400 p-1 text-white"
+            @click="addStaffAbsentee"
+        >
+            Add Staff Absentee
+        </button>
     </div>
 </template>
 <script setup>
@@ -1584,6 +1591,27 @@ function insertStudentsAssessment() {
             },
         ],
     });
+}
+
+function addStaffAbsentee() {
+    router.post(
+        "/absentee/staff/add",
+        {
+            batch_session_id: 3,
+            user_id: 2058,
+            reason: "Sick",
+            type: "teacher",
+        },
+        {
+            onSuccess: () => {
+                console.log("Success");
+            },
+            onError: (error) => {
+                console.log("Error");
+                console.log(error);
+            },
+        }
+    );
 }
 </script>
 
