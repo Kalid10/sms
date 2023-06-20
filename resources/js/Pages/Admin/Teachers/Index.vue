@@ -64,23 +64,71 @@
                     </div>
                 </div>
             </template>
+
+            <template #session-column="{ data }">
+                <SecondaryButton
+                    v-if="data.batch_session_id"
+                    title="Absentee"
+                    class="!rounded-2xl bg-zinc-700 text-white"
+                    @click="toggleDialogBox(data.id, data.batch_session_id)"
+                />
+            </template>
         </TeacherTableElement>
     </div>
+
+    <DialogBox
+        v-if="isDialogBoxOpen"
+        title="Absent"
+        description="confirm if you want to mark this teacher as absent"
+        open
+        accent="gray"
+        @abort="isDialogBoxOpen = false"
+        @confirm="markTeacherAsAbsent"
+    >
+        <template #action> Absent</template>
+        <template #icon>
+            <MinusCircleIcon />
+        </template>
+        <template #content>
+            <TextInput
+                v-model="form.reason"
+                label="Reason"
+                placeholder="ex: sick"
+            />
+        </template>
+    </DialogBox>
 </template>
 
 <script setup>
 import { computed, ref, watch } from "vue";
-import { router, usePage } from "@inertiajs/vue3";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import TeacherTableElement from "@/Components/TableElement.vue";
-import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline/index";
+import {
+    ExclamationTriangleIcon,
+    MinusCircleIcon,
+} from "@heroicons/vue/24/outline/index";
 import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
 import Pagination from "@/Components/Pagination.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
+import DialogBox from "@/Components/DialogBox.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+
+const isDialogBoxOpen = ref(false);
 
 const teachers = computed(() => {
     return usePage().props.teachers;
 });
+
+const selectedBatchSessionId = ref(null);
+
+function toggleDialogBox(id, batch_session_id) {
+    isDialogBoxOpen.value = !isDialogBoxOpen.value;
+    form.batch_session_id = batch_session_id;
+    form.user_id = id;
+}
+
+const selectedTeacherUserId = ref(null);
 
 const formattedTeachersData = computed(() => {
     return teachers.value.data.map((teacher) => {
@@ -100,6 +148,12 @@ const formattedTeachersData = computed(() => {
                 .map((hr) => `${hr.batch.level.name}${hr.batch.section}`)
                 .join(", "),
             subjects: subjects,
+            session: {
+                id: teacher.user.id,
+                batch_session_id: teacher.batch_sessions.length
+                    ? teacher.batch_sessions[0].id
+                    : null,
+            },
         };
     });
 });
@@ -125,6 +179,22 @@ const search = debounce(() => {
 watch([searchKey, perPage], () => {
     search();
 });
+
+const form = useForm({
+    batch_session_id: "",
+    user_id: "",
+    reason: "",
+    type: "teacher",
+});
+
+const markTeacherAsAbsent = () => {
+    form.post("/absentee/staff/add", {
+        onSuccess: () => {
+            isDialogBoxOpen.value = false;
+            form.reset();
+        },
+    });
+};
 
 const config = [
     {
@@ -154,6 +224,11 @@ const config = [
         name: "Subjects",
         key: "subjects",
         align: "left",
+        type: "custom",
+    },
+    {
+        name: "Absentee",
+        key: "session",
         type: "custom",
     },
 ];

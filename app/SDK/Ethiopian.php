@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fake;
+namespace App\SDK;
 
 class Ethiopian
 {

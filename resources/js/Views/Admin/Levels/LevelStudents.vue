@@ -1,7 +1,7 @@
 <template>
     <div class="flex w-full flex-col gap-3">
         <TableElement
-            v-if="!!students"
+            v-if="!!students.data"
             :title="
                 (selectedSection &&
                     `Section ${selectedSection} Students List`) ||
@@ -14,7 +14,7 @@
             :row-actionable="true"
             :selectable="false"
             :columns="studentsConfig"
-            :data="students"
+            :data="students.data"
         >
             <template #date_of_birth-column="{ data }">
                 {{ Math.abs(moment(data).diff(new Date(), "years")) }}
@@ -89,12 +89,10 @@
             </template>
 
             <template #footer>
-                <SelectInput
-                    v-model="perPage"
-                    :options="perPageOptions"
-                    class="w-36"
-                    direction="up"
-                    placeholder="Per page"
+                <Pagination
+                    :preserve-state="true"
+                    :links="students.links"
+                    position="center"
                 />
             </template>
         </TableElement>
@@ -115,7 +113,7 @@ import {
 } from "@heroicons/vue/24/outline/index.js";
 import moment from "moment";
 import TextInput from "@/Components/TextInput.vue";
-import SelectInput from "@/Components/SelectInput.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const props = {
     pagination: {

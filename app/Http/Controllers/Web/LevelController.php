@@ -128,14 +128,16 @@ class LevelController extends Controller
                 return $query->whereHas('batch', function ($query) use ($sectionFilter) {
                     return $query->where('section', $sectionFilter);
                 });
-            })
-            ->paginate($perPage, ['*'], 'page', $page)
-            ->map(fn ($batchStudent) => [
+            })->paginate(10);
+
+        $students->getCollection()->transform(function ($batchStudent) {
+            return [
                 ...$batchStudent->student->user->toArray(),
                 'student_id' => $batchStudent->student->id,
                 'section' => $batchStudent->batch->section,
                 'updated_at' => $batchStudent->updated_at->diffForHumans(Carbon::now()),
-            ]);
+            ];
+        });
 
         return Inertia::render('Admin/Levels/Single', [
             'level' => $level,

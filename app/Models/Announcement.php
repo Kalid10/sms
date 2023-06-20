@@ -17,6 +17,7 @@ class Announcement extends Model
         'body',
         'expires_on',
         'target_group',
+        'target_batches',
     ];
 
     public function author(): BelongsTo
@@ -31,5 +32,6 @@ class Announcement extends Model
 
     protected $casts = [
         'target_group' => 'array',
+        'target_batches' => 'array',
     ];
 }
