@@ -10,6 +10,7 @@
             </div>
 
             <SecondaryButton
+                v-if="isAdmin()"
                 title="Assign Homeroom"
                 class="!rounded-2xl bg-zinc-800 text-white"
                 @click="showAssignModal = true"
@@ -21,7 +22,7 @@
             class="flex min-h-screen w-full justify-between space-x-6 divide-x divide-gray-200 bg-gray-50"
         >
             <!--        Left Side-->
-            <div class="flex w-8/12 flex-col space-y-2 py-5 pl-5">
+            <div class="flex w-8/12 flex-col space-y-4 py-5 pl-5">
                 <Header
                     title="Homeroom Classes"
                     :select-input-options="homeroomOptions"
@@ -29,7 +30,7 @@
                     @change="updateBatchInfo"
                 />
 
-                <Statistics />
+                <Statistics class="!bg-white" />
 
                 <StudentsTable
                     :show-homeroom-detail="false"
@@ -44,7 +45,8 @@
                     <div
                         class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg bg-positive-100 py-5 text-center text-5xl font-bold text-white shadow-sm"
                     >
-                        <div v-if="grade">{{ grade?.attendance }}%</div>
+                        <div v-if="grade">{{ grade?.attendance ?? "-" }}%</div>
+                        <div>-</div>
                         <span class="text-xs font-light"
                             >CLASS ATTENDANCE
                         </span>
@@ -112,6 +114,7 @@ import Modal from "@/Components/Modal.vue";
 import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetail.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
+import { isAdmin } from "@/utils";
 
 const homeroomClasses = computed(() => usePage().props.homeroom_classes);
 const selectedHomeroom = ref(usePage().props.filters.batch_id);
