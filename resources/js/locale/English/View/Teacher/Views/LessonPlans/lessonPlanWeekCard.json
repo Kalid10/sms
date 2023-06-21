@@ -1,6 +1,7 @@
 {
+    "week":"Week"
     "classSessionsStarting": "Class sessions for the week starting from",
     "noClassSessions": "No Class Sessions",
     "noClassSessions": "There will be no class sessions",
-    "during Week": "during Week"
+    "duringWeek": "during Week"
 }

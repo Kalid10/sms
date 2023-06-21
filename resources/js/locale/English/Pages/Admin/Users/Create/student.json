@@ -7,7 +7,7 @@
     "levelIdLabel": "Student's level",
     "levelIdPlaceholder": "Select students level(grade)",
     "genderLabel": "Student's gender",
-    "genderLabel": "Select Student's Gender",
+    "genderPlaceholder": "Select Student's Gender",
     "studentDateOfBirth": "Student's Date Of Birth",
     "guardianRelationLabel": "Parent's relation",
     "guardianRelationPlaceholder": "Select Parent's Relation",
@@ -21,7 +21,7 @@
     "guardianGenderPlaceholder":"Select Guardian's Gender",
     "headingThree": "Register student and parents in bulk",
     "headingFour":"only upload an excel or csv file.",
-    "Father": "Father",
-    "Mother": "Mother",
-    "Other": "Other"
+    "father": "Father",
+    "mother": "Mother",
+    "other": "Other"
 }

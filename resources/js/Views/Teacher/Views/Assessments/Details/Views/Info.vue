@@ -27,7 +27,7 @@
             <div
                 class="mt-2 cursor-pointer text-xs font-light underline-offset-2 hover:font-semibold hover:underline"
             >
-                Mr. {{ teacherName }}
+             {{ teacherName }}
             </div>
         </div>
     </div>

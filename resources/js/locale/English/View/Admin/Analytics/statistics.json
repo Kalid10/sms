@@ -1,8 +1,8 @@
 {
-    "Previous": "Previous",
-    "Next": "Next",
-    "Teachers": "Teachers",
-    "Students": "Students",
-    "Subjects": "Subjects",
-    "Administrators": "Administrators"
+    "previous": "Previous",
+    "next": "Next",
+    "teachers": "Teachers",
+    "students": "Students",
+    "subjects": "Subjects",
+    "administrators": "Administrators"
 }

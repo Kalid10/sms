@@ -1,4 +1,4 @@
-<template>
+ <template>
     <label class="flex flex-col gap-1">
         <span v-if="label" class="">
             <span class="pl-0.5 text-xs font-semibold text-gray-500">{{

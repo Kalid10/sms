@@ -1,6 +1,6 @@
 {
-    "FormElementTitle": "New Subject",
-    "FormElementSubtitle": "Create a new subject and assign it to a category",
+    "formElementTitle": "New Subject",
+    "formElementSubtitle": "Create a new subject and assign it to a category",
     "fullNamePlaceholder": "Name of the new Subject",
     "fullNameLabel": "Subject Name",
     "shortNamePlaceholder": "Short name for Subject",

@@ -11,6 +11,7 @@ import assessmentsMark from './Amharic/View/Teacher/Assessments/mark.json'
 import lessonPlansIndex from './Amharic/View/Teacher/LessonPlans/index.json'
 import lessonPlansUpdate from './Amharic/View/Teacher/LessonPlans/update.json'
 
+import AssessmentOutcomePercentages from './Amharic/View/Teacher/Views/Assessments/Details/Views/assessmentOutcomePercentages.json'
 const am = {
     "test": {
         "name":"ስም"
@@ -39,6 +40,16 @@ const am = {
             "lessonPlans":{
                 lessonPlansIndex,
                 lessonPlansUpdate
+            },
+            "views":{
+                "assessments":{
+                    "details":{
+                        "views":{
+                            AssessmentOutcomePercentages
+
+                        }
+                    }
+                }
             }
 
 

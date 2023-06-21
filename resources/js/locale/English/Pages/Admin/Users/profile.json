@@ -16,6 +16,6 @@
     "passwordPlaceholder": "enter your new password",
     "passwordConfirmationLabel":"Confirm Password",
     "passwordConfirmationPlaceholder":"confirm your new password",
-    "Male": "Male",
-    "Female":"Female"
+    "male": "Male",
+    "female":"Female"
 }
