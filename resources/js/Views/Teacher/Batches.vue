@@ -191,9 +191,13 @@ const updateBatchInfo = (batchSubjectId, search) => {
     if (batchSubjectId !== null) selectedBatchSubject.value = batchSubjectId;
     router.get(
         isAdmin()
-            ? "/admin/teachers"
-            : "/teacher" +
-                  "/class?batch_subject_id=" +
+            ? "/admin/teachers/class?teacher_id=" +
+                  teacher.id +
+                  "&batch_subject_id=" +
+                  selectedBatchSubject.value +
+                  "&search=" +
+                  search
+            : "/teacher/class?batch_subject_id=" +
                   selectedBatchSubject.value +
                   "&search=" +
                   search,

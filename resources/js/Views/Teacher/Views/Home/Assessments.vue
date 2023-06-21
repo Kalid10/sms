@@ -19,7 +19,7 @@
         <!--        Content-->
         <div class="flex w-full flex-col">
             <div
-                v-if="assessments?.data.length"
+                v-if="assessments?.data?.length"
                 class="flex w-full flex-col justify-center divide-y pb-2"
             >
                 <Item :assessments="assessments" :view="view" />
