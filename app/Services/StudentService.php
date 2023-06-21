@@ -17,7 +17,7 @@ class StudentService
     public static function getBatchStudents(int $batchId, ?string $search = '', int $batchSubjectId = null)
     {
         $batchStudents = BatchStudent::where('batch_id', $batchId)
-            ->with('student.user.absentee', 'student.batches')
+            ->with('student.user.absentee', 'student.batches', 'student.flags')
             ->whereHas('student.user', function ($query) use ($search) {
                 $query->where('name', 'like', "%$search%");
             })

@@ -36,9 +36,15 @@
                     </div>
                 </div>
 
-                <div class="w-full pr-3">
+                <div class="flex w-full justify-between space-x-5 pr-3">
                     <div class="w-7/12 rounded-lg bg-white p-3 shadow-sm">
                         <AbsenteeRecords />
+                    </div>
+                    <div class="w-5/12">
+                        <Flag
+                            :batch-subject-options="batchSubjectOptions"
+                            :student="student"
+                        />
                     </div>
                 </div>
             </div>
@@ -92,6 +98,7 @@ import GeneralReport from "@/Views/Teacher/Views/Student/GeneralReport.vue";
 import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import AbsenteeRecords from "@/Views/AbsenteeRecords.vue";
+import Flag from "@/Views/Teacher/Views/Student/Flag/Index.vue";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);

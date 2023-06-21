@@ -79,6 +79,7 @@ const filteredStudents = computed(() => {
                 name: item.student.user.name,
                 id: item.student.id,
             },
+            flags: item.student.flags?.length,
             attendance: item.attendance_percentage + "%",
             grade: item.quarterly_grade
                 ? item.quarterly_grade?.score?.toFixed(1)
@@ -97,6 +98,12 @@ const config = [
         align: "center",
         class: "h-12 !text-[0.6rem]",
         type: "custom",
+    },
+    {
+        key: "flags",
+        name: "Flags",
+        align: "center",
+        class: "h-12 !text-[0.6rem]",
     },
     {
         key: "attendance",
