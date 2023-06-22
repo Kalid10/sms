@@ -17,7 +17,7 @@ class Flag extends Model
         'updated_at',
     ];
 
-    public function flagable(): MorphTo
+    public function flaggable(): MorphTo
     {
         return $this->morphTo();
     }
