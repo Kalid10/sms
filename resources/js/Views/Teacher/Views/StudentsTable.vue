@@ -17,15 +17,21 @@
                         placeholder="Search"
                         class="w-5/12"
                     />
-
-                    <div v-if="showHomeroomDetail">
+                    <div v-if="!homeroomTeacher && isAdmin()">
+                        <SecondaryButton
+                            title="Assign Homeroom"
+                            class="!rounded-2xl bg-zinc-800 text-white"
+                            @click="showAssignModal = true"
+                        />
+                    </div>
+                    <div v-if="homeroomTeacher" class="text-xs font-semibold">
                         <div class="mb-1 text-[0.55rem] font-light">
                             Homeroom Teacher
                         </div>
                         <div
                             class="cursor-pointer text-xs font-semibold underline-offset-2 hover:underline"
                         >
-                            Mr.Bereket Gobeze
+                            {{ homeroomTeacher.user.name }}
                         </div>
                     </div>
                 </div>
@@ -47,6 +53,9 @@
             </template>
         </TableElement>
     </div>
+    <Modal v-model:view="showAssignModal">
+        <AssignHomeroom />
+    </Modal>
 </template>
 <script setup>
 import Pagination from "@/Components/Pagination.vue";
@@ -55,6 +64,10 @@ import TableElement from "@/Components/TableElement.vue";
 import { computed, ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import debounce from "lodash/debounce";
+import Modal from "@/Components/Modal.vue";
+import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
+import { isAdmin } from "@/utils";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const emit = defineEmits(["click", "search"]);
 const props = defineProps({
@@ -67,9 +80,19 @@ const props = defineProps({
         default: true,
     },
 });
+
+const teacher = usePage().props.teacher;
+
+const batches = computed(() => usePage().props.batches);
+
+const showAssignModal = ref(false);
+
 const searchText = ref(usePage().props.filters?.search);
 const students = computed(() => {
     return usePage().props.students;
+});
+const homeroomTeacher = computed(() => {
+    return usePage().props.homeroom_teacher;
 });
 
 const filteredStudents = computed(() => {

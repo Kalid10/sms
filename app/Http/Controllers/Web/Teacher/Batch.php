@@ -30,7 +30,11 @@ class Batch extends Controller
 
         $batchSubject = TeacherService::prepareBatchSubject($request, $id);
         $students = TeacherService::getStudents($batchSubject->id, $request->input('search'));
-        $teacher = Teacher::find($id)->load('user');
+        $teacher = Teacher::find($id)->load('user', 'homeroom.batch');
+
+        $homeroomTeacher = Teacher::with('user')->whereHas('homeroom', function ($query) use ($batchSubject) {
+            $query->where('batch_id', $batchSubject->batch_id);
+        })->first();
 
         $batchSubjects = $teacher->batchSubjects()
             ->whereHas('batch', function ($query) {
@@ -87,6 +91,8 @@ class Batch extends Controller
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),
             ],
+            'homeroom_teacher' => $homeroomTeacher,
+            'batches' => TeacherService::assignHomeroomTeacherData(),
         ]);
     }
 }
