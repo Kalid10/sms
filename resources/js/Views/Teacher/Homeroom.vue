@@ -136,7 +136,11 @@ const homeroomOptions = computed(() => {
 const updateBatchInfo = (batchId, search) => {
     if (batchId !== null) selectedHomeroom.value = batchId;
     router.get(
-        "/teacher/homeroom",
+        isAdmin()
+            ? "/admin/teachers/homeroom?teacher_id=" +
+                  usePage().props.filters.teacher_id +
+                  "&batch_id="
+            : "/teacher/homeroom?batch_id=",
         {
             batch_id: selectedHomeroom.value,
             search: search,

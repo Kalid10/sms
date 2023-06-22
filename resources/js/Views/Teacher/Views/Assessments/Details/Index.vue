@@ -23,19 +23,19 @@
                 :assessment="assessment"
             />
             <Scheduled
-                v-if="assessment.status === 'scheduled'"
+                v-if="assessment.status === 'scheduled' && isTeacher()"
                 :assessment="assessment"
             />
             <Published
-                v-if="assessment.status === 'published'"
+                v-if="assessment.status === 'published' && isTeacher()"
                 :assessment="assessment"
             />
             <Completed
-                v-if="assessment.status === 'completed'"
+                v-if="assessment.status === 'completed' && isTeacher()"
                 :assessment="assessment"
             />
             <Marking
-                v-if="assessment.status === 'marking'"
+                v-if="assessment.status === 'marking' && isTeacher()"
                 :assessment="assessment"
             />
 

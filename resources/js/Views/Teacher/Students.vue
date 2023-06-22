@@ -75,6 +75,7 @@ import {
 import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 import Header from "@/Views/Teacher/Views/Header.vue";
 import StudentsTable from "@/Views/Teacher/Views/StudentsTable.vue";
+import { isAdmin } from "@/utils";
 
 const students = computed(() => usePage().props.students);
 const batchSubjectGrade = computed(() => usePage().props.batch_subject_grade);
@@ -106,10 +107,17 @@ const batchSubjectOptions = computed(() => {
 const updateBatchInfo = (batchSubjectId, search) => {
     if (batchSubjectId !== null) selectedBatchSubject.value = batchSubjectId;
     router.visit(
-        "/teacher/students?batch_subject_id=" +
-            selectedBatchSubject.value +
-            "&search=" +
-            search,
+        isAdmin()
+            ? "/admin/teachers/students?teacher_id=" +
+                  usePage().props.teacher.id +
+                  "&batch_subject_id=" +
+                  selectedBatchSubject.value +
+                  "&search=" +
+                  search
+            : "/teacher/students?batch_subject_id=" +
+                  selectedBatchSubject.value +
+                  "&search=" +
+                  search,
         {
             preserveState: true,
         }

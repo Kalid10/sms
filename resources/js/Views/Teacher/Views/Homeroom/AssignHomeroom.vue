@@ -16,8 +16,8 @@
                             class="mr-2 cursor-pointer rounded-md bg-gray-200 text-gray-500"
                         >
                             <p class="px-3 py-2 text-sm font-bold">
-                                {{ homeroom.batch.level.name }} -
-                                {{ homeroom.batch.section }}
+                                {{ homeroom.batch?.level?.name }} -
+                                {{ homeroom.batch?.section }}
                             </p>
                         </span>
                     </span>
@@ -94,7 +94,7 @@ const batches = computed(() => usePage().props.batches);
 const teacher = computed(() => usePage().props.teacher);
 
 const isAssigned = computed(() => {
-    return teacher.value.homeroom[0];
+    return teacher?.value.homeroom[0];
 });
 
 const props = defineProps({
