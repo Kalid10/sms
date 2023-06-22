@@ -10,9 +10,7 @@
             />
             <span
                 class="-skew-x-3 px-3 py-0.5 text-center font-semibold"
-                :class="
-                    flags?.data?.length ? 'bg-red-600 text-white italic' : ' '
-                "
+                :class="flags?.data?.length ? '' : ' '"
             >
                 {{ student.user.name }}'s Flag List
             </span>
@@ -28,9 +26,9 @@
             <div
                 class="mb-2 flex w-full bg-zinc-800 py-2 text-center text-xs text-white"
             >
-                <span class="w-4/12 text-center"> CreatedAt </span>
-                <span class="w-4/12"> Type </span>
+                <span class="w-4/12 text-center"> Created</span>
                 <span class="w-4/12 text-center">Expiry Date </span>
+                <span class="w-4/12"> Type </span>
             </div>
             <div
                 v-for="(item, index) in flags.data"
@@ -38,20 +36,23 @@
                 class="flex w-full cursor-pointer justify-evenly space-x-2 px-2 py-4 text-xs hover:scale-105 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-200"
                 :class="index % 2 === 1 ? 'bg-gray-100/70' : ''"
                 @click="
-                    selectedFlagItem = item;
+                    selectedFlag = item;
                     showDetailModal = true;
                 "
             >
                 <span class="w-4/12 text-center">
                     {{ moment(item.created_at).format("MMMM DD, YYYY") }}
                 </span>
-                <span
-                    class="w-3/12 rounded-3xl bg-red-600 py-0.5 text-center text-[0.65rem] font-medium uppercase text-white"
-                >
-                    {{ item.type }}
-                </span>
+
                 <span class="w-4/12 text-center italic">
                     {{ moment(item.expires_at).fromNow() }}
+                </span>
+                <span class="flex w-4/12 justify-center">
+                    <span
+                        class="w-fit rounded-3xl bg-red-600 py-0.5 px-3 text-center text-[0.65rem] font-medium lowercase text-white"
+                    >
+                        {{ item.type }}
+                    </span>
                 </span>
             </div>
             <Pagination :links="flags.links" class="pt-3" position="center" />
@@ -100,47 +101,7 @@
         </div>
     </Modal>
     <Modal v-model:view="showDetailModal">
-        <div
-            class="flex w-full flex-col items-center space-y-5 rounded-lg bg-white p-5"
-        >
-            <div class="flex w-full items-center justify-center space-x-2 px-3">
-                <div
-                    class="w-fit bg-red-600 px-2 py-0.5 text-center font-semibold uppercase text-white"
-                >
-                    {{ selectedFlagItem.type }} Flag
-                </div>
-
-                <div v-if="selectedFlagItem?.batch_subject">
-                    ( {{ selectedFlagItem.batch_subject?.subject?.full_name }} )
-                </div>
-            </div>
-
-            <div class="p-3 text-sm text-gray-500">
-                {{ selectedFlagItem.description }}
-            </div>
-            <div
-                class="flex w-full items-end justify-between px-4 text-center text-sm font-semibold"
-            >
-                <div class="text-xs font-light italic">
-                    Expiry Date:
-                    {{
-                        moment(selectedFlagItem.expires_at).format(
-                            "ddd MMMM DD YYYY"
-                        )
-                    }}
-                </div>
-                <div>
-                    <div>{{ selectedFlagItem.flagged_by.name }}</div>
-                    <div class="pt-1 text-xs font-light">
-                        {{
-                            moment(selectedFlagItem.created_at).format(
-                                "ddd MMMM DD YYYY"
-                            )
-                        }}
-                    </div>
-                </div>
-            </div>
-        </div>
+        <SelectedFlagDetail :selected-flag-item="selectedFlag" />
     </Modal>
     <Modal v-model:view="showInfoModal">
         <div class="flex w-full flex-col space-y-5 rounded-lg bg-white p-5">
@@ -202,6 +163,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { isTeacher } from "@/utils";
 import EmptyView from "@/Views/EmptyView.vue";
+import SelectedFlagDetail from "@/Views/SelectedFlagDetail.vue";
 
 const props = defineProps({
     student: {
@@ -216,7 +178,7 @@ const props = defineProps({
 const showInfoModal = ref(false);
 const showAddModal = ref(false);
 const showDetailModal = ref(false);
-const selectedFlagItem = ref(null);
+const selectedFlag = ref(null);
 
 const flags = computed(() => usePage().props.flags);
 
