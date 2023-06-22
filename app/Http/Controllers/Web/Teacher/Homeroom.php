@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Teacher;
 
+use App\Models\Flag;
 use App\Models\Quarter;
 use App\Models\Teacher;
 use App\Models\User;
@@ -62,6 +63,7 @@ class Homeroom extends Controller
             'student.grades' => StudentService::getStudentDetail($request->input('student_id'), $batch),
             'teacher' => $teacher,
             'batches' => TeacherService::assignHomeroomTeacherData(),
+            'flags' => Flag::with('flaggedBy', 'flaggable.user.admin', 'batchSubject.subject')->latest()->paginate(5),
             'filters' => [
                 'batch_id' => $batchId,
                 'search' => $search,

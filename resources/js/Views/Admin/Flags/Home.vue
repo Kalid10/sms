@@ -51,7 +51,7 @@ import { usePage } from "@inertiajs/vue3";
 import moment from "moment";
 import Pagination from "@/Components/Pagination.vue";
 import Modal from "@/Components/Modal.vue";
-import SelectedFlagDetail from "@/Views/SelectedFlagDetail.vue";
+import SelectedFlagDetail from "@/Views/Flag/SelectedFlagDetail.vue";
 
 const flags = computed(() => usePage().props.flags);
 const selectedFlag = ref(null);
