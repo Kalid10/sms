@@ -16,7 +16,7 @@
             <ul class="flex gap-3 py-4">
                 <li v-for="(subject, s) in subjects" :key="s">
                     <Link
-                        :href="`/teacher/lesson-plan?batch_subject_id=${subject.id}&month=${selectedMonth}`"
+                        :href="getLink(subject)"
                         :class="
                             lessonPlanSubject.batch.level.name ===
                                 subject.batch.level.name &&
@@ -25,7 +25,7 @@
                                 ? ' text-zinc-800 bg-zinc-200/60  rounded-2xl'
                                 : 'text-gray-800'
                         "
-                        class="relative grid min-w-[4rem] place-items-center py-2 px-5 text-center text-sm font-medium"
+                        class="relative grid min-w-[4rem] cursor-pointer place-items-center py-2 px-5 text-center text-sm font-medium"
                     >
                         <span class="flex items-end">
                             <span
@@ -60,7 +60,7 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { Link, router, usePage } from "@inertiajs/vue3";
-import { parseLevel } from "@/utils.js";
+import { isAdmin, parseLevel } from "@/utils.js";
 import LessonPlanFormModal from "@/Views/Teacher/Views/LessonPlans/LessonPlanFormModal.vue";
 import LessonPlanMonthViewer from "@/Views/Teacher/Views/LessonPlans/LessonPlanMonthViewer.vue";
 import Header from "@/Views/Teacher/Views/Header.vue";
@@ -78,14 +78,23 @@ const selectedSubject = computed(
 function handleMonthChange(month) {
     selectedMonth.value = month;
     router.get(
-        "/teacher/lesson-plan",
+        isAdmin() ? "/admin/teachers/lesson-plan" : "/teacher/lesson-plan",
         {
+            teacher_id: usePage().props.teacher.id,
             batch_subject_id: selectedSubject.value.id,
             month: selectedMonth.value,
         },
         { preserveState: true }
     );
 }
+
+const getLink = (subject) => {
+    return isAdmin()
+        ? `/admin/teachers/lesson-plan?teacher_id=${
+              usePage().props.teacher.id
+          }&batch_subject_id=${subject.id}&month=${selectedMonth.value}`
+        : `/teacher/lesson-plan?batch_subject_id=${subject.id}&month=${selectedMonth.value}`;
+};
 
 watch(selectedMonth, handleMonthChange);
 

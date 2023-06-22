@@ -1,464 +1,56 @@
 <template>
-    <UsersStatistics />
-
-    <div class="flex w-full flex-col gap-4 lg:flex-row">
-        <div class="h-fit w-full lg:w-1/2">
-            <ActivityLog
-                title="Activity Logs"
-                subtitle="users activity logs"
-                :logs="activityLogs.data"
-                :columns="user_log_column"
-            >
-                <template #footer>
-                    <div class="flex w-full justify-end gap-3">
-                        <TertiaryButton
-                            class="w-full md:w-fit"
-                            title="Previous"
-                            @click="logPreviousPage"
-                        />
-                        <TertiaryButton
-                            class="w-full md:w-fit"
-                            title="Next"
-                            @click="logNextPage"
-                        />
-                    </div>
-                </template>
-            </ActivityLog>
+    <div class="flex min-h-screen w-11/12 flex-col space-y-6">
+        <div class="p-3">
+            <UsersStatistics />
         </div>
-        <div class="h-fit w-full rounded-t-lg border lg:w-1/2">
-            <TableElement
-                :columns="users_config"
-                :data="
-                    users.data.map((user) => {
-                        return { ...user, active: true };
-                    })
-                "
-                actionable
-                row-actionable
-                selectable
-                subtitle="List of personnel registered on your system, with user types and contact information"
-                title="Users List"
-            >
-                <template #filter>
-                    <TextInput
-                        v-model="query"
-                        placeholder="Search for Users by Name or Email"
+
+        <div class="flex w-full flex-col gap-4 lg:flex-row lg:justify-between">
+            <div class="h-fit w-full lg:w-7/12">
+                <UsersTable />
+            </div>
+            <div class="flex h-fit w-full flex-col space-y-4 lg:w-4/12">
+                <div class="flex w-full flex-col justify-evenly space-y-4">
+                    <SummaryItem
+                        class-style="bg-orange-100 text-black"
+                        icon-style="bg-orange-500/20 text-white"
+                        title="Admins"
+                        value="Sign up administrators with ease"
+                        :icon="ClipboardIcon"
+                        url="/register/admin"
                     />
-                </template>
-
-                <template #action="{ selected }">
-                    <div class="flex flex-row space-x-4">
-                        <div
-                            v-if="selected.selected"
-                            class="flex items-center gap-2"
-                        >
-                            <TertiaryButton
-                                title="Move Items"
-                                @click="moveItems(selected.items)"
-                            />
-                            <PrimaryButton
-                                title="Update Items"
-                                @click="updateItems(selected.items)"
-                            />
-                        </div>
-                        <PrimaryButton
-                            v-else
-                            title="Create New User"
-                            @click="createUserForm"
-                        >
-                            <span class="flex items-center gap-2">
-                                <CloudArrowDownIcon
-                                    class="h-4 w-4 stroke-white stroke-2"
-                                />
-                                <span>
-                                    Download
-                                    <span class="font-mono">CSV</span>
-                                </span>
-                            </span>
-                        </PrimaryButton>
-                        <PrimaryButton @click="openRegisterOptions">
-                            Add User
-                        </PrimaryButton>
-                    </div>
-                </template>
-
-                <template #row-actions="{ row }">
-                    <Link
-                        :href="'/admin/users/' + row.id"
-                        class="flex flex-col items-center gap-1"
-                    >
-                        <EyeIcon
-                            class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"
-                        />
-                    </Link>
-                    <Link
-                        :href="'/admin/users/' + row.id + '/edit'"
-                        class="flex flex-col items-center gap-1"
-                    >
-                        <ArrowPathIcon
-                            class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"
-                        />
-                    </Link>
-                    <Link
-                        :href="'/admin/users/' + row.id + '/delete'"
-                        class="flex flex-col items-center gap-1"
-                    >
-                        <ArchiveBoxXMarkIcon
-                            class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"
-                        />
-                    </Link>
-                </template>
-
-                <template #footer>
-                    <SelectInput
-                        v-model="perPage"
-                        :options="perPageOptions"
-                        class="w-36"
-                        direction="up"
-                        placeholder="Per page"
+                    <SummaryItem
+                        class-style="bg-zinc-100 text-black"
+                        icon-style="bg-zinc-500/20 text-white"
+                        title="Students"
+                        value="Register Students With there Guardians"
+                        :icon="UsersIcon"
+                        url="/register/student"
                     />
-                    <div class="flex w-full justify-end gap-3">
-                        <TertiaryButton
-                            :disabled="!users['prev_page_url']"
-                            class="w-full md:w-fit"
-                            title="Previous"
-                            @click="previousPage"
-                        />
-                        <TertiaryButton
-                            :disabled="!users['next_page_url']"
-                            class="w-full md:w-fit"
-                            title="Next"
-                            @click="nextPage"
-                        />
-                    </div>
-                </template>
-            </TableElement>
+                    <SummaryItem
+                        class-style="bg-fuchsia-100 text-black"
+                        icon-style="bg-fuchsia-500/20 text-white"
+                        title="Teachers"
+                        value="Register Students With there Guardians"
+                        :icon="CalendarIcon"
+                        url="/register/teacher"
+                    />
+                </div>
+                <RecentActivities />
+            </div>
         </div>
     </div>
-
-    <Register
-        v-if="showRegisterOptions"
-        :toggle="showRegisterOptions"
-        :user-roles="userRoles"
-    ></Register>
-
-    <Modal v-model:view="showModal">
-        <FormElement
-            v-model:show-modal="showModal"
-            modal
-            subtitle="Update the selected user"
-            title="Update user"
-        >
-            <TextInput
-                v-model="formData.name"
-                label="Name"
-                placeholder="Update user name"
-                required
-            />
-            <TextInput
-                v-model="formData.role"
-                label="Role"
-                placeholder="Update user role"
-            />
-            <TextInput
-                v-model="formData.position"
-                label="Position"
-                placeholder="Update user position"
-            />
-        </FormElement>
-    </Modal>
-
-    <Modal v-model:view="showRegisterUser">
-        <FormElement
-            v-model:show-modal="showRegisterUser"
-            modal
-            subtitle="Fill in the information required about the new user"
-            title="Register new User"
-            @cancel="showRegisterUser = false"
-        >
-            <TextInput
-                v-model="formData.name"
-                label="Name"
-                placeholder="Full name of new user"
-                required
-            />
-
-            <div class="flex gap-3">
-                <TextInput
-                    v-model="formData.position"
-                    class="w-1/2 lg:w-3/5"
-                    label="Position"
-                    placeholder="Position of user"
-                />
-
-                <DatePicker
-                    v-model:end-date="end_date"
-                    v-model:start-date="start_date"
-                    class="w-1/2 lg:w-2/5"
-                    label="Start Date"
-                    placeholder="Select a Date"
-                    range
-                    required
-                />
-            </div>
-
-            <RadioGroupPanel
-                v-model="userType"
-                :options="user_types"
-                label="User Type"
-                name="user_type"
-            />
-        </FormElement>
-    </Modal>
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
-import {
-    ArchiveBoxXMarkIcon,
-    ArrowPathIcon,
-    CloudArrowDownIcon,
-    EyeIcon,
-} from "@heroicons/vue/24/outline";
-import { Link, router, usePage } from "@inertiajs/vue3";
-import Modal from "@/Components/Modal.vue";
-import FormElement from "@/Components/FormElement.vue";
-import TextInput from "@/Components/TextInput.vue";
-import TableElement from "@/Components/TableElement.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TertiaryButton from "@/Components/TertiaryButton.vue";
 import UsersStatistics from "@/Views/Admin/UsersStatistics.vue";
-import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
-import DatePicker from "@/Components/DatePicker.vue";
-import Register from "@/Views/Admin/RegisterUser.vue";
-import SelectInput from "@/Components/SelectInput.vue";
-import ActivityLog from "@/Views/Admin/ActivityLogs/Index.vue";
-
-const activityLogs = computed(() => {
-    return usePage().props.activity_log;
-});
-
-const showRegisterOptions = ref(false);
-
-function openRegisterOptions() {
-    showRegisterOptions.value = !showRegisterOptions.value;
-}
-
-const formData = ref({
-    name: "",
-    position: "",
-    role: "",
-});
-
-const roleOptions = [
-    { value: "admin", label: "Administrator" },
-    { value: "teacher", label: "Views" },
-    { value: "student", label: "Student" },
-];
-
-const userType = ref("admin");
-const user_types = [
-    {
-        id: "admin",
-        value: "admin",
-        label: "Administrator",
-        description: "Manages the school resources based on access level",
-    },
-    {
-        id: "teacher",
-        value: "teacher",
-        label: "Views",
-        description:
-            "Teachers employed by the school, tasked with taking over classes and managing students",
-    },
-    {
-        id: "student",
-        value: "student",
-        label: "Student",
-        description:
-            "Students registered in the school, with access to their own assignment and assessment resources",
-    },
-    {
-        id: "guardian",
-        value: "guardian",
-        label: "Guardian",
-        description:
-            "Guardians of students registered in the school, have access their children's resources i.e., grade reports, accessment results and more",
-    },
-];
-
-function updateItems(items) {
-    // TODO: remove console.log when notification is ready
-    console.log(
-        `Items to update are `,
-        items.map((item) => item.id)
-    );
-}
-
-function moveItems(items) {
-    // TODO: remove console.log when notification is ready
-    console.log(
-        `Items to move are `,
-        items.map((item) => item.id)
-    );
-}
-
-// Get all users
-const users = computed(() => {
-    return usePage().props.users;
-});
-
-const userRoles = computed(() => usePage().props.user_roles);
-
-const showRegisterUser = ref(false);
-const showModal = ref(false);
-
-function createUserForm() {
-    showRegisterUser.value = true;
-}
-
-const query = ref("");
-const perPage = ref(10);
-const perPageOptions = [
-    { value: 10, label: "10" },
-    { value: 25, label: "25" },
-    { value: 50, label: "50" },
-    { value: 100, label: "100" },
-];
-
-const logsPerPage = ref(15);
-
-function search() {
-    router.get(
-        "/admin/users",
-        {
-            search: query.value,
-            per_page: perPage.value,
-        },
-        {
-            preserveState: true,
-            replace: true,
-        }
-    );
-}
-
-const key = ref(0);
-watch([query, perPage], () => {
-    search();
-});
-
-function previousPage() {
-    router.get(
-        "/admin/users",
-        {
-            user_page: parseInt(users.value["current_page"]) - 1,
-            per_page: perPage.value,
-            log_page: activityLogs.value["current_page"],
-        },
-        {
-            preserveState: true,
-            replace: true,
-        }
-    );
-}
-
-function nextPage() {
-    router.get(
-        "/admin/users",
-        {
-            user_page: parseInt(users.value["current_page"]) + 1,
-            per_page: perPage.value,
-            log_page: activityLogs.value["current_page"],
-        },
-        {
-            preserveState: true,
-            replace: true,
-        }
-    );
-}
-
-function logNextPage() {
-    router.get(
-        "/admin/users",
-        {
-            log_page: Number(activityLogs.value["current_page"] + 1),
-            logs_per_page: logsPerPage.value,
-            user_page: users.value["current_page"],
-        },
-        {
-            preserveState: true,
-            replace: true,
-        }
-    );
-}
-
-function logPreviousPage() {
-    console.log(activityLogs);
-
-    router.get(
-        "/admin/users",
-        {
-            log_page: Number(activityLogs.value["current_page"] - 1),
-            logs_per_page: logsPerPage.value,
-            user_page: users.value["current_page"],
-        },
-        {
-            preserveState: true,
-            replace: true,
-        }
-    );
-}
-
-// 'name', 'email', 'type', 'gender'
-const users_config = [
-    {
-        name: "Full Name",
-        key: "name",
-        link: "/admin/users/{id}",
-        class: "w-[35%]",
-        align: "left",
-    },
-    {
-        name: "Email",
-        key: "email",
-        link: "mailto:{email}",
-        class: "w-[35%]",
-        align: "left",
-    },
-    {
-        name: "User Type",
-        key: "type",
-        type: "enum",
-        options: ["admin", "teacher", "student", "guardian"],
-    },
-    {
-        name: "Gender",
-        key: "gender",
-        type: "enum",
-        options: ["male", "female"],
-    },
-    {
-        name: "Active",
-        key: "active",
-        type: Boolean,
-        class: "w-fit",
-    },
-];
-
-const user_log_column = [
-    {
-        name: "Name",
-    },
-    {
-        name: "Description",
-    },
-    {
-        name: "Updated At",
-    },
-];
-
-const start_date = ref(null);
-const end_date = ref(null);
+import UsersTable from "@/Views/Admin/Users/UsersTable.vue";
+import {
+    CalendarIcon,
+    ClipboardIcon,
+    UsersIcon,
+} from "@heroicons/vue/24/solid";
+import SummaryItem from "@/Views/Teacher/Views/SummaryItem.vue";
+import RecentActivities from "@/Views/Admin/Users/RecentActivities.vue";
 </script>
 
 <style scoped></style>

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="my-2 flex w-full flex-col gap-2 md:grid md:grid-cols-2 md:grid-rows-2 lg:flex lg:flex-row"
+        class="my-2 flex w-full flex-col gap-5 md:grid md:grid-cols-2 md:grid-rows-2 lg:flex lg:flex-row"
     >
         <StatisticsCard
             data="12"
@@ -8,7 +8,7 @@
             title="Admins"
         >
             <template #icon>
-                <UserCircleIcon/>
+                <UserCircleIcon />
             </template>
         </StatisticsCard>
         <StatisticsCard
@@ -17,7 +17,7 @@
             title="Students"
         >
             <template #icon>
-                <UserIcon/>
+                <UserIcon />
             </template>
         </StatisticsCard>
         <StatisticsCard
@@ -26,7 +26,7 @@
             title="Teachers"
         >
             <template #icon>
-                <UsersIcon/>
+                <UsersIcon />
             </template>
         </StatisticsCard>
         <StatisticsCard
@@ -35,7 +35,7 @@
             title="New Users"
         >
             <template #icon>
-                <UserPlusIcon/>
+                <UserPlusIcon />
             </template>
         </StatisticsCard>
     </div>
@@ -43,7 +43,12 @@
 
 <script setup>
 import StatisticsCard from "@/Views/Admin/StatisticsCard.vue";
-import {UserCircleIcon, UserIcon, UserPlusIcon, UsersIcon,} from "@heroicons/vue/24/outline";
+import {
+    UserCircleIcon,
+    UserIcon,
+    UserPlusIcon,
+    UsersIcon,
+} from "@heroicons/vue/24/outline";
 </script>
 
 <style scoped></style>

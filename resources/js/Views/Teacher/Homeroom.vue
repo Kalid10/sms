@@ -112,6 +112,7 @@ import Modal from "@/Components/Modal.vue";
 import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetail.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
+import { isAdmin } from "@/utils";
 
 const homeroomClasses = computed(() => usePage().props.homeroom_classes);
 const selectedHomeroom = ref(usePage().props.filters.batch_id);
@@ -133,7 +134,11 @@ const homeroomOptions = computed(() => {
 const updateBatchInfo = (batchId, search) => {
     if (batchId !== null) selectedHomeroom.value = batchId;
     router.get(
-        "/teacher/homeroom",
+        isAdmin()
+            ? "/admin/teachers/homeroom?teacher_id=" +
+                  usePage().props.filters.teacher_id +
+                  "&batch_id="
+            : "/teacher/homeroom?batch_id=",
         {
             batch_id: selectedHomeroom.value,
             search: search,
