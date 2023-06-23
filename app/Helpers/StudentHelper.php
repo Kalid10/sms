@@ -4,6 +4,9 @@ namespace App\Helpers;
 
 use App\Models\Batch;
 use App\Models\BatchStudent;
+use App\Models\Flag;
+use App\Models\Quarter;
+use App\Models\Student;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -72,5 +75,44 @@ class StudentHelper
         }
 
         return $username;
+    }
+
+    public static function flagStudent($flaggable_id, $type, $description, $flagged_by, $batch_subject_id, $expires_at, $is_homeroom = null): void
+    {
+        $flag = Flag::where('flaggable_id', $flaggable_id)
+            ->where('flaggable_type', Student::class)
+            ->where('batch_subject_id', $batch_subject_id)
+            ->first();
+
+        // If a flag exists, update the type and description
+        if ($flag) {
+            $existingTypes = $flag->type;
+            // If the new type does not exist in the array, add it
+            if (! in_array($type, $existingTypes)) {
+                $existingTypes[] = $type;
+            }
+
+            // Update the flag
+            $flag->update([
+                'type' => $existingTypes,
+                'description' => $description,
+                'flagged_by' => $flagged_by,
+                'expires_at' => date('Y-m-d H:i:s', strtotime($expires_at)),
+                'quarter_id' => Quarter::getActiveQuarter()->id,
+            ]);
+        } else {
+            // If the flag doesn't exist, create a new one
+            Flag::create([
+                'flaggable_id' => $flaggable_id,
+                'flaggable_type' => Student::class,
+                'type' => (array) $type,
+                'description' => $description,
+                'flagged_by' => $flagged_by,
+                'batch_subject_id' => $batch_subject_id,
+                'expires_at' => date('Y-m-d H:i:s', strtotime($expires_at)),
+                'quarter_id' => Quarter::getActiveQuarter()->id,
+                'is_homeroom' => $is_homeroom,
+            ]);
+        }
     }
 }
