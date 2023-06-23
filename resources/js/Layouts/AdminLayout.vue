@@ -110,7 +110,7 @@ const sidebarItems = computed(() => [
     {
         name: "Absentees",
         icon: FingerPrintIcon,
-        route: "/admin/absentees/staff",
+        route: "/admin/absentees",
         active: directory.value === "absentees",
     },
 ]);
