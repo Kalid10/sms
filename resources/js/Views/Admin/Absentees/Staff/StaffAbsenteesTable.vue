@@ -5,7 +5,7 @@
                 <TextInput
                     v-model="query"
                     class="w-full lg:max-w-lg"
-                    placeholder="Search for an absentee staff by name"
+                    placeholder="Search for an absent staff by name"
                 />
                 <PrimaryButton @click="showModal = true">
                     <span class="flex gap-2">
@@ -82,7 +82,7 @@ watch(query, () => {
 
 const find = debounce(() => {
     router.get(
-        "/admin/absentees/staff",
+        "/admin/absentees",
         {
             find: query.value,
         },

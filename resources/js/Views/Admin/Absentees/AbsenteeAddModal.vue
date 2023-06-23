@@ -1,13 +1,50 @@
 <template>
     <Modal v-model:view="showModal">
         <div
-            class="flex flex-col space-y-3 rounded-lg bg-white p-4 text-center"
+            class="scrollbar-hide flex max-h-[800px] flex-col space-y-3 overflow-y-scroll rounded-lg bg-white p-4 text-center"
         >
             <div>
                 <Title title="Assign Homeroom" />
             </div>
 
             <div class="flex w-full flex-col justify-center space-y-4">
+                <div
+                    v-if="selectedStaff && selectedStaff.value"
+                    class="flex w-full flex-col items-center justify-center gap-5 py-3"
+                >
+                    <div
+                        class="flex w-full flex-col items-center justify-center py-3"
+                    >
+                        <div class="flex w-full flex-col gap-5 py-3">
+                            <h2 class="flex justify-center">
+                                Your are about to add
+                                <span class="px-2 font-bold">
+                                    {{ selectedStaff.type }}
+                                    {{ selectedStaff.label }}
+                                </span>
+                                as an absentee:
+                            </h2>
+
+                            <div
+                                class="flex flex-col items-center justify-center"
+                            >
+                                <TextInput
+                                    v-model="form.reason"
+                                    label="Reason"
+                                    placeholder="Enter reason"
+                                    class="w-full lg:max-w-lg"
+                                />
+                            </div>
+
+                            <div class="flex items-center justify-center">
+                                <PrimaryButton
+                                    title="Add"
+                                    @click="addAbsentee"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <span class="text-md font-medium text-gray-500"
                     >Search for a staff member to add as an absentee
                 </span>
@@ -32,43 +69,6 @@
                     >
                         <p class="px-3 py-2">{{ staff.label }}</p>
                     </div>
-                    <div
-                        v-if="selectedStaff && selectedStaff.value"
-                        class="flex w-full flex-col items-center justify-center gap-5 py-3"
-                    >
-                        <div
-                            class="flex w-full flex-col items-center justify-center py-3"
-                        >
-                            <div class="flex w-full flex-col gap-5 py-3">
-                                <h2 class="flex justify-center">
-                                    Your are about to add
-                                    <span class="px-2 font-bold">
-                                        {{ selectedStaff.type }}
-                                        {{ selectedStaff.label }}
-                                    </span>
-                                    as an absentee:
-                                </h2>
-
-                                <div
-                                    class="flex flex-col items-center justify-center"
-                                >
-                                    <TextInput
-                                        v-model="form.reason"
-                                        label="Reason"
-                                        placeholder="Enter reason"
-                                        class="w-full lg:max-w-lg"
-                                    />
-                                </div>
-
-                                <div class="flex items-center justify-center">
-                                    <PrimaryButton
-                                        title="Add"
-                                        @click="addAbsentee"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@ const showModal = ref(true);
 const staff = computed(() => usePage().props.staff);
 
 const staffUsers = computed(() => {
-    return staff.value.map((staff) => {
+    return staff.value?.map((staff) => {
         return {
             label: staff.name,
             value: staff.id,
@@ -113,7 +113,7 @@ watch(searchKey, () => {
 
 const search = debounce(() => {
     router.get(
-        "/admin/absentees/staff",
+        "/admin/absentees",
         {
             search: searchKey.value,
         },

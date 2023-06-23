@@ -47,7 +47,7 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
     });
 
     Route::controller(AbsenteesController::class)->prefix('absentees/')->middleware(['checkUserRole:manage-users'])->name('absentees.')->group(function () {
-        Route::get('staff', 'staff')->name('staff');
+        Route::get('', 'index')->name('index');
     });
 
     Route::prefix('teachers/')->middleware(['checkUserRole:manage-teachers'])->name('teachers.')->group(function () {

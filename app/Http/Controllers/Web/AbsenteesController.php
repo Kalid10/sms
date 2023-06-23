@@ -167,27 +167,37 @@ class AbsenteesController extends Controller
         return redirect()->back()->with('success', 'Staff Absentees updated successfully.');
     }
 
-    public function staff(): Response
+    public function index(): Response
     {
         $searchKey = request()->query('search');
 
         $queryKey = request()->query('find');
+
+        $studentsQueryKey = request()->query('students_find');
 
         $staff = User::whereIn('type', [User::TYPE_TEACHER, User::TYPE_ADMIN])
             ->when($searchKey, function ($query, $searchKey) {
                 $query->where('name', 'like', '%'.$searchKey.'%');
             })->get();
 
-        $staff_absentees = StaffAbsentee::with('user')
+        $studentAbsentees = Absentee::with('user')
+            ->when($studentsQueryKey, function ($query, $studentsQueryKey) {
+                $query->whereHas('user', function ($query) use ($studentsQueryKey) {
+                    $query->where('name', 'like', '%'.$studentsQueryKey.'%');
+                });
+            })->paginate(10);
+
+        $staffAbsentees = StaffAbsentee::with('user')
             ->when($queryKey, function ($query, $queryKey) {
                 $query->whereHas('user', function ($query) use ($queryKey) {
                     $query->where('name', 'like', '%'.$queryKey.'%');
                 });
             })->paginate(10);
 
-        return Inertia::render('Admin/Absentees/StaffAbsentees', [
-            'staff_absentees' => $staff_absentees,
-            'staff' => $staff,
+        return Inertia::render('Admin/Absentees/Index', [
+            'staff_absentees' => $staffAbsentees,
+            'staff' => Inertia::lazy(fn () => $staff),
+            'student_absentees' => $studentAbsentees,
         ]);
     }
 }
