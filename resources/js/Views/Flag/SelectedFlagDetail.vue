@@ -38,7 +38,12 @@
             </div>
 
             <div>
-                <div>{{ selectedFlagItem.flagged_by.name }}</div>
+                <div>
+                    <span v-if="selectedFlagItem.flagged_by">
+                        {{ selectedFlagItem.flagged_by.name }}
+                    </span>
+                    <span v-else> SYSTEM GENERATED</span>
+                </div>
                 <div class="pt-1 text-xs font-light">
                     {{
                         moment(selectedFlagItem.created_at).format(

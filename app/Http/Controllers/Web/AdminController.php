@@ -57,7 +57,7 @@ class AdminController extends Controller
             ->take(3)
             ->get();
 
-        $flags = Flag::with('flaggedBy', 'flaggable.user.admin', 'batchSubject.subject')->latest()->paginate(5);
+        $flags = Flag::with('flaggedBy', 'flaggable.user.admin', 'batchSubject.subject')->latest('updated_at')->paginate(7);
 
         return Inertia::render('Admin/Index', [
             'teachers_count' => $teachersCount,

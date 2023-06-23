@@ -17,14 +17,18 @@
             <span
                 class="w-3/12 cursor-pointer hover:underline hover:underline-offset-2"
             >
-                By {{ item.flagged_by.name }}
-                <span v-if="item.is_homeroom" class="font-medium"
-                    >(Homeroom)</span
-                >
-                <span v-else-if="item.flagged_by.type === 'teacher'"
-                    >( {{ item.batch_subject?.subject.full_name }} )</span
-                >
-                <span v-else>{{ item.flaggable.user.admin }}</span>
+                <span v-if="item.flagged_by">
+                    By
+                    {{ item.flagged_by.name }}
+                    <span v-if="item.is_homeroom" class="font-medium"
+                        >(Homeroom)</span
+                    >
+                    <span v-else-if="item.flagged_by.type === 'teacher'"
+                        >( {{ item.batch_subject?.subject.full_name }} )</span
+                    >
+                    <span v-else>{{ item.flaggable.user.admin }}</span>
+                </span>
+                <span v-else class="text-xs font-medium">System Generated</span>
             </span>
             <span class="w-4/12 text-center text-xs font-light">
                 {{
