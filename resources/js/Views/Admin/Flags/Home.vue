@@ -15,11 +15,14 @@
                 {{ item.flaggable.user.name }}
             </span>
             <span
-                class="w-2/12 cursor-pointer hover:underline hover:underline-offset-2"
+                class="w-3/12 cursor-pointer hover:underline hover:underline-offset-2"
             >
                 By {{ item.flagged_by.name }}
-                <span v-if="item.flagged_by.type === 'teacher'"
-                    >({{ item.batch_subject?.subject.full_name }} )</span
+                <span v-if="item.is_homeroom" class="font-medium"
+                    >(Homeroom)</span
+                >
+                <span v-else-if="item.flagged_by.type === 'teacher'"
+                    >( {{ item.batch_subject?.subject.full_name }} )</span
                 >
                 <span v-else>{{ item.flaggable.user.admin }}</span>
             </span>
@@ -31,11 +34,13 @@
                 }}
             </span>
 
-            <span class="w-3/12 text-center">
+            <span class="flex w-3/12 space-x-1 text-center">
                 <span
-                    class="rounded-lg bg-red-600 px-3 py-1 font-medium lowercase text-white"
+                    v-for="(type, index) in item.type"
+                    :key="index"
+                    class="mx-1 flex h-fit w-fit flex-wrap rounded-3xl bg-red-600 py-0.5 px-2 text-center text-[0.65rem] font-medium lowercase text-white"
                 >
-                    {{ item.type }}
+                    {{ type.substring(0, 3) }}
                 </span>
             </span>
         </div>

@@ -31,4 +31,8 @@ class Flag extends Model
     {
         return $this->hasOne(BatchSubject::class, 'id', 'batch_subject_id');
     }
+
+    protected $casts = [
+        'type' => 'array',
+    ];
 }

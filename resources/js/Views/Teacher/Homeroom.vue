@@ -139,7 +139,7 @@ import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetai
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 import { isAdmin } from "@/utils";
-import Flag from "@/Views/Teacher/Views/Student/Flag/Index.vue";
+import Flag from "@/Views/Flag/Index.vue";
 import AddFlag from "@/Views/Flag/AddFlag.vue";
 
 const homeroomClasses = computed(() => usePage().props.homeroom_classes);

@@ -152,6 +152,6 @@ class Student extends Controller
             ['flaggable_type', StudentModel::class],
             ['batch_subject_id', $batchSubjectId],
             ['quarter_id', Quarter::getActiveQuarter()->id],
-        ])->latest('expires_at')->with('batchSubject.subject', 'flaggedBy')->paginate(5);
+        ])->latest('expires_at')->with('flaggedBy', 'flaggable.user.admin', 'batchSubject.subject')->paginate(5);
     }
 }

@@ -98,7 +98,7 @@ import GeneralReport from "@/Views/Teacher/Views/Student/GeneralReport.vue";
 import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import AbsenteeRecords from "@/Views/AbsenteeRecords.vue";
-import Flag from "@/Views/Teacher/Views/Student/Flag/Index.vue";
+import Flag from "@/Views/Flag/Index.vue";
 
 const student = computed(() => usePage().props.student);
 const batchSessions = computed(() => usePage().props.batch_sessions);

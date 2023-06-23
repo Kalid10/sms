@@ -30,9 +30,9 @@
             <div
                 class="mb-2 flex w-full bg-zinc-800 py-2 text-center text-xs text-white"
             >
-                <span class="w-4/12 text-center"> Name</span>
-                <span class="w-5/12 text-center">Duration </span>
-                <span class="w-4/12"> Type </span>
+                <span class="w-3/12 text-center"> Name</span>
+                <span class="w-4/12 text-center">Duration </span>
+                <span class="w-5/12"> Type </span>
             </div>
             <div
                 v-for="(item, index) in flags.data"
@@ -49,16 +49,18 @@
                 </span>
 
                 <span
-                    class="w-5/12 text-center text-[0.6rem] font-semibold italic"
+                    class="w-4/12 text-center text-[0.6rem] font-semibold italic"
                 >
                     {{ moment(item.created_at).format("MMMM DD, YYYY") }} -
                     {{ moment(item.expires_at).fromNow() }}
                 </span>
-                <span class="flex w-4/12 justify-center">
+                <span class="flex w-5/12 justify-center">
                     <span
-                        class="w-fit rounded-3xl bg-red-600 py-0.5 px-3 text-center text-[0.65rem] font-medium lowercase text-white"
+                        v-for="(type, index) in item.type"
+                        :key="index"
+                        class="mx-1 flex h-fit w-fit flex-wrap rounded-3xl bg-red-600 py-0.5 px-2 text-center text-[0.65rem] font-medium lowercase text-white"
                     >
-                        {{ item.type }}
+                        {{ type.substring(0, 3) }}
                     </span>
                 </span>
             </div>

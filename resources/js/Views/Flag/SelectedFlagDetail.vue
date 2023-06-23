@@ -1,16 +1,24 @@
 <template>
     <div
-        class="flex w-full flex-col items-center space-y-5 rounded-lg bg-white p-5"
+        class="flex w-full flex-col items-center space-y-6 rounded-lg bg-white p-5"
     >
         <div class="flex w-full items-center justify-center space-x-2 px-3">
-            <div
-                class="w-fit bg-red-600 px-2 py-0.5 text-center font-semibold uppercase text-white"
-            >
-                {{ selectedFlagItem.type }} Flag
-            </div>
-
+            <div>{{ selectedFlagItem.flaggable.user.name }}'s Flag Detail</div>
             <div v-if="selectedFlagItem?.batch_subject">
                 ( {{ selectedFlagItem.batch_subject?.subject?.full_name }} )
+            </div>
+            <div v-if="selectedFlagItem.is_homeroom" class="font-medium">
+                (Homeroom)
+            </div>
+        </div>
+
+        <div class="flex w-full space-x-2">
+            <div
+                v-for="(type, index) in selectedFlagItem.type"
+                :key="index"
+                class="w-fit rounded-2xl bg-red-600 px-2 py-0.5 text-center text-xs font-semibold lowercase text-white"
+            >
+                {{ type }}
             </div>
         </div>
 
@@ -28,6 +36,7 @@
                     )
                 }}
             </div>
+
             <div>
                 <div>{{ selectedFlagItem.flagged_by.name }}</div>
                 <div class="pt-1 text-xs font-light">
