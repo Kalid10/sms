@@ -15,11 +15,10 @@ class CopilotController extends Controller
         return Inertia::render('Teacher/Copilot');
     }
 
-    public function search(Request $request, OpenAIService $openAIService): StreamedResponse
+    public function chat(Request $request, OpenAIService $openAIService): StreamedResponse
     {
-        $searchText = $request->input('prompt');
-        $explanationPrompt = 'Give me five questions for grade 5 students on the following topic: '.$searchText;
+        $messages = json_decode($request->input('messages'), true);
 
-        return $openAIService->generateCompletionStream($searchText, 1000);
+        return $openAIService->createChatStream($messages, 1000);
     }
 }

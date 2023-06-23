@@ -24,5 +24,5 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher,admin', 'auth'])->
     Route::get('students', Students::class)->name('students.show');
     Route::get('announcements', Announcements::class)->name('announcement.show');
     Route::get('/copilot', [CopilotController::class, 'show']);
-    Route::get('/copilot/search', [CopilotController::class, 'search']);
+    Route::get('/copilot/chat', [CopilotController::class, 'chat']);
 });
