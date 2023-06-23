@@ -19,7 +19,7 @@ return new class extends Migration
             $table->json('type');
             $table->longText('description')->nullable();
             $table->foreignId('batch_subject_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(User::class, 'flagged_by')->constrained('users')->cascadeOnDelete();
+            $table->foreignIdFor(User::class, 'flagged_by')->nullable()->constrained('users')->cascadeOnDelete();
             $table->timestamp('expires_at')->nullable();
             $table->foreignId('quarter_id')->constrained()->cascadeOnDelete();
             $table->boolean('is_homeroom')->nullable();
