@@ -22,6 +22,7 @@ class StudentGradeHelper
     public static function processGrades(array $student_points, Assessment $assessment): void
     {
         self::insertStudentAssessmentPoints($student_points, $assessment);
+        FlagHelper::processStudentFlags($assessment->batch_subject_id);
     }
 
     /**
