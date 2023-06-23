@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Helpers\StudentHelper;
 use App\Models\BatchGrade;
 use App\Models\BatchSubjectGrade;
 use App\Models\Quarter;
@@ -42,13 +43,20 @@ class ConductObserver
 
         $gradeMap = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
 
+        $totalConductAssessedCount = 0;
+
         foreach ($studentSubjectGrades as $grade) {
             if (isset($gradeMap[$grade->conduct])) {
+                $totalConductAssessedCount++;
                 $total += $gradeMap[$grade->conduct];
             }
         }
 
-        $average = $total / count($studentSubjectGrades);
+        if ($totalConductAssessedCount === 0) {
+            return;
+        }
+
+        $average = $total / $totalConductAssessedCount;
 
         // round the average
         $roundedAverage = round($average);
@@ -63,6 +71,20 @@ class ConductObserver
             ['student_id', $studentId]])->first();
         $studentGrade->conduct = $averageConduct;
         $studentGrade->save();
+
+        // Check if the student should be flagged
+        if ($totalConductAssessedCount >= 2) {
+            if ($averageConduct === 'D' || $averageConduct === 'F') {
+                StudentHelper::flagStudent(
+                    $studentId,
+                    'conduct',
+                    'This student has an average conduct of '.$averageConduct.' in Quarter '.Quarter::getActiveQuarter()->name.'.',
+                    null,
+                    self::$batchSubjectId,
+                    now()->addDays(7),
+                    false);
+            }
+        }
 
         $this->updateAverageQuarterlyBatchSubjectConduct($studentId);
     }
