@@ -54,6 +54,5 @@ import Feedbacks from "@/Views/Teacher/Views/Home/Feedbacks.vue";
 const announcements = computed(() => usePage().props.announcements);
 const selectedAnnouncement = ref(announcements.value?.data[0]);
 
-const filePath = ref()
 </script>
 <style scoped></style>

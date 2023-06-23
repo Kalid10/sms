@@ -11,7 +11,6 @@
                 <div class="text-xl font-semibold text-zinc-800 lg:text-4xl">
                     {{ $t('views.teacher.assessments.assessmentsIndex.assessments') }}
 
-<!--                    Assessments-->
                 </div>
                 <div
                     class="flex w-fit cursor-pointer items-center space-x-1 rounded-md px-2 text-[0.65rem] text-zinc-800 underline decoration-zinc-800 underline-offset-2 hover:font-semibold lg:hidden"
@@ -19,7 +18,6 @@
                 >
                     <div>
                         {{ $t('views.teacher.assessments.assessmentsIndex.createAssessment') }}
-<!--                        Create Assessment-->
                     </div>
                 </div>
             </div>

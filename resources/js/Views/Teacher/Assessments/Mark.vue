@@ -74,13 +74,6 @@
                         </span>
                     </div>
                     <div class="text-xs font-light">
-<!--                        Please note, upon clicking 'Finish Marking',-->
-<!--                        notifications, emails and SMS will be sent to parents-->
-<!--                        and relevant authorities regarding the students'-->
-<!--                        performance. However, rest assured, you will retain the-->
-<!--                        ability to make necessary adjustments to these-->
-<!--                        assessments until the end of the current quarter or-->
-<!--                        semester.-->
                         {{ $t('views.teacher.assessments.assessmentsMark.message') }}
                     </div>
                     <SecondaryButton

@@ -14,6 +14,8 @@
 import { computed, onMounted, ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import PeriodForm from "@/Views/Admin/GettingStarted/SchoolPeriod/PeriodForm.vue";
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 
 const levelCategories = computed(() => usePage().props.level_categories || []);
 
@@ -85,7 +87,10 @@ const clear = () => {
     ];
 };
 
-const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+
+
+const weekdays = [t('schoolPeriodForm.weekdays[0]'), t('schoolPeriodForm.weekdays[1]'), t('schoolPeriodForm.weekdays[2]'), t('schoolPeriodForm.weekdays[3]'), t('schoolPeriodForm.weekdays[4]')];
 
 const weekdaysClassSchedule = computed(() => {
     return weekdays.map((weekday, index) => {

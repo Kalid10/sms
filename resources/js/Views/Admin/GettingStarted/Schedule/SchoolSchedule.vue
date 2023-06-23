@@ -2,37 +2,37 @@
     <Modal v-model:view="showCreateModal">
         <FormElement
             class="max-w-2xl"
-            title="Create school schedule "
-            subtitle="Registration form"
+            :title="$t('schoolSchedule.formTitle')"
+            :subtitle="$t('schoolSchedule.formSubTitle')"
             @submit="addSchoolSchedule"
             @cancel="clear">
             <TextInput
-                v-model="schoolScheduleFormData.title" 
+                v-model="schoolScheduleFormData.title"
                 :error="schoolScheduleFormData.errors.title"
-                label="Name"                          
-                placeholder=" name" 
+                :label="$t('schoolSchedule.titleLabel')"
+                :placeholder="$t('schoolSchedule.titlePlaceholder')"
                 :required="true"/>
                 <TextArea
-                    v-model="schoolScheduleFormData.body" 
+                    v-model="schoolScheduleFormData.body"
                     :error="schoolScheduleFormData.errors.body"
-                    label="Description" 
-                    placeholder="Its about..." 
+                    :label="$t('schoolSchedule.bodyLabel')"
+                    :placeholder="$t('schoolSchedule.bodyPlaceholder')"
                     :required="true"/>
-                <TextInput 
-                    v-model="inputTags" 
-                    label="tags" 
-                    placeholder="tag1,tag2,tag3" 
+                <TextInput
+                    v-model="inputTags"
+                    :label="$t('schoolSchedule.inputTagsLabel')"
+                    :placeholder="$t('schoolSchedule.inputTagsPlaceholder')"
                     :required="true"/>
          <DatePicker
              v-model:start-date="schoolScheduleFormData.start_date"
-             v-model:end-date="schoolScheduleFormData.end_date" 
-             range 
-             label="Date" 
+             v-model:end-date="schoolScheduleFormData.end_date"
+             range
+             :label="$t('schoolSchedule.datePickerLabel')"
              required>
         </DatePicker>
       <RadioGroupPanel
-        v-model="schoolScheduleFormData.type" 
-        label="Type" 
+        v-model="schoolScheduleFormData.type"
+        :label="$t('schoolSchedule.typeLabel')"
         :options="eventTypes"
         name="event-types"/>
  </FormElement>
@@ -49,23 +49,25 @@ import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import {computed, ref} from "vue";
 import {router, useForm} from "@inertiajs/vue3";
 import moment from "moment";
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 
 const showCreateModal = ref(true)
 const eventTypes = [
     {
         value: 'closed',
-        label: 'Full Day',
-        description: 'There is no school for the whole day.'
+        label: t('schoolSchedule.fullDay'),
+        description: t('schoolSchedule.fullDayDescription')
     },
     {
         value: 'half_closed',
-        label: 'Half Day',
-        description: 'There will be no class for the half day.'
+        label: t('schoolSchedule.halfDay'),
+        description: t('schoolSchedule.halfDayDescription')
     },
     {
         value: 'not_closed',
-        label: 'None',
-        description: 'There will be class all day.'
+        label: t('schoolSchedule.none'),
+        description: t('schoolSchedule.noneDescription')
     }
 ];
 
@@ -82,8 +84,6 @@ const schoolScheduleFormData = useForm({
 })
 
 function addSchoolSchedule() {
-    console.log(schoolScheduleFormData)
-
     router.post('/school-schedules/create', {
             ...schoolScheduleFormData,
             tags: tagsFormData.value,

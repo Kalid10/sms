@@ -328,7 +328,7 @@ const am = {
         ],
         "secondTexts": [
             "ትምህርት ቤትዎን ያበረታቱ",
-            "ፈጠራን ማሳደግ",
+            "ፈጠራን ያሳደጉ",
             "የወደፊቱን ይገንቡ"
         ]
     },
@@ -420,6 +420,9 @@ const am = {
         "descriptionThree": "እንጀምር! በቀላሉ የተጠየቀውን መረጃ፣ የመነሻ ሰዓቱን፣ ክፍለጊዜ ብዛት፣ የቆይታ ጊዜን እና ማንኛውንም የተለዩ ክፍለ ጊዜያትን ጨምሮ ያስገቡ እና ሞጁሉ የተደራጀ እና ቀልጣፋ የሳምንት መርሃ ግብር ለትምህርት ቤትዎ እንዲፈጥር ይረዳዎት።",
         "getStarted": "እንጀምር"
     },
+    "schoolPeriodForm":{
+        "weekdays": ["ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ", "እሑድ"]
+    },
     "schoolPeriodFormWrapper": {
         "step": "ደረጃ",
         "of4": "ከ 4",
@@ -432,7 +435,7 @@ const am = {
         "howManyMinutesSinglePeriod": "በአንድ ክፍለ ጊዜ ውስጥ ስንት ደቂቃዎች አሉ?",
         "setMinute": "ደቂቃ ያዘጋጁ",
         "back": "ተመለስ",
-        "hintCustomDuration": "ለ ልዩ የትምህርት ክፍሎች ስቴፕ ፬ ላይ ልዩ ክፍሎች በሚለው ቅጽ ላይ መሙላት ይችላሉ::",
+        "hintCustomDuration": "ለ ልዩ የትምህርት ክፍሎች ስቴፕ 4 ላይ ልዩ ክፍሎች በሚለው ቅጽ ላይ መሙላት ይችላሉ::",
         "3":"3",
         "periodsPerDay": "በቀን ክፍለ ጊዜዎች",
         "howManyPeriods": "በትምህርት ቀን ስንት ክፍለ ጊዜዎች ይኖራሉ?",
@@ -447,17 +450,14 @@ const am = {
         "homeroom": "\"ሆም ሩም\"",
         "customPeriodLabel": "የልዩ ክፍል ስም",
         "customPeriodPlaceHolder": "እረፍት ሰዓት",
+        "durationMin":"የቆይታ ጊዜ (ደቂቃ)",
         "beforePeriod": "ከክፍለ ጊዜ በፊት",
-        "days":{
-            "monday": "ሰኞ",
-            "tuesday": "ማክሰኞ",
-            "wednesday": "ረቡዕ",
-            "thursday": "ሐሙስ",
-            "friday": "አርብ"
-        },
+        "day":"ቀን",
         "finishHint": "የጊዜ ሰሌዳዎን ማዋቀር ለመጨረስ በማያ ገጹ ግርጌ ላይ ያለውን \"ጨርስ\" ቁልፍን ይጫኑ።",
         "addNewPeriod": "አዲስ ክፍለጊዜ ጨምር",
-        "finish": "ጨርስ"
+        "finish": "ጨርስ",
+        "days":["ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ", "እሑድ"]
+
     },
     "schoolPeriodModal": {
         "almostThere": "ሊጨርሱ ነው !",
@@ -486,23 +486,15 @@ const am = {
         "inputTagsPlaceholder": "ምልክት 1, ምልክት 2, ምልክት 3",
         "datePickerLabel": "ቀን",
         "typeLabel": "ዓይነት",
-        "eventTypes": [
-            {
-                "value": "closed",
-                "label": "ሙሉ ቀን",
-                "description": "ሙሉ ቀን ትምህርት የለም።"
-            },
-            {
-                "value": "half_closed",
-                "label": "ግማሽ ቀን",
-                "description": "በግማሽ ቀን ትምህርት አይኖርም።"
-            },
-            {
-                "value": "not_closed",
-                "label": "ምንም",
-                "description": "ሙሉ ቀን ትምህርት ይኖራል።"
-            }
-        ]
+
+        "fullDay":"ሙሉ ቀን",
+        "fullDayDescription":"ሙሉ ቀን ትምህርት የለም።",
+        "halfDay":"ግማሽ ቀን",
+        "halfDayDescription":"ለግማሽ ቀን ትምህርት አይኖርም።",
+        "none":"ምንም",
+        "noneDescription":"ሙሉ ቀን ትምህርት ይኖራል።",
+
+    
     },
     "periodForm": {
         "classSchedule": "የትምህርት መርሐግብር",
@@ -539,13 +531,7 @@ const am = {
         "scheduleDisplay": "የጊዜ ሰሌዳ በእውነተኛ ጊዜ ማሳያ",
         "noPeriodsFound": "ምንም ክፍለ ጊዜዎች አልተገኙም, በእውነተኛ ጊዜ ለማሳየት የምትፈልገውን የክፍለ ጊዜዎች ብዛት ያስገቡ።",
         "Period": "ክፍለ ጊዜ",
-        "weekdays":{
-            "monday": "ሰኞ",
-            "tuesday": "ማክሰኞ",
-            "wednesday": "ረቡዕ",
-            "thursday": "ሐሙስ",
-            "friday": "አርብ"
-        }
+        "weekdays":["ሰኞ","ማክሰኞ","ረቡዕ","ሐሙስ","አርብ"]
     },
     "assignSubjects":{
         "assignSubjects": "የትምህርት አይነት መድብ",
@@ -562,24 +548,26 @@ const am = {
         "pickOne": " ... ወይም ለመጀመር ከእነዚህ ጉዳዮች ውስጥ አንዱን ይምረጡ",
         "english": "እንግሊዝኛ",
         "mathematics": "ሒሳብ",
-        "Amharic": "አማርኛ",
-        "selectedLevels": "15 ክፍሎች ተመርጠዋል",
+        "amharic": "አማርኛ",
+        "selectedLevels": "15 ደረጃዎች ተመርጠዋል",
         "classesSelected": "ክፍሎች ተመርጠዋል",
         "selectClassesInLevels": "በደረጃዎች ውስጥ ክፍሎችን ይምረጡ",
-        "selectIndividualClasses": "ኣንድ በኣንድ ክፍሎችን ይምረጡ",
+        "deselectAll": "ሁሉንም አለመምረጥ",
+        "selectAll": "ሁሉንም ምረጥ",
+        "selectIndividualClasses": "አንድ በአንድ ክፍሎችን ይምረጡ",
         "selectAllSections": "ሁሉንም ክፍሎች ይምረጡ",
         "listAllSections": "ሁሉንም ክፍሎች ዘርዝር",
         "allSections": "ሁሉንም ክፍሎች",
         "section": "ክፍሎች",
         "collapse": "ሰብስብ",
+        "allSectionSelected": "መላው ክፍል ተመረጡዋል",
+        "someSectionsSelected": "አንዳንድ ክፍሎች ተመረጡዋል",
+        "noneSelected": "ምንም ክፍል አልተመረጠም",
         "save": "አስቀምጥ",
         "finish": "ጨርስ",
-        "levelCategoryDescriptions" :{
-            "1": "የመዋዕለ ሕፃናት ደረጃ (ከቅድመ-ኪጂ እስከ ኪጂ-2) ብቻ ይምረጡ",
-            "2": "የመጀመሪያ ደረጃ ደረጃዎችን ብቻ ይምረጡ (1ኛ - 8ኛ ክፍል)",
-            "3": "የሁለተኛ ደረጃ ትምህርት ቤቶችን ብቻ ይምረጡ (9 - 12ኛ ክፍል)"
-        }
-
+        "kindergarten": "የመዋዕለ ሕፃናት ደረጃ (ከቅድመ-ኪጂ እስከ ኪጂ-2) ብቻ ይምረጡ",
+        "elementary": "የመጀመሪያ ደረጃ ደረጃዎችን ብቻ ይምረጡ (1ኛ - 8ኛ ክፍል)",
+        "highSchool":"የሁለተኛ ደረጃ ትምህርት ቤቶችን ብቻ ይምረጡ (9 - 12ኛ ክፍል)"
     },
     "registerAdmin": {
         "title":"አዲስ የአስተዳዳሪ ምዝገባ",
@@ -621,12 +609,13 @@ const am = {
         "buttonTitle":"አዲስ ደረጃ ፍጠር",
         "grade": "ደረጃ",
         "sections": "ክፍል",
-        "Finish": "ጨርስ",
+        "finish": "ጨርስ",
         "updateLevelSectionTitle": "የክፍሎች ብዛት",
         "updateLevelSectionSubtitle": "ለ7ኛ ክፍል የክፍሎች ብዛት ያዘምኑ",
         "updateLevelSectionInputPlaceholder": "ለ7ኛ ክፍል የክፍሎችን ብዛት ይግለጹ"
     },
     "registerSchoolYear": {
+        "welcomeText": "እባክዎ የአዲሱን የትምህርት ዘመን <span class='text-black'>የመጀመሪያ ቀን</span> እና በውስጡ ያሉትን የሴሚስተር ብዛት አስገባ። በተጨማሪም  በቀኝ በኩል  <span id='pencilIcon'></span> የሚለውን በመጫን የትምህርት አመት ስም መቀየር ትችላለህ። ይህን ሁልጊዜ በትምህርት አመቱ መቼቶች በኋላ መቀየር ትችላለህ።",
         "welcome": "እንኳን በደህና",
         "schoolYear": "የትምህርት ዘመን",
         "pleaseEnter": "እባክዎን ያስገቡ",
@@ -646,20 +635,21 @@ const am = {
         "eachDividedInto": "እያንዳንዳቸው ተከፋፍለዋል",
         "quarters": "ሩብ አመቶች",
         "resultingInTotalOf":"አጠቃላይ ውጤት ያስገኛል",
-        "createAndProceed": "ይፍጠሩ እና ይቀጥሉ"
+        "createAndProceed": "ይፍጠሩ እና ይቀጥሉ",
+        "summaryText":"<p class='text-xs'> መጪው የትምህርት ዘመን <span class='font-bold text-gray-700'>{academicYear}</span>፣ <span class='ን ይይዛል። font-bold text-gray-700'>{semesters} ሴሚስተር፣</span> እያንዳንዳቸው በ<span class='font-bold text-gray-700'>{quartersPerSemester}</span> ሩብ ተከፍለዋል፣  በአጠቃላይ  <span class='font-bold text-gray-700' >{totalQuarters} ሩብ አመት አለ።</span > </p>"
     },
     "registerSubjects": {
         "registerSubjects": "የትምህርት አይነቶች መዝግብ",
         "descriptionOne": "አስቀድሞ የተገለጹ የትምህርት አይነቶችን ለእርስዎ መርጠናል ።  የትምህርት አይነቶችን ማስወገድ ወይም እዚህ ያልተዘረዘሩ ተጨማሪ የትምህርት አይነቶችን ማከል ትችላለህ።",
         "descriptionTwo": "ለመቀጠል 'ጨርስ' ላይ ጠቅ ያድርጉ እና ለማስቀመጥ እና ለመቀጠል 'ቀጥል' ላይ ጠቅ ያድርጉ።",
-        "totalSubjects": "ጠቅላላ ርዕሰ ጉዳዮች",
-        "subjectsSelected": "የተመረጡ ርዕሰ ጉዳዮች",
-        "New Subject": "አዲስ  የትምህርት አይነት",
+        "totalSubjects": "ጠቅላላ የትምህርት አይነቶች",
+        "subjectsSelected": "የተመረጡ የትምህርት አይነቶች",
+        "newSubject": "አዲስ የትምህርት አይነት",
         "other": "ሌላ",
-        "createNewSubject": "አዲስ  የትምህርት አይነት ይፍጠሩ",
+        "createNewSubject": "አዲስ የትምህርት አይነት ይፍጠሩ",
         "createNewCategory": "አዲስ ምድብ ይፍጠሩ",
         "finish": "ጨርስ",
-        "Reset": "አስጀምር",
+        "reset": "ዳግም አስጀምር",
         "newSubjectTitle": "አዲስ የትምህርት አይነት",
         "newSubjectSubtitle": "አዲስ የትምህርት አይነት ይፍጠሩ እና ወደ ምድብ ያስገቡት",
         "subjectFullNamePlaceholder": "የአዲሱ ትምህርት አይነት ስም",

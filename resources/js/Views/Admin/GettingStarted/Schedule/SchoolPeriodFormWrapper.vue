@@ -10,13 +10,15 @@
                 <div
                     class="flex grow items-center justify-center gap-1 text-xs font-semibold text-gray-500"
                 >
-                    Step
+
+                    {{ $t('schoolPeriodFormWrapper.step') }}
+
                     <div
                         class="grid h-6 w-6 place-items-center rounded-full border bg-black text-xs font-semibold text-white"
                     >
                         {{ formStep }}
                     </div>
-                    of 4
+                    {{ $t('schoolPeriodFormWrapper.of4') }}
                 </div>
             </div>
 
@@ -26,25 +28,28 @@
             >
                 <div class="flex w-full items-start justify-between">
                     <div class="flex items-center gap-1.5">
-                        <span class="text-sm font-semibold"> Step </span>
+                        <span class="text-sm font-semibold">
+                              {{ $t('schoolPeriodFormWrapper.step') }}
+                        </span>
 
                         <span
                             class="grid h-5 w-5 place-items-center rounded-full border border-black text-xs font-semibold"
                         >
-                            1
+
+                              {{ $t('schoolPeriodFormWrapper.1') }}
+
                         </span>
                     </div>
 
                     <div class="flex flex-col items-end">
                         <h3 class="text-sm font-semibold">
-                            Start time of the day
+                            {{ $t('schoolPeriodFormWrapper.startTimeOfTheDay') }}
                         </h3>
                         <h3
                             v-if="formStep === 1"
                             class="text-right text-sm text-gray-500"
                         >
-                            What time does the first period of the school day
-                            start?
+                            {{ $t('schoolPeriodFormWrapper.whatTimeFirstPeriod') }}
                         </h3>
                     </div>
                 </div>
@@ -65,7 +70,9 @@
                     <PrimaryButton
                         :disabled="formStep !== 1 || !!!form.start_time"
                         @click="updateStep"
-                        >Next
+                        >
+                        {{ $t('schoolPeriodFormWrapper.next') }}
+
                     </PrimaryButton>
                 </div>
             </fieldset>
@@ -76,21 +83,23 @@
             >
                 <div class="flex w-full items-start justify-between">
                     <div class="flex items-center gap-1.5">
-                        <span class="text-sm font-semibold"> Step </span>
+                        <span class="text-sm font-semibold">
+                        {{ $t('schoolPeriodFormWrapper.step') }}
+                        </span>
 
                         <span
                             class="grid h-5 w-5 place-items-center rounded-full border border-black text-xs font-semibold"
                         >
-                            2
+                        {{ $t('schoolPeriodFormWrapper.2') }}
                         </span>
                     </div>
 
                     <div class="flex flex-col items-end">
                         <h3 class="text-sm font-semibold">
-                            Duration of a single period
+                            {{ $t('schoolPeriodFormWrapper.durationSinglePeriod') }}
                         </h3>
                         <h3 v-if="formStep === 2" class="text-sm text-gray-500">
-                            How many minutes are in a single period?
+                            {{ $t('schoolPeriodFormWrapper.howManyMinutesSinglePeriod') }}
                         </h3>
                     </div>
                 </div>
@@ -137,7 +146,8 @@
                         class="absolute right-0 mr-[0.2rem] h-[calc(2.25rem-0.4rem)] rounded-[calc(0.375rem-0.1rem)] border bg-black px-2 text-xs font-semibold text-white"
                         @click="setOtherDuration"
                     >
-                        Set Minute
+                        {{ $t('schoolPeriodFormWrapper.setMinute') }}
+
                     </button>
                     <TextInput
                         v-model="otherDuration"
@@ -154,12 +164,13 @@
                     <TertiaryButton
                         :disabled="formStep !== 2"
                         @click="revertStep"
-                        >Back
+                        >{{ $t('schoolPeriodFormWrapper.back') }}
+
                     </TertiaryButton>
                     <PrimaryButton
                         :disabled="formStep !== 2 || !!!form.minutes_per_period"
                         @click="updateStep"
-                        >Next
+                        >{{ $t('schoolPeriodFormWrapper.next') }}
                     </PrimaryButton>
                 </div>
 
@@ -170,8 +181,8 @@
                     <InformationCircleIcon
                         class="inline-block h-4 w-4 stroke-2"
                     />
-                    For your periods with a custom duration, you can add them
-                    later in Step 4, "Custom Periods".
+                    {{ $t('schoolPeriodFormWrapper.hintCustomDuration') }}
+
                 </div>
             </fieldset>
 
@@ -181,23 +192,22 @@
             >
                 <div class="flex w-full items-start justify-between gap-2">
                     <div class="flex items-center gap-1.5">
-                        <span class="text-sm font-semibold"> Step </span>
+                        <span class="text-sm font-semibold"> {{ $t('schoolPeriodFormWrapper.step') }} </span>
 
                         <span
                             class="grid h-5 w-5 place-items-center rounded-full border border-black text-xs font-semibold"
                         >
-                            3
+                            {{ $t('schoolPeriodFormWrapper.3') }}
                         </span>
                     </div>
 
                     <div class="flex flex-col items-end">
-                        <h3 class="text-sm font-semibold">Periods per day</h3>
+                        <h3 class="text-sm font-semibold">{{ $t('schoolPeriodFormWrapper.periodsPerDay') }}</h3>
                         <h3
                             v-if="formStep === 3"
                             class="text-right text-sm text-gray-500"
                         >
-                            How many periods (sessions) will a typical school
-                            day have?
+                            {{ $t('schoolPeriodFormWrapper.howManyPeriods') }}
                         </h3>
                     </div>
                 </div>
@@ -240,7 +250,7 @@
                         class="absolute right-0 mr-[0.2rem] h-[calc(2.25rem-0.4rem)] rounded-[calc(0.375rem-0.1rem)] border bg-black px-2 text-xs font-semibold text-white"
                         @click="setOtherPeriod"
                     >
-                        Set Periods
+                        {{ $t('schoolPeriodFormWrapper.setPeriods') }}
                     </button>
                     <TextInput
                         v-model="otherPeriod"
@@ -257,12 +267,12 @@
                     <TertiaryButton
                         :disabled="formStep !== 3"
                         @click="revertStep"
-                        >Back
+                        >{{ $t('schoolPeriodFormWrapper.back') }}
                     </TertiaryButton>
                     <PrimaryButton
                         :disabled="formStep !== 3 || !!!form.no_of_periods"
                         @click="updateStep"
-                        >Next
+                        >{{ $t('schoolPeriodFormWrapper.next') }}
                     </PrimaryButton>
                 </div>
 
@@ -273,8 +283,9 @@
                     <InformationCircleIcon
                         class="inline-block h-4 w-4 stroke-2"
                     />
-                    This does not include your recess, lunch break or any other
-                    custom periods
+                    {{ $t('schoolPeriodFormWrapper.next') }}
+
+                    {{ $t('schoolPeriodFormWrapper.hint') }}
                 </div>
             </fieldset>
 
@@ -284,7 +295,7 @@
             >
                 <div class="flex w-full items-start justify-between gap-2">
                     <div class="flex items-center gap-1.5">
-                        <span class="text-sm font-semibold"> Step </span>
+                        <span class="text-sm font-semibold">{{ $t('schoolPeriodFormWrapper.step') }}</span>
 
                         <span
                             class="grid h-5 w-5 place-items-center rounded-full border border-black text-xs font-semibold"
@@ -294,16 +305,16 @@
                     </div>
 
                     <div class="flex flex-col items-end">
-                        <h3 class="text-sm font-semibold">Custom Periods</h3>
+                        <h3 class="text-sm font-semibold">{{ $t('schoolPeriodFormWrapper.customPeriods') }}</h3>
                         <h3
                             v-if="formStep === 4"
                             class="text-right text-sm text-gray-500"
                         >
-                            Add your custom periods here. Examples can be
-                            <span class="inline-block">"Break time"</span>,
-                            <span class="inline-block">"Lunch break"</span>,
-                            <span class="inline-block">"Recess"</span>,
-                            <span class="inline-block">"Homeroom"</span>
+                            {{ $t('schoolPeriodFormWrapper.addCustomPeriods') }}
+                            <span class="inline-block">{{ $t('schoolPeriodFormWrapper.breakTime') }}</span>,
+                            <span class="inline-block">{{ $t('schoolPeriodFormWrapper.lunchBreak') }}</span>,
+                            <span class="inline-block">{{ $t('schoolPeriodFormWrapper.recess') }}</span>,
+                            <span class="inline-block">{{ $t('schoolPeriodFormWrapper.homeroom') }}</span>
                         </h3>
                     </div>
                 </div>
@@ -328,9 +339,9 @@
                         >
                             <TextInput
                                 v-model="customPeriod.name"
-                                placeholder="Break time"
+                                :placeholder="$t('schoolPeriodFormWrapper.customPeriodPlaceHolder')"
                                 class="w-full"
-                                label="Custom Period Name"
+                                :label="$t('schoolPeriodFormWrapper.customPeriodLabel')"
                                 required
                             />
 
@@ -339,7 +350,8 @@
                             >
                                 <span
                                     class="min-w-[80.64px] pl-0.5 text-xs font-semibold text-gray-500"
-                                    >Duration (min)</span
+                                    >{{ $t('schoolPeriodFormWrapper.durationMin') }}
+                                </span
                                 >
 
                                 <button
@@ -364,7 +376,9 @@
                             >
                                 <span
                                     class="flex h-8 min-w-[85.5px] items-center pl-0.5 text-xs font-semibold text-gray-500"
-                                    >Before Period</span
+                                    >
+                                    {{ $t('schoolPeriodFormWrapper.beforePeriod') }}
+                                    </span
                                 >
 
                                 <div class="flex flex-wrap items-center gap-3">
@@ -400,16 +414,18 @@
                             >
                                 <span
                                     class="min-w-[85.5px] pl-0.5 text-xs font-semibold text-gray-500"
-                                    >Days</span
+                                    >
+                                 {{ $t('schoolPeriodFormWrapper.day') }}
+                                </span
                                 >
 
                                 <button
                                     v-for="(day, d) in [
-                                        'monday',
-                                        'tuesday',
-                                        'wednesday',
-                                        'thursday',
-                                        'friday',
+                                        t('schoolPeriodFormWrapper.days[0]'),
+                                       t('schoolPeriodFormWrapper.days[1]'),
+                                       t('schoolPeriodFormWrapper.days[2]'),
+                                       t('schoolPeriodFormWrapper.days[3]'),
+                                      t('schoolPeriodFormWrapper.days[4]'),
                                     ]"
                                     :key="d"
                                     :class="{
@@ -436,8 +452,8 @@
                     <InformationCircleIcon
                         class="inline-block h-4 w-4 stroke-2"
                     />
-                    Click on the "Finish" button on the bottom of the screen to
-                    finish setting up your schedule.
+                    {{ $t('schoolPeriodFormWrapper.finishHint') }}
+
                 </div>
 
                 <div
@@ -450,12 +466,14 @@
                         @click="addCustomPeriod"
                     >
                         <PlusCircleIcon class="h-4 w-4 stroke-2" />
-                        <span>Add new Period</span>
+                        <span>
+                          {{ $t('schoolPeriodFormWrapper.addNewPeriod') }}
+                        </span>
                     </button>
                     <TertiaryButton
                         :disabled="formStep !== 4 || !!!form.start_time"
                         @click="revertStep"
-                        >Back
+                        >{{ $t('schoolPeriodFormWrapper.back') }}
                     </TertiaryButton>
                 </div>
             </fieldset>
@@ -468,7 +486,7 @@
                 class="grid h-12 w-full place-items-center rounded-md bg-black font-semibold text-white"
                 @click="submit"
             >
-                Finish
+                {{ $t('schoolPeriodFormWrapper.finish') }}
             </button>
         </div>
     </div>
@@ -487,7 +505,8 @@ import TertiaryButton from "@/Components/TertiaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { addSuffix } from "@/utils.js";
 import { router } from "@inertiajs/vue3";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const isFormRendered = ref(false);
 
 const form = ref({
@@ -500,7 +519,7 @@ const form = ref({
             name: "",
             duration: null,
             before_period: null,
-            days: ["monday", "tuesday", "wednesday", "thursday", "friday"],
+            days: [t('schoolPeriodFormWrapper.days[0]'), t('schoolPeriodFormWrapper.days[1]'),t('schoolPeriodFormWrapper.days[2]'), t('schoolPeriodFormWrapper.days[3]'), t('schoolPeriodFormWrapper.days[4]')],
         },
     ],
 });
@@ -569,7 +588,7 @@ function addCustomPeriod() {
         name: "",
         duration: null,
         before_period: null,
-        days: ["monday", "tuesday", "wednesday", "thursday", "friday"],
+        days: [t('schoolPeriodFormWrapper.days[0]'), t('schoolPeriodFormWrapper.days[1]'),t('schoolPeriodFormWrapper.days[2]'), t('schoolPeriodFormWrapper.days[3]'), t('schoolPeriodFormWrapper.days[4]')],
     });
 }
 

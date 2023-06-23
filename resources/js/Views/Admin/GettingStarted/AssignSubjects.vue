@@ -6,22 +6,24 @@
             class="grid h-full grid-cols-12 grid-rows-[auto_1fr] overflow-auto"
         >
             <div class="col-span-12 mb-4 flex h-fit flex-col">
-                <Heading>Assign Subjects</Heading>
+                <Heading>
+                    {{ $t('assignSubjects.assignSubjects') }}
+                </Heading>
                 <h3 class="text-sm text-gray-500">
-                    Now that you have registered your classes and subjects, it's
-                    time to assign each class to the subject they will be
-                    taking.
+                    {{ $t('assignSubjects.assignClassHint') }}
                 </h3>
             </div>
 
             <div
                 class="relative col-span-12 flex h-full max-h-full flex-col gap-3 overflow-auto px-0.5 lg:col-span-3"
             >
-                <Heading size="sm">Subjects</Heading>
+                <Heading size="sm">
+                    {{ $t('assignSubjects.subjects') }}
+                </Heading>
 
                 <TextInput
                     v-model="query"
-                    placeholder="Search for a subject, tag or category"
+                    :placeholder="$t('assignSubjects.queryPlaceholder')"
                     class="!w-full"
                 />
 
@@ -110,7 +112,9 @@
                                         ]"
                                         class="text-sm text-gray-500"
                                     >
-                                        Levels
+                    {{ $t('assignSubjects.levels') }}
+
+
                                     </span>
 
                                     <span class="text-sm font-semibold">{{
@@ -124,7 +128,9 @@
                                         ]"
                                         class="text-sm text-gray-500"
                                     >
-                                        Classes
+                    {{ $t('assignSubjects.classes') }}
+
+
                                     </span>
                                 </div>
                             </div>
@@ -138,10 +144,11 @@
             >
                 <div v-if="!!selectedSubject" class="flex flex-col">
                     <Heading size="sm"
-                        >{{ selectedSubject.full_name }} Classes
+                        >{{ selectedSubject.full_name }} {{ $t('assignSubjects.classes') }}
                     </Heading>
                     <h3 class="text-sm text-gray-500">
-                        Select the classes that will be taking<span
+                        {{ $t('assignSubjects.selectClasses') }}
+                     <span
                             class="font-semibold"
                             >&nbsp;{{ selectedSubject.full_name }}</span
                         >
@@ -155,39 +162,49 @@
                     >
                         <div class="flex flex-col items-center justify-center">
                             <h3 class="font-semibold">
-                                First, Select a Subject
+                                {{ $t('assignSubjects.selectSubject') }}
                             </h3>
                             <h3 class="text-center text-sm text-gray-500">
-                                Choose a subject from the list
-                                <span>on the left</span>
-                                <span class="block"
-                                    >to start assigning classes</span
+                                {{ $t('assignSubjects.chooseSubject') }}
+                                <span>
+<!--                                    on the left-->
+                                {{ $t('assignSubjects.onTheLeft') }}
+
+                                </span>
+                                <span class="block">
+<!--                                    to start assigning classes-->
+                                {{ $t('assignSubjects.startAssigningClass') }}
+                                </span
                                 >
                             </h3>
                         </div>
 
                         <div class="flex flex-col items-center gap-2">
                             <h3 class="text-sm text-gray-500">
-                                ...or pick one of these subjects to start
+                                {{ $t('assignSubjects.pickOne') }}
+
+<!--                                ...or pick one of these subjects to start-->
                             </h3>
                             <div class="flex gap-2">
                                 <button
                                     class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-gray-500"
                                     @click="selectSubjectByName('English')"
                                 >
-                                    English
+                                    {{ $t('assignSubjects.english') }}
+
                                 </button>
                                 <button
                                     class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-gray-500"
                                     @click="selectSubjectByName('Mathematics')"
                                 >
-                                    Mathematics
+                                    {{ $t('assignSubjects.mathematics') }}
                                 </button>
                                 <button
                                     class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-gray-500"
                                     @click="selectSubjectByName('አማርኛ')"
                                 >
-                                    አማርኛ
+                                    {{ $t('assignSubjects.amharic') }}
+
                                 </button>
                             </div>
                         </div>
@@ -202,7 +219,7 @@
                                 selectedCount(selectedSubject).levels
                             }}</span>
                             <span class="text-sm text-gray-500">
-                                / 15 Levels Selected
+                                    {{ $t('assignSubjects.selectedLevels') }}
                             </span>
                         </div>
 
@@ -211,8 +228,7 @@
                                 selectedCount(selectedSubject).batches
                             }}</span>
                             <span class="text-sm text-gray-500">
-                                / {{ batchToSelectedSubject.length }} Classes
-                                Selected
+                                / {{ batchToSelectedSubject.length }} {{ $t('assignSubjects.classesSelected') }}
                             </span>
                         </div>
                     </div>
@@ -220,7 +236,7 @@
                     <div class="flex flex-col gap-8">
                         <div class="flex flex-col gap-3">
                             <h3 class="text-sm font-semibold">
-                                Select Classes in Levels
+                                {{ $t('assignSubjects.selectClassesInLevels') }}
                             </h3>
                             <div
                                 class="grid-cols-3 gap-3 transition duration-300 lg:grid"
@@ -262,7 +278,7 @@
                                 class="flex w-full items-center justify-between"
                             >
                                 <h3 class="text-sm font-semibold">
-                                    Select Individual Classes
+                                    {{ $t('assignSubjects.selectIndividualClasses') }}
                                 </h3>
                                 <button
                                     class="flex items-center gap-1"
@@ -290,8 +306,8 @@
                                     >
                                         {{
                                             isGroupSelected("All")
-                                                ? "Deselect All"
-                                                : "Select All"
+                                                ? $t('assignSubjects.deselectAll')
+                                                : $t('assignSubjects.selectAll')
                                         }}
                                     </span>
                                 </button>
@@ -385,7 +401,7 @@
                                                             )
                                                         "
                                                     >
-                                                        Select All Sections
+                                                        {{ $t('assignSubjects.selectAllSections') }}
                                                     </button>
                                                     <div
                                                         class="h-full w-1 border-r border-black"
@@ -398,7 +414,7 @@
                                                             )
                                                         "
                                                     >
-                                                        List All Sections
+                                                        {{ $t('assignSubjects.listAllSections') }}
                                                     </button>
                                                 </div>
                                                 <ul
@@ -445,7 +461,7 @@
                                                             :for="`section${l}-all`"
                                                             class="grow cursor-pointer select-none border-b py-1 font-semibold"
                                                         >
-                                                            All Sections
+                                                            {{ $t('assignSubjects.allSections') }}
                                                         </label>
                                                     </li>
                                                     <li
@@ -484,7 +500,8 @@
                                                             }"
                                                             class="grow cursor-pointer select-none py-1"
                                                         >
-                                                            Section
+                                                            {{ $t('assignSubjects.section') }}
+
                                                             {{
                                                                 section.section
                                                             }}
@@ -513,7 +530,9 @@
                                                         />
                                                         <span
                                                             class="text-xs font-semibold text-gray-500"
-                                                            >Collapse</span
+                                                            >
+                                                            {{ $t('assignSubjects.collapse') }}
+                                                        </span
                                                         >
                                                     </button>
                                                 </div>
@@ -549,9 +568,9 @@
                                                                           selectedSubject,
                                                                           level
                                                                       ) === 100
-                                                                        ? "All Sections Selected"
-                                                                        : "Some Sections Selected"
-                                                                    : "None Selected"
+                                                                        ? $t('assignSubjects.allSectionSelected')
+                                                                        : $t('assignSubjects.someSectionsSelected')
+                                                                    : $t('assignSubjects.noneSelected')
                                                             }}
                                                         </span>
                                                     </div>
@@ -571,10 +590,13 @@
                                 class="flex items-center justify-between gap-3"
                             >
                                 <TertiaryButton @click="saveBatches"
-                                    >Save
+                                    >
+                                    {{ $t('assignSubjects.save') }}
                                 </TertiaryButton>
                                 <PrimaryButton @click="submitForm"
-                                    >Finish
+                                    >
+                                    {{ $t('assignSubjects.finish') }}
+
                                 </PrimaryButton>
                             </div>
                         </div>
@@ -587,7 +609,7 @@
 
 <script setup>
 import { router } from "@inertiajs/vue3";
-
+import {useI18n} from "vue-i18n";
 import { parseLevel, toHashTag } from "@/utils";
 import { computed, onMounted, ref, watch } from "vue";
 import { allLevels, sectionsOfLevel } from "@/fake";
@@ -888,10 +910,11 @@ function submitForm() {
     router.get("/getting-started/school-period");
 }
 
+const {t} = useI18n()
 const levelCategoryDescriptions = {
-    1: "Select only Kindergarten level grades (Pre-KG to KG-2)",
-    2: "Select only Elementary level grades (Grades 1 - 8)",
-    3: "Select only High School level grades (Grades 9 - 12)",
+    1: t('assignSubjects.kindergarten'),
+    2: t('assignSubjects.elementary'),
+    3: t('assignSubjects.highSchool'),
 };
 
 const batchToSubjects = ref([]);

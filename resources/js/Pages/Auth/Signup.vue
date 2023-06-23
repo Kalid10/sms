@@ -40,14 +40,14 @@
 
                 <div class="flex flex-col gap-1">
                     <h3 class="text-xl font-semibold">
-                        {{ $t('pages.auth.signUp.messageOne') }}
+                        {{ $t('signUp.messageOne') }}
 
                     </h3>
                     <h3 class="text-gray-500">
-                        {{ $t('pages.auth.signUp.messageTwo') }}
+                        {{ $t('signUp.messageTwo') }}
                         <a class="text-brand-100" href="#"
                         >
-                            {{ $t('pages.auth.signUp.notifyYourSchool') }}
+                            {{ $t('signUp.notifyYourSchool') }}
                         </a
                         >
                     </h3>
@@ -58,7 +58,7 @@
                         <TextInput
                             v-model="form.emailOrPhone"
                             class="w-full"
-                            :label="$t('pages.auth.signUp.emailOrPhoneLabel')"
+                            :label="$t('signUp.emailOrPhoneLabel')"
                             placeholder="johndoe@school.org"
                             required
                             type="email"
@@ -66,10 +66,10 @@
                         <TextInput
                             v-model="form.current_password"
                             class="w-full"
-                            :label="$t('pages.auth.signUp.currentPasswordLabel')"
+                            :label="$t('signUp.currentPasswordLabel')"
                             placeholder="**********"
                             required
-                            :subtext="$t('pages.auth.signUp.currentPasswordSubtext')"
+                            :subtext="$t('signUp.currentPasswordSubtext')"
                             type="password"
                         />
                     </div>
@@ -78,7 +78,7 @@
                         <TextInput
                             v-model="form.password"
                             class="w-full"
-                            :label="$t('pages.auth.signUp.newPassword')"
+                            :label="$t('signUp.newPassword')"
                             placeholder="**********"
                             required
                             type="password"
@@ -86,7 +86,7 @@
                         <TextInput
                             v-model="form.password_confirmation"
                             class="w-full"
-                            :subtext="$t('pages.auth.signUp.confirmPassword')"
+                            :subtext="$t('signUp.confirmPassword')"
                             placeholder="**********"
                             required
                             type="password"
@@ -97,14 +97,14 @@
                         class="h-10 w-full rounded-md border-brand-50 bg-brand-100 text-center font-semibold text-white"
                         type="submit"
                     >
-                        {{ $t('pages.auth.signUp.signUp') }}
+                        {{ $t('signUp.signUp') }}
                     </button>
                 </fieldset>
 
                 <div class="flex w-full justify-end">
                     <Link class="text-brand-100" href="login"
                     >
-                        {{ $t('pages.auth.signUp.alreadyRegistered') }}
+                        {{ $t('signUp.alreadyRegistered') }}
                     </Link>
                 </div>
             </form>

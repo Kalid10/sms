@@ -419,24 +419,27 @@ const en = {
         "descriptionThree": "Let's get started! Simply enter the requested information, including the start time, number of periods, duration, and any custom periods, and let the module assist you in creating an organized and efficient weekly schedule for your school.",
         "getStarted": "Get Started"
     },
+    "schoolPeriodForm":{
+        "weekdays": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    },
     "schoolPeriodFormWrapper": {
         "step": "Step",
         "of4": "of 4",
         "1": "1",
         "startTimeOfTheDay": "Start time of the day",
         "whatTimeFirstPeriod": "What time does the first period of the school day start?",
-        "next": "Next",
         "2": "2",
         "durationSinglePeriod": "Duration of a single period",
         "howManyMinutesSinglePeriod":"How many minutes are in a single period?",
         "setMinute": "Set Minute",
         "back": "Back",
+        "next":"Next",
         "hintCustomDuration": "For your periods with a custom duration, you can add them later in Step 4, \"Custom Periods\"",
         "3":"3",
         "periodsPerDay": "Periods per day",
         "howManyPeriods": "How many periods (sessions) will a typical school day have?",
         "setPeriods": "Set Periods",
-        "": "This does not include your recess, lunch break or any other custom periods",
+        "hint": "This does not include your recess, lunch break or any other custom periods",
         "4": "4",
         "customPeriods": "Custom Periods",
         "addCustomPeriods": "Add your custom periods here. Examples can be",
@@ -446,17 +449,13 @@ const en = {
         "homeroom": "\"Homeroom\"",
         "customPeriodLabel": "Custom Period Name",
         "customPeriodPlaceHolder": "Break time",
+        "durationMin":"Duration (min)",
         "beforePeriod": "Before Period",
-        "days":{
-            "monday":"Monday",
-            "tuesday":"Tuesday",
-            "wednesday":"Wednesday",
-            "thursday":"Thursday",
-            "friday":"Friday"
-        },
+        "day":"Day",
         "finishHint": "Click on the \"Finish\" button on the bottom of the screen to finish setting up your schedule.",
         "addNewPeriod": "Add new Period",
-        "finish": "Finish"
+        "days":["Monday","Tuesday","Wednesday","Thursday","Friday"],
+
     },
     "schoolPeriodModal": {
         "almostThere": "Almost there!",
@@ -481,27 +480,17 @@ const en = {
         "titlePlaceholder": "name",
         "bodyLabel": "Description",
         "bodyPlaceholder": "Its about...",
-        "inputTagsLabel": "tags",
+        "inputTagsLabel": "Tags",
         "inputTagsPlaceholder": "tag1,tag2,tag3",
         "datePickerLabel": "Date",
         "typeLabel": "Type",
-        "eventTypes": [
-            {
-                "value": "closed",
-                "label": "Full Day",
-                "description": "There is no school for the whole day."
-            },
-            {
-                "value": "half_closed",
-                "label": "Half Day",
-                "description": "There will be no class for the half day."
-            },
-            {
-                "value": "not_closed",
-                "label": "None",
-                "description": "There will be class all day."
-            }
-        ]
+
+        "fullDay":"Full Day",
+        "fullDayDescription":"There is no school for the whole day.",
+        "halfDay":"Half Day",
+        "halfDayDescription":"There will be no class for the half day.",
+        "none":"None",
+        "noneDescription":"There will be class all day.",
     },
     "periodForm": {
         "classSchedule": "Class Schedule",
@@ -531,20 +520,14 @@ const en = {
         "customBeforePeriodLabel": "Period before",
         "customBeforePeriodPlaceholder": "0",
         "hintAddCustomPeriods": "Add custom periods like lunch or recess. Fill in the name, duration (in minutes), and specify which period it precedes. For instance, to add a 'Breakfast' break before the 4th period, enter 'Breakfast', its length, and '4' in the respective fields.",
-        "title": "Title",
+        "title": "Submit",
         "submit": "Submit"
     },
     "viewPeriod": {
         "scheduleDisplay": "Schedule real time display",
         "noPeriodsFound": "No periods found, enter the number (amount) of periods to display in real time.",
         "Period": "Period",
-        "weekdays":{
-            "monday":"Monday",
-            "tuesday":"Tuesday",
-            "wednesday":"Wednesday",
-            "thursday":"Thursday",
-            "friday":"Friday"
-        }
+        "weekdays":["Monday","Tuesday","Wednesday","Thursday","Friday"]
     },
     "assignSubjects":{
         "assignSubjects": "Assign Subjects",
@@ -561,26 +544,26 @@ const en = {
         "pickOne": " ...or pick one of these subjects to start",
         "english": "English",
         "mathematics": "Mathematics",
-        "Amharic": "አማርኛ",
+        "amharic": "አማርኛ",
         "selectedLevels": "15 Levels Selected",
         "classesSelected": "Classes Selected",
         "selectClassesInLevels": "Select Classes in Levels",
+        "deselectAll":"Deselect All",
+        "selectAll":"Select All",
         "selectIndividualClasses": "Select Individual Classes",
         "selectAllSections": "Select All Sections",
         "listAllSections": "List All Sections",
         "allSections": "All Sections",
         "section": "Section",
         "collapse": "Collapse",
+        "allSectionSelected":"All Sections Selected",
+        "someSectionsSelected":"Some Sections Selected",
+        "noneSelected":"None Selected",
         "save": "Save",
         "finish": "Finish",
-
-
-        "levelCategoryDescriptions" :{
-            "1": "Select only Kindergarten level grades (Pre-KG to KG-2)",
-            "2": "Select only Elementary level grades (Grades 1 - 8)",
-            "3": "Select only High School level grades (Grades 9 - 12)"
-        }
-
+        "kindergarten": "Select only Kindergarten level grades (Pre-KG to KG-2)",
+        "elementary": "Select only Elementary level grades (Grades 1 - 8)",
+        "highSchool": "Select only High School level grades (Grades 9 - 12)"
     },
     "registerAdmin": {
         "title":"New Admin Registration",
@@ -622,12 +605,13 @@ const en = {
         "buttonTitle":"Add New Grade",
         "grade": "Grade",
         "sections": "Sections",
-        "Finish": "Finish",
+        "finish": "Finish",
         "updateLevelSectionTitle": "Number of Sections",
         "updateLevelSectionSubtitle": "Update the number of Sections for Grade 7",
         "updateLevelSectionInputPlaceholder": "Specify the number of sections for Grade 7"
     },
     "registerSchoolYear": {
+        "welcomeText": "{name} Please enter the <span class='text-black'>start date</span> of the new school year and the number of semesters it includes. You can also change the school year name by clicking the <span id='pencilIcon'></span> icon on the right. You can always change this in the school year settings later",
         "welcome": "Welcome to the",
         "schoolYear": "School Year",
         "pleaseEnter": "Please enter the",
@@ -647,7 +631,12 @@ const en = {
         "eachDividedInto": "each divided into",
         "quarters": "quarters",
         "resultingInTotalOf":"resulting in a total of",
-        "createAndProceed": "Create and Proceed"
+        "createAndProceed": "Create and Proceed",
+        "summaryText":"<p class='text-xs'> The upcoming academic year <span class='font-bold text-gray-700'>{academicYear}</span>, will consist of <span class='font-bold text-gray-700'>{semesters} semesters,</span > each divided into <span class='font-bold text-gray-700'>{quartersPerSemester} quarters, </span> resulting in a total of <span class='font-bold text-gray-700' >{totalQuarters} quarters.</span > </p>"
+
+
+
+
     },
     "registerSubjects": {
         "registerSubjects": "Register Subjects",
@@ -655,12 +644,12 @@ const en = {
         "descriptionTwo":"Click on the \"Finish\" to proceed, and \"Next\" to save and proceed.",
         "totalSubjects": "Total Subjects",
         "subjectsSelected": "Subjects Selected",
-        "New Subject": "New Subject",
+        "newSubject": "New Subject",
         "other": "Other",
         "createNewSubject": "Create new Subject",
         "createNewCategory": "Create new Category",
         "finish": "Finish",
-        "Reset": "Reset",
+        "reset": "Reset",
         "newSubjectTitle": "New Subject",
         "newSubjectSubtitle":"Create a new subject and assign it to a category",
         "subjectFullNamePlaceholder": "Name of the new Subject",

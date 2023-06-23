@@ -3,14 +3,14 @@
         class="container mx-auto flex max-w-7xl flex-col gap-4 px-2 pt-6 md:p-6"
     >
         <div class="flex flex-col">
-            <Heading>Register Subjects</Heading>
+            <Heading>
+                {{ $t('registerSubjects.registerSubjects') }}
+            </Heading>
             <h3 class="text-sm text-gray-500">
-                We have selected a set predefined subjects for you. You can
-                remove the subjects you don't provide or add more subjects not
-                listed here.
-                <span class="inline-block"
-                    >Click on the "Finish" to proceed, and "Next" to save and
-                    proceed.</span
+                {{ $t('registerSubjects.descriptionOne') }}
+                <span class="inline-block">
+                {{ $t('registerSubjects.descriptionTwo') }}
+                </span
                 >
             </h3>
         </div>
@@ -22,7 +22,8 @@
                 <span class="whitespace-nowrap font-semibold text-black">{{
                     updatedSubjects.length
                 }}</span>
-                Total Subjects
+                {{ $t('registerSubjects.totalSubjects') }}
+
             </span>
             <span
                 class="col-span-1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
@@ -30,7 +31,7 @@
                 <span class="whitespace-nowrap font-semibold text-black">{{
                     selectedSubjects.length
                 }}</span>
-                Subjects Selected
+                {{ $t('registerSubjects.subjectsSelected') }}
             </span>
             <span
                 v-if="newSubjects.length > 0"
@@ -39,7 +40,8 @@
                 <span class="whitespace-nowrap font-semibold text-black">{{
                     newSubjects.length
                 }}</span>
-                New Subject{{ newSubjects.length > 1 ? "s" : "" }}
+                {{ $t('registerSubjects.newSubject') }}
+                {{ newSubjects.length > 1 ? "s" : "" }}
             </span>
         </div>
 
@@ -141,7 +143,8 @@
                 <div class="flex items-center gap-2">
                     <div class="z-10 h-3.5 w-3.5 rounded-full bg-gray-300" />
                     <Heading size="sm" class="font-normal text-gray-500"
-                        >Other
+                        >
+                        {{ $t('registerSubjects.other') }}
                     </Heading>
                 </div>
 
@@ -156,7 +159,7 @@
                             class="h-5 w-5 stroke-gray-500 stroke-2"
                         />
                         <span class="text-sm font-semibold text-gray-500"
-                            >Create new Subject</span
+                            >{{ $t('registerSubjects.createNewSubject') }}</span
                         >
                     </button>
                     <button
@@ -179,7 +182,7 @@
                             </span>
                         </span>
                         <span class="text-sm font-semibold text-gray-500"
-                            >Create new Category</span
+                            >{{ $t('registerSubjects.createNewCategory') }}</span
                         >
                     </button>
                 </div>
@@ -187,11 +190,11 @@
         </div>
 
         <div class="flex items-center gap-3">
-            <PrimaryButton @click="submitSubjects">Finish</PrimaryButton>
+            <PrimaryButton @click="submitSubjects">{{ $t('registerSubjects.finish') }}</PrimaryButton>
             <TertiaryButton
                 v-if="selectedSubjects.length < updatedSubjects.length"
                 @click="resetSubjects"
-                >Reset
+                >{{ $t('registerSubjects.reset') }}
             </TertiaryButton>
         </div>
 
@@ -199,42 +202,42 @@
             <FormElement
                 v-model:show-modal="isNewSubjectFormOpened"
                 modal
-                title="New Subject"
-                subtitle="Create a new subject and assign it to a category"
+                :title="$t('registerSubjects.newSubjectTitle')"
+                :subtitle="$t('registerSubjects.newSubjectSubtitle')"
                 @submit="addToSubjectsList"
             >
                 <TextInput
                     v-model="newSubject.full_name"
                     required
-                    placeholder="Name of the new Subject"
-                    label="Subject Name"
+                    :placeholder="$t('registerSubjects.subjectFullNamePlaceholder')"
+                    :label="$t('registerSubjects.newSubjectFullNameLabel')"
                 />
                 <TextInput
                     v-model="newSubject.short_name"
                     required
-                    placeholder="Short name for Subject"
-                    label="Subject Short Name"
+                    :placeholder="$t('registerSubjects.subjectShortNamePlaceholder')"
+                    :label="$t('registerSubjects.subjectShortNameLabel')"
                 />
                 <TextInput
                     v-model="tags"
-                    placeholder="Assign tags (separate multiple tags with comma)"
-                    label="Subject Tags"
+                    :placeholder="$t('registerSubjects.subjectTagPlaceholder')"
+                    :label="$t('registerSubjects.subjectTagLabel')"
                 />
                 <SelectInput
                     v-if="!customCategory"
                     v-model="newSubject.category"
                     :options="categoryOptions"
                     required
-                    placeholder="Category of the new Subject"
-                    label="Subject Category"
+                    :placeholder="$t('registerSubjects.subjectCategoryOptionsPlaceholder')"
+                    :label="$t('registerSubjects.subjectCategoryOptionsLabel')"
                 />
                 <TextInput
                     v-else
                     id="categoryInput"
                     v-model="newSubject.category"
                     required
-                    placeholder="Create a custom Category"
-                    label="Subject Category"
+                    :placeholder="$t('registerSubjects.subjectCategoryPlaceholder')"
+                    :label="$t('registerSubjects.subjectCategoryLabel')"
                 />
             </FormElement>
         </Modal>
