@@ -124,6 +124,8 @@ class TeacherController extends Controller
             default => throw new Exception('Type unknown!'),
         };
 
+        $teacherAbsentee = $this->teacherService->getTeacherAbsentee($id, $schoolYearId);
+
         return Inertia::render($page, [
             'teacher' => $teacher,
             'batches' => $batches,
@@ -139,6 +141,7 @@ class TeacherController extends Controller
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),
             ],
+            'teacher_absentee' => $teacherAbsentee,
         ]);
     }
 

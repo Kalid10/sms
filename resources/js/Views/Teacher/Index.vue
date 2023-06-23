@@ -149,10 +149,10 @@
                             class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
                         >
                             <div class="text-center text-5xl font-bold">
-                                100%
+                                {{ teacherAbsentee.absentee }} %
                             </div>
 
-                            <div class="font-medium">Attendance</div>
+                            <div class="font-medium">Absentee</div>
                         </div>
                         <div
                             class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
@@ -197,6 +197,8 @@ const nextClass = usePage().props.teacher.next_batch_session;
 const nextClassSection = ref(null);
 const teacherSchedule = computed(() => usePage().props.teacher_schedule);
 const schoolSchedule = computed(() => usePage().props.school_schedule);
+const teacherAbsentee = computed(() => usePage().props.teacher_absentee);
+
 const scrollToNextClass = () => {
     nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
 };

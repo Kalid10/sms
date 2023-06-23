@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AbsenteesController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\AssessmentController;
 use App\Http\Controllers\Web\LessonPlanController;
@@ -43,6 +44,10 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
 
     Route::controller(UserController::class)->prefix('users/')->middleware(['auth'])->name('users.')->group(function () {
         Route::get('', 'index');
+    });
+
+    Route::controller(AbsenteesController::class)->prefix('absentees/')->middleware(['checkUserRole:manage-users'])->name('absentees.')->group(function () {
+        Route::get('staff', 'staff')->name('staff');
     });
 
     Route::prefix('teachers/')->middleware(['checkUserRole:manage-teachers'])->name('teachers.')->group(function () {

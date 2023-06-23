@@ -137,4 +137,15 @@ class TeacherService
                 return $query->whereRelation('level', 'name', 'like', "%{$searchKey}%");
             })->get();
     }
+
+    public static function getTeacherAbsentee(int $id, int $schoolYearId): array
+    {
+        $teacher = Teacher::findOrFail($id);
+
+        $absentee = $teacher->staffAbsenteePercentage($schoolYearId);
+
+        return [
+            'absentee' => $absentee,
+        ];
+    }
 }

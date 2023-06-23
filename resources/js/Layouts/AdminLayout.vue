@@ -35,7 +35,11 @@ import {
     UserIcon,
 } from "@heroicons/vue/20/solid/index.js";
 import { usePage } from "@inertiajs/vue3";
-import { BookOpenIcon, UsersIcon } from "@heroicons/vue/24/solid";
+import {
+    BookOpenIcon,
+    FingerPrintIcon,
+    UsersIcon,
+} from "@heroicons/vue/24/solid";
 import {
     ArrowLeftOnRectangleIcon,
     CalendarDaysIcon,
@@ -102,6 +106,12 @@ const sidebarItems = computed(() => [
         icon: UserGroupIcon,
         route: "/admin/users",
         active: directory.value === "users",
+    },
+    {
+        name: "Absentees",
+        icon: FingerPrintIcon,
+        route: "/admin/absentees/staff",
+        active: directory.value === "absentees",
     },
 ]);
 
