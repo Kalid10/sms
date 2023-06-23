@@ -154,6 +154,6 @@ class LessonPlanController extends Controller
         $explanationPrompt = "The lesson plan title is '{$prompt}' for a '{$grade}' level class in the subject of '{$subject}'. Provide a brief 2-5 paragraph explanation of '{$prompt}'.";
 
 //        $explanationPrompt = "I want you to act as a lesson plan advisor.The subject is '{$subject}' for grade '{$grade}' provide a brief 2-5 paragraphs explaining this lesson plan title: '{$prompt}";
-        return $openAIService->generateCompletionStream($explanationPrompt);
+        return $openAIService->createCompletionStream($explanationPrompt);
     }
 }
