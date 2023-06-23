@@ -25,4 +25,9 @@ class Admin extends Model
     {
         return $this->hasMany(Announcement::class, 'author_id');
     }
+
+    public function schoolYear(): HasMany
+    {
+        return $this->hasMany(SchoolYear::class);
+    }
 }

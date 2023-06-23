@@ -7,12 +7,15 @@ use App\Models\Batch;
 use App\Models\BatchSession;
 use App\Models\BatchSubject;
 use App\Models\LessonPlan;
+use App\Models\Quarter;
 use App\Models\SchoolYear;
+use App\Models\Semester;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Services\OpenAIService;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -66,9 +69,16 @@ class LessonPlanController extends Controller
             ->distinct()
             ->get(['id', 'subject_id', 'batch_id']);
 
+        $quarterFilter = $request->input('quarter_id');
+
         $batchSessionsWithLessonPlans = BatchSession::where('teacher_id', $teacherId)
             ->whereHas('batchSchedule.batchSubject', fn ($query) => $query->where('batch_subject_id', $batchSubject->id))
             ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
+            ->when($quarterFilter, function (Builder $query) use ($quarterFilter) {
+                $query->whereHas('batchSchedule', function (Builder $query) use ($quarterFilter) {
+                    $query->where('quarter_id', $quarterFilter);
+                });
+            })
             ->with([
                 'batchSchedule.schoolPeriod',
                 'batchSchedule.batchSubject.subject',
@@ -105,7 +115,14 @@ class LessonPlanController extends Controller
             default => throw new Exception('Type unknown!'),
         };
 
+        $quarters = Quarter::with('semester.schoolYear')->get();
+        $semesters = Semester::with('schoolYear')->get();
+        $schoolYears = SchoolYear::all();
+
         return Inertia::render($page, [
+            'quarters' => $quarters,
+            'semesters' => $semesters,
+            'school_years' => $schoolYears,
             'batch_sessions' => $weeklyBatchSessions,
             'batch' => Batch::find($batchId)->load('level'),
             'subjects' => $teacherSubjects,

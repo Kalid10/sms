@@ -118,15 +118,31 @@ class AdminController extends Controller
     {
         $searchKey = $request->input('search');
 
-        $schoolYear = SchoolYear::getActiveSchoolYear();
+        $schoolYears = SchoolYear::all();
 
-        $announcements = Announcement::where('school_year_id', $schoolYear?->id)->with('author.user')
+        $schoolYearId = $request->input('school_year_id');
+        $expiresOn = $request->input('expires_on');
+        $announcements = Announcement::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
             ->when($searchKey, function ($query) use ($searchKey) {
                 return $query->where('title', 'like', "%{$searchKey}%");
-            })->paginate(10);
+            })
+            ->when($schoolYearId, function ($query) use ($schoolYearId) {
+                return $query->where('school_year_id', $schoolYearId);
+            })
+            ->when($expiresOn, function ($query) use ($expiresOn) {
+                return $query->where('expires_on', $expiresOn);
+            })
+            ->orderBy('created_at', 'desc')
+            ->with('author.user:id,name')
+            ->paginate(10);
 
         return Inertia::render('Admin/Announcements/Index', [
             'announcements' => $announcements,
+            'school_years' => $schoolYears,
+            'filters' => [
+                'school_year_id' => $schoolYearId,
+                'expires_on' => $expiresOn,
+            ],
         ]);
     }
 }

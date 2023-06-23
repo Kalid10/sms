@@ -82,14 +82,21 @@ class TeacherService
             });
     }
 
-    public static function getStudents(int $batchSubjectId, ?string $studentSearch)
+    public static function getStudents(int $batchSubjectId, ?string $studentSearch, Request $request)
     {
+        $schoolYearId = $request->input('school_year_id');
+
         $batchSubject = $batchSubjectId ?
             BatchSubject::find($batchSubjectId)->load('subject', 'batch.level') :
             BatchSubject::where('teacher_id', auth()->user()->teacher->id)
                 ->whereHas('batch', function ($query) {
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-                })->first()->load('subject', 'batch.level');
+                })->first()->load('subject', 'batch.level')
+                ->when($schoolYearId, function ($query) use ($schoolYearId) {
+                    $query->whereHas('batch', function ($query) use ($schoolYearId) {
+                        $query->where('school_year_id', $schoolYearId);
+                    });
+                });
 
         return StudentService::getBatchStudents($batchSubject->batch_id, $studentSearch, $batchSubjectId);
     }

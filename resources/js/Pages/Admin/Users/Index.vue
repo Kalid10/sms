@@ -16,7 +16,7 @@
                         title="Admins"
                         value="Sign up administrators with ease"
                         :icon="ClipboardIcon"
-                        url="/register/admin"
+                        url="/admin/user/register/admin"
                     />
                     <SummaryItem
                         class-style="bg-zinc-100 text-black"
@@ -24,7 +24,7 @@
                         title="Students"
                         value="Register Students With there Guardians"
                         :icon="UsersIcon"
-                        url="/register/student"
+                        url="/admin/user/register/student"
                     />
                     <SummaryItem
                         class-style="bg-fuchsia-100 text-black"
@@ -32,7 +32,7 @@
                         title="Teachers"
                         value="Register Students With there Guardians"
                         :icon="CalendarIcon"
-                        url="/register/teacher"
+                        url="/admin/user/register/teacher"
                     />
                 </div>
                 <RecentActivities />
