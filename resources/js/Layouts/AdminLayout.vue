@@ -41,6 +41,7 @@ import {
     CalendarDaysIcon,
 } from "@heroicons/vue/20/solid/index";
 import { HomeIcon } from "@heroicons/vue/24/solid/index";
+import { UserGroupIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     auth: {
@@ -95,6 +96,12 @@ const sidebarItems = computed(() => [
         icon: CalendarDaysIcon,
         route: "/admin/schedules",
         active: directory.value === "schedules",
+    },
+    {
+        name: "Users",
+        icon: UserGroupIcon,
+        route: "/admin/users",
+        active: directory.value === "users",
     },
 ]);
 

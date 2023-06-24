@@ -1,5 +1,5 @@
 <template>
-    <div class="lex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
+    <div class="flex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
         <div>
             <Title title="Assign Homeroom" />
         </div>
