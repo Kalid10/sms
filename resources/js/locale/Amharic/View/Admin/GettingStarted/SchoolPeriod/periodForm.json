@@ -1,0 +1,32 @@
+{
+    "classSchedule": "የትምህርት መርሐግብር",
+    "description": "በርዕሱ ስር, ተጠቃሚው በዚህ ገጽ ላይ ማድረግ የሚችለውን አጭር መግለጫ አለ።",
+    "startTimePickerSubtext": "የቀኑ የመጀመሪያ ጊዜ የትምህርት ቀን የሚጀምርበት ጊዜ ነው። ቀኑን መጀመሪያ ሰዓት 7:00  AM ላይ ካዘጋጁ, የትምህርት ቀን በ7:00 AM ይጀምራል።",
+    "startTimePickerPlaceholder": "0",
+    "startTimePickerLabel": "መጀመሪያ ሰአት",
+
+    "minutesPerPeriodPlaceholder": "0",
+    "minutesPerPeriodLabel": "በደቂቃ የሚቆይ የክፍለ ጊዜ ጊዜ (ደቂቃዎች)",
+    "minutesPerPeriodSubtext":"እያንዳንዱ የትምህርት ክፍለ ጊዜ በደቂቃዎች ውስጥ ለምን ያህል ጊዜ እንደሚቆይ ይግለጹ። ይህ እንደ ትምህርት ቤትዎ ልዩ ፍላጎቶች ሊለያይ ይችላል፣ ይህ ደግሞ ብጁ ጊዜዎችን አያካትትም። ለምሳሌ፡ የእርስዎ ግብአት 45 ከሆነ፣ ይህ ማለት እያንዳንዱ ክፍለ ጊዜ 45 ደቂቃ አለው ማለት ነው።",
+
+    "noOfPeriodPlaceholder": "0",
+    "noOfPeriodsLabel": "በቀን ውስጥ የክፍለ ጊዜዎች ብዛት",
+    "noOfPeriodSubtext": "በተለመደው የትምህርት ቀን ያለዎትን የክፍል ጊዜያት ብዛት ያስገቡ።. ይህ በአንድ ቀን ውስጥ የሚካሄዱ የክፍል ክፍለ ጊዜዎች ቁጥር ይሆናል. ለምሳሌ፡ የእርስዎ ግብአት 8 ከሆነ፣ ያ ማለት እያንዳንዱ ቀን በቀን 8 ጊዜዎች አሉት ማለት ነው።",
+    "selectLevelCategories": "የክፍል ምድቦችን ይምረጡ:",
+    "note": "ማስታወሻ፡ ተመሳሳይ መርሃ ግብሮች በተመረጡ ምድቦች ውስጥ ለሁሉም ክፍሎች ይተገበራሉ።",
+    "customPeriod":"ልዩ ክፍለ ጊዜ",
+    "addNew": "+ አዲስ አስገባ",
+
+    "customTimeNameLabel": "ስም",
+    "customTimeNamePlaceholder": "ቁርስ",
+
+    "customTimeDurationLabel": "ቆይታ (ደቂቃዎች)",
+    "customTimeDurationPlaceholder": "0",
+
+    "customBeforePeriodLabel": "ከክፍለ ጊዜ በፊት",
+    "customBeforePeriodPlaceholder": "0",
+    "hintAddCustomPeriods": "እንደ ምሳ ወይም ዕረፍት ያሉ ለዩ ክፍለ ጊዜዎች ያክሉ። ስሙን ፣ የቆይታ ጊዜውን (በደቂቃ) ይሙሉ እና የትኛውን ክፍለ ጊዜ እንደሚቀድም ይግለጹ። ለምሳሌ፣ ከአራተኛው ክፍለ ጊዜ በፊት  የቁርስ እ ዕረፍትን ለመጨመር እቁርስእን ፣ ርዝመቱን እና 4 ያስገቡ።",
+    "submitTitle": "አስገባ",
+    "submit": "አስገባ"
+
+}

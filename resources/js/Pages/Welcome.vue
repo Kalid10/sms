@@ -1,6 +1,9 @@
 <template>
     <div class="">Welcome</div>
 
+    <p v-html="$t('test.name')"></p>
+
+
     <div>
         <Localization :current-locale="title">
             <div class="bg-pink-400 text-2xl">english</div>

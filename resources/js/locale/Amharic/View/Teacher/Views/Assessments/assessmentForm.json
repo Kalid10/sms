@@ -1,0 +1,24 @@
+{
+    "formElementTitle": "የመገምገም ቅጽ",
+    "titlePlaceholder": "ለመገምገም ርዕስ ያክሉ",
+    "titleLabel": "ርዕስ",
+    "descriptionPlaceholder": "ለመገምገም መግለጫ ያክሉ",
+    "descriptionLabel": "መግለጫ",
+    "maximumPointPlaceholder":"ከፍተኛ ነጥብ",
+    "maximumPointLabel":"ከፍተኛ ነጥብ",
+    "dueDatePlaceholder": "የመፈፀም ቀን",
+    "batchSubjectIdPlaceholder":"ርዕሰ ጉዳይ ይምረጡ",
+    "assessmentTypeId": "አይነት ይምረጡ",
+    "statusPlaceholder":"ሁኔታ ይምረጡ",
+    "SettingAnAssessment": "መገምገምን እንደ",
+    "published": "ታትሟል",
+    "or": "ወይም",
+    "scheduled": "ተመድቧል",
+    "message": "ለአሳዳጊዎች እና ለርዕሰ መምህራን ወዲያውኑ ማሳወቂያዎችን ያስነሳል። ለበለጠ ግንዛቤ ስለ ግምገማው ዝርዝር መረጃ ማግኘት ይቻላል።",
+    "title": "ግምገማ አስገባ",
+    "alertMessage": "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?"
+
+
+
+
+}

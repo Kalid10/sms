@@ -1,0 +1,10 @@
+{
+    "adminStaTitle":"Admins",
+    "adminStatSubtitle":"Admins registered in the system",
+    "studentsStatTitle": "Students",
+    "studentsStatSubtitle": "Students registered into the school (all-time)",
+    "teacherStatTitle": "Teachers",
+    "teacherStatSubtitle": "Teachers registered into the school (all-time)",
+    "newUsersStatTitle": "New Users",
+    "newUserStatSubtitle": "New Users (last 30 days)"
+}

@@ -1,0 +1,32 @@
+{
+    "formTitle": "የትምህርት መርሐግብር ይፍጠሩ",
+    "formSubTitle": "ምዝገባ ቅጽ",
+    "titleLabel": "ስም",
+    "titlePlaceholder": "ስም",
+    "bodyLabel": "መግለጫ",
+    "bodyPlaceholder": "ይህ በተመለከተ...",
+    "inputTagsLabel": "ምልክቶች",
+    "inputTagsPlaceholder": "ምልክት 1, ምልክት 2, ምልክት 3",
+    "datePickerLabel": "ቀን",
+    "typeLabel": "ዓይነት",
+    "eventTypes": [
+        {
+            "value": "closed",
+            "label": "ሙሉ ቀን",
+            "description": "ሙሉ ቀን ትምህርት የለም።"
+        },
+        {
+            "value": "half_closed",
+            "label": "ግማሽ ቀን",
+            "description": "በግማሽ ቀን ትምህርት አይኖርም።"
+        },
+        {
+            "value": "not_closed",
+            "label": "ምንም",
+            "description": "ሙሉ ቀን ትምህርት ይኖራል።"
+        }
+    ]
+
+
+
+}

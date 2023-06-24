@@ -1,0 +1,35 @@
+{
+    "allDay": "ሁሉም ቀናት",
+    "days": {
+        "sunday": "እሁድ",
+        "monday": "ሰኞ",
+        "tuesday": "ማክሰኞ",
+        "wednesday": "ረቡዕ",
+        "thursday": "ሐሙስ",
+        "friday": "አርብ",
+        "saturday": "ቅዳሜ"
+    },
+    "shortDays": {
+        "sun": "እሁድ",
+        "mon": "ሰኞ",
+        "tue": "ማክ",
+        "wed": "ረቡዕ",
+        "thu": "ሐሙስ",
+        "fri": "አርብ",
+        "sat": "ቅዳሜ"
+    },
+    "months": {
+        "january": "ጃንዩወሪ",
+        "february": "ፌብሩወሪ",
+        "march": "ማርች",
+        "april": "ኤፕሪል",
+        "may": "ሜይ",
+        "june": "ጁን",
+        "july": "ጁላይ",
+        "august": "ኦገስት",
+        "september": "ሴፕቴምበር",
+        "october": "ኦክቶበር",
+        "november": "ኖቬምበር",
+        "december": "ዲሴምበር"
+    }
+}

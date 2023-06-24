@@ -1,0 +1,23 @@
+{
+    "welcome": "እንኳን በደህና",
+    "schoolYear": "የትምህርት ዘመን",
+    "pleaseEnter": "እባክዎን ያስገቡ",
+    "startDate": "የመጀመሪያ ቀን",
+    "ofTheNew":"የአዲሱ የትምህርት ዓመት እና የ",
+    "numberOfSemesters": "የሴሚስተር ብዛት",
+    "itIncludes": "ያካትታል። የሚለውን ጠቅ በማድረግ የትምህርት አመት ስም መቀየር ይችላሉ",
+    "iconOnTheRight": "በቀኝ በኩል ያለውን አይከን",
+    "youCanAlwaysChange": "ይህንን ሁልጊዜ በኋላ በትምህርት አመቱ መቼቶች መለወጥ ይችላሉ።",
+    "chooseStartDate": "የመጀመሪያ ቀን ይምረጡ",
+    "numberOfSemesters": "የሴሚስተር ብዛት",
+    "numberOfQuarters": "በአንድ ሴሚስተር ውስጥ የሩብ አመት ብዛት",
+    "ifThereIs": "በትምህርት ቤትዎ ውስጥ ሩብ አመት ከሌለ ማስወገድ ይችላሉ?",
+    "RemoveQuarter": "ሩብ አመት አስወግድ",
+    "TheUpcoming": "መጪው የትምህርት ዘመን፣",
+    "WillConsistOf":"ያካትታል",
+    "semesters": "ሴሚስተሮች",
+    "eachDividedInto": "እያንዳንዳቸው ተከፋፍለዋል",
+    "quarters": "ሩብ አመቶች",
+    "resultingInTotalOf":"አጠቃላይ ውጤት ያስገኛል",
+    "createAndProceed": "ይፍጠሩ እና ይቀጥሉ"
+}

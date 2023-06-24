@@ -1,0 +1,15 @@
+{
+    "youHave": "አለህ",
+    "assessmentsRemaining": "ለዚህ ሩብ ዓመት የሚቀሩ ግምገማዎች።",
+    "maxPts": "ትልቁ ነጥብ",
+    "previous": "ቀዳሚ",
+    "count": "መቁጠር",
+    "totalPts": "ጠቅላላ ነጥብ",
+    "assessmentCompleted": "ይህንን ግምገማ በተሳካ ሁኔታ አጠናቅቀዋል፣ እና በዚህ ምክንያት፣ ማንኛውም ተጨማሪ ማሻሻያ ወይም አዳዲስ ግምገማዎች መፍጠር አይፈቀድም።",
+    "hintAssessmentAdministered": "ይህ ግምገማ የሚካሄደው በየሩብ ዓመቱ ነው፣ ስለዚህ እባክዎ ተገቢውን እርምጃ እየወሰዱ መሆኑን ያረጋግጡ።",
+    "atTheConclusion": "በሩብ ወይም በሴሚስተር ማጠቃለያ ላይ, ሁሉም",
+    "willBeConverted": "ወደ መለያ ይቀየራል።",
+    "ofTheFinalGrade.": "የመጨረሻው ክፍል",
+    "note": "ማስታወሻ፡ ይህ ግምገማን አያካችም።",
+    "updateAssessment": "ግምገማን አዘምን"
+}

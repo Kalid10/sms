@@ -1,0 +1,12 @@
+{
+    "messageOne": "ዛሬ ትምህርትን ቀይር። እዚ ጀምር።",
+    "messageTwo": "ለመጀመሪያ ጊዜ የይለፍ ቃልዎ በገቢ መልእክት ሳጥንዎ ውስጥ ግብዣ ማግኘት አለብዎት። ግብዣህን አላገኘህም?",
+    "notifyYourSchool": "ትምህርት ቤትዎን ያሳውቁ።",
+    "emailOrPhoneLabel": "የእርስዎ ኢሜይል",
+    "currentPasswordLabel": "የመጀመሪያ ጊዜ የይለፍ ቃል",
+    "currentPasswordSubtext": "ለመጀመሪያ ጊዜ የይለፍ ቃልዎ በገቢ መልእክት ሳጥንዎ ውስጥ መሆን አለበት።",
+    "newPassword": "አዲስ የይለፍ ቃል",
+    "confirmPassword": "የይለፍ ቃል አረጋግጥ",
+    "signUp":"ተመዝገብ/ቢ",
+    "alreadyRegistered":"አስቀድመው ተመዝግበዋል? በምትኩ ይግቡ።"
+}

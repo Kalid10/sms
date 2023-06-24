@@ -1,0 +1,44 @@
+{
+    "assignSubjects": "የትምህርት አይነት መድብ",
+    "assignClassHint": "አሁን ክፍሎችን እና ትምህርት አይነቶችን መዝግበዋል፣ እያንዳንዱን ክፍል ለሚወስዱት ትምህርት ለመመደብ ጊዜው አሁን ነው።",
+    "subjects": "የትምህርት አይነቶች",
+    "queryPlaceholder": "n ርዕሰ ጉዳይ፣ መለያ ወይም ምድብ ይፈልጉ",
+    "levels": "ደረጃዎች",
+    "classes": "ክፍሎች",
+    "selectClasses": "የሚወስዱትን ክፍሎች ይምረጡ",
+    "selectSubject": "በመጀመሪያ አንድ የትምህርት አይነት ይምረጡ",
+    "chooseSubject": "ከዝርዝሩ ውስጥ አንድ የትምህርት አይነ ይምረጡ",
+    "onTheLeft": "በግራ በኩል",
+    "startAssigningClass": "ክፍሎችን መመደብ ለመጀመር",
+    "pickOne": " ... ወይም ለመጀመር ከእነዚህ ጉዳዮች ውስጥ አንዱን ይምረጡ",
+    "english": "እንግሊዝኛ",
+    "mathematics": "ሒሳብ",
+    "Amharic": "አማርኛ",
+    "selectedLevels": "15 ክፍሎች ተመርጠዋል",
+    "classesSelected": "ክፍሎች ተመርጠዋል",
+    "selectClassesInLevels": "በደረጃዎች ውስጥ ክፍሎችን ይምረጡ",
+    "selectIndividualClasses": "ኣንድ በኣንድ ክፍሎችን ይምረጡ",
+    "selectAllSections": "ሁሉንም ክፍሎች ይምረጡ",
+    "listAllSections": "ሁሉንም ክፍሎች ዘርዝር",
+    "allSections": "ሁሉንም ክፍሎች",
+    "section": "ክፍሎች",
+    "collapse": "ሰብስብ",
+    "save": "አስቀምጥ",
+    "finish": "ጨርስ",
+
+
+    "levelCategoryDescriptions" :{
+        "1": "የመዋዕለ ሕፃናት ደረጃ (ከቅድመ-ኪጂ እስከ ኪጂ-2) ብቻ ይምረጡ",
+        "2": "የመጀመሪያ ደረጃ ደረጃዎችን ብቻ ይምረጡ (1ኛ - 8ኛ ክፍል)",
+        "3": "የሁለተኛ ደረጃ ትምህርት ቤቶችን ብቻ ይምረጡ (9 - 12ኛ ክፍል)"
+      }
+
+
+
+
+
+
+
+
+
+}

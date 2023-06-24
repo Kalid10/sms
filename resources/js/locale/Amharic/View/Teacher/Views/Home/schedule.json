@@ -1,0 +1,21 @@
+{
+    "Period": "ጊዜ",
+    "calenderMonthView": {
+        "days": {
+            "monday": "ሰኞ",
+            "tuesday": "ማክሰኞ",
+            "wednesday": "ረቡዕ",
+            "thursday": "ሐሙስ",
+            "friday": "ዓርብ"
+        },
+        "daysOfWeek":{
+            "sunday":"እሑድ",
+            "monday":"ሰኞ",
+            "tuesday":"ማክሰኞ",
+            "wednesday":"ረቡዕ",
+            "thursday":"ሐሙስ",
+            "friday":"ዓርብ",
+            "saturday":"ቅዳሜ"
+        }
+    }
+}

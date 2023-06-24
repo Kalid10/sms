@@ -6,7 +6,9 @@
             class="flex min-h-max w-full flex-col items-center justify-center py-4"
         >
             <Heading class="mb-1 text-center !font-normal text-black" size="md"
-                >Welcome to the
+                >
+                {{ $t('registerSchoolYear.welcome') }}
+
             </Heading>
 
             <div class="relative flex items-center">
@@ -31,31 +33,14 @@
                 </div>
             </div>
 
-            <Heading class="mt-1 text-center !font-normal">School Year</Heading>
+            <Heading class="mt-1 text-center !font-normal">
+                {{ $t('registerSchoolYear.schoolYear') }}
+
+            </Heading>
 
             <div class="mt-8 flex">
                 <h3 class="max-w-md text-center text-sm text-gray-500">
-                    <span
-                        ><InformationCircleIcon
-                            class="mb-1 inline h-4 w-4 stroke-2"
-                    /></span>
-                    Please enter the
-                    <span class="text-black">start date</span> of the new school
-                    year and the
-                    <span class="whitespace-nowrap text-black"
-                        >number of semesters</span
-                    >
-                    it includes. You can also change the school year name by
-                    clicking the
-                    <span
-                        ><PencilIcon
-                            class="inline h-3 w-3 stroke-black stroke-2"
-                    /></span>
-                    icon on the right.
-                    <span class="inline">
-                        You can always change this in the school year settings
-                        later.
-                    </span>
+                    <span v-html="$t('registerSchoolYear.welcomeText', { name: 'very good boy' })" />
                 </h3>
             </div>
 
@@ -66,13 +51,13 @@
                     :label-location="!!formData.start_date ? 'inside' : ''"
                     :minimum="new Date()"
                     class="w-72"
-                    placeholder="Choose a Start Date"
+                    :placeholder="$t('registerSchoolYear.chooseStartDate')"
                 />
                 <SelectInput
                     v-model="formData.number_of_semesters"
                     :label="
                         !!formData.number_of_semesters
-                            ? 'Number of Semesters'
+                            ? $t('registerSchoolYear.numberOfSemesters')
                             : ''
                     "
                     :label-location="
@@ -80,7 +65,7 @@
                     "
                     :options="noOfSemesters"
                     class="w-72"
-                    placeholder="Number of Semesters"
+                    :placeholder="$t('registerSchoolYear.numberOfSemesters')"
                 />
 
                 <div v-if="hideQuarter" class="flex w-72 flex-col">
@@ -89,53 +74,36 @@
                         :options="noOfQuarters"
                         :label="
                             !!formData.number_of_quarters
-                                ? 'Number of Quarters within a Semester'
+                                ? $t('registerSchoolYear.numberOfQuarters')
                                 : ''
                         "
                         :label-location="
                             !!formData.number_of_quarters ? 'inside' : ''
                         "
-                        placeholder="Number of Quarters in a Semester"
+                        :placeholder="$t('registerSchoolYear.numberOfQuarters')"
+
                         class="w-72"
                     />
 
                     <div class="p-2 text-xs text-gray-400">
                         <span>
-                            If there is no quarter in your school system, you
-                            can remove the quarter ?
+                    {{ $t('registerSchoolYear.ifThereIs') }}
+
+
                         </span>
                         <span
                             class="ml-1 cursor-pointer text-red-500 underline-offset-2 hover:font-medium hover:underline"
                             @click="hideQuarters"
                         >
-                            Remove Quarter
+                    {{ $t('registerSchoolYear.removeQuarter') }}
                         </span>
                     </div>
 
                     <div
                         class="mt-5 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center text-gray-500"
                     >
-                        <p class="text-xs">
-                            The upcoming academic year,
-                            <span class="font-bold text-gray-700">{{
-                                formData.name
-                            }}</span>
-                            , will consist of
-                            <span class="font-bold text-gray-700"
-                                >{{
-                                    formData.number_of_semesters
-                                }}
-                                semesters,</span
-                            >
-                            each divided into
-                            <span class="font-bold text-gray-700">
-                                {{ formData.number_of_quarters }} quarters,
-                            </span>
-                            resulting in a total of
-                            <span class="font-bold text-gray-700"
-                                >{{ totalQuarters }} quarters.</span
-                            >
-                        </p>
+
+                        <span v-html="$t('registerSchoolYear.summaryText', { academicYear: formData.name, semesters: formData.number_of_semesters, quartersPerSemester: formData.number_of_quarters, totalQuarters } )" />
                     </div>
                 </div>
 
@@ -143,14 +111,15 @@
                     v-if="formComplete"
                     class="w-72"
                     @click="handleSubmit"
-                    >Create and Proceed
+                    >
+                    {{ $t('registerSchoolYear.createAndProceed') }}
                 </PrimaryButton>
             </div>
         </form>
     </div>
 </template>
 <script setup>
-import { computed, ref } from "vue";
+import {computed, createApp, getCurrentInstance, onMounted, ref} from "vue";
 import {
     ArrowPathIcon,
     InformationCircleIcon,
@@ -161,6 +130,37 @@ import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import Heading from "@/Components/Heading.vue";
+import TextInput from "@/Components/TextInput.vue";
+
+// for pencil icon
+function renderComponent({ el, component, props, appContext }) {
+    let app = createApp(component, props)
+    Object.assign(app._context, appContext) // must use Object.assign on _context
+    app.mount(el)
+
+    return () => {
+        // destroy app/component
+        app?.unmount()
+        app = undefined
+    }
+}
+
+const appContext = getCurrentInstance()
+
+async function insertPencilIcon() {
+    renderComponent({
+        el: document.getElementById("pencilIcon"),
+        component: PencilIcon,
+        props: {
+            class: "h-3 w-3 inline stroke-black stroke-2"
+        },
+        appContext
+    })
+}
+
+onMounted(async () => {
+    await insertPencilIcon()
+})
 
 const emits = defineEmits(["success"]);
 

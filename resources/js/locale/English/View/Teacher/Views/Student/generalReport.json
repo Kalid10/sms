@@ -1,0 +1,8 @@
+{
+    "grade": "GRADE",
+    "attendance": "ATTENDANCE",
+    "conduct": "CONDUCT",
+    "formElementTitle": "Update Conduct",
+    "conductPlaceholder": "Select Conduct"
+
+}

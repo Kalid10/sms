@@ -1,0 +1,16 @@
+{
+    "currently": "በአሁኑ ጊዜ ይህ ግምገማ በሂደት ላይ ነው።",
+    "draft": "ረቂቅ",
+    "stateYouCan": "ሁኔታ! ትችላለህ",
+    "settingAnAssessment": "ግምገማን እንደ ማቀናበር",
+    "published": "ታትሟል",
+    "or": "ወይም",
+    "scheduled": "መርሐግብር ተይዞለታል",
+    "willTrigger":"ለአሳዳጊዎች እና ለርዕሰ መምህራን ወዲያውኑ ማሳወቂያዎችን ያስነሳል። ለበለጠ ግንዛቤ ስለ ግምገማው ዝርዝር መረጃ ማግኘት ይቻላል።",
+    "publishAssessment": "ግምገማን ያትሙ",
+    "OR": "ወይም",
+    "scheduleAssessment": "የጊዜ ሰሌዳ ግምገማ",
+    "finishUpdating": "ማዘመንን ጨርስ",
+    "updateAssessment": "ግምገማን አዘምን",
+    "alertMessage": "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?"
+}

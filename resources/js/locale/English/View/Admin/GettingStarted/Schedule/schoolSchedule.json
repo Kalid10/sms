@@ -1,0 +1,31 @@
+{
+    "formTitle":"Create school schedule",
+    "formSubTitle":"Registration form",
+    "titleLabel": "Name",
+    "titlePlaceholder": "name",
+    "bodyLabel": "Description",
+    "bodyPlaceholder": "Its about...",
+    "inputTagsLabel": "tags",
+    "inputTagsPlaceholder": "tag1,tag2,tag3",
+    "datePickerLabel": "Date",
+    "typeLabel": "Type",
+    "eventTypes": [
+        {
+            "value": "closed",
+            "label": "Full Day",
+            "description": "There is no school for the whole day."
+        },
+        {
+            "value": "half_closed",
+            "label": "Half Day",
+            "description": "There will be no class for the half day."
+        },
+        {
+            "value": "not_closed",
+            "label": "None",
+            "description": "There will be class all day."
+        }
+    ]
+
+
+}

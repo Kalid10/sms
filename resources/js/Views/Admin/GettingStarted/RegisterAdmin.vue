@@ -1,8 +1,25 @@
 <template>
-    <FormElement class="max-w-2xl" subtitle="Register and assign a position with predefined roles into the system" title="New Admin Registration" @submit="handleSubmit">
-        <TextInput v-model="formData.name"   label="Name" placeholder="Full name" :required="true"/>
-        <TextInput v-model="formData.phone" label="Phone" placeholder="+251..." :required="true" />
-        <TextInput v-model="formData.email" label="Email" placeholder="example@example.com" :required="true" />
+    <FormElement
+class="max-w-2xl"
+                 :title="$t('registerAdmin.title')"
+                 :subtitle="$t('registerAdmin.subtitle')"
+                 @submit="handleSubmit"
+    >
+        <TextInput
+            v-model="formData.name"
+            :label="$t('registerAdmin.nameLabel')"
+            :placeholder="$t('registerAdmin.namePlaceholder')"
+            :required="true"/>
+        <TextInput
+            v-model="formData.phone"
+            :label="$t('registerAdmin.phoneLabel')"
+            placeholder="+251..."
+            :required="true" />
+        <TextInput
+            v-model="formData.email"
+            :label="$t('registerAdmin.emailLabel')"
+            placeholder="example@example.com"
+            :required="true" />
         <RadioGroupPanel v-model="adminType" :options="adminTypes"  name="admin-types"/>
     </FormElement>
 </template>
@@ -57,4 +74,3 @@ function handleSubmit() {
 }
 
 </script>
-

@@ -42,13 +42,16 @@
                 </div>
 
                 <div class="flex flex-col gap-4">
+
+
                     <h3 class="text-xl font-semibold">
-                        Welcome Back! Sign In and Ignite The Learning Adventure
+                        {{ $t('login.welcomeBack') }}
                     </h3>
+
+
                     <h3 class="text-gray-500">
-                        Reconnect with our collaborative platform to continue
-                        empowering your school and elevating educational
-                        experiences.
+                        {{ $t('login.messageOne') }}
+
                     </h3>
                 </div>
 
@@ -57,7 +60,7 @@
                         <TextInput
                             v-model="form.emailOrPhone"
                             class="w-full"
-                            label="Your Email"
+                            :label="$t('login.emailOrPhoneLabel')"
                             placeholder="johndoe@school.org"
                             required
                             :error="form.errors.emailOrPhone"
@@ -66,7 +69,7 @@
                         <TextInput
                             v-model="form.password"
                             class="w-full"
-                            label="Password"
+                            :label="$t('login.passwordLabel')"
                             placeholder="**********"
                             required
                             type="password"
@@ -76,9 +79,11 @@
                     <button
                         class="h-10 w-full rounded-md border-brand-50 bg-brand-100 text-center font-semibold text-white"
                         type="submit"
-                    >
-                        Log In
+                         >
+                        {{ $t('login.logIn') }}
+
                     </button>
+
                 </fieldset>
             </form>
         </div>
@@ -129,14 +134,13 @@
                 </transition>
             </h1>
 
-            <h3 class="max-w-xl font-medium text-white">
-                Maximize your school's potential with our all-inclusive
-                management platform. Simplify operations, boost communication,
-                and create a teamwork-driven learning space for a brilliant
-                future.
-                <span class="block py-3"
-                >Sign in to start your journey towards educational
-                    excellence.</span
+            <h3 class="max-w-xl font-medium text-white"
+            >
+                {{ $t('login.messageTwo') }}
+                <span
+class="block py-3"
+                      v-html="$t('login.signIn')"
+                > </span
                 >
             </h3>
         </div>
@@ -147,6 +151,8 @@
 import {useForm} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import {onMounted, onUnmounted, ref} from "vue";
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 
 const form = useForm({
     emailOrPhone: "",
@@ -164,8 +170,8 @@ const submit = () => {
     });
 };
 
-const firstTexts = ['Innovate and Elevate:', 'Create and Inspire:', 'Dream and Achieve:'];
-const secondTexts = ['Empower Your School', 'Foster Creativity', 'Build Futures'];
+const firstTexts = [t('login.firstTexts[0]'), t('login.firstTexts[1]'),t('login.firstTexts[2]')];
+const secondTexts = [t('login.secondTexts[0]'), t('login.secondTexts[1]'), t('login.secondTexts[2]')];
 
 let index = 0;
 

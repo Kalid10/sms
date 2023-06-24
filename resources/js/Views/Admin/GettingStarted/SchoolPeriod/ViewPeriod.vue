@@ -2,15 +2,14 @@
     <div class="flex w-full flex-col space-y-5">
         <div class="flex flex-col space-y-3">
             <h2 class="text-xl font-medium leading-7 text-gray-900">
-                Schedule real time display
+                {{ $t('viewPeriod.scheduleDisplay') }}
             </h2>
 
             <h3
                 v-if="schoolPeriods.length < 1"
                 class="text-xs font-light text-gray-900"
             >
-                No periods found, enter the number (amount) of periods to
-                display in real time.
+                {{ $t('viewPeriod.noPeriodsFound') }}
             </h3>
         </div>
 
@@ -51,7 +50,7 @@
                     <h3 class="mb-1 font-semibold">
                         {{ period.start }} - {{ period.end }}
                     </h3>
-                    <p class="text-[0.65rem]">Period {{ periodIndex + 1 }}</p>
+                    <p class="text-[0.65rem]">{{ $t('viewPeriod.Period') }} {{ periodIndex + 1 }}</p>
                 </div>
             </div>
         </div>

@@ -1,0 +1,32 @@
+{
+    "classSchedule": "Class Schedule",
+    "description": "Below the title, there's a brief description of what the user can do on this page.",
+    "startTimePickerSubtext": "The start time of the day is the time when the school day begins.If you set the start time of the day to 7:00 AM, then the school day will begin at 7:00 AM.",
+    "startTimePickerPlaceholder": "0",
+    "startTimePickerLabel": "Starting time",
+
+    "minutesPerPeriodPlaceholder":"0",
+    "minutesPerPeriodLabel":"Time for single period (minutes)",
+    "minutesPerPeriodSubtext":"Define how long each class period lasts in minutes.This could vary based on your school's specific needs, this also excludes custom periods.For example: if your input is 45, that means each period has 45 minutes.",
+
+    "noOfPeriodPlaceholder": "0",
+    "noOfPeriodsLabel": "Number of Periods Per Day",
+    "noOfPeriodSubtext": "Enter the number of periods you have in a typical school day. This will be the number of class sessions that are held in a day. For example: if your input is is 8, that means there each day has 8 periods a day",
+    "selectLevelCategories": "Select level categories:",
+    "note": "Note: Similar schedules will be applied for all classes in selected categories.",
+    "customPeriod":"Custom Period",
+    "addNew": "+ Add New",
+
+    "customTimeNameLabel": "Name",
+    "customTimeNamePlaceholder": "Breakfast",
+
+    "customTimeDurationLabel": "Duration (minutes)",
+    "customTimeDurationPlaceholder": "0",
+
+    "customBeforePeriodLabel": "Period before",
+    "customBeforePeriodPlaceholder": "0",
+    "hintAddCustomPeriods": "Add custom periods like lunch or recess. Fill in the name, duration (in minutes), and specify which period it precedes. For instance, to add a 'Breakfast' break before the 4th period, enter 'Breakfast', its length, and '4' in the respective fields.",
+    "title": "Title",
+    "submit": "Submit"
+
+}

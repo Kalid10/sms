@@ -1,0 +1,11 @@
+{
+    "UpdateFormElementTitle": "የትምህርት አይነት ያዘምኑ",
+    "fullNameLabel": "ሙሉ ስም",
+    "fullNamePlaceholder": "ሙሉ ስም",
+    "shortNameLabel": "አጭር ስም",
+    "shortNamePlaceholder": "አጭር ስም",
+    "tagsLabel": "የትምህርት አይነት ምልክቶች",
+    "tagsPlaceholder": "ምልክቶች ይመድቡ (ምልክቶችን በኮማ ይለዩ)",
+    "categoryPlaceholder": "ምድብ ያስገቡ",
+    "categoryLabel": "የትምህርት አይነት ምድብ"
+}

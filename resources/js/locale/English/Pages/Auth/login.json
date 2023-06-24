@@ -1,0 +1,19 @@
+{
+    "welcomeBack": "Welcome Back! Sign In and Ignite The Learning Adventure",
+    "messageOne": "Reconnect with our collaborative platform to continue empowering your school and elevating educational experiences.",
+    "emailOrPhoneLabel": "Email or Phone",
+    "passwordLabel": "Password",
+    "logIn": "Log In",
+    "messageTwo": "Maximize your school's potential with our all-inclusive management platform. Simplify operations, boost communication,and create a teamwork-driven learning space for a brilliant future.",
+    "signIn": "Sign in to start your journey towards educational excellence.",
+    "firstTexts": [
+        "Innovate and Elevate:",
+        "Create and Inspire:",
+        "Dream and Achieve:"
+    ],
+    "secondTexts": [
+        "Empower Your School",
+        "Foster Creativity",
+        "Build Futures"
+    ]
+}

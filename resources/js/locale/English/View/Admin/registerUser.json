@@ -1,0 +1,9 @@
+{
+    "header": "Choose user type",
+    "guardianStudentRegisterTitle": "Guardian and Student",
+    "guardianStudentRegisterSubtitle":"Students and their guardians are required to provide personal information such as name,contact information and any special needs or accommodations required. Depending on the institution, guardians may also need to provide legal documentation such as proof of guardianship or custody.",
+    "teacherRegisterTitle": "Teacher",
+    "teacherRegisterSubtitle":" Teachers are typically required to provide personal information such as name,contact information, and educational qualifications.They may also need to provide teaching experience, references, and any specialized training or certifications.",
+    "adminRegisterTitle": "Admin",
+    "adminRegisterSubtitle": "Administrators may need to provide personal information such as name, contact information, and job position.They may also need to provide professional qualifications and references."
+}

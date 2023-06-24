@@ -1,0 +1,18 @@
+{
+    "headingOne": "Register an Admin",
+    "headingTwo": "Fill in the information required.",
+    "adminFormElementTitle": "Register Admin",
+    "nameLabel": "Name",
+    "namePlaceholder": "Full Name",
+    "emailLabel": "Email",
+    "phoneNumberLabel": "Phone Number",
+    "phoneNumberPlaceholder": "Phone Number",
+    "usernameLabel": "User Name",
+    "usernamePlaceholder": "Username",
+    "positionLabel": "Position",
+    "positionPlaceholder": "Position",
+    "genderLabel": "Gender",
+    "genderPlaceholder": "Gender",
+    "male": "male",
+    "female": "Female"
+}

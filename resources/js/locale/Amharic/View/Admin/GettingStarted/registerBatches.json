@@ -1,0 +1,14 @@
+{
+    "registerGrades": "ደረጃዎችን ይመዝገቡ",
+    "hintOne": "ነባሪ የውጤቶች ስብስብ መርጠናል ። የማያስፈልጉዎትን ደረጃዎች ማስወገድ፣ አዲስ ደረጃዎችን ማከል ወይም በእያንዳንዱ ክፍል ያሉትን የክፍሎች ብዛት ማስተካከል ይችላሉ።",
+    "hintTwo": "ለመቀጠል \"ጨርስ\" ን ይጫኑ፣ እና \"ቀጣይ\" ለማስቀመጥ እና ለመቀጠል።",
+    "gradesSelected": "የተመረጡ ደረጃዎች",
+    "sectionsSelected": "የተመረጡ ክፍሎች",
+    "buttonTitle":"አዲስ ደረጃ ፍጠር",
+    "grade": "ደረጃ",
+    "sections": "ክፍል",
+    "Finish": "ጨርስ",
+    "updateLevelSectionTitle": "የክፍሎች ብዛት",
+    "updateLevelSectionSubtitle": "ለ7ኛ ክፍል የክፍሎች ብዛት ያዘምኑ",
+    "updateLevelSectionInputPlaceholder": "ለ7ኛ ክፍል የክፍሎችን ብዛት ይግለጹ"
+}

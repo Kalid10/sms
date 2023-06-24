@@ -1,0 +1,12 @@
+{
+    "searchTeacherByName": "Search for a teacher by name",
+    "noDataFound": "No data found",
+    "noTeacherEnrolled": "No teacher has been enrolled",
+    "yourSearchQuery": "Your search query",
+    "anyTeacherName": "any teacher's name",
+    "name": "Name",
+    "email": "Email",
+    "homerooms": "Homerooms",
+    "gender": "Gender",
+    "subjects": "Subjects"
+}

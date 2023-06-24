@@ -1,0 +1,12 @@
+{
+    "scheduleDisplay": "Schedule real time display",
+    "noPeriodsFound": "No periods found, enter the number (amount) of periods to display in real time.",
+    "Period": "Period",
+    "weekdays":{
+        "monday":"Monday",
+        "tuesday":"Tuesday",
+        "wednesday":"Wednesday",
+        "thursday":"Thursday",
+        "friday":"Friday"
+    }
+}

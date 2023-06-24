@@ -1,0 +1,8 @@
+{
+ "semesters": "ሴሚስተሮች",
+    "seasons" : {
+        "first": "አንደኛ",
+        "second": "ሁለተኛ",
+        "third": "ሶስተኛ"
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "section": "ክፍል",
+  "studentsList": "የተማሪዎች ዝርዝር",
+  "studentsEnrolledIn": "በዚህ ክፍል የተመዘገቡ ተማሪዎች",
+  "for": "ለ",
+  "years": "ዓመታት",
+ "searchKeyPlaceHolder": "ተማሪን በስም ፈልግ",
+  "noDataFound": "መረጃ አልተገኘም",
+  "noStudentEnrolled": "በዚህ ክፍል ተማሪ አልተመዘገበም",
+  "yourSearchQuery": "የእርስዎ የፍለጋ ጥያቄ",
+  "didNotMatch": "አልተገናኘም",
+  "anyStudentName": "ማንኛውም የተማሪ ስም",
+  "perPage": "ለገጽ"
+}

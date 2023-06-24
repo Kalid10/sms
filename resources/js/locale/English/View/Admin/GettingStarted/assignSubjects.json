@@ -1,0 +1,44 @@
+{
+    "assignSubjects": "Assign Subjects",
+    "assignClassHint": "Now that you have registered your classes and subjects, it's time to assign each class to the subject they will be taking.",
+    "subjects": "Subjects",
+    "queryPlaceholder": "Search for a subject, tag or category",
+    "levels": "Levels",
+    "classes": "Classes",
+    "selectClasses": "Select the classes that will be taking",
+    "selectSubject": "First, Select a Subject",
+    "chooseSubject": "Choose a subject from the list",
+    "onTheLeft": "on the left",
+    "startAssigningClass": "to start assigning classes",
+    "pickOne": " ...or pick one of these subjects to start",
+    "english": "English",
+    "mathematics": "Mathematics",
+    "Amharic": "አማርኛ",
+    "selectedLevels": "15 Levels Selected",
+    "classesSelected": "Classes Selected",
+    "selectClassesInLevels": "Select Classes in Levels",
+    "selectIndividualClasses": "Select Individual Classes",
+    "selectAllSections": "Select All Sections",
+    "listAllSections": "List All Sections",
+    "allSections": "All Sections",
+    "section": "Section",
+    "collapse": "Collapse",
+    "save": "Save",
+    "finish": "Finish",
+
+
+    "levelCategoryDescriptions" :{
+        "1": "Select only Kindergarten level grades (Pre-KG to KG-2)",
+        "2": "Select only Elementary level grades (Grades 1 - 8)",
+        "3": "Select only High School level grades (Grades 9 - 12)"
+      }
+
+
+
+
+
+
+
+
+
+}

@@ -1,0 +1,21 @@
+{
+    "students": "Students",
+    "ListAllStudent": "List of all students in the school",
+    "registerStudent": "Register Student",
+    "searchForStudent":"Search for a student by name",
+    "totalStudents": "Total Students",
+    "absenteesToday": "Absentees Today",
+    "latestPeriodAbsentees": "Latest Period Absentees",
+    "suspendedStudents": "Suspended Students",
+    "noDataFound": "No data found",
+    "yourSearchQuery": "Your search query",
+    "didNotMatch": "did not match",
+    "anyStudentName": "any student's name",
+    "transferringStudent": "Transferring a student will remove them from their current section and add them to the selected section.",
+    "selectDestinationSection": "Select Destination Section",
+    "name": "Name",
+    "email": "Email",
+    "gender": "Gender",
+    "grade": "Grade"
+
+}

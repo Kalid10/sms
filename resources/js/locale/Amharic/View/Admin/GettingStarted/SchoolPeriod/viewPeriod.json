@@ -1,0 +1,12 @@
+{
+    "scheduleDisplay": "የጊዜ ሰሌዳ በእውነተኛ ጊዜ ማሳያ",
+    "noPeriodsFound": "ምንም ክፍለ ጊዜዎች አልተገኙም, በእውነተኛ ጊዜ ለማሳየት የምትፈልገውን የክፍለ ጊዜዎች ብዛት ያስገቡ።",
+    "Period": "ክፍለ ጊዜ",
+    "weekdays":{
+        "monday": "ሰኞ",
+        "tuesday": "ማክሰኞ",
+        "wednesday": "ረቡዕ",
+        "thursday": "ሐሙስ",
+        "friday": "አርብ"
+    }
+}

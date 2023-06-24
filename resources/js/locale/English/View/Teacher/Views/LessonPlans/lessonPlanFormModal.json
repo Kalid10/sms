@@ -1,0 +1,17 @@
+{
+    "Period": "Period",
+    "NewLessonPlan": "New Lesson Plan",
+    "addTopicAndDescription ": "Add the topic and description of the lesson plan for the session here",
+    "topicLabel": "Topic",
+    "topicPlaceholder": "Topic of the Lesson Plan",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Add your Lesson Plan description",
+    "submit": "Submit",
+    "edit": "Edit",
+    "previousLessonPlans":"Previous Lesson Plans",
+    "otherLessonPlans": "Other lesson plans for class sessions before",
+    "noPreviousLessonPlans": "No Previous Lesson Plans",
+    "noPreviousLessonPlansMessage": "Previous lesson plans have not been added for this session. Make sure you have populated your lesson plans to view them here.",
+    "period": "Period"
+
+}
