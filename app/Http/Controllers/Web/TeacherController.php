@@ -77,7 +77,7 @@ class TeacherController extends Controller
         $schoolYearId = SchoolYear::getActiveSchoolYear()?->id;
         $batchSubject = $this->teacherService->prepareBatchSubject($request, $id);
         $batches = $this->teacherService->getBatches($id);
-        $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'));
+        $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'), $request);
         $teacher = $this->teacherService->getTeacherDetails($id);
         $teacherBatchSubjects = $teacher->batchSubjects->pluck('id');
         $teacherSchedules = BatchSchedule::whereIn('batch_subject_id', $teacherBatchSubjects)
