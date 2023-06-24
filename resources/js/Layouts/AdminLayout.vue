@@ -37,15 +37,13 @@ import {
 import { usePage } from "@inertiajs/vue3";
 import {
     BookOpenIcon,
+    CalendarDaysIcon,
     FingerPrintIcon,
+    HomeIcon,
+    UserGroupIcon,
     UsersIcon,
 } from "@heroicons/vue/24/solid";
-import {
-    ArrowLeftOnRectangleIcon,
-    CalendarDaysIcon,
-} from "@heroicons/vue/20/solid/index";
-import { HomeIcon } from "@heroicons/vue/24/solid/index";
-import { UserGroupIcon } from "@heroicons/vue/24/outline";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/vue/20/solid/index";
 
 const props = defineProps({
     auth: {

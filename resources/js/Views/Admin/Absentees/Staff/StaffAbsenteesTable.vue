@@ -1,5 +1,9 @@
 <template>
-    <TableElement :data="filteredStaffAbsentees" :columns="config">
+    <TableElement
+        :selectable="false"
+        :data="filteredStaffAbsentees"
+        :columns="config"
+    >
         <template #filter>
             <div class="flex justify-between gap-2">
                 <TextInput
