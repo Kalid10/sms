@@ -12,11 +12,11 @@
             :required="required"
             :type="type"
             :value="modelValue"
-            class="h-9 w-full rounded-md outline-none"
+            class="h-9 w-full outline-none"
             :class="
                 classStyle
                     ? classStyle
-                    : 'border border-gray-200 text-sm  placeholder:text-xs placeholder:text-gray-400'
+                    : 'border border-gray-200 text-sm  rounded-md placeholder:text-xs placeholder:text-gray-400'
             "
             @input="$emit('update:modelValue', $event.target.value)"
             @focusin="toggleSubtext ? (showSubText = true) : null"

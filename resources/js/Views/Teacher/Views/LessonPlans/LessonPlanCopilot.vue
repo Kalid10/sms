@@ -29,6 +29,7 @@
                 "
             >
                 {{ noteSuggestions }}
+                <span v-if="isNoteUpdating" class="animate-blink">|</span>
 
                 <div class="flex w-full justify-end">
                     <ClipboardDocumentIcon
@@ -108,6 +109,7 @@ import Loading from "@/Components/Loading.vue";
 import { computed, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
+import { copyToClipboard } from "@/utils";
 
 const emit = defineEmits(["selectedText", "finish"]);
 const props = defineProps({
@@ -126,6 +128,7 @@ const props = defineProps({
 });
 const showLoading = ref(false);
 const noteSuggestions = ref("");
+const isNoteUpdating = ref(false);
 const questionSuggestions = computed(() => usePage().props.questions);
 
 const updateNoteSuggestion = () => {
@@ -141,9 +144,11 @@ const updateNoteSuggestion = () => {
             "update",
             (event) => {
                 if (event.data) {
+                    isNoteUpdating.value = true;
                     showLoading.value = false;
                     if (event.data === "<END_STREAMING_SSE>") {
                         showLoading.value = false;
+                        isNoteUpdating.value = false;
                         es.close();
                     } else noteSuggestions.value += event.data;
                 }
@@ -177,14 +182,6 @@ watch(
     }
 );
 
-const copyToClipboard = async (text) => {
-    try {
-        await navigator.clipboard.writeText(text);
-        console.log("Text copied to clipboard");
-    } catch (err) {
-        console.error("Failed to copy text", err);
-    }
-};
 const showPopup = ref(false);
 const selectedText = ref("");
 const x = ref(0);

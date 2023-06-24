@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use OpenAI\Laravel\Facades\OpenAI;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -172,35 +171,6 @@ class LessonPlanController extends Controller
         $explanationPrompt = "The lesson plan title is '{$prompt}' for a '{$grade}' level class in the subject of '{$subject}'. Provide a brief 2-5 paragraph explanation of '{$prompt}'.";
 
 //        $explanationPrompt = "I want you to act as a lesson plan advisor.The subject is '{$subject}' for grade '{$grade}' provide a brief 2-5 paragraphs explaining this lesson plan title: '{$prompt}";
-        return response()->stream(function () use ($explanationPrompt) {
-            $stream = OpenAI::completions()->createStreamed([
-                'model' => 'text-davinci-003',
-                'prompt' => $explanationPrompt,
-                'max_tokens' => 400,
-            ]);
-
-            foreach ($stream as $response) {
-                $text = $response->choices[0]->text;
-                if (connection_aborted()) {
-                    break;
-                }
-
-                echo "event: update\n";
-                echo 'data: '.$text;
-                echo "\n\n";
-                ob_flush();
-                flush();
-            }
-
-            echo "event: update\n";
-            echo 'data: <END_STREAMING_SSE>';
-            echo "\n\n";
-            ob_flush();
-            flush();
-        }, 200, [
-            'Cache-Control' => 'no-cache',
-            'X-Accel-Buffering' => 'no',
-            'Content-Type' => 'text/event-stream',
-        ]);
+        return $openAIService->createCompletionStream($explanationPrompt);
     }
 }

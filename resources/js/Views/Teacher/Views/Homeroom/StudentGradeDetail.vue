@@ -1,22 +1,29 @@
 <template>
     <div class="flex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
-        <div class="flex justify-between py-3 text-2xl font-medium">
-            <ArrowLeftCircleIcon
-                v-if="showSubjectDetail"
-                class="w-6 cursor-pointer"
-                @click="showSubjectDetail = false"
-            />
-            <span class="grow">
-                {{ studentName.user.name }}'s
+        <div class="flex w-full items-center justify-between">
+            <div class="flex grow justify-between py-3 text-2xl font-medium">
+                <ArrowLeftCircleIcon
+                    v-if="showSubjectDetail"
+                    class="w-6 cursor-pointer"
+                    @click="showSubjectDetail = false"
+                />
+                <span class="grow">
+                    {{ studentName.user.name }}'s
 
-                <span v-if="showSubjectDetail">
-                    {{
-                        selectedBatchSubjectDetail.batch_subject.subject
-                            .full_name
-                    }}
+                    <span v-if="showSubjectDetail">
+                        {{
+                            selectedBatchSubjectDetail.batch_subject.subject
+                                .full_name
+                        }}
+                    </span>
+                    Grade Report
                 </span>
-                Grade Report
-            </span>
+            </div>
+            <SecondaryButton
+                class="h-fit !rounded-2xl bg-red-600 !px-4 !py-1 !text-xs text-white"
+                title="Flag Student"
+                @click="emit('flag')"
+            />
         </div>
 
         <Statistics v-if="!showSubjectDetail" :grade="studentGrade" />
@@ -62,7 +69,9 @@ import AssessmentBreakDown from "@/Views/Teacher/Views/Assessments/AssessmentBre
 import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
+const emit = defineEmits(["flag"]);
 const props = defineProps({
     studentName: {
         type: Object,
