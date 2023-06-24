@@ -12,6 +12,14 @@
                 :selected-input="batchSubject.id"
                 @change="updateBatchInfo"
             />
+            <div class="flex">
+                <SecondaryButton
+                    title="Filter students"
+                    class="!rounded-2xl bg-zinc-800 text-white"
+                    @click="showFilter = true"
+                />
+            </div>
+
             <StudentsTable
                 :table-model-value="batchSubject.id"
                 @search="updateBatchInfo"
@@ -64,6 +72,11 @@
             </div>
         </div>
     </div>
+    <Filters
+        v-if="showFilter"
+        :school-years="schoolYears"
+        @filter="applyFilters"
+    />
 </template>
 <script setup>
 import { computed, ref } from "vue";
@@ -76,6 +89,10 @@ import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/St
 import Header from "@/Views/Teacher/Views/Header.vue";
 import StudentsTable from "@/Views/Teacher/Views/StudentsTable.vue";
 import { isAdmin } from "@/utils";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Filters from "@/Views/Filters.vue";
+
+const showFilter = ref(false);
 
 const students = computed(() => usePage().props.students);
 const batchSubjectGrade = computed(() => usePage().props.batch_subject_grade);
@@ -130,6 +147,24 @@ function fetchStudent(studentId) {
             studentId +
             "?batch_subject_id=" +
             selectedBatchSubject.value
+    );
+}
+
+const schoolYears = computed(() => usePage().props.school_years);
+
+function applyFilters(params) {
+    params.teacher_id = usePage().props.teacher.id;
+
+    router.get(
+        isAdmin() ? "/admin/teachers/students" : "/teacher/students",
+        params,
+        {
+            onSuccess: () => {
+                showFilter.value = false;
+                resetFilters();
+            },
+            preserveState: true,
+        }
     );
 }
 </script>

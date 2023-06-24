@@ -25,6 +25,7 @@ class Students extends Controller
             'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
             'search' => 'nullable|string',
             'teacher_id' => 'nullable|integer|exists:teachers,id',
+            'school_year_id' => 'nullable|integer|exists:school_years,id',
         ]);
 
         $teacher = auth()->user()->isTeacher() ? auth()->user()->teacher : Teacher::findOrFail($request->input('teacher_id'))->load('user');
@@ -34,7 +35,7 @@ class Students extends Controller
         }
 
         $batchSubject = TeacherService::prepareBatchSubject($request, $teacher->id);
-        $batchStudents = TeacherService::getStudents($batchSubject->id, $request->input('search'));
+        $batchStudents = TeacherService::getStudents($batchSubject->id, $request->input('search'), $request);
 
         $batchSubjects = $teacher->batchSubjects()
             ->whereHas('batch', function ($query) {
@@ -51,7 +52,10 @@ class Students extends Controller
             default => throw new Exception('Type unknown!'),
         };
 
+        $schoolYears = SchoolYear::all();
+
         return Inertia::render($page, [
+            'school_years' => $schoolYears,
             'students' => $batchStudents,
             'batch_subject' => $batchSubject,
             'batch_subjects' => $batchSubjects,

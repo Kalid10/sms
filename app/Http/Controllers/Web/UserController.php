@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateRequest;
+use App\Models\Admin;
 use App\Models\Level;
+use App\Models\SchoolYear;
+use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,9 +39,25 @@ class UserController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(8, ['*'], 'log_page', $logPage);
 
+        // Get current batch students count
+        $studentsCount = Student::with('currentBatch')->count();
+
+        // Get active school year teachers count through batch subject and batch and school year
+        $teachersCount = Teacher::whereHas('batchSubjects', function ($query) {
+            $query->whereHas('batch', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            });
+        })->count();
+
+        // Get active school year admins
+        $adminsCount = Admin::with('schoolYear', SchoolYear::getActiveSchoolYear())->count();
+
         return Inertia::render('Admin/Users/Index', [
             'users' => $users,
             'activity_log' => $activityLog,
+            'students_count' => $studentsCount,
+            'teachers_count' => $teachersCount,
+            'admins_count' => $adminsCount,
         ]);
     }
 

@@ -3,7 +3,7 @@
         class="my-2 flex w-full flex-col gap-5 md:grid md:grid-cols-2 md:grid-rows-2 lg:flex lg:flex-row"
     >
         <StatisticsCard
-            data="12"
+            :data="adminsCount"
             subtitle="Admins registered in the system"
             title="Admins"
         >
@@ -12,7 +12,7 @@
             </template>
         </StatisticsCard>
         <StatisticsCard
-            data="12,059"
+            :data="studentsCount"
             subtitle="Students registered into the school (all-time)"
             title="Students"
         >
@@ -21,7 +21,7 @@
             </template>
         </StatisticsCard>
         <StatisticsCard
-            data="322"
+            :data="teachersCount"
             subtitle="Teachers registered into the school (all-time)"
             title="Teachers"
         >
@@ -49,6 +49,14 @@ import {
     UserPlusIcon,
     UsersIcon,
 } from "@heroicons/vue/24/outline";
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
+
+const studentsCount = computed(() => usePage().props.students_count);
+
+const teachersCount = computed(() => usePage().props.teachers_count);
+
+const adminsCount = computed(() => usePage().props.admins_count);
 </script>
 
 <style scoped></style>

@@ -78,7 +78,7 @@
         <div class="flex w-full justify-between">
             <div class="flex w-6/12 flex-col space-y-5">
                 <Announcements
-                    url="/admin/announcements"
+                    url="/admin"
                     class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
                 />
             </div>
