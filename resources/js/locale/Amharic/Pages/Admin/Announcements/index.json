@@ -1,0 +1,13 @@
+{
+    "announcements": "መግለጫዎች",
+    "searchAnnouncements": "መግለጫዎችን ይፈልጉ",
+
+    "recentAnnouncements": "የቅርብ ጊዜ ማስታወቂያዎች",
+    "emptyViewTitle": "ምንም ማስታወቂያዎች አልተገኙም!",
+    "emptyViewLinkTitle": "ወደ ማስታወቂያዎች ሂድ",
+    "linkCellValue": "ሁሉንም ማስታወቂያዎች ያሳዩ",
+    "postTargets": "የመልእክት ዓላማዎች",
+    "expires": "ያበቃል",
+    "posted": "ተለቀቀ",
+    "by":"በ"
+}

@@ -11,6 +11,7 @@ use App\Models\Quarter;
 use App\Models\Student;
 use App\Models\StudentGrade;
 use App\Models\StudentSubjectGrade;
+use Carbon\Carbon;
 
 class AbsenteeHelper
 {
@@ -65,11 +66,15 @@ class AbsenteeHelper
             ]);
         }
 
+        self::checkFlag($student, $absenteePercentage, $batchSubjectId);
+
         $studentSubjectGrades = $student->studentSubjectGrades()->where([
             ['student_id', $student->id],
             ['gradable_type', Quarter::class],
             ['gradable_id', Quarter::getActiveQuarter()->id],
         ])->get();
+
+        $studentSubjectGradesAverageAttendance = $studentSubjectGrades->avg('attendance');
 
         $studentGrade = StudentGrade::where([
             ['student_id', $student->id],
@@ -79,16 +84,18 @@ class AbsenteeHelper
 
         if ($studentGrade) {
             $studentGrade->update([
-                'attendance' => $studentSubjectGrades->avg('attendance'),
+                'attendance' => $studentSubjectGradesAverageAttendance,
             ]);
         } else {
             StudentGrade::create([
                 'student_id' => $student->id,
                 'gradable_type' => Quarter::class,
                 'gradable_id' => Quarter::getActiveQuarter()->id,
-                'attendance' => $studentSubjectGrades->avg('attendance'),
+                'attendance' => $studentSubjectGradesAverageAttendance,
             ]);
         }
+
+        self::checkFlag($student, 100 - $studentSubjectGradesAverageAttendance);
     }
 
     private static function updateBatchAttendanceStatistics($batch, $batchSubjectId, $allBatchSubjects, $completedBatchSession): void
@@ -152,6 +159,20 @@ class AbsenteeHelper
                 'gradable_id' => Quarter::getActiveQuarter()->id,
                 'attendance' => $averageBatchAttendance,
             ]);
+        }
+    }
+
+    private static function checkFlag($student, $absenteeValue, $batchSubjectId = null): void
+    {
+        if ($absenteeValue >= 25) {
+            StudentHelper::flagStudent(
+                $student->id,
+                'attendance',
+                'Student has been marked as absentee, with attendance percentage of '. 100 - $absenteeValue.'%.',
+                null,
+                $batchSubjectId,
+                Carbon::now()->addWeek()
+            );
         }
     }
 }

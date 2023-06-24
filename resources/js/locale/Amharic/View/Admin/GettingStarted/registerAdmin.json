@@ -1,0 +1,31 @@
+{
+    "title":"አዲስ የአስተዳዳሪ ምዝገባ",
+    "subtitle":"በስርዓቱ ውስጥ አስቀድሞ የተገለጹ ሚናዎች ያለው ቦታ ይመዝገቡ እና ይመድቡ",
+    "nameLabel": "ስም",
+    "namePlaceholder": "ሙሉ ስም",
+    "phoneLabel": "ስልክ",
+    "phonePlaceholder": "+251...",
+    "emailLabel": "ኢሜል",
+    "emailPlaceholder": "example@example.com",
+
+    "adminTypes":[
+        {
+            "id": "unit-leader",
+            "value": "unit-leader",
+            "label": "ክፍል መሪ",
+            "description": "ክፍል መሪ የቡድኖች፣ የጊዜ ሰሌዳዎች፣ ተማሪዎች፣ አስተማሪዎች፣ ግምገማዎች፣  ክፍሎቹን የማስተዳደር ኃላፊነት ያለው ። \n"
+        },
+        {
+            "id": "secretary",
+            "value": "secretary",
+            "label": "ጸሐፊ",
+            "description": "ጸሐፊ የተማሪዎችን፣ አሳዳጊዎችን፣ አስተማሪዎችን፣ መርሃ ግብሮችን ማግኘት፣ ቡድኖችን የማስተዳደር ኃላፊነት አለው ። "
+        },
+        {
+            "id": "principal",
+            "value": "principal",
+            "label": "ርዕሰ መምህር",
+            "description": "ርእሰ መምህሩ በስርዓቱ ውስጥ ያሉትን ሁሉንም መረጃዎች ማግኘት ይችላሉ። ሁሉንም መረጃዎች ማየት፣ ማዘመን እና መሰረዝ ይችላል።"
+        }
+    ]
+}

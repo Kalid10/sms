@@ -1,0 +1,21 @@
+{
+    "Period": "Period",
+    "calenderMonthView": {
+        "days": {
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday"
+        },
+        "daysOfWeek":{
+            "sunday":"Sunday",
+            "monday":"Monday",
+            "tuesday":"Tuesday",
+            "wednesday":"Wednesday",
+            "thursday":"Thursday",
+            "friday":"Friday",
+            "saturday":"Saturday"
+        }
+    }
+}

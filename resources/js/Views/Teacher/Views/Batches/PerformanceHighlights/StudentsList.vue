@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-fit w-full flex-col items-center space-y-3 py-2">
         <div
-            class="flex w-7/12 -skew-x-3 items-center justify-center space-x-1.5 py-1.5 font-semibold"
+            class="flex w-11/12 -skew-x-3 items-center justify-center space-x-1.5 py-1.5 font-semibold"
         >
             <component
                 :is="icon"

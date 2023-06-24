@@ -1,0 +1,12 @@
+{
+    "searchTeacherByName": "መምህርን በስም ይፈልጉ",
+    "noDataFound": "ምንም መረጃ አልተገኘም",
+    "noTeacherEnrolled": "ምንም መምህር አልተመዘገበም",
+    "yourSearchQuery": "የእርስዎ የፍለጋ ጥያቄ",
+    "anyTeacherName": "ማንኛውም መምህር ስም",
+    "name": "ስም",
+    "email": "ኢሜይል",
+    "homerooms": "የመኖሪያ ክፍሎች",
+    "gender": "ፆታ",
+    "subjects": "ርዕሰ ጉዳዮች"
+}

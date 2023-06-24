@@ -1,0 +1,13 @@
+{
+    "searchPlaceholder": "የመገምገም ርዕስ ይፈልጉ",
+    "selectSubjectPlaceholder": "የትምህርት አይነት ይምረጡ",
+    "createAssessment": "መገምገም ይፍጠሩ",
+    "filters": "ማጣሪያዎች",
+    "selectedAssessmentStatusPlaceholder": "ሁኔታ ይምረጡ",
+    "selectedAssessmentTypeIdPlaceholder": "የመገምገም አይነት",
+    "selectedSchoolYearPlaceholder": "የትምህርት ዓመት ይምረጡ",
+    "selectedSemesterPlaceholder": "ሴምስተር ይምረጡ",
+    "selectedQuarterPlaceholder": "ሩብ አመት ይምረጡ",
+    "done": "ተጠናቀቀ",
+    "clearALL": "ሁሉንም አጥፋ"
+}

@@ -9,13 +9,16 @@
         >
             <div class="flex w-full justify-between">
                 <div class="text-xl font-semibold text-zinc-800 lg:text-4xl">
-                    Assessments
+                    {{ $t('views.teacher.assessments.assessmentsIndex.assessments') }}
+
                 </div>
                 <div
                     class="flex w-fit cursor-pointer items-center space-x-1 rounded-md px-2 text-[0.65rem] text-zinc-800 underline decoration-zinc-800 underline-offset-2 hover:font-semibold lg:hidden"
                     @click="showModal = true"
                 >
-                    <div>Create Assessment</div>
+                    <div>
+                        {{ $t('views.teacher.assessments.assessmentsIndex.createAssessment') }}
+                    </div>
                 </div>
             </div>
 

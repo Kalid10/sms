@@ -1,0 +1,12 @@
+{
+    "listOfTeachers": "List of teachers in the",
+    "faculty": "Faculty",
+    "searchKeyPlaceholder": "Search for a teacher by name",
+    "noDataFound": "No data found",
+    "NoTeacherEnrolled": "No teacher has been enrolled",
+    "searchQuery":"Your search query",
+    "didNotMatch": "did not match",
+    "anyTeacherName": "any teacher's name",
+    "teacher": "Teacher",
+    "grades": "Grades"
+}

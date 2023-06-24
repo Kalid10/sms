@@ -1,0 +1,19 @@
+{
+    "headingOne": "ሲስተም አስተዳዳሪ ይመዝገቡ",
+    "headingTwo": "የሚጠየቀውን መረጃ ይሙሉ።",
+    "adminFormElementTitle": "ሲስተም አስተዳዳሪ ይመዝገቡ",
+    "nameLabel": "ስም",
+    "namePlaceholder": "ሙሉ ስም",
+    "emailLabel": "ኢሜይል",
+    "phoneNumberLabel": "ስልክ ቁጥር",
+    "phoneNumberPlaceholder": "ስልክ ቁጥር",
+    "usernameLabel": "ተጠቃሚ ስም",
+    "usernamePlaceholder": "ተጠቃሚ ስም",
+    "positionLabel": "ቦታ",
+    "positionPlaceholder": "ቦታ",
+    "genderLabel": "ፆታ",
+    "genderPlaceholder": "ፆታ",
+    "male": "ወንድ",
+    "female": "ሴት"
+
+}

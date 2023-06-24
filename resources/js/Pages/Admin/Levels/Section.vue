@@ -109,7 +109,7 @@
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import ActiveSession from "@/Views/Admin/Levels/Section/ActiveSession.vue";
-import AbsentStudents from "@/Views/Admin/Absentee.vue";
+import AbsentStudents from "@/Views/Admin/Absentee/AbsenteeCard.vue";
 import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import {
     CalendarIcon,

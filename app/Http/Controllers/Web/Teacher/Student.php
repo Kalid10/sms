@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Teacher;
 
 use App\Models\BatchSubject;
+use App\Models\Flag;
 use App\Models\Level;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
@@ -44,6 +45,7 @@ class Student extends Controller
             'in_progress_session' => $currentBatch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user'),
             'student_notes' => StudentNote::where('student_id', $student->id)->with('author:name,id,email,phone_number,gender')->paginate(5)->appends($request->all()),
             'absentee_records' => $student->absenteeRecords(SchoolYear::getActiveSchoolYear()->id, $batchSubjectId)->with('batchSession.batchSchedule.batchSubject.subject', 'batchSession.schoolPeriod', 'batchSession.teacher.user')->paginate(5)->appends($request->all()),
+            'flags' => $this->loadStudentFlags($student, $batchSubjectId),
         ]);
     }
 
@@ -141,5 +143,15 @@ class Student extends Controller
         }
 
         return $student->fetchStudentBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first();
+    }
+
+    private function loadStudentFlags($student, $batchSubjectId)
+    {
+        return Flag::where([
+            ['flaggable_id', $student->id],
+            ['flaggable_type', StudentModel::class],
+            ['batch_subject_id', $batchSubjectId],
+            ['quarter_id', Quarter::getActiveQuarter()->id],
+        ])->latest('expires_at')->with('flaggedBy', 'flaggable.user.admin', 'batchSubject.subject')->paginate(5);
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="h-full">
         <div
             v-if="absenteeRecords?.data.length"
             class="flex w-full flex-col space-y-2"
@@ -38,7 +38,7 @@
                 position="center"
             />
         </div>
-        <div v-else class="py-5">
+        <div v-else class="flex h-full items-center justify-center py-5">
             <EmptyView title="No absentee records found!" />
         </div>
     </div>

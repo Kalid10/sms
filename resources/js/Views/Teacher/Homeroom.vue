@@ -10,6 +10,7 @@
             </div>
 
             <SecondaryButton
+                v-if="isAdmin()"
                 title="Assign Homeroom"
                 class="!rounded-2xl bg-zinc-800 text-white"
                 @click="showAssignModal = true"
@@ -21,7 +22,7 @@
             class="flex min-h-screen w-full justify-between space-x-6 divide-x divide-gray-200 bg-gray-50"
         >
             <!--        Left Side-->
-            <div class="flex w-8/12 flex-col space-y-2 py-5 pl-5">
+            <div class="flex w-9/12 flex-col space-y-4 py-5 pl-5">
                 <Header
                     title="Homeroom Classes"
                     :select-input-options="homeroomOptions"
@@ -29,22 +30,36 @@
                     @change="updateBatchInfo"
                 />
 
-                <Statistics />
+                <Statistics class="!bg-white" />
 
-                <StudentsTable
-                    :show-homeroom-detail="false"
-                    @search="updateBatchInfo"
-                    @click="getStudentDetails"
-                />
+                <div class="flex w-full justify-between">
+                    <div class="!w-6/12">
+                        <StudentsTable
+                            :show-homeroom-detail="false"
+                            @search="updateBatchInfo"
+                            @click="getStudentDetails"
+                        />
+                    </div>
+                    <div class="h-fit w-5/12">
+                        <Flag
+                            view="homeroom"
+                            :title="
+                                selectedHomeroomName.label + ' Flagged Students'
+                            "
+                            :batch-subject-options="homeroomOptions"
+                        />
+                    </div>
+                </div>
             </div>
 
             <!--        Right side-->
-            <div class="flex w-4/12 flex-col space-y-6 bg-gray-50 py-5 pl-5">
+            <div class="flex w-3/12 flex-col space-y-6 bg-gray-50 py-5 pl-5">
                 <div class="flex w-full justify-evenly">
                     <div
                         class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg bg-positive-100 py-5 text-center text-5xl font-bold text-white shadow-sm"
                     >
-                        <div v-if="grade">{{ grade?.attendance }}%</div>
+                        <div v-if="grade">{{ grade?.attendance ?? "-" }}%</div>
+                        <div>-</div>
                         <span class="text-xs font-light"
                             >CLASS ATTENDANCE
                         </span>
@@ -86,10 +101,21 @@
             </div>
         </div>
     </div>
+    <Modal v-model:view="showAddFlagModal">
+        <AddFlag
+            :flaggable="studentDetail.student"
+            view="homeroom"
+            @done="showAddFlagModal = false"
+        />
+    </Modal>
     <Modal v-model:view="showModal">
         <StudentGradeDetail
             :student-grade="studentDetail.quarterly_grade"
             :student-name="studentDetail.student"
+            @flag="
+                showModal = false;
+                showAddFlagModal = true;
+            "
         />
     </Modal>
 
@@ -113,6 +139,8 @@ import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetai
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 import { isAdmin } from "@/utils";
+import Flag from "@/Views/Flag/Index.vue";
+import AddFlag from "@/Views/Flag/AddFlag.vue";
 
 const homeroomClasses = computed(() => usePage().props.homeroom_classes);
 const selectedHomeroom = ref(usePage().props.filters.batch_id);
@@ -123,6 +151,8 @@ const grade = computed(() => usePage().props.grade);
 const showModal = ref(false);
 const showAssignModal = ref(false);
 const studentDetail = ref();
+const showAddFlagModal = ref(false);
+
 const homeroomOptions = computed(() => {
     return homeroomClasses.value.map((homeroom) => {
         return {
@@ -167,5 +197,11 @@ function getStudentDetails(studentId) {
         }
     );
 }
+
+const selectedHomeroomName = computed(() => {
+    return homeroomOptions.value.find((item) => {
+        return (item.id = selectedHomeroom);
+    });
+});
 </script>
 <style scoped></style>

@@ -1,0 +1,26 @@
+{
+    "registerSubjects": "Register Subjects",
+    "descriptionOne": "We have selected a set predefined subjects for you. You can remove the subjects you don't provide or add more subjects not listed here.",
+    "descriptionTwo":"Click on the \"Finish\" to proceed, and \"Next\" to save and proceed.",
+    "totalSubjects": "Total Subjects",
+    "subjectsSelected": "Subjects Selected",
+    "New Subject": "New Subject",
+    "other": "Other",
+    "createNewSubject": "Create new Subject",
+    "createNewCategory": "Create new Category",
+    "finish": "Finish",
+    "Reset": "Reset",
+    "newSubjectTitle": "New Subject",
+    "newSubjectSubtitle":"Create a new subject and assign it to a category",
+    "subjectFullNamePlaceholder": "Name of the new Subject",
+    "newSubjectFullNameLabel": "Subject Name",
+    "subjectShortNamePlaceholder": "Short name for Subject",
+    "subjectShortNameLabel": "Subject Short Name",
+    "subjectTagPlaceholder": "Assign tags (separate multiple tags with comma)",
+    "subjectTagLabel":"Subject Tags",
+    "subjectCategoryOptionsPlaceholder":"Category of the new Subject",
+    "subjectCategoryOptionsLabel":"Subject Category",
+    "subjectCategoryPlaceholder":"Create a custom Category",
+    "subjectCategoryLabel":"Subject Category"
+
+}

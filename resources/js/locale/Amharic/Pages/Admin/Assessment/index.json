@@ -1,0 +1,17 @@
+{
+    "name": "ስም",
+    "percentage": "መቶኛ",
+    "updateLevelCategories": "የክፍል ምድቦችን ያሻሽሉ",
+    "selectLevelCategories": "የክፍል ምድቦችን ይምረጡ",
+    "customizable": "መሻሻል የሚችሉ",
+    "minimumAssessments": "ዝቅተኛ ግምገማዎች",
+    "minimumAssessmentsPlaceHolder": "ዝቅተኛ ግምገማ",
+    "maximumAssessments": "ከፍተኛ ግምገማዎች",
+    "maximumAssessmentsPlaceHolder": "ከፍተኛ ግምገማ",
+    "minMaxHint": "ዝቅተኛ እና ከፍተኛ ግምገማዎች አንድ ተማሪ መውሰድ ያለበትን ዝቅተኛ እና ከፍተኛ የፈተና ቁጥር ነው።",
+    "listOfAssessmentTypes": "የግምገማ ዓይነቶች ዝርዝር",
+    "filterByLevelCategory": "በክፍል ይለዩ",
+    "addAssessmentType": "የግምገማ ዓይነት ያክሉ"
+}
+
+

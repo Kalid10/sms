@@ -1,0 +1,31 @@
+{
+    "title":"New Admin Registration",
+    "subtitle":"Register and assign a position with predefined roles into the system",
+    "nameLabel": "Name",
+    "namePlaceholder": "Full name",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "+251...",
+    "emailLabel": "Email",
+    "emailPlaceholder": "example@example.com",
+
+    "adminTypes":[
+    {
+        "id": "unit-leader",
+        "value": "unit-leader",
+        "label": "Unit Leader",
+        "description": "Unit Leader responsible for managing the batches. Has manage access to batches, schedules, students, teachers, assessments"
+    },
+    {
+        "id": "secretary",
+        "value": "secretary",
+        "label": "Secretary",
+        "description": "Secretary responsible for managing the batches. Has manage access to students, guardians, teachers, schedules"
+    },
+    {
+        "id": "principal",
+        "value": "principal",
+        "label": "Principal",
+        "description": "Principal has access to all resources in the system. Can view, update and delete all resources"
+    }
+]
+}

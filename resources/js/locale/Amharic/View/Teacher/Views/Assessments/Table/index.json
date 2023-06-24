@@ -1,0 +1,13 @@
+{
+    "title": "ርዕስ",
+    "type": "አይነት",
+    "homework": "የቤት ስራ",
+    "classwork": "የክፍል ስራ",
+    "finalQuarterlyExam": "የሩብ ዓመት መጨረሻ ፈተና",
+    "finalExam": "መጨረሻ ፈተና",
+    "test": "ፈተና",
+    "maxPoints":"ከፍተኛ ነጥብ",
+    "status": "ሁኔታ",
+    "dueDate": "የመፈፀም ቀን",
+    "lastUpdate": "መጨረሻ የተሻሻለበት ጊዜ"
+}

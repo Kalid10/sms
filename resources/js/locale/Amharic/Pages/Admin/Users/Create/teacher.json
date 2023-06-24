@@ -1,0 +1,15 @@
+{
+    "headerOne": "አዲስ መምህር ይመዝገቡ",
+    "headerTwo": "የሚጠየቀውን መረጃ ይሙሉ።",
+    "nameLabel": "ስም",
+    "namePlaceholder": "የአዲሱ መምህር ሙሉ ስም",
+    "usernameLabel": "መለያ ስም",
+    "usernamePlaceholder": "መለያ ስም",
+    "phoneNumberLabel": "ስልክ ቁጥር",
+    "phoneNUmberPlaceholder": "ስልክ ቁጥር",
+    "emailLabel": "ኢሜይል",
+    "emailPlaceholder": "ኢሜይል",
+    "genderLabel": "ፆታ",
+    "genderPlaceholder": "ፆታ"
+
+}

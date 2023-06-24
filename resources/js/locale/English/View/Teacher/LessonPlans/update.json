@@ -1,0 +1,9 @@
+{
+    "formElementTitle":"Update Lesson plan",
+    "formElementSubtitle":"Update a new lesson plan",
+    "topicLabel":"Topic",
+    "topicPlaceholder":"topic",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "description",
+    "batchSession": "Batch Session"
+}

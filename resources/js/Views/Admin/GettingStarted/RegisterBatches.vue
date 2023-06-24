@@ -5,14 +5,14 @@
     >
 
         <div class="flex flex-col">
-            <Heading>Register Grades</Heading>
+            <Heading>{{ $t('registerBatches.registerGrades') }}</Heading>
             <h3 class="text-sm text-gray-500">
-                We have selected a set of default grades for you. You can remove
-                grades you don't need, add new grades or edit the number of sections
-                in each grade.
+                {{ $t('registerBatches.hintOne') }}
+
                 <span class="inline-block"
-                >Click on the "Finish" to proceed, and "Next" to save and
-                    proceed.</span
+                >
+                    {{ $t('registerBatches.hintTwo') }}
+                    </span
                 >
             </h3>
         </div>
@@ -24,19 +24,19 @@
                 <span class="font-semibold text-black">{{
                         selectedGradeCount
                     }}</span>
-                Grades Selected
+                    {{ $t('registerBatches.gradesSelected') }}
             </span>
 
             <span
                 class="col-span1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
                 <span class="font-semibold text-black">{{ batchesCount }}</span>
-                Sections Selected
+                    {{ $t('registerBatches.sectionsSelected') }}
             </span>
 
             <PrimaryButton
                 class="absolute right-0"
-                title="Add New Grade"
+                :title="$t('registerBatches.buttonTitle')"
                 @click="isNewLevelFormOpened = true"
             />
 
@@ -77,7 +77,7 @@
                         >
                             <div class="flex items-center justify-between">
                                 <h3 class="font-semibold">
-                                    <span v-if="level.name.length < 3">Grade</span>
+                                    <span v-if="level.name.length < 3">{{ $t('registerBatches.grade') }}</span>
                                     {{ level.name }}
                                 </h3>
 
@@ -95,7 +95,7 @@
                             </div>
 
                             <div class="flex items-baseline gap-1">
-                                <span>Sections</span>
+                                <span>{{ $t('registerBatches.sections') }}</span>
                                 <span class="font-semibold">{{
                                         level.no_of_sections
                                     }}</span>
@@ -116,7 +116,7 @@
         </div>
 
         <div class="flex items-center justify-end gap-3">
-            <PrimaryButton @click="submitBatches">Finish</PrimaryButton>
+            <PrimaryButton @click="submitBatches">{{ $t('registerBatches.finish') }}</PrimaryButton>
         </div>
 
     </div>
@@ -125,13 +125,13 @@
         <FormElement
             v-model:show-modal="updateLevelSection"
             modal
-            title="Number of Sections"
-            subtitle="Update the number of Sections for Grade 7"
+            :title="$t('registerBatches.updateLevelSectionTitle')"
+            :subtitle="$t('registerBatches.updateLevelSectionSubtitle')"
             @submit="updateSection"
         >
             <TextInput
                 v-model="updatedLevels[levelToUpdateSection].no_of_sections"
-                placeholder="Specify the number of sections for Grade 7"
+                :placeholder="$t('registerBatches.updateLevelSectionInputPlaceholder')"
             />
         </FormElement>
     </Modal>

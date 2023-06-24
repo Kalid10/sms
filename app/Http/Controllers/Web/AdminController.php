@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Absentee;
 use App\Models\Announcement;
+use App\Models\Flag;
 use App\Models\Level;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
@@ -56,6 +57,8 @@ class AdminController extends Controller
             ->take(3)
             ->get();
 
+        $flags = Flag::with('flaggedBy', 'flaggable.user.admin', 'batchSubject.subject')->latest('updated_at')->paginate(7);
+
         return Inertia::render('Admin/Index', [
             'teachers_count' => $teachersCount,
             'students_count' => $studentsCount,
@@ -76,7 +79,7 @@ class AdminController extends Controller
                 ->orderBy('name', 'asc')
                 ->get()
             ),
-
+            'flags' => $flags,
         ]);
     }
 

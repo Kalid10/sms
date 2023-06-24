@@ -1,0 +1,12 @@
+{
+    "messageOne": "Transform Learning Today. Start Here.",
+    "messageTwo": "You should find an invitation in your inbox with your first time password. Can't find your invitation?",
+    "notifyYourSchool": "Notify your school.",
+    "emailOrPhoneLabel": "Your Email",
+    "currentPasswordLabel": "First-time Password",
+    "currentPasswordSubtext": "You first time password should be in your inbox",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "signUp":"Sign Up",
+    "alreadyRegistered":"Already registered? Sign in instead."
+}

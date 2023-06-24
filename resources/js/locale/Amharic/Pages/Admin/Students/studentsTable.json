@@ -1,0 +1,20 @@
+{
+    "students": "ተማሪዎች",
+    "ListAllStudent": "በትምህርት ቤቱ ውስጥ ያሉ ተማሪዎች ዝርዝር",
+    "registerStudent": "ተማሪ ይመዝገቡ",
+    "searchForStudent":"ተማሪን በስም ፈልግ",
+    "totalStudents": "ጠቅላላ ተማሪዎች",
+    "absenteesToday": "Absentees Today",
+    "latestPeriodAbsentees": "የቅርብ ጊዜ ቀሪዎች",
+    "suspendedStudents": "የታገዱ ተማሪዎች",
+    "noDataFound": "ምንም መረጃ አልተገኘም።",
+    "yourSearchQuery": "የፍለጋ ጥያቄህ",
+    "didNotMatch": "አልተዛመደም።",
+    "anyStudentName": "የማንኛውም ተማሪ ስም",
+    "transferringStudent": "ተማሪን ማዛወር አሁን ካለው ክፍል ያስወጣቸውና ወደ ተመረጠው ክፍል ያስገባቸዋል።",
+    "selectDestinationSection": "መድረሻ ክፍልን ይምረጡ",
+    "name": "ስም",
+    "email": "Email",
+    "gender": "ኢሜይል",
+    "grade": "ደረጃ"
+}

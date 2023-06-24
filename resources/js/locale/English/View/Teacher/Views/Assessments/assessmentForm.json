@@ -1,0 +1,24 @@
+{
+    "formElementTitle": "Assessment Form",
+    "titlePlaceholder": "Add title for the assessment",
+    "titleLabel": "Title",
+    "descriptionPlaceholder": "Add description for the assessment",
+    "descriptionLabel": "Description",
+    "maximumPointPlaceholder":"Maximum Point",
+    "maximumPointLabel":"Maximum Point",
+    "dueDatePlaceholder": "Due Date",
+    "batchSubjectIdPlaceholder":"Select Subject",
+    "assessmentTypeId": "Select type",
+    "statusPlaceholder":"Select Status",
+    "SettingAnAssessment": "Setting an assessment as",
+    "published": "PUBLISHED",
+    "or": "or",
+    "scheduled": "SCHEDULED",
+    "message": "will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
+    "title": "Submit Assessment",
+    "alertMessage": "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?"
+
+
+
+
+}

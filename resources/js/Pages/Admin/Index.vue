@@ -35,14 +35,15 @@
     <!--        />-->
     <!--    </div>-->
     <div
-        class="flex min-h-screen w-full flex-col gap-3 space-y-6 bg-gray-50 py-8 px-5 lg:space-y-5 lg:px-1 2xl:px-10"
+        class="flex min-h-screen w-full justify-between bg-gray-50 p-5 lg:px-1 2xl:px-10"
     >
-        <div class="flex w-full justify-between space-x-5">
+        <div class="flex w-7/12 flex-col space-y-5">
             <WelcomeHeader />
-            <div class="relative w-4/12">
+            <div class="relative w-10/12">
                 <Combobox v-model="selectedStudents">
                     <ComboboxInput
-                        class="w-full rounded-lg"
+                        class="w-full rounded-3xl placeholder:text-sm"
+                        placeholder="Search Student"
                         @change="handleSearch"
                     />
                     <transition
@@ -73,26 +74,18 @@
                     </transition>
                 </Combobox>
             </div>
+            <Flags />
         </div>
 
-        <div class="flex w-full justify-between">
-            <div class="flex w-6/12 flex-col space-y-5">
-                <Announcements
-                    url="/admin"
-                    class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
-                />
-            </div>
-            <div class="flex w-5/12 flex-col space-y-5">
-                <div class="flex w-full space-x-5">
-                    <div
-                        class="flex h-full w-4/12 flex-col justify-evenly space-y-4"
-                    >
-                        <AbsentTeachers value="4" title="Absent Teachers" />
-                        <AbsentTeachers value="15" title="Absent Students" />
-                    </div>
-                    <div class="w-9/12">
-                        <SchoolSchedule />
-                    </div>
+           <div class="flex min-h-screen w-5/12 justify-center">
+            <div class="flex h-full w-11/12 flex-col space-y-8">
+                <AbsenteeStats />
+                <div class="w-full">
+                    <Announcements
+                        url="/admin"
+                        class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
+                    />
+                    <!--                        <SchoolSchedule />-->
                 </div>
             </div>
         </div>
@@ -104,8 +97,6 @@ import moment from "moment/moment";
 import { router, usePage } from "@inertiajs/vue3";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import Announcements from "@/Views/Announcements/Index.vue";
-import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Index.vue";
-import AbsentTeachers from "@/Views/Admin/Absentee.vue";
 import {
     Combobox,
     ComboboxInput,
@@ -113,6 +104,8 @@ import {
     ComboboxOptions,
 } from "@headlessui/vue";
 import { debounce } from "lodash";
+import AbsenteeStats from "@/Views/Admin/Absentee/AbsenteeStats.vue";
+import Flags from "@/Views/Admin/Flags/Home.vue";
 
 const students = computed(() => usePage().props.students);
 
