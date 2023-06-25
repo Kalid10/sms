@@ -65,12 +65,17 @@ const props = defineProps({
         type: String,
         default: "student",
     },
+    selectedFlag: {
+        type: Object,
+        default: null,
+    },
 });
+
 const form = useForm({
     batch_subject_id:
         props.view === "student" ? props.batchSubjectOptions[0].value : null,
-    flag_type: "",
-    description: null,
+    flag_type: props.selectedFlag?.type[0] || "",
+    description: props.selectedFlag?.description || "",
     flaggable_id: props.flaggable.id,
     expires_at: new Date(moment().add(1, "weeks")),
     is_homeroom: props.view === "homeroom",

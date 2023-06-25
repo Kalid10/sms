@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Web;
 
 use App\Helpers\StudentHelper;
+use App\Models\Flag;
 use App\Models\Student;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class FlagController extends Controller
@@ -33,5 +35,14 @@ class FlagController extends Controller
         );
 
         return redirect()->back()->with('success', 'You have successfully flagged '.$student->user->name);
+    }
+
+    public function delete($id): RedirectResponse
+    {
+        $flag = Flag::find($id);
+
+        $flag->delete();
+
+        return redirect()->back()->with('success', 'Flag deleted successfully');
     }
 }
