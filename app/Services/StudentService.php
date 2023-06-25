@@ -34,7 +34,7 @@ class StudentService
                     ['gradable_type', Quarter::class],
                     ['gradable_id', Quarter::getActiveQuarter()->id],
                     ['batch_subject_id', $batchSubjectId],
-                ])->first();
+                ])->first()?->load('gradeScale');
 
                 $student->semester_grade = $student->student->studentSubjectGrades()->where([
                     ['gradable_type', Semester::class],

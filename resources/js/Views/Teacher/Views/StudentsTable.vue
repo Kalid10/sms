@@ -104,9 +104,12 @@ const filteredStudents = computed(() => {
             },
             flags: item.student.flags?.length,
             attendance: item.attendance_percentage + "%",
-            grade: item.quarterly_grade
-                ? item.quarterly_grade?.score?.toFixed(1)
+            grade: item.quarterly_grade?.score
+                ? `${item.quarterly_grade.score.toFixed(1)} (${
+                      item.quarterly_grade.grade_scale?.label || ""
+                  })`
                 : "-",
+
             rank: item.rank ?? " -",
             id: item.student.id,
             conduct: item.conduct ?? "-",
@@ -119,38 +122,38 @@ const config = [
         key: "name",
         name: "Name",
         align: "center",
-        class: "h-12 !text-[0.6rem]",
+        class: "h-12 !text-[0.7rem]",
         type: "custom",
     },
     {
         key: "flags",
         name: "Flags",
         align: "center",
-        class: "h-12 !text-[0.6rem]",
+        class: "h-12 !text-[0.7rem]",
     },
     {
         key: "attendance",
         name: "Attendance%",
         align: "center",
-        class: "h-12 !text-[0.65rem]",
+        class: "h-12 !text-[0.7rem]",
     },
     {
         key: "grade",
         name: "Grade",
         align: "center",
-        class: "h-12 !text-[0.65rem]",
+        class: "h-12 !text-[0.7rem]",
     },
     {
         key: "rank",
         name: "Rank",
         align: "center",
-        class: "h-12 !text-[0.65rem]",
+        class: "h-12 !text-[0.7rem]",
     },
     {
         key: "conduct",
         name: "Conduct",
         align: "center",
-        class: "h-12 !text-[0.65rem]",
+        class: "h-12 !text-[0.7rem]",
     },
 ];
 
