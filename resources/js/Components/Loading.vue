@@ -6,7 +6,9 @@
                 : ''
         "
     >
+        <!-- Existing spinner loader -->
         <div
+            v-if="type === 'spinner'"
             class="animate-spin rounded-full border-4 border-solid border-t-transparent"
             :class="{
                 'h-8 w-8 sm:h-12 sm:w-12': size === 'large',
@@ -20,6 +22,29 @@
                 'border-neutral-200': color === 'neutral',
             }"
         ></div>
+
+        <!-- New bounce loader -->
+        <div
+            v-if="type === 'bounce'"
+            class="flex animate-bounce items-center justify-center space-x-2"
+        >
+            <div v-for="item in 3" :key="item">
+                <div
+                    :class="{
+                        'h-8 w-8 rounded-full': size === 'large',
+                        'h-4 w-4 rounded-full': size === 'medium',
+                        'h-2 w-2 rounded-full': size === 'small',
+                        'bg-gray-100': color === 'primary',
+                        'bg-black': color === 'secondary',
+                        'bg-emerald-400': color === 'success',
+                        'bg-negative-100': color === 'danger',
+                        'bg-orange-500': color === 'warning',
+                        'bg-purple-500': color === 'info',
+                        'bg-neutral-200': color === 'neutral',
+                    }"
+                ></div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -39,9 +64,14 @@ const props = defineProps({
         type: String,
         default: "small",
     },
+    type: {
+        type: String,
+        default: "bounce",
+    },
 });
 
 const isFullScreen = ref(props.isFullScreen);
 const color = ref(props.color);
 const size = ref(props.size);
+const type = ref(props.type);
 </script>
