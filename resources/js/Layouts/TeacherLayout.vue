@@ -127,7 +127,7 @@ const sidebarItems = computed(() => [
     {
         name: "Settings",
         icon: Cog6ToothIcon,
-        route: "/teacher/settings",
+        route: "/user/profile",
         active: directory.value === "settings",
     },
 ]);
