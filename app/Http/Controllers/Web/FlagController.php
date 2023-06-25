@@ -14,7 +14,7 @@ class FlagController extends Controller
     {
         $request->validate([
             'flaggable_id' => 'required|exists:students,id',
-            'flag_type' => 'required',
+            'flag_type' => 'required|array|min:1',
             'description' => 'required|string',
             'batch_subject_id' => 'nullable|exists:batch_subjects,id',
             'expires_at' => 'required|date',

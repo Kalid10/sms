@@ -86,15 +86,9 @@ class StudentHelper
 
         // If a flag exists, update the type and description
         if ($flag) {
-            $existingTypes = $flag->type;
-            // If the new type does not exist in the array, add it
-            if (! in_array($type, $existingTypes)) {
-                $existingTypes[] = $type;
-            }
-
             // Update the flag
             $flag->update([
-                'type' => $existingTypes,
+                'type' => $type,
                 'description' => $description,
                 'flagged_by' => $flagged_by,
                 'expires_at' => date('Y-m-d H:i:s', strtotime($expires_at)),

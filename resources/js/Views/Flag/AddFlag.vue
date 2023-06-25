@@ -3,13 +3,32 @@
         <div class="w-full text-center text-2xl font-medium">
             {{ flaggable.user.name }} Flag Form
         </div>
-        <SelectInput
-            v-model="form.flag_type"
-            label="Flag Type"
-            placeholder="Select Type"
-            :options="flagTypeOptions"
-            :error="form.errors.flag_type"
-        />
+
+        <div class="flex flex-col">
+            <label
+                for="target-group"
+                class="block text-sm font-medium text-gray-700"
+                >Select flag type(s) :</label
+            >
+            <div
+                class="mt-1 flex w-full justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            >
+                <div
+                    v-for="type in flagTypeOptions"
+                    :key="type"
+                    :class="{
+                        'bg-zinc-800 text-white': form.flag_type.includes(type),
+                    }"
+                    class="flex cursor-pointer flex-row justify-between rounded bg-zinc-100 p-2 px-8 text-black"
+                    @click="toggleSelection(type)"
+                >
+                    {{ type }}
+                </div>
+            </div>
+            <div v-if="form.errors.flag_type" class="text-xs text-negative-50">
+                * {{ form.errors.flag_type }}
+            </div>
+        </div>
         <SelectInput
             v-if="
                 batchSubjectOptions?.length &&
@@ -46,7 +65,6 @@ import { isTeacher } from "@/utils";
 import SelectInput from "@/Components/SelectInput.vue";
 import { useForm } from "@inertiajs/vue3";
 import moment from "moment/moment";
-import { computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import TextArea from "@/Components/TextArea.vue";
@@ -74,19 +92,14 @@ const props = defineProps({
 const form = useForm({
     batch_subject_id:
         props.view === "student" ? props.batchSubjectOptions[0].value : null,
-    flag_type: props.selectedFlag?.type[0] || "",
+    flag_type: props.selectedFlag?.type || [],
     description: props.selectedFlag?.description || "",
     flaggable_id: props.flaggable.id,
     expires_at: new Date(moment().add(1, "weeks")),
     is_homeroom: props.view === "homeroom",
 });
 
-const flagTypeOptions = computed(() => [
-    { value: "academic", label: "Academic" },
-    { value: "attendance", label: "Attendance" },
-    { value: "behavioral", label: "Behavioral" },
-    { value: "other", label: "Other" },
-]);
+const flagTypeOptions = ["academic", "attendance", "behavioral", "other"];
 const handleAddFlag = () => {
     form.post("/teacher/students/flag", {
         preserveState: true,
@@ -96,5 +109,14 @@ const handleAddFlag = () => {
         },
     });
 };
+
+function toggleSelection(type) {
+    const index = this.form.flag_type.indexOf(type);
+    if (index < 0) {
+        this.form.flag_type.push(type);
+    } else {
+        this.form.flag_type.splice(index, 1);
+    }
+}
 </script>
 <style scoped></style>

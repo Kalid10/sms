@@ -59,20 +59,19 @@
                     <span
                         v-for="(type, index) in item.type"
                         :key="index"
-                        class="mx-1 flex h-fit w-fit flex-wrap rounded-3xl bg-red-600 py-0.5 px-2 text-center text-[0.65rem] font-medium lowercase text-white"
+                        class="mx-1 flex h-fit w-fit flex-wrap rounded-3xl bg-red-600 py-0.5 px-2 text-center text-[0.65rem] font-medium lowercase text-white hover:scale-110"
                     >
                         {{ type.substring(0, 3) }}
                     </span>
                 </span>
                 <div v-if="item.flagged_by.id === auth.id">
-                    <SecondaryButton
-                        class="mr-6 h-fit !rounded-2xl bg-zinc-700 !px-4 !py-1 !text-xs text-white hover:bg-white hover:text-zinc-700"
-                        title="Update"
+                    <PencilIcon
+                        class="absolute bottom-0 right-0 my-1 ml-3 w-4 cursor-pointer fill-black stroke-white text-gray-600 hover:mx-1 hover:scale-110 hover:fill-white hover:text-black"
                         @click="handleUpdateFlag($event, item)"
                     />
                 </div>
                 <div
-                    class="absolute top-0 right-0 mx-5 py-1 pl-3 hover:scale-110 hover:stroke-red-50 hover:px-1"
+                    class="absolute top-0 right-0 py-1 pl-3 hover:scale-110 hover:stroke-red-50 hover:px-1"
                 >
                     <TrashIcon
                         class="w-4 cursor-pointer stroke-red-500 text-gray-600"
@@ -110,7 +109,11 @@
 </template>
 
 <script setup>
-import { InformationCircleIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import {
+    InformationCircleIcon,
+    PencilIcon,
+    TrashIcon,
+} from "@heroicons/vue/24/outline";
 import { computed, ref } from "vue";
 import Modal from "@/Components/Modal.vue";
 import { router, usePage } from "@inertiajs/vue3";
@@ -173,12 +176,4 @@ const flags = computed(() => usePage().props.flags);
 const auth = usePage().props.auth.user;
 </script>
 
-<style scoped>
-.trash-icon {
-    visibility: hidden;
-}
-
-.div-hover:hover .trash-icon {
-    visibility: visible;
-}
-</style>
+<style scoped></style>

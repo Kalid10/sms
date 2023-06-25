@@ -37,10 +37,10 @@
                 </div>
 
                 <div class="flex w-full justify-between space-x-5 pr-3">
-                    <div class="w-7/12 rounded-lg bg-white p-3 shadow-sm">
+                    <div class="w-1/2 rounded-lg bg-white p-3 shadow-sm">
                         <AbsenteeRecords />
                     </div>
-                    <div class="w-5/12">
+                    <div class="w-1/2">
                         <Flag
                             :batch-subject-options="batchSubjectOptions"
                             :student="student"
