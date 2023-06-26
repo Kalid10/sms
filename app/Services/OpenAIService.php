@@ -8,18 +8,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class OpenAIService
 {
-    public function lessonPlanHelper($prompt, $batchSubject): array
+    public function createCompletion($prompt): array
     {
-        $grade = 8;
-        $subject = 'Biology';
-
-        // Prepare a more detailed prompt for the questions
-        $questionPrompt = "Given the topic '{$prompt}' for a '{$grade}' level class in the subject of '{$subject}', generate a list of potential questions that students could be asked about '{$prompt}'.";
         $questionResponse = OpenAI::completions()->create([
             'model' => 'text-davinci-003',
-            'prompt' => $questionPrompt,
-            'max_tokens' => 200,
-            'temperature' => 0.2,
+            'prompt' => $prompt,
+            'max_tokens' => 500,
+            'temperature' => 0.5,
         ]);
 
         $responseText = $questionResponse['choices'][0]['text'];

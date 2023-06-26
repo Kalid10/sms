@@ -42,7 +42,7 @@ class LessonPlanController extends Controller
         $lessonPlanData = $teacherService->getLessonPlansData($request, $teacherId);
 
         return Inertia::render($page, array_merge($lessonPlanData, [
-            'questions' => $prompt ? Inertia::lazy(fn () => $openAIService->lessonPlanHelper($prompt, $lessonPlanData['lesson_plan_subject'])) : null,
+            'questions' => $prompt ? Inertia::lazy(fn () => $openAIService->createCompletion($prompt, $lessonPlanData['lesson_plan_subject'])) : null,
         ]));
     }
 
