@@ -1,4 +1,20 @@
 <template>
+    <div v-if="isLoading">
+        <Loading is-full-screen type="bounce">
+            <template #description>
+                <div
+                    class="flex animate-bounce items-center justify-center space-x-3 text-white"
+                >
+                    <div class="flex justify-end">
+                        <SparklesIcon class="w-10 text-white" />
+                    </div>
+                    <div class="w-fit text-start text-xl font-semibold">
+                        {{ loadingMessage }}
+                    </div>
+                </div>
+            </template>
+        </Loading>
+    </div>
     <div
         class="flex min-h-full w-full flex-col items-center space-y-8 rounded-lg p-4 py-8"
     >

@@ -1,8 +1,8 @@
 <template>
     <div
-        class="flex flex-col items-center space-y-2 rounded-lg border border-black bg-zinc-800 p-5 text-white"
+        class="flex w-full flex-col items-center space-y-2 rounded-lg bg-white p-5"
     >
-        <div class="w-fit px-2 text-center text-2xl uppercase">
+        <div class="w-fit px-2 text-center text-2xl capitalize">
             Your Lesson Plans
         </div>
         <div class="flex w-full space-x-5 p-2 text-black">
@@ -29,10 +29,10 @@
                         v-for="(item, index) in selectedWeekPlans"
                         :key="index"
                         :class="[
-                            'my-3 flex w-5/12 cursor-pointer flex-col space-y-2 rounded-lg p-2 text-center text-xs shadow-sm',
-                            isSelected(item.id)
-                                ? 'bg-zinc-200 text-black'
-                                : 'bg-zinc-700 hover:scale-105 hover:border-zinc-100 hover:bg-zinc-200 hover:text-black',
+                            'my-3 flex w-5/12 cursor-pointer flex-col items-center justify-evenly space-y-3 rounded-lg p-2 px-3 text-center text-xs shadow-sm',
+                            isSelected(item.lesson_plan.id)
+                                ? 'bg-zinc-800 text-white'
+                                : 'border border-zinc-700 bg-white hover:scale-105 hover:border-zinc-100 hover:bg-zinc-800 hover:text-white',
                         ]"
                         @click="handleClick(item)"
                     >
@@ -41,15 +41,13 @@
                         </span>
 
                         <span class="flex w-full justify-between px-2">
-                            <span
-                                class="text-[0.65rem] font-light hover:scale-105 hover:font-medium hover:text-black hover:underline hover:underline-offset-2"
+                            <EyeIcon
+                                class="w-3 hover:scale-125"
                                 @click="
                                     selectedLessonPlan = item;
                                     showModal = true;
                                 "
-                            >
-                                View
-                            </span>
+                            />
                             <span class="text-[0.65rem] font-light">
                                 {{ moment(item.date).fromNow() }}
                             </span>
@@ -57,18 +55,16 @@
                     </div>
                 </div>
             </div>
-            <div v-else>
-                <div class="pt-5">
-                    <EmptyView
-                        class="capitalize"
-                        :title="
-                            'No Lesson Plans found in ' +
-                            moment(selectedMonth).format('MMMM YYYY') +
-                            ' - ' +
-                            selectedWeek
-                        "
-                    />
-                </div>
+            <div v-else class="w-full p-5">
+                <EmptyView
+                    class="capitalize"
+                    :title="
+                        'No Lesson Plans found in ' +
+                        moment(selectedMonth).format('MMMM YYYY') +
+                        ' - ' +
+                        selectedWeek
+                    "
+                />
             </div>
         </div>
     </div>
@@ -103,6 +99,7 @@ import SelectInput from "@/Components/SelectInput.vue";
 import EmptyView from "@/Views/EmptyView.vue";
 import Loading from "@/Components/Loading.vue";
 import Modal from "@/Components/Modal.vue";
+import { EyeIcon } from "@heroicons/vue/24/outline";
 
 const emit = defineEmits(["select"]);
 
@@ -116,6 +113,7 @@ const selectedLessonPlans = ref([]);
 const selectedSubject = ref();
 const selectedWeek = ref();
 const selectedMonth = ref();
+const selectedBatchSubject = ref();
 
 const subjectOptions = computed(() => {
     return lessonPlansData?.value?.subjects.map((item) => {
@@ -183,17 +181,31 @@ function handleMonthChange() {
 
 const handleClick = (item) => {
     // Check if the item.id is already in the array
-    const index = selectedLessonPlans.value.findIndex((id) => id === item.id);
+    const index = selectedLessonPlans.value.findIndex(
+        (id) => id === item.lesson_plan.id
+    );
 
     // If the item is in the array, remove it
     if (index > -1) {
         selectedLessonPlans.value.splice(index, 1);
     } else {
+        if (
+            selectedBatchSubject.value &&
+            selectedBatchSubject.value.subject.full_name !==
+                item.batch_schedule.batch_subject.subject.full_name
+        ) {
+            alert("Error! Please select the same subject");
+            return;
+        }
+
+        // Add a selected batch subject
+        selectedBatchSubject.value = item.batch_schedule.batch_subject;
+
         // Otherwise, add the item to the array
-        selectedLessonPlans.value.push(item.id);
+        selectedLessonPlans.value.push(item.lesson_plan.id);
     }
 
-    emit("select", selectedLessonPlans.value);
+    emit("select", selectedLessonPlans.value, selectedBatchSubject.value);
 };
 
 const isSelected = (itemId) => {
