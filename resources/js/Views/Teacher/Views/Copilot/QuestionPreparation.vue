@@ -1,12 +1,12 @@
 <template>
     <div
-        class="flex min-h-full w-full flex-col items-center space-y-6 rounded-lg p-4"
+        class="flex min-h-full w-full flex-col items-center space-y-8 rounded-lg p-4 py-8"
     >
         <div
-            class="flex w-9/12 flex-col items-center rounded-lg p-4 text-center"
+            class="fixed top-6 right-0 flex w-10/12 flex-col items-center rounded-lg p-4 text-center"
         >
             <div class="text-4xl font-medium">
-                Welcome to our AI-Powered Assessment Preparation Platform
+                Welcome to our AI-Powered Question Preparation Platform
             </div>
             <div class="w-10/12 py-1 text-sm font-light">
                 Embrace our AI-powered platform that creates custom assessments
@@ -22,13 +22,13 @@
             >
                 <div class="text-xl font-light">
                     Question Generation Customization
-                    {{ form.errors }}
                 </div>
                 <SelectInput
                     v-model="form.assessment_type_id"
                     class="w-full"
                     label="Select Question Type"
                     :options="filteredAssessmentType"
+                    :error="form.errors.assessment_type_id"
                 />
                 <TextInput
                     v-if="form.assessment_type_id"
@@ -37,7 +37,32 @@
                     label="Number Of Questions?"
                     placeholder="How Many Questions?"
                     type="number"
+                    :error="form.errors.number_of_questions"
                 />
+                <div class="w-full flex-col space-y-1">
+                    <div>
+                        <label
+                            for="large-range"
+                            class="block text-sm font-medium"
+                            >Set Difficulty Level for Questions</label
+                        >
+                        <p class="mb-2 py-1 text-xs font-light text-gray-600">
+                            Use this slider to set the difficulty level for the
+                            generated questions. Moving the slider to the left
+                            will make questions easier, while moving it to the
+                            right will make them more challenging.
+                        </p>
+                    </div>
+
+                    <input
+                        id="large-range"
+                        v-model="form.difficulty_level"
+                        min="1"
+                        max="10"
+                        type="range"
+                        class="range-lg h-3 w-full cursor-pointer appearance-none rounded-lg bg-gray-100"
+                    />
+                </div>
                 <div
                     v-if="form.number_of_questions"
                     class="flex w-full justify-evenly space-x-4"
@@ -45,9 +70,12 @@
                     <QuestionSource
                         title="Manual Input"
                         description="Opt for manual input if you prefer to generate questions based on your unique inputs and parameters. This option allows for greater control and specificity."
-                        source="input"
+                        source="custom"
                         :selected-source="form.question_source"
-                        @click="form.question_source = $event"
+                        @click="
+                            form.question_source = $event;
+                            form.lessonPlanIds = null;
+                        "
                     />
 
                     <QuestionSource
@@ -58,9 +86,19 @@
                         @click="form.question_source = 'lesson-plans'"
                     />
                 </div>
+
+                <TextArea
+                    v-if="form.question_source === 'custom'"
+                    v-model="form.manual_input"
+                    class="w-full"
+                    label="Question"
+                    placeholder="Enter Question"
+                    rows="10"
+                    :error="form.errors.manual_input"
+                />
                 <SecondaryButton
                     title="Submit"
-                    class="w-10/12 !rounded-2xl bg-zinc-800 py-2 font-medium uppercase text-white"
+                    class="w-10/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
                     @click="submit"
                 />
             </div>
@@ -68,21 +106,30 @@
                 <LessonPlans @select="updateLessonPlanIds" />
             </div>
         </div>
+        <GeneratedQuestions
+            v-if="questions?.length"
+            ref="generatedQuestionsRef"
+        />
     </div>
-    <Loading v-if="isLoading" is-full-screen type="bounce" />
 </template>
 <script setup>
 import SelectInput from "@/Components/SelectInput.vue";
 import { computed, onMounted, ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
-import Loading from "@/Components/Loading.vue";
 import QuestionSource from "@/Views/Teacher/Views/Copilot/QuestionSource.vue";
 import LessonPlans from "@/Views/Teacher/Views/Copilot/LessonPlans.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import TextArea from "@/Components/TextArea.vue";
+import GeneratedQuestions from "@/Views/Teacher/Views/Copilot/GeneratedQuestions.vue";
+import Loading from "@/Components/Loading.vue";
+import { SparklesIcon } from "@heroicons/vue/20/solid";
 
 const isLoading = ref(false);
 const assessmentTypes = computed(() => usePage().props.assessment_types);
+
+const generatedQuestionsRef = ref(null);
+const questions = computed(() => usePage().props.questions);
 
 onMounted(() => {
     loadLessonPlans();
@@ -100,11 +147,13 @@ const form = useForm({
     assessment_type_id: assessmentTypes.value[0].id,
     number_of_questions: 3,
     question_source: null,
-    lessonPlanIds: [],
+    lesson_plan_ids: [],
+    manual_input: "",
+    batch_subject_id: 1263,
+    difficulty_level: 5,
 });
 
 const loadLessonPlans = () => {
-    isLoading.value = true;
     router.visit("/teacher/copilot", {
         only: ["lesson_plans_data"],
         preserveState: true,
@@ -114,19 +163,66 @@ const loadLessonPlans = () => {
     });
 };
 
-const updateLessonPlanIds = (value) => {
-    form.lessonPlanIds = value;
+const updateLessonPlanIds = (lessonPlanIds, batchSubject) => {
+    if (form.question_source !== "lesson-plans")
+        form.question_source = "lesson-plans";
+
+    form.batch_subject_id = batchSubject.id;
+    form.lesson_plan_ids = lessonPlanIds;
 };
 
 const submit = () => {
     isLoading.value = true;
-    form.post("/teacher/copilot/generate-questions", {
+    form.get("/teacher/copilot", {
         preserveState: true,
+        only: ["questions"],
         onFinish: () => {
             isLoading.value = false;
+            generatedQuestionsRef.value.$el.scrollIntoView({
+                behavior: "smooth",
+            });
         },
     });
 };
+
+const index = ref(0);
+setInterval(() => {
+    index.value += 1;
+}, 7000);
+
+const loadingMessage = computed(() => {
+    const messages = ["Generating Questions", "Thinking"];
+
+    return messages[index.value % messages.length];
+});
 </script>
 
-<style scoped></style>
+<style>
+/* For Chrome and Safari */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: mediumpurple; /* Change this to the color you want */
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+/* For Firefox */
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: mediumpurple; /* Change this to the color you want */
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+/* For IE */
+input[type="range"]::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    background: mediumpurple; /* Change this to the color you want */
+    cursor: pointer;
+    border-radius: 50%;
+}
+</style>
