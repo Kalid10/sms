@@ -30,7 +30,7 @@
             </template>
         </StatisticsCard>
         <StatisticsCard
-            data="11"
+            :data="newUsersCount"
             subtitle="New Users (last 30 days)"
             title="New Users"
         >
@@ -57,6 +57,8 @@ const studentsCount = computed(() => usePage().props.students_count);
 const teachersCount = computed(() => usePage().props.teachers_count);
 
 const adminsCount = computed(() => usePage().props.admins_count);
+
+const newUsersCount = computed(() => usePage().props.new_users_count);
 </script>
 
 <style scoped></style>

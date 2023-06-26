@@ -35,13 +35,15 @@ import {
     UserIcon,
 } from "@heroicons/vue/20/solid/index.js";
 import { usePage } from "@inertiajs/vue3";
-import { BookOpenIcon, UsersIcon } from "@heroicons/vue/24/solid";
 import {
-    ArrowLeftOnRectangleIcon,
+    BookOpenIcon,
     CalendarDaysIcon,
-} from "@heroicons/vue/20/solid/index";
-import { HomeIcon } from "@heroicons/vue/24/solid/index";
-import { UserGroupIcon } from "@heroicons/vue/24/outline";
+    FingerPrintIcon,
+    HomeIcon,
+    UserGroupIcon,
+    UsersIcon,
+} from "@heroicons/vue/24/solid";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/vue/20/solid/index";
 
 const props = defineProps({
     auth: {
@@ -102,6 +104,12 @@ const sidebarItems = computed(() => [
         icon: UserGroupIcon,
         route: "/admin/users",
         active: directory.value === "users",
+    },
+    {
+        name: "Absentees",
+        icon: FingerPrintIcon,
+        route: "/admin/absentees",
+        active: directory.value === "absentees",
     },
 ]);
 
