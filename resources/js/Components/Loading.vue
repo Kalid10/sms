@@ -2,7 +2,7 @@
     <div
         :class="
             isFullScreen
-                ? 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50'
+                ? 'fixed inset-0 flex items-center  space-x-2 justify-center bg-black bg-opacity-50 z-50'
                 : ''
         "
     >
@@ -23,9 +23,10 @@
             }"
         ></div>
 
+        <slot name="description"></slot>
         <!-- New bounce loader -->
         <div
-            v-if="type === 'bounce'"
+            v-if="type === 'bounce' && !$slots.description"
             class="flex animate-bounce items-center justify-center space-x-2"
         >
             <div v-for="item in 3" :key="item">
