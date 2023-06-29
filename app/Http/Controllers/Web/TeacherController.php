@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Models\Announcement;
 use App\Models\Assessment;
 use App\Models\BatchSchedule;
+use App\Models\Flag;
 use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
@@ -118,6 +119,9 @@ class TeacherController extends Controller
             ->take(4)
             ->get();
 
+        $flags = Flag::whereIn('batch_subject_id', $teacherBatchSubjects)->with(['flaggedBy', 'flaggable.user.admin', 'batchSubject.subject',
+        ])->latest('updated_at')->paginate(7);
+
         $page = match (auth()->user()->type) {
             User::TYPE_TEACHER => 'Teacher/Index',
             User::TYPE_ADMIN => 'Admin/Teachers/Single',
@@ -135,6 +139,7 @@ class TeacherController extends Controller
             'batch_subject' => $batchSubject,
             'teacher_schedule' => $teacherSchedules,
             'announcements' => $announcements,
+            'flags' => $flags,
             'filters' => [
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),

@@ -107,8 +107,10 @@
                 />
 
                 <div
-                    class="flex w-full items-center justify-between space-x-6"
-                ></div>
+                    class="flex w-10/12 items-center justify-between space-x-6"
+                >
+                    <Flags title="Recent Flags" view="teacher" />
+                </div>
             </div>
             <div
                 class="flex h-full w-4/12 flex-col items-center space-y-8 p-0 px-3"
@@ -145,28 +147,15 @@
                 </div>
                 <div class="flex w-full items-center justify-between">
                     <div class="flex h-full w-4/12 flex-col justify-between">
-                        <div
-                            class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
-                        >
-                            <div class="text-center text-5xl font-bold">
-                                100%
-                            </div>
-
-                            <div class="font-medium">Attendance</div>
-                        </div>
-                        <div
-                            class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
-                        >
-                            <div class="text-center text-5xl font-bold">
-                                100%
-                            </div>
-
-                            <div class="font-medium">Attendance</div>
-                        </div>
+                        <AttendanceCard />
+                        <AttendanceCard />
                     </div>
                     <div class="w-7/12">
                         <NextClass />
                     </div>
+                </div>
+                <div class="flex w-full justify-center">
+                    <AI />
                 </div>
             </div>
         </div>
@@ -190,6 +179,9 @@ import {
 import SummaryItem from "@/Views/Teacher/Views/SummaryItem.vue";
 import SchoolScheduleItem from "@/Views/Admin/Schedule/SchoolScheduleItem.vue";
 import LinkCell from "@/Components/LinkCell.vue";
+import AttendanceCard from "@/Views/Teacher/Views/Home/AttendanceCard.vue";
+import AI from "@/Views/Teacher/Views/AI.vue";
+import Flags from "@/Views/Flag/Index.vue";
 
 const teacher = usePage().props.teacher;
 const filters = computed(() => usePage().props.filters);

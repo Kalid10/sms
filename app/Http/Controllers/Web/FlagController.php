@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Web;
 
 use App\Helpers\StudentHelper;
 use App\Models\Student;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class FlagController extends Controller
 {
-    public function flagStudent(Request $request)
+    public function flagStudent(Request $request): RedirectResponse
     {
         $request->validate([
             'flaggable_id' => 'required|exists:students,id',
