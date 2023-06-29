@@ -135,7 +135,7 @@ import {
 import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import Modal from "@/Components/Modal.vue";
-import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetail.vue";
+import StudentGradeDetail from "@/Views/Teacher/Views/Grade/StudentGradeDetail.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 import { isAdmin } from "@/utils";

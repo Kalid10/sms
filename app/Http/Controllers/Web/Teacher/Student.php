@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Teacher;
 
+use App\Models\AssessmentType;
 use App\Models\BatchSubject;
 use App\Models\Flag;
 use App\Models\Level;
@@ -23,11 +24,21 @@ class Student extends Controller
      */
     public function __invoke(StudentModel $student, Request $request): Response
     {
+        $request->validate([
+            'semester_id' => 'nullable|exists:semesters,id',
+            'quarter_id' => 'nullable|exists:quarters,id',
+        ]);
+
         $batchSubjectId = $request->query('batch_subject_id');
-        $studentAssessment = $this->prepareStudentAssessments($student, $batchSubjectId);
+        $studentAssessment = $this->prepareStudentAssessments($student, $batchSubjectId, $request);
         $currentBatch = $this->getCurrentBatch($student);
         $student = $this->loadStudentData($student, $batchSubjectId, $currentBatch);
         $batchSubjects = $this->getBatchSubjects($currentBatch, $student, $batchSubjectId);
+        $assessmentTypes = $this->getAssessmentTypes($student, $request);
+
+        $quarters = Quarter::with('semester.schoolYear')->get();
+        $semesters = Semester::with('schoolYear')->get();
+        $schoolYears = SchoolYear::all();
 
         return Inertia::render('Teacher/Student', [
             'student' => $student,
@@ -40,12 +51,18 @@ class Student extends Controller
             'batch_sessions' => $this->getBatchSessions($student),
             'batch_subject' => BatchSubject::find($batchSubjectId)?->load('subject', 'batch.level'),
             'batch_subjects' => $batchSubjects,
-            'grade' => $this->loadStudentGrade($student, $batchSubjectId),
+            'grade' => $this->loadStudentGrade($student, $batchSubjectId, $request),
             'total_batch_students' => $student->activeBatch()->students()->count(),
             'in_progress_session' => $currentBatch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user'),
             'student_notes' => StudentNote::where('student_id', $student->id)->with('author:name,id,email,phone_number,gender')->paginate(5)->appends($request->all()),
             'absentee_records' => $student->absenteeRecords(SchoolYear::getActiveSchoolYear()->id, $batchSubjectId)->with('batchSession.batchSchedule.batchSubject.subject', 'batchSession.schoolPeriod', 'batchSession.teacher.user')->paginate(5)->appends($request->all()),
             'flags' => $this->loadStudentFlags($student, $batchSubjectId),
+            'assessment_types' => $assessmentTypes,
+            'filters' => [
+                'quarters' => $quarters,
+                'semesters' => $semesters,
+                'school_years' => $schoolYears,
+            ],
         ]);
     }
 
@@ -61,14 +78,20 @@ class Student extends Controller
         }
 
         $student->absentee_percentage = $student->absenteePercentage();
-        $student->quarterly_grade = $student->grades()->where([['gradable_type', Quarter::class], ['gradable_id', Quarter::getActiveQuarter()->id]])->first();
-        $student->semester_grade = $student->grades()->where([['gradable_type', Semester::class], ['gradable_id', Semester::getActiveSemester()->id]])->first();
+//        $student->quarterly_grade = $student->grades()->where([
+//            ['gradable_type', Quarter::class],
+//            ['gradable_id', Quarter::getActiveQuarter()->id]
+//        ])->first();
+//        $student->semester_grade = $student->grades()->where([
+//            ['gradable_type', Semester::class],
+//            ['gradable_id', Semester::getActiveSemester()->id]
+//        ])->first()
         $student->grades = StudentService::getStudentDetail($student->id, $currenBatch);
 
         return $student;
     }
 
-    private function prepareStudentAssessments($student, $batchSubjectId, $perPage = 5)
+    private function prepareStudentAssessments($student, $batchSubjectId, Request $request, $perPage = 5)
     {
         $studentAssessment = $student->assessments()->orderBy('updated_at', 'DESC');
 
@@ -76,6 +99,9 @@ class Student extends Controller
             $studentAssessment = $studentAssessment->paginate($perPage);
         } else {
             $studentAssessment = $studentAssessment->whereRelation('assessment', 'batch_subject_id', $batchSubjectId)
+                ->when($request->query('assessment_type_id'), function ($query, $assessmentTypeId) {
+                    $query->whereRelation('assessment', 'assessment_type_id', $assessmentTypeId);
+                })
                 ->paginate($perPage);
         }
 
@@ -136,10 +162,20 @@ class Student extends Controller
             ->with('subject:id,full_name', 'batch:id,section,level_id', 'batch.level:id,name')->get();
     }
 
-    private function loadStudentGrade($student, $batchSubjectId)
+    private function loadStudentGrade($student, $batchSubjectId, Request $request)
     {
-        if (! $batchSubjectId) {
-            return $student->grades()->where('gradable_type', Quarter::class)->first()?->load('gradeScale');
+        if ($request->semester_id || $request->quarter_id) {
+            $grade = $student->grades()
+                ->when($request->semester_id, function ($query, $semesterId) {
+                    $query->where('gradable_id', $semesterId)
+                        ->where('gradable_type', Semester::class);
+                })
+                ->when($request->quarter_id, function ($query, $quarterId) {
+                    $query->where('gradable_id', $quarterId)
+                        ->where('gradable_type', Quarter::class);
+                })->first();
+
+            return $grade;
         }
 
         return $student->fetchStudentBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first();
@@ -153,5 +189,18 @@ class Student extends Controller
             ['batch_subject_id', $batchSubjectId],
             ['quarter_id', Quarter::getActiveQuarter()->id],
         ])->latest('expires_at')->with('flaggedBy', 'flaggable.user.admin', 'batchSubject.subject')->paginate(5);
+    }
+
+    private function getAssessmentTypes($student, Request $request)
+    {
+        $request->validate([
+            'batch_subject_id' => 'nullable|exists:batch_subjects,id',
+        ]);
+
+        if ($request->batch_subject_id) {
+            return $student->activeBatch()->load('level.levelCategory.assessmentTypes')->level->levelCategory->assessmentTypes;
+        }
+
+        return AssessmentType::all();
     }
 }

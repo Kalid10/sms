@@ -26,7 +26,9 @@
             />
         </div>
 
-        <Statistics v-if="!showSubjectDetail" :grade="studentGrade" />
+        <GradeFilter />
+
+        <Statistics v-if="!showSubjectDetail" />
 
         <TableElement
             v-if="!showSubjectDetail"
@@ -70,14 +72,11 @@ import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue
 import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import GradeFilter from "@/Views/Teacher/Views/Grade/GradeFilter.vue";
 
 const emit = defineEmits(["flag"]);
 const props = defineProps({
     studentName: {
-        type: Object,
-        required: true,
-    },
-    studentGrade: {
         type: Object,
         required: true,
     },
@@ -107,6 +106,7 @@ const studentGrades = computed(() => {
         };
     });
 });
+
 const config = [
     {
         key: "subject",
