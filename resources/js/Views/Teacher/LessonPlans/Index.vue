@@ -2,23 +2,37 @@
     <div
         class="flex h-screen max-h-full w-full flex-col space-y-5 overflow-auto border-l border-zinc-500 bg-white py-5 px-3 text-white"
     >
-        <div class="flex w-full">
-            <div class="flex w-8/12 grow">
-                <Header
-                    title="My Lesson Plans"
-                    :select-input-options="months"
-                    :selected-input="selectedMonth"
-                    :show-current-class="false"
-                    @change="handleMonthChange"
-                />
-            </div>
-            <div class="flex w-4/12 justify-end p-16">
-                <SecondaryButton
-                    title="Filter lesson plans"
-                    class="!rounded-2xl bg-zinc-800 text-white"
-                    @click="showFilter = true"
-                />
-            </div>
+        <FilterModal v-model:view="showFilter">
+            <Filters
+                :school-years="schoolYears"
+                :semesters="semesters"
+                :quarters="quarters"
+                @filter="applyFilters"
+            />
+        </FilterModal>
+
+        <div class="flex w-11/12 justify-evenly">
+            <Header
+                title="My Lesson Plans"
+                :select-input-options="months"
+                :selected-input="selectedMonth"
+                :show-current-class="false"
+                class="pr-5"
+                @change="handleMonthChange"
+            >
+                <template #default>
+                    <div
+                        class="mx-4 flex w-3/12 cursor-pointer justify-center !rounded-2xl bg-zinc-200 px-2 font-semibold"
+                        @click="showFilter = true"
+                    >
+                        <AdjustmentsHorizontalIcon class="w-4 text-black" />
+                        <SecondaryButton
+                            title="Filter lesson plans"
+                            class="w-fit p-0"
+                        />
+                    </div>
+                </template>
+            </Header>
         </div>
 
         <div class="flex h-full max-h-full w-full grow flex-col">
@@ -64,14 +78,6 @@
         v-model:view="openForm"
         :batch-session="selectedBatchSession"
     />
-
-    <Filters
-        v-if="showFilter"
-        :school-years="schoolYears"
-        :semesters="semesters"
-        :quarters="quarters"
-        @filter="applyFilters"
-    />
 </template>
 
 <script setup>
@@ -83,6 +89,8 @@ import LessonPlanMonthViewer from "@/Views/Teacher/Views/LessonPlans/LessonPlanM
 import Header from "@/Views/Teacher/Views/Header.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Filters from "@/Views/Filters.vue";
+import { AdjustmentsHorizontalIcon } from "@heroicons/vue/20/solid";
+import FilterModal from "@/Components/Modal.vue";
 
 const showFilter = ref(false);
 

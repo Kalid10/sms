@@ -31,8 +31,8 @@
                         :class="[
                             'my-3 flex w-5/12 cursor-pointer flex-col items-center justify-evenly space-y-3 rounded-lg p-2 px-3 text-center text-xs shadow-sm',
                             isSelected(item.lesson_plan.id)
-                                ? 'bg-zinc-800 text-white'
-                                : 'border border-zinc-700 bg-white hover:scale-105 hover:border-zinc-100 hover:bg-zinc-800 hover:text-white',
+                                ? 'border border-zinc-700 bg-gradient-to-bl from-violet-500 to-purple-500 text-white'
+                                : 'border border-zinc-700 bg-white from-violet-500 to-purple-500 hover:scale-105 hover:border-zinc-700 hover:bg-gradient-to-bl hover:text-white',
                         ]"
                         @click="handleClick(item)"
                     >
