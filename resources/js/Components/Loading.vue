@@ -12,7 +12,8 @@
             class="animate-spin rounded-full border-4 border-solid border-t-transparent"
             :class="{
                 'h-8 w-8 sm:h-12 sm:w-12': size === 'large',
-                'h-6 w-6 sm:h-8 sm:w-8': size === 'small',
+                'h-6 w-6 sm:h-8 sm:w-8': size === 'medium',
+                'h-3 w-3 sm:h-6 sm:w-6': size === 'small',
                 'border-gray-100': color === 'primary',
                 'border-black': color === 'secondary',
                 'border-emerald-400': color === 'success',
@@ -35,6 +36,7 @@
                         'h-8 w-8 rounded-full': size === 'large',
                         'h-4 w-4 rounded-full': size === 'medium',
                         'h-2 w-2 rounded-full': size === 'small',
+                        'h-1 w-1 rounded-full': size === 'extra-small',
                         'bg-gray-100': color === 'primary',
                         'bg-black': color === 'secondary',
                         'bg-emerald-400': color === 'success',
