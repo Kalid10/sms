@@ -3,28 +3,33 @@
         v-if="questions?.data?.length"
         class="flex h-screen w-11/12 flex-col space-y-4 bg-gray-50/60 p-4"
     >
-        <Title title="My Questions" />
+        <Title title="My Question Bank" />
 
         <div class="flex w-full justify-between">
             <div
                 v-if="selectedQuestion"
-                class="w-5/12 rounded-lg border border-black p-3 shadow-sm"
+                class="w-5/12 rounded-lg bg-white p-3 shadow-sm"
             >
-                <div class="text-center text-xl font-semibold">
-                    Generated For
-                    {{
-                        selectedQuestion.batch_subject.subject.full_name +
-                        " " +
-                        selectedQuestion.assessment_type.name
-                    }}
+                <div class="flex justify-between px-2">
+                    <div class="text-center text-xl font-semibold">
+                        Generated For
+                        {{
+                            selectedQuestion.batch_subject.subject.full_name +
+                            " " +
+                            selectedQuestion.assessment_type.name
+                        }}
+                    </div>
+                    <PrinterIcon
+                        class="w-5 cursor-pointer text-black hover:scale-125"
+                    />
                 </div>
                 <div
                     v-for="(item, index) in selectedQuestion?.questions"
                     :key="index"
-                    class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg bg-white p-4 font-medium shadow-sm hover:bg-zinc-800 hover:text-white"
-                    :class="index % 2 === 1 ? 'bg-gray-50' : ''"
+                    class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-4 font-medium shadow-sm hover:bg-zinc-600 hover:text-white"
+                    :class="index % 2 === 1 ? 'bg-gray-50' : 'bg-gray-50/50'"
                 >
-                    <div class="flex w-full flex-col space-y-3">
+                    <div class="flex w-full flex-col space-y-3 text-sm">
                         <span>
                             {{ item.question }}
                         </span>
@@ -53,14 +58,18 @@
                     </div>
                 </div>
             </div>
-            <div class="flex w-6/12 flex-col items-center space-y-3 px-4">
-                <div class="text-2xl font-medium">Recent Questions</div>
+            <div
+                class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white px-4 py-6 shadow-sm"
+            >
+                <div class="text-3xl font-semibold">Recent Questions</div>
                 <TableElement
                     :filterable="false"
                     :selectable="false"
-                    header-style="bg-zinc-800 text-white"
+                    header-style="bg-zinc-800 text-white "
+                    class="!rounded-none !shadow-none"
                     :data="formattedQuestionData"
                     :columns="config"
+                    :footer-style="questions.links?.length > 3 ? '' : '!p-0'"
                 >
                     <template #footer>
                         <Pagination
@@ -85,22 +94,23 @@
     </div>
 </template>
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import EmptyView from "@/Views/EmptyView.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/vue/20/solid";
+import {
+    PencilSquareIcon,
+    PrinterIcon,
+    TrashIcon,
+} from "@heroicons/vue/20/solid";
 
 const questions = computed(() => usePage().props.questions);
-const selectedQuestion = ref(questions.value.data[4]);
-
-watch(questions, (newValue) => {
-    console.log("there is new value");
-    console.log(newValue);
-});
+const selectedQuestion = ref(
+    questions.value.data[questions.value.data.length - 1]
+);
 
 const formattedQuestionData = computed(() => {
     return questions.value.data.map((question) => {
@@ -118,6 +128,7 @@ const config = [
     {
         name: "Assessment Type",
         key: "type",
+        class: "!py-4 !text-xs",
     },
     {
         name: "Subject",
