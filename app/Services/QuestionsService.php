@@ -2,16 +2,18 @@
 
 namespace App\Services;
 
+use App\Events\QuestionGeneratorEvent;
 use App\Models\AssessmentType;
 use App\Models\BatchSubject;
 use App\Models\LessonPlan;
-use Illuminate\Http\Request;
+use App\Models\Question;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionsService
 {
-    public function generateQuestions(Request $request, OpenAIService $openAIService): array
+    public function generateQuestions(array $requestData, OpenAIService $openAIService, $userId): array
     {
-        $request->validate([
+        Validator::make($requestData, [
             'assessment_type_id' => 'required|exists:assessment_types,id',
             'batch_subject_id' => 'required|exists:batch_subjects,id',
             'question_source' => 'required|in:lesson-plans,custom',
@@ -20,32 +22,44 @@ class QuestionsService
             'number_of_questions' => 'required|integer|min:1|max:50',
             'manual_question' => 'required_if:question_source,custom',
             'difficulty_level' => 'required|integer|min:1|max:10',
-        ]);
+        ])->validate();
 
         // Get the assessment type and batch subject
-        $assessmentType = AssessmentType::find($request->assessment_type_id);
-        $batchSubject = BatchSubject::find($request->batch_subject_id)->load('batch.level', 'subject');
+        $assessmentType = AssessmentType::find($requestData['assessment_type_id']);
+        $batchSubject = BatchSubject::find($requestData['batch_subject_id'])->load('batch.level', 'subject');
 
         $finalPrompt = "\nPlease generate a mix of questions, making sure they are diverse and cover the key concepts provided.
-        The difficulty of these questions should range from 1 (very easy) to 10 (very hard), with an average difficulty of { $request->difficulty_level}.
+        The difficulty of these questions should range from 1 (very easy) to 10 (very hard), with an average difficulty of {$requestData['difficulty_level']}.
         For each question, provide the question itself, the answer, and the question type EXCLUDING MULTIPLE CHOICE. Also specify the difficulty level for each question on a scale from 1 to 10.\n";
 
-        if ($request->question_source === 'lesson-plans') {
-            $questions = $this->generateQuestionFromLessonPlan($request, $openAIService, $assessmentType, $batchSubject, $finalPrompt);
+        if ($requestData['question_source'] === 'lesson-plans') {
+            $questions = $this->generateQuestionFromLessonPlan($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt);
+
+            Question::create([
+                'user_id' => $userId,
+                'batch_subject_id' => $requestData['batch_subject_id'],
+                'questions' => $questions,
+                'lesson_plan_ids' => $requestData['lesson_plan_ids'],
+                'assessment_type_id' => $assessmentType->id,
+                'no_of_questions' => $requestData['number_of_questions'],
+                'difficulty_level' => $requestData['difficulty_level'],
+            ]);
+
+            return event(new QuestionGeneratorEvent('success', 'Questions generated successfully!'));
         }
 
-        return $this->generateManualInputQuestions($request, $openAIService, $assessmentType, $batchSubject, $finalPrompt);
+        return $this->generateManualInputQuestions($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt);
     }
 
-    private function generateQuestionFromLessonPlan($request, $openAIService, $assessmentType, $batchSubject, $finalPrompt): array
+    private function generateQuestionFromLessonPlan($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt): array
     {
-        $lessonPlans = LessonPlan::whereIn('id', $request->lesson_plan_ids)->get();
+        $lessonPlans = LessonPlan::whereIn('id', $requestData['lesson_plan_ids'])->get();
 
-        $prompt = "Generate {$request->no_of_questions} {$assessmentType->name} questions for Grade {$batchSubject->batch->level->name} , subject Biology. Consider the following lesson plans:\n\n";
+        $prompt = "Generate {$requestData['number_of_questions']} {$assessmentType->name} questions for Grade 11 , subject Biology. Consider the following lesson plans:\n\n";
 
         // Adding topics from lesson plans to the prompt
         foreach ($lessonPlans as $lessonPlan) {
-            $prompt .= "- Topic: {$lessonPlan->topic}, Key Concepts: {$lessonPlan->description}\n";
+            $prompt .= "- Topic: {$lessonPlan->topic}";
         }
 
         $prompt .= $finalPrompt;
@@ -54,10 +68,10 @@ class QuestionsService
         return $this->passThePromptToTheCompletionMethod($openAIService, $prompt);
     }
 
-    public function generateManualInputQuestions($request, $openAIService, $assessmentType, $batchSubject, $finalPrompt): array
+    private function generateManualInputQuestions($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt): array
     {
-        $prompt = "Generate {$request->number_of_questions} {$assessmentType->name} questions for Grade {$batchSubject->batch->level->name}, subject Biology, based on the following topic:\n\n";
-        $prompt .= "Topic: {$request->manual_question}\n";
+        $prompt = "Generate {$requestData['number_of_questions']} {$assessmentType->name} questions for Grade {$batchSubject->batch->level->name}, subject Biology, based on the following topic:\n\n";
+        $prompt .= "Topic: {$requestData['manual_question']}\n";
         $prompt .= $finalPrompt;
 
         // Pass the prompt to the completion method

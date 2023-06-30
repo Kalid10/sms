@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\LessonPlans\UpdateOrCreateRequest;
+use App\Jobs\QuestionGeneratorJob;
+use App\Models\AssessmentType;
 use App\Models\BatchSession;
 use App\Models\BatchSubject;
 use App\Models\LessonPlan;
+use App\Models\SchoolYear;
 use App\Models\User;
 use App\Services\OpenAIService;
+use App\Services\QuestionsService;
 use App\Services\TeacherService;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,7 +22,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class LessonPlanController extends Controller
 {
-    public function index(Request $request, OpenAIService $openAIService, TeacherService $teacherService): Response|\Illuminate\Http\RedirectResponse
+    public function index(Request $request, OpenAIService $openAIService, TeacherService $teacherService, QuestionsService $questionsService): Response|\Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'batch_subject_id' => 'nullable|exists:batch_subjects,id',
@@ -32,7 +36,6 @@ class LessonPlanController extends Controller
             abort(403);
         }
 
-        $prompt = $request->input('prompt') ?? null;
         $page = match (auth()->user()->type) {
             User::TYPE_TEACHER => 'Teacher/LessonPlans/Index',
             User::TYPE_ADMIN => 'Admin/Teachers/Single',
@@ -41,8 +44,14 @@ class LessonPlanController extends Controller
 
         $lessonPlanData = $teacherService->getLessonPlansData($request, $teacherId);
 
+        // TODO: Change level category id
+        $assessmentTypes = AssessmentType::where([
+            ['school_year_id', SchoolYear::getActiveSchoolYear()->id], [
+                'level_category_id', 1,
+            ]])->get(['name', 'id']);
+
         return Inertia::render($page, array_merge($lessonPlanData, [
-            'questions' => $prompt ? Inertia::lazy(fn () => $openAIService->createCompletion($prompt, $lessonPlanData['lesson_plan_subject'])) : null,
+            'assessment_types' => $assessmentTypes,
         ]));
     }
 
@@ -84,5 +93,12 @@ class LessonPlanController extends Controller
 
 //        $explanationPrompt = "I want you to act as a lesson plan advisor.The subject is '{$subject}' for grade '{$grade}' provide a brief 2-5 paragraphs explaining this lesson plan title: '{$prompt}";
         return $openAIService->createCompletionStream($explanationPrompt);
+    }
+
+    public function createQuestions(Request $request, QuestionsService $questionsService, OpenAIService $openAIService): \Illuminate\Http\RedirectResponse
+    {
+        QuestionGeneratorJob::dispatch($request->all(), auth()->user()->id);
+
+        return redirect()->back()->with('success', 'You have successfully started generating questions, we will notify you once we are done');
     }
 }

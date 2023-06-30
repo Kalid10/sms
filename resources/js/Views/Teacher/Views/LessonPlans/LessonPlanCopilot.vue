@@ -1,25 +1,48 @@
 <template>
     <div
-        class="scrollbar-hide flex h-full w-full flex-col space-y-5 overflow-y-auto rounded-lg border border-zinc-500 p-5"
+        class="scrollbar-hide flex h-full w-full flex-col space-y-5 overflow-y-auto border-r border-zinc-100 px-5 py-2"
     >
-        <div>
-            <div class="mb-1 text-2xl font-bold">Rigel Copilot</div>
-            <div class="w-8/12 text-sm text-gray-700">
-                I'm your Rigel co-pilot. I will assist you as you create your
-                lesson plan.
-            </div>
-        </div>
         <Loading
             v-if="showLoading"
             color="info"
             class="absolute z-50 flex h-full w-4/12 items-center justify-center"
         />
+        <div class="flex justify-between">
+            <div>
+                <div class="mb-1 text-2xl font-bold">Rigel Copilot</div>
+                <div class="w-full text-sm text-gray-700">
+                    I'm your Rigel co-pilot. I will assist you as you create
+                    your lesson plan.
+                </div>
+            </div>
+
+            <XMarkIcon
+                class="w-5 cursor-pointer text-black hover:scale-125 hover:text-red-600"
+                @click="emit('close')"
+            />
+        </div>
+
+        <div class="flex w-full justify-between">
+            <div
+                class="mt-3 w-fit cursor-pointer rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:scale-105 hover:font-medium"
+                @click="showQuestionModal = true"
+            >
+                Generate Questions ?
+            </div>
+        </div>
+
+        <QuestionPreparation
+            v-if="showQuestionModal"
+            :batch-subject-id="batchSubjectId"
+            :lesson-plan-id="lessonPlanId"
+        />
+
         <div
             v-if="noteSuggestions"
             ref="selectedTextPopUp"
-            class="flex flex-col space-y-1 p-3"
+            class="flex flex-col space-y-2 p-3"
         >
-            <div class="px-1 pb-1">Notes</div>
+            <div class="pl-1">Notes</div>
             <div
                 class="rounded-lg bg-zinc-100 p-3 text-sm text-black shadow-sm"
                 @mouseup="
@@ -61,7 +84,7 @@
             v-if="showPopup && selectedText"
             ref="selectedTextPopUp"
             :style="{ left: `${x}px`, top: `${y}px` }"
-            class="fixed z-50 flex flex-col items-center space-y-3 rounded border border-gray-100 bg-gradient-to-t from-purple-500 to-violet-500 px-4 py-3 text-white shadow"
+            class="fixed z-50 flex flex-col items-center space-y-3 rounded border border-gray-100 bg-gradient-to-tl from-purple-500 to-violet-500 px-4 py-3 text-white shadow"
         >
             <p class="max-w-3xl px-2 py-1 text-xs">
                 {{ selectedText }}
@@ -104,14 +127,16 @@
 import {
     ClipboardDocumentIcon,
     MagnifyingGlassIcon,
+    XMarkIcon,
 } from "@heroicons/vue/20/solid";
 import Loading from "@/Components/Loading.vue";
 import { computed, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
 import { copyToClipboard } from "@/utils";
+import QuestionPreparation from "@/Views/Teacher/Views/LessonPlans/QuestionPreparation.vue";
 
-const emit = defineEmits(["selectedText", "finish"]);
+const emit = defineEmits(["selectedText", "finish", "close"]);
 const props = defineProps({
     topic: {
         type: String,
@@ -125,7 +150,17 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    lessonPlanId: {
+        type: Number,
+        required: true,
+    },
+    batchSubjectId: {
+        type: Number,
+        required: true,
+    },
 });
+
+const showQuestionModal = ref(false);
 const showLoading = ref(false);
 const noteSuggestions = ref("");
 const isNoteUpdating = ref(false);
