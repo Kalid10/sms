@@ -44,6 +44,7 @@
                         <Flag
                             :batch-subject-options="batchSubjectOptions"
                             :student="student"
+                            :view-date="false"
                         />
                     </div>
                 </div>

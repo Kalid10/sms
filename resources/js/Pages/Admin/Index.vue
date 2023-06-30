@@ -74,10 +74,10 @@
                     </transition>
                 </Combobox>
             </div>
-            <Flags />
+            <Flags view="admin" title="Recent Flags" />
         </div>
 
-           <div class="flex min-h-screen w-5/12 justify-center">
+        <div class="flex min-h-screen w-5/12 justify-center">
             <div class="flex h-full w-11/12 flex-col space-y-8">
                 <AbsenteeStats />
                 <div class="w-full">
@@ -105,7 +105,7 @@ import {
 } from "@headlessui/vue";
 import { debounce } from "lodash";
 import AbsenteeStats from "@/Views/Admin/Absentee/AbsenteeStats.vue";
-import Flags from "@/Views/Admin/Flags/Home.vue";
+import Flags from "@/Views/Flag/Index.vue";
 
 const students = computed(() => usePage().props.students);
 

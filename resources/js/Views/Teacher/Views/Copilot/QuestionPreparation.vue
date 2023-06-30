@@ -19,7 +19,7 @@
         class="flex min-h-full w-full flex-col items-center space-y-8 rounded-lg p-4 py-8"
     >
         <div
-            class="fixed top-6 right-0 flex w-10/12 flex-col items-center rounded-lg p-4 text-center"
+            class="absolute top-6 right-0 flex w-10/12 flex-col items-center rounded-lg p-4 text-center"
         >
             <div class="text-4xl font-medium">
                 Welcome to our AI-Powered Question Preparation Platform
@@ -150,6 +150,7 @@ const questions = computed(() => usePage().props.questions);
 onMounted(() => {
     loadLessonPlans();
 });
+
 const filteredAssessmentType = computed(() => {
     return assessmentTypes.value.map((assessmentType) => {
         return {
