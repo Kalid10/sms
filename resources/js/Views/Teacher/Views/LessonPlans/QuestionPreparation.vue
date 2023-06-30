@@ -1,35 +1,5 @@
 <template>
     <div
-        v-if="showLoading || questionEventStatus"
-        class="group absolute bottom-2 right-2 w-fit cursor-pointer text-white"
-    >
-        <div
-            v-if="showLoading"
-            class="flex items-center justify-center space-x-2 rounded-full bg-violet-600 px-3 py-2 text-xs"
-        >
-            <Loading size="small" type="spinner" />
-            <div
-                class="hidden group-hover:inline-block group-hover:animate-fade-in group-hover:delay-700"
-            >
-                Generating Questions
-            </div>
-        </div>
-
-        <div
-            v-if="questionEventStatus === 'success'"
-            class="flex items-center justify-center space-x-4 rounded-lg bg-emerald-500 py-2 px-4 text-sm"
-            @click="routeToQuestionsPage()"
-        >
-            <span> Generated Questions Successfully!</span>
-            <SecondaryButton
-                title="View"
-                class="cursor-pointer !rounded-2xl bg-emerald-100 !py-1.5 !px-6 hover:scale-105"
-            />
-        </div>
-        <div></div>
-    </div>
-
-    <div
         class="flex h-fit w-full flex-col items-center space-y-6 rounded-lg bg-zinc-100 px-5 pt-3 pb-5 shadow-sm"
     >
         <div class="text-xl font-light">LessonPlan Question Generator</div>
@@ -93,11 +63,11 @@
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
-import { router, useForm, usePage } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 import GeneratedQuestions from "@/Views/Teacher/Views/Copilot/GeneratedQuestions.vue";
-import Loading from "@/Components/Loading.vue";
 import Error from "@/Components/Error.vue";
+import { useUIStore } from "@/Store/ui";
 
 const props = defineProps({
     lessonPlanId: {
@@ -136,22 +106,19 @@ const questionForm = useForm({
 });
 
 const submit = () => {
-    showLoading.value = true;
+    uiStore.setQuestionGenerationLoading(true);
     questionForm.post("/teacher/lesson-plan/generate-question", {
         preserveState: true,
     });
 };
 
+const uiStore = useUIStore();
 Echo.private("question-generator").listen(".question-generator", (e) => {
-    showLoading.value = false;
+    uiStore.setQuestionGenerationLoading(false);
 
-    if (e.type === "success") questionEventStatus.value = "success";
+    if (e.type === "success") uiStore.setQuestionGenerationStatus("success");
 
-    if (e.type === "error") questionEventStatus.value = "error";
+    if (e.type === "error") uiStore.setQuestionGenerationStatus("error");
 });
-
-const routeToQuestionsPage = () => {
-    router.get("/teacher/questions", {}, { preserveState: true });
-};
 </script>
 <style scoped></style>
