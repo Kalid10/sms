@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Absentee;
 use App\Models\Announcement;
+use App\Models\Assessment;
+use App\Models\AssessmentType;
 use App\Models\Flag;
 use App\Models\Level;
+use App\Models\LevelCategory;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Subject;
@@ -141,10 +144,71 @@ class AdminController extends Controller
 
         return Inertia::render('Admin/Announcements/Index', [
             'announcements' => $announcements,
-            'school_years' => $schoolYears,
             'filters' => [
-                'school_year_id' => $schoolYearId,
+                'school_year_id' => $schoolYearId ?? SchoolYear::getActiveSchoolYear()->id,
                 'expires_on' => $expiresOn,
+                'school_years' => $schoolYears,
+            ],
+        ]);
+    }
+
+    public function assessments(Request $request): Response
+    {
+        $request->validate([
+            'search' => 'nullable|string',
+            'level_id' => 'nullable|integer',
+            'assessment_type_id' => 'nullable|integer',
+            'subject_id' => 'nullable|integer',
+        ]);
+
+        $searchKey = $request->input('search');
+
+        $assessments = Assessment::with('batchSubject.level', 'assessmentType')
+            ->where('status', '!=', Assessment::STATUS_DRAFT)
+            ->when($searchKey, function ($query) use ($searchKey) {
+                return $query->where('title', 'like', "%{$searchKey}%");
+            })
+            ->when($request->input('level_id'), function ($query) use ($request) {
+                return $query->whereHas('batchSubject.level', function ($query) use ($request) {
+                    $query->where('level_id', $request->input('level_id'));
+                });
+            })
+            ->when($request->input('subject_id'), function ($query) use ($request) {
+                return $query->whereHas('batchSubject', function ($query) use ($request) {
+                    $query->where('subject_id', $request->input('subject_id'));
+                });
+            })
+            ->when($request->input('assessment_type_id'), function ($query) use ($request) {
+                return $query->where('assessment_type_id', $request->input('assessment_type_id'));
+            })
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10);
+
+        // Get all assessment types of active school year
+        $assessmentTypes = AssessmentType::with('levelCategory', 'schoolYear')
+            ->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->get();
+
+        $levels = Level::all();
+
+        // Get Subjects of active school year
+        $subjects = Subject::with('batches.schoolYear')->whereHas('batches', function ($query) {
+            $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+        })->get();
+
+        $levelCategories = LevelCategory::all();
+
+        return Inertia::render('Admin/Assessments/Index', [
+            'assessments' => $assessments,
+            'assessment_types' => $assessmentTypes,
+            'level_categories' => $levelCategories,
+            'filters' => [
+                'search' => $searchKey,
+                'assessment_types' => $assessmentTypes,
+                'levels' => $levels,
+                'subjects' => $subjects,
+                'assessment_type_id' => $request->input('assessment_type_id') ?? null,
+                'level_id' => $request->input('level_id') ?? null,
+                'subject_id' => $request->input('subject_id') ?? null,
             ],
         ]);
     }

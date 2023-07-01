@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Announcement;
 use App\Models\Assessment;
+use App\Models\Batch;
 use App\Models\BatchSchedule;
 use App\Models\Quarter;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
+use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Services\StudentService;
@@ -56,10 +58,32 @@ class TeacherController extends Controller
                     return $query->where('name', 'like', "%{$searchKey}%");
                 });
             })
+            ->when($request->input('subject_id'), function ($query) use ($request) {
+                return $query->whereHas('batchSubjects', function ($query) use ($request) {
+                    return $query->where('subject_id', $request->input('subject_id'));
+                });
+            })
+            ->when($request->input('batch_id'), function ($query) use ($request) {
+                return $query->whereHas('batchSubjects', function ($query) use ($request) {
+                    return $query->where('batch_id', $request->input('batch_id'));
+                });
+            })
             ->paginate($perPage);
+
+        // Subjects of active school year
+        $subjects = Subject::select('id', 'full_name')
+            ->whereHas('batches', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()?->id);
+            })
+            ->get();
+
+        // Active school year batches with level
+        $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level:id,name')->get();
 
         return Inertia::render('Admin/Teachers/Index', [
             'teachers' => $teachers,
+            'subjects' => $subjects,
+            'batches' => $batches,
         ]);
     }
 

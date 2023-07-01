@@ -72,11 +72,10 @@
             </div>
         </div>
     </div>
-    <Filters
-        v-if="showFilter"
-        :school-years="schoolYears"
-        @filter="applyFilters"
-    />
+
+    <Modal v-model:view="showFilter">
+        <Filters @filter="applyFilters" />
+    </Modal>
 </template>
 <script setup>
 import { computed, ref } from "vue";
@@ -91,6 +90,7 @@ import StudentsTable from "@/Views/Teacher/Views/StudentsTable.vue";
 import { isAdmin } from "@/utils";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Filters from "@/Views/Filters.vue";
+import Modal from "@/Components/Modal.vue";
 
 const showFilter = ref(false);
 
@@ -161,7 +161,6 @@ function applyFilters(params) {
         {
             onSuccess: () => {
                 showFilter.value = false;
-                resetFilters();
             },
             preserveState: true,
         }

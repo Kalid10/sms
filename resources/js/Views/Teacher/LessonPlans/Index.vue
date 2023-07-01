@@ -65,13 +65,9 @@
         :batch-session="selectedBatchSession"
     />
 
-    <Filters
-        v-if="showFilter"
-        :school-years="schoolYears"
-        :semesters="semesters"
-        :quarters="quarters"
-        @filter="applyFilters"
-    />
+    <Modal v-model:view="showFilter">
+        <Filters @filter="applyFilters" />
+    </Modal>
 </template>
 
 <script setup>
@@ -83,6 +79,7 @@ import LessonPlanMonthViewer from "@/Views/Teacher/Views/LessonPlans/LessonPlanM
 import Header from "@/Views/Teacher/Views/Header.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Filters from "@/Views/Filters.vue";
+import Modal from "@/Components/Modal.vue";
 
 const showFilter = ref(false);
 

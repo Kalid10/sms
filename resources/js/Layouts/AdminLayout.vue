@@ -40,6 +40,7 @@ import {
     CalendarDaysIcon,
     FingerPrintIcon,
     HomeIcon,
+    NewspaperIcon,
     UserGroupIcon,
     UsersIcon,
 } from "@heroicons/vue/24/solid";
@@ -98,6 +99,12 @@ const sidebarItems = computed(() => [
         icon: CalendarDaysIcon,
         route: "/admin/schedules",
         active: directory.value === "schedules",
+    },
+    {
+        name: "Assessments",
+        icon: NewspaperIcon,
+        route: "/admin/assessments",
+        active: directory.value === "assessments",
     },
     {
         name: "Users",

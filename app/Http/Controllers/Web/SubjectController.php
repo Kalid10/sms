@@ -28,7 +28,8 @@ class SubjectController extends Controller
         $subjects = Subject::withTrashed()
             ->select('id', 'full_name', 'short_name', 'priority', 'category', 'tags', 'updated_at', 'deleted_at')
             ->where('full_name', 'like', '%'.$searchKey.'%')
-            ->OrWhere(DB::raw('lower(tags)'), 'like', '%'.$searchKey.'%')->paginate(20);
+            ->OrWhere(DB::raw('lower(tags)'), 'like', '%'.$searchKey.'%')
+            ->paginate(15)->appends(request()->query());
 
         // Get all batches
         $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level')->get();
