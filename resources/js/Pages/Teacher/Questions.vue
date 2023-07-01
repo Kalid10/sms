@@ -3,7 +3,21 @@
         v-if="questions?.data?.length"
         class="flex h-screen w-11/12 flex-col space-y-4 bg-gray-50/60 p-4"
     >
-        <Title title="My Question Bank" />
+        <div class="flex w-full items-center justify-between py-3">
+            <Title title="My Question Bank (Beta)" />
+            <p
+                class="w-8/12 rounded-lg bg-gradient-to-tr from-teal-400 to-emerald-400 p-4 text-center text-xs text-white"
+            >
+                Welcome to our innovative AI Question Generator. This is
+                currently a beta version, and we're actively working to refine
+                and improve it. Please note that while our AI strives to produce
+                high-quality, relevant questions, there may be occasional
+                inaccuracies or unexpected results. We appreciate your
+                understanding and patience during this testing phase. Your
+                feedback is invaluable in helping us make this tool the best it
+                can be.
+            </p>
+        </div>
 
         <div class="flex w-full justify-between">
             <div
@@ -20,7 +34,7 @@
                         }}
                     </div>
                     <PrinterIcon
-                        class="w-5 cursor-pointer text-black hover:scale-125"
+                        class="w-5 cursor-pointer text-zinc-600 hover:scale-125 hover:text-black"
                     />
                 </div>
                 <div
@@ -40,18 +54,20 @@
                             Answer : {{ item.answer }}</span
                         >
                         <span
-                            class="flex w-full justify-between space-x-6 pt-2 text-xs"
+                            class="flex w-full justify-end space-x-6 pt-2 text-xs"
                         >
-                            <span>
-                                Difficulty Level:
-                                {{ item.difficulty }}/10
-                            </span>
                             <span class="flex cursor-pointer space-x-3">
                                 <TrashIcon
                                     class="w-4 text-red-600 hover:scale-105 group-hover:text-red-500"
+                                    @click="
+                                        selectedIndex = index;
+                                        selectedRow = null;
+                                        showDeleteDialogBox = true;
+                                    "
                                 />
                                 <PencilSquareIcon
                                     class="w-4 text-black hover:scale-105 group-hover:text-white"
+                                    @click="updateQuestionForm(item, index)"
                                 />
                             </span>
                         </span>
@@ -70,7 +86,18 @@
                     :data="formattedQuestionData"
                     :columns="config"
                     :footer-style="questions.links?.length > 3 ? '' : '!p-0'"
+                    row-actionable
                 >
+                    <template #row-actions="{ row }">
+                        <TrashIcon
+                            class="w-4 cursor-pointer text-red-600 hover:scale-125"
+                            @click="
+                                selectedIndex = null;
+                                selectedRow = row.id;
+                                showDeleteDialogBox = true;
+                            "
+                        />
+                    </template>
                     <template #footer>
                         <Pagination
                             :links="questions.links"
@@ -92,10 +119,44 @@
             class="w-2/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
         />
     </div>
+
+    <DialogBox v-model:open="showDeleteDialogBox" @confirm="deleteQuestion" />
+
+    <Modal v-model:view="showUpdateModal">
+        <div
+            class="flex flex-col items-center space-y-5 rounded-lg bg-white p-4 shadow-sm"
+        >
+            <div class="text-xl font-semibold">Update Question</div>
+            <TextArea
+                v-model="updateForm.question"
+                placeholder="Add Question"
+                class="w-full"
+                label="Question"
+            />
+            <TextArea
+                v-model="updateForm.answer"
+                class="w-full"
+                placeholder="Add answer"
+                label="Answer"
+            />
+
+            <TextArea
+                v-model="updateForm.answer"
+                class="w-full"
+                placeholder="Add answer"
+                label="Answer"
+            />
+            <SecondaryButton
+                title="Update"
+                class="w-3/12 !rounded-2xl bg-zinc-800 text-2xl text-white"
+                @click="updateQuestion()"
+            />
+        </div>
+    </Modal>
 </template>
 <script setup>
 import { computed, ref } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import EmptyView from "@/Views/EmptyView.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
@@ -106,6 +167,14 @@ import {
     PrinterIcon,
     TrashIcon,
 } from "@heroicons/vue/20/solid";
+import Modal from "@/Components/Modal.vue";
+import TextArea from "@/Components/TextArea.vue";
+import DialogBox from "@/Components/DialogBox.vue";
+
+const showUpdateModal = ref(false);
+const showDeleteDialogBox = ref(false);
+const selectedIndex = ref(null);
+const selectedRow = ref(null);
 
 const questions = computed(() => usePage().props.questions);
 const selectedQuestion = ref(
@@ -116,7 +185,10 @@ const formattedQuestionData = computed(() => {
     return questions.value.data.map((question) => {
         return {
             id: question.id,
-            name: question.user.name,
+            name:
+                question.user.name === usePage().props.auth.user.name
+                    ? "Self"
+                    : question.user.name,
             type: question.assessment_type.name,
             subject: question.batch_subject.subject.full_name,
             no_of_questions: question.no_of_questions,
@@ -147,5 +219,45 @@ const config = [
         key: "difficulty_level",
     },
 ];
+
+const updateForm = useForm({
+    question: "",
+    answer: "",
+    index: "",
+    question_id: null,
+});
+
+function updateQuestionForm(item, index) {
+    updateForm.question = item.question;
+    updateForm.answer = item.answer;
+    updateForm.index = index;
+    updateForm.question_id = selectedQuestion.value.id;
+    showUpdateModal.value = true;
+}
+
+function deleteQuestion() {
+    router.post(
+        "/teacher/questions/delete",
+        {
+            index: selectedIndex.value,
+            question_id: selectedRow.value ?? selectedQuestion.value.id,
+        },
+        {
+            onSuccess: () => {
+                router.visit("/teacher/questions", {
+                    only: ["questions"],
+                });
+            },
+        }
+    );
+}
+
+const updateQuestion = () => {
+    updateForm.post("/teacher/questions", {
+        onSuccess: () => {
+            showUpdateModal.value = true;
+        },
+    });
+};
 </script>
 <style scoped></style>
