@@ -11,7 +11,7 @@
             />
         </FilterModal>
 
-        <div class="flex w-11/12 justify-evenly">
+        <div class="flex w-full justify-evenly">
             <Header
                 title="My Lesson Plans"
                 :select-input-options="months"

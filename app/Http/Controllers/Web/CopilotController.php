@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web;
 use App\Models\AssessmentType;
 use App\Models\SchoolYear;
 use App\Services\OpenAIService;
-use App\Services\QuestionsService;
 use App\Services\TeacherService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,7 +13,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CopilotController extends Controller
 {
-    public function show(Request $request, TeacherService $teacherService, QuestionsService $questionsService): Response
+    public function show(Request $request, TeacherService $teacherService): Response
     {
         $request->validate([
             'batch_subject_id' => 'nullable|exists:batch_subjects,id',
@@ -34,7 +33,6 @@ class CopilotController extends Controller
         return Inertia::render('Teacher/Copilot/Index', [
             'assessment_types' => $assessmentTypes,
             'lesson_plans_data' => $lessonPlansData,
-            'questions' => Inertia::lazy(fn () => $questionsService->generateQuestions($request, app(OpenAIService::class))),
         ]);
     }
 

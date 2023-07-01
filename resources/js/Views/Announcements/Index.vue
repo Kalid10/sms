@@ -20,13 +20,6 @@
                     title="Add Announcement"
                     @click="showAddAnnouncement = true"
                 />
-                <TextInput
-                    v-if="!(view === 'teacher' && isAdmin())"
-                    v-model="searchKey"
-                    placeholder="Search Announcements"
-                    class="w-5/12"
-                    @keyup="search"
-                />
             </div>
         </div>
 
@@ -58,7 +51,7 @@
                     v-else-if="!(view === 'teacher' && isAdmin())"
                     class="flex w-full justify-center py-2"
                     :href="url"
-                    value="Show All Announcements"
+                    value="View All Announcements"
                 />
             </div>
         </div>

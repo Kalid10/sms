@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\LessonPlans\UpdateOrCreateRequest;
-use App\Jobs\QuestionGeneratorJob;
 use App\Models\AssessmentType;
 use App\Models\BatchSession;
 use App\Models\BatchSubject;
@@ -93,12 +92,5 @@ class LessonPlanController extends Controller
 
 //        $explanationPrompt = "I want you to act as a lesson plan advisor.The subject is '{$subject}' for grade '{$grade}' provide a brief 2-5 paragraphs explaining this lesson plan title: '{$prompt}";
         return $openAIService->createCompletionStream($explanationPrompt);
-    }
-
-    public function createQuestions(Request $request, QuestionsService $questionsService, OpenAIService $openAIService): \Illuminate\Http\RedirectResponse
-    {
-        QuestionGeneratorJob::dispatch($request->all(), auth()->user()->id);
-
-        return redirect()->back()->with('success', 'You have successfully started generating questions, we will notify you once we are done');
     }
 }

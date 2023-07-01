@@ -5,7 +5,7 @@
         <!--        Header-->
         <div class="flex h-fit w-full items-center justify-between px-2">
             <span
-                class="grow -skew-x-3 px-3 py-0.5 text-xl font-medium"
+                class="grow px-3 py-0.5 text-xl font-medium"
                 :class="flags?.data?.length ? '' : ' '"
             >
                 <span v-if="view === 'student'">
