@@ -71,7 +71,7 @@ class QuestionsController extends Controller
         } else {
             $questions = $question->questions;
 
-            array_splice($questions, $request->questionIndex, 1);
+            array_splice($questions, $request->index, 1);
 
             $question->update(['questions' => $questions]);
         }

@@ -136,6 +136,12 @@ const sidebarItems = computed(() => [
         active: directory.value === "lesson-plan",
     },
     {
+        name: "Question Bank",
+        icon: QuestionMarkCircleIcon,
+        route: "/teacher/questions",
+        active: directory.value === "questions",
+    },
+    {
         name: "Assessments",
         icon: ClipboardIcon,
         route: "/teacher/assessments",
@@ -166,13 +172,6 @@ const sidebarItems = computed(() => [
         icon: CalendarDaysIcon,
         route: "/teacher/school-schedule",
         active: directory.value === "school-schedule",
-    },
-
-    {
-        name: "Question Bank",
-        icon: QuestionMarkCircleIcon,
-        route: "/teacher/questions",
-        active: directory.value === "questions",
     },
 
     {
