@@ -58,6 +58,10 @@ import {
 } from "@heroicons/vue/24/solid";
 import { isTeacher } from "@/utils";
 import SummaryItem from "@/Views/Teacher/Views/SummaryItem.vue";
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
+
+const teacher = computed(() => usePage().props.teacher);
 </script>
 
 <style scoped></style>
