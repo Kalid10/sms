@@ -1,25 +1,9 @@
 <template>
-    <div v-if="isLoading">
-        <Loading is-full-screen type="bounce">
-            <template #description>
-                <div
-                    class="flex animate-bounce items-center justify-center space-x-3 text-white"
-                >
-                    <div class="flex justify-end">
-                        <SparklesIcon class="w-10 text-white" />
-                    </div>
-                    <div class="w-fit text-start text-xl font-semibold">
-                        {{ loadingMessage }}
-                    </div>
-                </div>
-            </template>
-        </Loading>
-    </div>
     <div
         class="flex min-h-full w-full flex-col items-center space-y-8 rounded-lg p-4 py-8"
     >
         <div
-            class="absolute top-6 right-0 flex w-10/12 flex-col items-center rounded-lg p-4 text-center"
+            class="absolute top-6 right-0 flex w-8/12 flex-col items-center rounded-lg p-4 text-center"
         >
             <div class="text-4xl font-medium">
                 Welcome to our AI-Powered Question Preparation Platform
@@ -105,12 +89,12 @@
 
                 <TextArea
                     v-if="form.question_source === 'custom'"
-                    v-model="form.manual_input"
+                    v-model="form.manual_question"
                     class="w-full"
                     label="Question"
                     placeholder="Enter Question"
                     rows="10"
-                    :error="form.errors.manual_input"
+                    :error="form.errors.manual_question"
                 />
                 <SecondaryButton
                     title="Submit"
@@ -122,29 +106,21 @@
                 <LessonPlans @select="updateLessonPlanIds" />
             </div>
         </div>
-        <GeneratedQuestions
-            v-if="questions?.length"
-            ref="generatedQuestionsRef"
-        />
     </div>
 </template>
 <script setup>
 import SelectInput from "@/Components/SelectInput.vue";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import QuestionSource from "@/Views/Teacher/Views/Copilot/QuestionSource.vue";
 import LessonPlans from "@/Views/Teacher/Views/Copilot/LessonPlans.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextArea from "@/Components/TextArea.vue";
-import GeneratedQuestions from "@/Views/Teacher/Views/Copilot/GeneratedQuestions.vue";
-import Loading from "@/Components/Loading.vue";
-import { SparklesIcon } from "@heroicons/vue/20/solid";
+import { useUIStore } from "@/Store/ui";
 
-const isLoading = ref(false);
 const assessmentTypes = computed(() => usePage().props.assessment_types);
 
-const generatedQuestionsRef = ref(null);
 const questions = computed(() => usePage().props.questions);
 
 onMounted(() => {
@@ -165,7 +141,7 @@ const form = useForm({
     number_of_questions: 3,
     question_source: null,
     lesson_plan_ids: [],
-    manual_input: "",
+    manual_question: "",
     batch_subject_id: 1263,
     difficulty_level: 5,
 });
@@ -174,9 +150,6 @@ const loadLessonPlans = () => {
     router.visit("/teacher/copilot", {
         only: ["lesson_plans_data"],
         preserveState: true,
-        onFinish: () => {
-            isLoading.value = false;
-        },
     });
 };
 
@@ -188,29 +161,20 @@ const updateLessonPlanIds = (lessonPlanIds, batchSubject) => {
     form.lesson_plan_ids = lessonPlanIds;
 };
 
+const uiStore = useUIStore();
 const submit = () => {
-    isLoading.value = true;
-    form.get("/teacher/copilot", {
+    uiStore.setQuestionGenerationLoading(true);
+    form.post("/teacher/questions/create", {
         preserveState: true,
-        only: ["questions"],
-        onFinish: () => {
-            isLoading.value = false;
-            generatedQuestionsRef.value.$el.scrollIntoView({
-                behavior: "smooth",
-            });
-        },
     });
 };
 
-const index = ref(0);
-setInterval(() => {
-    index.value += 1;
-}, 7000);
+Echo.private("question-generator").listen(".question-generator", (e) => {
+    uiStore.setQuestionGenerationLoading(false);
 
-const loadingMessage = computed(() => {
-    const messages = ["Generating Questions", "Thinking"];
+    if (e.type === "success") uiStore.setQuestionGenerationStatus("success");
 
-    return messages[index.value % messages.length];
+    if (e.type === "error") uiStore.setQuestionGenerationStatus("error");
 });
 </script>
 

@@ -6,7 +6,7 @@
         <div class="flex w-full items-center justify-between py-3">
             <Title title="My Question Bank (Beta)" />
             <p
-                class="w-8/12 rounded-lg bg-gradient-to-tr from-teal-400 to-emerald-400 p-4 text-center text-xs text-white"
+                class="w-8/12 rounded-lg bg-gradient-to-tr from-violet-500 to-purple-500 p-4 text-center text-xs text-white"
             >
                 Welcome to our innovative AI Question Generator. This is
                 currently a beta version, and we're actively working to refine
@@ -25,13 +25,26 @@
                 class="w-5/12 rounded-lg bg-white p-3 shadow-sm"
             >
                 <div class="flex justify-between px-2">
-                    <div class="text-center text-xl font-semibold">
-                        Generated For
-                        {{
-                            selectedQuestion.batch_subject.subject.full_name +
-                            " " +
-                            selectedQuestion.assessment_type.name
-                        }}
+                    <div
+                        class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
+                    >
+                        <span>
+                            Questions For
+                            {{
+                                selectedQuestion.batch_subject.subject
+                                    .full_name +
+                                " " +
+                                selectedQuestion.assessment_type.name
+                            }}
+                        </span>
+                        <span class="text-start text-xs font-light">
+                            @
+                            {{
+                                moment(selectedQuestion.updated_at).format(
+                                    "ddd MMMM DD YYYY"
+                                )
+                            }}</span
+                        >
                     </div>
                     <PrinterIcon
                         class="w-5 cursor-pointer text-zinc-600 hover:scale-125 hover:text-black"
@@ -82,13 +95,17 @@
                     :filterable="false"
                     :selectable="false"
                     header-style="bg-zinc-800 text-white "
-                    class="!rounded-none !shadow-none"
+                    class="cursor-pointer !rounded-none !shadow-none"
                     :data="formattedQuestionData"
                     :columns="config"
                     :footer-style="questions.links?.length > 3 ? '' : '!p-0'"
                     row-actionable
                 >
                     <template #row-actions="{ row }">
+                        <EyeIcon
+                            class="w-4 cursor-pointer text-gray-800 hover:scale-125"
+                            @click="setSelectedQuestion(row.id)"
+                        />
                         <TrashIcon
                             class="w-4 cursor-pointer text-red-600 hover:scale-125"
                             @click="
@@ -163,6 +180,7 @@ import Title from "@/Views/Teacher/Views/Title.vue";
 import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 import {
+    EyeIcon,
     PencilSquareIcon,
     PrinterIcon,
     TrashIcon,
@@ -170,6 +188,7 @@ import {
 import Modal from "@/Components/Modal.vue";
 import TextArea from "@/Components/TextArea.vue";
 import DialogBox from "@/Components/DialogBox.vue";
+import moment from "moment";
 
 const showUpdateModal = ref(false);
 const showDeleteDialogBox = ref(false);
@@ -243,6 +262,7 @@ function deleteQuestion() {
             question_id: selectedRow.value ?? selectedQuestion.value.id,
         },
         {
+            preserveState: true,
             onSuccess: () => {
                 router.visit("/teacher/questions", {
                     only: ["questions"],
@@ -254,10 +274,17 @@ function deleteQuestion() {
 
 const updateQuestion = () => {
     updateForm.post("/teacher/questions", {
+        preserveState: true,
         onSuccess: () => {
             showUpdateModal.value = true;
         },
     });
+};
+
+const setSelectedQuestion = (id) => {
+    selectedQuestion.value = questions.value.data.find(
+        (item) => item.id === id
+    );
 };
 </script>
 <style scoped></style>

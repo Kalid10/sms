@@ -105,14 +105,14 @@ const questionForm = useForm({
     batch_subject_id: props.batchSubjectId,
 });
 
+const uiStore = useUIStore();
 const submit = () => {
     uiStore.setQuestionGenerationLoading(true);
-    questionForm.post("/teacher/lesson-plan/generate-question", {
+    questionForm.post("/teacher/questions/create", {
         preserveState: true,
     });
 };
 
-const uiStore = useUIStore();
 Echo.private("question-generator").listen(".question-generator", (e) => {
     uiStore.setQuestionGenerationLoading(false);
 
