@@ -164,6 +164,22 @@ export const useMessageStore = defineStore({
                 console.error(error);
             }
         },
+        async deleteMessage(id, userId) {
+            this.isLoading = true;
+            try {
+                const { data } = await axiosClient
+                    .post("/chat/deleteMessage", {
+                        id: id,
+                    })
+                    .then(() => {
+                        this.fetchMessages(userId);
+                        this.isLoading = false;
+                    });
+            } catch (error) {
+                this.isLoading = false;
+                console.error(error);
+            }
+        },
     },
 });
 

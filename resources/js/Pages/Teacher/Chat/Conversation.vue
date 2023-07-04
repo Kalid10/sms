@@ -105,7 +105,7 @@
                     :key="index"
                 >
                     <div
-                        class="flex gap-[14px]"
+                        class="group flex cursor-pointer space-x-5"
                         :class="
                             text.from_id === usePage().props.auth.user.id
                                 ? 'flex-row-reverse'
@@ -115,7 +115,7 @@
                         <img
                             :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
                             alt="avatar"
-                            class="h-8 w-8 rounded-full object-contain"
+                            class="mx-1 h-8 w-8 rounded-full object-contain"
                         />
                         <div
                             class="rounded-b-[10px] px-[14px] py-[10px]"
@@ -148,6 +148,12 @@
                                 />
                             </span>
                         </div>
+                        <TrashIcon
+                            class="hidden w-4 cursor-pointer group-hover:inline-block"
+                            @click="
+                                messageStore.deleteMessage(text.id, text.to_id)
+                            "
+                        />
                     </div>
                 </div>
             </div>
