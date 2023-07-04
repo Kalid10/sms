@@ -2,15 +2,6 @@
     <div
         class="flex h-screen max-h-full w-full flex-col space-y-5 overflow-auto border-l border-zinc-500 bg-white py-5 px-3 text-white"
     >
-        <FilterModal v-model:view="showFilter">
-            <Filters
-                :school-years="schoolYears"
-                :semesters="semesters"
-                :quarters="quarters"
-                @filter="applyFilters"
-            />
-        </FilterModal>
-
         <div class="flex w-full justify-evenly">
             <Header
                 title="My Lesson Plans"
@@ -95,7 +86,6 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Filters from "@/Views/Filters.vue";
 import Modal from "@/Components/Modal.vue";
 import { AdjustmentsHorizontalIcon } from "@heroicons/vue/20/solid";
-import FilterModal from "@/Components/Modal.vue";
 
 const showFilter = ref(false);
 

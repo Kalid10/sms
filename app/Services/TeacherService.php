@@ -226,6 +226,14 @@ class TeacherService
             'months' => $months,
             'selected_month' => $currentMonth->format('Y-m'),
             'teacher' => Teacher::find($teacherId)->load('user'),
+            'filters' => [
+                'quarter_id' => $quarterFilter ?? Quarter::getActiveQuarter()->id,
+                'quarters' => $quarters,
+                'semesters' => $semesters,
+                'school_years' => $schoolYears,
+                'semester_id' => $request->input('semester_id') ?? Semester::getActiveSemester()->id,
+                'school_year_id' => $request->input('school_year_id') ?? SchoolYear::getActiveSchoolYear()->id,
+            ],
         ];
     }
 
