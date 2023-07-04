@@ -1,4 +1,5 @@
 <template>
+    <Loading v-if="showLoading" is-full-screen color="secondary" />
     <div
         v-if="activeChat?.id !== null"
         class="scrollbar-hide flex h-full max-h-full w-8/12 flex-col items-center justify-between space-y-2 overflow-y-auto rounded-lg border border-zinc-300 bg-gray-50 p-4 shadow-sm"
@@ -44,13 +45,24 @@
 
                 <div class="flex w-2/12 items-center justify-end space-x-5">
                     <StarIcon
-                        class="w-5 cursor-pointer hover:scale-125"
+                        class="w-4 cursor-pointer hover:scale-125"
                         :class="
                             isInFavorites(activeChat.id).value
                                 ? 'text-yellow-400'
                                 : 'text-gray-400'
                         "
                         @click="messageStore.toggleFavorite(null)"
+                    />
+                    <TrashIcon
+                        class="w-4 cursor-pointer text-gray-400 hover:scale-125 hover:text-red-500"
+                        @click="showDeleteDialog = true"
+                    />
+
+                    <DialogBox
+                        v-model:open="showDeleteDialog"
+                        @confirm="
+                            messageStore.deleteConversation(activeChat.id)
+                        "
                     />
                 </div>
             </div>
@@ -223,8 +235,15 @@
 import { usePage } from "@inertiajs/vue3";
 import moment from "moment/moment";
 import { computed, nextTick, ref } from "vue";
-import { CheckIcon, ChevronLeftIcon, StarIcon } from "@heroicons/vue/20/solid";
+import {
+    CheckIcon,
+    ChevronLeftIcon,
+    StarIcon,
+    TrashIcon,
+} from "@heroicons/vue/20/solid";
 import useMessageStore from "@/Store/chat";
+import DialogBox from "@/Components/DialogBox.vue";
+import Loading from "@/Components/Loading.vue";
 
 const emit = defineEmits(["toggle", "contact", "fetch"]);
 const chatContent = ref(null);
@@ -235,6 +254,8 @@ const messageStore = useMessageStore();
 const messages = computed(() => messageStore.messages.messages);
 const activeChat = computed(() => messageStore.activeChat);
 const favorites = computed(() => messageStore.favorites);
+const showDeleteDialog = ref(false);
+const showLoading = computed(() => messageStore.isLoading);
 
 async function sendMessage() {
     if (messageField.value) {

@@ -29,7 +29,6 @@ export const useMessageStore = defineStore({
                     socket_id: "15886.48502",
                     channel_name: "private-chatify",
                 });
-                console.log(response.data);
                 this.token = response.data;
             } catch (error) {
                 console.error(error);
@@ -132,7 +131,6 @@ export const useMessageStore = defineStore({
                 const { data } = await axiosClient.post("/chat/api/star", {
                     user_id: userId ?? this.activeChat.id,
                 });
-                console.log(data);
                 await this.getFavorites();
             } catch (error) {
                 console.error(error);
@@ -146,6 +144,23 @@ export const useMessageStore = defineStore({
                 );
                 this.favorites = data.favorites;
             } catch (error) {
+                console.error(error);
+            }
+        },
+        async deleteConversation(userId) {
+            this.isLoading = true;
+            try {
+                const { data } = await axiosClient
+                    .post("/chat/api/deleteConversation", {
+                        id: userId,
+                    })
+                    .then(() => {
+                        this.getContacts();
+                        this.fetchMessages(userId);
+                        this.isLoading = false;
+                    });
+            } catch (error) {
+                this.isLoading = false;
                 console.error(error);
             }
         },
