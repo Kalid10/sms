@@ -35,20 +35,16 @@ class QuestionsService
         if ($requestData['question_source'] === 'lesson-plans') {
             $questions = $this->generateQuestionFromLessonPlan($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt);
 
-            Question::create([
-                'user_id' => $userId,
-                'batch_subject_id' => $requestData['batch_subject_id'],
-                'questions' => $questions,
-                'lesson_plan_ids' => $requestData['lesson_plan_ids'],
-                'assessment_type_id' => $assessmentType->id,
-                'no_of_questions' => $requestData['number_of_questions'],
-                'difficulty_level' => $requestData['difficulty_level'],
-            ]);
+            $this->saveQuestion($questions, $requestData, $assessmentType, $userId);
+
+            return event(new QuestionGeneratorEvent('success', 'Questions generated successfully!'));
+        } else {
+            $questions = $this->generateManualInputQuestions($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt);
+
+            $this->saveQuestion($questions, $requestData, $assessmentType, $userId);
 
             return event(new QuestionGeneratorEvent('success', 'Questions generated successfully!'));
         }
-
-        return $this->generateManualInputQuestions($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt);
     }
 
     private function generateQuestionFromLessonPlan($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt): array
@@ -98,5 +94,18 @@ class QuestionsService
         }
 
         return $questions;
+    }
+
+    private function saveQuestion($questions, $requestData, $assessmentType, $userId)
+    {
+        return Question::create([
+            'user_id' => $userId,
+            'batch_subject_id' => $requestData['batch_subject_id'],
+            'questions' => $questions,
+            'lesson_plan_ids' => $requestData['lesson_plan_ids'],
+            'assessment_type_id' => $assessmentType->id,
+            'no_of_questions' => $requestData['number_of_questions'],
+            'difficulty_level' => $requestData['difficulty_level'],
+        ]);
     }
 }
