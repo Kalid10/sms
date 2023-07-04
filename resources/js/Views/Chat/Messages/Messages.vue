@@ -166,7 +166,7 @@ import { computed, ref, watch } from "vue";
 import { ChatBubbleBottomCenterIcon } from "@heroicons/vue/24/outline";
 import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
-import ContactSearch from "@/Pages/Teacher/Chat/Messages/ContactSearch.vue";
+import ContactSearch from "@/Views/Chat/Messages/ContactSearch.vue";
 import useMessageStore from "@/Store/chat";
 import { StarIcon } from "@heroicons/vue/20/solid";
 

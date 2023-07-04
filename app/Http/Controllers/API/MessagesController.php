@@ -36,7 +36,13 @@ class MessagesController extends Controller
     {
         $messenger_color = Auth::user()->messenger_color;
 
-        return Inertia::render('Teacher/Chat/Chat', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Chat',
+            User::TYPE_ADMIN => 'Admin/Chat',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'id' => $id ?? 0,
             'messengerColor' => $messenger_color ? $messenger_color : Chatify::getFallbackColor(),
             'dark_mode' => Auth::user()->dark_mode < 1 ? 'light' : 'dark',

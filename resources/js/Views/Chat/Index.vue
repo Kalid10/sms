@@ -11,8 +11,8 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted } from "vue";
-import Messages from "@/Pages/Teacher/Chat/Messages/Messages.vue";
-import Conversation from "@/Pages/Teacher/Chat/Conversation.vue";
+import Messages from "@/Views/Chat/Messages/Messages.vue";
+import Conversation from "@/Views/Chat/Conversation.vue";
 import useMessageStore from "@/Store/chat";
 
 const messageStore = useMessageStore();

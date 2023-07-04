@@ -112,6 +112,12 @@ const sidebarItems = computed(() => [
         active: directory.value === undefined,
     },
     {
+        name: "Chat",
+        icon: ChatBubbleBottomCenterIcon,
+        route: "/teacher/chat",
+        active: directory.value === "chat",
+    },
+    {
         name: "My Classes",
         icon: PuzzlePieceIcon,
         route: "/teacher/class",
