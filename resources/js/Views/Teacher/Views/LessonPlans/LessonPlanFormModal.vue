@@ -15,7 +15,7 @@
             >
                 <div
                     v-if="isTeacher()"
-                    class="h-5/6 w-6/12"
+                    class="h-5/6 w-6/12 overflow-y-auto"
                     :class="showAISection ? 'flex ' : 'hidden'"
                 >
                     <LessonPlanCopilot
@@ -222,15 +222,27 @@
                                     <div
                                         class="flex w-full items-end justify-between lg:items-center"
                                     >
-                                        <h3
-                                            class="w-9/12 text-center font-semibold"
+                                        <div
+                                            class="flex w-10/12 items-center justify-center space-x-4 text-center font-semibold"
                                         >
-                                            {{
-                                                selectedBatchSession[
-                                                    "lesson_plan"
-                                                ]["topic"]
-                                            }}
-                                        </h3>
+                                            <div class="flex h-8 items-center">
+                                                <SparklesIcon
+                                                    class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
+                                                    @click="
+                                                        generateNoteSuggestions = true;
+                                                        showAISection = true;
+                                                    "
+                                                />
+                                            </div>
+
+                                            <div class="">
+                                                {{
+                                                    selectedBatchSession[
+                                                        "lesson_plan"
+                                                    ]["topic"]
+                                                }}
+                                            </div>
+                                        </div>
 
                                         <div
                                             class="flex justify-evenly rounded-2xl bg-zinc-700 px-4 hover:scale-105"

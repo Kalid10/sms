@@ -9,10 +9,10 @@
         />
         <div class="flex justify-between">
             <div>
-                <div class="mb-1 text-2xl font-bold">Rigel Copilot</div>
+                <div class="mb-1 text-2xl font-bold">Rigel Copilot (AI)</div>
                 <div class="w-full text-sm text-gray-700">
-                    I'm your Rigel co-pilot. I will assist you as you create
-                    your lesson plan.
+                    I am your Rigel Co-Pilot, a dedicated AI assistant, here to
+                    simplify your lesson planning and elaboration needs.
                 </div>
             </div>
 
@@ -22,29 +22,65 @@
             />
         </div>
 
-        <div class="flex w-full justify-between">
+        <div class="flex w-full space-x-4">
             <div
                 class="mt-3 w-fit cursor-pointer rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:scale-105 hover:font-medium"
-                @click="showQuestionModal = true"
+                @click="showQuestionSection = true"
             >
                 Generate Questions ?
+            </div>
+
+            <div
+                class="mt-3 w-fit cursor-pointer rounded-2xl bg-yellow-400 px-3 py-1.5 text-xs hover:scale-105 hover:font-medium"
+                @click="showChatSection = true"
+            >
+                Or Do You Want To Chat ?
             </div>
         </div>
 
         <QuestionPreparation
-            v-if="showQuestionModal"
+            v-if="showQuestionSection"
             :batch-subject-id="batchSubjectId"
             :lesson-plan-id="lessonPlanId"
         />
 
         <div
+            v-if="showChatSection && !generateNoteSuggestions"
+            class="flex w-full flex-col items-center justify-center space-y-5 pt-5"
+        >
+            <div class="w-fit px-3 py-1">
+                Need assistance with anything? Rigel AI chat is here to help!
+            </div>
+            <Chat :show-getting-started="false" />
+        </div>
+
+        <div
+            v-if="
+                !showChatSection &&
+                !showQuestionSection &&
+                !generateNoteSuggestions
+            "
+            class="flex h-full w-full items-center justify-center px-5 text-center"
+        >
+            <div class="space-x- flex w-9/12 font-light leading-7">
+                Need a hand with anything from creating questions to lively
+                chats, or understanding lesson plans? Rigel Copilot(AI) is ready
+                to assist! Just tap on the sparkle icon for clear explanations,
+                or click on the buttons above for specific actions. Let's make
+                learning a fun journey together!
+            </div>
+        </div>
+
+        <div
             v-if="noteSuggestions"
             ref="selectedTextPopUp"
-            class="flex flex-col space-y-2 p-3"
+            class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 text-sm text-black shadow-sm"
         >
-            <div class="pl-1">Notes</div>
+            <div class="text-center text-xl font-semibold">
+                Lesson Plan Explained- Rigel Copilot (AI)
+            </div>
             <div
-                class="rounded-lg bg-zinc-100 p-3 text-sm text-black shadow-sm"
+                class="px-4"
                 @mouseup="
                     showPopup = true;
                     selectedText = getSelectedText();
@@ -54,7 +90,7 @@
                 {{ noteSuggestions }}
                 <span v-if="isNoteUpdating" class="animate-blink">|</span>
 
-                <div class="flex w-full justify-end">
+                <div class="flex w-full justify-end px-2 pt-2">
                     <ClipboardDocumentIcon
                         class="w-4 cursor-pointer text-zinc-400 hover:text-black"
                         @click="copyToClipboard(noteSuggestions)"
@@ -135,6 +171,7 @@ import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
 import { copyToClipboard } from "@/utils";
 import QuestionPreparation from "@/Views/Teacher/Views/LessonPlans/QuestionPreparation.vue";
+import Chat from "@/Views/Teacher/Views/Copilot/Chat.vue";
 
 const emit = defineEmits(["selectedText", "finish", "close"]);
 const props = defineProps({
@@ -160,7 +197,8 @@ const props = defineProps({
     },
 });
 
-const showQuestionModal = ref(false);
+const showQuestionSection = ref(false);
+const showChatSection = ref(false);
 const showLoading = ref(false);
 const noteSuggestions = ref("");
 const isNoteUpdating = ref(false);

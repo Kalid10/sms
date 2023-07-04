@@ -1,7 +1,11 @@
 <template>
-    <div class="flex h-screen w-full justify-between space-x-8">
+    <div
+        class="flex h-screen w-full space-x-8"
+        :class="showGettingStarted ? 'justify-between' : 'justify-center'"
+    >
         <div
-            class="flex h-4/6 max-h-screen w-8/12 flex-col rounded-lg border border-black bg-white p-4"
+            class="flex h-4/6 max-h-screen flex-col rounded-lg border border-black bg-white p-4"
+            :class="showGettingStarted ? 'w-8/12' : 'w-11/12'"
         >
             <div
                 ref="chatContainer"
@@ -69,6 +73,7 @@ rounded-2xl ring-purple-600 ring-2 bg-gray-50 border-none bg-white placeholder:t
             </div>
         </div>
         <div
+            v-if="showGettingStarted"
             class="mt-5 flex h-fit w-4/12 flex-col space-y-6 rounded-lg border border-black p-5 text-center text-sm"
         >
             <h2 class="text-2xl font-bold">Getting Started with the AI Chat</h2>
@@ -142,6 +147,12 @@ import Loading from "@/Components/Loading.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { usePage } from "@inertiajs/vue3";
 
+defineProps({
+    showGettingStarted: {
+        type: Boolean,
+        default: true,
+    },
+});
 const isLoading = ref(false);
 const messages = ref([]);
 const inputMessage = ref("Who is usain bolt?");
