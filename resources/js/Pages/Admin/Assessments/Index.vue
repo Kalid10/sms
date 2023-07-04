@@ -2,22 +2,28 @@
     <div class="flex min-h-screen w-11/12 flex-col space-y-6">
         <Title class="w-5/12" title="Assessments" />
 
-        <div class="flex w-full flex-col gap-4 lg:flex-row lg:justify-between">
+        <div
+            class="flex w-full flex-col space-x-5 lg:flex-row lg:justify-between"
+        >
             <div class="h-fit w-full lg:w-6/12">
                 <div
                     class="h-fit w-full rounded-lg bg-white px-5 py-3 shadow-sm"
                 >
-                    <div class="flex w-full items-center justify-between gap-2">
+                    <div
+                        class="flex w-full flex-col items-center justify-between gap-2"
+                    >
                         <div
                             class="flex w-full flex-col justify-center space-y-2 py-2"
                         >
                             <Filter />
                         </div>
-                        <TextInput
-                            v-model="query"
-                            class="w-4/5"
-                            placeholder="Search for assessment"
-                        />
+                        <div class="flex w-full justify-start">
+                            <TextInput
+                                v-model="query"
+                                class="w-4/5"
+                                placeholder="Search for assessment"
+                            />
+                        </div>
                     </div>
 
                     <div
@@ -39,7 +45,9 @@
                 </div>
             </div>
 
-            <div class="flex h-fit w-full flex-col space-y-4 lg:w-5/12">
+            <div
+                class="flex h-fit w-full flex-col space-y-4 rounded-lg border py-2 lg:w-6/12"
+            >
                 <AssessmentTypes />
             </div>
         </div>

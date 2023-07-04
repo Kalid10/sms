@@ -63,9 +63,11 @@ class TeacherController extends Controller
                     return $query->where('subject_id', $request->input('subject_id'));
                 });
             })
-            ->when($request->input('batch_id'), function ($query) use ($request) {
+            ->when($request->input('level_id'), function ($query) use ($request) {
                 return $query->whereHas('batchSubjects', function ($query) use ($request) {
-                    return $query->where('batch_id', $request->input('batch_id'));
+                    return $query->whereHas('batch', function ($query) use ($request) {
+                        return $query->where('level_id', $request->input('level_id'));
+                    });
                 });
             })
             ->paginate($perPage);
@@ -80,10 +82,13 @@ class TeacherController extends Controller
         // Active school year batches with level
         $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level:id,name')->get();
 
+        // Active school year levels
+        $levels = $batches->pluck('level')->unique('id')->values();
+
         return Inertia::render('Admin/Teachers/Index', [
             'teachers' => $teachers,
             'subjects' => $subjects,
-            'batches' => $batches,
+            'levels' => $levels,
         ]);
     }
 

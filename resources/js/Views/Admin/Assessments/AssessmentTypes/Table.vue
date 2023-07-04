@@ -101,29 +101,33 @@
 
     <TableElement
         :selectable="false"
-        :filterable="false"
         :columns="config"
         :footer="false"
-        :header="false"
+        :header="true"
         :data="filteredAssessmentTypes"
         actionable
         row-actionable
-        title="Assessment Types"
     >
-        <template #action>
-            <div class="flex w-full items-center gap-2">
-                <SelectInput
-                    v-model="filterByLevelCategory"
-                    :options="levelCategories"
-                    placeholder="filter by level category"
-                    class="lg:text-md w-40 text-xs md:w-48"
-                />
+        <template #filter>
+            <div class="flex w-full items-center justify-between gap-2">
+                <div class="flex w-full items-center space-x-2">
+                    <span class="font-semibold">
+                        Filter by grade category:
+                    </span>
+                    <SelectInput
+                        v-model="filterByLevelCategory"
+                        :options="levelCategories"
+                        placeholder="filter by grade category"
+                        class="lg:text-md w-40 text-xs md:w-48"
+                    />
+                </div>
 
-                <PrimaryButton
-                    title="Add Assessment Type"
-                    class="lg:text-md text-xs"
-                    @click="openAddModal"
-                />
+                <PrimaryButton @click="openAddModal">
+                    <span class="flex gap-2">
+                        <PlusIcon class="h-4 w-4 stroke-white stroke-2" />
+                        <span class="text-xs">New Assessment Type</span>
+                    </span>
+                </PrimaryButton>
             </div>
         </template>
 
@@ -196,6 +200,7 @@ import TableElement from "@/Components/TableElement.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
 import SelectInput from "@/Components/SelectInput.vue";
+import { PlusIcon } from "@heroicons/vue/24/outline/index";
 
 const isModalOpen = ref(false);
 const isUpdate = ref(false);
@@ -281,7 +286,7 @@ const levelCategoriesWithoutAll = computed(() => {
 
 const config = [
     {
-        name: "Assessment type name",
+        name: "Assessment type",
         key: "name",
         type: "custom",
     },
@@ -291,7 +296,7 @@ const config = [
         type: "custom",
     },
     {
-        name: "Level Category",
+        name: "Grade Category",
         key: "level_category",
         type: "custom",
     },
