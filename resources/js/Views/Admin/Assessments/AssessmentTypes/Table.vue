@@ -1,5 +1,4 @@
 <template>
-
     <!-- Add/Update Modal -->
     <Modal v-model:view="isModalOpen">
         <FormElement :title="modalTitle" @submit="submitForm">
@@ -7,7 +6,8 @@
                 <TextInput
                     v-model="form.name"
                     :error="form.errors.name"
-                    class="w-full" label="Name"
+                    class="w-full"
+                    label="Name"
                     placeholder="name"
                     required
                 />
@@ -15,39 +15,44 @@
                     <TextInput
                         v-model="form.percentage"
                         :error="form.errors.percentage"
-                        type="number" class="w-full"
+                        type="number"
+                        class="w-full"
                         label="Percentage"
                         placeholder="percentage"
                         required
                     />
-                    <ReceiptPercentIcon class="absolute bottom-0 right-0 mx-8 my-2 h-6 w-6"/>
+                    <ReceiptPercentIcon
+                        class="absolute bottom-0 right-0 mx-8 my-2 h-6 w-6"
+                    />
                 </div>
-
             </div>
 
             <div v-if="isUpdate" class="w-full">
-                <label class="pl-0.5 text-sm font-semibold text-gray-500"> Update level categories:</label>
+                <label class="pl-0.5 text-sm font-semibold text-gray-500">
+                    Update level categories:</label
+                >
 
                 <SelectInput
                     v-model="form.level_category_id"
                     :options="levelCategoriesWithoutAll"
                     class="my-2"
-                    placeholder=""/>
+                    placeholder=""
+                />
             </div>
 
             <div v-else>
-                <label class="pl-0.5 text-sm font-semibold text-gray-500"> Select level categories:</label>
+                <label class="pl-0.5 text-sm font-semibold text-gray-500">
+                    Select level categories:</label
+                >
 
                 <div class="flex flex-row gap-6 rounded border p-3">
-
                     <div
-
-                        v-for="(levelCategory, index) in levelCategoriesWithoutAll"
+                        v-for="(
+                            levelCategory, index
+                        ) in levelCategoriesWithoutAll"
                         :key="index"
                         class="flex items-center space-x-2"
                     >
-
-
                         <div>
                             <input
                                 v-model="form.level_category_id"
@@ -61,19 +66,15 @@
                 </div>
             </div>
 
+            <Toggle v-model="form.customizable" label="Customizable" />
 
-            <Toggle
-                v-model="form.customizable"
-                label="Customizable"/>
-
-            <div
-                v-show="form.customizable"
-            >
+            <div v-show="form.customizable">
                 <div class="flex gap-3">
                     <TextInput
                         v-model="form.min_assessments"
                         :error="form.errors.min_assessments"
-                        class="w-full" type="number"
+                        class="w-full"
+                        type="number"
                         label="Minimum Assessments"
                         placeholder="min assessment"
                     />
@@ -84,16 +85,18 @@
                         class="w-full"
                         type="number"
                         label="Maximum Assessments"
-                        placeholder="max assessment"/>
+                        placeholder="max assessment"
+                    />
                 </div>
                 <div class="mt-2 pl-3">
                     <span class="text-[0.7rem] font-light">
-                        Min and max assessments are the minimum and maximum number of tests or exams that a student is required to take.
+                        Min and max assessments are the minimum and maximum
+                        number of tests or exams that a student is required to
+                        take.
                     </span>
                 </div>
             </div>
         </FormElement>
-
     </Modal>
 
     <TableElement
@@ -105,82 +108,88 @@
         :data="filteredAssessmentTypes"
         actionable
         row-actionable
-        title="List of Assessment Types"
+        title="Assessment Types"
     >
         <template #action>
             <div class="flex w-full items-center gap-2">
-
                 <SelectInput
                     v-model="filterByLevelCategory"
                     :options="levelCategories"
                     placeholder="filter by level category"
-                    class="lg:text-md w-40 text-xs md:w-48"/>
+                    class="lg:text-md w-40 text-xs md:w-48"
+                />
 
                 <PrimaryButton
                     title="Add Assessment Type"
                     class="lg:text-md text-xs"
-                    @click="openAddModal"/>
-
+                    @click="openAddModal"
+                />
             </div>
         </template>
 
         <template #name-column="{ data }">
             <div class="flex items-center gap-2">
-                <div class="h-1.5 w-1.5 rotate-45 bg-orange-300"/>
+                <div class="h-1.5 w-1.5 rotate-45 bg-orange-300" />
                 <span class="form-control-sm text-sm">{{ data }}</span>
             </div>
         </template>
 
         <template #percentage-column="{ data }">
             <div class="flex justify-start gap-1">
-                <span class="text-xs font-semibold ">
-                    {{ data }}%
-                </span>
+                <span class="text-xs font-semibold"> {{ data }}% </span>
             </div>
         </template>
 
         <template #level_category-column="{ data }">
             <div class="flex items-center gap-1">
-                <div class="h-1.5 w-1.5 rounded-full" :class="categoryColors[data.name]"/>
+                <div
+                    class="h-1.5 w-1.5 rounded-full"
+                    :class="categoryColors[data.name]"
+                />
                 <div class="flex items-center gap-1">
-                <span class="text-xs">
-                {{ data.name }}
-            </span>
+                    <span class="text-xs">
+                        {{ data.name }}
+                    </span>
                 </div>
             </div>
         </template>
 
         <template #updated_at-column="{ data }">
             <div class="flex w-full justify-start">
-                <span class="text-xs text-gray-500">Last updated {{ data }}</span>
+                <span class="text-xs text-gray-500"
+                    >Last updated {{ data }}</span
+                >
             </div>
         </template>
 
         <template #row-actions="{ row }">
             <button @click="openUpdateModal(row)">
-                <PencilSquareIcon class="h-4 w-4"/>
+                <PencilSquareIcon class="h-4 w-4" />
             </button>
             <button @click="toggleDialogBox(row.id)">
-                <TrashIcon class="h-4 w-4"/>
+                <TrashIcon class="h-4 w-4" />
             </button>
         </template>
-
     </TableElement>
 
     <DialogBox
         v-if="isDialogBoxOpen"
         open
         @abort="isDialogBoxOpen = false"
-        @confirm="remove"/>
-
+        @confirm="remove"
+    />
 </template>
 <script setup>
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
 import Toggle from "@/Components/Toggle.vue";
-import {computed, ref} from "vue";
-import {router, useForm, usePage} from "@inertiajs/vue3";
-import {PencilSquareIcon, ReceiptPercentIcon, TrashIcon} from "@heroicons/vue/24/outline";
+import { computed, ref } from "vue";
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import {
+    PencilSquareIcon,
+    ReceiptPercentIcon,
+    TrashIcon,
+} from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TableElement from "@/Components/TableElement.vue";
@@ -203,14 +212,16 @@ function openUpdateModal(row) {
     form.id = row.id;
     form.name = row.name;
     form.percentage = row.percentage;
-    form.level_category_id = row.level_category_id
+    form.level_category_id = row.level_category_id;
     form.customizable = row.customizable;
     form.min_assessments = row.min_assessments;
     form.max_assessments = row.max_assessments;
     isModalOpen.value = true;
 }
 
-const modalTitle = computed(() => (isUpdate.value ? "Update Assessment Type" : "Add Assessment Type"));
+const modalTitle = computed(() =>
+    isUpdate.value ? "Update Assessment Type" : "Add Assessment Type"
+);
 
 function submitForm() {
     if (isUpdate.value) {
@@ -230,19 +241,19 @@ function toggleDialogBox(id) {
 }
 
 const assessmentTypes = computed(() => {
-    return usePage().props.assessment_types.map((assessment_type) => {
+    return usePage().props.assessment_types?.map((assessment_type) => {
         return {
             ...assessment_type,
-            updated_at: moment(assessment_type.updated_at).fromNow()
-        }
-    })
-})
+            updated_at: moment(assessment_type.updated_at).fromNow(),
+        };
+    });
+});
 
-const level_categories = computed(() => usePage().props.level_categories)
+const level_categories = computed(() => usePage().props.level_categories);
 
 const levelCategories = computed(() => {
     return [
-        {label: 'All', value: null},
+        { label: "All", value: null },
         ...level_categories.value.map((level_category) => {
             return {
                 label: level_category.name,
@@ -255,39 +266,41 @@ const levelCategories = computed(() => {
 const filteredAssessmentTypes = computed(() => {
     if (filterByLevelCategory.value !== null) {
         return assessmentTypes.value.filter((assessment_type) => {
-            return assessment_type.level_category_id === filterByLevelCategory.value;
+            return (
+                assessment_type.level_category_id ===
+                filterByLevelCategory.value
+            );
         });
     }
     return assessmentTypes.value;
 });
 
 const levelCategoriesWithoutAll = computed(() => {
-    return levelCategories.value.filter((category) => category.label !== 'All');
+    return levelCategories.value.filter((category) => category.label !== "All");
 });
-
 
 const config = [
     {
-        name: 'Assessment type name',
-        key: 'name',
-        type: 'custom',
+        name: "Assessment type name",
+        key: "name",
+        type: "custom",
     },
     {
-        name: 'Percentage',
-        key: 'percentage',
-        type: 'custom',
+        name: "Percentage",
+        key: "percentage",
+        type: "custom",
     },
     {
-        name: 'Level Category',
-        key: 'level_category',
-        type: 'custom',
+        name: "Level Category",
+        key: "level_category",
+        type: "custom",
     },
     {
-        name: 'Updated at',
-        key: 'updated_at',
-        type: 'custom',
+        name: "Updated at",
+        key: "updated_at",
+        type: "custom",
     },
-]
+];
 
 // Single form for both add and update actions
 const form = useForm({
@@ -306,7 +319,7 @@ function submit() {
         form.max_assessments = null;
     }
 
-    form.post(route('assessments.type.create'), {
+    form.post(route("assessments.type.create"), {
         onSuccess: () => {
             form.reset();
             isModalOpen.value = false;
@@ -319,7 +332,7 @@ function update(id) {
         form.min_assessments = null;
         form.max_assessments = null;
     }
-    form.post(route('assessments.type.update', id), {
+    form.post(route("assessments.type.update", id), {
         onSuccess: () => {
             form.reset();
             isModalOpen.value = false;
@@ -328,19 +341,18 @@ function update(id) {
 }
 
 const remove = () => {
-    router.delete('/assessments/type/destroy/' + selectedAssessmentId.value, {
+    router.delete("/assessments/type/destroy/" + selectedAssessmentId.value, {
         onFinish: () => {
             isDialogBoxOpen.value = false;
             selectedAssessmentId.value = null;
         },
     });
-}
+};
 
 const categoryColors = {
-    'Kindergarten': 'bg-blue-500',
-    'ElementarySchool': 'bg-orange-500',
-    'HighSchool': 'bg-green-500'
-}
-
+    Kindergarten: "bg-blue-500",
+    Primary: "bg-orange-500",
+    Secondary: "bg-green-500",
+};
 </script>
 <style scoped></style>

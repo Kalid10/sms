@@ -1,5 +1,5 @@
 <template>
-    <div class="my-5 w-10/12">
+    <div class="my-5 h-full w-10/12">
         <TeacherTableElement
             :columns="config"
             :selectable="false"
@@ -8,12 +8,31 @@
         >
             <template #table-header>
                 <div class="flex w-full items-center justify-between pb-5">
-                    <Title title="Teachers" />
-                    <TextInput
-                        v-model="searchKey"
-                        class="w-5/12"
-                        placeholder="Search for a teacher by name"
-                    />
+                    <div class="flex w-full">
+                        <Title title="Teachers" />
+                    </div>
+
+                    <div class="flex w-full justify-between space-x-2">
+                        <TextInput
+                            v-model="searchKey"
+                            class="w-full"
+                            placeholder="Search for a teacher by name"
+                        />
+                        <div class="flex w-full justify-between space-x-2">
+                            <SelectInput
+                                v-model="selectedSubject"
+                                class="h-fit w-full rounded-2xl !text-sm"
+                                :options="subjectOptions"
+                                placeholder="Filter by subject"
+                            />
+                            <SelectInput
+                                v-model="selectedBatch"
+                                class="h-fit w-full rounded-2xl !text-sm"
+                                :options="batchOptions"
+                                placeholder="Filter by batch"
+                            />
+                        </div>
+                    </div>
                 </div>
             </template>
 
@@ -113,12 +132,70 @@ import Pagination from "@/Components/Pagination.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import SelectInput from "@/Components/SelectInput.vue";
 
 const isDialogBoxOpen = ref(false);
 
 const teachers = computed(() => {
     return usePage().props.teachers;
 });
+
+const subjects = computed(() => usePage().props.subjects);
+
+const batches = computed(() => usePage().props.batches);
+
+const selectedSubject = ref(null);
+const selectedBatch = ref(null);
+
+const subjectOptions = computed(() => {
+    return subjects.value?.map((subject) => {
+        return {
+            value: subject.id,
+            label: subject.full_name,
+        };
+    });
+});
+
+const batchOptions = computed(() => {
+    return batches.value?.map((batch) => {
+        return {
+            value: batch.id,
+            label: `Grade ${batch.level.name}`,
+        };
+    });
+});
+
+watch(selectedSubject, () => {
+    applySubjectFilter();
+});
+
+function applySubjectFilter() {
+    router.get(
+        "/admin/teachers/",
+        {
+            subject_id: selectedSubject.value,
+        },
+        {
+            preserveState: true,
+        }
+    );
+}
+
+watch(selectedBatch, () => {
+    applyBatchFilter();
+});
+
+function applyBatchFilter() {
+    router.get(
+        "/admin/teachers/",
+        {
+            batch_id: selectedBatch.value,
+        },
+        {
+            preserveState: true,
+        }
+    );
+}
 
 const selectedBatchSessionId = ref(null);
 
@@ -178,6 +255,8 @@ const search = debounce(() => {
 
 watch([searchKey, perPage], () => {
     search();
+    selectedSubject.value = null;
+    selectedBatch.value = null;
 });
 
 const form = useForm({

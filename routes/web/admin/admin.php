@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Web\AbsenteesController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\AssessmentController;
+use App\Http\Controllers\Web\BatchController;
 use App\Http\Controllers\Web\LessonPlanController;
 use App\Http\Controllers\Web\LevelController;
 use App\Http\Controllers\Web\SchoolScheduleController;
@@ -21,6 +23,7 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
         Route::get('', 'show')->name('show');
         Route::get('schedules', 'schedule')->name('schedule');
         Route::get('announcements', 'announcements')->name('announcements');
+        Route::get('assessments', 'assessments')->name('assessments');
     });
 
     Route::controller(StudentController::class)->prefix('students/')->middleware(['checkUserRole:manage-students'])->name('students.')->group(function () {
@@ -43,6 +46,14 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
 
     Route::controller(UserController::class)->prefix('users/')->middleware(['auth'])->name('users.')->group(function () {
         Route::get('', 'index');
+    });
+
+    Route::controller(AbsenteesController::class)->prefix('absentees/')->middleware(['checkUserRole:manage-users'])->name('absentees.')->group(function () {
+        Route::get('', 'index')->name('index');
+    });
+
+    Route::controller(BatchController::class)->prefix('batches/')->middleware(['checkUserRole:manage-batches'])->name('batches.')->group(function () {
+        Route::get('{batch}', 'show')->name('show');
     });
 
     Route::prefix('teachers/')->middleware(['checkUserRole:manage-teachers'])->name('teachers.')->group(function () {

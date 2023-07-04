@@ -138,4 +138,15 @@ class BatchController extends Controller
             'batches' => Batch::active(['level', 'schoolYear']),
         ]);
     }
+
+    public function show(Batch $batch): Response
+    {
+        $batch->load(['level', 'schoolYear', 'schedule' => function ($query) {
+            $query->with('batchSubject', 'schoolPeriod');
+        }]);
+
+        return Inertia::render('Admin/Batches/Index', [
+            'batch' => $batch,
+        ]);
+    }
 }

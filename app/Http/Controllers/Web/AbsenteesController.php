@@ -124,29 +124,32 @@ class AbsenteesController extends Controller
             'type' => 'required|string',
         ]);
 
-        // Get the batch session
-        $batchSession = BatchSession::find($request->batch_session_id);
+        // check if request has batch session id
+        if ($request->batch_session_id) {
+            // Get the batch session
+            $batchSession = BatchSession::find($request->batch_session_id);
 
-        $batchId = $batchSession->batchSchedule->batch_id;
+            $batchId = $batchSession->batchSchedule->batch_id;
 
-        // Check if the batch session is already closed
-        if ($batchSession->status !== BatchSession::STATUS_IN_PROGRESS) {
-            return redirect()->back()->with('error', 'Class is not active.');
-        }
+            // Check if the batch session is already closed
+            if ($batchSession->status !== BatchSession::STATUS_IN_PROGRESS) {
+                return redirect()->back()->with('error', 'Class is not active.');
+            }
 
-        $user = User::with('teacher.batchSessions.batchSchedule')->where('id', $request->user_id)->first();
+            $user = User::with('teacher.batchSessions.batchSchedule')->where('id', $request->user_id)->first();
 
-        if ($request->type === User::TYPE_TEACHER && $user->type !== User::TYPE_TEACHER) {
-            return redirect()->back()->with('error', $user->name.' is not a teacher.');
-        }
+            if ($request->type === User::TYPE_TEACHER && $user->type !== User::TYPE_TEACHER) {
+                return redirect()->back()->with('error', $user->name.' is not a teacher.');
+            }
 
-        // Check if the teacher is assigned to the batch
-        if ($request->type === User::TYPE_TEACHER &&
-            ! $user->teacher->batchSessions->contains(function ($batchSession) use ($batchId) {
-                return $batchSession->batchSchedule->batch_id == $batchId;
-            })
-        ) {
-            return redirect()->back()->with('error', $user->name.' is not assigned to this class.');
+            // Check if the teacher is assigned to the batch
+            if ($request->type === User::TYPE_TEACHER &&
+                ! $user->teacher->batchSessions->contains(function ($batchSession) use ($batchId) {
+                    return $batchSession->batchSchedule->batch_id == $batchId;
+                })
+            ) {
+                return redirect()->back()->with('error', $user->name.' is not assigned to this class.');
+            }
         }
 
         StaffAbsentee::updateOrInsert(
@@ -162,5 +165,39 @@ class AbsenteesController extends Controller
             ]);
 
         return redirect()->back()->with('success', 'Staff Absentees updated successfully.');
+    }
+
+    public function index(): Response
+    {
+        $searchKey = request()->query('search');
+
+        $queryKey = request()->query('find');
+
+        $studentsQueryKey = request()->query('students_find');
+
+        $staff = User::whereIn('type', [User::TYPE_TEACHER, User::TYPE_ADMIN])
+            ->when($searchKey, function ($query, $searchKey) {
+                $query->where('name', 'like', '%'.$searchKey.'%');
+            })->get();
+
+        $studentAbsentees = Absentee::with('user')
+            ->when($studentsQueryKey, function ($query, $studentsQueryKey) {
+                $query->whereHas('user', function ($query) use ($studentsQueryKey) {
+                    $query->where('name', 'like', '%'.$studentsQueryKey.'%');
+                });
+            })->paginate(10);
+
+        $staffAbsentees = StaffAbsentee::with('user')
+            ->when($queryKey, function ($query, $queryKey) {
+                $query->whereHas('user', function ($query) use ($queryKey) {
+                    $query->where('name', 'like', '%'.$queryKey.'%');
+                });
+            })->paginate(10);
+
+        return Inertia::render('Admin/Absentees/Index', [
+            'staff_absentees' => $staffAbsentees,
+            'staff' => Inertia::lazy(fn () => $staff),
+            'student_absentees' => $studentAbsentees,
+        ]);
     }
 }

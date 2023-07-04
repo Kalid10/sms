@@ -228,4 +228,15 @@ class TeacherService
             'teacher' => Teacher::find($teacherId)->load('user'),
         ];
     }
+
+    public static function getTeacherAbsentee(int $id, int $schoolYearId): array
+    {
+        $teacher = Teacher::findOrFail($id);
+
+        $absentee = $teacher->staffAbsenteePercentage($schoolYearId);
+
+        return [
+            'absentee' => $absentee,
+        ];
+    }
 }

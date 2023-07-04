@@ -12,11 +12,7 @@
             </div>
 
             <div class="flex w-full justify-end">
-                <SecondaryButton
-                    title="Filter"
-                    class="!rounded-2xl bg-zinc-800 text-white"
-                    @click="showFilter = true"
-                />
+                <Filters title="" @filter="applyFilters" />
             </div>
 
             <div class="flex w-full justify-between divide-gray-100 py-6 pr-5">
@@ -36,12 +32,6 @@
             </div>
         </div>
     </div>
-
-    <Filters
-        v-if="showFilter"
-        :school-years="schoolYears"
-        @filter="applyFilters"
-    />
 </template>
 <script setup>
 import Announcements from "@/Views/Announcements/Index.vue";
@@ -51,7 +41,6 @@ import Title from "@/Views/Teacher/Views/Title.vue";
 import SelectedAnnouncementView from "@/Views/Announcements/SelectedAnnouncement.vue";
 import TextInput from "@/Components/TextInput.vue";
 import Filters from "@/Views/Filters.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { debounce } from "lodash";
 
 const props = defineProps({

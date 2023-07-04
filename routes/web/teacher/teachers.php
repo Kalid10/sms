@@ -20,6 +20,7 @@ Route::prefix('teacher/')->middleware(['checkUserType:teacher,admin', 'auth'])->
     Route::get('students/{student}', Student::class)->name('student.show');
 
     Route::post('students/flag', [FlagController::class, 'flagStudent'])->name('student.flag');
+    Route::delete('students/flag/{id}', [FlagController::class, 'delete'])->name('student.flag.delete');
     Route::get('students', Students::class)->name('students.show');
     Route::get('announcements', Announcements::class)->name('announcement.show');
 });

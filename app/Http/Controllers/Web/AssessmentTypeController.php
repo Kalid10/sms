@@ -19,13 +19,13 @@ class AssessmentTypeController extends Controller
 
         $levelCategories = LevelCategory::all();
 
-        return Inertia::render('Admin/Assessment/AssessmentTypes/Index', [
+        return Inertia::render('Admin/Assessments/AssessmentTypes/Index', [
             'assessment_types' => $assessmentTypes,
             'level_categories' => $levelCategories,
         ]);
     }
 
-    public function create()
+    public function create(): RedirectResponse
     {
         $validated = request()->validate([
             'name' => 'required|string',

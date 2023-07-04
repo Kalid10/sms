@@ -40,10 +40,10 @@ class StudentController extends Controller
         $selectedBatch = Batch::find($batchId)->load('level');
 
         $batchStudents = BatchStudent::where('batch_id', $batchId)->with([
-            'student.user:id,name,email,phone_number,gender',
+            'student.user:id,name,username,phone_number,gender',
             'batch:id,section',
             'level',
-        ])->get();
+        ])->paginate(15);
 
         return Inertia::render('Admin/Students/Index', [
             'students' => $students,

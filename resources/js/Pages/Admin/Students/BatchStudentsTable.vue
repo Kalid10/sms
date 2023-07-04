@@ -12,7 +12,9 @@
             />
         </div>
         <SecondaryButton
-            :title="'Go To Grade ' + selectedBatchLevel"
+            :title="
+                'Go To Grade ' + selectedBatchLevel + ' ' + selectedBatchLabel
+            "
             class="!rounded-2xl bg-zinc-700 text-white"
             @click="levelDetailLink"
         />
@@ -32,13 +34,21 @@
             </div>
         </template>
 
-        <template #email-column="{ data }">
+        <template #username-column="{ data }">
             <div class="flex items-center gap-1">
                 <div class="h-1.5 w-1.5 rotate-45 bg-emerald-400" />
                 <span class="text-xs">
                     {{ data }}
                 </span>
             </div>
+        </template>
+
+        <template #footer>
+            <Pagination
+                :links="batchStudents.links"
+                preserve-state
+                position="center"
+            />
         </template>
 
         <template #empty-data>
@@ -71,6 +81,7 @@ import { router, usePage } from "@inertiajs/vue3";
 import { debounce } from "lodash";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const batchStudents = computed(() => {
     return usePage().props.batch_students;
@@ -78,11 +89,11 @@ const batchStudents = computed(() => {
 
 // Map the batch_student data
 const batchStudentData = computed(() => {
-    return batchStudents.value.map((batch_student) => {
+    return batchStudents.value.data.map((batch_student) => {
         return {
             id: batch_student.student.id,
             name: batch_student.student.user.name,
-            email: batch_student.student.user.email,
+            username: batch_student.student.user.username,
             gender: batch_student.student.user.gender,
             grade: batch_student.level.name,
             section: batch_student.batch.section,
@@ -114,7 +125,7 @@ const selectedBatchLevel = computed(() => {
 const selectedBatchId = ref(usePage().props.selected_batch.id);
 
 function levelDetailLink() {
-    router.get("/admin/levels/" + selectedBatchId.value);
+    router.get("/admin/batches/" + selectedBatchId.value);
 }
 
 const searchKey = ref("");
@@ -151,8 +162,8 @@ const config = [
         type: "custom",
     },
     {
-        name: "Email",
-        key: "email",
+        name: "Username",
+        key: "username",
         type: "custom",
     },
     {

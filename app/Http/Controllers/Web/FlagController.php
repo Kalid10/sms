@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Helpers\StudentHelper;
+use App\Models\Flag;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class FlagController extends Controller
     {
         $request->validate([
             'flaggable_id' => 'required|exists:students,id',
-            'flag_type' => 'required',
+            'flag_type' => 'required|array|min:1',
             'description' => 'required|string',
             'batch_subject_id' => 'nullable|exists:batch_subjects,id',
             'expires_at' => 'required|date',
@@ -34,5 +35,14 @@ class FlagController extends Controller
         );
 
         return redirect()->back()->with('success', 'You have successfully flagged '.$student->user->name);
+    }
+
+    public function delete($id): RedirectResponse
+    {
+        $flag = Flag::find($id);
+
+        $flag->delete();
+
+        return redirect()->back()->with('success', 'Flag deleted successfully');
     }
 }

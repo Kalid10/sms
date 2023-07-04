@@ -55,7 +55,6 @@ class Students extends Controller
         $schoolYears = SchoolYear::all();
 
         return Inertia::render($page, [
-            'school_years' => $schoolYears,
             'students' => $batchStudents,
             'batch_subject' => $batchSubject,
             'batch_subjects' => $batchSubjects,
@@ -70,6 +69,8 @@ class Students extends Controller
             'filters' => [
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),
+                'school_years' => $schoolYears,
+                'school_year_id' => $request->input('school_year_id') ?? SchoolYear::getActiveSchoolYear()->id,
             ],
         ]);
     }

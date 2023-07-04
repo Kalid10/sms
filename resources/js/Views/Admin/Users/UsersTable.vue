@@ -77,7 +77,7 @@ import Pagination from "@/Components/Pagination.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import TableElement from "@/Components/TableElement.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { Link, router, usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
 
 const users = computed(() => {
@@ -109,7 +109,7 @@ const users_config = [
     {
         name: "Full Name",
         key: "name",
-        link: "/admin/users/{id}",
+        link: "/admin/{type}s/{id}",
         class: "w-[35%]",
         align: "left",
     },

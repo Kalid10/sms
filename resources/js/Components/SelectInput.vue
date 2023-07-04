@@ -43,7 +43,7 @@
                         ? 'bottom-0 -mb-1 translate-y-full'
                         : 'top-0 -mt-1 -translate-y-full',
                 ]"
-                class="absolute left-0 z-50 min-h-10 w-full rounded-md border bg-white drop-shadow"
+                class="scrollbar-hide absolute left-0 z-50 max-h-[500px] min-h-10 w-full overflow-y-scroll rounded-md border bg-white drop-shadow"
             >
                 <template v-for="(option, index) in options" :key="index">
                     <li

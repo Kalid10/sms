@@ -216,15 +216,9 @@ const error = computed(() => usePage().props.errors);
 
 const { classStyle } = toRefs(props);
 
-const Announcements = ["all", "students", "teachers", "guardians", "admins"];
+const Announcements = ["all", "teachers", "guardians", "admins"];
 
-const targetGroupOptions = [
-    "all",
-    "students",
-    "teachers",
-    "guardians",
-    "admins",
-];
+const targetGroupOptions = ["all", "teachers", "guardians", "admins"];
 
 function toggleSelection(target) {
     const index = this.form.target_group.indexOf(target);

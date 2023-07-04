@@ -52,12 +52,16 @@ class UserController extends Controller
         // Get active school year admins
         $adminsCount = Admin::with('schoolYear', SchoolYear::getActiveSchoolYear())->count();
 
+        // Get new users registered the last 30 days
+        $newUsersCount = User::where('created_at', '>=', now()->subDays(30))->count();
+
         return Inertia::render('Admin/Users/Index', [
             'users' => $users,
             'activity_log' => $activityLog,
             'students_count' => $studentsCount,
             'teachers_count' => $teachersCount,
             'admins_count' => $adminsCount,
+            'new_users_count' => $newUsersCount,
         ]);
     }
 

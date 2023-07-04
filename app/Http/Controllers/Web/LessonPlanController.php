@@ -27,6 +27,9 @@ class LessonPlanController extends Controller
             'batch_subject_id' => 'nullable|exists:batch_subjects,id',
             'month' => 'nullable|date_format:"Y-m"',
             'teacher_id' => 'nullable|exists:teachers,id',
+            'quarter_id' => 'nullable|exists:quarters,id',
+            'semester_id' => 'nullable|exists:semesters,id',
+            'school_year_id' => 'nullable|exists:school_years,id',
         ]);
 
         $teacherId = auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id');
