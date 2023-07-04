@@ -37,10 +37,10 @@
                 </div>
 
                 <div class="flex w-full justify-between space-x-5 pr-3">
-                    <div class="w-7/12 rounded-lg bg-white p-3 shadow-sm">
+                    <div class="w-1/2 rounded-lg bg-white p-3 shadow-sm">
                         <AbsenteeRecords />
                     </div>
-                    <div class="w-5/12">
+                    <div class="w-1/2">
                         <Flag
                             :batch-subject-options="batchSubjectOptions"
                             :student="student"
@@ -52,7 +52,7 @@
             <Modal v-model:view="showGrade">
                 <StudentGradeDetail
                     :student-name="student"
-                    :student-grade="student.quarterly_grade"
+                    :student-grade="grade"
                 />
             </Modal>
         </div>
@@ -93,7 +93,7 @@ import Information from "@/Views/Teacher/Views/Student/GuardianInformation.vue";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import Header from "@/Views/Teacher/Views/Header.vue";
 import AssessmentBreakDown from "@/Views/Teacher/Views/Assessments/AssessmentBreakDown.vue";
-import StudentGradeDetail from "@/Views/Teacher/Views/Homeroom/StudentGradeDetail.vue";
+import StudentGradeDetail from "@/Views/Teacher/Views/Grade/StudentGradeDetail.vue";
 import GeneralReport from "@/Views/Teacher/Views/Student/GeneralReport.vue";
 import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
@@ -107,6 +107,7 @@ const batchSubject = computed(() => usePage().props.batch_subject);
 const batchSubjects = usePage().props.batch_subjects ?? [];
 const selectedBatchSubject = ref(batchSubject.value?.id);
 const auth = computed(() => usePage().props.auth);
+const grade = computed(() => usePage().props.grade);
 const showGrade = ref(false);
 
 const batchSubjectOptions = computed(() => {

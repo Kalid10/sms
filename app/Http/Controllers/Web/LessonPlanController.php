@@ -30,6 +30,9 @@ class LessonPlanController extends Controller
             'batch_subject_id' => 'nullable|exists:batch_subjects,id',
             'month' => 'nullable|date_format:"Y-m"',
             'teacher_id' => 'nullable|exists:teachers,id',
+            'quarter_id' => 'nullable|exists:quarters,id',
+            'semester_id' => 'nullable|exists:semesters,id',
+            'school_year_id' => 'nullable|exists:school_years,id',
         ]);
 
         $teacherId = auth()->user()->isTeacher() ? auth()->user()->teacher->id : $request->input('teacher_id');
@@ -119,9 +122,6 @@ class LessonPlanController extends Controller
         $schoolYears = SchoolYear::all();
 
         return Inertia::render($page, [
-            'quarters' => $quarters,
-            'semesters' => $semesters,
-            'school_years' => $schoolYears,
             'batch_sessions' => $weeklyBatchSessions,
             'batch' => Batch::find($batchId)->load('level'),
             'subjects' => $teacherSubjects,
@@ -131,6 +131,14 @@ class LessonPlanController extends Controller
             'selected_month' => $currentMonth->format('Y-m'),
             'teacher' => Teacher::find($teacherId)->load('user'),
             'questions' => $prompt ? Inertia::lazy(fn () => $openAIService->lessonPlanHelper($prompt, $batchSubject)) : null,
+            'filters' => [
+                'quarter_id' => $quarterFilter ?? Quarter::getActiveQuarter()->id,
+                'quarters' => $quarters,
+                'semesters' => $semesters,
+                'school_years' => $schoolYears,
+                'semester_id' => $request->input('semester_id') ?? Semester::getActiveSemester()->id,
+                'school_year_id' => $request->input('school_year_id') ?? SchoolYear::getActiveSchoolYear()->id,
+            ],
         ]);
     }
 

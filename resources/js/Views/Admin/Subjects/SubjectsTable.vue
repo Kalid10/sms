@@ -6,7 +6,7 @@
                 :row-actionable="true"
                 :actionable="true"
                 :selectable="false"
-                :data="subjects"
+                :data="formattedSubjects"
             >
                 <template #filter>
                     <div class="flex justify-between gap-2">
@@ -24,6 +24,10 @@
                             </span>
                         </PrimaryButton>
                     </div>
+                </template>
+
+                <template #footer>
+                    <Pagination :links="subjects.links" position="center" />
                 </template>
 
                 <template #empty-data>
@@ -199,6 +203,7 @@ import TextInput from "@/Components/TextInput.vue";
 import TableElement from "@/Components/TableElement.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import TabElement from "@/Components/TabElement.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const tabs = ["Subjects", "Grades"];
 const activeTab = ref("Subjects");
@@ -247,8 +252,10 @@ const schoolName = computed(() => import.meta.env.SCHOOL_LONG_NAME);
 
 const emits = defineEmits(["new", "update", "archive"]);
 
-const subjects = computed(() => {
-    return usePage().props.subjects.data.map((subject) => {
+const subjects = ref(usePage().props.subjects);
+
+const formattedSubjects = computed(() => {
+    return subjects.value.data.map((subject) => {
         return {
             ...subject,
             full_name: {
@@ -258,6 +265,20 @@ const subjects = computed(() => {
         };
     });
 });
+
+// const formattedSubjects = computed(() => {
+//     return subjects.value.map((subject) => {
+//         return {
+//             id: subject.id,
+//             priority: subject.priority,
+//             full_name: subject.full_name,
+//             short_name: subject.short_name,
+//             tags: subject.tags,
+//             updated_at: subject.updated_at,
+//             archived_at: subject.archived_at,
+//         };
+//     });
+// });
 
 const query = ref(null);
 const search = debounce(() => {
