@@ -14,18 +14,20 @@
         <!--        Favorites-->
         <div
             v-if="favorites.length"
-            class="scrollbar-hide flex max-w-full space-x-2 overflow-x-auto"
+            class="scrollbar-hide flex max-w-full space-x-4 overflow-x-auto"
         >
             <div
                 v-for="(item, index) in favorites"
                 :key="index"
-                class="flex flex-col"
+                class="flex cursor-pointer flex-col items-center justify-center space-y-1 hover:scale-105"
             >
                 <img
                     :src="item.user.avatar"
                     alt="avatar"
                     class="h-12 w-12 rounded-full border-2 border-violet-400 object-contain"
+                    @click="$emit('toggleConversation', item.user)"
                 />
+                <div class="text-[0.6rem]">{{ item.user.name }}</div>
             </div>
         </div>
 
@@ -179,6 +181,7 @@ const showLoading = ref(false);
 async function searchContacts(query) {
     showLoading.value = true;
     await messageStore.searchContacts(query);
+    showContacts.value = true;
     showLoading.value = false;
 }
 
@@ -192,6 +195,7 @@ watch([searchKey], () => {
 
 const toggleConversation = (chatId) => {
     emit("toggleConversation", chatId);
+    searchKey.value = null;
 };
 
 const isInFavorites = (id) => {
