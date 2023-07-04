@@ -42,7 +42,7 @@
 import { computed } from "vue";
 import EmptyView from "@/Views/EmptyView.vue";
 import Loading from "@/Components/Loading.vue";
-import useMessageStore from "@/Store/message";
+import useMessageStore from "@/Store/chat";
 
 defineEmits("toggle");
 

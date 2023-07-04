@@ -19,6 +19,7 @@ export const useMessageStore = defineStore({
             avatar: null,
             active_status: null,
         },
+        favorites: {},
     }),
     getters: {},
     actions: {
@@ -122,6 +123,28 @@ export const useMessageStore = defineStore({
                     { status: status }
                 );
                 this.activeChat.active_status = data.status;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async toggleFavorite(userId) {
+            try {
+                const { data } = await axiosClient.post("/chat/api/star", {
+                    user_id: userId ?? this.activeChat.id,
+                });
+                console.log(data);
+                await this.getFavorites();
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getFavorites() {
+            try {
+                const { data } = await axiosClient.post(
+                    "/chat/api/favorites",
+                    {}
+                );
+                this.favorites = data.favorites;
             } catch (error) {
                 console.error(error);
             }

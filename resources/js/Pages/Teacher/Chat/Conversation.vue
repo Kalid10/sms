@@ -1,43 +1,57 @@
 <template>
     <div
         v-if="activeChat?.id !== null"
-        class="flex max-h-max w-8/12 flex-col items-center justify-between space-y-2 rounded-lg border border-zinc-300 bg-gray-50 p-4 shadow-sm"
+        class="scrollbar-hide flex h-full max-h-full w-8/12 flex-col items-center justify-between space-y-2 overflow-y-auto rounded-lg border border-zinc-300 bg-gray-50 p-4 shadow-sm"
     >
         <!-- top -->
         <div
             class="flex w-full items-center justify-between rounded-lg border border-zinc-100 bg-zinc-800 p-4 text-white"
         >
-            <div class="flex items-center space-x-3">
-                <ChevronLeftIcon
-                    class="w-8 cursor-pointer text-zinc-200 hover:scale-125"
-                    @click="messageStore.activeChat.id = null"
-                />
-
-                <div class="relative">
-                    <img
-                        :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
-                        alt="avatar"
-                        class="w-12 rounded-full object-contain"
+            <div class="flex w-full items-center justify-between pr-3">
+                <div class="flex w-6/12 items-center space-x-4">
+                    <ChevronLeftIcon
+                        class="w-8 cursor-pointer text-zinc-200 hover:scale-125"
+                        @click="messageStore.activeChat.id = null"
                     />
-                    <div
-                        v-if="activeChat.active_status"
-                        class="absolute right-[0px] bottom-[4px] h-3 w-3 rounded-full border-2 border-white bg-[#41D37E]"
-                    ></div>
+
+                    <div class="relative">
+                        <img
+                            :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
+                            alt="avatar"
+                            class="w-12 rounded-full object-contain"
+                        />
+                        <div
+                            v-if="activeChat.active_status"
+                            class="absolute right-[0px] bottom-[4px] h-3 w-3 rounded-full border-2 border-white bg-[#41D37E]"
+                        ></div>
+                    </div>
+
+                    <div>
+                        <h1
+                            class="w-fit overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium text-zinc-100"
+                        >
+                            {{ activeChat.name }}
+                        </h1>
+                        <h1
+                            v-if="activeChat.active_status"
+                            class="text-xs text-zinc-400"
+                        >
+                            Active Now
+                        </h1>
+                        <h1 v-else class="text-xs text-zinc-400">Offline</h1>
+                    </div>
                 </div>
 
-                <div>
-                    <h1
-                        class="w-fit overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium text-zinc-100"
-                    >
-                        {{ activeChat.name }}
-                    </h1>
-                    <h1
-                        v-if="activeChat.active_status"
-                        class="text-xs text-zinc-400"
-                    >
-                        Active Now
-                    </h1>
-                    <h1 v-else class="text-xs text-zinc-400">Offline</h1>
+                <div class="flex w-2/12 items-center justify-end space-x-5">
+                    <StarIcon
+                        class="w-5 cursor-pointer hover:scale-125"
+                        :class="
+                            isInFavorites(activeChat.id).value
+                                ? 'text-yellow-400'
+                                : 'text-gray-400'
+                        "
+                        @click="messageStore.toggleFavorite(null)"
+                    />
                 </div>
             </div>
 
@@ -201,13 +215,16 @@
             </div>
         </div>
     </div>
+    <div v-else class="flex max-h-screen w-11/12 items-center justify-center">
+        <div>Please select chat to start messaging</div>
+    </div>
 </template>
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 import moment from "moment/moment";
-import { computed, nextTick, onMounted, ref } from "vue";
-import { CheckIcon, ChevronLeftIcon } from "@heroicons/vue/20/solid";
-import useMessageStore from "@/Store/message";
+import { computed, nextTick, ref } from "vue";
+import { CheckIcon, ChevronLeftIcon, StarIcon } from "@heroicons/vue/20/solid";
+import useMessageStore from "@/Store/chat";
 
 const emit = defineEmits(["toggle", "contact", "fetch"]);
 const chatContent = ref(null);
@@ -216,8 +233,8 @@ const isMessageSent = ref(false);
 
 const messageStore = useMessageStore();
 const messages = computed(() => messageStore.messages.messages);
-
 const activeChat = computed(() => messageStore.activeChat);
+const favorites = computed(() => messageStore.favorites);
 
 async function sendMessage() {
     if (messageField.value) {
@@ -239,11 +256,15 @@ async function sendMessage() {
     }
 }
 
-onMounted(() => {
-    // nextTick(() => {
-    //     chatContent.value.scrollTop = chatContent.value.scrollHeight;
-    // });
-});
+const isInFavorites = (id) => {
+    return computed(() => {
+        if (!Array.isArray(favorites.value)) {
+            // return a default value if favorites.value is not an array
+            return false;
+        }
+        return favorites.value.some((favorite) => favorite.favorite_id === id);
+    });
+};
 </script>
 
 <style scoped></style>

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-full w-3/12 flex-col items-center space-y-5 rounded-lg bg-white shadow-sm"
+        class="scrollbar-hide flex h-full w-3/12 flex-col items-center space-y-5 overflow-y-auto rounded-lg bg-white shadow-sm"
     >
         <div
             class="flex w-full items-center justify-center space-x-2 rounded-t-md bg-zinc-800 py-3 text-white"
@@ -10,6 +10,25 @@
                 My Messages
             </h1>
         </div>
+
+        <!--        Favorites-->
+        <div
+            v-if="favorites.length"
+            class="scrollbar-hide flex max-w-full space-x-2 overflow-x-auto"
+        >
+            <div
+                v-for="(item, index) in favorites"
+                :key="index"
+                class="flex flex-col"
+            >
+                <img
+                    :src="item.user.avatar"
+                    alt="avatar"
+                    class="h-12 w-12 rounded-full border-2 border-violet-400 object-contain"
+                />
+            </div>
+        </div>
+
         <TextInput
             v-model="searchKey"
             placeholder="Search Teacher, Admin..."
@@ -76,6 +95,16 @@
                         </div>
                     </div>
 
+                    <StarIcon
+                        class="w-5 cursor-pointer hover:scale-125"
+                        :class="
+                            isInFavorites(chat.id).value
+                                ? 'text-yellow-400'
+                                : 'text-gray-400'
+                        "
+                        @click="messageStore.toggleFavorite(chat.id)"
+                    />
+
                     <!-- time, unread counter and seen -->
                     <div class="flex w-2/12 flex-col items-end">
                         <h1
@@ -136,12 +165,14 @@ import { ChatBubbleBottomCenterIcon } from "@heroicons/vue/24/outline";
 import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
 import ContactSearch from "@/Pages/Teacher/Chat/Messages/ContactSearch.vue";
-import useMessageStore from "@/Store/message";
+import useMessageStore from "@/Store/chat";
+import { StarIcon } from "@heroicons/vue/20/solid";
 
 const messageStore = useMessageStore();
 
 const emit = defineEmits(["toggleConversation"]);
 const contacts = computed(() => messageStore.contacts);
+const favorites = computed(() => messageStore.favorites);
 const searchKey = ref();
 const showLoading = ref(false);
 
@@ -161,6 +192,16 @@ watch([searchKey], () => {
 
 const toggleConversation = (chatId) => {
     emit("toggleConversation", chatId);
+};
+
+const isInFavorites = (id) => {
+    return computed(() => {
+        if (!Array.isArray(favorites.value)) {
+            // return a default value if favorites.value is not an array
+            return false;
+        }
+        return favorites.value.some((favorite) => favorite.favorite_id === id);
+    });
 };
 </script>
 <style scoped></style>
