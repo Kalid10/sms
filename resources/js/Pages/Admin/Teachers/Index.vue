@@ -26,10 +26,10 @@
                                 placeholder="Filter by subject"
                             />
                             <SelectInput
-                                v-model="selectedBatch"
+                                v-model="selectedLevel"
                                 class="h-fit w-full rounded-2xl !text-sm"
-                                :options="batchOptions"
-                                placeholder="Filter by batch"
+                                :options="levelsOptions"
+                                placeholder="Filter by Grade"
                             />
                         </div>
                     </div>
@@ -57,7 +57,11 @@
             </template>
 
             <template #footer>
-                <Pagination :links="teachers.links" position="center" />
+                <Pagination
+                    preserve-state
+                    :links="teachers.links"
+                    position="center"
+                />
             </template>
 
             <template #empty-data>
@@ -142,10 +146,19 @@ const teachers = computed(() => {
 
 const subjects = computed(() => usePage().props.subjects);
 
-const batches = computed(() => usePage().props.batches);
+const levels = computed(() => usePage().props.levels);
 
+const selectedLevel = ref(null);
 const selectedSubject = ref(null);
-const selectedBatch = ref(null);
+
+const levelsOptions = computed(() => {
+    return levels.value?.map((level) => {
+        return {
+            value: level.id,
+            label: `Grade ${level.name}`,
+        };
+    });
+});
 
 const subjectOptions = computed(() => {
     return subjects.value?.map((subject) => {
@@ -156,14 +169,21 @@ const subjectOptions = computed(() => {
     });
 });
 
-const batchOptions = computed(() => {
-    return batches.value?.map((batch) => {
-        return {
-            value: batch.id,
-            label: `Grade ${batch.level.name}`,
-        };
-    });
+watch(selectedLevel, () => {
+    applyLevelFilter();
 });
+
+function applyLevelFilter() {
+    router.get(
+        "/admin/teachers/",
+        {
+            level_id: selectedLevel.value,
+        },
+        {
+            preserveState: true,
+        }
+    );
+}
 
 watch(selectedSubject, () => {
     applySubjectFilter();
@@ -180,24 +200,6 @@ function applySubjectFilter() {
         }
     );
 }
-
-watch(selectedBatch, () => {
-    applyBatchFilter();
-});
-
-function applyBatchFilter() {
-    router.get(
-        "/admin/teachers/",
-        {
-            batch_id: selectedBatch.value,
-        },
-        {
-            preserveState: true,
-        }
-    );
-}
-
-const selectedBatchSessionId = ref(null);
 
 function toggleDialogBox(id, batch_session_id) {
     isDialogBoxOpen.value = !isDialogBoxOpen.value;
@@ -256,7 +258,7 @@ const search = debounce(() => {
 watch([searchKey, perPage], () => {
     search();
     selectedSubject.value = null;
-    selectedBatch.value = null;
+    selectedLevel.value = null;
 });
 
 const form = useForm({

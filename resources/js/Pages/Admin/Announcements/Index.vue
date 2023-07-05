@@ -11,10 +11,6 @@
                 />
             </div>
 
-            <div class="flex w-full justify-end">
-                <Filters title="" @filter="applyFilters" />
-            </div>
-
             <div class="flex w-full justify-between divide-gray-100 py-6 pr-5">
                 <div class="flex h-full w-5/12 flex-col space-y-6 p-3">
                     <SelectedAnnouncementView
@@ -26,7 +22,33 @@
                         :selected-announcement="selectedAnnouncement2"
                     />
                 </div>
-                <div class="w-6/12">
+                <div class="flex w-6/12 flex-col">
+                    <div v-if="hideFilter" class="flex w-full justify-end">
+                        <div
+                            class="flex w-full cursor-pointer justify-end"
+                            @click="handleFilter"
+                        >
+                            <div
+                                class="flex items-center space-x-2 rounded-lg bg-zinc-900 px-3"
+                            >
+                                <AdjustmentsHorizontalIcon
+                                    class="h-8 w-8 fill-white"
+                                />
+
+                                <span class="font-semibold text-white"
+                                    >Filter Assessments</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex w-full justify-center shadow-md">
+                        <Filters
+                            v-if="showFilter"
+                            title="Filter by School Year"
+                            @filter="applyFilters"
+                        />
+                    </div>
+
                     <Announcements :show-header="false" class-style="d" />
                 </div>
             </div>
@@ -42,6 +64,7 @@ import SelectedAnnouncementView from "@/Views/Announcements/SelectedAnnouncement
 import TextInput from "@/Components/TextInput.vue";
 import Filters from "@/Views/Filters.vue";
 import { debounce } from "lodash";
+import { AdjustmentsHorizontalIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
     url: {
@@ -51,6 +74,13 @@ const props = defineProps({
 });
 
 const showFilter = ref(false);
+
+const hideFilter = ref(true);
+
+function handleFilter() {
+    showFilter.value = true;
+    hideFilter.value = false;
+}
 
 const announcements = computed(() => usePage().props.announcements);
 const selectedAnnouncement = ref(announcements.value?.data[0]);
@@ -71,6 +101,7 @@ function applyFilters(params) {
     router.get("/admin/announcements", params, {
         onSuccess: () => {
             showFilter.value = false;
+            hideFilter.value = true;
         },
         preserveState: true,
     });

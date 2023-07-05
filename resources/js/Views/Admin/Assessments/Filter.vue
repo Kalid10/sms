@@ -10,7 +10,7 @@
                         ? levelOptions?.find(
                               (option) => option.value === selectedLevel
                           )?.label
-                        : 'level'
+                        : 'Grade'
                 "
                 class="w-full"
             />

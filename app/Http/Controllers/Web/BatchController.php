@@ -4,9 +4,17 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\Batches\CreateBulkRequest;
 use App\Http\Requests\Batches\CreateRequest;
+use App\Models\Assessment;
 use App\Models\Batch;
+use App\Models\BatchSchedule;
+use App\Models\Flag;
 use App\Models\Level;
+use App\Models\Quarter;
 use App\Models\SchoolYear;
+use App\Models\Student;
+use App\Models\StudentNote;
+use App\Services\StudentService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -145,8 +153,61 @@ class BatchController extends Controller
             $query->with('batchSubject', 'schoolPeriod');
         }]);
 
+        $batchSchedules = BatchSchedule::whereHas('sessions', function ($query) {
+            $query->whereDate('date', Carbon::today());
+        })->with(['sessions' => function ($query) {
+            $query
+                ->whereDate('date', Carbon::today())
+                ->with('batchSubject.subject', 'schoolPeriod', 'teacher.user');
+        }])->where('batch_id', $batch->id)
+            ->get();
+
+        $batches = Batch::where('level_id', $batch->level_id)
+            ->where('school_year_id', $batch->school_year_id)
+            ->where('id', '=', $batch->id)
+            ->get();
+
+        $selectedBatch = $batches->each(function ($batch) {
+            $batchStudentIds = $batch->load('students')->students->pluck('student_id');
+
+            $batch->top_students = StudentService::getBatchTopStudents($batchStudentIds);
+            $batch->bottom_students = StudentService::getBatchBottomStudents($batchStudentIds);
+            $batch->grade = $batch->grades()->where([
+                ['gradable_type', Quarter::class],
+                ['gradable_id', Quarter::getActiveQuarter()->id],
+            ])->first();
+        });
+
+        $students = Student::whereHas('batches', function ($query) use ($batch) {
+            $query->where('batch_id', $batch->id);
+        })->with('user')->paginate(10);
+
+        $assessments = Assessment::wherehas('batchSubject', function ($query) use ($batch) {
+            $query->where('batch_id', $batch->id);
+        })->where('status', Assessment::STATUS_SCHEDULED)
+            ->with('assessmentType', 'batchSubject.subject', 'teacher.user')
+            ->get();
+
+        $flaggedStudents = Flag::whereHas('batchSubject.subject', function ($query) use ($batch) {
+            $query->where('batch_id', $batch->id);
+        })->with('flaggedBy', 'flaggable.user.admin')->paginate(10);
+
+        $studentsNotes = StudentNote::whereHas('student', function ($query) use ($batch) {
+            $query->whereHas('batches', function ($query) use ($batch) {
+                $query->where('batch_id', $batch->id);
+            });
+        })->with('author', 'student.user')
+            ->get();
+
         return Inertia::render('Admin/Batches/Index', [
             'batch' => $batch,
+            'active_session' => $batch->activeSession,
+            'selected_batch' => $selectedBatch,
+            'batch_schedules' => $batchSchedules,
+            'students' => $students,
+            'assessments' => $assessments,
+            'flags' => $flaggedStudents,
+            'students_notes' => $studentsNotes,
         ]);
     }
 }
