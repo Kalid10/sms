@@ -116,4 +116,9 @@ class BatchSubject extends Model
     {
         return $this->hasMany(StudentAssessmentsGrade::class, 'batch_subject_id', 'id');
     }
+
+    public function flag(): BelongsTo
+    {
+        return $this->belongsTo(Flag::class);
+    }
 }

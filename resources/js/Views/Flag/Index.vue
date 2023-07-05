@@ -38,7 +38,7 @@
             <div
                 v-for="(item, index) in flags.data"
                 :key="index"
-                class="relative flex w-full cursor-pointer justify-evenly space-x-2 px-2 py-4 text-xs hover:scale-105 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-200"
+                class="group relative flex w-full cursor-pointer items-center justify-evenly space-x-2 px-2 py-4 text-xs hover:scale-105 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-200"
                 :class="index % 2 === 1 ? 'bg-gray-100/70' : ''"
                 @click="
                     selectedFlag = item;
@@ -64,14 +64,15 @@
                         {{ type.substring(0, 3) }}
                     </span>
                 </span>
-                <div v-if="item.flagged_by.id === auth.id">
+                <div v-if="item.flagged_by.id === auth.id" class="">
                     <PencilIcon
-                        class="absolute bottom-0 right-0 my-1 ml-3 w-4 cursor-pointer fill-black stroke-white text-gray-600 hover:mx-1 hover:scale-110 hover:fill-white hover:text-black"
+                        class="my-1 ml-3 w-4 cursor-pointer text-zinc-700 hover:text-black group-hover:fill-white"
                         @click="handleUpdateFlag($event, item)"
                     />
                 </div>
                 <div
-                    class="absolute top-0 right-0 py-1 pl-3 hover:scale-110 hover:stroke-red-50 hover:px-1"
+                    v-if="item.flagged_by.id === auth.id"
+                    class="py-1 pl-3 hover:scale-110 hover:stroke-red-50 hover:px-1"
                 >
                     <TrashIcon
                         class="w-4 cursor-pointer stroke-red-500 text-gray-600"
