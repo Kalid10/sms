@@ -1,6 +1,10 @@
 <template>
-    <div class="flex w-full justify-between space-x-1">
-        <div class="flex w-full">
+    <div
+        class="flex w-full flex-col justify-between space-y-4 rounded-lg bg-zinc-50 p-3 text-black shadow-sm"
+    >
+        <Loading v-if="showLoading" is-full-screen color="secondary" />
+        <div class="pl-2 text-sm font-light text-black">Filters</div>
+        <div class="flex w-full justify-between">
             <SelectInput
                 v-if="levelOptions?.length"
                 v-model="selectedLevel"
@@ -10,13 +14,10 @@
                         ? levelOptions?.find(
                               (option) => option.value === selectedLevel
                           )?.label
-                        : 'Grade'
+                        : 'Select Class'
                 "
-                class="w-full"
+                class="w-5/12"
             />
-        </div>
-
-        <div class="flex w-full">
             <SelectInput
                 v-if="subjectOptions?.length"
                 v-model="selectedSubject"
@@ -26,13 +27,13 @@
                         ? subjectOptions?.find(
                               (option) => option.value === selectedSubject
                           )?.label
-                        : 'subject'
+                        : 'Select Subject'
                 "
-                class="w-full"
+                class="w-5/12"
             />
         </div>
 
-        <div class="flex w-full">
+        <div class="flex w-full justify-between">
             <SelectInput
                 v-if="assessmentTypeOptions?.length"
                 v-model="selectedAssessmentType"
@@ -43,9 +44,14 @@
                               (option) =>
                                   option.value === selectedAssessmentType
                           )?.label
-                        : 'assessment type'
+                        : 'Select Assessment Type'
                 "
-                class="w-full"
+                class="w-5/12"
+            />
+            <TextInput
+                v-model="query"
+                class="w-5/12"
+                placeholder="Search Assessment"
             />
         </div>
     </div>
@@ -54,8 +60,11 @@
 import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
+import TextInput from "@/Components/TextInput.vue";
+import Loading from "@/Components/Loading.vue";
 
 const emit = defineEmits(["filter"]);
+const showLoading = ref(false);
 
 const selectedLevel = ref(Number(usePage().props.filters.level));
 const selectedSubject = ref(Number(usePage().props.filters.subject));
@@ -101,6 +110,7 @@ const assessmentTypeOptions = computed(() => {
 watch([selectedLevel, selectedSubject, selectedAssessmentType], applyFilters);
 
 function applyFilters() {
+    showLoading.value = true;
     const params = {
         level_id: selectedLevel.value,
         subject_id: selectedSubject.value,
@@ -108,7 +118,33 @@ function applyFilters() {
     };
     router.get("/admin/assessments", params, {
         preserveState: true,
+        onFinish: () => {
+            showLoading.value = false;
+        },
     });
 }
+
+const query = ref(usePage().props.filters.search);
+
+function search() {
+    showLoading.value = true;
+    router.get(
+        "/admin/assessments/",
+        {
+            search: query.value,
+        },
+        {
+            preserveState: true,
+            onFinish: () => {
+                showLoading.value = false;
+            },
+        }
+    );
+}
+
+const key = ref(0);
+watch([query], () => {
+    search();
+});
 </script>
 <style scoped></style>
