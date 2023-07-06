@@ -11,7 +11,7 @@
                     : 'flex w-full flex-col justify-evenly divide-y-2 divide-neutral-800 py-2 lg:flex-row lg:divide-y-0 lg:py-0',
             ]"
         >
-            <NextClassSection />
+            <NextClassSection @click="$emit('view')" />
             <!--            <div-->
             <!--                class="my-auto hidden w-0.5 bg-neutral-600 lg:inline-flex"-->
             <!--                :class="isSidebarOpenOnXlDevice ? 'h-0' : 'h-60'"-->
@@ -41,8 +41,8 @@
 import { usePage } from "@inertiajs/vue3";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import NextClassSection from "@/Views/Teacher/Views/NextClass/NextClass.vue";
-// import LastAssessmentSection from "@/Views/Teacher/Views/NextClass/LastAssessment.vue";
 
+defineEmits(["view"]);
 const nextClass = usePage().props.teacher.next_batch_session;
 </script>
 

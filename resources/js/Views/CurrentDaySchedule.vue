@@ -3,8 +3,8 @@
         class="flex h-full w-full flex-col justify-center rounded-lg bg-white shadow-sm"
         :class="classStyle ? classStyle : ' p-5 space-y-3 bg-white'"
     >
-        <div v-if="schedule" class="text-xl font-semibold text-gray-700">
-            {{ moment().format("dddd") }}'s Schedule
+        <div v-if="schedule" class="text-xl font-medium text-gray-800">
+            Your {{ moment().format("dddd") }} Class Schedule
         </div>
         <div
             v-if="schedule"

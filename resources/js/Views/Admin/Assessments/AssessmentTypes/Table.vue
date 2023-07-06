@@ -99,82 +99,86 @@
         </FormElement>
     </Modal>
 
-    <TableElement
-        :selectable="false"
-        :columns="config"
-        :footer="false"
-        :header="true"
-        :data="filteredAssessmentTypes"
-        actionable
-        row-actionable
+    <div
+        class="flex flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
     >
-        <template #filter>
-            <div class="flex w-full items-center justify-between gap-2">
-                <div class="flex w-full items-center space-x-2">
-                    <span class="font-semibold">
-                        Filter by grade category:
-                    </span>
-                    <SelectInput
-                        v-model="filterByLevelCategory"
-                        :options="levelCategories"
-                        placeholder="filter by grade category"
-                        class="lg:text-md w-40 text-xs md:w-48"
-                    />
+        <div class="px-3 text-2xl font-medium">Assessment Types</div>
+
+        <TableElement
+            :selectable="false"
+            :columns="config"
+            :footer="false"
+            :header="true"
+            :data="filteredAssessmentTypes"
+            actionable
+            row-actionable
+            class="px-2 !shadow-none"
+        >
+            <template #filter>
+                <div class="flex w-full items-center justify-between gap-2">
+                    <div class="flex w-full items-center space-x-2">
+                        <SelectInput
+                            v-model="filterByLevelCategory"
+                            :options="levelCategories"
+                            placeholder="filter by grade category"
+                            class="w-8/12"
+                        />
+                    </div>
+
+                    <PrimaryButton
+                        class="w-3/12 !rounded-3xl p-2"
+                        @click="openAddModal"
+                    >
+                        Add Type
+                    </PrimaryButton>
                 </div>
+            </template>
 
-                <PrimaryButton @click="openAddModal">
-                    <span class="flex gap-2">
-                        <PlusIcon class="h-4 w-4 stroke-white stroke-2" />
-                        <span class="text-xs">New Assessment Type</span>
-                    </span>
-                </PrimaryButton>
-            </div>
-        </template>
+            <template #name-column="{ data }">
+                <div class="flex items-center gap-2">
+                    <div class="h-1.5 w-1.5 rotate-45 bg-orange-300" />
+                    <span class="form-control-sm text-sm">{{ data }}</span>
+                </div>
+            </template>
 
-        <template #name-column="{ data }">
-            <div class="flex items-center gap-2">
-                <div class="h-1.5 w-1.5 rotate-45 bg-orange-300" />
-                <span class="form-control-sm text-sm">{{ data }}</span>
-            </div>
-        </template>
+            <template #percentage-column="{ data }">
+                <div class="flex justify-start gap-1">
+                    <span class="text-xs font-semibold"> {{ data }}% </span>
+                </div>
+            </template>
 
-        <template #percentage-column="{ data }">
-            <div class="flex justify-start gap-1">
-                <span class="text-xs font-semibold"> {{ data }}% </span>
-            </div>
-        </template>
-
-        <template #level_category-column="{ data }">
-            <div class="flex items-center gap-1">
-                <div
-                    class="h-1.5 w-1.5 rounded-full"
-                    :class="categoryColors[data.name]"
-                />
+            <template #level_category-column="{ data }">
                 <div class="flex items-center gap-1">
-                    <span class="text-xs">
-                        {{ data.name }}
-                    </span>
+                    <div
+                        class="h-1.5 w-1.5 rounded-full"
+                        :class="categoryColors[data.name]"
+                    />
+                    <div class="flex items-center gap-1">
+                        <span class="text-xs">
+                            {{ data.name }}
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </template>
+            </template>
 
-        <template #updated_at-column="{ data }">
-            <div class="flex w-full justify-start">
-                <span class="text-xs text-gray-500"
-                    >Last updated {{ data }}</span
-                >
-            </div>
-        </template>
+            <template #updated_at-column="{ data }">
+                <div class="flex w-full justify-start">
+                    <span class="text-xs text-gray-500"
+                        >Last updated {{ data }}</span
+                    >
+                </div>
+            </template>
 
-        <template #row-actions="{ row }">
-            <button @click="openUpdateModal(row)">
-                <PencilSquareIcon class="h-4 w-4" />
-            </button>
-            <button @click="toggleDialogBox(row.id)">
-                <TrashIcon class="h-4 w-4" />
-            </button>
-        </template>
-    </TableElement>
+            <template #row-actions="{ row }">
+                <button @click="openUpdateModal(row)">
+                    <PencilSquareIcon class="h-4 w-4" />
+                </button>
+                <button @click="toggleDialogBox(row.id)">
+                    <TrashIcon class="h-4 w-4" />
+                </button>
+            </template>
+        </TableElement>
+    </div>
 
     <DialogBox
         v-if="isDialogBoxOpen"
@@ -200,7 +204,6 @@ import TableElement from "@/Components/TableElement.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
 import SelectInput from "@/Components/SelectInput.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline/index";
 
 const isModalOpen = ref(false);
 const isUpdate = ref(false);

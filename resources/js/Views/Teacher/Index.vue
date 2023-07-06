@@ -29,145 +29,41 @@
             </div>
         </div>
 
-        <div
-            class="flex h-screen w-full justify-between space-x-10"
-            :class="isTeacher() ? 'px-2 py-3' : ''"
-        >
-            <div class="flex w-8/12 flex-col space-y-10">
+        <div class="flex w-full justify-between p-8">
+            <div class="flex w-8/12 flex-col space-y-8">
                 <WelcomeHeader v-if="isTeacher()" />
-
-                <div class="flex w-full justify-between">
-                    <div class="w-7/12">
+                <TabElement v-model:active="activeTabs" :tabs="tabs">
+                    <template #announcements>
                         <Announcements
                             url="/teacher/announcements"
                             view="teacher"
                         />
-                    </div>
-                    <div
-                        class="flex w-5/12 flex-col justify-evenly space-y-4 pl-10"
-                    >
-                        <SummaryItem
-                            class-style="bg-orange-100 text-black"
-                            icon-style="bg-orange-500/20 text-white"
-                            :title="'Assessments'"
-                            value="10 /10 Completed"
-                            :icon="ClipboardIcon"
-                            :url="
-                                isTeacher()
-                                    ? '/teacher/assessments'
-                                    : '/admin/teachers/assessments?teacher_id=' +
-                                      teacher.id
-                            "
+                    </template>
+                    <template #school-schedules>
+                        <SchoolSchedule class="!w-11/12" />
+                    </template>
+                    <template #todays-schedule>
+                        <CurrentDaySchedule
+                            v-if="teacherSchedule?.length"
+                            ref="currentDayScheduleRef"
+                            :schedule="teacherSchedule"
+                            class-style="px-4 !h-fit py-2 space-y-2"
                         />
-                        <SummaryItem
-                            class-style="bg-zinc-100 text-black"
-                            icon-style="bg-zinc-500/20 text-white"
-                            :title="'Students'"
-                            value="75 Total Students"
-                            :icon="UsersIcon"
-                            :url="
-                                isTeacher()
-                                    ? '/teacher/students'
-                                    : '/admin/teachers/students?teacher_id=' +
-                                      teacher.id
-                            "
-                        />
-                        <SummaryItem
-                            class-style="bg-fuchsia-100 text-black"
-                            icon-style="bg-fuchsia-500/20 text-white"
-                            :title="'LessonPlans'"
-                            value="10 /10 Completed"
-                            :icon="CalendarIcon"
-                            :url="
-                                isTeacher()
-                                    ? '/teacher/lesson-plan'
-                                    : '/admin/teachers/lesson-plan?teacher_id=' +
-                                      teacher.id
-                            "
-                        />
-                        <SummaryItem
-                            class-style="bg-green-100 text-black"
-                            icon-style="bg-green-500/20 text-white"
-                            :title="'Homeroom Classes'"
-                            value="10 /10 Completed"
-                            :icon="CalendarIcon"
-                            :url="
-                                isTeacher()
-                                    ? '/teacher/homeroom'
-                                    : '/admin/teachers/homeroom?teacher_id=' +
-                                      teacher.id
-                            "
-                        />
-                    </div>
+                    </template>
+                </TabElement>
+                <div class="flex w-full items-center justify-between space-x-6">
+                    <div class="w-7/12"></div>
                 </div>
-                <CurrentDaySchedule
-                    v-if="teacherSchedule?.length"
-                    :schedule="teacherSchedule"
-                    class-style="px-4 !h-fit py-2 space-y-2"
-                />
-
-                <div
-                    class="flex w-full items-center justify-between space-x-6"
-                ></div>
+                <Flags title="Recent Flags" view="teacher" />
             </div>
-            <div
-                class="flex h-full w-4/12 flex-col items-center space-y-8 p-0 px-3"
-            >
-                <div class="w-full rounded-lg bg-white p-3 shadow-sm">
-                    <div class="flex w-full justify-between px-2">
-                        <div class="py-2 text-center text-xl font-medium">
-                            Upcoming Schedules
-                        </div>
-                        <LinkCell
-                            class="flex w-fit items-center justify-center"
-                            value="VIEW ALL"
-                            :href="
-                                isAdmin()
-                                    ? '/admin/schedules'
-                                    : '/teacher/school-schedule'
-                            "
-                        />
-                    </div>
-                    <div class="flex w-full flex-col justify-center">
-                        <div
-                            v-for="(item, index) in schoolSchedule"
-                            :key="index"
-                            class="rounded-lg px-1"
-                            :class="index % 2 === 0 ? 'bg-gray-50/50 ' : ''"
-                        >
-                            <SchoolScheduleItem
-                                class="!py-2"
-                                :school-schedule="item"
-                                view="teacher"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="flex w-full items-center justify-between">
-                    <div class="flex h-full w-4/12 flex-col justify-between">
-                        <div
-                            class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
-                        >
-                            <div class="text-center text-5xl font-bold">
-                                {{ teacherAbsentee?.absentee }} %
-                            </div>
+            <div class="flex h-full w-3/12 flex-col items-center space-y-8">
+                <NextClass
+                    class="!w-11/12"
+                    @view="scrollToCurrentDaySchedule"
+                />
+                <Summary class="!w-11/12" />
 
-                            <div class="font-medium">Absentee</div>
-                        </div>
-                        <div
-                            class="flex h-2/5 w-full flex-col items-center justify-center space-y-3 rounded-lg bg-green-300 text-center text-sm shadow-sm"
-                        >
-                            <div class="text-center text-5xl font-bold">
-                                100%
-                            </div>
-
-                            <div class="font-medium">Attendance</div>
-                        </div>
-                    </div>
-                    <div class="w-7/12">
-                        <NextClass />
-                    </div>
-                </div>
+                <AttendanceCard class="!w-11/12" />
             </div>
         </div>
     </div>
@@ -178,30 +74,31 @@ import { usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/Views/NextClass/Index.vue";
 import moment from "moment/moment";
 import { computed, ref } from "vue";
-import { isAdmin, isTeacher } from "@/utils";
+import { isTeacher } from "@/utils";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import CurrentDaySchedule from "@/Views/CurrentDaySchedule.vue";
 import Announcements from "@/Views/Announcements/Index.vue";
-import {
-    CalendarIcon,
-    ClipboardIcon,
-    UsersIcon,
-} from "@heroicons/vue/24/solid";
-import SummaryItem from "@/Views/Teacher/Views/SummaryItem.vue";
-import SchoolScheduleItem from "@/Views/Admin/Schedule/SchoolScheduleItem.vue";
-import LinkCell from "@/Components/LinkCell.vue";
+import AttendanceCard from "@/Views/Teacher/Views/Home/AttendanceCard.vue";
+import Flags from "@/Views/Flag/Index.vue";
+import TabElement from "@/Components/TabElement.vue";
+import SchoolSchedule from "@/Views/Teacher/Views/Home/SchoolSchedule.vue";
+import Summary from "@/Views/Teacher/Views/Home/Summary.vue";
 
 const teacher = usePage().props.teacher;
 const filters = computed(() => usePage().props.filters);
 const nextClass = usePage().props.teacher.next_batch_session;
 const nextClassSection = ref(null);
 const teacherSchedule = computed(() => usePage().props.teacher_schedule);
-const schoolSchedule = computed(() => usePage().props.school_schedule);
-const teacherAbsentee = computed(() => usePage().props.teacher_absentee);
-
 const scrollToNextClass = () => {
     nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
 };
+const currentDayScheduleRef = ref(null);
+const scrollToCurrentDaySchedule = () => {
+    currentDayScheduleRef.value.$el.scrollIntoView({ behavior: "smooth" });
+};
+
+const tabs = ["Announcements", "School-Schedules", "Todays-Schedule"];
+const activeTabs = ref("Announcements");
 </script>
 
 <style scoped></style>

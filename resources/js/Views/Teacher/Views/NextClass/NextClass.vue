@@ -92,7 +92,8 @@
         <PrimaryButton
             class="w-8/12 !border-none bg-zinc-700 !text-xs lg:w-10/12 2xl:w-10/12"
             :class="buttonWidth"
-            >View Full Schedule
+            @click="$emit('view')"
+            >View Today's Schedule
         </PrimaryButton>
     </div>
 </template>
@@ -104,6 +105,7 @@ import { usePage } from "@inertiajs/vue3";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import { computed } from "vue";
 
+defineEmits(["view"]);
 const props = defineProps({
     nextClass: {
         type: Object,

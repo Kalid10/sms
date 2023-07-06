@@ -33,3 +33,7 @@ Broadcast::channel('batch-schedule', function ($user) {
 Broadcast::channel('mark-assessment', function ($user) {
     return $user->type === User::TYPE_TEACHER;
 });
+
+Broadcast::channel('question-generator', function ($user) {
+    return $user->type === User::TYPE_TEACHER;
+});

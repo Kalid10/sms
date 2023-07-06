@@ -1,27 +1,86 @@
 <template>
     <div
-        class="scrollbar-hide flex h-full w-full flex-col space-y-5 overflow-y-auto rounded-lg border border-zinc-500 p-5"
+        class="scrollbar-hide flex h-full w-full flex-col space-y-5 overflow-y-auto border-r border-zinc-100 px-5 py-2"
     >
-        <div>
-            <div class="mb-1 text-2xl font-bold">Rigel Copilot</div>
-            <div class="w-8/12 text-sm text-gray-700">
-                I'm your Rigel co-pilot. I will assist you as you create your
-                lesson plan.
-            </div>
-        </div>
         <Loading
             v-if="showLoading"
             color="info"
             class="absolute z-50 flex h-full w-4/12 items-center justify-center"
         />
+        <div class="flex justify-between">
+            <div>
+                <div class="mb-1 text-2xl font-bold">Rigel Copilot (AI)</div>
+                <div class="w-full text-sm text-gray-700">
+                    I am your Rigel Co-Pilot, a dedicated AI assistant, here to
+                    simplify your lesson planning and elaboration needs.
+                </div>
+            </div>
+
+            <XMarkIcon
+                class="w-5 cursor-pointer text-black hover:scale-125 hover:text-red-600"
+                @click="emit('close')"
+            />
+        </div>
+
+        <div class="flex w-full space-x-4">
+            <div
+                class="mt-3 w-fit cursor-pointer rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:scale-105 hover:font-medium"
+                @click="showQuestionSection = true"
+            >
+                Generate Questions ?
+            </div>
+
+            <div
+                class="mt-3 w-fit cursor-pointer rounded-2xl bg-yellow-400 px-3 py-1.5 text-xs hover:scale-105 hover:font-medium"
+                @click="showChatSection = true"
+            >
+                Or Do You Want To Chat ?
+            </div>
+        </div>
+
+        <QuestionPreparation
+            v-if="showQuestionSection"
+            :batch-subject-id="batchSubjectId"
+            :lesson-plan-id="lessonPlanId"
+        />
+
+        <div
+            v-if="showChatSection && !generateNoteSuggestions"
+            class="flex w-full flex-col items-center justify-center space-y-5 pt-5"
+        >
+            <div class="w-fit px-3 py-1">
+                Need assistance with anything? Rigel AI chat is here to help!
+            </div>
+            <Chat :show-getting-started="false" />
+        </div>
+
+        <div
+            v-if="
+                !showChatSection &&
+                !showQuestionSection &&
+                !generateNoteSuggestions
+            "
+            class="flex h-full w-full items-center justify-center px-5 text-center"
+        >
+            <div class="space-x- flex w-9/12 font-light leading-7">
+                Need a hand with anything from creating questions to lively
+                chats, or understanding lesson plans? Rigel Copilot(AI) is ready
+                to assist! Just tap on the sparkle icon for clear explanations,
+                or click on the buttons above for specific actions. Let's make
+                learning a fun journey together!
+            </div>
+        </div>
+
         <div
             v-if="noteSuggestions"
             ref="selectedTextPopUp"
-            class="flex flex-col space-y-1 p-3"
+            class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 text-sm text-black shadow-sm"
         >
-            <div class="px-1 pb-1">Notes</div>
+            <div class="text-center text-xl font-semibold">
+                Lesson Plan Explained- Rigel Copilot (AI)
+            </div>
             <div
-                class="rounded-lg bg-zinc-100 p-3 text-sm text-black shadow-sm"
+                class="px-4"
                 @mouseup="
                     showPopup = true;
                     selectedText = getSelectedText();
@@ -31,7 +90,7 @@
                 {{ noteSuggestions }}
                 <span v-if="isNoteUpdating" class="animate-blink">|</span>
 
-                <div class="flex w-full justify-end">
+                <div class="flex w-full justify-end px-2 pt-2">
                     <ClipboardDocumentIcon
                         class="w-4 cursor-pointer text-zinc-400 hover:text-black"
                         @click="copyToClipboard(noteSuggestions)"
@@ -61,7 +120,7 @@
             v-if="showPopup && selectedText"
             ref="selectedTextPopUp"
             :style="{ left: `${x}px`, top: `${y}px` }"
-            class="fixed z-50 flex flex-col items-center space-y-3 rounded border border-gray-100 bg-gradient-to-t from-purple-500 to-violet-500 px-4 py-3 text-white shadow"
+            class="fixed z-50 flex flex-col items-center space-y-3 rounded border border-gray-100 bg-gradient-to-tl from-purple-500 to-violet-500 px-4 py-3 text-white shadow"
         >
             <p class="max-w-3xl px-2 py-1 text-xs">
                 {{ selectedText }}
@@ -104,14 +163,17 @@
 import {
     ClipboardDocumentIcon,
     MagnifyingGlassIcon,
+    XMarkIcon,
 } from "@heroicons/vue/20/solid";
 import Loading from "@/Components/Loading.vue";
 import { computed, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
 import { copyToClipboard } from "@/utils";
+import QuestionPreparation from "@/Views/Teacher/Views/LessonPlans/QuestionPreparation.vue";
+import Chat from "@/Views/Teacher/Views/Copilot/Chat.vue";
 
-const emit = defineEmits(["selectedText", "finish"]);
+const emit = defineEmits(["selectedText", "finish", "close"]);
 const props = defineProps({
     topic: {
         type: String,
@@ -125,7 +187,18 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    lessonPlanId: {
+        type: Number,
+        required: true,
+    },
+    batchSubjectId: {
+        type: Number,
+        required: true,
+    },
 });
+
+const showQuestionSection = ref(false);
+const showChatSection = ref(false);
 const showLoading = ref(false);
 const noteSuggestions = ref("");
 const isNoteUpdating = ref(false);
