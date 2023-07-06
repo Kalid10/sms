@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class FlagController extends Controller
 {
-    public function flagStudent(Request $request)
+    public function flagStudent(Request $request): RedirectResponse
     {
         $request->validate([
             'flaggable_id' => 'required|exists:students,id',

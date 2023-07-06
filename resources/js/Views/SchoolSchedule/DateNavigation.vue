@@ -42,6 +42,7 @@ import { router, usePage } from "@inertiajs/vue3";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 
+const emit = defineEmits(["loading", "finish"]);
 const selectedDate = ref(usePage().props.school_schedule_date);
 const props = defineProps({
     scheduleUrl: {
@@ -62,10 +63,18 @@ const changeDate = (direction) => {
 
 watch(selectedDate, (newValue) => {
     const formattedDate = moment(newValue).format("YYYY-MM-DD");
-    router.visit(props.scheduleUrl + formattedDate, {
-        only: ["school_schedule"],
-        preserveState: true,
-    });
+    emit("loading");
+    router.get(
+        props.scheduleUrl + formattedDate,
+        {},
+        {
+            only: ["school_schedule"],
+            preserveState: true,
+            onFinish: () => {
+                emit("finish");
+            },
+        }
+    );
 });
 </script>
 <style scoped></style>

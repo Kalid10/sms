@@ -13,7 +13,11 @@
                 class="relative col-start-2 flex h-full w-full animate-slide-left space-x-5 border-l bg-white pl-3 pt-8 shadow-sm"
                 :class="isTeacher() ? 'col-span-11' : 'col-span-4'"
             >
-                <div v-if="isTeacher()" class="h-5/6 w-5/12">
+                <div
+                    v-if="isTeacher()"
+                    class="h-5/6 w-6/12 overflow-y-auto"
+                    :class="showAISection ? 'flex ' : 'hidden'"
+                >
                     <LessonPlanCopilot
                         :topic="form.topic"
                         :generate-note-suggestions="generateNoteSuggestions"
@@ -21,16 +25,27 @@
                         :generate-question-suggestions="
                             generateQuestionSuggestions
                         "
+                        :lesson-plan-id="batchSession?.lesson_plan?.id"
+                        :batch-subject-id="
+                            batchSession?.batch_schedule.batch_subject_id
+                        "
                         @selected-text="updateSelectedText"
                         @finish="
                             generateQuestionSuggestions = false;
                             generateNoteSuggestions = false;
                         "
+                        @close="showAISection = false"
                     />
                 </div>
                 <div
                     class="flex h-full flex-col gap-4"
-                    :class="isTeacher() ? ' w-8/12' : 'w-full px-5'"
+                    :class="
+                        isTeacher()
+                            ? showAISection
+                                ? 'w-6/12'
+                                : ' w-full'
+                            : 'w-full px-5'
+                    "
                 >
                     <div class="flex w-full flex-col">
                         <div
@@ -111,10 +126,23 @@
                                 }}
                             </h3>
                         </div>
+                        <div
+                            v-if="!showAISection"
+                            class="mt-3 flex w-fit cursor-pointer space-x-1 rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:font-medium"
+                            @click="showAISection = true"
+                        >
+                            <SparklesIcon class="w-3.5 text-white" />
+                            <div>Show AI Section</div>
+                        </div>
                     </div>
 
-                    <div class="grid w-full grow grid-cols-12 gap-8">
-                        <div class="col-span-7 flex h-full flex-col gap-8 pt-4">
+                    <div class="flex w-full grow items-center justify-between">
+                        <div
+                            class="flex h-full flex-col pt-4"
+                            :class="
+                                showAISection ? 'w-11/12' : 'w-7/12 mx-auto'
+                            "
+                        >
                             <form
                                 v-if="
                                     updateLessonPlan ||
@@ -153,7 +181,8 @@
                                         <SparklesIcon
                                             class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
                                             @click="
-                                                generateNoteSuggestions = true
+                                                generateNoteSuggestions = true;
+                                                showAISection = true;
                                             "
                                         />
                                     </div>
@@ -173,36 +202,60 @@
                                         <SparklesIcon
                                             class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
                                             @click="
-                                                generateQuestionSuggestions = true
+                                                generateQuestionSuggestions = true;
+                                                showAISection = true;
                                             "
                                         />
                                     </div>
                                 </div>
-                                <div class="flex w-full justify-end">
-                                    <PrimaryButton
+                                <div class="flex w-full justify-end px-7">
+                                    <SecondaryButton
                                         title="Submit"
+                                        class="w-2/12 !rounded-2xl bg-zinc-800 text-white"
                                         @click="handleSubmit"
                                     />
                                 </div>
                             </form>
 
                             <template v-else>
-                                <div class="flex flex-col gap-3">
+                                <div class="flex flex-col space-y-6">
                                     <div
                                         class="flex w-full items-end justify-between lg:items-center"
                                     >
-                                        <h3 class="w-9/12 font-semibold">
-                                            {{
-                                                selectedBatchSession[
-                                                    "lesson_plan"
-                                                ]["topic"]
-                                            }}
-                                        </h3>
-                                        <SecondaryButton
-                                            title="Edit"
-                                            class="!mx-1 w-2/12 !rounded-2xl bg-zinc-700 text-white shadow-sm"
-                                            @click="updateLessonPlan = true"
-                                        />
+                                        <div
+                                            class="flex w-10/12 items-center justify-center space-x-4 text-center font-semibold"
+                                        >
+                                            <div class="flex h-8 items-center">
+                                                <SparklesIcon
+                                                    class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
+                                                    @click="
+                                                        generateNoteSuggestions = true;
+                                                        showAISection = true;
+                                                    "
+                                                />
+                                            </div>
+
+                                            <div class="">
+                                                {{
+                                                    selectedBatchSession[
+                                                        "lesson_plan"
+                                                    ]["topic"]
+                                                }}
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="flex justify-evenly rounded-2xl bg-zinc-700 px-4 hover:scale-105"
+                                        >
+                                            <PencilIcon
+                                                class="w-4 text-white"
+                                            />
+                                            <SecondaryButton
+                                                title="Edit"
+                                                class="text-white"
+                                                @click="updateLessonPlan = true"
+                                            />
+                                        </div>
                                     </div>
 
                                     <h3 class="text-sm leading-loose">
@@ -217,9 +270,10 @@
                         </div>
 
                         <div
-                            class="scrollbar-hide col-span-5 flex h-screen w-full flex-col gap-8 overflow-y-scroll rounded-tl-md border-l border-t py-4 pl-4 pr-8"
+                            v-if="!showAISection"
+                            class="scrollbar-hide flex h-screen w-4/12 flex-col items-center space-y-4 overflow-y-scroll rounded-tl-md border-l border-t border-zinc-300 bg-zinc-100 p-4"
                         >
-                            <div class="flex flex-col">
+                            <div class="flex w-11/12 flex-col">
                                 <h3 class="text-sm font-semibold">
                                     Previous Lesson Plans
                                 </h3>
@@ -235,7 +289,7 @@
                                 </h3>
                             </div>
 
-                            <div class="flex flex-col gap-6">
+                            <div class="flex w-11/12 flex-col gap-6">
                                 <template
                                     v-if="
                                         previousBatchSessionsWithLessonPlans.length <
@@ -275,16 +329,20 @@
                                             prevBatchSession, pBS
                                         ) in previousBatchSessionsWithLessonPlans"
                                         :key="pBS"
-                                        class="scrollbar-hide flex h-fit flex-col overflow-hidden overflow-y-scroll rounded-lg bg-gray-50 p-2 shadow-sm"
+                                        class="scrollbar-hide flex h-fit flex-col items-center justify-center space-y-2 overflow-hidden overflow-y-scroll rounded-lg bg-white p-2 shadow-sm"
                                     >
-                                        <h3 class="text-sm font-normal">
+                                        <h3
+                                            class="text-center text-sm font-medium"
+                                        >
                                             {{
                                                 prevBatchSession["lesson_plan"][
                                                     "topic"
                                                 ]
                                             }}
                                         </h3>
-                                        <h3 class="text-xs text-gray-400">
+                                        <h3
+                                            class="text-xs font-light text-black"
+                                        >
                                             <ReadMoreLess
                                                 lines="4"
                                                 :text="
@@ -381,10 +439,10 @@ import {
     CalendarIcon,
     ClockIcon,
     ExclamationTriangleIcon,
+    PencilIcon,
 } from "@heroicons/vue/24/outline/index.js";
 import TextInput from "@/Components/TextInput.vue";
 import Modal from "@/Components/Modal.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextArea from "@/Components/TextArea.vue";
 import { computed, ref, watch } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
@@ -405,6 +463,9 @@ const props = defineProps({
 });
 
 const emits = defineEmits(["update:view"]);
+
+const showAISection = ref(false);
+
 const batch = computed(() => usePage().props.batch);
 const selectedBatchSession = computed(() => props.batchSession);
 const batchSessions = computed(() => usePage().props["batch_sessions"]);
@@ -440,6 +501,7 @@ const openForm = computed({
 function closeForm() {
     updateLessonPlan.value = false;
     openForm.value = false;
+    showAISection.value = false;
 }
 
 function dayLabel(day) {
