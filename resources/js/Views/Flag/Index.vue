@@ -84,14 +84,14 @@
 
                 <span class="flex w-3/12 justify-center space-x-1 text-center">
                     <span
-                        v-for="(type, index) in item.type"
+                        v-for="(type, index) in item?.type"
                         :key="index"
                         class="mx-1 flex h-fit w-fit flex-wrap rounded-3xl bg-red-600 py-0.5 px-2 text-center text-[0.65rem] font-medium lowercase text-white hover:scale-110"
                     >
                         {{ type.substring(0, 3) }}
                     </span>
                 </span>
-                <div v-if="item.flagged_by.id === auth.id" class="">
+                <div v-if="item?.flagged_by?.id === auth.id">
                     <PencilIcon
                         class="my-1 ml-3 w-4 cursor-pointer text-zinc-700 hover:text-black group-hover:fill-white"
                         @click="handleUpdateFlag($event, item)"
@@ -216,6 +216,7 @@ function deleteFlag(e, item) {
         },
     });
 }
+
 const isLoading = ref(false);
 
 const flags = computed(() => usePage().props.flags);
