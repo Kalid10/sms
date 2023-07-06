@@ -1,45 +1,26 @@
 <template>
-    <!--    <div class="my-5 w-10/12">-->
-    <!--        <div class="my-5 mb-8 flex flex-row items-center gap-2">-->
-    <!--            <QueueListIcon class="h-6 w-6"/>-->
-    <!--            <h1 class="text-2xl font-semibold text-gray-900">-->
-    <!--                Home-->
-    <!--            </h1>-->
-    <!--            <h3 class="text-sm text-gray-500">({{ schoolYear.name }})</h3>-->
-    <!--        </div>-->
-
-    <!--        <div class="flex w-full flex-col gap-2 md:flex-row">-->
-    <!--            <div class="mr-2 w-full rounded border shadow-sm lg:w-2/3">-->
-    <!--                <h1 class="p-2">Overview</h1>-->
-    <!--                <Graph/>-->
-
-    <!--                <Statistics-->
-    <!--                    :teachers-count="teachersCount"-->
-    <!--                    :students-count="studentsCount"-->
-    <!--                    :subjects-count="subjectCount"-->
-    <!--                    :admins-count="adminsCount"-->
-    <!--                />-->
-    <!--            </div>-->
-
-    <!--            <div class="rounded border shadow-sm lg:w-2/3">-->
-    <!--                <LevelIndex/>-->
-    <!--            </div>-->
-    <!--        </div>-->
-
-    <!--        <Management :user-roles="userRoles"/>-->
-
-    <!--        <AdminsTable-->
-    <!--            :admins="admins"-->
-    <!--            :config-admin="configAdmin"-->
-    <!--            class="border"-->
-    <!--        />-->
-    <!--    </div>-->
     <div
         class="flex min-h-screen w-full justify-between bg-gray-50 p-5 lg:px-1 2xl:px-10"
     >
-        <div class="flex w-7/12 flex-col space-y-5">
+        <div class="flex w-7/12 flex-col space-y-8">
             <WelcomeHeader />
-            <div class="relative w-10/12">
+
+            <TabElement v-model:active="activeTab" :tabs="tabs">
+                <template #announcements>
+                    <Announcements
+                        url="/admin/announcements"
+                        class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
+                    />
+                </template>
+
+                <template #flags>
+                    <Flags view="admin" title="Recent Flags" />
+                </template>
+            </TabElement>
+        </div>
+
+        <div class="flex min-h-screen w-4/12 flex-col items-center space-y-8">
+            <div class="relative w-11/12">
                 <Combobox v-model="selectedStudents">
                     <ComboboxInput
                         class="w-full rounded-3xl placeholder:text-sm"
@@ -74,26 +55,48 @@
                     </transition>
                 </Combobox>
             </div>
-            <Flags view="admin" title="Recent Flags" />
-        </div>
+            <AbsenteeStats class="w-11/12" />
 
-        <div class="flex min-h-screen w-5/12 justify-center">
-            <div class="flex h-full w-11/12 flex-col space-y-8">
-                <AbsenteeStats />
-                <div class="w-full">
-                    <Announcements
-                        url="/admin/announcements"
-                        class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
-                    />
-                    <!--                        <SchoolSchedule />-->
-                </div>
+            <div class="flex w-11/12 flex-col space-y-6">
+                <SummaryItem
+                    class-style="bg-sky-100 text-black"
+                    icon-style="bg-sky-500/20 text-white"
+                    title="Chats"
+                    value="5 Unread Messages"
+                    :icon="PaperAirplaneIcon"
+                    url="/admin/chat"
+                />
+                <SummaryItem
+                    class-style="bg-fuchsia-100 text-black"
+                    icon-style="bg-fuchsia-500/20 text-white"
+                    title="Students"
+                    value="Register, Review, explore and More"
+                    :icon="UserGroupIcon"
+                    url="/admin/students"
+                />
+                <SummaryItem
+                    class-style="bg-orange-100 text-black"
+                    icon-style="bg-orange-500/20 text-white"
+                    title="Teachers"
+                    value="Register, evaluate, explore and more"
+                    :icon="UserCircleIcon"
+                    url="/admin/teachers"
+                />
+
+                <SummaryItem
+                    class-style="bg-zinc-100 text-black"
+                    icon-style="bg-zinc-500/20 text-white"
+                    title="Admins"
+                    value="Register, Review, explore and More"
+                    :icon="UsersIcon"
+                    url="/admin/admins "
+                />
             </div>
         </div>
     </div>
 </template>
 <script setup>
 import { computed, ref } from "vue";
-import moment from "moment/moment";
 import { router, usePage } from "@inertiajs/vue3";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import Announcements from "@/Views/Announcements/Index.vue";
@@ -106,38 +109,19 @@ import {
 import { debounce } from "lodash";
 import AbsenteeStats from "@/Views/Admin/Absentee/AbsenteeStats.vue";
 import Flags from "@/Views/Flag/Index.vue";
+import TabElement from "@/Components/TabElement.vue";
+import SummaryItem from "@/Views/Teacher/Views/SummaryItem.vue";
+import {
+    PaperAirplaneIcon,
+    UserCircleIcon,
+    UserGroupIcon,
+    UsersIcon,
+} from "@heroicons/vue/24/solid";
+
+const tabs = ["Announcements", "Flags"];
+const activeTab = ref("Announcements");
 
 const students = computed(() => usePage().props.students);
-
-const admins = computed(() => {
-    return usePage().props.admins.map((admin) => {
-        return {
-            id: admin.id,
-            name: admin.name,
-            email: admin.email,
-            type: admin.type,
-            // Role is not yet implemented it should be looped through the roles array
-            // role: admin.roles,
-            updated_at: moment(admin.updated_at).fromNow(),
-        };
-    });
-});
-
-const levels = computed(() => {
-    return usePage().props.levels.map((level) => {
-        return {
-            batches: level.batches,
-            id: level.id,
-            level: {
-                id: level.id,
-                name: level.name,
-                category: level["level_category"],
-            },
-            updated_at: moment(level.updated_at).fromNow(),
-            created_at: level.created_at,
-        };
-    });
-});
 
 const schoolYear = computed(() => usePage().props.school_year);
 
@@ -185,18 +169,4 @@ const filteredStudents = computed(() => {
             : [];
     }
 });
-const config = [
-    {
-        key: "name",
-        type: "custom",
-    },
-    {
-        key: "statistics",
-        type: "custom",
-    },
-    {
-        key: "last_updated",
-        type: "custom",
-    },
-];
 </script>
