@@ -155,7 +155,10 @@
                 <Title title="Today's Absentees" />
             </div>
 
-            <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
+            <div
+                v-if="todayAbsentees.length > 0"
+                class="mx-auto mt-10 flex w-full flex-col space-y-4"
+            >
                 <div
                     v-for="(absentee, index) in todayAbsentees"
                     :key="index"
@@ -173,6 +176,7 @@
                     </div>
                 </div>
             </div>
+            <EmptyView v-else title="No absentees today" />
         </div>
     </Modal>
 
@@ -182,7 +186,10 @@
                 <Title title="Latest Period Absentees" />
             </div>
 
-            <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
+            <div
+                v-if="latestPeriodAbsentees.length > 0"
+                class="mx-auto mt-10 flex w-full flex-col space-y-4"
+            >
                 <div
                     v-for="(absentee, index) in latestPeriodAbsentees"
                     :key="index"
@@ -199,6 +206,7 @@
                     </div>
                 </div>
             </div>
+            <EmptyView v-else title="No absentees in the latest period" />
         </div>
     </Modal>
 </template>
@@ -218,6 +226,7 @@ import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import Pagination from "@/Components/Pagination.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
+import EmptyView from "@/Views/EmptyView.vue";
 
 const props = defineProps({
     url: {

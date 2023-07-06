@@ -85,7 +85,7 @@
                                 required
                             />
                         </div>
-                        <div class="flex justify-end">
+                        <div class="flex justify-end py-3">
                             <PrimaryButton
                                 title="Update Profile"
                                 @click="submitProfileForm"
@@ -136,7 +136,7 @@
                             placeholder="Confirm your new password"
                             required
                         />
-                        <div class="flex justify-end">
+                        <div class="flex justify-end py-3">
                             <PrimaryButton
                                 title="Update Password"
                                 @click="submitPasswordForm"
