@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex max-h-screen min-h-screen w-full justify-between py-5 px-10"
+        class="flex max-h-screen min-h-screen w-full justify-between bg-gray-50"
     >
         <Messages @toggle-conversation="toggleConversation" />
 
