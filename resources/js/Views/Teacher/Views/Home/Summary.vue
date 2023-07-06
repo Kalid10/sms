@@ -1,5 +1,13 @@
 <template>
-    <div class="flex w-5/12 flex-col justify-evenly space-y-4 pl-10">
+    <div class="flex w-5/12 flex-col items-center space-y-5">
+        <SummaryItem
+            class-style="bg-sky-100 text-black"
+            icon-style="bg-sky-500/20 text-white"
+            title="Chats"
+            value="5 Unread Messages"
+            :icon="PaperAirplaneIcon"
+            url="/teacher/chat"
+        />
         <SummaryItem
             class-style="bg-orange-100 text-black"
             icon-style="bg-orange-500/20 text-white"
@@ -25,8 +33,8 @@
             "
         />
         <SummaryItem
-            class-style="bg-fuchsia-100 text-black"
-            icon-style="bg-fuchsia-500/20 text-white"
+            class-style="bg-green-100 text-black"
+            icon-style="bg-green-500/20 text-white"
             :title="'LessonPlans'"
             value="10 /10 Completed"
             :icon="CalendarIcon"
@@ -37,8 +45,8 @@
             "
         />
         <SummaryItem
-            class-style="bg-green-100 text-black"
-            icon-style="bg-green-500/20 text-white"
+            class-style="bg-fuchsia-100 text-black"
+            icon-style="bg-fuchsia-500/20 text-white"
             :title="'Homeroom Classes'"
             value="10 /10 Completed"
             :icon="CalendarIcon"
@@ -54,6 +62,7 @@
 import {
     CalendarIcon,
     ClipboardIcon,
+    PaperAirplaneIcon,
     UsersIcon,
 } from "@heroicons/vue/24/solid";
 import { isTeacher } from "@/utils";

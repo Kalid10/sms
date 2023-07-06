@@ -6,7 +6,7 @@
     >
         <div class="text-center text-5xl font-bold">10%</div>
 
-        <div class="font-medium">Attendance</div>
+        <div class="font-light">Your Attendance For This Quarter</div>
     </div>
 </template>
 

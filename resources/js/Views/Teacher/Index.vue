@@ -29,18 +29,12 @@
             </div>
         </div>
 
-        <div class="flex w-full flex-col space-y-10 p-8">
-            <WelcomeHeader v-if="isTeacher()" />
-
-            <div class="flex w-full justify-between">
-                <TabElement
-                    v-model:active="activeTabs"
-                    class="!w-8/12"
-                    :tabs="tabs"
-                >
+        <div class="flex w-full justify-between p-8">
+            <div class="flex w-8/12 flex-col space-y-8">
+                <WelcomeHeader v-if="isTeacher()" />
+                <TabElement v-model:active="activeTabs" :tabs="tabs">
                     <template #announcements>
                         <Announcements
-                            class="!w-11/12"
                             url="/teacher/announcements"
                             view="teacher"
                         />
@@ -48,29 +42,29 @@
                     <template #school-schedules>
                         <SchoolSchedule class="!w-11/12" />
                     </template>
+                    <template #todays-schedule>
+                        <CurrentDaySchedule
+                            v-if="teacherSchedule?.length"
+                            ref="currentDayScheduleRef"
+                            :schedule="teacherSchedule"
+                            class-style="px-4 !h-fit py-2 space-y-2"
+                        />
+                    </template>
                 </TabElement>
-
-                <div
-                    class="flex h-full w-3/12 flex-col items-center justify-evenly px-3"
-                >
-                    <NextClass @view="scrollToCurrentDaySchedule" />
+                <div class="flex w-full items-center justify-between space-x-6">
+                    <div class="w-7/12"></div>
                 </div>
+                <Flags title="Recent Flags" view="teacher" />
             </div>
+            <div class="flex h-full w-3/12 flex-col items-center space-y-8">
+                <NextClass
+                    class="!w-11/12"
+                    @view="scrollToCurrentDaySchedule"
+                />
+                <Summary class="!w-11/12" />
 
-            <div class="flex w-full items-center justify-between space-x-6">
-                <div class="w-7/12">
-                    <Flags title="Recent Flags" view="teacher" />
-                </div>
-                <Summary class="!w-4/12" />
+                <AttendanceCard class="!w-11/12" />
             </div>
-            <CurrentDaySchedule
-                v-if="teacherSchedule?.length"
-                ref="currentDayScheduleRef"
-                :schedule="teacherSchedule"
-                class-style="px-4 !h-fit py-2 space-y-2"
-            />
-
-            <AttendanceCard class="!w-3/12" />
         </div>
     </div>
 </template>
@@ -103,7 +97,7 @@ const scrollToCurrentDaySchedule = () => {
     currentDayScheduleRef.value.$el.scrollIntoView({ behavior: "smooth" });
 };
 
-const tabs = ["Announcements", "School-Schedules"];
+const tabs = ["Announcements", "School-Schedules", "Todays-Schedule"];
 const activeTabs = ref("Announcements");
 </script>
 
