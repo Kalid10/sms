@@ -161,6 +161,7 @@ class StudentGradeHelper
                     'gradable_type' => Quarter::class,
                     'gradable_id' => $assessment->quarter_id,
                     'score' => $studentAssessmentGradeSum,
+                    'total_score' => $studentTotalGradedPercentage,
                     'grade_scale_id' => GradeScale::get(
                         score: $studentAssessmentGradeSum,
                         maximum: $studentTotalGradedPercentage
@@ -183,22 +184,7 @@ class StudentGradeHelper
                 'student_id' => $student_id,
                 'gradable_type' => Quarter::class,
                 'gradable_id' => $assessment->quarter_id,
-            ])->sum('score');
-
-            // Todo:: Check if it can be optimized more
-            $studentAssessmentGrade = StudentAssessmentsGrade::where([
-                'student_id' => $student_id,
-                'gradable_type' => Quarter::class,
-                'gradable_id' => Quarter::getActiveQuarter()->id,
-            ])->with(['assessmentType' => function ($q) {
-                $q->select('id', 'percentage');
-            }])->get()->groupBy('batch_subject_id')
-                ->map(function ($item) {
-                    return $item->sum(function ($row) {
-                        return $row->assessmentType->percentage;
-                    });
-                })->avg();
-
+            ]);
             StudentGrade::updateOrCreate([
                 'student_id' => $student_id,
                 'gradable_type' => Quarter::class,
@@ -207,11 +193,12 @@ class StudentGradeHelper
                 'student_id' => $student_id,
                 'gradable_type' => Quarter::class,
                 'gradable_id' => $assessment->quarter_id,
-                'score' => $studentQuarterGrade,
+                'score' => $studentQuarterGrade->avg('score'),
                 'grade_scale_id' => GradeScale::get(
-                    score: $studentQuarterGrade,
-                    maximum: round($studentAssessmentGrade, 2)
+                    score: $studentQuarterGrade->avg('score'),
+                    maximum: (float) $studentQuarterGrade->avg('total_score')
                 )->id,
+                'total_score' => (float) $studentQuarterGrade->avg('total_score'),
             ]);
         });
     }
