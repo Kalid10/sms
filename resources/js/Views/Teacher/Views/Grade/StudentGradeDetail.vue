@@ -100,7 +100,9 @@ const studentGrades = computed(() => {
                 id: item.batch_subject.id,
             },
             attendance: item.attendance ? item.attendance + "%" : "-",
-            grade: item?.score?.toFixed(1) ?? "-",
+            grade: item.score
+                ? item?.score?.toFixed(1) + "(" + item?.grade_scale?.label + ")"
+                : "-",
             rank: item.rank ?? " -",
             conduct: item.conduct ?? "-",
         };
