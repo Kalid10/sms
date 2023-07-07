@@ -58,12 +58,20 @@ class Batch extends Controller
             ->get()->take(3);
 
         $batch = BatchModel::find($batchSubject->batch_id)->load('level:id,name,level_category_id', 'level.levelCategory:id,name');
+
         $schedule = BatchModel::find($batchSubject->batch_id)->load(
             'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',
             'schedule.batchSubject:id,teacher_id,subject_id,weekly_frequency',
             'schedule.batchSubject.subject',
             'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id',
         )->only('schedule')['schedule'];
+
+        $inProgressSession = $batch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user', 'batchSchedule.batchSubject.batch.level');
+        $yourInProgressSession = null;
+
+        if ($inProgressSession && $batchSubjects->contains('id', $inProgressSession->batchSchedule->batchSubject->id)) {
+            $yourInProgressSession = $inProgressSession;
+        }
 
         $page = match (auth()->user()->type) {
             User::TYPE_TEACHER => 'Teacher/Batches',
@@ -83,7 +91,8 @@ class Batch extends Controller
                 ['gradable_type', Quarter::class],
                 ['gradable_id', Quarter::getActiveQuarter()->id],
             ])->first(),
-            'in_progress_session' => $batch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user', 'batchSchedule.batchSubject.batch.level'),
+            'in_progress_session' => $inProgressSession,
+            'your_in_progress_session' => $yourInProgressSession,
             'top_students' => StudentService::getBatchSubjectTopStudents($batchSubject),
             'bottom_students' => StudentService::getBatchSubjectBottomStudents($batchSubject),
             'teacher' => $teacher,
