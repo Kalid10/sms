@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\Batches\CreateBulkRequest;
 use App\Http\Requests\Batches\CreateRequest;
+use App\Models\Absentee;
 use App\Models\Assessment;
 use App\Models\Batch;
 use App\Models\BatchSchedule;
 use App\Models\Flag;
 use App\Models\Level;
 use App\Models\Quarter;
+use App\Models\SchoolPeriod;
 use App\Models\SchoolYear;
 use App\Models\Student;
 use App\Models\StudentNote;
@@ -150,9 +152,10 @@ class BatchController extends Controller
     public function show(Batch $batch): Response
     {
         $batch->load(['level', 'schoolYear', 'schedule' => function ($query) {
-            $query->with('batchSubject', 'schoolPeriod');
+            $query->with('batchSubject.subject', 'schoolPeriod');
         }]);
 
+        // Schedule for today
         $batchSchedules = BatchSchedule::whereHas('sessions', function ($query) {
             $query->whereDate('date', Carbon::today());
         })->with(['sessions' => function ($query) {
@@ -161,6 +164,14 @@ class BatchController extends Controller
                 ->with('batchSubject.subject', 'schoolPeriod', 'teacher.user');
         }])->where('batch_id', $batch->id)
             ->get();
+
+        // Schedule for the week
+        $schedules = $batch->load(
+            'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',
+            'schedule.batchSubject:id,teacher_id,subject_id,weekly_frequency',
+            'schedule.batchSubject.subject',
+            'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id',
+        )->only('schedule')['schedule'];
 
         $batches = Batch::where('level_id', $batch->level_id)
             ->where('school_year_id', $batch->school_year_id)
@@ -199,6 +210,18 @@ class BatchController extends Controller
         })->with('author', 'student.user')
             ->get();
 
+        // Today's absentees of a batch
+        $absentees = Absentee::whereHas('batchSession', function ($query) use ($batch) {
+            $query->whereHas('batchSchedule', function ($query) use ($batch) {
+                $query->where('batch_id', $batch->id);
+            })
+                ->whereDate('date', Carbon::today());
+        })
+            ->with('user')
+            ->get();
+
+        $schoolPeriods = SchoolPeriod::where('level_category_id', $batch->level->levelCategory->id)->get();
+
         return Inertia::render('Admin/Batches/Index', [
             'batch' => $batch,
             'active_session' => $batch->activeSession,
@@ -208,6 +231,10 @@ class BatchController extends Controller
             'assessments' => $assessments,
             'flags' => $flaggedStudents,
             'students_notes' => $studentsNotes,
+            'schedules' => $schedules,
+            'periods' => Level::find($batch->level->id)->levelCategory->schoolPeriods,
+            'absentees' => $absentees,
+            'school_periods' => $schoolPeriods,
         ]);
     }
 }
