@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('gradable_type');
             $table->foreignId('grade_scale_id')->nullable()->constrained()->cascadeOnDelete();
             $table->float('score')->nullable();
+            $table->float('total_score')->nullable();
             $table->smallInteger('rank')->nullable();
             $table->char('conduct')->nullable();
             $table->smallInteger('attendance')->nullable();
