@@ -46,13 +46,14 @@ class Students extends Controller
 
         $batchesCount = Batch::find($batchSubject->batch_id)->load('level')->level->batches()->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->count();
 
+        $inProgressSession = $batchSubject->batch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user', 'batchSchedule.batchSubject.batch.level');
+        $schoolYears = SchoolYear::all();
+
         $page = match (auth()->user()->type) {
             User::TYPE_TEACHER => 'Teacher/Students',
             User::TYPE_ADMIN => 'Admin/Teachers/Single',
             default => throw new Exception('Type unknown!'),
         };
-
-        $schoolYears = SchoolYear::all();
 
         return Inertia::render($page, [
             'students' => $batchStudents,
@@ -66,6 +67,7 @@ class Students extends Controller
             'top_students' => StudentService::getBatchSubjectTopStudents($batchSubject),
             'bottom_students' => StudentService::getBatchSubjectBottomStudents($batchSubject),
             'teacher' => $teacher,
+            'in_progress_session' => $inProgressSession,
             'filters' => [
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),
