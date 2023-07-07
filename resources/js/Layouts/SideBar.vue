@@ -66,6 +66,7 @@ const isOpen = computed(() => sidebarStore.isOpen);
 
 function toggleSidebar() {
     if (isOpen.value) return sidebarStore.toggle();
+    else sidebarStore.open();
 }
 
 // Close sidebar when clicking outside of it
