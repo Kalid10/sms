@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\ChFavorite as Favorite;
-use App\Models\ChMessage as Message;
 use App\Models\User;
+use Carbon\Carbon;
 use Chatify\Facades\ChatifyMessenger as Chatify;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class MessagesController extends Controller
     protected int $perPage = 30;
 
     /**
-     * Authinticate the connection for pusher
+     * Authenticate the connection for pusher
      */
     public function pusherAuth(Request $request)
     {
@@ -215,20 +215,38 @@ class MessagesController extends Controller
      */
     public function getContacts(Request $request): JsonResponse
     {
-        // get all users that received/sent message from/to [Auth user]
-        $users = Message::join('users', function ($join) {
-            $join->on('ch_messages.from_id', '=', 'users.id')
-                ->orOn('ch_messages.to_id', '=', 'users.id');
-        })
-            ->where(function ($q) {
-                $q->where('ch_messages.from_id', Auth::user()->id)
-                    ->orWhere('ch_messages.to_id', Auth::user()->id);
+        $users = DB::table('users')
+            ->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('ch_messages')
+                    ->whereColumn('users.id', 'ch_messages.from_id')
+                    ->orWhereColumn('users.id', 'ch_messages.to_id')
+                    ->where(function ($query) {
+                        $query->where('ch_messages.from_id', Auth::user()->id)
+                            ->orWhere('ch_messages.to_id', Auth::user()->id);
+                    });
             })
             ->where('users.id', '!=', Auth::user()->id)
-            ->select('users.*', DB::raw('MAX(ch_messages.created_at) max_created_at'))
-            ->orderBy('max_created_at', 'desc')
-            ->groupBy('users.id')
             ->paginate($request->per_page ?? $this->perPage);
+        foreach ($users as $user) {
+            $latest_message = DB::table('ch_messages')
+                ->where('ch_messages.from_id', Auth::user()->id)
+                ->where('ch_messages.to_id', $user->id)
+                ->orWhere(function ($query) use ($user) {
+                    $query->where('ch_messages.from_id', $user->id)
+                        ->where('ch_messages.to_id', Auth::user()->id);
+                })
+                ->orderBy('updated_at', 'desc')
+                ->first();
+
+            // Convert timestamps to ISO 8601 format
+            if ($latest_message) {
+                $latest_message->created_at = Carbon::parse($latest_message->created_at)->toIso8601String();
+                $latest_message->updated_at = Carbon::parse($latest_message->updated_at)->toIso8601String();
+            }
+
+            $user->latest_message = $latest_message;
+        }
 
         return response()->json([
             'contacts' => $users->items(),
@@ -261,6 +279,7 @@ class MessagesController extends Controller
         $favorites = Favorite::where('user_id', Auth::user()->id)->get();
         foreach ($favorites as $favorite) {
             $favorite->user = User::where('id', $favorite->favorite_id)->first();
+            $favorite->user->avatar = Chatify::getUserWithAvatar($favorite->user)->avatar;
         }
 
         return Response::json([
@@ -276,7 +295,9 @@ class MessagesController extends Controller
     {
         $input = trim(filter_var($request['input']));
         $records = User::where('id', '!=', Auth::user()->id)
+            ->whereNot('type', User::TYPE_STUDENT)
             ->where('name', 'LIKE', "%{$input}%")
+            ->with('guardian.children.user')
             ->paginate($request->per_page ?? $this->perPage);
 
         $records->getCollection()->transform(function ($record) {
