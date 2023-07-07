@@ -11,6 +11,7 @@ use App\Models\Level;
 use App\Models\LevelCategory;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
+use App\Models\StaffAbsentee;
 use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
@@ -41,6 +42,16 @@ class AdminController extends Controller
 
         // Get absentee records of active batch students
         $absenteeRecords = Absentee::with('user.student.batches.activeBatch')->count();
+
+        // Get staff absentee records of teachers
+        $teacherAbsenteeRecords = StaffAbsentee::with('user')->whereHas('user', function ($query) {
+            $query->where('type', 'teacher');
+        })->count();
+
+        // Get staff absentee records of admin
+        $adminAbsenteeRecords = StaffAbsentee::with('user')->whereHas('user', function ($query) {
+            $query->where('type', 'admin');
+        })->count();
 
         // Get admins of active batch
         $admins = User::with('roles')->where('type', 'admin')->get();
@@ -83,6 +94,8 @@ class AdminController extends Controller
                 ->get()
             ),
             'flags' => $flags,
+            'teacher_absentee_records' => $teacherAbsenteeRecords,
+            'admin_absentee_records' => $adminAbsenteeRecords,
         ]);
     }
 

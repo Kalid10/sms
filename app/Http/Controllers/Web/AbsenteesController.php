@@ -138,7 +138,7 @@ class AbsenteesController extends Controller
         $request->validate([
             'batch_session_id' => 'nullable|exists:batch_sessions,id',
             'user_id' => 'required|integer|exists:users,id',
-            'reason' => 'nullable|string',
+            'reason' => 'required|string',
             'type' => 'required|string',
         ]);
 
@@ -170,16 +170,17 @@ class AbsenteesController extends Controller
             }
         }
 
-        StaffAbsentee::updateOrInsert(
+        // Check if the staff is already absent for the day
+        if (StaffAbsentee::where('user_id', $request->user_id)->whereDate('created_at', Carbon::today())->first()) {
+            return redirect()->back()->with('error', 'Staff is already absent for the day.');
+        }
+
+        StaffAbsentee::create(
             [
                 'batch_session_id' => $request->batch_session_id,
                 'user_id' => $request->user_id,
-            ],
-            [
                 'reason' => $request->reason,
                 'type' => $request->type,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]);
 
         return redirect()->back()->with('success', 'Staff Absentees updated successfully.');
@@ -205,17 +206,20 @@ class AbsenteesController extends Controller
                 });
             })->paginate(10);
 
-        $staffAbsentees = StaffAbsentee::with('user')
+        // Get staff absentees of the day
+        $staffAbsenteesOfTheDay = StaffAbsentee::with('user')
+            ->whereDate('created_at', Carbon::today())
             ->when($queryKey, function ($query, $queryKey) {
                 $query->whereHas('user', function ($query) use ($queryKey) {
                     $query->where('name', 'like', '%'.$queryKey.'%');
                 });
-            })->paginate(10);
+            })
+            ->paginate(10);
 
         return Inertia::render('Admin/Absentees/Index', [
-            'staff_absentees' => $staffAbsentees,
             'staff' => Inertia::lazy(fn () => $staff),
             'student_absentees' => $studentAbsentees,
+            'staff_absentees_of_the_day' => $staffAbsenteesOfTheDay,
         ]);
     }
 }

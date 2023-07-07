@@ -46,10 +46,12 @@ import AbsenteeAddModal from "@/Views/Admin/Absentees/AbsenteeAddModal.vue";
 
 const showModal = ref(false);
 
-const staffAbsentees = computed(() => usePage().props.staff_absentees);
+const staffAbsenteesOfTheDay = computed(
+    () => usePage().props.staff_absentees_of_the_day
+);
 
 const filteredStaffAbsentees = computed(() => {
-    return staffAbsentees.value.data.map((staffAbsentee) => {
+    return staffAbsenteesOfTheDay.value.data.map((staffAbsentee) => {
         return {
             name: staffAbsentee.user.name,
             email: staffAbsentee.user.email,
@@ -91,7 +93,7 @@ const find = debounce(() => {
             find: query.value,
         },
         {
-            only: ["staff_absentees"],
+            only: ["staff_absentees_of_the_day"],
             preserveState: true,
             replace: true,
         }
