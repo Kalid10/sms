@@ -118,7 +118,7 @@ class StudentGradeHelper
                         score: $studentAssessmentsScore,
                         maximum: $assessmentType->percentage
                     )->id,
-                    'gradable_type' => 'App\Models\Quarter',
+                    'gradable_type' => Quarter::class,
                     'gradable_id' => $assessment->quarter_id,
                 ]
             );
@@ -138,7 +138,7 @@ class StudentGradeHelper
             $studentAssessmentGrade = StudentAssessmentsGrade::where([
                 'student_id' => $student_id,
                 'batch_subject_id' => $assessment->batch_subject_id,
-                'gradable_type' => 'App\Models\Quarter',
+                'gradable_type' => Quarter::class,
                 'gradable_id' => $assessment->quarter_id,
             ]);
             $studentAssessmentGradeSum = $studentAssessmentGrade->sum('score');
@@ -152,13 +152,13 @@ class StudentGradeHelper
                 [
                     'student_id' => $student_id,
                     'batch_subject_id' => $assessment->batch_subject_id,
-                    'gradable_type' => 'App\Models\Quarter',
+                    'gradable_type' => Quarter::class,
                     'gradable_id' => $assessment->quarter_id,
                 ],
                 [
                     'student_id' => $student_id,
                     'batch_subject_id' => $assessment->batch_subject_id,
-                    'gradable_type' => 'App\Models\Quarter',
+                    'gradable_type' => Quarter::class,
                     'gradable_id' => $assessment->quarter_id,
                     'score' => $studentAssessmentGradeSum,
                     'grade_scale_id' => GradeScale::get(
@@ -181,22 +181,36 @@ class StudentGradeHelper
         $student_ids->each(function ($student_id) use ($assessment) {
             $studentQuarterGrade = StudentSubjectGrade::where([
                 'student_id' => $student_id,
-                'gradable_type' => 'App\Models\Quarter',
+                'gradable_type' => Quarter::class,
                 'gradable_id' => $assessment->quarter_id,
             ])->sum('score');
 
+            // Todo:: Check if it can be optimized more
+            $studentAssessmentGrade = StudentAssessmentsGrade::where([
+                'student_id' => $student_id,
+                'gradable_type' => Quarter::class,
+                'gradable_id' => Quarter::getActiveQuarter()->id,
+            ])->with(['assessmentType' => function ($q) {
+                $q->select('id', 'percentage');
+            }])->get()->groupBy('batch_subject_id')
+                ->map(function ($item) {
+                    return $item->sum(function ($row) {
+                        return $row->assessmentType->percentage;
+                    });
+                })->avg();
+
             StudentGrade::updateOrCreate([
                 'student_id' => $student_id,
-                'gradable_type' => 'App\Models\Quarter',
+                'gradable_type' => Quarter::class,
                 'gradable_id' => $assessment->quarter_id,
             ], [
                 'student_id' => $student_id,
-                'gradable_type' => 'App\Models\Quarter',
+                'gradable_type' => Quarter::class,
                 'gradable_id' => $assessment->quarter_id,
                 'score' => $studentQuarterGrade,
                 'grade_scale_id' => GradeScale::get(
                     score: $studentQuarterGrade,
-                    maximum: 100
+                    maximum: round($studentAssessmentGrade, 2)
                 )->id,
             ]);
         });
@@ -224,7 +238,7 @@ class StudentGradeHelper
                         $totalSubjectScore += StudentSubjectGrade::where([
                             'student_id' => $student_id,
                             'batch_subject_id' => $subject_id,
-                            'gradable_type' => 'App\Models\Quarter',
+                            'gradable_type' => Quarter::class,
                             'gradable_id' => $quarter->id,
                         ])->sum('score');
                     } else { // quarter is ongoing
@@ -232,7 +246,7 @@ class StudentGradeHelper
                         $ongoingQuarterScore = StudentAssessmentsGrade::where([
                             'student_id' => $student_id,
                             'batch_subject_id' => $subject_id,
-                            'gradable_type' => 'App\Models\Quarter',
+                            'gradable_type' => Quarter::class,
                             'gradable_id' => $quarter->id,
                         ])->sum('score');
 
@@ -245,7 +259,7 @@ class StudentGradeHelper
                     [
                         'student_id' => $student_id,
                         'batch_subject_id' => $subject_id,
-                        'gradable_type' => 'App\Models\Semester',
+                        'gradable_type' => Semester::class,
                         'gradable_id' => $semester->id,
                     ],
                     [
@@ -261,14 +275,14 @@ class StudentGradeHelper
             // update overall semester grade for the student
             $totalSemesterScore = StudentSubjectGrade::where([
                 'student_id' => $student_id,
-                'gradable_type' => 'App\Models\Semester',
+                'gradable_type' => Semester::class,
                 'gradable_id' => $semester->id,
             ])->sum('score');
 
             StudentGrade::updateOrCreate(
                 [
                     'student_id' => $student_id,
-                    'gradable_type' => 'App\Models\Semester',
+                    'gradable_type' => Semester::class,
                     'gradable_id' => $semester->id,
                 ],
                 [
