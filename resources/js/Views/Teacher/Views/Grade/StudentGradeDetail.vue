@@ -101,7 +101,12 @@ const studentGrades = computed(() => {
             },
             attendance: item.attendance ? item.attendance + "%" : "-",
             grade: item.score
-                ? item?.score?.toFixed(1) + "(" + item?.grade_scale?.label + ")"
+                ? item?.score?.toFixed(1) +
+                  "/" +
+                  item?.total_score +
+                  " (" +
+                  item?.grade_scale?.label +
+                  ")"
                 : "-",
             rank: item.rank ?? " -",
             conduct: item.conduct ?? "-",
