@@ -39,7 +39,7 @@
             <div
                 v-for="(item, index) in flags.data"
                 :key="index"
-                class=" group flex w-full cursor-pointer items-center justify-evenly space-x-2 py-3 text-xs hover:rounded-lg hover:bg-zinc-800 hover:text-white"
+                class="group flex w-full cursor-pointer items-center justify-evenly space-x-2 py-3 text-xs hover:rounded-lg hover:bg-zinc-800 hover:text-white"
                 :class="index % 2 === 1 ? 'bg-gray-50' : ''"
                 @click="
                     showDetailModal = true;
@@ -120,7 +120,7 @@
             </div>
             <Pagination :links="flags.links" class="pt-3" position="center" />
         </div>
-        <div v-else class="w-full">
+        <div v-else class="flex h-48 w-full items-center justify-center">
             <EmptyView title="No Flags Found" />
         </div>
     </div>

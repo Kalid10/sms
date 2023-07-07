@@ -3,11 +3,11 @@
         class="flex h-full w-full flex-col justify-center rounded-lg bg-white shadow-sm"
         :class="classStyle ? classStyle : ' p-5 space-y-3 bg-white'"
     >
-        <div v-if="schedule" class="text-xl font-medium text-gray-800">
-            Your {{ moment().format("dddd") }} Class Schedule
+        <div v-if="schedule?.length" class="text-xl font-medium text-gray-800">
+            {{ moment().format("dddd") }}'s Class Schedule
         </div>
         <div
-            v-if="schedule"
+            v-if="schedule?.length"
             class="flex w-full items-center justify-between divide-x text-center"
         >
             <!--            {{ batch.active_session }}-->
@@ -41,15 +41,18 @@
         </div>
         <div
             v-else
-            class="py-5 text-center text-2xl font-bold uppercase text-gray-600"
+            class="flex h-44 items-center justify-center py-5 text-center text-2xl font-bold uppercase text-gray-600"
         >
-            No schedule found!
+            <EmptyView
+                :title="'No Schedule found for ' + moment().format('dddd')"
+            />
         </div>
     </div>
 </template>
 <script setup>
 import { numberWithOrdinal } from "@/utils";
 import moment from "moment";
+import EmptyView from "@/Views/EmptyView.vue";
 
 defineProps({
     schedule: {
