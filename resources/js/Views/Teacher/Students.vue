@@ -10,6 +10,7 @@
                 :total-batches-count="totalBatchesCount"
                 :select-input-options="batchSubjectOptions"
                 :selected-input="batchSubject.id"
+                :show-current-class="true"
                 @change="updateBatchInfo"
             />
             <div class="flex">
