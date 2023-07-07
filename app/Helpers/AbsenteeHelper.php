@@ -175,4 +175,24 @@ class AbsenteeHelper
             );
         }
     }
+
+    public static function setAbsenteesFromPreviousSession(): void
+    {
+        $absentees = Absentee::where([
+            ['next_class_attended_flag', false],
+        ])->whereDate('created_at', Carbon::today())->with('batchSession.batchSchedule.batch')->get();
+
+        foreach ($absentees as $absentee) {
+            $inProgressSession = $absentee->batchSession->batchSchedule->batch->inProgressSession();
+
+            if ($inProgressSession->id !== $absentee->batch_session_id) {
+                Absentee::updateOrCreate([
+                    'user_id' => $absentee->user_id,
+                    'batch_session_id' => $inProgressSession->id,
+                ], [
+                    'next_class_attended_flag' => false,
+                ]);
+            }
+        }
+    }
 }
