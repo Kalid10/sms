@@ -33,6 +33,7 @@
                                     label="Reason"
                                     placeholder="Enter reason"
                                     class="w-full lg:max-w-lg"
+                                    :error="form.errors.reason"
                                 />
                             </div>
 
@@ -144,6 +145,7 @@ const addAbsentee = () => {
         onSuccess: () => {
             showModal.value = false;
             form.reset();
+            selectedStaff.value = null;
         },
     });
 };

@@ -1,25 +1,6 @@
 <template>
     <div class="flex h-full w-full items-center justify-evenly bg-gray-100">
         <div
-            class="hidden h-full w-4/12 flex-col items-center justify-center space-y-2 text-center lg:flex"
-        >
-            <div>
-                <h1
-                    class="w-full text-3xl font-extrabold leading-none lg:text-6xl"
-                >
-                    <span class="w-full">Hello 👋🏼 {{ user.name }}</span>
-                </h1>
-
-                <h3 class="py-1 font-light text-gray-500">
-                    Welcome to your profile page, where you can view and update
-                    your personal information and security settings. Enjoy your
-                    journey with us!
-                </h3>
-            </div>
-
-            <div class="h-3/6 min-w-full"></div>
-        </div>
-        <div
             class="flex h-5/6 w-7/12 flex-col items-center justify-between rounded-lg bg-white px-12 py-3"
         >
             <!--            Profile -->
@@ -85,7 +66,7 @@
                                 required
                             />
                         </div>
-                        <div class="flex justify-end">
+                        <div class="flex justify-end py-3">
                             <PrimaryButton
                                 title="Update Profile"
                                 @click="submitProfileForm"
@@ -136,7 +117,7 @@
                             placeholder="Confirm your new password"
                             required
                         />
-                        <div class="flex justify-end">
+                        <div class="flex justify-end py-3">
                             <PrimaryButton
                                 title="Update Password"
                                 @click="submitPasswordForm"
@@ -145,6 +126,26 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div
+            class="hidden h-full w-4/12 flex-col items-center justify-center space-y-2 text-center lg:flex"
+        >
+            <div>
+                <h1
+                    class="w-full text-3xl font-extrabold leading-none lg:text-6xl"
+                >
+                    <span class="w-full">Hello 👋🏼 {{ user.name }}</span>
+                </h1>
+
+                <h3 class="py-1 font-light text-gray-500">
+                    Welcome to your profile page, where you can view and update
+                    your personal information and security settings. Enjoy your
+                    journey with us!
+                </h3>
+            </div>
+
+            <div class="h-3/6 min-w-full"></div>
         </div>
     </div>
 </template>

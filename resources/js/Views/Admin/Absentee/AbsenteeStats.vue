@@ -4,19 +4,49 @@
     >
         <div class="flex items-center space-x-2.5 pl-3">
             <UserMinusIcon class="w-6" />
-            <div class="text-sm font-medium">Today's Absentees</div>
+            <div class="grow text-sm font-medium">Today's Absentees</div>
+            <EyeIcon
+                class="w-5 cursor-pointer hover:scale-125"
+                @click="absenteeLink"
+            />
         </div>
         <div
             class="flex w-full items-center justify-between divide-x divide-gray-600 pt-4"
         >
-            <AbsenteeStatItem class="w-1/3" value="4" title="Students" />
-            <AbsenteeStatItem class="w-1/3" value="2" title="Teachers" />
-            <AbsenteeStatItem class="w-1/3" value="1" title="Admins" />
+            <AbsenteeStatItem
+                class="w-1/3"
+                :value="absenteeRecords"
+                title="Students"
+            />
+            <AbsenteeStatItem
+                class="w-1/3"
+                :value="teacherAbsenteeRecords"
+                title="Teachers"
+            />
+            <AbsenteeStatItem
+                class="w-1/3"
+                :value="adminAbsenteeRecords"
+                title="Admins"
+            />
         </div>
     </div>
 </template>
 <script setup>
 import AbsenteeStatItem from "@/Views/Admin/Absentee/AbsenteeStatItem.vue";
-import { UserMinusIcon } from "@heroicons/vue/24/outline";
+import { EyeIcon, UserMinusIcon } from "@heroicons/vue/24/outline";
+import { computed } from "vue";
+import { router, usePage } from "@inertiajs/vue3";
+
+const absenteeRecords = computed(() => usePage().props.absentee_records);
+const teacherAbsenteeRecords = computed(
+    () => usePage().props.teacher_absentee_records
+);
+const adminAbsenteeRecords = computed(
+    () => usePage().props.admin_absentee_records
+);
+
+function absenteeLink() {
+    router.get("/admin/absentees");
+}
 </script>
 <style scoped></style>
