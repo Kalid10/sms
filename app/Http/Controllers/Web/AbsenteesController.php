@@ -8,6 +8,7 @@ use App\Models\BatchSession;
 use App\Models\StaffAbsentee;
 use App\Models\Student;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class AbsenteesController extends Controller
         $request->validate([
             'batch_session_id' => 'required|integer|exists:batch_sessions,id',
             'user_type' => 'required|in:'.User::TYPE_STUDENT.','.User::TYPE_TEACHER,
-            'absentees' => 'required|array|min:1',
+            'absentees' => 'nullable|array|min:0',
             'absentees.*.user_id' => 'required|integer|exists:users,id|distinct:strict',
             'absentees.*.reason' => 'nullable|string',
         ]);
@@ -87,6 +88,16 @@ class AbsenteesController extends Controller
 
             // Remove students from the absent list
             Absentee::where('batch_session_id', $request->batch_session_id)->whereIn('user_id', $usersToRemove)->delete();
+
+            foreach ($usersToRemove as $userId) {
+                $absentee = Absentee::where('user_id', $userId)->whereDate('created_at', Carbon::today())->latest()->first();
+
+                if ($absentee) {
+                    $absentee->update([
+                        'next_class_attended_flag' => true,
+                    ]);
+                }
+            }
 
             DB::commit();
 
