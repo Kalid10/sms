@@ -1,11 +1,11 @@
 <template>
     <div class="container mx-auto flex w-full flex-col items-center gap-3">
-        <Heading value="All Semesters" />
+        <Heading :value="$t('allSemesters.allSemesters')"  />
         <div class="flex w-full flex-col gap-3 xl:flex-row">
             <TextInput
                 v-model="query"
                 class="grow"
-                placeholder="Search for Semesters by name"
+                :placeholder="$t('allSemesters.queryPlaceholder')"
             />
             <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-fit">
                 <RadioGroup
@@ -17,7 +17,7 @@
                     v-model="selectedYear"
                     class="w-full sm:w-1/3 sm:max-w-xs xl:w-44"
                     :options="years"
-                    placeholder="Filter by School Year"
+                    :placeholder="$t('allSemesters.selectedYearPlaceholder')"
                 />
             </div>
         </div>
@@ -25,7 +25,7 @@
             v-if="filtersApplied"
             class="flex min-h-8 w-full flex-wrap items-center justify-start gap-3"
         >
-            <span class="text-sm text-gray-500">Applied filters:</span>
+            <span class="text-sm text-gray-500">{{ $t('allSemesters.appliedFilters')}}</span>
             <div class="flex flex-wrap items-start justify-center gap-3">
                 <ButtonLabel
                     v-if="!!query"

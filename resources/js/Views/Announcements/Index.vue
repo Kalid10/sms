@@ -17,7 +17,7 @@
                 <SecondaryButton
                     v-if="isAdmin() && view === 'admin'"
                     class="h-fit !rounded-2xl bg-zinc-700 text-white"
-                    title="Add Announcement"
+                    :title="$t('announcementsIndex.addAnnouncement')"
                     @click="showAddAnnouncement = true"
                 />
             </div>
@@ -82,7 +82,7 @@
                         class="flex items-end justify-between space-y-2 text-xs"
                     >
                         <div>
-                            Expires
+                            {{ $t('announcementsIndex.expires') }}
                             {{
                                 moment(
                                     selectedAnnouncement.expires_on
@@ -91,12 +91,13 @@
                         </div>
                         <div>
                             <div>
-                                Posted
+                                {{ $t('announcementsIndex.posted') }}
                                 {{
                                     moment(
                                         selectedAnnouncement.created_at
                                     ).fromNow()
-                                }}, By
+                                }},
+                                {{ $t('announcementsIndex.by') }}
                                 <span
                                     class="cursor-pointer underline-offset-2 hover:scale-105 hover:font-semibold hover:underline"
                                 >
@@ -111,14 +112,14 @@
 
         <Modal v-model:view="showAddAnnouncement">
             <FormElement
-                title="Add Announcement"
+                :title="$t('announcementsIndex.addAnnouncement')"
                 @submit="addAnnouncement"
                 @cancel="form.reset()"
             >
                 <TextInput
                     v-model="form.title"
-                    label="Title"
-                    placeholder="Title"
+                    :label="$t('announcementsIndex.title')"
+                    :placeholder="$t('announcementsIndex.title')"
                     class="w-full"
                     :error="form.errors.title"
                     required
@@ -126,8 +127,8 @@
 
                 <TextArea
                     v-model="form.body"
-                    label="Body"
-                    placeholder="the body or description"
+                    :label="$t('announcementsIndex.body')"
+                    :placeholder="$t('announcementsIndex.bodyDescription')"
                     class="w-full"
                     :error="form.errors.body"
                 />
@@ -136,7 +137,8 @@
                     <label
                         for="target-group"
                         class="block text-sm font-medium text-gray-700"
-                        >Select target group :</label
+                        >
+                        {{ $t('announcementsIndex.selectTargetGroup') }}</label
                     >
                     <div
                         class="mt-1 flex w-full justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -164,8 +166,8 @@
 
                 <DatePicker
                     v-model="form.expires_on"
-                    label="Expire date"
-                    placeholder="Expires On"
+                    :label="$t('announcementsIndex.expireDate')"
+                    :placeholder="$t('announcementsIndex.expiresOn')"
                     class="w-full"
                 />
             </FormElement>
@@ -173,6 +175,8 @@
     </div>
 </template>
 <script setup>
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 import { computed, ref, toRefs, watch } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import Item from "@/Views/Announcements/Item.vue";
@@ -196,7 +200,9 @@ const props = defineProps({
     },
     title: {
         type: String,
-        default: "Announcements",
+        default: function () {
+            useI18n().t('announcementsIndex.announcementsTitle')
+        },
     },
     classStyle: {
         type: String,

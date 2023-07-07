@@ -10,7 +10,7 @@
 
             <SelectInput
                 v-model="selectedBatch"
-                placeholder="Select Section"
+                :placeholder="$t('single.selectSection')"
                 class="w-5/12"
                 :options="batchOptions"
             />

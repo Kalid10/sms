@@ -4,8 +4,8 @@
     >
         <StatisticsCard
             :data="adminsCount"
-            subtitle="Admins registered in the system"
-            title="Admins"
+            :subtitle="$t('userStatistics.adminStatSubtitle')"
+            :title="$t('userStatistics.adminsTitle')"
         >
             <template #icon>
                 <UserCircleIcon />
@@ -13,8 +13,8 @@
         </StatisticsCard>
         <StatisticsCard
             :data="studentsCount"
-            subtitle="Students registered into the school (all-time)"
-            title="Students"
+            :subtitle="$t('userStatistics.studentsStatSubtitle')"
+            :title="$t('userStatistics.studentsStatTitle')"
         >
             <template #icon>
                 <UserIcon />
@@ -22,8 +22,8 @@
         </StatisticsCard>
         <StatisticsCard
             :data="teachersCount"
-            subtitle="Teachers registered into the school (all-time)"
-            title="Teachers"
+            :subtitle="$t('userStatistics.teacherStatSubtitle')"
+            :title="$t('userStatistics.teacherStatTitle')"
         >
             <template #icon>
                 <UsersIcon />
@@ -31,8 +31,8 @@
         </StatisticsCard>
         <StatisticsCard
             :data="newUsersCount"
-            subtitle="New Users (last 30 days)"
-            title="New Users"
+            :subtitle="$t('userStatistics.newUserStatSubtitle')"
+            :title="$t('userStatistics.newUsersStatTitle')"
         >
             <template #icon>
                 <UserPlusIcon />

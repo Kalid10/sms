@@ -8,7 +8,7 @@
                 <div :class="levelCategoryLabels[c]" class="grid h-5 w-5 place-items-center rounded-full border text-xs font-semibold">
                     {{ category[0] }}
                 </div>
-                <h3 class="text-sm font-semibold text-gray-500">{{ category }} Levels</h3>
+                <h3 class="text-sm font-semibold text-gray-500">{{ category }} {{ $t('subjectGrades.levels')}}</h3>
             </div>
 
             <div class="grid grid-cols-4 gap-3">
@@ -17,7 +17,7 @@
 
                     <div class="flex flex-col gap-1">
 
-                        <h3 class="text-sm font-semibold text-gray-500">Sections</h3>
+                        <h3 class="text-sm font-semibold text-gray-500">{{ $t('subjectGrades.sections')}}</h3>
                         <div class="flex gap-3">
 
                             <div

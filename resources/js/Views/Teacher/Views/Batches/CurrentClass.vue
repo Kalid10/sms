@@ -4,7 +4,7 @@
             v-if="inProgressSession"
             class="flex w-full flex-col items-center justify-evenly space-y-1 rounded-md py-2 px-3 text-center text-gray-200"
         >
-            <div class="text-[0.6rem] font-light">Current Class</div>
+            <div class="text-[0.6rem] font-light">{{$t('currentClass.currentClass')}}</div>
             <div class="text-xl font-bold">
                 {{
                     inProgressSession.batch_schedule.batch_subject.subject
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div v-else class="w-full text-center font-light text-white">
-            No Active Class
+            {{ $t('currentClass.noActiveClass')}}
         </div>
     </div>
     <div v-else-if="view === 'absentee'">
@@ -31,6 +31,9 @@
                 class="flex h-full w-6/12 flex-col items-center justify-between space-y-4"
             >
                 <div class="w-full text-center font-light">
+<!--                    <span>You are now having{x}class with {y} students!</span>-->
+
+
                     You are now having
                     <span class="px-1 font-medium">{{
                         inProgressSession.batch_schedule.batch_subject.subject
@@ -48,7 +51,7 @@
                 </div>
                 <SecondaryButton
                     class="w-fit !rounded-2xl bg-zinc-800 !px-5 font-bold uppercase text-white"
-                    title="Add Absentees"
+                    :title="$t('currentClass.buttonTitle')"
                     @click="showModal = true"
                 />
             </div>
@@ -58,7 +61,7 @@
                 <div class="text-6xl font-bold">
                     {{ inProgressSession.absentees?.length }}
                 </div>
-                <div class="text-sm font-light uppercase">Absent Students</div>
+                <div class="text-sm font-light uppercase">{{$t('currentClass.absentStudents')}}</div>
             </div>
 
             <Modal v-model:view="showModal">
@@ -74,6 +77,7 @@ import { usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Modal from "@/Components/Modal.vue";
 import AddAbsentees from "@/Views/Teacher/Views/Batches/AddAbsentees.vue";
+import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 
 const inProgressSession = computed(() => usePage().props.in_progress_session);
 const showModal = ref(false);

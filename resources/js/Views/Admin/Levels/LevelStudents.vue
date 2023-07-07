@@ -32,7 +32,7 @@
                     <TextInput
                         v-model="searchKey"
                         class="w-full"
-                        placeholder="Search for a student by name"
+                        :placeholder="$t('levelStudent.searchKeyPlaceHolder')"
                     />
                 </div>
             </template>
@@ -42,20 +42,22 @@
                     <ExclamationTriangleIcon
                         class="mb-2 h-6 w-6 text-negative-50"
                     />
-                    <p class="text-sm font-semibold">No data found</p>
+                    <p class="text-sm font-semibold">
+                        {{ $t('levelStudent.noDataFound') }}
+                    </p>
                     <div v-if="searchKey.length">
                         <p
                             v-if="searchKey === null"
                             class="text-sm text-gray-500"
                         >
-                            No student has been enrolled in this section
+                            {{ $t('levelStudent.noStudentEnrolled') }}
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
-                            Your search query "<span
+                            {{ $t('levelStudent.yourSearchQuery') }} "<span
                                 class="font-medium text-black"
                                 >{{ searchKey }}</span
-                            >" did not match
-                            <span class="block">any student's name</span>
+                            >" {{ $t('levelStudent.didNotMatch') }}
+                            <span class="block">{{ $t('levelStudent.anyStudentName') }}</span>
                         </p>
                     </div>
                 </div>

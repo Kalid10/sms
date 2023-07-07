@@ -16,7 +16,7 @@
                     />
                     <span class="text-xs capitalize">{{ semester.status }}</span>
                 </div>
-                <span class="text-xs">Updated {{ moment(semester.updated_at).fromNow() }}</span>
+                <span class="text-xs">{{ $t('semesterCard.updated')}}  {{ moment(semester.updated_at).fromNow() }}</span>
             </div>
 
         </div>

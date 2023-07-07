@@ -22,11 +22,11 @@
     </div>
 
     <TabElement v-model:active="activeTab" :tabs="subjectTabs">
-        <template #teachers>
+        <template #[teachersTab]>
             <SubjectTeachers />
         </template>
 
-        <template #grades>
+        <template #[gradesTab]>
             <SubjectGrades />
         </template>
     </TabElement>
@@ -39,11 +39,15 @@ import TabElement from "@/Components/TabElement.vue";
 import { subjectPriorityLabels, toHashTag } from "@/utils.js";
 import SubjectTeachers from "@/Views/Admin/Subjects/SubjectTeachers.vue";
 import SubjectGrades from "@/Views/Admin/Subjects/SubjectGrades.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const subject = computed(() => usePage().props.subject);
 
-const subjectTabs = ["Grades", "Teachers"];
+const subjectTabs = [t('common.grades'), t('common.teachers')];
 const activeTab = ref("Grades");
+
+const teachersTab = t('common.teachers')
+const gradesTab = t('common.grades')
 </script>
 
 <style scoped></style>

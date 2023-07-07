@@ -5,7 +5,7 @@
             <div
                 class="cursor-pointer text-xs font-light underline-offset-2 hover:font-medium hover:underline"
             >
-                Total Students
+                {{ $t('info.totalStudents') }}
             </div>
         </div>
         <div class="h-full w-[0.01rem] bg-gray-200"></div>

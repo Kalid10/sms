@@ -51,7 +51,8 @@ import { Link, usePage } from "@inertiajs/vue3";
 import { toHashTag } from "@/utils.js";
 import TableElement from "@/Components/TableElement.vue";
 import moment from "moment";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const batchesSubjects = computed(() =>
     usePage().props.batches.map((batch) => batch.subjects)
 );
@@ -87,7 +88,7 @@ const subjectsConfig = [
     },
     {
         key: "full_name",
-        name: "Subject",
+        name: t('common.subject'),
         type: "custom",
         align: "right",
     },

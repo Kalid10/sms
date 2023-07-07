@@ -2,13 +2,15 @@ const am = {
     "datePicker":{
         "selectYear":"አመት ይምረጡ",
         "today":"ዛሬ",
-        "clear":"ባዶ አድርግ"
+        "clear":"ባዶ አድርግ",
+        "days": ["እሁድ","ሰኞ","ማክ","ረቡዕ","ሐሙስ","አርብ","ቅዳሜ"],
+        "months": ["ጃንዩወሪ","ፌብሩወሪ","ማርች","ኤፕሪል","ሜይ","ጁን","ጁላይ","ኦገስት","ሴፕቴምበር","ኦክቶበር","ኖቬምበር","ዲሴምበር"]
     },
     "dialogBox":{
         "cancel":"ሰርዝ"
     },
     "fileInput":{
-        "uploadText":"ፋይሉን ለመጫን ይንኩት ውይም ወስደው እዚህ ያስቀምጡት",
+        "uploadText":"<span class='font-bold'>ፋይሉን ለመጫን ይንኩት</span> ውይም ወስደው እዚህ ያስቀምጡት",
         "max" : "ከፍተኛ",
         "file": "ፋይል:",
         "noFileSelected.": "ምንም ፋይል አልመረጡም።",
@@ -26,17 +28,22 @@ const am = {
     },
     "teacherLayout": {
         "home": "መነሻ",
-        "myClasses": "የእኔ ክፍሎች",
-        "myStudents": "የእኔ ተማሪዎች",
+        "myClasses": "ክፍሎቼ",
+        "myStudents": "ተማሪዎቼ",
         "lessonPlan": "የትምህርት ዕቅድ",
         "assessments": "ግምገማዎች",
         "homeRooms": "ሆም ሩምስ",
+        "announcements":"ማስታወቂያዎች",
         "schedule": "ሰዓት ሰሌዳ",
         "feedbacks": "ግብረ መልስ",
-        "settings": "ቅንብሮች"
+        "settings": "ቅንብሮች",
+        "logout":"ይወጡ",
+        "questionBank":"የጥያቄ ባንክ"
+
     },
     "announcementsIndex": {
-        "announcements": "መግለጫዎች",
+        "announcementsTitle":"ማስታወቂያ",
+        "addAnnouncement":"ማስታወቂያ ጨምር",
         "searchAnnouncements": "መግለጫዎችን ይፈልጉ",
         "recentAnnouncements": "የቅርብ ጊዜ ማስታወቂያዎች",
         "emptyViewTitle": "ምንም ማስታወቂያዎች አልተገኙም!",
@@ -45,7 +52,15 @@ const am = {
         "postTargets": "የመልእክት ዓላማዎች",
         "expires": "ያበቃል",
         "posted": "ተለቀቀ",
-        "by":"በ"
+        "by":"በ",
+        "title":"ርዕስ",
+        "body":"መግለጫ",
+        "bodyDescription":"መግለጫ",
+        "selectTargetGroup":"የታለመ ቡድን ይምረጡ",
+        "expireDate":"ጊዜው የሚያበቃበት ቀን",
+        "expiresOn":"ጊዜው ያበቃል",
+        "announcements": [ "ሁሉም", "ተማሪዎች", "መምህራን", "ወላጆች", "አስተዳዳሪዎች" ]
+
     },
     "assessmentIndex": {
         "name": "ስም",
@@ -60,7 +75,13 @@ const am = {
         "minMaxHint": "ዝቅተኛ እና ከፍተኛ ግምገማዎች አንድ ተማሪ መውሰድ ያለበትን ዝቅተኛ እና ከፍተኛ የፈተና ቁጥር ነው።",
         "listOfAssessmentTypes": "የግምገማ ዓይነቶች ዝርዝር",
         "filterByLevelCategory": "በክፍል ይለዩ",
-        "addAssessmentType": "የግምገማ ዓይነት ያክሉ"
+        "addAssessmentType": "የግምገማ ዓይነት ያክሉ",
+        "lastUpdated ":"መጨረሻ የተሻሻለው",
+        "updateAssessmentType": "የመገምገሚያ አይነት ማሻሻል",
+        "assessmentType": "የመገምገሚያ አይነት",
+        "gradeCategory": "ደረጃ ምድብ",
+        "updatedAt": "የተሻሻለበት ጊዜ"
+
     },
     "gettingStartedSchoolSchedule": {
         "congratulations": "እንኳን ደስ አላችሁ",
@@ -106,7 +127,7 @@ const am = {
     },
     "section": {
         "section": "ክፍል",
-        "absent Students": "የቀሩ ተማሪዎች",
+        "absentStudents": "የቀሩ ተማሪዎች",
         "topStudents": "ምርጥ ተማሪዎች",
         "studentsFallingBehind": "በትምህርት መዘግየት ላይ ያሉ ተማሪዎች"
     },
@@ -127,6 +148,7 @@ const am = {
         "search": "ፍለጋ"
     },
     "schedulesIndex": {
+        "schoolSchedules":"የትምህርት ቤት መርሃ ግብሮች",
         "from": "ከ",
         "searchForSchedule": "ለመርሐግብር ፍለጋ",
         "addEvent": "ክስተት ይጨምሩ"
@@ -137,31 +159,44 @@ const am = {
     },
     "batchStudentTable": {
         "select a grade": "ክፍል ምረጥ",
-        "full information on": "ስለዚህ ሙሉ መረጃ",
-        "studentsIn": "በ ተማሪዎች"
+        "selectBatch": "ባች(batch) ምረጥ",
+        "goToGrade": "ወደ ክፍል ",
+        "fullInformation": "ስለዚህ ሙሉ መረጃ",
+        "studentsIn": "በ ተማሪዎች",
+        "noDataFound": "ምንም መረጃ አልተገኘም",
+        "noTeacherEnrolled": "ምንም መምህር አልተመዘገበም",
+        "yourSearchQuery": "የእርስዎ የፍለጋ ጥያቄ '<span class='font-medium text-black' >{ searchKey }</span >' አንድም መምህር ስም ጋራ አልተገናኘም",
+        "name": "ስም",
+        "email": "ኢሜል",
+        "gender": "ፆታ",
+        "female": "ሴት",
+        "male": "ወንድ"
     },
     "studentsIndex": {
-        "students": "ተማሪዎች"
+        "students": "ተማሪዎች",
+        "grades":"ክፍሎች"
+
+
     },
     "adminStudentsTable": {
         "students": "ተማሪዎች",
-        "ListAllStudent": "በትምህርት ቤቱ ውስጥ ያሉ ተማሪዎች ዝርዝር",
-        "registerStudent": "ተማሪ ይመዝገቡ",
-        "searchForStudent":"ተማሪን በስም ፈልግ",
+        "listAllStudents": "የትምህርት ቤቱ ሁሉም ተማሪዎች ዝርዝር",
+        "registerStudent": "ተማሪ መመዝገብ",
+        "searchForStudent": "ተማሪን በስም ይፈልጉ",
         "totalStudents": "ጠቅላላ ተማሪዎች",
-        "absenteesToday": "ዛሬ የቀሩ",
-        "latestPeriodAbsentees": "የቅርብ ጊዜ ቀሪዎች",
-        "suspendedStudents": "የታገዱ ተማሪዎች",
-        "noDataFound": "ምንም መረጃ አልተገኘም።",
-        "yourSearchQuery": "የፍለጋ ጥያቄህ",
-        "didNotMatch": "አልተዛመደም።",
-        "anyStudentName": "የማንኛውም ተማሪ ስም",
-        "transferringStudent": "ተማሪን ማዛወር አሁን ካለው ክፍል ያስወጣቸውና ወደ ተመረጠው ክፍል ያስገባቸዋል።",
-        "selectDestinationSection": "መድረሻ ክፍልን ይምረጡ",
+        "absenteesToday": "ዛሬ የቀሩ ተማሪዎች",
+        "noDataFound": "ምንም መረጃ አልተገኘም",
+        "noStudentEnrolled": "ምንም ተማሪ አልተመዘገበም",
+        "yourSearchQuery": "<span>የእርስዎ የፍለጋ ጥያቄ '<span class='font-medium text-black' >{ searchKey }</span >' አንድም ተማሪ ስም ጋራ አልተገናኘም</span>",
+        "transferringStudent ":"ተማሪን ማዛወር አሁን ካለው ክፍል ያስወግዳው እና ወደ ተመረጠው ክፍል ያክላቸዋል።",
+        "selectDestinationSection": "የመድረሻ ክፍል ይምረጡ",
+        "sections": "ክፍሎች",
+        "todayAbsentees": "ዛሬ የቀሩ ተማሪዎች",
+        "latestPeriodAbsentees": "የቅርብ ጊዜ ክፍለ ጊዜ የቀሩ ተማሪዎች",
         "name": "ስም",
-        "email": "ኢሜይል",
+        "email": "ኢሜል",
         "gender": "ፆታ",
-        "grade": "ደረጃ"
+        "grade": "ደረጃ",
     },
     "subjectsIndex": {
         "message":"ይህን ርዕሰ ጉዳይ በማህደር ልታስቀምጠው ነው። እርግጠኛ ነህ መቀጠል ትፈልጋለህ? አይጨነቁ፣ በዚህ ርዕሰ ጉዳይ ስር ያሉ ሁሉም ቡድኖች እና ተማሪዎች ይገኛሉ፣ እና ይህን ትምህርት በማንኛውም ጊዜ ወደነበረበት መመለስ ይችላሉ።"
@@ -182,41 +217,34 @@ const am = {
         "headingOne": "ሲስተም አስተዳዳሪ ይመዝገቡ",
         "headingTwo": "የሚጠየቀውን መረጃ ይሙሉ።",
         "adminFormElementTitle": "ሲስተም አስተዳዳሪ ይመዝገቡ",
-        "nameLabel": "ስም",
         "namePlaceholder": "ሙሉ ስም",
-        "emailLabel": "ኢሜይል",
-        "phoneNumberLabel": "ስልክ ቁጥር",
-        "phoneNumberPlaceholder": "ስልክ ቁጥር",
+        "phoneNumber": "ስልክ ቁጥር",
         "usernameLabel": "ተጠቃሚ ስም",
         "usernamePlaceholder": "ተጠቃሚ ስም",
-        "positionLabel": "ቦታ",
-        "positionPlaceholder": "ቦታ",
+        "position": "ቦታ",
         "genderLabel": "ፆታ",
-        "genderPlaceholder": "ፆታ",
+        "genderPlaceholder": "ፆታ ምረጥ",
         "male": "ወንድ",
         "female": "ሴት"
     },
     "createStudent": {
-        "headingOne": "አዲስ ተማሪ እና ወላጆች ይመዝገቡ",
+        "headingOne": "አዲስ ተማሪ እና አሳዳጊ ይመዝገቡ",
         "headingTwo": "የትምህርት እድገትን በብቃት ለማስተዳደር፣ ስኬቶችን ለመከታተል እና ግንኙነቶችን ለማመቻቸት ተማሪዎችን እና ወላጆችን ያስመዝግቡ።",
-        "guardianFormElementTitle": "የአስተዳዳሪ ቅጽ",
+        "guardianFormElementTitle": "የአሳዳጊ ቅጽ",
         "nameLabel": "የተማሪ ስም",
-        "namePlaceholder": "ስም",
         "levelIdLabel": "የተማሪ ደረጃ",
         "levelIdPlaceholder": "የተማሪ ደረጃ ይምረጡ (ክፍል)",
         "genderLabel": "የተማሪ ፆታ",
         "genderPlaceholder": "የተማሪ ፆታ ይምረጡ",
         "studentDateOfBirth": "የተማሪ የልደት ቀን",
-        "guardianRelationLabel": "ወላጅ ግንኙነት",
-        "guardianRelationPlaceholder": "ወላጅ ግንኙነት ይምረጡ",
-        "guardianNameLabel": "ስም",
-        "guardianNamePlaceholder": "የአስተዳዳሪ ስም",
-        "guardianPhoneNumberLabel": "የአስተዳዳሪ የስልክ ቁጥር",
+        "guardianRelationLabel": "አሳዳጊ ግንኙነት",
+        "guardianRelationPlaceholder": "አሳዳጊ ግንኙነት ይምረጡ",
+        "guardianName": "የአሳዳጊ ስም",
+        "guardianPhoneNumberLabel": "የአሳዳጊ የስልክ ቁጥር",
         "guardianPhoneNumberPlaceholder": "ስልክ ቁጥር",
-        "guardianEmailLabel": "የአስተዳዳሪ ኢሜይል",
-        "guardianEmailPlaceholder": "ኢሜይል",
-        "guardianGenderLabel": "የአስተዳዳሪ ፆታ",
-        "guardianGenderPlaceholder":"የአስተዳዳሪ ፆታ ይምረጡ",
+        "guardianEmailLabel": "የአሳዳጊ ኢሜይል",
+        "guardianGenderLabel": "የአሳዳጊ ፆታ",
+        "guardianGenderPlaceholder":"የአሳዳጊ ፆታ ይምረጡ",
         "headingThree": "በጅምላ የተማሪ እና ወላጆችን ይመዝገቡ",
         "headingFour":"የኤክሴል excel ወይም csv ፋይል ብቻ ይጫኑ።",
         "father": "አባት",
@@ -226,14 +254,12 @@ const am = {
     "createTeacher": {
         "headerOne": "አዲስ መምህር ይመዝገቡ",
         "headerTwo": "የሚጠየቀውን መረጃ ይሙሉ።",
-        "nameLabel": "ስም",
+        "registerTeacher":"መምህር ይመዝገቡ",
         "namePlaceholder": "የአዲሱ መምህር ሙሉ ስም",
         "usernameLabel": "መለያ ስም",
         "usernamePlaceholder": "መለያ ስም",
         "phoneNumberLabel": "ስልክ ቁጥር",
         "phoneNUmberPlaceholder": "ስልክ ቁጥር",
-        "emailLabel": "ኢሜይል",
-        "emailPlaceholder": "ኢሜይል",
         "genderLabel": "ፆታ",
         "genderPlaceholder": "ፆታ"
     },
@@ -371,38 +397,10 @@ const am = {
     },
     "calenderMonthView":{
         "allDay": "ሁሉም ቀናት",
-        "days": {
-            "sunday": "እሁድ",
-            "monday": "ሰኞ",
-            "tuesday": "ማክሰኞ",
-            "wednesday": "ረቡዕ",
-            "thursday": "ሐሙስ",
-            "friday": "አርብ",
-            "saturday": "ቅዳሜ"
-        },
-        "shortDays": {
-            "sun": "እሁድ",
-            "mon": "ሰኞ",
-            "tue": "ማክ",
-            "wed": "ረቡዕ",
-            "thu": "ሐሙስ",
-            "fri": "አርብ",
-            "sat": "ቅዳሜ"
-        },
-        "months": {
-            "january": "ጃንዩወሪ",
-            "february": "ፌብሩወሪ",
-            "march": "ማርች",
-            "april": "ኤፕሪል",
-            "may": "ሜይ",
-            "june": "ጁን",
-            "july": "ጁላይ",
-            "august": "ኦገስት",
-            "september": "ሴፕቴምበር",
-            "october": "ኦክቶበር",
-            "november": "ኖቬምበር",
-            "december": "ዲሴምበር"
-        }
+        "days": ["እሁድ","ሰኞ","ማክሰኞ","ረቡዕ","ሐሙስ","አርብ","ቅዳሜ"],
+        "shortDays": ["እሁድ","ሰኞ","ማክ","ረቡዕ","ሐሙስ","አርብ","ቅዳሜ"],
+        "months": ["ጃንዩወሪ","ፌብሩወሪ","ማርች","ኤፕሪል","ሜይ","ጁን","ጁላይ","ኦገስት","ሴፕቴምበር","ኦክቶበር","ኖቬምበር","ዲሴምበር"]
+
     },
     "batchScheduler": {
         "header":"በጣም ጥሩ! አሁን ለክፍሎችዎ መርሃ ግብሮችን ይፍጠሩ",
@@ -494,7 +492,7 @@ const am = {
         "none":"ምንም",
         "noneDescription":"ሙሉ ቀን ትምህርት ይኖራል።",
 
-    
+
     },
     "periodForm": {
         "classSchedule": "የትምህርት መርሐግብር",
@@ -578,27 +576,12 @@ const am = {
         "phonePlaceholder": "+251...",
         "emailLabel": "ኢሜል",
         "emailPlaceholder": "example@example.com",
-
-        "adminTypes":[
-            {
-                "id": "unit-leader",
-                "value": "unit-leader",
-                "label": "ክፍል መሪ",
-                "description": "ክፍል መሪ የቡድኖች፣ የጊዜ ሰሌዳዎች፣ ተማሪዎች፣ አስተማሪዎች፣ ግምገማዎች፣  ክፍሎቹን የማስተዳደር ኃላፊነት ያለው ። \n"
-            },
-            {
-                "id": "secretary",
-                "value": "secretary",
-                "label": "ጸሐፊ",
-                "description": "ጸሐፊ የተማሪዎችን፣ አሳዳጊዎችን፣ አስተማሪዎችን፣ መርሃ ግብሮችን ማግኘት፣ ቡድኖችን የማስተዳደር ኃላፊነት አለው ። "
-            },
-            {
-                "id": "principal",
-                "value": "principal",
-                "label": "ርዕሰ መምህር",
-                "description": "ርእሰ መምህሩ በስርዓቱ ውስጥ ያሉትን ሁሉንም መረጃዎች ማግኘት ይችላሉ። ሁሉንም መረጃዎች ማየት፣ ማዘመን እና መሰረዝ ይችላል።"
-            }
-        ]
+        "unitLeaderLabel": "ክፍል መሪ",
+        "unitLeaderDescription": "ክፍል መሪ የቡድኖች፣ የጊዜ ሰሌዳዎች፣ ተማሪዎች፣ አስተማሪዎች፣ ግምገማዎች፣  ክፍሎቹን የማስተዳደር ኃላፊነት ያለው ።",
+        "secretaryLabel": "ጸሐፊ",
+        "secretaryDescription": "ጸሐፊ የተማሪዎችን፣ አሳዳጊዎችን፣ አስተማሪዎችን፣ መርሃ ግብሮችን ማግኘት፣ ቡድኖችን የማስተዳደር ኃላፊነት አለው ። ",
+        "PrincipalLabel": "ርዕሰ መምህር",
+        "PrincipalDescription": "ርእሰ መምህሩ በስርዓቱ ውስጥ ያሉትን ሁሉንም መረጃዎች ማግኘት ይችላሉ። ሁሉንም መረጃዎች ማየት፣ ማዘመን እና መሰረዝ ይችላል።"
     },
     "registerBatches": {
         "registerGrades": "ደረጃዎችን ይመዝገቡ",
@@ -670,7 +653,9 @@ const am = {
     },
     "sectionHomeroom": {
         "homeroomTeacher": "የክፍል መምህር",
-        "noHomeroomTeacherAssigned": "የክፍል መምህር አልተመደበም"
+        "noHomeroomTeacherAssigned": "የክፍል መምህር አልተመደበም",
+        "assignHomeroom":"ስም ጠሪ ይሰይሙ"
+
     },
     "sectionPerformance": {
         "topStudents": "ምርጥ ተማሪዎች",
@@ -698,21 +683,27 @@ const am = {
         "schedules": "ሰዓት ሰሌዳዎች",
         "schedulesIn": "በዚህ ሰሌዳዎች",
         "queryPlaceholder": "በርዕስ መሰረት ሰዓት ሰሌዳ ይፈልጉ",
-        "months": {
-            "january": "ጃንዩወሪ",
-            "february": "ፌብሩወሪ",
-            "march": "ማርች",
-            "april": "ኤፕሪል",
-            "may": "ሜይ",
-            "june": "ጁን",
-            "july": "ጁላይ",
-            "august": "ኦገስት",
-            "september": "ሴፕቴምበር",
-            "october": "ኦክቶበር",
-            "november": "ኖቬምበር",
-            "december": "ዲሴምበር"
-        }
+        "months": ["ጃንዩወሪ","ፌብሩወሪ","ማርች","ኤፕሪል","ሜይ","ጁን","ጁላይ","ኦገስት","ሴፕቴምበር","ኦክቶበር","ኖቬምበር","ዲሴምበር"]
     },
+    "schoolScheduleItem":{
+        "updateSchoolSchedule":"የትምህርት ቤት መርሃ ግብር ያዘምኑ",
+        "update":"አዘምን",
+        "titleLabel": "ስም",
+        "titlePlaceholder": "ስም",
+        "bodyLabel": "መግለጫ",
+        "bodyPlaceholder": "ይህ በተመለከተ...",
+        "inputTagsLabel": "ምልክቶች",
+        "inputTagsPlaceholder": "ምልክት 1, ምልክት 2, ምልክት 3",
+        "datePickerLabel": "ቀን",
+        "typeLabel": "ዓይነት",
+        "fullDay":"ሙሉ ቀን",
+        "fullDayDescription":"ሙሉ ቀን ትምህርት የለም።",
+        "halfDay":"ግማሽ ቀን",
+        "halfDayDescription":"ለግማሽ ቀን ትምህርት አይኖርም።",
+        "none":"ምንም",
+        "noneDescription":"ሙሉ ቀን ትምህርት ይኖራል።",
+    },
+
     "allSemesters": {
         "allSemesters": "ሁሉም ሴሚስተር",
         "queryPlaceholder": "በስም ለመፈለግ",
@@ -727,11 +718,9 @@ const am = {
     },
     "semestersBySeason": {
         "semesters": "ሴሚስተሮች",
-        "seasons" : {
-            "first": "አንደኛ",
-            "second": "ሁለተኛ",
-            "third": "ሶስተኛ"
-        }
+        "first": "አንደኛ",
+        "second": "ሁለተኛ",
+        "third": "ሶስተኛ"
     },
     "semesterByStatus": {
         "semesters": "ሴሚስተሮች"
@@ -753,30 +742,59 @@ const am = {
         "tableElementTitle": "የትምህርት አይነቶች ዝርዝር",
         "tableElementSubtitle": "በዚህ ትምህርት ቤት የተሰጡትን ሁሉም የትምህርት አይነቶች ዝርዝር",
         "newSubject": "አዲስ የትምህርት አይነት",
+        "noDataFound":"ምንም መርጃ አልተገኘም።",
         "queryPlaceholder": "በስም ወይም በምልክቶች ለመፈለግ",
-        "noStudentEnrolled": "ምንም ተማሪ በዚህ ክፍል አልተመዘገበም",
-        "searchQuery": "የእርስዎ የፍለጋ ጥያቄ",
-        "didNotMatch": "አልተገናኘም",
-        "anySubjectCategory": "ማንኛውም የትምህርት አይነት, ምድብ ወይም ምልክት",
-        "selectGrade": "ደረጃ ይምረጡ"
+        "yourQueryDidNotMatch":"የእርስዎ የፍለጋ ጥያቄ <span class='font-medium text-black' >'{ query }</span >'<span class='block'>ከማንኛውም የትምህርት አይነት፣ ምድብ ወይም መለያ ጋር አልተዛመደም</span > </span> ",
+        "noSubjectEnrolled": "በዚህ ክፍል ምንም አይነት የትምህርት አይነት አልተመዘገበም።",
+        "selectGrade": "ደረጃ ይምረጡ:",
+        "selectBatch":"ባች ይምረጡ",
+        "lastUpdated": "መጨረሻ የተሻሻለ",
+        "subjects": "የትምህርት አይነቶች",
+        "active":"ንቁ (Active)",
+        "grades":"ደረጃዎች"
+
+
     },
     "subjectTeachers": {
-        "listOfTeachers": "በ ውስጥ የመምህራን ዝርዝር",
-        "faculty": "ፋኩልቲ",
+        "listOfTeachers": "የመምህራን ዝርዝር",
+        "faculty": "በፋኩልቲ ውስጥ ",
         "searchKeyPlaceholder": "አስተማሪን በስም ፈልግ",
         "noDataFound": "ምንም መረጃ አልተገኘም።",
         "NoTeacherEnrolled": "ምንም አስተማሪ አልተመዘገበም።",
-        "searchQuery":"የፍለጋ ጥያቄህ",
-        "didNotMatch": "አልተዛመደም።",
-        "anyTeacherName": "የማንኛውም አስተማሪ ስም",
+        "yourQueryDidNotMatch":"የእርስዎ የፍለጋ ጥያቄ <span class='font-medium text-black' >'{ searchKey }</span >'<span class='block'>የማንኛውም መምህር ስም ጋር አልተዛመደም</span > </span> ",
         "teacher": "መምህር",
-        "grades": "ደረጃዎች"
+        "grades": "ደረጃዎች",
+        "views":"እይታዎች"
     },
+    "recentActivities":{
+        "recentActivities":"የቅርብ ጊዜ እንቅስቃሴዎች",
+    },
+    "usersTable": {
+        "tableElementTitle": "ዝርዝር መዝገብ ተጠቃሚዎች",
+        "tableElementSubtitle": "በስርዓት ውስጥ የተመዘገቡ ተጠቃሚዎች ዝርዝር",
+        "queryPlaceholder": "በስም ወይም በኢሜይል ተጠቃሚዎችን ፈልግ",
+        "moveItems": "ነገሮችን ያንቀሳቅሱ",
+        "updateItems": "ነገሮችን ያሻሽሉ",
+        "fullName": "ሙሉ ስም",
+        "email": "ኢሜይል",
+        "userType": "የተጠቃሚ ዓይነት",
+        "gender": "ፆታ",
+        "active":"ንቁ(Active)",
+        "options":["አስተዳዳሪ", "መምህር", "ተማሪ", "አሳዳጊ"]
+        },
     "adminsTable":{
         "tableElementTitle": "አድሚንስትሬተሮች",
         "tableElementSubtitle": "በዚህ ዓመት የተመዘገቡ አድሚንስትሬተሮች",
         "updated": "ተዘምኗል",
         "noDataFound": "ምንም መረጃ አልተገኘም"
+    },
+    "teacherStudents": {
+        "myStudents": "የእኔ ተማሪዎች",
+        "filterStudents": "ተማሪዎችን ያጣራ",
+        "classAttendance": "የመደብ መገኘት",
+        "classConduct":"የክፍል ምግባር",
+        "topStudents": "ከፍተኛ ተማሪዎች",
+        "studentsFallingBehind": "በኋላ የሚቀሩ ተማሪዎች"
     },
     "delegateLink": {
         "modalTitle": "ተግባራትን አስተላልፍ",
@@ -807,17 +825,15 @@ const am = {
     },
     "subjectUpdate": {
         "updateFormElementTitle": "የትምህርት አይነት ያዘምኑ",
-        "fullNameLabel": "ሙሉ ስም",
-        "fullNamePlaceholder": "ሙሉ ስም",
-        "shortNameLabel": "አጭር ስም",
-        "shortNamePlaceholder": "አጭር ስም",
+        "fullName": "ሙሉ ስም",
+        "shortName": "አጭር ስም",
         "tagsLabel": "የትምህርት አይነት ምልክቶች",
         "tagsPlaceholder": "ምልክቶች ይመድቡ (ምልክቶችን በኮማ ይለዩ)",
         "categoryPlaceholder": "ምድብ ያስገቡ",
         "categoryLabel": "የትምህርት አይነት ምድብ"
     },
     "userStatistics": {
-        "adminStaTitle": "አስተዳዳሪዎች",
+        "adminsTitle": "አስተዳዳሪዎች",
         "adminStatSubtitle": "በስርዓቱ ውስጥ የተመዘገቡ አስተዳዳሪዎች",
         "studentsStatTitle": "ተማሪዎች",
         "studentsStatSubtitle": "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ ተማሪዎች (ሁሉም ጊዜ)",
@@ -831,6 +847,9 @@ const am = {
         "andExpires": "እና ያበቃል",
         "posted": "ተለቀቀ",
         "byAuthor": "በአዘጋጁ"
+    },
+    "selectedAnnouncement":{
+        "continueReading":"ማንበብ ይቀጥሉ"
     },
     "teacherAnnouncementIndex": {
         "announcements": "መግለጫዎች",
@@ -917,7 +936,6 @@ const am = {
         "alertMessage": "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?"
     },
     "detailsIndex": {
-        "title": "ርዕስ",
         "selectAnyAssessment": "ለዝርዝር እይታ ማንኛውንም ግምገማ ይምረጡ!"
     },
     "marking": {
@@ -985,6 +1003,7 @@ const am = {
     },
     "assessmentBreakDown": {
         "assessmentBreakDown": "የመገምገም ማጠቃለያ",
+        "noGradesRecorded":"ምንም ደረጃዎች አልተመዘገቡም!",
         "atPresent": "በአሁኑ ጊዜ",
         "noAssociatedGrades": "ተዛማጅ ውጤቶች የሉትም። ውጤቶች ሲመዘገቡ እና ሲመዘገቡ፣ በምዘና አይነት ተለይተው በዚህ ቦታ ላይ ይታያሉ።"
     },
@@ -1006,7 +1025,11 @@ const am = {
         "scheduled": "ተመድቧል",
         "message": "ለአሳዳጊዎች እና ለርዕሰ መምህራን ወዲያውኑ ማሳወቂያዎችን ያስነሳል። ለበለጠ ግንዛቤ ስለ ግምገማው ዝርዝር መረጃ ማግኘት ይቻላል።",
         "title": "ግምገማ አስገባ",
-        "alertMessage": "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?"
+        "alertMessage": "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?",
+        "draft": "ረቂቅ",
+        "schedule": "መርሃግብር",
+        "publish": "መለጠፍ"
+
     },
     "batchPerformanceIndex": {
         "classAverage": "የክፍል አማካይ",
@@ -1035,7 +1058,8 @@ const am = {
         "classWith": "ከ ክፍል ",
         "students": "ተማሪዎች",
         "buttonTitle": "የወጡ ተማሪዎችን ያክሉ",
-        "absentStudents": "የወጡ ተማሪዎች"
+        "absentStudents": "የወጡ ተማሪዎች",
+        "youAreNowHavingAll":"<span>አሁን ከ{y}ተማሪዎች ጋር{x}ክፍል እየተማሩ ነው!</span>"
     },
     "lessonPlanIndex": {
         "updated": "አሻሻየ",
@@ -1066,24 +1090,9 @@ const am = {
     },
     "homeSchedule": {
         "Period": "ጊዜ",
-        "calenderMonthView": {
-            "days": {
-                "monday": "ሰኞ",
-                "tuesday": "ማክሰኞ",
-                "wednesday": "ረቡዕ",
-                "thursday": "ሐሙስ",
-                "friday": "ዓርብ"
-            },
-            "daysOfWeek":{
-                "sunday":"እሑድ",
-                "monday":"ሰኞ",
-                "tuesday":"ማክሰኞ",
-                "wednesday":"ረቡዕ",
-                "thursday":"ሐሙስ",
-                "friday":"ዓርብ",
-                "saturday":"ቅዳሜ"
-            }
-        }
+        "days": ["ሰኞ","ማክሰኞ","ረቡዕ","ሐሙስ","አርብ"],
+        "daysOfWeek": ["እሁድ","ሰኞ","ማክሰኞ","ረቡዕ","ሐሙስ","አርብ","ቅዳሜ"]
+
     },
     "homeSubjects": {
         "subjects": "የትምህርት አይነቶች",
@@ -1092,13 +1101,13 @@ const am = {
         "grade": "ደረጃ"
     },
     "assignHomeroom":{
-        "assignHomeroom": "የመኖሪያ ክፍል መመደብ",
+        "assignHomeroom": "ስም ጠሪ(Homeroom) መመደብ",
         "teacher": "መምህር:",
         "currentlyAssigned":"አሁን ባለው ደረጃ ተመድቧል:",
         "searchAndSelect": "መመድብ ለሚፈልጉት ደረጃ ፈልግና ምረጥ",
         "searchGradeLevel": "የደረጃ ደረጃ ፈልግ",
         "yourAreAbout": "እርስዎ ለማመደብ ነዎት",
-        "asAHomeroomTeacher": "የመኖሪያ ክፍል መምህር ሆነው ለደረጃ:"
+        "asAHomeroomTeacher": "የመኖሪያ ክፍል መምህር ሆነው ለደረጃ:",
     },
     "studentGradeDetail": {
         "gradeReport": "ደረጃ ሪፖርት",
@@ -1150,15 +1159,15 @@ const am = {
     },
     "lastAssessment": {
         "lastAssessment": "የመጨረሻ ግምገማ",
-        "pts": "ነጥቦች",
         "dueOn": "መጠናቀቅ ያለበት",
         "viewAllAssessments": "ሁሉንም ግምገማዎች ይመልከቱ",
-        "noPreviousAssessments": "ምንም ቀዳሚ ግምገማዎች አልተገኙም። ከመጀመሪያው ግምገማ በኋላ፣ በጣም የቅርብ ጊዜው ግምገማ እዚህ ይታያል።"
+        "noPreviousAssessments": "ምንም ቀዳሚ ግምገማዎች አልተገኙም። ከመጀመሪያው ግምገማ በኋላ፣ በጣም የቅርብ ጊዜው ግምገማ እዚህ ይታያል።",
+        "viewAssessments":"ግምገማዎችን ይመልከቱ"
+
     },
     "nextClass": {
-        "nextUp": "ቀጣዩ ክፍልዎ ነው",
+        "nextUp": "ቀጣዩ ክፍል የእርሶ ነውz",
         "nextClass": "ቀጣይ ክፍል",
-        "period": "ክፍለ-ጊዜ",
         "lessonPlan": "ትምህርት መርሃግብር",
         "addLessonPlan": "ትምህርት መርሃግብር ያክሉ",
         "teacher": "መምህር",
@@ -1166,6 +1175,7 @@ const am = {
     },
     "studentAssessments": {
         "recentAssessments": "የቅርብ ጊዜ ግምገማዎች",
+        "seeAll":"ሁሉም ይዩ",
         "noAssessmentsFound": "ምንም ግምገማዎች አልተገኙም!",
         "linkCellValue": "ወደ ግምገማዎች ሂድ"
     },
@@ -1174,53 +1184,263 @@ const am = {
         "attendance": "መገኘት",
         "conduct": "ባህሪ",
         "formElementTitle": "ባህሪን ያዘምኑ",
-        "conductPlaceholder": "ባህሪ ይምረጡ"
+        "conductPlaceholder": "ባህሪ ይምረጡ",
+        "rankFrom":"ከ"
     },
     "guardianInformation": {
         "guardianInfo": "አሳዳጊ መረጃ",
-        "name:": "ስም:",
-        "relation:":"ግንኙነት:",
-        "phoneNumber:":"ስልክ ቁጥር:",
-        "email": "ኢሜይል:"
+        "name": "ስም:",
+        "relation":"ግንኙነት:",
+        "phoneNumber":"ስልክ ቁጥር:",
+        "email": "ኢሜይል:",
+        "requestMeeting":"ስብሰባ ጠይቅ"
     },
     "studentNotes": {
         "notes": "ማስታወሻዎች",
         "noNotesAssociated": "ምንም ማስታወሻዎች አልተገኙም",
         "addNoteFor": "ለ...ማስታወሻ ያክሉ",
-        "descriptionPlaceholder": "መግለጫ",
-        "descriptionLabel": "መግለጫ",
+        "addNote":"ማስታወሻ ጨምር",
+        "description": "መግለጫ",
         "Update": "አዘምን",
         "note": "ማስታወሻ",
-        "titleLabel": "ርዕስ",
+        "title": "ርዕስ",
         "titlePlaceholder": "ርዕስ",
         "by": "በ"
     },
     "studentRank": {
-        "Rank": "ደረጃ",
-        "From": "ከ",
+        "rank": "ደረጃ",
+        "from": "ከ",
         "students": "ተማሪዎች",
         "in": "በ"
     },
     "studentStatistics":{
-        "Grade": "ደረጃ",
-        "Attendance": "መገኘት",
-        "Conduct": "ባህሪ",
-        "Vitals": "መለኪያዎች"
+        "grade": "ደረጃ",
+        "attendance": "መገኘት",
+        "conduct": "ባህሪ",
+        "vitals": "መለኪያዎች"
     },
     "header": {
         "classRankFrom":"የክፍል ደረጃ ከጠቅላላ"
     },
     "studentsTable": {
-        "searchTextPlaceholder": "ፈልግ",
+        "search": "ፈልግ",
+        "assignHomeroom":"ሆም ሩም ሰይም",
+        "homeroomTeacher":"ሆም ሩም መምህር",
         "name": "ስም",
-        "attendance": "መገኘት",
+        "attendance": "መገኘት%",
         "grade": "ደረጃ",
         "rank": "ደረጃ",
         "conduct":"ባህሪ"
-    }
+    },
+    "currentDaySchedule":{
+        "schedule": "መርሐ-ግብር",
+        "period": "ጊዜ",
+        "noScheduleFound": "መርሐ-ግብር አልተገኘም!"
+    },
+    "absenteeRecords":{
+        "absenteeRecords": "የቀሪ መዝገቦች",
+        "period": "ክፍለ ጊዜ",
+        "noAbsentee": "የቀሪ መዝገቦች አልተገኙም!"
+    },
+    "filters":{
+        "filters": "ማጣሪያዎች",
+        "schoolYear": "የትምህርት ዓመት",
+        "semester": "ሴሚስተር",
+        "quarter": "ሩብ",
+    },
+    "welcomeHeader":{
+        "welcomeBack":"እንኳን ደህና መጡ:"
+    },
+    "schoolScheduleSchedules":{
+        "noScheduleFound": "ለዛሬ መርሐ-ግብር አልተገኘም!",
+        "viewAllSchedules": "ሁሉንም መርሐ-ግብሮች ይመልከቱ"
+    },
+    "viewsTeacherStudent":{
+        "wantToSee":"{student} በሌሎች ክፍሎች እንዴት እንደሚሰራ ማየት ይፈልጋሉ?",
+        "viewFullGrade":"የሙሉ ክፍል ሪፖርት ይመልከቱ"
+    },
+    "homeRooms":{
+        "noHomeroomClasses":"ስም ጠሪ የሆኑበት ክፍል የለም",
+        "assignHomeroom":"ስም ጠሪ ሰይም",
+        "homeroomClasses":"ስም ጠሪ የሆኑበት ክፍሎች",
+        "classAttendance":"የክፍል መገኘት",
+        "classConduct":"የክፍል ምግባር",
+        "topStudents":"ከፍተኛ ተማሪዎች",
+        "studentsFalling":"ዝቅተኛ ውጤት ያመጡ"
+    },
+    "filtersIndex":{
+        "searchAssessmentTitle": "የመገምገሚያ ርዕስ ይፈልጉ",
+        "selectSubject": "የትምህርት አይነት ይምረጡ",
+        "createAssessment": "መገምገሚያ ይፍጠሩ",
+        "filters": "ፊልተሮች",
+        "selectStatus": "ሁኔታ ይምረጡ",
+        "assessmentType": "የመገምገሚያ አይነት",
+        "selectSchoolYear": "የትምህርት ዓመት ይምረጡ",
+        "SelectSemester": "ሴሚስተር ይምረጡ",
+        "SelectQuarter": "ሩብ አመት ይምረጡ",
+        "done": "ተጠናቀቀ",
+        "clearAll": "ሁሉንም አጥፉ",
+        "all": "ሁሉም",
+        "published": "ታትሟል",
+        "completed": "ተጠናቀቀ",
+        "marking": "ምልክት መደረግ",
+        "draft": "ረቂቅ(draft)",
+        "canceled": "ተሰረዘ"
+    },
 
+    "lessonPlans":{
+        "viewAllLessonPlans": "ሁሉንም የትምህርት ዕቅዶች ይመልከቱ",
+        "noLessonPlan": "የትምህርት ዕቅድ አልተገኘም!"
+    },
+    "homeroomClasses":{
+        "homerooms":"መምህር ክፍሎች(Homerooms)",
+        "noHomeroomClassAttached":"እስካሁን ምንም የመምህር ክፍል(Homeroom) የለም!"
+    },
+    "batches":{
+        "myClasses": "ክፍሎቼ",
+        "classes": "ክፍሎች",
+        "assessments": "መገምገሞች",
+        "lessonPlans": "የትምህርት ዕቅዶች",
+        "students": "ተማሪዎች",
+        "announcements": "መግለጫዎች",
+        "recentAssessments": "የቅርብ ጊዜ መገምገሞች",
+        "topStudents": "ከፍተኛ ተማሪዎች",
+        "studentsFalling": "በኋላ የሚቀሩ ተማሪዎች"
+        },
+
+    "usersAbsentee":{
+            "classAbsentStudents": "የክፍል የቀሩ ተማሪዎች ዝርዝር",
+            "teacher": "መምህር:",
+            "absentTeachers": "የቀሩ መምህሮች"
+        },
+
+
+    "teacherIndex":{
+        "homeroomClasses": "ሆም ሩም ክፍሎች",
+        "upcomingSchedules": "የሚመጡ መርሃግብሮች"
+
+        },
+
+
+ "adminLayout":{
+        "home": "መነሻ",
+        "settings": "ቅንብሮች",
+        "logout": "መውጫ"
+        },
+
+        "teachersIndex":{
+            "absentee": "ቀሪ",
+            "confirmIf": "ይህን መምህር 'የማይገኝ' መሆኑን ለማረጋገጥ ያረጋግጡ",
+            "absent": "ቀሪ",
+            "reason": "ምክንያት",
+            "noTeacher":"ምንም አስተማሪ አልተመዘገበም",
+            "searchTeacher":"አስተማሪን በስም ፈልግ"
+        },
+
+        "levelSingle":{
+            "selectSection":"ክፍል ይምረጡ"
+        },
+
+        "levelSubjects":{
+            "Views":"Views",
+            "lastUpdated ":"መጨረሻ የተሻሻለው",
+        },
+        "staffAbsenteesTable":{
+            "searchStaff":"የቀረ ሰራተኛ በስም ይፈልጉ",
+            "newAbsentee":"አዲስ ቀሪ"
+        },
+        "absenteeStats":{
+            "todayAbsentees":"ዛሬ ያልተገኙ"
+        },
+        "studentAbsenteesTable":{
+            "searchStudent":"የቀረ ተማሪ በስም ይፈልጉ",
+        },
+
+
+        "copilotIndex":{
+            "rigelCopilot":"ሪግል ኮፓይሎት"
+        },
+        "questionPreparation":{
+            "welcome":"አንኩዋን ወደ AI-Powered የጥያቄ ዝግጅት መድረክ በደህና መጡ",
+            "description" :"ከትምህርት ዕቅዶችዎ ብጁ ግምገማዎችን የሚፈጥር፣የተሳለጠ የማስተማር ልምድን የሚያመቻች የእኛን AI-የተጎለበተ መድረክ ተቀበሉ። ብዙ በሚያስተምሩበት እና ትንሽ በሚዘጋጁበት ሂደት ውስጥ እራስዎን ያስገቡ ፣ ይህም የትምህርትን የወደፊት ሁኔታ እንደገና ለመቅረጽ ይረዱ።",
+            "questionGeneration":"Question Generation Customization",
+            "selectQuestionType":"የጥያቄ ዓይነትን ይምረጡ",
+            "numberOfQuestions":"የጥያቄዎች ብዛት?",
+            "howManyQuestions":"ስንት ጥያቄዎች?",
+            "setDifficultyLevel":"ለጥያቄዎች የክብደት ደረጃን ያዘጋጁ",
+            "hintForDifficulty":"ለተፈጠሩት ጥያቄዎች የችግር ደረጃን ለማዘጋጀት ይህንን ተንሸራታች ይጠቀሙ። ተንሸራታቹን ወደ ግራ ማንቀሳቀስ ጥያቄዎችን ቀላል ያደርገዋል, ወደ ቀኝ ማንቀሳቀስ ደግሞ የበለጠ ፈታኝ ያደርጋቸዋል.",
+            "manualInput":"Manual Input",
+            "manualInputDescription":"በልዩ ግብዓቶችዎ እና ግቤቶችዎ ላይ በመመስረት ጥያቄዎችን ማመንጨት ከመረጡ በእጅ ግብዓት ይምረጡ። ይህ አማራጭ የበለጠ ቁጥጥር እና ልዩነት እንዲኖር ያስችላል.",
+            "lessonPlans":"የትምህርት ዕቅዶች",
+            "lessonPlanDescription":"ካሉዎት እቅዶች ጥያቄዎችን በራስ-ሰር ለማመንጨት 'የትምህርት እቅዶች'ን ይምረጡ። ከመረጥን በኋላ ዕቅዶችዎን እንጭነዋለን፣ እና ለእኛ የተበጁ ጥያቄዎችን ለመስራት አንዱን መምረጥ ይችላሉ።",
+            "question":"ጥያቄ",
+            "enterQuestion":"ጥያቄ አስገባ"
+        },
+
+        "batchAssessments":{
+            "studentNotes":"የተማሪ ማስታወሻዎች",
+            "noScheduledAssessment":"ምንም የታቀደ ግምገማ አልተገኘም።",
+            "dueDate":"የመጨረሻ ማስረከቢያ ቀን",
+            "assessmentType":"የግምገማ አይነት"
+        },
+        "batchFlags":{
+            "flaggedStudents":"የተመዘገቡ ተማሪዎች",
+            "flaggedBy":"የተመዘገበው በ",
+            "userName":"የተጠቃሚ ስም"
+        },
+
+
+
+
+    "common":{
+        "days": ["እሁድ","ሰኞ","ማክ","ረቡዕ","ሐሙስ","አርብ","ቅዳሜ"],
+        "months": ["ጃንዩወሪ","ፌብሩወሪ","ማርች","ኤፕሪል","ሜይ","ጁን","ጁላይ","ኦገስት","ሴፕቴምበር","ኦክቶበር","ኖቬምበር","ዲሴምበር"],
+        "pts": "ነጥቦች",
+        "noFeedbacks":"ምንም ግብረመልሶች የሉም",
+        "grade": "ደረጃ",
+        "grades": "ደረጃዎች",
+        "admins":"አስተዳዳሪዎች",
+        "subjects": "ትምህርቶች",
+        "lessonPlans":"ትምህርት እቅዶች",
+        "students":"ተማሪዎች",
+        "student":"ተማሪ",
+        "assessments": "መገምገሚያዎች",
+        "assessment":"መገምገሚያ",
+        "description":"መግለጫ",
+        "viewAllGrades": "ሁሉንም ደረጃዎች ይመልከቱ",
+        "noGradesFound": "ደረጃዎች አልተገኙም!",
+        "goToGrades": "ወደ ደረጃዎች ሂድ",
+        "and":"እና",
+        "period":"ክፍለ ጊዜ",
+        "attendance":"መገኘት",
+        "homeroom":"ሆም ሩም",
+        "viewAll":"ሁሉንም ይመልከቱ",
+        "teachers": "መምህራን",
+        "announcements": "መግለጫዎች",
+        "schedule": "መርሃግብር",
+        "users": "ተጠቃሚዎች",
+        "noDataFound": "ምንም መረጃ አልተገኘም",
+        "name": "ስም",
+        "email": "ኢሜይል",
+        "gender": "ፆታ",
+        "male":"ወንድ",
+        "female":"ሴት",
+        "close":"ዝጋ",
+        "clear":"ባዶ አርግ",
+        "submit":"አስገባ",
+        "chat":"ቻት(Chat)",
+        "copilot":"ኮፓይለት(Copilot)",
+        "previous": "ቀደም",
+        "next": "ቀጣይ",
+        "administrators":"አስተዳዳሪዎች",
+        "reason":"ምክንያት",
+        "type":"ዓይነት",
+        "age":"ዕድሜ",
+        "lastUpdated":"መጨረሻ የተሻሻለው"
+    }
 
 }
 
 
 export default am;
+

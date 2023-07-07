@@ -6,7 +6,7 @@
         <span
             class="flex h-5 items-end justify-center text-[0.55rem] text-gray-600"
         >
-            PTS
+            {{ $t('scoreDisplay.pts') }}
         </span>
     </div>
 </template>

@@ -2,7 +2,7 @@
     <div class="flex w-full items-center justify-between">
         <OutcomePercentageDisplay
             icon-class="icon-check text-green-500"
-            :title="$t('views.teacher.views.assessments.details.views,AssessmentOutcomePercentages.passedPercentTitle')"
+            :title="$t('AssessmentOutcomePercentages.passedPercentTitle')"
             :value="passedPercent"
             :icon="ArrowSmallUpIcon"
             type="positive"
@@ -11,7 +11,7 @@
         <div class="h-12 w-[0.01rem] bg-gray-200"></div>
         <OutcomePercentageDisplay
             icon-class="icon-close text-red-500"
-            title="Failed"
+            :title="$t('AssessmentOutcomePercentages.failedPercentTitle')"
             :value="100 - passedPercent"
             :icon="ArrowSmallDownIcon"
             type="negative"

@@ -5,7 +5,7 @@
     >
         <div class="w-full px-3 py-4">
             <div class="w-full pb-1 text-start text-2xl font-semibold">
-                Class Performance
+                {{ $t('performanceHighlightsIndex.classPerformance')}}
             </div>
             <div class="w-full pr-5">
                 <BatchPerformance />
@@ -17,7 +17,7 @@
             <div class="w-full">
                 <StudentsList
                     progress-type="up"
-                    title="Top Students"
+                    :title="$t('performanceHighlightsIndex.topStudents')"
                     :icon="ArrowTrendingUpIcon"
                     :students="topStudents"
                 />
@@ -26,7 +26,7 @@
             <div class="w-full">
                 <StudentsList
                     progress-type="down"
-                    title="Students Falling Behind"
+                    :title="$t('performanceHighlightsIndex.StudentsFallingBehind')"
                     :icon="ArrowTrendingDownIcon"
                     :students="bottomStudents"
                 />

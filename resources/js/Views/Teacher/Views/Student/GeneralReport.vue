@@ -23,7 +23,7 @@
                 <span class="text-4xl font-semibold"> - </span>
             </div>
             <span class="text-xs font-light">
-                {{ batchSubject?.subject.short_name }} GRADE
+                {{ batchSubject?.subject.short_name }}   {{ $t('generalReport.grade')}}
             </span>
         </div>
 
@@ -46,7 +46,7 @@
         >
             <div>{{ attendancePercentage }}%</div>
             <span class="text-xs font-light">
-                {{ batchSubject?.subject?.short_name }} ATTENDANCE
+                {{ batchSubject?.subject?.short_name }}  {{ $t('generalReport.attendance')}}
             </span>
         </div>
 
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <span class="text-xs font-light">
-                {{ batchSubject?.subject?.short_name }} CONDUCT
+                {{ batchSubject?.subject?.short_name }} {{ $t('generalReport.conduct')}}
             </span>
         </div>
         <div
@@ -88,15 +88,15 @@
         >
             <div>{{ rank ? numberWithOrdinal(rank) : "-" }}</div>
             <span class="text-xs font-light">
-                {{ batchSubject?.subject.short_name }} Rank From
-                {{ totalStudents }} Students
+                {{ batchSubject?.subject.short_name }} {{ $t('generalReport.rankFrom')}}
+                {{ totalStudents }} {{ $t('common.students')}}
             </span>
         </div>
         <Modal v-model:view="showConductModal">
-            <FormElement title="Update Conduct" @submit="submit">
+            <FormElement :title="$t('generalReport.formElementTitle')" @submit="submit">
                 <SelectInput
                     v-model="conductForm.conduct"
-                    placeholder="Select Conduct"
+                    :placeholder="$t('generalReport.conductPlaceholder')"
                     :options="[
                         { label: 'A', value: 'A' },
                         { label: 'B', value: 'B' },

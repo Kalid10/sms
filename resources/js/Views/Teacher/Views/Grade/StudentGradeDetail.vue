@@ -16,7 +16,7 @@
                                 .full_name
                         }}
                     </span>
-                    Grade Report
+ {{ $t('studentGradeDetail.gradeReport')}}
                 </span>
             </div>
             <SecondaryButton
@@ -75,6 +75,8 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import GradeFilter from "@/Views/Teacher/Views/Grade/GradeFilter.vue";
 
 const emit = defineEmits(["flag"]);
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const props = defineProps({
     studentName: {
         type: Object,
@@ -110,32 +112,32 @@ const studentGrades = computed(() => {
 const config = [
     {
         key: "subject",
-        name: "Subject",
+        name: t('common.subjects'),
         align: "center",
         class: "h-12 !text-[0.6rem]",
         type: "custom",
     },
     {
         key: "attendance",
-        name: "Attendance%",
+        name: t('studentGradeDetail.attendance'),
         align: "center",
         class: "h-12 !text-[0.65rem]",
     },
     {
         key: "grade",
-        name: "Grade",
+        name: t('common.grade'),
         align: "center",
         class: "h-12 !text-[0.65rem]",
     },
     {
         key: "rank",
-        name: "Rank",
+        name: t('studentGradeDetail.rank'),
         align: "center",
         class: "h-12 !text-[0.65rem]",
     },
     {
         key: "conduct",
-        name: "Conduct",
+        name: t('studentGradeDetail.conduct'),
         align: "center",
         class: "h-12 !text-[0.65rem]",
     },

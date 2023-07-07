@@ -1,14 +1,15 @@
-
 const en = {
     "datePicker":{
         "selectYear":"Select Year",
         "today":"Today",
-        "clear":"Clear"
+        "clear":"Clear",
+        "days": ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+        "months": ["January","February","March","April","May","June","July","August","September","October","November","December"]
     },
     "dialogBox":{
         "cancel":"Cancel"        },
     "fileInput":{
-        "uploadText":"Click to upload or drag and drop",
+        "uploadText":"<span class='font-bold'>Click to upload</span> or drag and drop",
         "max" : "Max",
         "file": "file:",
         "noFileSelected.": "No file selected.",
@@ -29,12 +30,16 @@ const en = {
         "lessonPlan": "Lesson Plan",
         "assessments": "Assessments",
         "homeRooms": "Home Rooms",
+        "announcements":"Announcements",
         "schedule": "Schedule",
         "feedbacks": "Feedbacks",
-        "settings": "Settings"
+        "settings": "Settings",
+        "logout":"Logout",
+        "questionBank":"Question Bank"
     },
     "announcementsIndex": {
-        "announcements":"Announcements",
+        "announcementsTitle":"Announcements",
+        "addAnnouncement":"Add Announcement",
         "searchAnnouncements": "Search Announcements",
         "recentAnnouncements": " Recent Announcements",
         "emptyViewTitle": "No Announcements Found!",
@@ -43,13 +48,20 @@ const en = {
         "postTargets": "Post Targets",
         "expires": "Expires",
         "posted": "Posted",
-        "by":"By"
+        "by":"By",
+        "title":"Title",
+        "body":"Body",
+        "bodyDescription":"the body or description",
+        "selectTargetGroup":"Select target group:",
+        "expireDate":"Expire date",
+        "expiresOn":"Expires On",
+        "announcements":["all", "students", "teachers", "guardians", "admins"],
     },
     "assessmentIndex": {
         "name": "name",
-        "percentage": "percentage",
-        "updateLevelCategories": "Update level categories",
-        "selectLevelCategories": "Select level categories",
+        "percentage": "Percentage",
+        "updateLevelCategories": "Update level categories:",
+        "selectLevelCategories": "Select level categories:",
         "customizable": "Customizable",
         "minimumAssessments": "Minimum Assessments",
         "minimumAssessmentsPlaceHolder": "min assessment",
@@ -58,7 +70,13 @@ const en = {
         "minMaxHint": "Min and max assessments are the minimum and maximum number of tests or exams that a student is required to take.",
         "listOfAssessmentTypes": "List of Assessment Types",
         "filterByLevelCategory": "filter by level category",
-        "addAssessmentType": "Add Assessment Type"
+        "addAssessmentType": "Add Assessment Type",
+        "lastUpdated ":"Last updated",
+        "updateAssessmentType" :"Update Assessment Type",
+        "assessmentType":"Assessment type",
+        "gradeCategory":"Grade Category",
+        "updatedAt":"Updated at"
+
     },
     "gettingStartedSchoolSchedule": {
         "congratulations": "Congratulations !",
@@ -105,7 +123,7 @@ const en = {
     },
     "section": {
         "section": "Section",
-        "absent Students": "Absent Students",
+        "absentStudents": "Absent Students",
         "topStudents": "Top Students",
         "studentsFallingBehind": "Students Falling Behind"
     },
@@ -126,6 +144,7 @@ const en = {
         "search": "search"
     },
     "schedulesIndex": {
+        "schoolSchedules":"School Schedules",
         "from": "From",
         "searchForSchedule": "Search for schedule",
         "addEvent": "Add Event"
@@ -135,32 +154,43 @@ const en = {
         "recentActivities": "Recent Activities"
     },
     "batchStudentTable": {
-        "select a grade": "Select a grade:",
-        "full information on": "Full information on",
-        "studentsIn": "Students in"
+        "selectGrade": "Select a grade:",
+        "selectBatch":"Select a batch",
+        "goToGrade ":"Go To Grade ",
+        "fullInformation": "Full information on",
+        "studentsIn": "Students in",
+        "noDataFound":"No data found",
+        "noTeacherEnrolled":"No teacher has been enrolled",
+        "yourSearchQuery":"Your search query '<span class='font-medium text-black' >{ searchKey }</span >' did not match <span class='block>any teacher name</span>",
+        "name":"Name",
+        "email":"Email",
+        "gender":"Gender",
+        "female":"Female",
+        "male":"Male"
     },
     "studentsIndex": {
-        "students": "Students"
+        "students": "Students",
+        "grades":"Grades"
     },
     "adminStudentsTable": {
-        "students": "Students",
-        "ListAllStudent": "List of all students in the school",
-        "registerStudent": "Register Student",
+        "students":"Students",
+        "listAllStudents":" List of all students in the school",
+        "registerStudent":"Register Student",
         "searchForStudent":"Search for a student by name",
-        "totalStudents": "Total Students",
-        "absenteesToday": "Absentees Today",
-        "latestPeriodAbsentees": "Latest Period Absentees",
-        "suspendedStudents": "Suspended Students",
-        "noDataFound": "No data found",
-        "yourSearchQuery": "Your search query",
-        "didNotMatch": "did not match",
-        "anyStudentName": "any student's name",
-        "transferringStudent": "Transferring a student will remove them from their current section and add them to the selected section.",
-        "selectDestinationSection": "Select Destination Section",
-        "name": "Name",
-        "email": "Email",
-        "gender": "Gender",
-        "grade": "Grade"
+        "totalStudents":" Total Students",
+        "absenteesToday":"Absentees Today",
+        "latestPeriodAbsentees":"Latest Period Absentees",
+        "noDataFound":"No data found",
+        "noStudentEnrolled":"No student has been enrolled",
+        "yourSearchQuery":"<span>Your search query '<span class='font-medium text-black' >{ searchKey }</span >' did not match <span class='block'>any students name</span></span>",
+        "transferringStudent ":"Transferring a student will remove them from their current section and add them to the selected section.",
+        "selectDestinationSection":"Select Destination Section",
+        "sections":"sections",
+        "todayAbsentees":"Today's Absentees",
+        "name":"Name",
+        "email":"Email",
+        "gender":"Gender",
+        "grade":"Grade",
     },
     "subjectsIndex": {
         "message":"You are about to archive this subject. Are you sure you want to continue? Do not worry, all the batches and students under this subject will be available, and you can restore this subject anytime."
@@ -181,17 +211,13 @@ const en = {
         "headingOne": "Register an Admin",
         "headingTwo": "Fill in the information required.",
         "adminFormElementTitle": "Register Admin",
-        "nameLabel": "Name",
         "namePlaceholder": "Full Name",
-        "emailLabel": "Email",
-        "phoneNumberLabel": "Phone Number",
-        "phoneNumberPlaceholder": "Phone Number",
+        "phoneNumber": "Phone Number",
         "usernameLabel": "User Name",
         "usernamePlaceholder": "Username",
-        "positionLabel": "Position",
-        "positionPlaceholder": "Position",
+        "position": "Position",
         "genderLabel": "Gender",
-        "genderPlaceholder": "Gender",
+        "genderPlaceholder": "Select Gender",
         "male": "male",
         "female": "Female"
     },
@@ -200,7 +226,6 @@ const en = {
         "headingTwo": "Register students and parents to efficiently manage academic progress, track achievements, and facilitate communications.",
         "guardianFormElementTitle": "Guardian's form",
         "nameLabel": "Student's name",
-        "namePlaceholder": "Name",
         "levelIdLabel": "Student's level",
         "levelIdPlaceholder": "Select students level(grade)",
         "genderLabel": "Student's gender",
@@ -208,12 +233,10 @@ const en = {
         "studentDateOfBirth": "Student's Date Of Birth",
         "guardianRelationLabel": "Parent's relation",
         "guardianRelationPlaceholder": "Select Parent's Relation",
-        "guardianNameLabel": "Name",
-        "guardianNamePlaceholder": "Guardian's name",
+        "guardianName": "Guardian's name",
         "guardianPhoneNumberLabel": "Guardian's phone number",
         "guardianPhoneNumberPlaceholder": "Phone Number",
         "guardianEmailLabel": "Guardian's email",
-        "guardianEmailPlaceholder": "Email",
         "guardianGenderLabel": "Guardian's gender",
         "guardianGenderPlaceholder":"Select Guardian's Gender",
         "headingThree": "Register student and parents in bulk",
@@ -225,14 +248,12 @@ const en = {
     "createTeacher": {
         "headerOne": "Register new teacher",
         "headerTwo": "Fill in the information required.",
-        "nameLabel": "Name",
+        "registerTeacher":"Register Teacher",
         "namePlaceholder": "Full name of new teacher",
         "usernameLabel": "User Name",
         "usernamePlaceholder": "username",
         "phoneNumberLabel": "Phone number",
         "phoneNUmberPlaceholder": "Phone number",
-        "emailLabel": "Email",
-        "emailPlaceholder": "email",
         "genderLabel": "Gender",
         "genderPlaceholder": "Gender"
     },
@@ -370,38 +391,10 @@ const en = {
     },
     "calenderMonthView":{
         "allDay": "All-Day",
-        "days":{
-            "sunday":"Sunday",
-            "monday":"Monday",
-            "tuesday":"Tuesday",
-            "wednesday":"Wednesday",
-            "thursday":"Thursday",
-            "friday":"Friday",
-            "saturday":"Saturday"
-        },
-        "shortDays": {
-            "sun": "Sun",
-            "mon": "Mon",
-            "tue": "Tue",
-            "wed": "Wed",
-            "thu": "Thu",
-            "fri": "Fri",
-            "sat": "Sat"
-        },
-        "months": {
-            "january":"January",
-            "february":"February",
-            "march":"March",
-            "april":"April",
-            "may":"May",
-            "june":"June",
-            "july":"July",
-            "august":"August",
-            "september":"September",
-            "october":"October",
-            "november":"November",
-            "december":"December"
-        }
+        "days":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "shortDays": ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+        "months": ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
     },
     "batchScheduler": {
         "header":"Great! Now, Generate Schedules for your Classes",
@@ -574,27 +567,12 @@ const en = {
         "phonePlaceholder": "+251...",
         "emailLabel": "Email",
         "emailPlaceholder": "example@example.com",
-
-        "adminTypes":[
-            {
-                "id": "unit-leader",
-                "value": "unit-leader",
-                "label": "Unit Leader",
-                "description": "Unit Leader responsible for managing the batches. Has manage access to batches, schedules, students, teachers, assessments"
-            },
-            {
-                "id": "secretary",
-                "value": "secretary",
-                "label": "Secretary",
-                "description": "Secretary responsible for managing the batches. Has manage access to students, guardians, teachers, schedules"
-            },
-            {
-                "id": "principal",
-                "value": "principal",
-                "label": "Principal",
-                "description": "Principal has access to all resources in the system. Can view, update and delete all resources"
-            }
-        ]
+        "unitLeaderLabel": "Unit Leader",
+        "unitLeaderDescription": "Unit Leader responsible for managing the batches. Has manage access to batches, schedules, students, teachers, assessments",
+        "secretaryLabel": "Secretary",
+        "secretaryDescription": "Secretary responsible for managing the batches. Has manage access to students, guardians, teachers, schedules",
+        "PrincipalLabel": "Principal",
+        "PrincipalDescription": "Principal has access to all resources in the system. Can view, update and delete all resources"
     },
     "registerBatches": {
         "registerGrades": "Register Grades",
@@ -611,7 +589,7 @@ const en = {
         "updateLevelSectionInputPlaceholder": "Specify the number of sections for Grade 7"
     },
     "registerSchoolYear": {
-        "welcomeText": "{name} Please enter the <span class='text-black'>start date</span> of the new school year and the number of semesters it includes. You can also change the school year name by clicking the <span id='pencilIcon'></span> icon on the right. You can always change this in the school year settings later",
+        "welcomeText": "Please enter the <span class='text-black'>start date</span> of the new school year and the number of semesters it includes. You can also change the school year name by clicking the <span id='pencilIcon'></span> icon on the right. You can always change this in the school year settings later",
         "welcome": "Welcome to the",
         "schoolYear": "School Year",
         "pleaseEnter": "Please enter the",
@@ -670,7 +648,8 @@ const en = {
     },
     "sectionHomeroom": {
         "homeroomTeacher": "Homeroom teacher",
-        "noHomeroomTeacherAssigned": "No homeroom teacher assigned"
+        "noHomeroomTeacherAssigned": "No homeroom teacher assigned",
+        "assignHomeroom":"Assign Homeroom"
     },
     "sectionPerformance": {
         "topStudents": "Top Students",
@@ -700,26 +679,32 @@ const en = {
         "schedules": "Schedules",
         "schedulesIn": "Schedules in",
         "queryPlaceholder": "Search for schedule by title",
-        "months": {
-            "january":"January",
-            "february":"February",
-            "march":"March",
-            "april":"April",
-            "may":"May",
-            "june":"June",
-            "july":"July",
-            "august":"August",
-            "september":"September",
-            "october":"October",
-            "november":"November",
-            "december":"December"
-        }
+        "months": ["January","February","March","April","May","June","July","August","September","October","November","December"],
+    },
+    "schoolScheduleItem":{
+        "updateSchoolSchedule ":"Update school schedule",
+        "update":"update",
+        "titleLabel": "Name",
+        "titlePlaceholder": "name",
+        "bodyLabel": "Description",
+        "bodyPlaceholder": "Its about...",
+        "inputTagsLabel": "Tags",
+        "inputTagsPlaceholder": "tag1,tag2,tag3",
+        "datePickerLabel": "Date",
+        "typeLabel": "Type",
+        "fullDay":"Full Day",
+        "fullDayDescription":"There is no school for the whole day.",
+        "halfDay":"Half Day",
+        "halfDayDescription":"There will be no class for the half day.",
+        "none":"None",
+        "noneDescription":"There will be class all day.",
+
     },
     "allSemesters": {
         "allSemesters": "All Semesters",
         "queryPlaceholder":"Search for Semesters by name",
         "selectedYearPlaceholder": "Filter by School Year",
-        "appliedFilters": "Applied filters"
+        "appliedFilters": "Applied filters:"
     },
     "semesterCard": {
         "updated": "Updated"
@@ -729,11 +714,9 @@ const en = {
     },
     "semestersBySeason": {
         "semesters": "Semesters",
-        "seasons" : {
-            "first": "First",
-            "second": "Second",
-            "third": "Third"
-        }
+        "first": "First",
+        "second": "Second",
+        "third": "Third"
     },
     "semesterByStatus": {
         "semesters": "Semesters"
@@ -755,12 +738,17 @@ const en = {
         "tableElementTitle": "Subjects List",
         "tableElementSubtitle": "List of all subjects given at",
         "newSubject": "New Subject",
+        "noDataFound":"No data found",
         "queryPlaceholder": "Search for a subject by name or tags",
-        "noStudentEnrolled": "No student has been enrolled in this section",
-        "searchQuery": "Your search query",
-        "didNotMatch": "did not match",
-        "anySubjectCategory": "any subject, category or tag",
-        "selectGrade": "Select a grade"
+        "yourQueryDidNotMatch":"Your search query <span class='font-medium text-black' >'{ searchKey }</span >' did not match <span class='block' >any teacher's name</span > </span>",
+        "noSubjectEnrolled": "No subject has been enrolled in this section",
+        "selectGrade": "Select a grade:",
+        "selectBatch":"Select a batch",
+        "lastUpdated":"Last Updated",
+        "subjects": "Subjects",
+        "active":"Active",
+        "grades":"Grades",
+
     },
     "subjectTeachers": {
         "listOfTeachers": "List of teachers in the",
@@ -768,11 +756,34 @@ const en = {
         "searchKeyPlaceholder": "Search for a teacher by name",
         "noDataFound": "No data found",
         "NoTeacherEnrolled": "No teacher has been enrolled",
-        "searchQuery":"Your search query",
-        "didNotMatch": "did not match",
-        "anyTeacherName": "any teacher's name",
+        "yourQueryDidNotMatch":"Your search query <span class='font-medium text-black' >'{ searchKey }</span >' did not match <span class='block' >any subject, category or tag</span > </span>",
         "teacher": "Teacher",
-        "grades": "Grades"
+        "grades": "Grades",
+        "views":"Views"
+    },
+    "recentActivities":{
+        "recentActivities":"Recent Activities",
+    },
+    "usersTable":{
+        "tableElementTitle":"Users List",
+        "tableElementSubtitle":"List of users registered in the system",
+        "queryPlaceholder":"Search for Users by Name or Email",
+        "moveItems":"Move Items",
+        "updateItems":"Update Items",
+        "fullName":"Full Name",
+        "email":"Email",
+        "userType":"User Type",
+        "gender": "Gender",
+        "active":"Active",
+        "options": ["admin", "teacher", "student", "guardian"],
+    },
+    "teacherStudents":{
+        "myStudents":"My Students",
+        "filterStudents":"Filter students",
+        "classAttendance":"CLASS ATTENDANCE",
+        "classConduct":"CLASS CONDUCT",
+        "topStudents":"Top Students",
+        "studentsFallingBehind":"Students Falling Behind"
     },
     "adminsTable":{
         "tableElementTitle": "Administrator Staff",
@@ -809,17 +820,15 @@ const en = {
     },
     "subjectUpdate": {
         "updateFormElementTitle": "Update Subject",
-        "fullNameLabel": "Full Name",
-        "fullNamePlaceholder":"Full Name",
-        "shortNameLabel": "Short Name",
-        "shortNamePlaceholder":"Short Name",
+        "fullName": "Full Name",
+        "shortName": "Short Name",
         "tagsLabel": "Subject Tags",
         "tagsPlaceholder":"Assign tags (separate multiple tags with comma)",
         "categoryPlaceholder": "Enter a category",
         "categoryLabel": "Subject Category"
     },
     "userStatistics": {
-        "adminStaTitle":"Admins",
+        "adminsTitle":"Admins",
         "adminStatSubtitle":"Admins registered in the system",
         "studentsStatTitle": "Students",
         "studentsStatSubtitle": "Students registered into the school (all-time)",
@@ -833,6 +842,9 @@ const en = {
         "andExpires": "and expires",
         "posted": "Posted",
         "byAuthor": "by Author"
+    },
+    "selectedAnnouncement":{
+        "continueReading":"Continue reading"
     },
     "teacherAnnouncementIndex": {
         "announcements":"Announcements",
@@ -919,7 +931,6 @@ const en = {
 
     },
     "detailsIndex": {
-        "title": "title",
         "selectAnyAssessment": "Select any assessment for a detailed view!"
     },
     "marking": {
@@ -987,6 +998,7 @@ const en = {
     },
     "assessmentBreakDown": {
         "assessmentBreakDown": "Assessment BreakDown",
+        "noGradesRecorded":"No Grades Recorded!",
         "atPresent": "At present,",
         "noAssociatedGrades": "has no associated grades. As grades are recorded and registered,they will become visible in this space, segregated based on the type of assessment."
     },
@@ -1003,12 +1015,16 @@ const en = {
         "assessmentTypeId": "Select type",
         "statusPlaceholder":"Select Status",
         "SettingAnAssessment": "Setting an assessment as",
-        "published": "PUBLISHED",
+        "published": "published",
+        "publish":"Publish",
+        "Schedule":"Schedule",
         "or": "or",
-        "scheduled": "SCHEDULED",
-        "message": "will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
+        "scheduled": "Scheduled",
+        "message": "Setting an assessment as <span class='font-semibold uppercase'>' {published} '</span> or <span class='font-semibold uppercase' >' {scheduled} '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
         "title": "Submit Assessment",
-        "alertMessage": "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?"
+        "alertMessage": "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?",
+        "draft":"Draft",
+        "schedule":"Schedule",
     },
     "batchPerformanceIndex": {
         "classAverage": "Class Average",
@@ -1037,7 +1053,8 @@ const en = {
         "classWith": "class with",
         "students": "students",
         "buttonTitle": "Add Absentees",
-        "absentStudents": "Absent Students"
+        "absentStudents": "Absent Students",
+        "youAreNowHavingAll":"<span>You are now having{x}class with {y} students!</span>"
     },
     "lessonPlanIndex": {
         "updated": "Updated",
@@ -1068,24 +1085,9 @@ const en = {
     },
     "homeSchedule": {
         "Period": "Period",
-        "calenderMonthView": {
-            "days": {
-                "monday": "Monday",
-                "tuesday": "Tuesday",
-                "wednesday": "Wednesday",
-                "thursday": "Thursday",
-                "friday": "Friday"
-            },
-            "daysOfWeek":{
-                "sunday":"Sunday",
-                "monday":"Monday",
-                "tuesday":"Tuesday",
-                "wednesday":"Wednesday",
-                "thursday":"Thursday",
-                "friday":"Friday",
-                "saturday":"Saturday"
-            }
-        }
+        "days":["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "daysOfWeek":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+
     },
     "homeSubjects": {
         "subjects": "Subjects",
@@ -1100,7 +1102,7 @@ const en = {
         "searchAndSelect": "Search and select a grade to assign as a homeroom teacher",
         "searchGradeLevel": "Search for grade level",
         "yourAreAbout": " Your are about to assign",
-        "asAHomeroomTeacher": "as a homeroom teacher to Grade:"
+        "asAHomeroomTeacher": "as a homeroom teacher to Grade:",
     },
     "studentGradeDetail": {
         "gradeReport": "Grade Report",
@@ -1153,16 +1155,14 @@ const en = {
     },
     "lastAssessment": {
         "lastAssessment": "Last Assessment",
-        "pts": "Pts",
         "dueOn": "Due On",
         "viewAllAssessments": "View All Assessments",
-        "noPreviousAssessments": "No previous assessments found. After your first evaluation, the most recent assessment will be displayed here."
-
+        "noPreviousAssessments": "No previous assessments found. After your first evaluation, the most recent assessment will be displayed here.",
+        "viewAssessments":"View Assessments"
     },
     "nextClass": {
         "nextUp": "Next Up Is Your Class",
         "nextClass": "NextClass",
-        "period": "Period",
         "lessonPlan": "Lesson Plan",
         "addLessonPlan": "Add Lesson Plan",
         "teacher": "Teacher",
@@ -1170,6 +1170,7 @@ const en = {
     },
     "studentAssessments": {
         "recentAssessments": "Recent Assessments",
+        "seeAll":"SEE ALL",
         "noAssessmentsFound": "No Assessments Found!",
         "linkCellValue": "Go To Assessments"
     },
@@ -1178,53 +1179,266 @@ const en = {
         "attendance": "ATTENDANCE",
         "conduct": "CONDUCT",
         "formElementTitle": "Update Conduct",
-        "conductPlaceholder": "Select Conduct"
+        "conductPlaceholder": "Select Conduct",
+        "rankFrom":"Rank From"
     },
     "guardianInformation": {
         "guardianInfo": "Guardian Info",
-        "name:": "Name:",
-        "relation:":"Relation:",
-        "phoneNumber:":"Phone Number:",
-        "email": "Email:"
+        "name": "Name:",
+        "relation":"Relation:",
+        "phoneNumber":"Phone Number:",
+        "email": "Email:",
+        "requestMeeting":"Request Meeting"
     },
     "studentNotes": {
         "notes": "Notes",
         "noNotesAssociated": "No Notes Associated with",
         "addNoteFor": "Add Note For",
-        "descriptionPlaceholder": "description",
-        "descriptionLabel": "Description",
+        "addNote":"Add Note",
+        "description": "Description",
         "Update": "Update",
         "note": "'s note",
-        "titleLabel": "Title",
+        "title": "Title",
         "titlePlaceholder": "title",
         "by": "By"
     },
     "studentRank": {
-        "Rank": "Rank",
-        "From": "From",
+        "rank": "Rank",
+        "from": "From",
         "students": "students",
         "in": "in"
     },
     "studentStatistics":{
-        "Grade": "Grade",
-        "Attendance": "Attendance",
-        "Conduct":"Conduct",
-        "Vitals": "Vitals"
+        "grade": "Grade",
+        "attendance": "Attendance",
+        "conduct":"Conduct",
+        "vitals": "Vitals"
     },
     "header": {
         "classRankFrom":"Class Rank From Total "
     },
     "studentsTable": {
-        "searchTextPlaceholder": "Search",
+        "search": "Search",
+        "assignHomeroom":"Assign Homeroom",
+        "homeroomTeacher":"Homeroom Teacher",
         "name": "Name",
-        "attendance": "Attendance",
+        "attendance": "Attendance%",
         "grade": "Grade",
         "rank": "Rank",
         "conduct":"Conduct"
-    }
+    },
+
+    "currentDaySchedule":{
+        "schedule":"'s Schedule",
+        "period":"Period",
+        "noScheduleFound":" No schedule found!"
+    },
+    "absenteeRecords":{
+        "absenteeRecords":"Absentee Records",
+        "period":"Period",
+        "noAbsentee" :"No absentee records found!"
+    },
+    "filters":{
+        "filters":"Filters",
+        "schoolYear":"school year",
+        "semester":"semester",
+        "quarter":"quarter",
+    },
+    "welcomeHeader":{
+        "welcomeBack":"Welcome back,"
+    },
+    "schoolScheduleSchedules":{
+        "noScheduleFound":"No Schedule found for today!",
+        "viewAllSchedules":"View All Schedules"
+    },
+    "viewsTeacherStudent":{
+        "wantToSee":"Want to see how { student } is doing on otherclasses?",
+        "viewFullGrade":"View Full Grade Report"
+    },
+    "homeRooms":{
+        "noHomeroomClasses":"No homeroom classes found!",
+        "assignHomeroom":"Assign Homeroom",
+        "homeroomClasses":"Homeroom Classes",
+        "classAttendance":"CLASS ATTENDANCE",
+        "classConduct":"CLASS CONDUCT",
+        "topStudents":"Top Students",
+        "studentsFalling":"Students Falling Behind"
+    },
+    "filtersIndex":{
+        "searchAssessmentTitle":"Search Assessment Title",
+        "selectSubject":"Select Subject",
+        "createAssessment":"Create Assessment",
+        "filters":"Filters",
+        "selectStatus":"Select Status",
+        "assessmentType":"Assessment Type",
+        "selectSchoolYear":"Select SchoolYear",
+        "SelectSemester":"Select Semester",
+        "SelectQuarter":"Select Quarter",
+        "done":"DONE",
+        "clearAll":"CLEAR ALL",
+        "all":"All",
+        "published":"Published",
+        "completed":"Completed",
+        "marking": "Marking",
+        "draft":"Draft",
+        "canceled":"Canceled",
+    },
+    "lessonPlans":{
+        "viewAllLessonPlans":"View All Lesson Plans",
+        "noLessonPlan":"No Lesson Plan Found!",
+
+    },
+    "homeroomClasses":{
+        "homerooms":"Homerooms",
+        "noHomeroomClassAttached":"No homeroom class attached yet!"
+    },
+
+"batches":{
+    "myClasses":"My Classes",
+    "classes":"Classes",
+    "assessments":"Assessments",
+    "lessonPlans":"LessonPlans",
+    "students":"Students",
+    "announcements":"Announcements",
+    "recentAssessments":"Recent Assessments",
+    "topStudents":"Top Students",
+    "studentsFalling":"Students Falling Behind"
+    },
+
+"usersAbsentee":{
+        "classAbsentStudents":" Class Absent Students List",
+        "teacher":"Teacher:",
+        "absentTeachers":"Absent Teachers"
+    },
+
+"teacherIndex":{
+        "homeroomClasses":"Homeroom Classes",
+        "upcomingSchedules":"Upcoming Schedules"
+    },
+
+"adminLayout":{
+    "home":"Home",
+    "settings":"Settings",
+    "logout":"Logout"
+
+},
+
+"teachersIndex":{
+    "absentee":"Absentee",
+    "confirmIf":"confirm if you want to mark this teacher as absent",
+    "absent":"Absent",
+    "reason":"Reason",
+    "noTeacher":"No teacher has been enrolled",
+    "searchTeacher":"Search for a teacher by name"
+},
 
 
+"levelSingle":{
+    "selectSection":"Select Section"
+},
+
+"levelSubjects":{
+    "Views":"Views",
+    "lastUpdated":"Last Updated"
+},
+
+"staffAbsenteesTable":{
+    "searchStaff":"Search for an absent staff by name",
+    "newAbsentee":"New Absentee"
+},
+"absenteeStats":{
+    "todayAbsentees":"Today's Absentees"
+},
+
+"studentAbsenteesTable":{
+    "searchStudent":"Search for an absent student by name"
+},
+
+"copilotIndex":{
+    "rigelCopilot":"Rigel Copilot"
+},
+"questionPreparation":{
+    "welcome":" Welcome to our AI-Powered Question Preparation Platform",
+    "description" :"Embrace our AI-powered platform that creates custom assessments from your lesson plans, facilitating a streamlined teaching experience. Immerse yourself in a process where you teach more and prepare less, helping reshape the future of education.",
+    "questionGeneration":"Question Generation Customization",
+    "selectQuestionType":"Select Question Type",
+    "numberOfQuestions":"Number Of Questions?",
+    "howManyQuestions":"How Many Questions?",
+    "setDifficultyLevel":"Set Difficulty Level for Questions",
+    "hintForDifficulty":"Use this slider to set the difficulty level for the generated questions. Moving the slider to the left will make questions easier, while moving it to the right will make them more challenging.",
+    "manualInput":"Manual Input",
+    "manualInputDescription":"Opt for manual input if you prefer to generate questions based on your unique inputs and parameters. This option allows for greater control and specificity.",
+    "lessonPlans":"Lesson Plans",
+    "lessonPlanDescription":"Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we'll load your plans, and you can choose one for us to craft tailored questions.",
+    "question":"Question",
+    "enterQuestion":"Enter Question"
+},
+
+"batchAssessments":{
+    "studentNotes":"Student Notes",
+    "noScheduledAssessment":"No Scheduled Assessment Found",
+    "dueDate":"Due Date",
+    "assessmentType":"Assessment Type"
+},
+"batchFlags":{
+    "flaggedStudents":"Flagged Students",
+    "flaggedBy":"Flagged by",
+    "userName":"Username"
+},
+"batchesIndex":{
+    "FlagList":"Flag List",
+},
+
+
+
+
+
+    "common":{
+        "days": ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+        "months": ["January","February","March","April","May","June","July","August","September","October","November","December"],
+        "pts": "PTS",
+        "noFeedbacks":"No Feedbacks",
+        "grades":"Grades",
+        "grade":"Grade",
+        "admins":"Admins",
+        "subjects":"Subjects",
+        "students":"Students",
+        "student":"Student",
+        "assessments":"Assessments",
+        "assessment":"Assessments",
+        "description":"Description",
+        "lessonPlans":"LessonPlans",
+        "viewAllGrades":"View All Grades",
+        "noGradesFound":"No Grades Found!",
+        "goToGrades":"Go To Grades",
+        "and":"And",
+        "period":"Period",
+        "attendance":"Attendance",
+        "homeroom":"Homeroom",
+        "viewAll":"VIEW ALL",
+        "teachers":"Teachers",
+        "announcements":"Announcements",
+        "schedule":"Schedule",
+        "users":"Users",
+        "noDataFound":"No data found",
+        "name":"Name",
+        "email":"Email",
+        "gender":"Gender",
+        "male":"Male",
+        "female":"Female",
+        "close":"Close",
+        "clear":"Clear",
+        "submit":"Submit",
+        "chat":"Chat",
+        "copilot":"Copilot",
+        "previous":"Previous",
+        "next":"Next",
+        "administrators":"Administrators",
+        "reason":"Reason",
+        "type":"Type",
+        "age":"Age",
+        "lastUpdated":"Last Updated"
+        }
 }
-
 
 export default en;

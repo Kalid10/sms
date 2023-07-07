@@ -14,7 +14,7 @@
                 <ExclamationTriangleIcon
                     class="mb-2 h-6 w-6 text-negative-50"
                 />
-                <p class="mb-0.5 text-sm font-semibold">No data found</p>
+                <p class="mb-0.5 text-sm font-semibold">{{ $t('common.noDataFound')}} </p>
             </div>
         </template>
     </TableElement>
@@ -26,6 +26,8 @@ import TextInput from "@/Components/TextInput.vue";
 import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { debounce } from "lodash";
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 
 const studentAbsentees = computed(() => usePage().props.student_absentees);
 
@@ -43,15 +45,15 @@ const filteredStudentAbsentees = computed(() => {
 const config = [
     {
         key: "name",
-        name: "Name",
+        name: t('common.name'),
     },
     {
         key: "email",
-        name: "Email",
+        name: t('common.email'),
     },
     {
         name: "Reason",
-        key: "reason",
+        key: t('common.reason'),
     },
 ];
 

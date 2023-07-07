@@ -24,7 +24,7 @@
         <div class="flex h-full flex-col space-y-5 rounded-lg bg-white p-4">
             <div class="text-center text-3xl font-bold">
                 {{ batch.active_session[0].batch_subject.subject.full_name }}
-                Class Absent Students List
+           {{ $t('usersAbsentee.classAbsentStudents')}}
             </div>
             <div
                 v-for="(item, index) in batch.active_session[0].absentees"
@@ -37,7 +37,7 @@
             </div>
             <div class="flex w-full justify-between p-3">
                 <div class="text-xs font-light">
-                    Teacher:
+                    {{ $t('usersAbsentee.teacher')}}
                     <span class="font-medium uppercase">
                         {{ batch.active_session[0].teacher.user.name }}
                     </span>
@@ -54,7 +54,8 @@ import Modal from "@/Components/Modal.vue";
 import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
 import moment from "moment";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 defineProps({
     value: {
         type: String,

@@ -6,8 +6,8 @@
             class="flex w-full flex-col items-center space-y-2 rounded-lg bg-white p-5 shadow-sm"
         >
             <div class="flex w-full items-center justify-between py-2 pr-5">
-                <Title class="w-5/12" :title="$t('views.teacher.announcement.announcementIndex.announcements')" />
-                <TextInput :placeholder="$t('views.teacher.announcement.announcementIndex.searchAnnouncements')" class="w-5/12" />
+                <Title class="w-5/12" :title="$t('teacherAnnouncementIndex.announcements')" />
+                <TextInput :placeholder="$t('teacherAnnouncementIndex.searchAnnouncements')" class="w-5/12" />
             </div>
 
             <div
@@ -31,7 +31,7 @@
             class="flex w-full flex-col items-center space-y-2 rounded-lg bg-white p-5 shadow-sm"
         >
             <div class="flex w-full items-center justify-between py-2 pr-5">
-                <Title class="w-full" :title="$t('views.teacher.announcement.announcementIndex.feedbacks')" />
+                <Title class="w-full" :title="$t('teacherAnnouncementIndex.feedbacks')" />
             </div>
 
             <div

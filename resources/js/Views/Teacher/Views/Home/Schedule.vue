@@ -32,20 +32,22 @@ import Card from "@/Components/Card.vue";
 import {usePage} from "@inertiajs/vue3";
 import {computed} from "vue";
 import moment from "moment/moment";
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 
 const teacher = usePage().props.teacher;
 const schedule = usePage().props.batchSchedules;
 const days = [
-    {name: 'Monday', key: 'monday'},
-    {name: 'Tuesday', key: 'tuesday'},
-    {name: 'Wednesday', key: 'wednesday'},
-    {name: 'Thursday', key: 'thursday'},
-    {name: 'Friday', key: 'friday'},
+    {name: t('common.days[1]'), key: 'monday'},
+    {name: t('common.days[2]'), key: 'tuesday'},
+    {name:t('common.days[3]'), key: 'wednesday'},
+    {name:t('common.days[4]'), key: 'thursday'},
+    {name: t('common.days[5]'), key: 'friday'},
 ];
 
 
 const sortedAndFormattedTeacherPeriods = computed(() => {
-    const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const daysOfWeek = [t('common.days[0]'), t('common.days[1]'), t('common.days[2]'), t('common.days[3]'), t('common.days[4]'), t('common.days[5]'), t('common.days[6]')];
 
     return teacher.batch_schedules.slice()
         .sort((a, b) => {

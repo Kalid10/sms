@@ -34,7 +34,8 @@ import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 import moment from "moment";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const students = computed(() => usePage().props.students);
 
 const studentsData = computed(() => {
@@ -69,7 +70,7 @@ const config = [
         align: "left",
     },
     {
-        name: "Age",
+        name: t('common.age'),
         key: "date_of_birth",
         type: "custom",
         align: "left",

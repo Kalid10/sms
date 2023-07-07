@@ -12,21 +12,22 @@
             <template #table-header>
                 <div v-if="showTitle" class="flex w-full justify-between pb-4">
                     <div class="pl-4">
-                        <div class="pb-2 text-xl font-semibold">Students</div>
+                        <div class="pb-2 text-xl font-semibold"> {{ $t('adminStudentsTable.students')}}</div>
                         <div class="text-xs font-light text-gray-500">
-                            List of all students in the school
+                            {{ $t('adminStudentsTable.listAllStudents')}}
                         </div>
                     </div>
                     <SecondaryButton
                         class="h-fit !rounded-2xl bg-zinc-700 text-white"
-                        title="Register Student"
+                        :title="$t('adminStudentsTable.registerStudent')"
                         @click="router.get('/register/student')"
                     />
                 </div>
                 <TextInput
                     v-model="searchKey"
                     class="w-7/12"
-                    placeholder="Search for a student by name"
+                    :title="$t('adminStudentsTable.searchForStudent')"
+
                 />
                 <div
                     class="mt-3 flex w-full justify-between divide-x divide-gray-200 rounded-lg border bg-gray-50 p-3"
@@ -36,7 +37,7 @@
                             {{ studentsCount }}
                         </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
-                            Total Students
+                            {{ $t('adminStudentsTable.totalStudents')}}
                         </div>
                     </div>
                     <div class="w-4/12 text-center">
@@ -47,7 +48,7 @@
                             {{ todayAbsentees.length }}
                         </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
-                            Absentees Today
+                            {{ $t('adminStudentsTable.absenteesToday')}}
                         </div>
                     </div>
                     <div class="w-4/12 text-center">
@@ -58,7 +59,7 @@
                             {{ latestPeriodAbsentees.length }}
                         </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
-                            Latest Period Absentees
+                            {{ $t('adminStudentsTable.latestPeriodAbsentees')}}
                         </div>
                     </div>
                 </div>
@@ -104,20 +105,21 @@
                     <ExclamationTriangleIcon
                         class="mb-2 h-6 w-6 text-negative-50"
                     />
-                    <p class="text-sm font-semibold">No data found</p>
+                    <p class="text-sm font-semibold">{{ $t('adminStudentsTable.noDataFound')}}</p>
                     <div v-if="searchKey.length">
                         <p
                             v-if="searchKey === null"
                             class="text-sm text-gray-500"
                         >
-                            No student has been enrolled
+                            {{ $t('adminStudentsTable.noStudentEnrolled')}}
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
-                            Your search query "<span
-                                class="font-medium text-black"
-                                >{{ searchKey }}</span
-                            >" did not match
-                            <span class="block">any student's name</span>
+                             <span v-html="$t('adminStudentsTable.yourSearchQuery',{searchKey})"> </span>
+<!--                            Your search query '<span-->
+<!--                                class="font-medium text-black"-->
+<!--                                >{{ searchKey }}</span-->
+<!--                            >" did not match-->
+<!--                            <span class="block">any student's name</span>-->
                         </p>
                     </div>
                 </div>
@@ -136,15 +138,13 @@
             @submit="submit"
         >
             <p class="text-xs text-gray-500">
-                Transferring a student will remove them from their current
-                section and add them to the selected section.
-            </p>
+                {{ $t('adminStudentsTable.transferringStudent')}}
+              </p>
 
             <RadioGroupPanel
                 v-model="transferForm.destination_batch_id"
                 :options="transferOptions"
-                label="Select Destination Section"
-                name="sections"
+                :label="$t('studentsIndex.selectDestinationSection')"
             />
         </FormElement>
     </Modal>
@@ -152,7 +152,7 @@
     <Modal v-model:view="showAbsentees">
         <div class="lex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
             <div>
-                <Title title="Today's Absentees" />
+                <Title :title="$t('adminStudentsTable.todayAbsentees')" />
             </div>
 
             <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
@@ -179,7 +179,8 @@
     <Modal v-model:view="showLatestPeriodAbsentees">
         <div class="lex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
             <div>
-                <Title title="Latest Period Absentees" />
+
+                <Title :title="$t('adminStudentsTable.latestPeriodAbsentees')" />
             </div>
 
             <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
@@ -218,7 +219,8 @@ import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import Pagination from "@/Components/Pagination.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const props = defineProps({
     url: {
         type: String,
@@ -336,25 +338,25 @@ watch([searchKey, perPage], () => {
 
 const config = [
     {
-        name: "Name",
+        name: t('adminStudentsTable.name'),
         key: "name",
         link: "/admin/teachers/students/{id}",
         align: "left",
         type: "custom",
     },
     {
-        name: "Email",
+        name:  t('adminStudentsTable.email'),
         key: "email",
         type: "custom",
     },
     {
-        name: "Gender",
+        name: t('adminStudentsTable.gender'),
         key: "gender",
         type: "enum",
         options: ["female", "male"],
     },
     {
-        name: "Grade",
+        name: t('adminStudentsTable.grade'),
         key: "grade",
         type: "custom",
         align: "right",

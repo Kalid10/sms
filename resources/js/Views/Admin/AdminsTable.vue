@@ -4,8 +4,8 @@
         :footer="false"
         :selectable="false"
         :header="false"
-        title="Administrator Staff"
-        subtitle="Admins registered this year"
+        :title="$t('adminsTable.tableElementTitle')"
+        :subtitle="$t('adminsTable.tableElementSubtitle')"
         :data="admins"
         :columns="configAdmin"
     >
@@ -43,7 +43,7 @@
         <template #updated_at-column="{ data }">
             <div class="flex items-center gap-1">
                 <span class="text-xs text-gray-500">
-                updated {{ data }}
+            {{ $t('adminsTable.updated')}}  {{ data }}
             </span>
             </div>
         </template>
@@ -52,7 +52,7 @@
             <div class="flex flex-col items-center justify-center">
                 <ExclamationTriangleIcon class="mb-2 h-6 w-6 text-negative-50"/>
                 <p class="text-sm font-semibold">
-                    No data found
+                    {{ $t('adminsTable.noDataFound')}}
                 </p>
             </div>
         </template>
@@ -65,6 +65,7 @@
 <script setup>
 import TableElement from "@/Components/TableElement.vue";
 import {ExclamationTriangleIcon} from "@heroicons/vue/24/outline";
+import SelectInput from "@/Components/SelectInput.vue";
 
 const props = defineProps({
     admins: {

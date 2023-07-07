@@ -14,7 +14,7 @@
         </div>
         <span
             class="-mt-1 w-full text-end text-[0.5rem] font-light text-gray-500"
-            >PTS</span
+            >{{$t('common.pts')}} </span
         >
     </div>
 </template>

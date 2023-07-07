@@ -1,6 +1,6 @@
 <template>
     <div class="w-10/12 py-5">
-        <Title class="pb-8" title="Subjects" />
+        <Title class="pb-8" :title="$t('common.subjects')" />
 
         <SubjectsTable
             @new="isAddModalOpen = true"

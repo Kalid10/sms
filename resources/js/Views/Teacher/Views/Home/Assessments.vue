@@ -11,7 +11,7 @@
             </div>
             <LinkCell
                 class="flex w-fit items-center justify-center"
-                value="VIEW ALL"
+                :value="$t('homeAssessments.viewAll')"
                 @click="fetchAssessments"
             />
         </div>
@@ -29,8 +29,8 @@
                 class="flex h-32 flex-col items-center justify-center space-y-4 lg:h-72"
             >
                 <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
-                <div class="text-xs lg:text-sm">No Assessments Found!</div>
-                <LinkCell value="Go To Assessments" @click="fetchAssessments" />
+                <div class="text-xs lg:text-sm">{{ $t('homeAssessments.noAssessmentsFound')}}</div>
+                <LinkCell :value="$t('homeAssessments.goToAssessments')"   @click="fetchAssessments" />
             </div>
         </div>
     </div>

@@ -34,7 +34,7 @@
                     </div>
                     <div class="text-[0.65rem] uppercase">
                         {{ numberWithOrdinal(Number(item.school_period.name)) }}
-                        Period
+                        {{ $t('currentDaySchedule.period') }}
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
             v-else
             class="py-5 text-center text-2xl font-bold uppercase text-gray-600"
         >
-            No schedule found!
+            {{ $t('currentDaySchedule.noScheduleFound') }}
         </div>
     </div>
 </template>

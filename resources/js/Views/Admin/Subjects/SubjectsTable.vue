@@ -13,14 +13,14 @@
                         <TextInput
                             v-model="query"
                             class="w-full lg:max-w-lg"
-                            placeholder="Search for a subject by name or tags"
+                            :placeholder="$t('subjectsTable.queryPlaceholder')"
                         />
                         <PrimaryButton @click="$emit('new')">
                             <span class="flex gap-2">
                                 <PlusIcon
                                     class="h-4 w-4 stroke-white stroke-2"
                                 />
-                                <span>New Subject</span>
+                                <span> {{ $t('subjectsTable.newSubject')}}</span>
                             </span>
                         </PrimaryButton>
                     </div>
@@ -36,19 +36,15 @@
                             class="mb-2 h-6 w-6 text-negative-50"
                         />
                         <p class="mb-0.5 text-sm font-semibold">
-                            No data found
+                            {{ $t('subjectsTable.noDataFound')}}
                         </p>
                         <p v-if="query === null" class="text-sm text-gray-500">
-                            No subject has been enrolled in this section
+                            {{ $t('subjectsTable.noSubjectEnrolled')}}
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
-                            Your search query "<span
-                                class="font-medium text-black"
-                                >{{ query }}</span
-                            >" did not match
-                            <span class="block"
-                                >any subject, category or tag</span
-                            >
+
+                            <span v-html="$t('subjectsTable.yourQueryDidNotMatch',{query})" />
+
                         </p>
                     </div>
                 </template>
@@ -135,12 +131,12 @@
         <template #grades>
             <div class="my-2 flex flex-row">
                 <label class="mx-2 flex w-32 items-center text-sm text-gray-800"
-                    >Select a grade:</label
+                    >{{ $t('subjectsTable.selectGrade')}}</label
                 >
                 <SelectInput
                     v-model="selectedBatchId"
                     :options="batchOptions"
-                    placeholder="Select a batch"
+                    :placeholder="$t('subjectsTable.selectBatch')"
                     class="max-h-28 w-4/12 cursor-pointer"
                 />
             </div>
@@ -205,7 +201,10 @@ import SelectInput from "@/Components/SelectInput.vue";
 import TabElement from "@/Components/TabElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 
-const tabs = ["Subjects", "Grades"];
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
+
+const tabs = [t('subjectsTable.subjects'), t('subjectsTable.grades')];
 const activeTab = ref("Subjects");
 
 // Map the batch_subjects data
@@ -301,7 +300,7 @@ const config = [
     },
     {
         key: "full_name",
-        name: "Subjects",
+        name: t('subjectsTable.subjects'),
         type: "custom",
         align: "right",
     },
@@ -317,13 +316,13 @@ const config = [
     },
     {
         key: "updated_at",
-        name: "Last Updated",
+        name:t('subjectsTable.lastUpdated'),
         type: "custom",
         align: "right",
     },
     {
         key: "deleted_at",
-        name: "Active",
+        name: t('subjectsTable.active'),
         type: "custom",
     },
 ];
@@ -331,7 +330,7 @@ const config = [
 const batch_subject_config = [
     {
         key: "full_name",
-        name: "Subjects",
+        name:  t('common.subjects'),
         type: "custom",
         align: "left",
     },
@@ -347,7 +346,7 @@ const batch_subject_config = [
     },
     {
         key: "updated_at",
-        name: "Last Updated",
+        name: t('common.lastUpdated'),
         type: "custom",
         align: "right",
     },

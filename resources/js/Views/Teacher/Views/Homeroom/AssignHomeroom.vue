@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
         <div>
-            <Title title="Assign Homeroom" />
+            <Title :title="$t('assignHomeroom.assignHomeroom')"/>
         </div>
 
         <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
@@ -26,7 +26,8 @@
 
             <div class="flex w-full flex-col justify-center space-y-4">
                 <span class="text-md font-medium text-gray-500"
-                    >Search and select a grade to assign as a homeroom teacher
+                    >
+                    {{ $t('assignHomeroom.searchAndSelect')}}
                 </span>
                 <div>
                     <input
@@ -70,7 +71,7 @@
 
                                 <div class="flex items-center justify-center">
                                     <PrimaryButton
-                                        title="Assign Homeroom"
+                                        :title="$t('assignHomeroom.assignHomeroom')"
                                         @click="assignHomeroom"
                                     />
                                 </div>

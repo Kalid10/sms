@@ -16,7 +16,7 @@
         <span
             class="flex w-full cursor-pointer space-x-2 text-sm font-medium text-violet-600 hover:font-semibold hover:underline hover:underline-offset-2"
         >
-            Continue reading
+          {{ $t('selectedAnnouncement.continueReading') }}
             <ArrowSmallRightIcon class="w-5" />
         </span>
         <div class="flex w-full items-center space-x-2 text-sm font-medium">

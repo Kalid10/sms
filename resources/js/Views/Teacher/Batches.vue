@@ -90,7 +90,7 @@
                         >
                             <Assessment
                                 class=""
-                                title="Recent Assessments"
+                                :title="$t('batches.recentAssessments')"
                                 :assessments="assessments"
                                 view="class"
                             />
@@ -112,7 +112,7 @@
                     <div class="w-full">
                         <StudentsList
                             progress-type="up"
-                            title="Top Students"
+                            :title="$t('batches.topStudents')"
                             :icon="ArrowTrendingUpIcon"
                             :students="topStudents"
                         />
@@ -121,7 +121,7 @@
                     <div class="w-full">
                         <StudentsList
                             progress-type="down"
-                            title="Students Falling Behind"
+                            :title="$t('batches.studentsFalling')"
                             :icon="ArrowTrendingDownIcon"
                             :students="bottomStudents"
                         />

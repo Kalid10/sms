@@ -47,35 +47,35 @@
     <Modal v-model:view="showUpdateModal">
         <FormElement
             class="max-w-2xl"
-            title="Update school schedule "
-            subtitle="update"
+            :title="$t('schoolScheduleItem.updateSchoolSchedule')"
+            :subtitle="$t('schoolScheduleItem.update')"
             @submit="update"
         >
             <TextInput
                 v-model="form.title"
                 :error="form.errors.title"
-                label="Name"
-                placeholder=" name"
+                :label="$t('schoolScheduleItem.titleLabel')"
+                :placeholder="$t('schoolScheduleItem.titlePlaceholder')"
                 :required="true"
             />
             <TextArea
                 v-model="form.body"
                 :error="form.errors.body"
-                label="Description"
-                placeholder="Its about..."
+                :label="$t('schoolScheduleItem.bodyLabel')"
+                :placeholder="$t('schoolScheduleItem.bodyPlaceholder')"
                 :required="true"
             />
             <TextInput
                 v-model="form.tags"
-                label="tags"
-                placeholder="tag1,tag2,tag3"
+                :label="$t('schoolScheduleItem.inputTagsLabel')"
+                :placeholder="$t('schoolScheduleItem.inputTagsPlaceholder')"
                 :required="true"
             />
             <DatePicker
                 v-model:start-date="form.start_date"
                 v-model:end-date="form.end_date"
                 range
-                label="Date"
+                :label="$t('schoolScheduleItem.datePickerLabel')"
                 required
             ></DatePicker>
             <RadioGroupPanel
@@ -108,7 +108,8 @@ import TextInput from "@/Components/TextInput.vue";
 import { router, useForm } from "@inertiajs/vue3";
 import DialogBox from "@/Components/DialogBox.vue";
 import { isAdmin, isTeacher } from "@/utils";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const isDialogBoxOpen = ref(false);
 
 const props = defineProps({
@@ -126,18 +127,18 @@ const showUpdateModal = ref(false);
 const eventTypes = [
     {
         value: "closed",
-        label: "Full Day",
-        description: "There is no school for the whole day.",
+        label: t('schoolScheduleItem.fullDay'),
+        description: t('schoolScheduleItem.fullDayDescription'),
     },
     {
         value: "half_closed",
-        label: "Half Day",
-        description: "There will be no class for the half day.",
+        label: t('schoolScheduleItem.halfDay'),
+        description: t('schoolScheduleItem.halfDayDescription'),
     },
     {
         value: "not_closed",
-        label: "None",
-        description: "There will be class all day.",
+        label: t('schoolScheduleItem.none'),
+        description: t('schoolScheduleItem.noneDescription'),
     },
 ];
 

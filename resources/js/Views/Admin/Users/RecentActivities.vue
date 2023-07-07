@@ -2,7 +2,7 @@
     <div
         class="flex flex-col space-y-4 rounded-lg border border-gray-100 bg-white p-3 py-4 shadow-sm"
     >
-        <div class="text-center text-xl font-semibold">Recent Activities</div>
+        <div class="text-center text-xl font-semibold">{{$t('recentActivities.recentActivities')}}</div>
 
         <div class="flex flex-col space-y-1">
             <div

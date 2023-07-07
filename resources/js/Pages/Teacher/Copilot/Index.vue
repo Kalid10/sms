@@ -1,6 +1,6 @@
 <template>
     <div class="flex min-h-screen w-full flex-col space-y-4 bg-gray-50 p-5">
-        <Title class="w-4/12 pl-8" title="Rigel Copilot" />
+        <Title class="w-4/12 pl-8" :title="$t('copilotIndex.rigelCopilot')"/>
 
         <div class="flex h-full w-full justify-center px-4">
             <TabElement v-model:active="activeTab" class="h-full" :tabs="tabs">

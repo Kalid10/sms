@@ -6,7 +6,7 @@
             class="absolute top-6 right-0 flex w-8/12 flex-col items-center rounded-lg p-4 text-center"
         >
             <div class="text-4xl font-medium">
-                Welcome to our AI-Powered Question Preparation Platform
+               {{ $t('questionPreparation.welcome') }}
             </div>
             <div class="w-10/12 py-1 text-sm font-light">
                 Embrace our AI-powered platform that creates custom assessments

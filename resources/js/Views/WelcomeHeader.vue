@@ -3,7 +3,7 @@
         class="col-span-12 h-fit text-start font-light lg:text-3xl 2xl:text-4xl"
         :class="isSidebarOpenOnXlDevice ? ' lg:col-span-8' : ' lg:col-span-7'"
     >
-        Welcome back,
+        {{ $t('welcomeHeader.welcomeBack') }}
 
         <span class="ml-0.5 font-semibold lg:ml-2">{{ user.name }}</span>
     </div>

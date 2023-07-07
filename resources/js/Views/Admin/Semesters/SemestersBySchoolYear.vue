@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto flex w-full flex-col items-center gap-3">
         <Heading v-if="selectedSemesters.length === 0">
-            {{ selectedSemesters.length }} Semesters</Heading
+            {{ selectedSemesters.length }} {{ $t('semestersBySchoolYear.semesters')}}</Heading
         >
         <Heading v-else
             >{{
@@ -9,7 +9,8 @@
                     selectedSemesters[0].school_year.start_date
                 ).getFullYear()
             }}
-            Semesters</Heading
+            {{ $t('semestersBySchoolYear.semesters')}}
+            </Heading
         >
         <SemestersList :semesters="selectedSemesters.slice().reverse()" />
     </div>
@@ -20,6 +21,7 @@ import { computed } from "vue";
 import Heading from "@/Components/Heading.vue";
 import SemestersList from "@/Views/Admin/Semesters/SemestersList.vue";
 import { useSemesterStore } from "@/Store/semesters";
+
 
 const props = defineProps({
     schoolYearId: {

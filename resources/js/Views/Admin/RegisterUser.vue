@@ -2,13 +2,12 @@
     <RegisterModal v-model:view="isOpen">
 
         <div class="grid w-full space-y-6 overflow-hidden rounded-lg bg-white p-5">
-            <h1 class="flex justify-center pt-4 text-lg font-bold">Choose user type</h1>
+            <h1 class="flex justify-center pt-4 text-lg font-bold">{{ $t('registerUser.header')}}</h1>
             <RegisterCard
                 v-if="hasRole('manage-students')"
                 icon
-                title="Guardian and Student" subtitle="Students and their guardians are required to provide personal information such as name,
-                contact information and any special needs or accommodations required. Depending on the institution, guardians may also need to
-                 provide legal documentation such as proof of guardianship or custody."
+                :title="$t('registerUser.guardianStudentRegisterTitle')"
+                :subtitle="$t('registerUser.guardianStudentRegisterSubtitle')"
                 class="hover:scale-11 min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out hover:-translate-y-1"
                 @click="familyRegistrationLink">
                 <template #icon>
@@ -20,10 +19,8 @@
             <RegisterCard
                 v-if="hasRole('manage-guardians')"
                 icon
-                title="Teacher" subtitle=" Teachers are typically required to provide personal information such as name,
-                contact information, and educational qualifications.
-                They may also need to provide teaching experience, references, and any specialized training or
-                certifications."
+                :title="$t('registerUser.teacherRegisterTitle')"
+                :subtitle="$t('registerUser.teacherRegisterSubtitle')"
                 class="hover:scale-11 min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out
                 hover:-translate-y-1"
                 @click="teacherRegistrationLink">
@@ -35,9 +32,8 @@
             <RegisterCard
                 v-if="hasRole('manage-admins')"
                 icon
-                title="Admin" subtitle="Administrators may need to provide personal information such as name, contact
-                information, and job position.
-                They may also need to provide professional qualifications and references."
+                :title="$t('registerUser.adminRegisterTitle')"
+                :subtitle="$t('registerUser.adminRegisterSubtitle')"
                 class="hover:scale-11 min-w-full max-w-full cursor-pointer transition duration-500 ease-in-out
                 hover:-translate-y-1"
                 @click="adminRegistrationLink">
@@ -56,6 +52,7 @@ import RegisterCard from "@/Components/Card.vue";
 import {AcademicCapIcon, BookOpenIcon, BuildingLibraryIcon} from "@heroicons/vue/24/outline"
 import RegisterModal from "@/Components/Modal.vue";
 import {router} from "@inertiajs/vue3";
+import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 
 
 const props = defineProps({

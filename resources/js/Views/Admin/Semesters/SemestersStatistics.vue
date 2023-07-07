@@ -4,8 +4,8 @@
     >
         <StatisticsCard
             :data="semestersCount"
-            subtitle="Semesters tracked on the system"
-            title="Semesters"
+            :title="$t('semestersStatistics.semestersCountTitle')"
+            :subtitle="$t('semestersStatistics.semestersCountSubtitle')"
         >
             <template #icon>
                 <StarIcon />
@@ -13,8 +13,8 @@
         </StatisticsCard>
         <StatisticsCard
             :data="schoolYearsCount"
-            subtitle="School Years registered on the system"
-            title="School Years"
+            :title="$t('semestersStatistics.schoolYearsCountTitle')"
+            :subtitle="$t('semestersStatistics.schoolYearsCountSubtitle')"
         >
             <template #icon>
                 <div class="relative">
@@ -28,8 +28,8 @@
         </StatisticsCard>
         <StatisticsCard
             :data="activeSchoolYearSemestersCount"
-            subtitle="Semesters currently in progress"
-            title="Current(Active) School year Semesters"
+            :title="$t('semestersStatistics.activeSchoolYearSemestersCountTitle')"
+            :subtitle="$t('semestersStatistics.activeSchoolYearSemestersCountSubtitle')"
         >
             <template #icon>
                 <StarIconSolid class="fill-yellow-400 stroke-yellow-800" />
@@ -48,6 +48,7 @@ import StatisticsCard from "@/Views/Admin/StatisticsCard.vue";
 import { StarIcon } from "@heroicons/vue/24/outline";
 import { StarIcon as StarIconSolid } from "@heroicons/vue/24/solid";
 import { useSemesterStore } from "@/Store/semesters";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const semestersCount = useSemesterStore().semestersCount;
 const schoolYearsCount = useSemesterStore().schoolYearsCount;

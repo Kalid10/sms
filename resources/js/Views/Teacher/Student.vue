@@ -67,12 +67,14 @@
                 class="flex h-36 w-full flex-col items-center justify-evenly rounded-lg bg-gradient-to-tl from-purple-500 to-violet-500 shadow-sm"
             >
                 <div class="px-4 text-center text-white">
+<!--                    <span v-html="$t('viewsTeacherStudent.wantToSee',{student:student?.user.name })" />-->
+
                     Want to see how {{ student?.user.name }} is doing on other
                     classes?
                 </div>
 
                 <SecondaryButton
-                    title="View Full Grade Report"
+                    :title="$t('viewsTeacherStudent.viewFullGrade')"
                     class="w-2/3 !rounded-2xl !border-none bg-purple-100 font-semibold"
                     @click="showGrade = true"
                 />

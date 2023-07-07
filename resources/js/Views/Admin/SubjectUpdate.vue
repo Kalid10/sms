@@ -1,23 +1,28 @@
 <template>
     <UpdateModal v-model:view="isUpdateSubjectFormOpened">
-        <UpdateFormElement v-model:show-modal="isUpdateSubjectFormOpened" modal title="Update Subject" @submit="update" @cancel="clear">
+        <UpdateFormElement v-model:show-modal="isUpdateSubjectFormOpened" modal :title="$t('subjectUpdate.updateFormElementTitle')"  @submit="update" @cancel="clear">
             <UpdateTextInput
-                v-model="form.full_name" required :error="form.errors.full_name" label="Full Name"
-                placeholder="Full Name"/>
+                v-model="form.full_name" required :error="form.errors.full_name"
+                :label="$t('subjectUpdate.fullName')"
+                :placeholder="$t('subjectUpdate.fullName')"
+            />
             <UpdateTextInput
-                v-model="form.short_name" required :error="form.errors.short_name" label="Short Name"
-                placeholder="Short Name"/>
+                v-model="form.short_name" required :error="form.errors.short_name"
+                :placeholder="$t('subjectUpdate.shortName')"
+                :label="$t('subjectUpdate.shortName')"
+            />
             <UpdateTextInput
                 v-model="tags"
                 required
-                placeholder="Assign tags (separate multiple tags with comma)"
-                label="Subject Tags"
+                :placeholder="$t('subjectUpdate.tagsPlaceholder')"
+                :label="$t('subjectUpdate.tagsLabel')"
             />
             <UpdateTextInput
                 v-model="form.category"
                 required
-                placeholder="Enter a category"
-                label="Subject Category"
+                :placeholder="$t('subjectUpdate.categoryPlaceholder')"
+                :label="$t('subjectUpdate.categoryLabel')"
+
             />
         </UpdateFormElement>
     </UpdateModal>

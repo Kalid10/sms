@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Heading size="lg">Subjects</Heading>
+        <Heading size="lg">{{ $t('common.subjects')}}</Heading>
         <div v-if="uniqueSubjectsAndLevels.length > 0" class="flex w-full flex-col items-center space-y-3 space-x-1.5">
             <div
                 v-for="(item, index) in uniqueSubjectsAndLevels" :key="index"
@@ -12,7 +12,7 @@
         </div>
         <div v-else>
             <div class="flex h-24 items-center justify-center">
-                No subject attached yet!
+                {{ $t('homeSubjects.noSubjectAttached')}}
             </div>
         </div>
     </div>
@@ -22,7 +22,8 @@
 import Heading from "@/Components/Heading.vue";
 import {computed} from "vue";
 import {usePage} from "@inertiajs/vue3";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const teacher = usePage().props.teacher;
 const uniqueSubjectsAndLevels = computed(() => {
     const subjectsMap = new Map();
