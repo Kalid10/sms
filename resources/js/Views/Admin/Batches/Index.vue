@@ -3,10 +3,8 @@
         <div class="rounded-lg border">
             <BatchPerformance :grade="selectedBatch.grade" />
         </div>
-        <div
-            class="flex w-full justify-between space-x-5 rounded-lg border py-3"
-        >
-            <div class="w-6/12">
+        <div class="flex w-full justify-between space-x-5 py-3">
+            <div class="flex w-7/12 rounded-lg border">
                 <Flags title="Flag List" view="homeroom" />
             </div>
             <div class="flex w-4/12 justify-between">
@@ -21,7 +19,8 @@
 
                         <div class="text-3xl font-semibold uppercase">
                             {{
-                                activeSession[0].batch_subject.subject.full_name
+                                activeSession[0].batch_subject?.subject
+                                    ?.full_name
                             }}
                         </div>
                         <div class="text-[0.65rem] font-light">with</div>
@@ -37,12 +36,13 @@
             </div>
         </div>
 
-        <Heading value="Title" class="pl-5" />
-        <div class="flex w-full justify-between py-6 pr-5">
-            <div class="flex h-full w-3/12 flex-col gap-5 rounded-lg px-3">
+        <div class="flex w-full justify-between rounded-lg border py-6 pr-5">
+            <div class="flex h-full w-2/12 flex-col gap-5 rounded-lg px-3">
                 <Card
                     title="Assessments"
-                    class="min-w-full cursor-pointer"
+                    :class="`min-w-full cursor-pointer ${
+                        selectedCard === 'assessments' ? 'bg-gray-200' : ''
+                    }`"
                     icon
                     @click="openAssessment"
                 >
@@ -56,7 +56,9 @@
 
                 <Card
                     title="Students Notes"
-                    class="min-w-full"
+                    :class="`min-w-full cursor-pointer ${
+                        selectedCard === 'studentNotes' ? 'bg-gray-200' : ''
+                    }`"
                     icon
                     @click="openStudentNotes"
                 >
@@ -67,10 +69,27 @@
                         <ArrowRightCircleIcon />
                     </template>
                 </Card>
+
+                <Card
+                    title="Today's Absentees"
+                    :class="`min-w-full cursor-pointer ${
+                        selectedCard === 'absentees' ? 'bg-gray-200' : ''
+                    }`"
+                    icon
+                    @click="openAbsentees"
+                >
+                    <h3 class="text-sm text-gray-500">
+                        Click here to view today's absentees
+                    </h3>
+                    <template #icon>
+                        <ArrowRightCircleIcon />
+                    </template>
+                </Card>
             </div>
-            <div class="flex w-8/12 border p-3 shadow-lg">
+            <div class="flex w-10/12 border p-3 shadow-lg">
                 <BatchAssessment v-if="showAssessment" />
                 <StudentNotes v-if="showStudentNotes" />
+                <Absentees v-if="showAbsentees" />
             </div>
         </div>
     </div>
@@ -83,8 +102,8 @@ import Flags from "@/Views/Flag/Index.vue";
 import BatchAssessment from "@/Views/Admin/Batches/Assessments.vue";
 import Card from "@/Components/Card.vue";
 import { ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
-import Heading from "@/Components/Heading.vue";
 import StudentNotes from "@/Views/Admin/Batches/StudentNotes.vue";
+import Absentees from "@/Views/Admin/Batches/Absentees.vue";
 
 const selectedBatch = computed(() => usePage().props.selected_batch);
 
@@ -92,15 +111,32 @@ const activeSession = computed(() => usePage().props.active_session);
 
 const showAssessment = ref(true);
 const showStudentNotes = ref(false);
+const showAbsentees = ref(false);
+const selectedCard = ref("assessments");
 
 function openAssessment() {
     showAssessment.value = true;
     showStudentNotes.value = false;
+    showAbsentees.value = false;
+    selectedCard.value = "assessments";
 }
 
 function openStudentNotes() {
     showStudentNotes.value = true;
     showAssessment.value = false;
+    showAbsentees.value = false;
+    selectedCard.value = "studentNotes";
+}
+
+function openAbsentees() {
+    showAbsentees.value = true;
+    showAssessment.value = false;
+    showStudentNotes.value = false;
+    selectedCard.value = "absentees";
 }
 </script>
-<style scoped></style>
+<style scoped>
+.bg-gray-200 {
+    background-color: #edf2f7;
+}
+</style>
