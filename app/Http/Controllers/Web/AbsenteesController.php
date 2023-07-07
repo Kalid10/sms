@@ -51,6 +51,13 @@ class AbsenteesController extends Controller
             }
         }
 
+        // Check if the teacher is assigned to the batchSubject
+        $batchSubject = $batchSession->load('batchSchedule.batchSubject.teacher.user')->batchSchedule->batchSubject;
+
+        if (auth()->user()->id !== $batchSubject->teacher->user->id) {
+            return redirect()->back()->with('error', 'You are not assigned to this class.');
+        }
+
         try {
             DB::beginTransaction();
 
