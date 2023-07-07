@@ -5,18 +5,23 @@
             class="flex w-full flex-col items-center justify-evenly space-y-1 rounded-md py-2 px-3 text-center text-gray-200"
         >
             <div class="text-[0.6rem] font-light">Current Class</div>
-            <div class="text-xl font-bold">
-                {{
-                    inProgressSession.batch_schedule.batch_subject.subject
-                        .full_name
-                }}
+            <div v-if="inProgressSession.batch_schedule?.batch_subject">
+                <div class="text-xl font-bold">
+                    {{
+                        inProgressSession.batch_schedule?.batch_subject.subject
+                            .full_name
+                    }}
+                </div>
+                <div class="text-xs font-light">
+                    With
+                    {{
+                        inProgressSession.batch_schedule.batch_subject.teacher
+                            .user.name
+                    }}
+                </div>
             </div>
-            <div class="text-xs font-light">
-                With
-                {{
-                    inProgressSession.batch_schedule.batch_subject.teacher.user
-                        .name
-                }}
+            <div v-else-if="inProgressSession.batch_schedule.school_period">
+                {{ inProgressSession.batch_schedule.school_period.name }}
             </div>
         </div>
         <div v-else class="w-full text-center font-light text-white">

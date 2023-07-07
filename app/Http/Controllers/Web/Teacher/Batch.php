@@ -69,7 +69,7 @@ class Batch extends Controller
         $inProgressSession = $batch->inProgressSession()?->load('batchSchedule.batchSubject.subject', 'batchSchedule.schoolPeriod', 'batchSchedule.batchSubject.teacher.user', 'batchSchedule.batchSubject.batch.level');
         $yourInProgressSession = null;
 
-        if ($inProgressSession && $batchSubjects->contains('id', $inProgressSession->batchSchedule->batchSubject->id)) {
+        if ($inProgressSession && $batchSubjects->contains('id', $inProgressSession->batchSchedule?->batchSubject?->id)) {
             $yourInProgressSession = $inProgressSession;
         }
 
