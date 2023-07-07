@@ -169,7 +169,7 @@ class AbsenteesController extends Controller
         return redirect()->back()->with('success', 'Staff Absentees updated successfully.');
     }
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $searchKey = request()->query('search');
 
@@ -189,6 +189,8 @@ class AbsenteesController extends Controller
                 });
             })->paginate(10);
 
+        $type = $request->input('type');
+
         // Get staff absentees of the day
         $staffAbsenteesOfTheDay = StaffAbsentee::with('user')
             ->whereDate('created_at', Carbon::today())
@@ -197,12 +199,33 @@ class AbsenteesController extends Controller
                     $query->where('name', 'like', '%'.$queryKey.'%');
                 });
             })
+            ->when($type, function ($query, $type) {
+                $query->whereHas('user', function ($query) use ($type) {
+                    if ($type === 'all') {
+                        $query->whereIn('type', [User::TYPE_TEACHER, User::TYPE_ADMIN]);
+                    } else {
+                        $query->where('type', $type);
+                    }
+                });
+            })
             ->paginate(10);
+
+        // Get user types
+        $types = User::select('type')->distinct()->get()->pluck('type');
+
+        // Get user types only for staff, admin and teacher
+        $userTypes = $types->filter(function ($type) {
+            return in_array($type, [User::TYPE_TEACHER, User::TYPE_ADMIN]);
+        });
 
         return Inertia::render('Admin/Absentees/Index', [
             'staff' => Inertia::lazy(fn () => $staff),
             'student_absentees' => $studentAbsentees,
             'staff_absentees_of_the_day' => $staffAbsenteesOfTheDay,
+            'user_types' => $userTypes,
+            'filters' => [
+                'type' => $type,
+            ],
         ]);
     }
 }

@@ -25,6 +25,7 @@ class Student extends Controller
     public function __invoke(StudentModel $student, Request $request): Response
     {
         $request->validate([
+            'school_year_id' => 'nullable|exists:school_years,id',
             'semester_id' => 'nullable|exists:semesters,id',
             'quarter_id' => 'nullable|exists:quarters,id',
         ]);
@@ -62,6 +63,9 @@ class Student extends Controller
                 'quarters' => $quarters,
                 'semesters' => $semesters,
                 'school_years' => $schoolYears,
+                'school_year_id' => $request->query('school_year_id') ?? SchoolYear::getActiveSchoolYear()->id,
+                'semester_id' => $request->query('semester_id') ?? Semester::getActiveSemester()->id,
+                'quarter_id' => $request->query('quarter_id') ?? Quarter::getActiveQuarter()->id,
             ],
         ]);
     }
@@ -165,7 +169,7 @@ class Student extends Controller
     private function loadStudentGrade($student, $batchSubjectId, Request $request)
     {
         if ($request->semester_id || $request->quarter_id) {
-            $grade = $student->grades()
+            return $student->grades()
                 ->when($request->semester_id, function ($query, $semesterId) {
                     $query->where('gradable_id', $semesterId)
                         ->where('gradable_type', Semester::class);
@@ -174,8 +178,6 @@ class Student extends Controller
                     $query->where('gradable_id', $quarterId)
                         ->where('gradable_type', Quarter::class);
                 })->first();
-
-            return $grade;
         }
 
         return $student->fetchStudentBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first();
