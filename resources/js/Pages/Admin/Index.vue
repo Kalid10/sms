@@ -20,43 +20,47 @@
                 </TabElement>
             </div>
 
-            <div class="flex w-4/12 flex-col items-center space-y-8">
-                <div class="relative w-11/12">
-                    <Combobox v-model="selectedStudents">
-                        <ComboboxInput
-                            class="w-full rounded-3xl placeholder:text-sm"
-                            placeholder="Search Student"
-                            @change="handleSearch"
-                        />
-                        <transition
-                            enter-active-class="transition duration-100 ease-out"
-                            enter-from-class="transform scale-95 opacity-0"
-                            enter-to-class="transform scale-100 opacity-100"
-                            leave-active-class="transition duration-75 ease-out"
-                            leave-from-class="transform scale-100 opacity-100"
-                            leave-to-class="transform scale-95 opacity-0"
+        <div class="flex min-h-screen w-4/12 flex-col items-center space-y-8">
+            <div class="relative w-11/12">
+                <div class="flex flex-col">
+                    <input
+                        v-model="query"
+                        class="mb-2 h-12 rounded-md border border-gray-300 px-3 py-2"
+                        type="text"
+                        placeholder="Search For A Student"
+                    />
+                    <div
+                        v-if="filteredStudents.length > 0"
+                        class="absolute mt-14 w-full"
+                    >
+                        <div
+                            v-for="(student, index) in filteredStudents"
+                            v-show="query.length > 0"
+                            :key="student"
+                            class="cursor-pointer py-2"
+                            :class="
+                                index % 2 === 0
+                                    ? 'bg-gray-100 px-10 hover:bg-gray-300'
+                                    : 'bg-white px-10 hover:bg-gray-300'
+                            "
+                            @click="goToStudentPage(student)"
                         >
-                            <ComboboxOptions
-                                class="absolute z-50 w-full cursor-pointer border-2"
-                            >
-                                <ComboboxOption
-                                    v-for="(student, index) in filteredStudents"
-                                    :key="student.id"
-                                    :value="student"
-                                    class="py-2"
-                                    :class="
-                                        index % 2 === 0
-                                            ? 'bg-gray-100 px-10 hover:bg-gray-300'
-                                            : 'bg-white px-10 hover:bg-gray-300'
-                                    "
-                                >
-                                    {{ student.name }}
-                                </ComboboxOption>
-                            </ComboboxOptions>
-                        </transition>
-                    </Combobox>
+                            <p class="px-3 py-2">
+                                {{ student.user.name }}
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        v-else
+                        class="flex flex-col items-center justify-center"
+                    >
+                        <p v-if="!!query" class="text-sm text-zinc-800">
+                            No students found
+                        </p>
+                    </div>
                 </div>
-                <AbsenteeStats class="w-11/12" />
+            </div>
+            <AbsenteeStats class="w-11/12" />
 
                 <Summary />
             </div>
@@ -65,16 +69,10 @@
     </div>
 </template>
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import Announcements from "@/Views/Announcements/Index.vue";
-import {
-    Combobox,
-    ComboboxInput,
-    ComboboxOption,
-    ComboboxOptions,
-} from "@headlessui/vue";
 import { debounce } from "lodash";
 import AbsenteeStats from "@/Views/Admin/Absentee/AbsenteeStats.vue";
 import Flags from "@/Views/Flag/Index.vue";
@@ -89,24 +87,17 @@ const students = computed(() => usePage().props.students);
 
 const schoolYear = computed(() => usePage().props.school_year);
 
-const selectedStudents = ref([]);
+const selectedStudent = ref([]);
+
+const selectStudent = (student) => {
+    selectedStudent.value = student;
+};
 
 const query = ref("");
 
-async function handleSearch(event) {
-    query.value = event.target.value;
-    if (query.value && query.value.trim() !== "") {
-        // Fetch data from the backend.
-        const response = await fetchStudent();
-        if (response) {
-            // Update selectedStudents.
-            selectedStudents.value = await response.json();
-        }
-    } else {
-        // If the search query is empty, clear the selectedStudents.
-        selectedStudents.value = [];
-    }
-}
+watch(query, () => {
+    fetchStudent();
+});
 
 const fetchStudent = debounce(async function () {
     router.get(
@@ -128,9 +119,23 @@ const filteredStudents = computed(() => {
     } else {
         return students.value
             ? students.value.filter((student) =>
-                  student.name.toLowerCase().includes(query.value.toLowerCase())
+                  student.user.name
+                      .toLowerCase()
+                      .includes(query.value.toLowerCase())
               )
             : [];
     }
 });
+
+const goToStudentPage = (student) => {
+    router.get(
+        `/admin/teachers/students/${student.id}`,
+        {},
+        {
+            only: ["student"],
+            preserveState: true,
+            replace: true,
+        }
+    );
+};
 </script>

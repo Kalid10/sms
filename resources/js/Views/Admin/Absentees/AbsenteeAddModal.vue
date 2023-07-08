@@ -4,7 +4,7 @@
             class="scrollbar-hide flex max-h-[800px] flex-col space-y-3 overflow-y-scroll rounded-lg bg-white p-4 text-center"
         >
             <div>
-                <Title title="Assign Homeroom" />
+                <Title title="Add Staff Absentee" />
             </div>
 
             <div class="flex w-full flex-col justify-center space-y-4">
