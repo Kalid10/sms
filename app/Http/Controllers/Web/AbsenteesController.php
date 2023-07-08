@@ -197,7 +197,7 @@ class AbsenteesController extends Controller
         $staff = User::whereIn('type', [User::TYPE_TEACHER, User::TYPE_ADMIN])
             ->when($searchKey, function ($query, $searchKey) {
                 $query->where('name', 'like', '%'.$searchKey.'%');
-            })->get();
+            })->get()->take(5);
 
         $studentAbsentees = Absentee::with('user')
             ->when($studentsQueryKey, function ($query, $studentsQueryKey) {
