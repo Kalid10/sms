@@ -63,12 +63,13 @@ class AdminController extends Controller
                 return $query->where('title', 'like', "%{$searchKey}%");
             })->orderBy('updated_at', 'DESC')->get()->take(5);
 
-        $schoolScheduleDate = $request->input('school_schedule_date') ?? now()->addDays(4);
+        $scheduleStartDate = $request->input('start_date') ?? Carbon::today();
+        $schoolScheduleEndDate = $request->input('end_date') ?? now()->addDays(4);
         $schoolSchedule = SchoolSchedule::where('school_year_id', $schoolYear?->id)
-            ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
-            ->whereDate('end_date', '>=', Carbon::parse($schoolScheduleDate))
+            ->whereDate('start_date', '>=', Carbon::parse($scheduleStartDate))
+            ->whereDate('end_date', '<=', Carbon::parse($schoolScheduleEndDate))
             ->orderBy('start_date', 'asc')
-            ->take(3)
+            ->take(4)
             ->get();
 
         $flags = Flag::with('flaggedBy', 'flaggable.user.admin', 'batchSubject.subject')->latest('updated_at')->paginate(7);
@@ -85,7 +86,6 @@ class AdminController extends Controller
             'school_year' => $schoolYear,
             'announcements' => $announcements,
             'school_schedule' => $schoolSchedule,
-            //            'students' => StudentService::getAllStudents($request),
             'students' => Inertia::lazy(fn () => User::with('student.currentBatch')->where('type', 'student')
                 ->when($searchKey, function ($query) use ($searchKey) {
                     return $query->where('name', 'like', "%{$searchKey}%");
