@@ -24,12 +24,12 @@
 
             <div
                 v-if="favorites.length"
-                class="flex h-fit w-11/12 justify-evenly space-x-4 overflow-x-auto whitespace-nowrap"
+                class="flex h-fit w-11/12 justify-evenly space-x-4 overflow-x-auto whitespace-nowrap py-1 hover:scale-105"
             >
                 <div
                     v-for="(item, index) in favorites"
                     :key="index"
-                    class="flex w-fit cursor-pointer flex-col items-center justify-center hover:scale-105"
+                    class="flex w-fit cursor-pointer flex-col items-center justify-center"
                 >
                     <img
                         :src="item.user.avatar"

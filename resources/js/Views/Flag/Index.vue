@@ -4,25 +4,24 @@
     >
         <!--        Header-->
         <div class="flex h-fit w-full items-center justify-between px-2">
-            <span
-                class="grow px-3 py-0.5 text-xl font-medium"
-                :class="flags?.data?.length ? '' : ' '"
-            >
-                <span v-if="view === 'student'">
-                    {{ student.user.name }}'s Flag List {{ showAddFlagModal }}
-                    {{ showAddModal }}
-                </span>
-                <span v-else> {{ title }} </span>
-            </span>
-            <SecondaryButton
-                v-if="view === 'student' && !flags.data?.length"
-                class="h-fit !rounded-2xl bg-zinc-700 !px-4 !py-1 !text-xs text-white"
-                title="Add"
-                @click="showAddModal = true"
-            />
             <InformationCircleIcon
                 class="w-4 cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
                 @click="showInfoModal = true"
+            />
+            <span
+                class="grow px-3 py-0.5 text-center text-xl font-medium"
+                :class="flags?.data?.length ? '' : ' '"
+            >
+                <span v-if="view === 'student'">
+                    {{ student.user.name }}'s Flag List
+                </span>
+                <span v-else class="text-center"> {{ title }} </span>
+            </span>
+
+            <SquaresPlusIcon
+                v-if="view === 'student' && !flags.data?.length"
+                class="w-5 cursor-pointer text-black hover:scale-105"
+                @click="showAddModal = true"
             />
         </div>
         <!--        List-->
@@ -153,13 +152,13 @@
 import {
     InformationCircleIcon,
     PencilIcon,
+    SquaresPlusIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline";
 import { computed, ref, watch } from "vue";
 import Modal from "@/Components/Modal.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import moment from "moment";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Pagination from "@/Components/Pagination.vue";
 import EmptyView from "@/Views/EmptyView.vue";
 import SelectedFlagDetail from "@/Views/Flag/SelectedFlagDetail.vue";
