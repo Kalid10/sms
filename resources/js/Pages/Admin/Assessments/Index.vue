@@ -1,7 +1,7 @@
 <template>
     <div class="flex min-h-screen w-full justify-center bg-gray-50">
         <div class="flex w-11/12 flex-col space-y-6">
-            <Title class="w-5/12" title="Assessments" />
+            <Title class="w-5/12" :title="$t('common.assessments')" />
 
             <div
                 class="flex h-full w-full flex-col space-x-5 lg:flex-row lg:justify-between"
@@ -9,7 +9,7 @@
                 <div
                     class="flex h-fit w-1/2 flex-col space-y-4 rounded-lg bg-white p-5 shadow-sm"
                 >
-                    <div class="text-2xl font-medium">Recent Assessments</div>
+                    <div class="text-2xl font-medium">{{ $t('assessmentIndex.recentAssessments')}}</div>
                     <div
                         class="flex w-full flex-col items-center justify-between space-y-2 text-white"
                     >

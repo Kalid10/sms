@@ -1,12 +1,12 @@
 <template>
     <div class="w-10/12 py-5">
-        <Title class="pb-8" title="Absentee" />
+        <Title class="pb-8" :title="$t('common.absentee')" />
 
         <TabElement v-model:active="activeTab" :tabs="tabs">
-            <template #staff>
+            <template #[staffTab]>
                 <StaffAbsenteesTable />
             </template>
-            <template #students>
+            <template #[studentTab]>
                 <StudentsAbsenteesTable />
             </template>
         </TabElement>
@@ -18,8 +18,11 @@ import StaffAbsenteesTable from "@/Views/Admin/Absentees/Staff/StaffAbsenteesTab
 import StudentsAbsenteesTable from "@/Views/Admin/Absentees/Students/StudentsAbsenteeTable.vue";
 import TabElement from "@/Components/TabElement.vue";
 import { ref } from "vue";
-
-const tabs = ["Staff", "Students"];
-const activeTab = ref("Staff");
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
+const tabs = [t('common.staff'), t('common.student')];
+const staffTab = t('common.staff')
+const studentTab = t('common.student')
+const activeTab = ref(staffTab);
 </script>
 <style scoped></style>

@@ -4,12 +4,12 @@
 
         <div class="flex h-full w-full justify-center px-4">
             <TabElement v-model:active="activeTab" class="h-full" :tabs="tabs">
-                <template #chat>
+                <template #[chatTab]>
                     <div class="h-screen">
                         <Chat />
                     </div>
                 </template>
-                <template #questions>
+                <template #[questionsTab]>
                     <QuestionPreparation />
                 </template>
             </TabElement>
@@ -22,9 +22,12 @@ import Chat from "@/Views/Teacher/Views/Copilot/Chat.vue";
 import TabElement from "@/Components/TabElement.vue";
 import { ref } from "vue";
 import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparation.vue";
-
-const tabs = ["Chat", "Questions"];
-const activeTab = ref("Questions");
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
+const tabs = [t('common.chat'), t('common.question')];
+const chatTab = t('common.chat')
+const questionsTab = t('common.question')
+const activeTab = ref(chatTab);
 </script>
 
 <style scoped></style>

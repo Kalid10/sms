@@ -33,16 +33,16 @@
             <div class="flex w-8/12 flex-col space-y-8">
                 <WelcomeHeader v-if="isTeacher()" />
                 <TabElement v-model:active="activeTabs" :tabs="tabs">
-                    <template #announcements>
+                    <template #[announcementsTab]>
                         <Announcements
                             url="/teacher/announcements"
                             view="teacher"
                         />
                     </template>
-                    <template #school-schedules>
+                    <template #[schoolSchedulesTab]>
                         <SchoolSchedule class="!w-11/12" />
                     </template>
-                    <template #todays-schedule>
+                    <template  #[toDaysScheduleTab]>
                         <CurrentDaySchedule
                             v-if="teacherSchedule?.length"
                             ref="currentDayScheduleRef"
@@ -54,7 +54,7 @@
                 <div class="flex w-full items-center justify-between space-x-6">
                     <div class="w-7/12"></div>
                 </div>
-                <Flags title="Recent Flags" view="teacher" />
+                <Flags :title="$t('teacherIndex.recentFlags')" view="teacher" />
             </div>
             <div class="flex h-full w-3/12 flex-col items-center space-y-8">
                 <NextClass
@@ -83,7 +83,9 @@ import Flags from "@/Views/Flag/Index.vue";
 import TabElement from "@/Components/TabElement.vue";
 import SchoolSchedule from "@/Views/Teacher/Views/Home/SchoolSchedule.vue";
 import Summary from "@/Views/Teacher/Views/Home/Summary.vue";
+import {useI18n} from "vue-i18n";
 
+const {t} = useI18n()
 const teacher = usePage().props.teacher;
 const filters = computed(() => usePage().props.filters);
 const nextClass = usePage().props.teacher.next_batch_session;
@@ -97,8 +99,12 @@ const scrollToCurrentDaySchedule = () => {
     currentDayScheduleRef.value.$el.scrollIntoView({ behavior: "smooth" });
 };
 
-const tabs = ["Announcements", "School-Schedules", "Todays-Schedule"];
-const activeTabs = ref("Announcements");
+const tabs = [t('common.announcements'), t('teacherIndex.schoolSchedules'), t('teacherIndex.toDaysSchedule')];
+const announcementsTab = t('common.announcements')
+const schoolSchedulesTab = t('teacherIndex.schoolSchedules')
+const toDaysScheduleTab = t('teacherIndex.schoolSchedules')
+const activeTabs = ref(announcementsTab);
+
 </script>
 
 <style scoped></style>

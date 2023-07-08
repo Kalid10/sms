@@ -6,15 +6,15 @@
             <WelcomeHeader />
 
             <TabElement v-model:active="activeTab" :tabs="tabs">
-                <template #announcements>
+                <template #[announcementsTab]>
                     <Announcements
                         url="/admin/announcements"
                         class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
                     />
                 </template>
 
-                <template #flags>
-                    <Flags view="admin" title="Recent Flags" />
+                <template #[flagsTab]>
+                    <Flags view="admin" :title="$t('adminIndex.recentFlags')"/>
                 </template>
             </TabElement>
         </div>
@@ -24,7 +24,7 @@
                 <Combobox v-model="selectedStudents">
                     <ComboboxInput
                         class="w-full rounded-3xl placeholder:text-sm"
-                        placeholder="Search Student"
+                        :placeholder="$t('adminIndex.searchStudent')"
                         @change="handleSearch"
                     />
                     <transition
@@ -61,7 +61,7 @@
                 <SummaryItem
                     class-style="bg-sky-100 text-black"
                     icon-style="bg-sky-500/20 text-white"
-                    title="Chats"
+                    :title="$t('common.chat')"
                     value="5 Unread Messages"
                     :icon="PaperAirplaneIcon"
                     url="/admin/chat"
@@ -69,16 +69,16 @@
                 <SummaryItem
                     class-style="bg-fuchsia-100 text-black"
                     icon-style="bg-fuchsia-500/20 text-white"
-                    title="Students"
-                    value="Register, Review, explore and More"
+                    :title="$t('common.students')"
+                    :value="$t('adminIndex.registerReview')"
                     :icon="UserGroupIcon"
                     url="/admin/students"
                 />
                 <SummaryItem
                     class-style="bg-orange-100 text-black"
                     icon-style="bg-orange-500/20 text-white"
-                    title="Teachers"
-                    value="Register, evaluate, explore and more"
+                    :title="$t('common.teachers')"
+                    :value="$t('adminIndex.registerReview')"
                     :icon="UserCircleIcon"
                     url="/admin/teachers"
                 />
@@ -86,8 +86,8 @@
                 <SummaryItem
                     class-style="bg-zinc-100 text-black"
                     icon-style="bg-zinc-500/20 text-white"
-                    title="Admins"
-                    value="Register, Review, explore and More"
+                    :title="$t('common.admins')"
+                    :value="$t('adminIndex.registerReview')"
                     :icon="UsersIcon"
                     url="/admin/admins "
                 />
@@ -117,9 +117,12 @@ import {
     UserGroupIcon,
     UsersIcon,
 } from "@heroicons/vue/24/solid";
-
-const tabs = ["Announcements", "Flags"];
-const activeTab = ref("Announcements");
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
+const tabs = [t('common.announcements'), t('common.flags')];
+const announcementsTab = t('common.announcements')
+const flagsTab = t('common.flags')
+const activeTab = ref(announcementsTab);
 
 const students = computed(() => usePage().props.students);
 

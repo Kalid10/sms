@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-
+<p>{{activeTab}}</p>
     <TabElement v-model:active="activeTab" :tabs="subjectTabs">
         <template #[teachersTab]>
             <SubjectTeachers />
@@ -44,10 +44,10 @@ const {t} = useI18n()
 const subject = computed(() => usePage().props.subject);
 
 const subjectTabs = [t('common.grades'), t('common.teachers')];
-const activeTab = ref("Grades");
-
 const teachersTab = t('common.teachers')
 const gradesTab = t('common.grades')
+const activeTab = ref(gradesTab);
+
 </script>
 
 <style scoped></style>

@@ -34,7 +34,7 @@
                         <SummaryItem
                             class-style="bg-orange-100 text-black"
                             icon-style="bg-orange-500/20 text-white"
-                            :title="'Assessments'"
+                            :title="$t('common.assessments')"
                             value="10 /10 Completed"
                             :icon="ClipboardIcon"
                             :url="
@@ -47,7 +47,7 @@
                         <SummaryItem
                             class-style="bg-fuchsia-100 text-black"
                             icon-style="bg-fuchsia-500/20 text-white"
-                            :title="'LessonPlans'"
+                            :title="$t('common.lessonPlan')"
                             value="10 /10 Completed"
                             :icon="CalendarIcon"
                             :url="
@@ -60,7 +60,7 @@
                         <SummaryItem
                             class-style="bg-zinc-100 text-black"
                             icon-style="bg-zinc-500/20 text-white"
-                            :title="'Students'"
+                            :title="$t('common.students')"
                             value="75 Total Students"
                             :icon="UsersIcon"
                             :url="
@@ -73,7 +73,7 @@
                         <SummaryItem
                             class-style="bg-red-50 text-black"
                             icon-style="bg-red-500/20 text-white"
-                            :title="'Announcements'"
+                            :title="$t('common.announcements')"
                             value="10 Announcements Today"
                             :icon="ChatBubbleBottomCenterIcon"
                             :url="

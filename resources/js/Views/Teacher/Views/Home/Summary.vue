@@ -3,7 +3,7 @@
         <SummaryItem
             class-style="bg-sky-100 text-black"
             icon-style="bg-sky-500/20 text-white"
-            title="Chats"
+            :title="$t('common.chat')"
             value="5 Unread Messages"
             :icon="PaperAirplaneIcon"
             url="/teacher/chat"
@@ -11,7 +11,7 @@
         <SummaryItem
             class-style="bg-orange-100 text-black"
             icon-style="bg-orange-500/20 text-white"
-            :title="'Assessments'"
+            :title="$t('common.assessments')"
             value="10 /10 Completed"
             :icon="ClipboardIcon"
             :url="
@@ -23,7 +23,7 @@
         <SummaryItem
             class-style="bg-zinc-100 text-black"
             icon-style="bg-zinc-500/20 text-white"
-            :title="'Students'"
+            :title="$t('common.students')"
             value="75 Total Students"
             :icon="UsersIcon"
             :url="
@@ -35,7 +35,7 @@
         <SummaryItem
             class-style="bg-green-100 text-black"
             icon-style="bg-green-500/20 text-white"
-            :title="'LessonPlans'"
+            :title="$t('common.lessonPlans')"
             value="10 /10 Completed"
             :icon="CalendarIcon"
             :url="
@@ -47,7 +47,7 @@
         <SummaryItem
             class-style="bg-fuchsia-100 text-black"
             icon-style="bg-fuchsia-500/20 text-white"
-            :title="'Homeroom Classes'"
+            :title="$t('common.homeroomClasses')"
             value="10 /10 Completed"
             :icon="CalendarIcon"
             :url="
@@ -69,6 +69,7 @@ import { isTeacher } from "@/utils";
 import SummaryItem from "@/Views/Teacher/Views/SummaryItem.vue";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import EmptyView from "@/Views/EmptyView.vue";
 
 const teacher = computed(() => usePage().props.teacher);
 </script>

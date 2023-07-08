@@ -15,7 +15,7 @@
                 <ExclamationTriangleIcon
                     class="mb-2 h-6 w-6 text-negative-50"
                 />
-                <p class="text-sm font-semibold">No data found</p>
+                <p class="text-sm font-semibold">{{ $t('common.noDataFound') }}</p>
             </div>
         </template>
 

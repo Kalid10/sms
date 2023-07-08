@@ -1,10 +1,10 @@
 <template>
     <div class="flex grow flex-col justify-between gap-3">
         <h3 v-if="student" class="font-semibold">
-            {{ student.user.name.split(" ").slice(-1)[0] }}'s Semester Schedule
+            {{ student.user.name.split(" ").slice(-1)[0] }}{{ $t('studentSemesterSchedule.selectGrade')}}
         </h3>
 
-        <h3 v-else class="font-semibold">Class Schedule</h3>
+        <h3 v-else class="font-semibold"> {{ $t('studentSemesterSchedule.classSchedule')}}</h3>
 
         <div class="flex h-full w-full rounded-md border-l border-t">
             <div class="hours grid w-fit grid-cols-1 flex-col">

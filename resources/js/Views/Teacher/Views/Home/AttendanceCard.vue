@@ -6,7 +6,7 @@
     >
         <div class="text-center text-5xl font-bold">10%</div>
 
-        <div class="font-light">Your Attendance For This Quarter</div>
+        <div class="font-light">{{ $t('attendanceCard.YourAttendance')}}</div>
     </div>
 </template>
 

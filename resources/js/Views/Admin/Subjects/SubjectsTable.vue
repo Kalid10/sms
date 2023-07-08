@@ -1,6 +1,6 @@
 <template>
     <TabElement v-model:active="activeTab" :tabs="tabs">
-        <template #subjects>
+        <template #[subjectsTab]>
             <TableElement
                 :columns="config"
                 :row-actionable="true"
@@ -128,7 +128,7 @@
             </TableElement>
         </template>
 
-        <template #grades>
+        <template #[gradesTab]>
             <div class="my-2 flex flex-row">
                 <label class="mx-2 flex w-32 items-center text-sm text-gray-800"
                     >{{ $t('subjectsTable.selectGrade')}}</label
@@ -204,8 +204,10 @@ import Pagination from "@/Components/Pagination.vue";
 import {useI18n} from "vue-i18n";
 const {t} = useI18n()
 
-const tabs = [t('subjectsTable.subjects'), t('subjectsTable.grades')];
-const activeTab = ref("Subjects");
+const tabs = [t('common.subjects'), t('common.grades')];
+const subjectsTab = t('common.subjects')
+const gradesTab = t('common.grades')
+const activeTab = ref(subjectsTab);
 
 // Map the batch_subjects data
 const batchSubjects = computed(() => {

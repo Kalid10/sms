@@ -20,10 +20,7 @@
             @confirm="archiveSubject"
         >
             <template #description>
-                You are about to archive this subject. Are you sure you want to
-                continue? Do not worry, all the batches and students under this
-                subject will be available, and you can restore this subject
-                anytime.
+                {{ $t('subjectsIndex.message')}}
             </template>
         </DialogBox>
     </div>

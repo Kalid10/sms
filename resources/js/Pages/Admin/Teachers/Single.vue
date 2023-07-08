@@ -12,7 +12,7 @@
         >
             <template #home>
                 <Home
-                    v-if="activeTab === 'Home' && !showLoading"
+                    v-if="activeTab === t('common.home') && !showLoading"
                     class="bg-white py-3"
                 />
             </template>
@@ -75,7 +75,8 @@ import Batches from "@/Views/Teacher/Batches.vue";
 import Homeroom from "@/Views/Teacher/Homeroom.vue";
 import Announcement from "@/Views/Teacher/Announcement/Index.vue";
 import Loading from "@/Components/Loading.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const showLoading = ref(false);
 const teacher = computed(() => usePage().props.teacher);
 const activeTab = ref("Home");
@@ -92,18 +93,18 @@ watch(activeTab, (tab) => {
     handleTabClick(tab);
 });
 const tabs = [
-    "Home",
-    "Classes",
-    "Students",
-    "LessonPlans",
-    "Assessments",
-    "Homerooms",
-    "Announcements",
+    t('common.home'),
+    t('common.classes'),
+    t('common.students'),
+    t('common.lessonPlans'),
+    t('common.assessments'),
+    t('common.homeroom'),
+    t('common.announcements'),
 ];
 
 const handleTabClick = (tab) => {
     switch (tab) {
-        case "Home":
+        case t('common.home'):
             fetchData(teacher.value.id, tab);
             break;
         case "Classes":

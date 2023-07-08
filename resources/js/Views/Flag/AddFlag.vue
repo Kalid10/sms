@@ -1,14 +1,14 @@
 <template>
     <div class="flex w-full flex-col space-y-5 rounded-lg bg-white p-5">
         <div class="w-full text-center text-2xl font-medium">
-            {{ flaggable.user.name }} Flag Form
+            {{ flaggable.user.name }} {{ $t('addFlag.flagForm')}}
         </div>
 
         <div class="flex flex-col">
             <label
                 for="target-group"
                 class="block text-sm font-medium text-gray-700"
-                >Select flag type(s) :</label
+                >{{ $t('addFlag.selectFlagType')}}</label
             >
             <div
                 class="mt-1 flex w-full justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -36,25 +36,25 @@
                 view !== 'homeroom'
             "
             v-model="form.batch_subject_id"
-            label="Subject"
-            placeholder="Select Subject"
+            :label="$t('common.subject')"
+            :placeholder="$t('addFlag.selectSubject')"
             :options="batchSubjectOptions"
             :error="form.errors.batch_subject_id"
         />
         <TextArea
             v-model="form.description"
-            placeholder="Enter Flag Description"
+            :label="$t('common.description')"
+            :placeholder="$t('addFlag.enterFlagDescription')"
             rows="10"
-            label="Description"
             :error="form.errors.description"
         />
 
-        <DatePicker v-model="form.expires_at" label="Expiry Date" />
+        <DatePicker v-model="form.expires_at" :label="$t('addFlag.expiryDate')"  />
 
         <div class="flex w-full justify-end">
             <PrimaryButton
                 class="w-3/12 !rounded-2xl bg-zinc-800 text-white shadow-sm"
-                title="Submit"
+                :title="$t('common.submit')"
                 @click="handleAddFlag"
             />
         </div>
@@ -68,6 +68,7 @@ import moment from "moment/moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import TextArea from "@/Components/TextArea.vue";
+import Modal from "@/Components/Modal.vue";
 
 const emit = defineEmits(["done"]);
 const props = defineProps({
