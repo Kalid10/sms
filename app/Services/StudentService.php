@@ -113,7 +113,7 @@ class StudentService
             $query->where([
                 ['student_id', $studentId],
             ]);
-        }, 'batchSubject.assessmentsGrades.assessmentType', 'batchSubject.assessmentsGrades.gradeScale'])->get();
+        }, 'batchSubject.assessmentsGrades.assessmentType', 'batchSubject.assessmentsGrades.gradeScale', 'gradeScale'])->get();
     }
 
     public static function getBatchSubjectAssessmentDetail($studentId, $batchSubjectId)
