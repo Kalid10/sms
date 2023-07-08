@@ -614,7 +614,7 @@ const en = {
         "halfDayClosed":"Half Day Closed",
         "schoolDay": "School Day"
 
-       
+
 
     },
     "guardianInformation": {
@@ -1587,37 +1587,9 @@ const en = {
     }
 
 
-
-
-
-
-
-
 }
 
 
 export default en;
 
 
-
- Pages/Admin/Announcements/Index.vue
- Pages/Admin/Batches/Index.vue
- Pages/Admin/GettingStarted/SchoolSchedule.vue
- Pages/Admin/Levels/Single.vue
- Pages/Admin/Teachers/Single.vue
- Pages/Admin/Users/Profile.vue
- Pages/Teacher/Copilot/Index.vue
- Views/Admin/Absentees/Students/StudentsAbsenteeTable.vue
- Views/Admin/GettingStarted/Schedule/BatchScheduler.vue
- Views/Announcements/Index.vue
- Views/Flag/Index.vue
- Views/Flag/SelectedFlagDetail.vue
- Views/Teacher/Batches.vue
- Views/Teacher/Index.vue
- Views/Teacher/LessonPlans/Index.vue
- Views/Teacher/Views/AI.vue
- Views/Teacher/Views/Copilot/Chat.vue
- Views/Teacher/Views/Grade/StudentGradeDetail.vue
- Views/Teacher/Views/StudentsTable.vue
- locale/am.js
- locale/en.js
