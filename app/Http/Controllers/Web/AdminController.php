@@ -12,6 +12,7 @@ use App\Models\LevelCategory;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\StaffAbsentee;
+use App\Models\Student;
 use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
@@ -86,12 +87,17 @@ class AdminController extends Controller
             'announcements' => $announcements,
             'school_schedule' => $schoolSchedule,
             //            'students' => StudentService::getAllStudents($request),
-            'students' => Inertia::lazy(fn () => User::with('student.currentBatch')->where('type', 'student')
+            'students' => Inertia::lazy(fn () => Student::with([
+                'user:id,name,email,phone_number,gender',
+                'currentBatch',
+            ])->select('id', 'user_id')
                 ->when($searchKey, function ($query) use ($searchKey) {
-                    return $query->where('name', 'like', "%{$searchKey}%");
+                    return $query->whereHas('user', function ($query) use ($searchKey) {
+                        return $query->where('name', 'like', "%{$searchKey}%");
+                    });
                 })
-                ->orderBy('name', 'asc')
-                ->get()
+                ->orderBy('user_id', 'asc')->get()
+                ->take(5)
             ),
             'flags' => $flags,
             'teacher_absentee_records' => $teacherAbsenteeRecords,
