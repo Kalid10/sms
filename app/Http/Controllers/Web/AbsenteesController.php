@@ -227,10 +227,7 @@ class AbsenteesController extends Controller
             })
             ->paginate(10);
 
-        // Get user types only for staff, admin and teacher
-        $userTypes = User::select('type')->distinct()->get()->pluck('type')->filter(function ($userType) {
-            return in_array($userType, [User::TYPE_TEACHER, User::TYPE_ADMIN]);
-        });
+        $userTypes = $userType === ['all', 'admin', 'teacher'];
 
         return Inertia::render('Admin/Absentees/Index', [
             'staff' => Inertia::lazy(fn () => $staff),

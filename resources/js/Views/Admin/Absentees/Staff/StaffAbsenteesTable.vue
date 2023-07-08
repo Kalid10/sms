@@ -66,12 +66,14 @@ const userTypeOptions = computed(() => {
             label: "All",
             value: "all",
         },
-        ...userTypes.value.map((type) => {
-            return {
-                label: type.charAt(0).toUpperCase() + type.slice(1),
-                value: type.toLowerCase(),
-            };
-        }),
+        {
+            label: "Admin",
+            value: "admin",
+        },
+        {
+            label: "Teacher",
+            value: "teacher",
+        },
     ];
 });
 
