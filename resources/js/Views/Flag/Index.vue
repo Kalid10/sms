@@ -9,7 +9,8 @@
                 :class="flags?.data?.length ? '' : ' '"
             >
                 <span v-if="view === 'student'">
-                    {{ student.user.name }}'s Flag List
+                    {{ student.user.name }}'s Flag List {{ showAddFlagModal }}
+                    {{ showAddModal }}
                 </span>
                 <span v-else> {{ title }} </span>
             </span>
@@ -98,7 +99,7 @@
                     />
                 </div>
                 <div
-                    v-if="item.flagged_by.id === auth.id"
+                    v-if="item?.flagged_by?.id === auth.id"
                     class="py-1 pl-3 hover:scale-110 hover:stroke-red-50 hover:px-1"
                 >
                     <TrashIcon
@@ -154,7 +155,7 @@ import {
     PencilIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import Modal from "@/Components/Modal.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import moment from "moment";
@@ -187,6 +188,10 @@ const props = defineProps({
     viewDate: {
         type: Boolean,
         default: true,
+    },
+    showAddFlagModal: {
+        type: Boolean,
+        default: false,
     },
 });
 const showInfoModal = ref(false);
@@ -237,6 +242,15 @@ const routeToStudent = (studentId) => {
 };
 
 const auth = usePage().props.auth.user;
+
+watch(
+    () => props.showAddFlagModal,
+    (newValue) => {
+        if (newValue) {
+            showAddModal.value = true;
+        }
+    }
+);
 </script>
 
 <style scoped></style>

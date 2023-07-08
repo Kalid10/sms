@@ -4,7 +4,11 @@
     >
         <Item
             title="Class Average"
-            :value="grade?.score ?? '-'"
+            :value="
+                grade?.score
+                    ? grade?.score?.toFixed(2) + '/' + grade?.total_score
+                    : '-'
+            "
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
