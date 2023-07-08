@@ -3,7 +3,7 @@
         class="flex w-full flex-col items-center space-y-6 rounded-lg bg-white p-5"
     >
         <div class="flex w-full items-center justify-center space-x-2 px-3">
-            <div>{{ selectedFlagItem.flaggable.user.name }}'s Flag Detail</div>
+            <div>{{ selectedFlagItem.flaggable.user.name }} {{ $t('selectedFlagDetail.flagDetail')}}</div>
             <div v-if="selectedFlagItem?.batch_subject">
                 ( {{ selectedFlagItem.batch_subject?.subject?.full_name }} )
             </div>
@@ -42,7 +42,7 @@
                     <span v-if="selectedFlagItem.flagged_by">
                         {{ selectedFlagItem.flagged_by.name }}
                     </span>
-                    <span v-else> SYSTEM GENERATED</span>
+                    <span v-else class="uppercase"> {{ $t('flagIndex.systemGenerated')}} </span>
                 </div>
                 <div class="pt-1 text-xs font-light">
                     {{

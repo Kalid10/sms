@@ -9,7 +9,7 @@
                 :class="isTeacher() ? 'py-5 pl-5' : 'py-3 pl-3 pr-10'"
             >
                 <Header
-                    :title="isTeacher() ? 'My Classes' : 'Classes'"
+                    :title="isTeacher() ? $t('batches.myClasses') : $t('batches.classes')"
                     :select-input-options="batchSubjectOptions"
                     :selected-input="batchSubject.id"
                     @change="updateBatchInfo"

@@ -18,7 +18,7 @@
                     >
                         <AdjustmentsHorizontalIcon class="w-4 text-black" />
                         <SecondaryButton
-                            title="Filter lesson plans"
+                            :title="$t('lessonPlansIndex.filterLessonPlans')"
                             class="w-fit p-0"
                         />
                     </div>

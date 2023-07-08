@@ -114,6 +114,11 @@ const en = {
         "expireDate": "Expire date",
         "expiresOn": "Expires On",
         "announcements": ["all", "students", "teachers", "guardians", "admins"],
+        "filterAssessments":"Filter Assessments",
+        "filterBySchoolYear":"Filter by School Year",
+        "noAnnouncementsFound":"No Announcements Found!",
+        "goToAnnouncements":"Go To Announcements",
+        "viewAllAnnouncements":"View All Announcements"
     },
     "announcementsItem": {
         "postTargets": "Post Targets",
@@ -330,6 +335,7 @@ const en = {
         "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     },
     "common": {
+        "password":"Password",
         "home": "Home",
         "classes":"Classes",
         "homeroomClasses":"Homeroom Classes",
@@ -365,6 +371,7 @@ const en = {
         "teacher": "Teacher",
         "announcements": "Announcements",
         "schedule": "Schedule",
+        "schedules": "Schedules",
         "users": "Users",
         "noDataFound": "No data found",
         "name": "Name",
@@ -587,7 +594,6 @@ const en = {
         "youCanSkipMessage": "Alternatively, you can skip this step and proceed to your Dashboard. You can always view, add, update and delete events to your calendar later.",
         "addNewEvent": "Add new Event",
         "addEvent": "Add a new event to your school calendar.",
-
         "eventTitlePlaceHolder": "Title for your new event",
         "eventTitleLabel": "Event Name",
         "eventDescription": "Event Description",
@@ -603,7 +609,13 @@ const en = {
         "createEvent": "Create Event",
         "goToDashboard": "Go to Dashboard",
         "addNewEventFormTitle": "Add new Event",
-        "addNewEventFormSubtitle": "Add new Event"
+        "addNewEventFormSubtitle": "Add a new event to the current school year in your school's schedule",
+        "noSchoolDay":"No School Day",
+        "halfDayClosed":"Half Day Closed",
+        "schoolDay": "School Day"
+
+       
+
     },
     "guardianInformation": {
         "guardianInfo": "Guardian Info",
@@ -717,7 +729,8 @@ const en = {
 
     },
     "lessonPlansIndex": {
-        "myLessonPlans": "My Lesson Plans"
+        "myLessonPlans": "My Lesson Plans",
+        "filterLessonPlans":"Filter lesson plans"
     },
     "lessonPlansUpdate": {
         "formElementTitle": "Update Lesson plan",
@@ -1216,7 +1229,8 @@ const en = {
         "attendance": "Attendance%",
         "grade": "Grade",
         "rank": "Rank",
-        "conduct": "Conduct"
+        "conduct": "Conduct",
+        "flagStudent":"Flag Student"
     },
     "studentNotes": {
         "notes": "Notes",
@@ -1369,6 +1383,7 @@ const en = {
     },
 
     "teacherIndex": {
+        "yourNexClass":"Your next class is <span class='font-semibold'>{fullName}</span> with grade <span class='font-semibold'>{levelName} {section}</span> during period <span class='font-semibold'>{schoolPeriodName}</span><span class='font-semibold'>approximately{time}</span>",
         "homeroomClasses": "Homeroom Classes",
         "upcomingSchedules": "Upcoming Schedules",
         "schoolSchedules":"School-Schedules",
@@ -1410,21 +1425,20 @@ const en = {
         "description": "Welcome to your profile page, where you can view and update your personal information and security settings. Enjoy your journey with us!",
         "headingOne": "Profile",
         "headingTwo": "Update your personal information and make sure your profile accurately reflects who you are.",
-        "nameLabel": "Name",
-        "emailLabel": "Email",
         "usernameLabel": "User Name",
         "phoneNumberLabel": "Phone number",
         "phoneNUmberPlaceholder": "'e.g. 09123456789'",
-        "genderLabel": "Gender",
         "genderPlaceholder": "select gender",
+        "stayAheadOf": "Stay ahead of potential security threats by updating your password now.",
         "currentPasswordLabel": "Current Password",
-        "currentPasswordPlaceholder": "enter your current password",
+        "currentPasswordPlaceholder": "Enter your current password",
         "passwordLabel": "New Password",
         "passwordPlaceholder": "enter your new password",
         "passwordConfirmationLabel": "Confirm Password",
         "passwordConfirmationPlaceholder": "confirm your new password",
         "male": "Male",
-        "female": "Female"
+        "female": "Female",
+        "updateProfile":"Update Profile"
     },
 
     "userStatistics": {
@@ -1536,10 +1550,74 @@ const en = {
     },
     "attendanceCard":{
         "YourAttendance":"Your Attendance For This Quarter"
+    },
+    "ai":{
+        "artificialIntelligence":"Artificial Intelligence",
+        "empowerYourTeaching":"Empower your teaching with our AI Copilot, crafting unique questions and sparking enriching conversations that ignite curiosity.",
+        "exploreMore":"Explore More"
+    },
+
+    "flagIndex":{
+        "flagList":"'s Flag List",
+        "add":"Add",
+        "duration":"Duration",
+        "systemGenerated":"System Generated",
+        "noFlagsFound":"No Flags Found"
+    },
+    "selectedFlagDetail":{
+        "flagDetail":"'s Flag Detail",
+        "expiryDate":"Expiry Date:",
+    },
+    "chat":{
+        "typeYourMessageHere":"Type your message here...",
+        "gettingStarted":"Getting Started with the AI Chat",
+        "hello":"Hello, {name}! We want to make sure you get the most out of our AI chat feature, Rigel Copilot. Here are some tips to guide you:",
+        "askSpecificQuestions":"Ask Specific Questions",
+        "theAiChat":"The AI chat is more effective when you ask specific questions...",
+        "experimentWithDifferent":"Experiment with Different Queries",
+        "feelFree":"Feel free to experiment with different types of questions or queries...",
+        "useItAsResource":"Use It as a Resource Finder",
+        "needHelpFinding":"Need help finding educational resources? You can ask the AI chat for recommendations...",
+        "seekClarification":"Seek Clarification on Complex Topics",
+        "ifYourAreDealing":"If you're dealing with complex educational topics, don't hesitate to ask the AI chat...",
+        "exploreCreativeIdeas":"Explore Creative Ideas",
+        "theAIChat":"The AI chat can be a great tool to brainstorm new teaching techniques...",
+        "RememberWhile":"Remember, while the AI chat is a powerful tool, it's not a replacement for human interaction..."
+
     }
+
+
+
+
+
+
+
+
 }
+
 
 export default en;
 
 
 
+ Pages/Admin/Announcements/Index.vue
+ Pages/Admin/Batches/Index.vue
+ Pages/Admin/GettingStarted/SchoolSchedule.vue
+ Pages/Admin/Levels/Single.vue
+ Pages/Admin/Teachers/Single.vue
+ Pages/Admin/Users/Profile.vue
+ Pages/Teacher/Copilot/Index.vue
+ Views/Admin/Absentees/Students/StudentsAbsenteeTable.vue
+ Views/Admin/GettingStarted/Schedule/BatchScheduler.vue
+ Views/Announcements/Index.vue
+ Views/Flag/Index.vue
+ Views/Flag/SelectedFlagDetail.vue
+ Views/Teacher/Batches.vue
+ Views/Teacher/Index.vue
+ Views/Teacher/LessonPlans/Index.vue
+ Views/Teacher/Views/AI.vue
+ Views/Teacher/Views/Copilot/Chat.vue
+ Views/Teacher/Views/Grade/StudentGradeDetail.vue
+ Views/Teacher/Views/StudentsTable.vue
+ locale/am.js
+ locale/en.js

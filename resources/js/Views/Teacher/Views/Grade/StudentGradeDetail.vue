@@ -21,7 +21,7 @@
             </div>
             <SecondaryButton
                 class="h-fit !rounded-2xl bg-red-600 !px-4 !py-1 !text-xs text-white"
-                title="Flag Student"
+                :title="$t('studentGradeDetail.flagStudent')"
                 @click="emit('flag')"
             />
         </div>

@@ -37,7 +37,7 @@
                                 />
 
                                 <span class="font-semibold text-white"
-                                    >Filter Assessments</span
+                                    >{{ $t('announcementsIndex.filterAssessments')}}</span
                                 >
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                     <div class="flex w-full justify-center shadow-md">
                         <Filters
                             v-if="showFilter"
-                            title="Filter by School Year"
+                            :title="$t('announcementsIndex.filterBySchoolYear')"
                             @filter="applyFilters"
                         />
                     </div>

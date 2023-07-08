@@ -10,22 +10,14 @@
             @click="scrollToNextClass"
         >
             <div class="w-full">
-                Your next class is
-                <span class="font-semibold">
-                    {{ nextClass.batch_subject.subject.full_name }}
+                <span>{{ $t('teacherIndex.yourNexClass', {
+                    fullName: nextClass.batch_subject.subject.full_name,
+                    levelName:nextClass.batch_subject.batch.level.name,
+                    section:nextClass.batch_subject.batch.section,
+                    schoolPeriodName:nextClass.school_period.name,
+                    time:moment(nextClass.date).fromNow() }) }}
                 </span>
-                with grade
-                <span class="font-semibold">
-                    {{ nextClass.batch_subject.batch.level.name }}
-                    {{ nextClass.batch_subject.batch.section }}
-                </span>
-                during
-                <span class="font-semibold">
-                    period {{ nextClass.school_period.name }} , </span
-                >approximately
-                <span class="font-semibold"
-                    >{{ moment(nextClass.date).fromNow() }}.
-                </span>
+
             </div>
         </div>
 
@@ -99,10 +91,10 @@ const scrollToCurrentDaySchedule = () => {
     currentDayScheduleRef.value.$el.scrollIntoView({ behavior: "smooth" });
 };
 
-const tabs = [t('common.announcements'), t('teacherIndex.schoolSchedules'), t('teacherIndex.toDaysSchedule')];
 const announcementsTab = t('common.announcements')
 const schoolSchedulesTab = t('teacherIndex.schoolSchedules')
-const toDaysScheduleTab = t('teacherIndex.schoolSchedules')
+const toDaysScheduleTab = t('teacherIndex.toDaysSchedule')
+const tabs = [announcementsTab, schoolSchedulesTab, toDaysScheduleTab];
 const activeTabs = ref(announcementsTab);
 
 </script>

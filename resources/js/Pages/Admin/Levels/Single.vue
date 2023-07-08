@@ -17,17 +17,17 @@
         </div>
 
         <TabElement v-model:active="activeTab" :tabs="tabs">
-            <template #sections>
+            <template #[sectionsTab]>
                 <Section :batch="activeBatch" />
             </template>
 
-            <template #subjects>
+            <template #[subjectsTab]>
                 <div class="flex w-10/12">
                     <LevelSubjects />
                 </div>
             </template>
 
-            <template #students>
+            <template #[studentTab]>
                 <div class="flex w-10/12">
                     <LevelStudents />
                 </div>
@@ -45,11 +45,15 @@ import LevelSubjects from "@/Views/Admin/Levels/LevelSubjects.vue";
 import LevelStudents from "@/Views/Admin/Levels/LevelStudents.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Section from "@/Pages/Admin/Levels/Section.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const level = computed(() => usePage().props.level);
 const schoolYear = computed(() => usePage().props.school_year);
-const tabs = ["Sections", "Subjects", "Students"];
-const activeTab = ref("Sections");
+const sectionsTab = t('common.sections');
+const subjectsTab = t('common.subjects');
+const studentTab = t('common.students');
+const tabs = [sectionsTab, subjectsTab, studentTab];
+const activeTab = ref(sectionsTab);
 
 const batches = computed(() => usePage().props.batches);
 const batchOptions = computed(() => {

@@ -5,7 +5,7 @@
                 <TextInput
                     v-model="query"
                     class="w-full lg:max-w-lg"
-                    placeholder="Search for an absent student by name"
+                    :placeholder="$t('studentAbsenteesTable.searchStudent')"
                 />
             </div>
         </template>
@@ -27,6 +27,7 @@ import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { debounce } from "lodash";
 import {useI18n} from "vue-i18n";
+import LinkCell from "@/Components/LinkCell.vue";
 const {t} = useI18n()
 
 const studentAbsentees = computed(() => usePage().props.student_absentees);

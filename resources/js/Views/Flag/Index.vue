@@ -9,14 +9,14 @@
                 :class="flags?.data?.length ? '' : ' '"
             >
                 <span v-if="view === 'student'">
-                    {{ student.user.name }}'s Flag List
+                    {{ student.user.name }} {{ $t('flagIndex.flagList')}}
                 </span>
                 <span v-else> {{ title }} </span>
             </span>
             <SecondaryButton
                 v-if="view === 'student' && !flags.data?.length"
                 class="h-fit !rounded-2xl bg-zinc-700 !px-4 !py-1 !text-xs text-white"
-                title="Add"
+                :title="$t('flagIndex.add')"
                 @click="showAddModal = true"
             />
             <InformationCircleIcon
@@ -29,11 +29,11 @@
             <div
                 class="mb-2 flex w-full bg-zinc-800 py-2 text-center text-xs text-white"
             >
-                <span :class="viewDate ? 'w-3/12' : 'w-4/12'"> Name</span>
-                <span :class="viewDate ? 'w-3/12' : 'w-4/12'"> By</span>
-                <span :class="viewDate ? 'w-3/12' : 'w-4/12'"> Type </span>
+                <span :class="viewDate ? 'w-3/12' : 'w-4/12'"> {{ $t('common.name')}}</span>
+                <span :class="viewDate ? 'w-3/12' : 'w-4/12'"> {{ $t('common.by')}}</span>
+                <span :class="viewDate ? 'w-3/12' : 'w-4/12'"> {{ $t('common.type')}} </span>
                 <span v-if="viewDate" class="w-3/12 text-center"
-                    >Duration
+                    >{{ $t('flagIndex.duration')}}
                 </span>
             </div>
             <div
@@ -78,7 +78,7 @@
                         <span v-else>{{ item.flaggable.user.admin }}</span>
                     </span>
                     <span v-else class="text-xs font-medium"
-                        >System Generated</span
+                        >{{ $t('flagIndex.systemGenerated')}} </span
                     >
                 </span>
 
@@ -121,7 +121,7 @@
             <Pagination :links="flags.links" class="pt-3" position="center" />
         </div>
         <div v-else class="w-full">
-            <EmptyView title="No Flags Found" />
+            <EmptyView :title="$t('flagIndex.noFlagsFound')"/>
         </div>
     </div>
 

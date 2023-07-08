@@ -3,7 +3,7 @@
         <!--        Table-->
         <TableElement
             :data="filteredStudents"
-            :title="title"
+            :title="$t('common.students')"
             :selectable="false"
             :columns="config"
             class="!!text-[0.5rem] border-none bg-red-400"
@@ -70,13 +70,10 @@ import { isAdmin } from "@/utils";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 import {useI18n} from "vue-i18n";
+import Header from "@/Views/Teacher/Views/Header.vue";
 const {t} = useI18n()
 const emit = defineEmits(["click", "search"]);
 const props = defineProps({
-    title: {
-        type: String,
-        default: "Students List",
-    },
     showHomeroomDetail: {
         type: Boolean,
         default: true,

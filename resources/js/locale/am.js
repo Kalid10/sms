@@ -31,7 +31,7 @@ const am = {
         "flagForm": "የመመዝገቢያ(flag) ቅጽ",
         "selectFlagType": "የመመዝገቢያ(flag) አይነት ይምረጡ :",
         "selectSubject": "የትምህርት አይነት ይምረጡ",
-        "enterFlagDescription": "(flag) መግለጫ ያስገቡ",
+        "enterFlagDescription": "ማስጠንቀቂያ መግለጫ ያስገቡ",
         "expiryDate": "የጊዜ ገደብ ቀን"
     },
     "adminLayout": {
@@ -112,8 +112,12 @@ const am = {
         "selectTargetGroup": "የታለመ ቡድን ይምረጡ",
         "expireDate": "ጊዜው የሚያበቃበት ቀን",
         "expiresOn": "ጊዜው ያበቃል",
-        "announcements": ["ሁሉም", "ተማሪዎች", "መምህራን", "ወላጆች", "አስተዳዳሪዎች"]
-
+        "announcements": ["all", "students", "teachers", "guardians", "admins"],
+        "filterAssessments":"መመዘኛዎችን ማጣራት",
+        "filterBySchoolYear":"በትምህርት ዓመት መመዘኛዎችን ማጣራት",
+        "noAnnouncementsFound":"መግለጫዎች አልተገኙም!",
+        "goToAnnouncements":"መግለጫዎች ላይ ሂድ",
+        "viewAllAnnouncements":"ሁሉንም መግለጫዎች ይመልከቱ"
     },
     "announcementsItem": {
         "postTargets": "የመልዕክት ዒላማዎች",
@@ -330,10 +334,11 @@ const am = {
         "months": ["ጃንዩወሪ", "ፌብሩወሪ", "ማርች", "ኤፕሪል", "ሜይ", "ጁን", "ጁላይ", "ኦገስት", "ሴፕቴምበር", "ኦክቶበር", "ኖቬምበር", "ዲሴምበር"]
     },
     "common": {
+        "password":"የይለፍ ቃል",
         "home": "መነሻ",
         "classes":"ክፍሎች",
         "homeroomClasses":"ሆም ሩም ክፍሎች",
-        "flags":"ፍላግ(Flags)",
+        "flags":"ማስጠንቀቂያዎች",
         "sections": "ክፍሎች",
         "question": "ጥያቄ",
         "studentNotes": "የተማሪ ማስታወሻዎች",
@@ -364,6 +369,7 @@ const am = {
         "teacher": "መምህር",
         "announcements": "መግለጫዎች",
         "schedule": "መርሃግብር",
+        "schedules": "መርሃግብሮች",
         "users": "ተጠቃሚዎች",
         "noDataFound": "ምንም መረጃ አልተገኘም",
         "name": "ስም",
@@ -374,7 +380,7 @@ const am = {
         "close": "ዝጋ",
         "clear": "ባዶ አርግ",
         "submit": "አስገባ",
-        "chat": "ቻት(Chat)",
+        "chat": "ቻት",
         "copilot": "ኮፓይለት(Copilot)",
         "previous": "ቀደም",
         "next": "ቀጣይ",
@@ -448,7 +454,7 @@ const am = {
     },
     "currentClass": {
         "currentClass": "የአሁኑ ክፍል",
-        "noActiveClass": "ምንም ንቁ ክፍል የለም",
+        "noActiveClass": "ምንም ንቁ(active) ክፍል የለም",
         "youAreNowHaving": "አሁን አለህ",
         "classWith": "ከ ክፍል ",
         "students": "ተማሪዎች",
@@ -538,7 +544,7 @@ const am = {
         "canceled": "ተሰረዘ"
     },
     "flagInfo": {
-        "understandingStudentFlags": "የተማሪ ምልክት ማድረጊያን(flag) መረዳት",
+        "understandingStudentFlags": "የማስጠንቀቂያ መረዳት",
         "descriptionOne": "የመምህራን ምልክት ማድረጊያ ባህሪ በተለያዩ ምክንያቶች የተወሰኑ ተማሪዎችን ለማጉላት እንደ አስተዋይ ዘዴ ሆኖ ያገለግላል። ተማሪን 'ምልክት በማድረግ' መምህራን የተማሪውን መገለጫ በማስታወሻ ወይም ምልክት በብቃት ምልክት አድርገውበታል፣ ይህም ልዩ ትኩረት እንደሚያስፈልጋቸው ወይም ልዩ አፈፃፀም እንዳሳዩ ያሳያል።",
         "descriptionTwo": "ምልክቶች የተለያዩ ሁኔታዎችን ሊወክሉ ይችላሉ። ለምሳሌ፣  የአካዳሚክ ችግርን ሊያመለክት ይችላል፣ ይህም በተወሰኑ ጉዳዮች ላይ ተጨማሪ እገዛን ይፈልጋል፣ ወይም የተማሪውን ልዩ አፈጻጸም የሚያመለክት ሲሆን ይህም የበለጠ ፈታኝ ስራን ይጠይቃል። ምልክቶች የመገኘት(attendance) ጉዳዮችን፣ የባህሪ ስጋቶችን ወይም ሌሎች ልዩ ሁኔታዎችን ሊያጎላ ይችላል።",
         "descriptionThree": "አንድ አስተማሪ ለተማሪው ባንዲራ ከተጠቀመ፣ በፕሮፋይላቸው ላይ ይታያል፣ ይህም ለአስተማሪው የተማሪውን ደረጃ እና እድገት ለመከታተል ቀላል ያደርገዋል። ይህ ስርዓት መምህራን የማስተማር ስልቶቻቸውን በእያንዳንዱ ተማሪ መስፈርቶች እና የስራ አፈጻጸም ደረጃዎች መሰረት እንዲያስተካክሉ ያግዛል።",
@@ -574,7 +580,7 @@ const am = {
     },
     "gettingStartedSchoolSchedule": {
         "congratulations": "እንኳን ደስ አላችሁ",
-        "almostDone": "ልትጨርስ የቀረህ ትንሽ ነው::",
+        "almostDone": "ልትጨርስ የቀረህ ትንሽ ነው...",
         "successfullyRegisteredMessage": "የትምህርት ቤትዎን ውጤቶች፣ ርዕሰ ጉዳዮች እና ክፍሎች በተሳካ ሁኔታ አስመዝግበዋል። በመቀጠል፣ ለአሁኑ የትምህርት ዘመን የትምህርት ቤትዎን መርሃ ግብር ማከል መቀጠል ይችላሉ። በሂደቱ ውስጥ እንመራዎታለን.",
         "firstStepHint": "እንደ መጀመሪያ ደረጃ፣ የትምህርት ዓመቱን የመጀመሪያ ሴሚስተር መጀመሪያ ቀን ማከል ይችላሉ። ይህ የትምህርት አመት መጀመሩን ለአሳዳጊዎች እና ለተማሪዎች ለማሳወቅ ይጠቅማል።የቀን መቁጠሪያ ዝግጅቶች ለምሳሌ የህዝብ በዓላት እና የትምህርት ቤት በዓላት እዚህም ሊጨመሩ ይችላሉ።",
         "doNotWorryMessage": " ትኽለኛዎቹ ቀኖች እርግጠኛ ካልሆኑ አይጨነቁ፣ እነዚህን ሁነቶች እና ሌሎችንም በኋላ ማከል ይችላሉ። አንዴ እዚህ ከጨረሱ በኋላ፣ በመጨረሻ ወደ ዳሽቦርድዎ እንወስድዎታለን።",
@@ -602,7 +608,11 @@ const am = {
         "createEvent": "ክስተት ይፍጠሩ",
         "goToDashboard": "ወደ ዳሽቦርድ ሂድ",
         "addNewEventFormTitle": "አዲስ ክስተት ይጨምሩ",
-        "addNewEventFormSubtitle": "አዲስ ክስተት ይጨምሩ"
+        "addNewEventFormSubtitle": "በአሁኑ የትምህርት ዘመን አዲስ ክስተት በት/ቤትህ መርሃ ግብር ውስጥ ጨምር",
+        "noSchoolDay":"የትምህርት ቀን የለም",
+        "halfDayClosed":"ግማሽ ቀን ተዘግቷል",
+        "schoolDay": "የትምህርት ቀን"
+    
     },
 
     "guardianInformation": {
@@ -716,7 +726,8 @@ const am = {
         "noLessonPlan": "የትምህርት ዕቅድ አልተገኘም!"
     },
     "lessonPlansIndex": {
-        "myLessonPlans": "የትምህርት እቅዴ"
+        "myLessonPlans": "የትምህርት እቅዴ",
+        "filterLessonPlans":"የትምህርት እቅዶችን አጣራ"
     },
     "lessonPlansUpdate": {
         "formElementTitle": "መርሀ ግብር ማሻሻል",
@@ -1214,7 +1225,9 @@ const am = {
         "attendance": "መገኘት%",
         "grade": "ደረጃ (የትምህርት ደረጃ)",
         "rank": "ደረጃ (በክፍል ውስጥ)",
-        "conduct": "ምግባር"
+        "conduct": "ምግባር",
+        "flagStudent":"ተማሪ ማስጠንቀቂያ"
+
     },
     "studentNotes": {
         "notes": "ማስታወሻዎች",
@@ -1366,11 +1379,12 @@ const am = {
     },
 
     "teacherIndex": {
+        "yourNexClass":"ቀጣዩ ክፍልህ <span class='font-semibold'>{fullName}</span> ከክፍል <span class='font-semibold'>{levelName} {section}</span> ጋር በወቅት <span class='font-semibold'>{schoolPeriodName}</span><span class='font-semibold'>በግምት{time}</span>",
         "homeroomClasses": "ሆም ሩም ክፍሎች",
         "upcomingSchedules": "የሚመጡ መርሃግብሮች",
         "schoolSchedules": "የትምህርት ቤት መርሐግብሮች",
         "toDaysSchedule": "የዛሬ መርሐግብር",
-        "recentFlags":"የቅርብ ጊዜ Flags"
+        "recentFlags":"የቅርብ ጊዜ ማስጠንቀቂያዎች"
 
     },
     "teacherLayout": {
@@ -1410,13 +1424,11 @@ const am = {
         "description": "እንኳን ወደ የመገለጫ ገጽዎ በደህና መጡ፣ የግል መረጃዎን እና የደህንነት ቅንብሮችዎን ማየት እና ማዘመን ይችላሉ። ከእኛ ጋር በጉዞዎ ይደሰቱ!",
         "headingOne": "ፕሮፋይል",
         "headingTwo": "የግል መረጃዎን ያዘምኑ እና መገለጫዎ እርስዎ ማን እንደሆኑ በትክክል እንደሚያንጸባርቅ ያረጋግጡ።",
-        "nameLabel": "ስም",
-        "emailLabel": "ኢሜይል",
         "usernameLabel": "የተጠቃሚ ስም",
         "phoneNumberLabel": "ስልክ ቁጥር",
         "phoneNUmberPlaceholder": "ለምሳሌ 09123456789",
-        "genderLabel": "ፆታ",
         "genderPlaceholder": "ፆታ ይምረጡ",
+        "stayAheadOf": "የይለፍ ቃልን አሁን በማዘመን ሊመጡ ከሚችሉ የደህንነት ስጋቶች ራሶን ይጠብቁ።",
         "currentPasswordLabel": "አሁን ያለው ይለፍ ቃል",
         "currentPasswordPlaceholder": "አሁን ያለዎትን ይለፍ ቃል ያስገቡ",
         "passwordLabel": "አዲስ ይለፍ ቃል",
@@ -1424,7 +1436,9 @@ const am = {
         "passwordConfirmationLabel": "የአዲስ ይለፍ ቃል ማረጋገጫ",
         "passwordConfirmationPlaceholder": "አዲስ ይለፍ ቃልዎን ያረጋግጡ",
         "male": "ወንድ",
-        "female": "ሴት"
+        "female": "ሴት",
+        "updateProfile":"ፕሮፋይል አዘምን"
+
     },
 
     "userStatistics": {
@@ -1539,7 +1553,44 @@ const am = {
     },
     "attendanceCard":{
         "YourAttendance":"በዚህ ሩብ ዓመት የእርስዎ ተሳትፎ"
+    },
+
+    "ai":{
+        "artificialIntelligence":"አርቲፊሻል ኢንተለጀንስ",
+        "empowerYourTeaching":"ልዩ ጥያቄዎችን በመፍጠር እና የማወቅ ጉጉትን የሚቀሰቅሱ የበለጸጉ ንግግሮችን በማነሳሳት በእኛ AI ፓይለት ማስተማርዎን ያበረታቱ።",
+        "exploreMore":"የበለጠ ያስሱ"
+    },
+    "flagIndex":{
+        "flagList":"ማስጠንቀቂያ ዝርዝር",
+        "add":"አክል",
+        "duration":"ጊዜ",
+        "systemGenerated":"በሲስተሙ የተፈጠረ",
+        "noFlagsFound":"ማስጠንቀቂያዎች አልተገኙም"
+    },
+
+    "selectedFlagDetail":{
+        "flagDetail":"ማስጠንቀቂያ ዝርዝር",
+        "expiryDate":"ማብቂያ ቀን:",
+    },
+
+    "chat":{
+        "typeYourMessageHere":"መልእክትህን እዚህ ተይብ...",
+        "gettingStarted":"በ AI Chat መጀመር",
+        "helloWeWant":"ሰላም፣ {name}! ከAI ቻት ባህሪያችን Rigel Copilot ምርጡን እንደሚያገኙ ማረጋገጥ እንፈልጋለን። እርስዎን ለመምራት አንዳንድ ጠቃሚ ምክሮች እዚህ አሉ",
+        "askSpecificQuestions":"የተወሰኑ ጥያቄዎችን ይጠይቁ",
+        "theAiChat":"የተወሰኑ ጥያቄዎችን ሲጠይቁ የ AI ውይይት የበለጠ ውጤታማ ይሆናል...",
+        "experimentWithDifferent":"በተለያዩ መጠይቆች ይሞክሩ",
+        "feelFree":"በተለያዩ አይነት ጥያቄዎች ወይም መጠይቆች ለመሞከር ነፃነት ይሰማህ...",
+        "useItAsResource":"እንደ ምረጃ ፍለጋ ይጠቀሙበት",
+        "needHelpFinding":"የትምህርት መርጃዎችን ለማግኘት እገዛ ይፈልጋሉ? ምክሮችን ለማግኘት የ AI ውይይትን መጠየቅ ትችላለህ...",
+        "seekClarification":"ውስብስብ በሆኑ ጉዳዮች ላይ ማብራሪያ ፈልግ",
+        "ifYourAreDealing":"ከተወሳሰቡ ትምህርታዊ ርዕሶች ጋር እየተገናኘህ ከሆነ፣ AI ቻቱን ከመጠየቅ ወደኋላ አትበል...",
+        "exploreCreativeIdeas":"የፈጠራ ሀሳቦችን ያስሱ",
+        "theAIChat":"የ AI ቻት አዳዲስ የማስተማር ዘዴዎችን ለማንሳት ጥሩ መሳሪያ ሊሆን ይችላል...",
+        "RememberWhile":"ያስታውሱ፣ AI ቻት ኃይለኛ መሳሪያ ቢሆንም፣ የሰው ልጅ መስተጋብርን የሚተካ ሳይሆን..."
+
     }
+
 
 }
 

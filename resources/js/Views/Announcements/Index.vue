@@ -26,8 +26,8 @@
         <div>
             <EmptyView
                 v-if="!computedAnnouncements"
-                title="No Announcements Found!"
-                link-title="Go To Announcements"
+                :title="$t('announcementsIndex.noAnnouncementsFound')"
+                :link-title="$t('announcementsIndex.goToAnnouncements')"
                 :link-url="url"
                 class="flex w-full justify-center py-2"
             />
@@ -51,7 +51,7 @@
                     v-else-if="!(view === 'teacher' && isAdmin())"
                     class="flex w-full justify-center py-2"
                     :href="url"
-                    value="View All Announcements"
+                    :value="$t('announcementsIndex.viewAllAnnouncements')"
                 />
             </div>
         </div>
