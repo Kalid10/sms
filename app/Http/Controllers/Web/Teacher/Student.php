@@ -13,6 +13,7 @@ use App\Models\Student as StudentModel;
 use App\Models\StudentNote;
 use App\Models\User;
 use App\Services\StudentService;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -41,7 +42,13 @@ class Student extends Controller
         $semesters = Semester::with('schoolYear')->get();
         $schoolYears = SchoolYear::all();
 
-        return Inertia::render('Teacher/Student', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Student',
+            User::TYPE_ADMIN => 'Admin/Students/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'student' => $student,
             'guardian' => $this->loadGuardianData($student),
             'assessments' => $studentAssessment,
