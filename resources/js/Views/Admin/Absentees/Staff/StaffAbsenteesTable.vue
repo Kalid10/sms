@@ -12,9 +12,9 @@
                     placeholder="Search for an absent staff by name"
                 />
                 <SelectInput
-                    v-model="selectedType"
+                    v-model="selectedUserType"
                     class="h-fit w-2/12 rounded-2xl !text-sm"
-                    :options="typeOptions"
+                    :options="userTypeOptions"
                     placeholder="Filter by user type"
                 />
 
@@ -53,14 +53,14 @@ import AbsenteeAddModal from "@/Views/Admin/Absentees/AbsenteeAddModal.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 
 const showModal = ref(false);
-const selectedType = ref(usePage().props.filters.type);
+const selectedUserType = ref(usePage().props.filters.user_type);
 const staffAbsenteesOfTheDay = computed(
     () => usePage().props.staff_absentees_of_the_day
 );
 
 const userTypes = computed(() => usePage().props.user_types);
 
-const typeOptions = computed(() => {
+const userTypeOptions = computed(() => {
     return [
         {
             label: "All",
@@ -75,12 +75,12 @@ const typeOptions = computed(() => {
     ];
 });
 
-watch(selectedType, () => {
-    if (selectedType.value) {
+watch(selectedUserType, () => {
+    if (selectedUserType.value) {
         router.get(
             "/admin/absentees",
             {
-                type: selectedType.value,
+                type: selectedUserType.value,
             },
             {
                 only: ["staff_absentees_of_the_day"],
