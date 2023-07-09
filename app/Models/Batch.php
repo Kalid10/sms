@@ -61,6 +61,11 @@ class Batch extends Model
             ->withTimestamps();
     }
 
+    public function assessments(): HasManyThrough
+    {
+        return $this->hasManyThrough(Assessment::class, BatchSubject::class);
+    }
+
     public function subjects(): HasMany
     {
         return $this->hasMany(BatchSubject::class);
@@ -74,6 +79,13 @@ class Batch extends Model
     public function sessions(): HasManyThrough
     {
         return $this->hasManyThrough(BatchSession::class, BatchSchedule::class);
+    }
+
+    public function teachers(): BelongsToMany
+    {
+        return $this->belongsToMany(Teacher::class, 'batch_subjects')
+            ->withPivot('subject_id', 'weekly_frequency')
+            ->withTimestamps();
     }
 
     public function inProgressSession(): BatchSession|null

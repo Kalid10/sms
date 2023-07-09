@@ -102,7 +102,12 @@ class Student extends Model
     public function assessments(): HasMany
     {
         return $this->hasMany(StudentAssessment::class)
-            ->with('assessment.assessmentType', 'assessment.batchSubject.batch.level', 'assessment.batchSubject.subject');
+            ->with(
+                'assessment.assessmentType',
+                'assessment.batchSubject.batch.level',
+                'assessment.batchSubject.subject',
+                'assessment.quarter'
+            );
     }
 
     public function base_batches(): BelongsToMany
@@ -209,5 +214,10 @@ class Student extends Model
     public function flags(): MorphMany
     {
         return $this->morphMany(Flag::class, 'flaggable');
+    }
+
+    public function subjectGrades(): HasMany
+    {
+        return $this->hasMany(StudentSubjectGrade::class);
     }
 }
