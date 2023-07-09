@@ -37,7 +37,7 @@
     </TableElement>
 
     <Modal v-model:view="showModal">
-        <AbsenteeAddModal @add="addAbsentee" />
+        <AbsenteeAddModal @add="showModal = false" />
     </Modal>
 </template>
 <script setup>
@@ -145,9 +145,5 @@ const find = debounce(() => {
         }
     );
 }, 300);
-
-function addAbsentee() {
-    showModal.value = false;
-}
 </script>
 <style scoped></style>

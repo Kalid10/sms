@@ -120,7 +120,7 @@
     </Modal>
 
     <Modal v-model:view="showAssignModal">
-        <AssignHomeroom @close="closeModal" />
+        <AssignHomeroom @close="showAssignModal = false" />
     </Modal>
 </template>
 <script setup>
@@ -203,9 +203,5 @@ const selectedHomeroomName = computed(() => {
         return (item.id = selectedHomeroom);
     });
 });
-
-function closeModal() {
-    showAssignModal.value = false;
-}
 </script>
 <style scoped></style>
