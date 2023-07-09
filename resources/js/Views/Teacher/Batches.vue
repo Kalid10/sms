@@ -1,11 +1,11 @@
 <template>
     <div class="flex h-full w-full flex-col space-y-2">
         <div
-            class="flex h-full w-full justify-between space-x-6 divide-x divide-gray-100"
+            class="flex h-full w-full flex-col justify-between divide-x divide-gray-100 px-1 lg:flex-row lg:space-x-6 lg:px-0"
         >
             <!--        Left Side-->
             <div
-                class="flex w-8/12 flex-col space-y-5"
+                class="flex w-full flex-col space-y-5 lg:w-8/12"
                 :class="isTeacher() ? 'py-5 pl-5' : 'py-3 pl-3 pr-10'"
             >
                 <Header
@@ -15,14 +15,16 @@
                     @change="updateBatchInfo"
                 />
 
-                <div class="bg w-full px-3 py-4">
+                <div class="w-full px-3 py-4">
                     <div class="w-full pr-5">
                         <BatchPerformance />
                     </div>
                 </div>
 
-                <div class="flex w-full justify-between space-x-10">
-                    <div class="w-6/12">
+                <div
+                    class="flex w-full flex-col justify-between lg:flex-row lg:space-x-10"
+                >
+                    <div class="w-full lg:w-6/12">
                         <StudentsTable
                             :title="tableTitle"
                             :table-model-value="batchSubject.id"
@@ -31,7 +33,7 @@
                         />
                     </div>
                     <div
-                        class="flex h-full w-5/12 flex-col justify-center space-y-8"
+                        class="flex h-full w-full flex-col justify-center space-y-8 lg:w-5/12"
                     >
                         <SummaryItem
                             class-style="bg-orange-100 text-black"
@@ -91,7 +93,7 @@
 
             <!--        Right side-->
             <div
-                class="flex w-4/12 flex-col px-3 pl-5"
+                class="flex w-full flex-col px-3 pl-5 lg:w-4/12"
                 :class="isTeacher() ? 'py-5' : ''"
             >
                 <CurrentClass view="absentee" />
