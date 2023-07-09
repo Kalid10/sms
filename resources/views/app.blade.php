@@ -16,6 +16,12 @@
     @inertiaHead
 </head>
 <body class="font-sans antialiased">
-@inertia
+<div class="lg:hidden flex items-center justify-center flex-col gap-1 h-screen w-full">
+    <h1 class="text-gray-400 text-center">Mobile site is under construction</h1>
+    <h1 class="font-semibold">Open in Desktop instead</h1>
+</div>
+<div class="hidden lg:block">
+    @inertia
+</div>
 </body>
 </html>
