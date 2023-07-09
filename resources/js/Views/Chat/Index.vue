@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="flex max-h-screen min-h-screen w-full justify-between bg-gray-50"
-    >
+    <div class="flex max-h-screen min-h-screen w-full justify-between">
         <Messages @toggle-conversation="toggleConversation" />
 
         <!-- conversation -->

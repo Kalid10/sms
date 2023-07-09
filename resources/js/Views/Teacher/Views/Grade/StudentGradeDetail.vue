@@ -19,9 +19,9 @@
                     Grade Report
                 </span>
             </div>
-            <SecondaryButton
-                class="h-fit !rounded-2xl bg-red-600 !px-4 !py-1 !text-xs text-white"
-                title="Flag Student"
+
+            <FlagIcon
+                class="w-4 cursor-pointer text-red-500 hover:scale-125 hover:text-red-600"
                 @click="emit('flag')"
             />
         </div>
@@ -65,13 +65,12 @@
     </div>
 </template>
 <script setup>
-import { ArrowLeftCircleIcon } from "@heroicons/vue/20/solid";
+import { ArrowLeftCircleIcon, FlagIcon } from "@heroicons/vue/20/solid";
 import TableElement from "@/Components/TableElement.vue";
 import AssessmentBreakDown from "@/Views/Teacher/Views/Assessments/AssessmentBreakDown.vue";
 import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import GradeFilter from "@/Views/Teacher/Views/Grade/GradeFilter.vue";
 
 const emit = defineEmits(["flag"]);

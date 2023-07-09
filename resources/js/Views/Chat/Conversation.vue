@@ -72,7 +72,7 @@
 
         <!-- content -->
         <div
-            class="scrollbar-hide flex h-full w-full flex-col items-center justify-between bg-violet-50/70 bg-contain pb-4"
+            class="scrollbar-hide flex h-full w-full flex-col items-center justify-between bg-gray-100 bg-contain pb-4"
             style="background-image: url('/assets/chat.png')"
         >
             <div
@@ -146,7 +146,7 @@
                 </div>
             </div>
             <div v-else class="flex h-5/6 items-center text-sm font-light">
-                <span class="rounded-2xl bg-violet-200 px-6 py-1">
+                <span class="rounded-2xl bg-gray-200 px-6 py-1">
                     No previous messages found!
                 </span>
             </div>
@@ -228,9 +228,13 @@
     </div>
     <div
         v-else
-        class="flex max-h-screen w-8/12 items-center justify-center rounded-lg border-zinc-500 bg-white shadow-sm"
+        style="background-image: url('/assets/chat.png')"
+        class="flex max-h-screen w-8/12 flex-col items-center justify-center space-y-2 rounded-lg border-zinc-500 bg-gray-100 shadow-sm"
     >
-        <div>Please select chat to start messaging</div>
+        <div class="text-3xl font-medium">Welcome back to rigel chat.</div>
+        <div class="text-sm font-light">
+            Please select chat to start messaging
+        </div>
     </div>
 </template>
 <script setup>

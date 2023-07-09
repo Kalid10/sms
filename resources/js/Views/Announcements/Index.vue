@@ -14,10 +14,9 @@
                 >
                     {{ title }}
                 </div>
-                <SecondaryButton
+                <SquaresPlusIcon
                     v-if="isAdmin() && view === 'admin'"
-                    class="h-fit !rounded-2xl bg-zinc-700 text-white"
-                    title="Add Announcement"
+                    class="w-5 cursor-pointer text-zinc-700 hover:scale-105"
                     @click="showAddAnnouncement = true"
                 />
             </div>
@@ -185,9 +184,9 @@ import { debounce } from "lodash";
 import Pagination from "@/Components/Pagination.vue";
 import FormElement from "@/Components/FormElement.vue";
 import DatePicker from "@/Components/DatePicker.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextArea from "@/Components/TextArea.vue";
 import { isAdmin } from "@/utils";
+import { SquaresPlusIcon } from "@heroicons/vue/20/solid";
 
 const props = defineProps({
     url: {

@@ -45,13 +45,12 @@
                 </div>
             </div>
             <div class="mt-5 flex h-fit w-5/12 flex-col items-center space-y-6">
-                <date-picker
+                <DatePicker
                     v-model:start-date="startDate"
                     v-model:end-date="endDate"
                     visible
                     range
                     class="w-7/12"
-                    @change="filterSchedule"
                 />
                 <SecondaryButton
                     v-if="isAdmin()"
