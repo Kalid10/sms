@@ -24,6 +24,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->json('fcm_tokens')->nullable();
             $table->string('password');
+            $table->boolean('active_status')->default(0); // Chatify
+            $table->string('avatar')->default(config('chatify.user_avatar.default')); // Chatify
+            $table->boolean('dark_mode')->default(0); // Chatify
+            $table->string('messenger_color')->nullable(); // Chatify
+            $table->integer('openai_daily_usage')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
