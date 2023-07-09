@@ -5,9 +5,12 @@ namespace Database\Seeders;
 use App\Jobs\GenerateBatchSchedulesJob;
 use App\Models\Role;
 use App\Models\User;
+use Database\Seeders\Simulation\AssessmentSeeder;
+use Database\Seeders\Simulation\AssessmentTypeSeeder;
 use Database\Seeders\Simulation\BatchSeeder;
 use Database\Seeders\Simulation\BatchSubjectSeeder;
 use Database\Seeders\Simulation\FamilySeeder;
+use Database\Seeders\Simulation\HomeroomTeacherSeeder;
 use Database\Seeders\Simulation\LevelCategorySeeder;
 use Database\Seeders\Simulation\LevelSeeder;
 use Database\Seeders\Simulation\SchoolYearSeeder;
@@ -35,10 +38,18 @@ class SimulationSeeder extends Seeder
             BatchSeeder::class,
             BatchSubjectSeeder::class,
             SchoolPeriodSeeder::class,
+        ]);
+
+        $this->call([
             TeacherSeeder::class,
+            HomeroomTeacherSeeder::class,
+            AssessmentTypeSeeder::class,
+            AssessmentSeeder::class,
+            GradeScaleSeeder::class,
         ]);
 
         GenerateBatchSchedulesJob::dispatchSync();
+        Artisan::call('app:generate-batch-sessions', ['--duration' => 'weekly']);
     }
 
     private function admin()
