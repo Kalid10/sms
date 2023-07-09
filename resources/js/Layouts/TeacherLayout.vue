@@ -69,8 +69,9 @@ import {
     CalendarDaysIcon,
     CalendarIcon,
     ChatBubbleBottomCenterIcon,
-    ClipboardIcon,
     Cog6ToothIcon,
+    MegaphoneIcon,
+    NewspaperIcon,
     PuzzlePieceIcon,
     QuestionMarkCircleIcon,
     SparklesIcon,
@@ -145,7 +146,7 @@ const sidebarItems = computed(() => [
     },
     {
         name: t('teacherLayout.assessments'),
-        icon: ClipboardIcon,
+        icon: NewspaperIcon,
         route: "/teacher/assessments",
         active: directory.value === "assessments",
     },
@@ -164,7 +165,7 @@ const sidebarItems = computed(() => [
 
     {
         name: t('teacherLayout.announcements'),
-        icon: ChatBubbleBottomCenterIcon,
+        icon: MegaphoneIcon,
         route: "/teacher/announcements",
         active: directory.value === "announcements",
     },
@@ -175,16 +176,15 @@ const sidebarItems = computed(() => [
         route: "/teacher/school-schedule",
         active: directory.value === "school-schedule",
     },
+]);
 
+const footerItems = [
     {
         name: t('teacherLayout.settings'),
         icon: Cog6ToothIcon,
         route: "/user/profile",
         active: directory.value === "settings",
     },
-]);
-
-const footerItems = [
     {
         icon: ArrowLeftOnRectangleIcon,
         name: t('teacherLayout.logout'),

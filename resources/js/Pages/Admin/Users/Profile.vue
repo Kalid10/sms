@@ -1,23 +1,6 @@
 <template>
     <div class="flex h-full w-full items-center justify-evenly bg-gray-100">
         <div
-            class="hidden h-full w-4/12 flex-col items-center justify-center space-y-2 text-center lg:flex"
-        >
-            <div>
-                <h1
-                    class="w-full text-3xl font-extrabold leading-none lg:text-6xl"
-                >
-                    <span class="w-full">{{ $t('userProfile.hello')}} 👋🏼 {{ user.name }}</span>
-                </h1>
-
-                <h3 class="py-1 font-light text-gray-500">
-                    {{ $t('userProfile.description')}}
-                </h3>
-            </div>
-
-            <div class="h-3/6 min-w-full"></div>
-        </div>
-        <div
             class="flex h-5/6 w-7/12 flex-col items-center justify-between rounded-lg bg-white px-12 py-3"
         >
             <!--            Profile -->
@@ -27,7 +10,7 @@
                 <div
                     class="flex w-full shrink-0 flex-col justify-center space-y-2"
                 >
-                    <Heading :value="$t('userProfile.headingOne')" />
+                    <Heading :value="$t('userProfile.profile')"/>
                     <Heading
                         :value="$t('userProfile.headingTwo')"
                         size="sm"
@@ -83,7 +66,7 @@
                                 required
                             />
                         </div>
-                        <div class="flex justify-end">
+                        <div class="flex justify-end py-3">
                             <PrimaryButton
                                 :title="$t('userProfile.updateProfile')"
                                 @click="submitProfileForm"
@@ -134,15 +117,33 @@
                             :error="passwordForm.errors.password_confirmation"
                             required
                         />
-                        <div class="flex justify-end">
+                        <div class="flex justify-end py-3">
                             <PrimaryButton
-                                :title="$t('userProfile.updateProfile')"
+                                :title="$t('userProfile.updatePassword')"
                                 @click="submitPasswordForm"
                             />
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div
+            class="hidden h-full w-4/12 flex-col items-center justify-center space-y-2 text-center lg:flex"
+        >
+            <div>
+                <h1
+                    class="w-full text-3xl font-extrabold leading-none lg:text-6xl"
+                >
+                    <span class="w-full">{{ $t('userProfile.hello')}} 👋🏼 {{ user.name }}</span>
+                </h1>
+
+                <h3 class="py-1 font-light text-gray-500">
+                    {{ $t('userProfile.description')}}
+                </h3>
+            </div>
+
+            <div class="h-3/6 min-w-full"></div>
         </div>
     </div>
 </template>

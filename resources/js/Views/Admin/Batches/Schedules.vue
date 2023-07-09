@@ -1,25 +1,10 @@
 <template>
-    <div
-        v-if="batchSchedules.length > 0"
-        class="flex w-full flex-col justify-start space-y-6"
-    >
-        <TableElement
-            :selectable="false"
-            :filterable="false"
-            :title="`${batchSchedules[0].day_of_week} Schedules `"
-            :columns="config"
-            :data="formattedSchedules"
-        />
-    </div>
-    <div v-else class="flex w-full items-center justify-center">
-        <EmptyView :title="$t('batchesSchedules.noSchedulesFound')" />
-    </div>
+    <WeeklySchedule />
 </template>
 <script setup>
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import EmptyView from "@/Views/EmptyView.vue";
-import TableElement from "@/Components/TableElement.vue";
+import WeeklySchedule from "@/Views/Admin/Batches/WeeklySchedule.vue";
 import {useI18n} from "vue-i18n";
 const {t} = useI18n()
 const batchSchedules = computed(() => usePage().props.batch_schedules);

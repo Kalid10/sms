@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('batch_session_id')->constrained('batch_sessions')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('reason')->nullable();
+            $table->boolean('next_class_attended_flag')->default(false);
             $table->unique(['batch_session_id', 'user_id']);
             $table->timestamps();
         });

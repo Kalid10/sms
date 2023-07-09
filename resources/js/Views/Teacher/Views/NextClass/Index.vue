@@ -30,7 +30,7 @@
                     class="cursor-pointer underline underline-offset-2 hover:font-medium"
                     >{{ $t('nextClassIndex.admin')}}</span
                 >
-                for assistance.
+                {{ $t('nextClassIndex.forAssistance')}}
             </div>
         </div>
     </div>

@@ -24,7 +24,7 @@
         <div class="flex w-full justify-between p-8">
             <div class="flex w-8/12 flex-col space-y-8">
                 <WelcomeHeader v-if="isTeacher()" />
-                <TabElement v-model:active="activeTabs" :tabs="tabs">
+                <TabElement v-model:active="activeTab" :tabs="tabs">
                     <template #[announcementsTab]>
                         <Announcements
                             url="/teacher/announcements"
@@ -36,7 +36,6 @@
                     </template>
                     <template  #[toDaysScheduleTab]>
                         <CurrentDaySchedule
-                            v-if="teacherSchedule?.length"
                             ref="currentDayScheduleRef"
                             :schedule="teacherSchedule"
                             class-style="px-4 !h-fit py-2 space-y-2"
@@ -51,7 +50,7 @@
             <div class="flex h-full w-3/12 flex-col items-center space-y-8">
                 <NextClass
                     class="!w-11/12"
-                    @view="scrollToCurrentDaySchedule"
+                    @view="activeTab = toDaysScheduleTab"
                 />
                 <Summary class="!w-11/12" />
 
@@ -87,16 +86,12 @@ const scrollToNextClass = () => {
     nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
 };
 const currentDayScheduleRef = ref(null);
-const scrollToCurrentDaySchedule = () => {
-    currentDayScheduleRef.value.$el.scrollIntoView({ behavior: "smooth" });
-};
 
 const announcementsTab = t('common.announcements')
 const schoolSchedulesTab = t('teacherIndex.schoolSchedules')
 const toDaysScheduleTab = t('teacherIndex.toDaysSchedule')
 const tabs = [announcementsTab, schoolSchedulesTab, toDaysScheduleTab];
-const activeTabs = ref(announcementsTab);
-
+const activeTab = ref(announcementsTab);
 </script>
 
 <style scoped></style>

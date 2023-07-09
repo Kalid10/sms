@@ -55,10 +55,7 @@ const en = {
         "selectDestinationSection": "Select Destination Section",
         "sections": "sections",
         "todayAbsentees": "Today's Absentees",
-        "name": "Name",
-        "email": "Email",
-        "gender": "Gender",
-        "grade": "Grade",
+
     },
     "adminTeacherIndex": {
         "searchTeacherByName": "Search for a teacher by name",
@@ -157,6 +154,7 @@ const en = {
         "schedule": "Schedule",
     },
     "assessmentIndex": {
+        "addType":"Add Type",
         "name": "name",
         "percentage": "Percentage",
         "updateLevelCategories": "Update level categories:",
@@ -172,7 +170,7 @@ const en = {
         "addAssessmentType": "Add Assessment Type",
         "lastUpdated ": "Last updated",
         "updateAssessmentType": "Update Assessment Type",
-        "assessmentType": "Assessment type",
+        "assessmentType": "Assessment Type",
         "gradeCategory": "Grade Category",
         "updatedAt": "Updated at",
         "recentAssessments": "Recent Assessments"
@@ -335,6 +333,10 @@ const en = {
         "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     },
     "common": {
+        "for":"for",
+        "add":"Add",
+        "absentees":"Absentees",
+        "all": "all",
         "password":"Password",
         "home": "Home",
         "classes":"Classes",
@@ -342,6 +344,7 @@ const en = {
         "flags":"Flags",
         "chat":"Chat",
         "sections": "Sections",
+        "section": "Section",
         "question": "Question",
         "studentNotes": "Student Notes",
         "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -704,14 +707,6 @@ const en = {
         "noPreviousLessonPlans": "No Previous Lesson Plans",
         "noPreviousLessonPlansMessage": "Previous lesson plans have not been added for this session. Make sure you have populated your lesson plans to view them here.",
         "period": "Period"
-    },
-    "lessonPlanCopilot": {
-        "rigelCopilot": "Rigel Copilot",
-        "introText": "I'm your Rigel co-pilot. I will assist you as you create your lesson plan.",
-        "notes": "Notes",
-        "potentialQuestions": "Potential Questions",
-        "copyToLessonPlan": "Copy To Lesson Plan",
-        "searchGoogle": "Search Google"
     },
     "lessonPlanIndex": {
         "updated": "Updated",
@@ -1423,7 +1418,7 @@ const en = {
     "userProfile": {
         "hello": "Hello",
         "description": "Welcome to your profile page, where you can view and update your personal information and security settings. Enjoy your journey with us!",
-        "headingOne": "Profile",
+        "profile": "Profile",
         "headingTwo": "Update your personal information and make sure your profile accurately reflects who you are.",
         "usernameLabel": "User Name",
         "phoneNumberLabel": "Phone number",
@@ -1438,7 +1433,8 @@ const en = {
         "passwordConfirmationPlaceholder": "confirm your new password",
         "male": "Male",
         "female": "Female",
-        "updateProfile":"Update Profile"
+        "updateProfile":"Update Profile",
+        "updatePassword":"Update Password"
     },
 
     "userStatistics": {
@@ -1545,7 +1541,8 @@ const en = {
     "adminIndex":{
         "recentFlags":"Recent Flags",
         "searchStudent":"Search Student",
-        "registerReview":"Register, Review, explore and More"
+        "registerReview":"Register, Review, explore and More",
+        "noStudentsFound":"No students found"
 
     },
     "attendanceCard":{
@@ -1583,8 +1580,75 @@ const en = {
         "exploreCreativeIdeas":"Explore Creative Ideas",
         "theAIChat":"The AI chat can be a great tool to brainstorm new teaching techniques...",
         "RememberWhile":"Remember, while the AI chat is a powerful tool, it's not a replacement for human interaction..."
+    },
+    "studentNotesPreview":{
+        "notesAbout":"Notes about",
+        "viewAll": "View All",
+    },
+    "lessonPlanCard":{
+        "addLessonPlan":"Add Lesson Plan",
+        "lessonPlanHas":"Lesson plan has not been added for this session. Add a new session before the session starts.",
+    },
+    "lessonPlanCopilot":{
+        "rigelCopilot":"Rigel Copilot (AI)",
+        "intro":"I am your Rigel Co-Pilot, a dedicated AI assistant, here to simplify your lesson planning and elaboration needs.",
+        "generateQuestions":"Generate Questions ?",
+        "orDoYouWant":"Or Do You Want To Chat ?",
+        "needAssistanceWith":"Need assistance with anything? Rigel AI chat is here to help!",
+        "needHandWith":"Need a hand with anything from creating questions to lively chats, or understanding lesson plans? Rigel Copilot(AI) is ready to assist! Just tap on the sparkle icon for clear explanations,or click on the buttons above for specific actions. Let's make learning a fun journey together!",
+        "lessonPlanExplained":"Lesson Plan Explained- Rigel Copilot (AI)",
+        "potentialQuestions":"Potential Questions",
+        "copyToLessonPlan":"Copy To Lesson Plan",
+        "searchGoogle":"Search Google",
+    },
 
+    "lessonPlanFormModal":{
+        "showAISection":"Show AI Section",
+        "newLessonPlan":"New Lesson Plan",
+        "addTheTopic":"Add the topic and description of the lesson plan for the session here",
+        "topicOfLessonPlan":"Topic of the Lesson Plan",
+        "topic":"Topic",
+        "addLessonPlanDescription":"Add your Lesson Plan description",
+        "edit":"Edit",
+        "previousLessonPlans":"Previous Lesson Plans",
+        "otherLessonPlans":"Other lesson plans for class sessions before",
+        "noPreviousLessonPlans":" No Previous Lesson Plans",
+        "lessonPlansNotAdded ":"Previous lesson plans have not been added for this session. Make sure you have populated your lesson plans to view them here."
+    },
+
+    "lessonPlanWeekCardNew":{
+        "week":"Week",
+        "classSessionsWeekStarting":"Class sessions for the week starting from",
+        "andEndingOn":"and ending on",
+        "noClassSessions":"No Class Sessions for Week "
+    },
+
+    "lessonPlanQuestionPreparation":{
+        "lessonPlanQuestionGenerator":"LessonPlan Question Generator",
+        "somethingWentWrong":"Something went wrong! Please try again later.",
+        "selectQuestionType":"Select Question Type",
+        "numberOfQuestions":"Number Of Questions?",
+        "howManyQuestions":"How Many Questions?",
+        "setDifficultyLevel":"Set Difficulty Level for Questions",
+        "useThisSlider":"Use this slider to set the difficulty level for the generated questions. Moving the slider to the left will make questions easier, while moving it to the right will make them more challenging.",
+    },
+
+    "adminSummary":{
+        "chatValue":"5 Unread Messages",
+        "studentValue":"Register, Review, explore and More",
+        "teacherValue":"Register, evaluate, explore and more",
+        "adminValue":"Register, Review, explore and More"
+    },
+
+    "absenteeAddModal":{
+        "addStaffAbsentee":"Add Staff Absentee",
+        "yourAreAbout":"Your are about to add <span class='px-2 font-bold'> { type } { label } </span> as an absentee:",
+        "enterReason":"Enter reason",
+        "searchAddAbsentee":"Search for a staff member to add as an absentee",
+        "searchStaffMember":"Search for a staff member by name"
     }
+
+
 
 
 }

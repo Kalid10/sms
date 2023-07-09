@@ -4,7 +4,7 @@
             class="scrollbar-hide flex max-h-[800px] flex-col space-y-3 overflow-y-scroll rounded-lg bg-white p-4 text-center"
         >
             <div>
-                <Title title="Assign Homeroom" />
+                <Title :title="$t('absenteeAddModal.addStaffAbsentee')" />
             </div>
 
             <div class="flex w-full flex-col justify-center space-y-4">
@@ -17,12 +17,7 @@
                     >
                         <div class="flex w-full flex-col gap-5 py-3">
                             <h2 class="flex justify-center">
-                                Your are about to add
-                                <span class="px-2 font-bold">
-                                    {{ selectedStaff.type }}
-                                    {{ selectedStaff.label }}
-                                </span>
-                                as an absentee:
+                                <span v-html="$t('absenteeAddModal.yourAreAbout',{type:selectedStaff.type,label:selectedStaff.label})"> </span>
                             </h2>
 
                             <div
@@ -30,15 +25,16 @@
                             >
                                 <TextInput
                                     v-model="form.reason"
-                                    label="Reason"
-                                    placeholder="Enter reason"
+                                    :label="$t('common.reason')"
+                                    :placeholder="$t('absenteeAddModal.enterReason')"
                                     class="w-full lg:max-w-lg"
+                                    :error="form.errors.reason"
                                 />
                             </div>
 
                             <div class="flex items-center justify-center">
                                 <PrimaryButton
-                                    title="Add"
+                                    :title="$t('common.add')"
                                     @click="addAbsentee"
                                 />
                             </div>
@@ -46,14 +42,14 @@
                     </div>
                 </div>
                 <span class="text-md font-medium text-gray-500"
-                    >Search for a staff member to add as an absentee
+                    >{{ $t('absenteeAddModal.searchAddAbsentee')}}
                 </span>
                 <div class="flex flex-col">
                     <input
                         v-model="searchKey"
                         class="mb-2 rounded-md border border-gray-300 px-3 py-2"
                         type="text"
-                        placeholder="Search for a staff member by name"
+                        :placeholder="$t('absenteeAddModal.searchStaffMember')"
                     />
                     <div
                         v-for="(staff, index) in staffUsers"
@@ -144,6 +140,7 @@ const addAbsentee = () => {
         onSuccess: () => {
             showModal.value = false;
             form.reset();
+            selectedStaff.value = null;
         },
     });
 };

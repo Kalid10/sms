@@ -45,6 +45,7 @@
                             :batch-subject-options="batchSubjectOptions"
                             :student="student"
                             :view-date="false"
+                            :show-add-flag-modal="showAddFlagModal"
                         />
                     </div>
                 </div>
@@ -54,6 +55,10 @@
                 <StudentGradeDetail
                     :student-name="student"
                     :student-grade="grade"
+                    @flag="
+                        showAddFlagModal = true;
+                        showGrade = false;
+                    "
                 />
             </Modal>
         </div>
@@ -112,6 +117,7 @@ const selectedBatchSubject = ref(batchSubject.value?.id);
 const auth = computed(() => usePage().props.auth);
 const grade = computed(() => usePage().props.grade);
 const showGrade = ref(false);
+const showAddFlagModal = ref(false);
 
 const batchSubjectOptions = computed(() => {
     let options = batchSubjects.map((batchSubject) => {

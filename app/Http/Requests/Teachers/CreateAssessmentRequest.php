@@ -80,7 +80,7 @@ class CreateAssessmentRequest extends FormRequest
                     ['quarter_id', Quarter::getActiveQuarter()->id],
                 ]);
 
-                if ($assessments->count() >= $assessmentType->max_count) {
+                if ($assessments->count() >= $assessmentType->max_assessments) {
                     return $validator->errors()->add('assessment_type_id', $assessmentType->name.' has reached its maximum count for this quarter.');
                 }
             }

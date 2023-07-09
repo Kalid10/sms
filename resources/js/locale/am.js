@@ -54,10 +54,7 @@ const am = {
         "sections": "ክፍሎች",
         "todayAbsentees": "ዛሬ የቀሩ ተማሪዎች",
         "latestPeriodAbsentees": "የቅርብ ጊዜ ክፍለ ጊዜ የቀሩ ተማሪዎች",
-        "name": "ስም",
-        "email": "ኢሜል",
-        "gender": "ፆታ",
-        "grade": "ደረጃ",
+
     },
     "adminTeacherIndex": {
         "searchTeacherByName": "መምህርን በስም ይፈልጉ",
@@ -156,6 +153,7 @@ const am = {
 
     },
     "assessmentIndex": {
+        "addType":"ዓይነት ያክሉ",
         "name": "ስም",
         "percentage": "መቶኛ",
         "updateLevelCategories": "የክፍል ምድቦችን ያሻሽሉ",
@@ -334,18 +332,23 @@ const am = {
         "months": ["ጃንዩወሪ", "ፌብሩወሪ", "ማርች", "ኤፕሪል", "ሜይ", "ጁን", "ጁላይ", "ኦገስት", "ሴፕቴምበር", "ኦክቶበር", "ኖቬምበር", "ዲሴምበር"]
     },
     "common": {
+        "for":"ለ",
+        "add":"አክል",
+        "absentees":"ያልተገኙ(ቀሪ)",
+        "all": "ሁሉም",
         "password":"የይለፍ ቃል",
         "home": "መነሻ",
         "classes":"ክፍሎች",
         "homeroomClasses":"ሆም ሩም ክፍሎች",
         "flags":"ማስጠንቀቂያዎች",
         "sections": "ክፍሎች",
+        "section": "ክፍል",
         "question": "ጥያቄ",
         "studentNotes": "የተማሪ ማስታወሻዎች",
         "days": ["እሁድ", "ሰኞ", "ማክ", "ረቡዕ", "ሐሙስ", "አርብ", "ቅዳሜ"],
         "months": ["ጃንዩወሪ", "ፌብሩወሪ", "ማርች", "ኤፕሪል", "ሜይ", "ጁን", "ጁላይ", "ኦገስት", "ሴፕቴምበር", "ኦክቶበር", "ኖቬምበር", "ዲሴምበር"],
         "pts": "ነጥቦች",
-        "noFeedbacks": "ምንም ግብረመልሶች የሉም",
+        "noFeedbacks": "ምንም አስተያየቶች የሉም",
         "grade": "ደረጃ",
         "grades": "ደረጃዎች",
         "admins": "አስተዳዳሪዎች",
@@ -507,7 +510,7 @@ const am = {
         "alertMessage": "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?"
     },
     "feedbacks": {
-        "noFeedbacks": "ምንም ግብረመልሶች የሉም"
+        "noFeedbacks": "ምንም አስተያየቶች የሉም"
     },
     "fileInput": {
         "uploadText": "<span class='font-bold'>ፋይሉን ለመጫን ይንኩት</span> ውይም ወስደው እዚህ ያስቀምጡት",
@@ -612,7 +615,7 @@ const am = {
         "noSchoolDay":"የትምህርት ቀን የለም",
         "halfDayClosed":"ግማሽ ቀን ተዘግቷል",
         "schoolDay": "የትምህርት ቀን"
-    
+
     },
 
     "guardianInformation": {
@@ -702,14 +705,6 @@ const am = {
         "noPreviousLessonPlans": "ምንም የቀደሙ የትምህርት እቅዶች የሉም",
         "noPreviousLessonPlansMessage": "ለዚህ ክፍለ ጊዜ የቀደሙት የትምህርት እቅዶች አልተጨመሩም። እነሱን ለማየት የትምህርት ዕቅዶችዎን እንደሞሉ ያረጋግጡ።",
         "period": "ክፍለ ጊዜ"
-    },
-    "lessonPlanCopilot": {
-        "rigelCopilot": "የሪጌል ኮ-ፒሎት",
-        "introText": "እኔ የሪጌል ኮ-ፒሎት ነኝ። ትምህርት ዕቅድዎን ሲፈጥሩ እገዛለሁ።",
-        "notes": "ማስታወሻዎች",
-        "potentialQuestions": "የሚጠበቁ ጥያቄዎች",
-        "copyToLessonPlan": "ወደ ትምህርት ዕቅድ መቅዳት",
-        "searchGoogle": "በGoogle ፍለጋ"
     },
     "lessonPlanIndex": {
         "updated": "አሻሻየ",
@@ -1422,7 +1417,7 @@ const am = {
     "userProfile": {
         "hello": "ሰላም",
         "description": "እንኳን ወደ የመገለጫ ገጽዎ በደህና መጡ፣ የግል መረጃዎን እና የደህንነት ቅንብሮችዎን ማየት እና ማዘመን ይችላሉ። ከእኛ ጋር በጉዞዎ ይደሰቱ!",
-        "headingOne": "ፕሮፋይል",
+        "profile": "ፕሮፋይል",
         "headingTwo": "የግል መረጃዎን ያዘምኑ እና መገለጫዎ እርስዎ ማን እንደሆኑ በትክክል እንደሚያንጸባርቅ ያረጋግጡ።",
         "usernameLabel": "የተጠቃሚ ስም",
         "phoneNumberLabel": "ስልክ ቁጥር",
@@ -1437,7 +1432,8 @@ const am = {
         "passwordConfirmationPlaceholder": "አዲስ ይለፍ ቃልዎን ያረጋግጡ",
         "male": "ወንድ",
         "female": "ሴት",
-        "updateProfile":"ፕሮፋይል አዘምን"
+        "updateProfile":"ፕሮፋይል አዘምን",
+        "updatePassword":"የይለፍ ቃል አዘምን"
 
     },
 
@@ -1549,7 +1545,8 @@ const am = {
     "adminIndex":{
        "recentFlags":"የቅርብ ጊዜ ጥቆማዎች",
         "searchStudent":"ተማሪ ፈልግ",
-        "registerReview":"መመዝገብ, መገምገም, መርምር እና ተጨማሪ"
+        "registerReview":"መመዝገብ, መገምገም, መርምር እና ተጨማሪ",
+        "noStudentsFound":"ምንም ተማሪዎች አልተገኙም።"
     },
     "attendanceCard":{
         "YourAttendance":"በዚህ ሩብ ዓመት የእርስዎ ተሳትፎ"
@@ -1588,7 +1585,71 @@ const am = {
         "exploreCreativeIdeas":"የፈጠራ ሀሳቦችን ያስሱ",
         "theAIChat":"የ AI ቻት አዳዲስ የማስተማር ዘዴዎችን ለማንሳት ጥሩ መሳሪያ ሊሆን ይችላል...",
         "RememberWhile":"ያስታውሱ፣ AI ቻት ኃይለኛ መሳሪያ ቢሆንም፣ የሰው ልጅ መስተጋብርን የሚተካ ሳይሆን..."
+    },
+    "studentNotesPreview":{
+        "notesAbout":"ማስታወሻዎች ስለ",
+        "viewAll": "ሁሉንም ይመልከቱ",
+    },
+    "lessonPlanCard":{
+        "addLessonPlan":"የትምህርት እቅድ ያክሉ",
+        "lessonPlanHas":"ለዚህ ክፍለ ጊዜ የትምህርት እቅድ አልታከለም። ክፍለ-ጊዜው ከመጀመሩ በፊት አዲስ ክፍለ ጊዜ ጨምር።",
+    },
 
+    "lessonPlanCopilot":{
+        "rigelCopilot":"ሪግል ኮፓይሎት(AI)",
+        "intro":"እኔ የርስዎ ሪግል ኮፓይሎት ነኝ፣ የAI ረዳትዎ፣ እዚህ የትምህርት ማቀድ እና የማብራሪያ ፍላጎቶችዎን ለማቃለል።",
+        "generateQuestions":"ጥያቄዎች አመንጭ?",
+        "orDoYouWant":"ወይስ ቻት ማድረግ ይፈልጋሉ?",
+        "needAssistanceWith":"በማንኛውም ነገር እርዳታ ይፈልጋሉ? ሪግል AI ውይይት ለማገዝ እዚህ አለ!",
+        "needHandWith":"ጥያቄዎችን ከመፍጠር እስከ ሕያው ውይይቶች ወይም የትምህርት ዕቅዶችን ከመረዳት ጀምሮ ማንኛውንም ነገር ማግኘት ይፈልጋሉ? Rigel Copilot (AI) ለመርዳት ዝግጁ ነው! ግልጽ ማብራሪያዎችን ለማግኘት የብልጭታ አዶውን(icon) ብቻ መታ ያድርጉ፣ ወይም ለተወሰኑ እርምጃዎች ከላይ ያሉትን ቁልፎች ጠቅ ያድርጉ። አብረን መማር አስደሳች ጉዞ እናድርግ!",
+        "lessonPlanExplained":"የትምህርት ዕቅድ ተብራርቷል - ኮ-ፒሎት (አይ.አይ.)ሪጌል ኮፓይሎት(AI)",
+        "potentialQuestions":"የሚሆኑ ጥያቄዎች",
+        "copyToLessonPlan":"ወደ የትምህርት ዕቅድ ቅዳ",
+        "searchGoogle":"በ ጎግል ፈልግ",
+    },
+
+    "lessonPlanFormModal":{
+        "showAISection":"የAI ክፍል ያሳዩ",
+        "newLessonPlan":"አዲስ የትምህርት ዕቅድ",
+        "addTheTopic":"ለክፍሉ የትምህርት ዕቅድ ርዕስ እና መግለጫ ያክሉ",
+        "topicOfLessonPlan":"የትምህርት ዕቅዱ ርዕስ",
+        "topic":"ርዕስ",
+        "addLessonPlanDescription":"የትምህርት ዕቅድ መግለጫዎን ይጨምሩ",
+        "edit":"አርትዖት",
+        "previousLessonPlans":"የቀድሞ የትምህርት ዕቅዶች",
+        "otherLessonPlans":"ከዚህ በፊት ለክፍል ስብሰባዎች ሌሎች የትምህርት ዕቅዶች",
+        "noPreviousLessonPlans":" የቀድሞ የትምህርት ዕቅዶች የሉም",
+        "lessonPlansNotAdded":"ለዚህ ክፍለ ጊዜ የቀደሙት የትምህርት እቅዶች አልተጨመሩም። እነሱን ለማየት የትምህርት ዕቅዶችዎን እንደሞሉ ያረጋግጡ።"
+    },
+
+    "lessonPlanWeekCardNew":{
+        "week":"ሳመንት",
+        "classSessionsWeekStarting":"የሳምንቱ ክፍሎች ሚጀምሩት",
+        "andEndingOn":"እና የሚያልቁት በ",
+        "noClassSessions":" ምንም የክፍል ክፍለ ጊዜ የለም ለሳምንት "
+    },
+    "lessonPlanQuestionPreparation":{
+        "lessonPlanQuestionGenerator":"የትምህርት ዕቅድ ጥያቄ ማመንጫ",
+        "somethingWentWrong":"አንድ ነገር ስህተት ሆነ! እባክዎን ከጊዜ በኋላ እንደገና ይሞክሩ።",
+        "selectQuestionType":"የጥያቄ አይነት ይምረጡ",
+        "numberOfQuestions":"ጥያቄዎች ቁጥር?",
+        "howManyQuestions":"ስንት ጥያቄዎች?",
+        "setDifficultyLevel":"የጥያቄዎች ክብደት ደረጃ ያስቀምጡ",
+        "useThisSlider":"ለተፈጠሩት ጥያቄዎች የችግር ደረጃን ለማዘጋጀት ይህንን ተንሸራታች ይጠቀሙ። ተንሸራታቹን ወደ ግራ ማንቀሳቀስ ጥያቄዎችን ቀላል ያደርገዋል, ወደ ቀኝ ማንቀሳቀስ ደግሞ የበለጠ ፈታኝ ያደርጋቸዋል.",
+    },
+    "adminSummary":{
+        "chatValue":"5 ያልተነበቡ መልእክቶች",
+        "studentValue":"መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ",
+        "teacherValue": "መዝገብ፣ ማረጋገጥ፣ መርምር እና ተጨማሪ",
+        "adminValue":"መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ።"
+    },
+
+    "absenteeAddModal":{
+        "addStaffAbsentee":"የሰራተኛ መቅረትን ይጨምሩ",
+        "yourAreAbout":"<span class='px-2 font-bold'> { type } { label}</span>ን እንደ ቀሪ ሊያክሉ ነው::",
+        "enterReason": "ምክንያት ያስገቡ",
+        "searchAddAbsentee": "ሰራተኛን በመለያ ይፈልጉ አን ቀሪ ላይ ይጨምሩ",
+        "searchStaffMember": "በስም የሰራተኛ መለያ ይፈልጉ"
     }
 
 

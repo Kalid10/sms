@@ -115,11 +115,6 @@
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
                              <span v-html="$t('adminStudentsTable.yourSearchQuery',{searchKey})"> </span>
-<!--                            Your search query '<span-->
-<!--                                class="font-medium text-black"-->
-<!--                                >{{ searchKey }}</span-->
-<!--                            >" did not match-->
-<!--                            <span class="block">any student's name</span>-->
                         </p>
                     </div>
                 </div>
@@ -145,6 +140,7 @@
                 v-model="transferForm.destination_batch_id"
                 :options="transferOptions"
                 :label="$t('studentsIndex.selectDestinationSection')"
+                name="sections"
             />
         </FormElement>
     </Modal>
@@ -155,7 +151,10 @@
                 <Title :title="$t('adminStudentsTable.todayAbsentees')" />
             </div>
 
-            <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
+            <div
+                v-if="todayAbsentees.length > 0"
+                class="mx-auto mt-10 flex w-full flex-col space-y-4"
+            >
                 <div
                     v-for="(absentee, index) in todayAbsentees"
                     :key="index"
@@ -173,17 +172,20 @@
                     </div>
                 </div>
             </div>
+            <EmptyView v-else title="No absentees today" />
         </div>
     </Modal>
 
     <Modal v-model:view="showLatestPeriodAbsentees">
         <div class="lex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
             <div>
-
                 <Title :title="$t('adminStudentsTable.latestPeriodAbsentees')" />
             </div>
 
-            <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
+            <div
+                v-if="latestPeriodAbsentees.length > 0"
+                class="mx-auto mt-10 flex w-full flex-col space-y-4"
+            >
                 <div
                     v-for="(absentee, index) in latestPeriodAbsentees"
                     :key="index"
@@ -200,6 +202,7 @@
                     </div>
                 </div>
             </div>
+            <EmptyView v-else title="No absentees in the latest period" />
         </div>
     </Modal>
 </template>
@@ -219,6 +222,7 @@ import RadioGroupPanel from "@/Components/RadioGroupPanel.vue";
 import Pagination from "@/Components/Pagination.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
+import EmptyView from "@/Views/EmptyView.vue";
 import {useI18n} from "vue-i18n";
 const {t} = useI18n()
 const props = defineProps({
@@ -338,25 +342,25 @@ watch([searchKey, perPage], () => {
 
 const config = [
     {
-        name: t('adminStudentsTable.name'),
+        name: t('common.name'),
         key: "name",
         link: "/admin/teachers/students/{id}",
         align: "left",
         type: "custom",
     },
     {
-        name:  t('adminStudentsTable.email'),
+        name:  t('common.email'),
         key: "email",
         type: "custom",
     },
     {
-        name: t('adminStudentsTable.gender'),
+        name: t('common.gender'),
         key: "gender",
         type: "enum",
         options: ["female", "male"],
     },
     {
-        name: t('adminStudentsTable.grade'),
+        name: t('common.grade'),
         key: "grade",
         type: "custom",
         align: "right",

@@ -36,10 +36,12 @@ import {
 } from "@heroicons/vue/20/solid/index.js";
 import { usePage } from "@inertiajs/vue3";
 import {
+    AcademicCapIcon,
     BookOpenIcon,
     CalendarDaysIcon,
     FingerPrintIcon,
     HomeIcon,
+    MegaphoneIcon,
     NewspaperIcon,
     UserGroupIcon,
     UsersIcon,
@@ -85,7 +87,7 @@ const sidebarItems = computed(() => [
     },
     {
         name:  t('common.grades'),
-        icon: UsersIcon,
+        icon: AcademicCapIcon,
         route: "/admin/levels",
         active: directory.value === "levels",
     },
@@ -97,7 +99,7 @@ const sidebarItems = computed(() => [
     },
     {
         name:  t('common.announcements'),
-        icon: ChatBubbleBottomCenterIcon,
+        icon: MegaphoneIcon,
         route: "/admin/announcements",
         active: directory.value === "announcements",
     },
@@ -108,7 +110,7 @@ const sidebarItems = computed(() => [
         active: directory.value === "schedules",
     },
     {
-        name: "Assessments",
+        name: t('common.assessments'),
         icon: NewspaperIcon,
         route: "/admin/assessments",
         active: directory.value === "assessments",
@@ -120,7 +122,7 @@ const sidebarItems = computed(() => [
         active: directory.value === "users",
     },
     {
-        name: "Absentees",
+        name: t('common.absentees'),
         icon: FingerPrintIcon,
         route: "/admin/absentees",
         active: directory.value === "absentees",

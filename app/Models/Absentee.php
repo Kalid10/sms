@@ -14,6 +14,7 @@ class Absentee extends Model
         'batch_session_id',
         'user_id',
         'reason',
+        'next_class_attended_flag',
     ];
 
     public function batchSession(): BelongsTo

@@ -11,6 +11,13 @@
                     class="w-full lg:max-w-lg"
                     :placeholder="$t('staffAbsenteesTable.searchStaff')"
                 />
+                <SelectInput
+                    v-model="selectedUserType"
+                    class="h-fit w-2/12 rounded-2xl !text-sm"
+                    :options="userTypeOptions"
+                    placeholder="Filter by user type"
+                />
+
                 <PrimaryButton @click="showModal = true">
                     <span class="flex gap-2">
                         <PlusIcon class="h-4 w-4 stroke-white stroke-2" />
@@ -43,14 +50,52 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
 import AbsenteeAddModal from "@/Views/Admin/Absentees/AbsenteeAddModal.vue";
+import SelectInput from "@/Components/SelectInput.vue";
 import { useI18n } from "vue-i18n";
 const {t} = useI18n()
 const showModal = ref(false);
+const selectedUserType = ref(usePage().props.filters.user_type);
+const staffAbsenteesOfTheDay = computed(
+    () => usePage().props.staff_absentees_of_the_day
+);
 
-const staffAbsentees = computed(() => usePage().props.staff_absentees);
+const userTypes = computed(() => usePage().props.user_types);
+
+const userTypeOptions = computed(() => {
+    return [
+        {
+            label: "All",
+            value: "all",
+        },
+        {
+            label: "Admin",
+            value: "admin",
+        },
+        {
+            label: "Teacher",
+            value: "teacher",
+        },
+    ];
+});
+
+watch(selectedUserType, () => {
+    if (selectedUserType.value) {
+        router.get(
+            "/admin/absentees",
+            {
+                type: selectedUserType.value,
+            },
+            {
+                only: ["staff_absentees_of_the_day"],
+                preserveState: true,
+                replace: true,
+            }
+        );
+    }
+});
 
 const filteredStaffAbsentees = computed(() => {
-    return staffAbsentees.value.data.map((staffAbsentee) => {
+    return staffAbsenteesOfTheDay.value.data.map((staffAbsentee) => {
         return {
             name: staffAbsentee.user.name,
             email: staffAbsentee.user.email,
@@ -93,7 +138,7 @@ const find = debounce(() => {
             find: query.value,
         },
         {
-            only: ["staff_absentees"],
+            only: ["staff_absentees_of_the_day"],
             preserveState: true,
             replace: true,
         }

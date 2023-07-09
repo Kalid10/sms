@@ -4,10 +4,10 @@
             v-if="!!students.data"
             :title="
                 (selectedSection &&
-                    `Section ${selectedSection} Students List`) ||
+                    ` ${$t('common.section')} ${selectedSection} ${$t('levelStudent.studentsList')}`) ||
                 'Students List'
             "
-            :subtitle="`Students enrolled in ${parseLevel(level.name)} for ${
+            :subtitle="`${$t('levelStudent.studentsEnrolledIn')}'${parseLevel(level.name)} ${$t('common.for')} ${
                 schoolYear.name
             }`"
             class="w-fit"
@@ -116,7 +116,8 @@ import {
 import moment from "moment";
 import TextInput from "@/Components/TextInput.vue";
 import Pagination from "@/Components/Pagination.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const props = {
     pagination: {
         type: Object,
@@ -204,12 +205,12 @@ const studentsConfig = [
         options: ["male", "female"],
     },
     {
-        name: "Age",
+        name: t('common.age'),
         key: "date_of_birth",
         type: "custom",
     },
     {
-        name: "Last updated",
+        name: t('common.lastUpdated'),
         key: "updated_at",
         class: "text-gray-500 text-xs",
         align: "right",

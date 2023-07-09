@@ -1,15 +1,15 @@
 <template>
-    <div class="flex flex-col gap-3">
-        <div class="flex w-full flex-col">
-            <div class="flex items-center gap-1.5">
-                <div
-                    :class="subjectPriorityLabels[subject['priority'] - 1]"
-                    class="h-2.5 w-2.5 rounded-full"
-                />
-                <h3 class="font-semibold">{{ subject["full_name"] }}</h3>
-            </div>
+    <div class="my-5 flex w-10/12 flex-col space-y-5">
+        <div class="flex items-center justify-center gap-2">
+            <div
+                :class="subjectPriorityLabels[subject['priority'] - 1]"
+                class="h-7 w-0.5"
+            />
+            <h3 class="text-xl font-semibold lg:text-4xl">
+                {{ subject["full_name"] }}
+            </h3>
             <div class="flex flex-col items-baseline gap-1">
-                <h3 class="text-sm text-gray-500">{{ subject["category"] }}</h3>
+                <h3 class="text-md text-gray-500">{{ subject["category"] }}</h3>
                 <h3 class="text-xs text-gray-500">
                     {{
                         subject["tags"]
@@ -19,33 +19,33 @@
                 </h3>
             </div>
         </div>
-    </div>
-<p>{{activeTab}}</p>
-    <TabElement v-model:active="activeTab" :tabs="subjectTabs">
-        <template #[teachersTab]>
-            <SubjectTeachers />
-        </template>
 
-        <template #[gradesTab]>
-            <SubjectGrades />
-        </template>
-    </TabElement>
+        <TabElement v-model:active="activeTab" :tabs="subjectTabs">
+            <template #[gradesTab]>
+                <SubjectGrades />
+            </template>
+
+            <template #[teachersTab]>
+                <SubjectTeachers />
+            </template>
+        </TabElement>
+    </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TabElement from "@/Components/TabElement.vue";
-import { subjectPriorityLabels, toHashTag } from "@/utils.js";
 import SubjectTeachers from "@/Views/Admin/Subjects/SubjectTeachers.vue";
 import SubjectGrades from "@/Views/Admin/Subjects/SubjectGrades.vue";
+import { subjectPriorityLabels, toHashTag } from "@/utils";
 import {useI18n} from "vue-i18n";
 const {t} = useI18n()
 const subject = computed(() => usePage().props.subject);
 
-const subjectTabs = [t('common.grades'), t('common.teachers')];
 const teachersTab = t('common.teachers')
 const gradesTab = t('common.grades')
+const subjectTabs = [gradesTab, teachersTab];
 const activeTab = ref(gradesTab);
 
 </script>

@@ -11,6 +11,8 @@ use App\Models\Level;
 use App\Models\LevelCategory;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
+use App\Models\StaffAbsentee;
+use App\Models\Student;
 use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
@@ -42,6 +44,16 @@ class AdminController extends Controller
         // Get absentee records of active batch students
         $absenteeRecords = Absentee::with('user.student.batches.activeBatch')->count();
 
+        // Get staff absentee records of teachers
+        $teacherAbsenteeRecords = StaffAbsentee::with('user')->whereHas('user', function ($query) {
+            $query->where('type', 'teacher');
+        })->count();
+
+        // Get staff absentee records of admin
+        $adminAbsenteeRecords = StaffAbsentee::with('user')->whereHas('user', function ($query) {
+            $query->where('type', 'admin');
+        })->count();
+
         // Get admins of active batch
         $admins = User::with('roles')->where('type', 'admin')->get();
 
@@ -52,12 +64,13 @@ class AdminController extends Controller
                 return $query->where('title', 'like', "%{$searchKey}%");
             })->orderBy('updated_at', 'DESC')->get()->take(5);
 
-        $schoolScheduleDate = $request->input('school_schedule_date') ?? now()->addDays(4);
+        $scheduleStartDate = $request->input('start_date') ?? Carbon::today();
+        $schoolScheduleEndDate = $request->input('end_date') ?? now()->addDays(4);
         $schoolSchedule = SchoolSchedule::where('school_year_id', $schoolYear?->id)
-            ->whereDate('start_date', '<=', Carbon::parse($schoolScheduleDate))
-            ->whereDate('end_date', '>=', Carbon::parse($schoolScheduleDate))
+            ->whereDate('start_date', '>=', Carbon::parse($scheduleStartDate))
+            ->whereDate('end_date', '<=', Carbon::parse($schoolScheduleEndDate))
             ->orderBy('start_date', 'asc')
-            ->take(3)
+            ->take(4)
             ->get();
 
         $flags = Flag::with('flaggedBy', 'flaggable.user.admin', 'batchSubject.subject')->latest('updated_at')->paginate(7);
@@ -74,15 +87,21 @@ class AdminController extends Controller
             'school_year' => $schoolYear,
             'announcements' => $announcements,
             'school_schedule' => $schoolSchedule,
-            //            'students' => StudentService::getAllStudents($request),
-            'students' => Inertia::lazy(fn () => User::with('student.currentBatch')->where('type', 'student')
+            'students' => Inertia::lazy(fn () => Student::with([
+                'user:id,name,email,phone_number,gender',
+                'currentBatch',
+            ])->select('id', 'user_id')
                 ->when($searchKey, function ($query) use ($searchKey) {
-                    return $query->where('name', 'like', "%{$searchKey}%");
+                    return $query->whereHas('user', function ($query) use ($searchKey) {
+                        return $query->where('name', 'like', "%{$searchKey}%");
+                    });
                 })
-                ->orderBy('name', 'asc')
-                ->get()
+                ->orderBy('user_id', 'asc')->get()
+                ->take(5)
             ),
             'flags' => $flags,
+            'teacher_absentee_records' => $teacherAbsenteeRecords,
+            'admin_absentee_records' => $adminAbsenteeRecords,
         ]);
     }
 

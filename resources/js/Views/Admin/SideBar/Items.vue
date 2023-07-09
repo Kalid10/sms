@@ -1,12 +1,13 @@
 <template>
     <div
-        class="mt-1 flex w-full flex-col justify-evenly lg:mt-7 lg:space-y-1 2xl:mt-10"
+        class="mt-1 flex w-full flex-col justify-evenly lg:mt-7 2xl:mt-10"
+        :class="isOpen ? 'lg:space-y-1 ' : 'space-y-3'"
     >
         <Link
             v-for="(item, index) in items"
             :key="index"
             :href="`${item.route}`"
-            class="flex h-14 w-full items-center justify-between lg:h-16 2xl:h-16"
+            class="flex h-12 w-full items-center justify-between lg:h-12 2xl:h-12"
             :class="[
                 item.active
                     ? 'rounded-lg bg-zinc-700 font-medium'
@@ -18,15 +19,15 @@
                 class="flex h-full w-full cursor-pointer items-center justify-center hover:bg-zinc-700 hover:transition-all hover:duration-300 hover:ease-out"
             >
                 <div
-                    class="relative flex w-10/12 items-center text-center hover:cursor-pointer lg:w-2/3"
+                    class="relative flex h-20 w-10/12 items-center text-center hover:cursor-pointer lg:w-2/3"
                 >
                     <div
                         class="relative flex w-full items-center"
-                        :class="isOpen ? 'justify-between' : 'justify-center'"
+                        :class="isOpen ? 'justify-between' : ' justify-center'"
                     >
-                        <component :is="item.icon" class="h-4 lg:h-6" />
+                        <component :is="item.icon" class="h-4 lg:h-5" />
                         <div
-                            class="absolute inset-x-2 whitespace-nowrap text-xs lg:text-sm 2xl:text-base"
+                            class="absolute inset-x-2 whitespace-nowrap text-xs lg:text-sm 2xl:text-sm"
                             :class="{
                                 hidden: !isOpen,
                                 'lg:inline': isOpen,

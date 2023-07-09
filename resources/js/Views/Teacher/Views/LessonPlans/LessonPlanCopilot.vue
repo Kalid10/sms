@@ -9,10 +9,9 @@
         />
         <div class="flex justify-between">
             <div>
-                <div class="mb-1 text-2xl font-bold">Rigel Copilot (AI)</div>
+                <div class="mb-1 text-2xl font-bold">{{ $t('lessonPlanCopilot.rigelCopilot')}} </div>
                 <div class="w-full text-sm text-gray-700">
-                    I am your Rigel Co-Pilot, a dedicated AI assistant, here to
-                    simplify your lesson planning and elaboration needs.
+                    {{ $t('lessonPlanCopilot.intro')}}
                 </div>
             </div>
 
@@ -27,14 +26,14 @@
                 class="mt-3 w-fit cursor-pointer rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:scale-105 hover:font-medium"
                 @click="showQuestionSection = true"
             >
-                Generate Questions ?
+                {{ $t('lessonPlanCopilot.generateQuestions')}}
             </div>
 
             <div
                 class="mt-3 w-fit cursor-pointer rounded-2xl bg-yellow-400 px-3 py-1.5 text-xs hover:scale-105 hover:font-medium"
                 @click="showChatSection = true"
             >
-                Or Do You Want To Chat ?
+                {{ $t('lessonPlanCopilot.orDoYouWant')}}
             </div>
         </div>
 
@@ -49,7 +48,7 @@
             class="flex w-full flex-col items-center justify-center space-y-5 pt-5"
         >
             <div class="w-fit px-3 py-1">
-                Need assistance with anything? Rigel AI chat is here to help!
+                {{ $t('lessonPlanCopilot.needAssistanceWith')}}
             </div>
             <Chat :show-getting-started="false" />
         </div>
@@ -63,11 +62,7 @@
             class="flex h-full w-full items-center justify-center px-5 text-center"
         >
             <div class="space-x- flex w-9/12 font-light leading-7">
-                Need a hand with anything from creating questions to lively
-                chats, or understanding lesson plans? Rigel Copilot(AI) is ready
-                to assist! Just tap on the sparkle icon for clear explanations,
-                or click on the buttons above for specific actions. Let's make
-                learning a fun journey together!
+                {{ $t('lessonPlanCopilot.needHandWith')}}
             </div>
         </div>
 
@@ -77,7 +72,7 @@
             class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 text-sm text-black shadow-sm"
         >
             <div class="text-center text-xl font-semibold">
-                Lesson Plan Explained- Rigel Copilot (AI)
+                {{ $t('lessonPlanCopilot.lessonPlanExplained')}}
             </div>
             <div
                 class="px-4"
@@ -100,7 +95,7 @@
         </div>
 
         <div v-if="questionSuggestions" class="flex flex-col space-y-1 p-3">
-            <div class="pb-3 text-zinc-800">Potential Questions</div>
+            <div class="pb-3 text-zinc-800">{{ $t('lessonPlanCopilot.potentialQuestions')}}</div>
             <div class="flex flex-col space-y-2">
                 <div
                     v-for="(item, index) in questionSuggestions"
@@ -134,7 +129,7 @@
                         class="!py-0.5 !px-0 text-xs font-medium"
                         @click="addToDescription"
                     >
-                        Copy To Lesson Plan
+                        {{ $t('lessonPlanCopilot.copyToLessonPlan')}}
                     </div>
                 </div>
                 <div
@@ -151,7 +146,7 @@
                             )
                         "
                     >
-                        Search Google
+                        {{ $t('lessonPlanCopilot.searchGoogle')}}
                     </div>
                 </div>
             </div>

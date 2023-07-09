@@ -7,7 +7,7 @@
                     v-model="form.name"
                     :error="form.errors.name"
                     class="w-full"
-                    label="Name"
+                    :label="$t('common.name')"
                     :placeholder="$t('assessmentIndex.name')"
                     required
                 />
@@ -100,7 +100,7 @@
     <div
         class="flex flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
     >
-        <div class="px-3 text-2xl font-medium">Assessment Types</div>
+        <div class="px-3 text-2xl font-medium">{{ $t('assessmentIndex.assessmentType')}}</div>
 
         <TableElement
             :selectable="false"
@@ -127,7 +127,7 @@
                         class="w-3/12 !rounded-3xl p-2"
                         @click="openAddModal"
                     >
-                        Add Type
+                        {{ $t('assessmentIndex.addType')}}
                     </PrimaryButton>
                 </div>
             </template>
@@ -227,7 +227,7 @@ function openUpdateModal(row) {
 }
 
 const modalTitle = computed(() =>
-    isUpdate.value ? "Update Assessment Type" : "Add Assessment Type"
+    isUpdate.value ? t('assessmentIndex.updateAssessmentType') : t('assessmentIndex.addAssessmentType')
 );
 
 function submitForm() {

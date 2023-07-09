@@ -1,24 +1,29 @@
 <template>
     <div
-        class="flex h-screen w-full space-x-8"
+        class="flex h-screen w-full space-x-8 py-10"
         :class="showGettingStarted ? 'justify-between' : 'justify-center'"
     >
         <div
-            class="flex h-4/6 max-h-screen flex-col rounded-lg border border-black bg-white p-4"
+            class="flex h-5/6 max-h-screen flex-col items-center space-y-2 rounded-lg border border-black bg-white p-4"
             :class="showGettingStarted ? 'w-8/12' : 'w-11/12'"
         >
             <div
                 ref="chatContainer"
-                class="scrollbar-hide flex grow flex-col space-y-4 overflow-y-auto rounded-lg bg-gray-50 p-4 shadow"
+                class="scrollbar-hide flex w-full grow flex-col space-y-4 overflow-y-auto rounded-lg bg-gray-50 p-4 shadow"
             >
                 <div
                     v-for="(message, index) in messages"
                     :key="index"
-                    class="group cursor-pointer rounded-lg hover:bg-zinc-100 hover:p-4"
+                    class="group flex w-full cursor-pointer rounded-lg"
+                    :class="
+                        message.role !== 'assistant'
+                            ? 'justify-end'
+                            : 'justify-start'
+                    "
                 >
                     <div
                         v-if="message.content"
-                        class="flex w-full justify-evenly space-x-2 p-1"
+                        class="flex w-fit max-w-3xl space-x-2 p-1"
                     >
                         <div
                             :class="
@@ -38,12 +43,16 @@
                                 >|</span
                             >
                         </div>
-                        <div class="hidden justify-end p-1 group-hover:flex">
-                            <ClipboardDocumentIcon
-                                class="w-5 cursor-pointer text-zinc-700"
-                                @click="copyToClipboard(message.content)"
-                            />
-                        </div>
+                    </div>
+
+                    <div
+                        v-if="message.role === 'assistant'"
+                        class="hidden px-1 group-hover:flex"
+                    >
+                        <ClipboardDocumentIcon
+                            class="w-3 cursor-pointer text-zinc-700"
+                            @click="copyToClipboard(message.content)"
+                        />
                     </div>
                 </div>
 
@@ -52,6 +61,25 @@
                 </div>
             </div>
 
+            <SecondaryButton
+                v-if="messages.length > 0 && !isLoading"
+                :title="
+                    isChatUpdating
+                        ? 'Stop Generating'
+                        : 'Regenerate Last Message'
+                "
+                class="w-fit !rounded-2xl !text-xs font-semibold"
+                :class="
+                    isChatUpdating
+                        ? 'bg-red-600 text-white'
+                        : 'bg-violet-100 text-zinc-700'
+                "
+                @click="
+                    regenerateResponseAndStopStreaming(
+                        isChatUpdating ? 'stop' : 'regenerate'
+                    )
+                "
+            />
             <div
                 class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-gray-50/70 p-4 shadow-sm"
             >
@@ -141,6 +169,7 @@ import { copyToClipboard } from "@/utils";
 import Loading from "@/Components/Loading.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { usePage } from "@inertiajs/vue3";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 defineProps({
     showGettingStarted: {
@@ -238,6 +267,33 @@ const startStreaming = () => {
         },
         false
     );
+};
+
+const stopStreaming = () => {
+    if (eventSource) {
+        eventSource.close();
+        isChatUpdating.value = false;
+        isLoading.value = false;
+    }
+};
+
+const regenerateResponse = () => {
+    // Set last message from messages with role user to inputMessage
+    const lastMessageFromUser = messages.value
+        .slice()
+        .reverse()
+        .find((message) => message.role === "user");
+    inputMessage.value = lastMessageFromUser.content;
+    sendMessage();
+};
+
+//Merge the regenerateResponse function with the stopStreaming function
+const regenerateResponseAndStopStreaming = (param) => {
+    if (param === "regenerate") {
+        regenerateResponse();
+    } else if (param === "stop") {
+        stopStreaming();
+    }
 };
 </script>
 <style scoped></style>

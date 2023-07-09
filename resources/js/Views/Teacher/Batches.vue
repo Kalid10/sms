@@ -30,7 +30,9 @@
                             @click="fetchStudent"
                         />
                     </div>
-                    <div class="flex h-full w-5/12 flex-col space-y-6">
+                    <div
+                        class="flex h-full w-5/12 flex-col justify-center space-y-8"
+                    >
                         <SummaryItem
                             class-style="bg-orange-100 text-black"
                             icon-style="bg-orange-500/20 text-white"
@@ -83,18 +85,6 @@
                                       teacher.id
                             "
                         />
-
-                        <div
-                            v-if="assessments?.length"
-                            class="mt-5 w-full rounded-lg bg-white pt-2 shadow-sm"
-                        >
-                            <Assessment
-                                class=""
-                                :title="$t('batches.recentAssessments')"
-                                :assessments="assessments"
-                                view="class"
-                            />
-                        </div>
                     </div>
                 </div>
             </div>
@@ -107,9 +97,9 @@
                 <CurrentClass view="absentee" />
 
                 <div
-                    class="flex h-full w-full flex-col items-center space-y-6 px-3 py-5"
+                    class="flex h-full w-full flex-col items-center space-y-10 px-3 py-5"
                 >
-                    <div class="w-full">
+                    <div class="w-full rounded-lg bg-white py-2 shadow-sm">
                         <StudentsList
                             progress-type="up"
                             :title="$t('batches.topStudents')"
@@ -118,7 +108,7 @@
                         />
                     </div>
 
-                    <div class="w-full">
+                    <div class="w-full rounded-lg bg-white py-2 shadow-sm">
                         <StudentsList
                             progress-type="down"
                             :title="$t('batches.studentsFalling')"
@@ -152,7 +142,6 @@ import {
 import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import StudentsTable from "@/Views/Teacher/Views/StudentsTable.vue";
-import Assessment from "@/Views/Teacher/Views/Home/Assessments.vue";
 
 const teacher = usePage().props.teacher;
 const schedule = usePage().props.schedule;

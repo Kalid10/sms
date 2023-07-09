@@ -4,7 +4,11 @@
     >
         <Item
             :title="$t('batchPerformanceIndex.classAverage')"
-            :value="grade?.score ?? '-'"
+            :value="
+                grade?.score
+                    ? grade?.score?.toFixed(2) + '/' + grade?.total_score
+                    : '-'
+            "
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
@@ -36,7 +40,6 @@ import {
 } from "@heroicons/vue/24/outline";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import UpdateTextInput from "@/Components/TextInput.vue";
 
 const props = defineProps({
     grade: {

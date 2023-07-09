@@ -4,24 +4,24 @@
     >
         <!--        Header-->
         <div class="flex h-fit w-full items-center justify-between px-2">
+            <InformationCircleIcon
+                class="w-4 cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
+                @click="showInfoModal = true"
+            />
             <span
-                class="grow px-3 py-0.5 text-xl font-medium"
+                class="grow px-3 py-0.5 text-center text-xl font-medium"
                 :class="flags?.data?.length ? '' : ' '"
             >
                 <span v-if="view === 'student'">
                     {{ student.user.name }} {{ $t('flagIndex.flagList')}}
                 </span>
-                <span v-else> {{ title }} </span>
+                <span v-else class="text-center"> {{ title }} </span>
             </span>
-            <SecondaryButton
+
+            <SquaresPlusIcon
                 v-if="view === 'student' && !flags.data?.length"
-                class="h-fit !rounded-2xl bg-zinc-700 !px-4 !py-1 !text-xs text-white"
-                :title="$t('flagIndex.add')"
+                class="w-5 cursor-pointer text-black hover:scale-105"
                 @click="showAddModal = true"
-            />
-            <InformationCircleIcon
-                class="w-4 cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
-                @click="showInfoModal = true"
             />
         </div>
         <!--        List-->
@@ -39,7 +39,7 @@
             <div
                 v-for="(item, index) in flags.data"
                 :key="index"
-                class=" group flex w-full cursor-pointer items-center justify-evenly space-x-2 py-3 text-xs hover:rounded-lg hover:bg-zinc-800 hover:text-white"
+                class="group flex w-full cursor-pointer items-center justify-evenly space-x-2 py-3 text-xs hover:rounded-lg hover:bg-zinc-800 hover:text-white"
                 :class="index % 2 === 1 ? 'bg-gray-50' : ''"
                 @click="
                     showDetailModal = true;
@@ -98,7 +98,7 @@
                     />
                 </div>
                 <div
-                    v-if="item.flagged_by.id === auth.id"
+                    v-if="item?.flagged_by?.id === auth.id"
                     class="py-1 pl-3 hover:scale-110 hover:stroke-red-50 hover:px-1"
                 >
                     <TrashIcon
@@ -120,7 +120,7 @@
             </div>
             <Pagination :links="flags.links" class="pt-3" position="center" />
         </div>
-        <div v-else class="w-full">
+        <div v-else class="flex h-48 w-full items-center justify-center">
             <EmptyView :title="$t('flagIndex.noFlagsFound')"/>
         </div>
     </div>
@@ -152,13 +152,13 @@
 import {
     InformationCircleIcon,
     PencilIcon,
+    SquaresPlusIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import Modal from "@/Components/Modal.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import moment from "moment";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Pagination from "@/Components/Pagination.vue";
 import EmptyView from "@/Views/EmptyView.vue";
 import SelectedFlagDetail from "@/Views/Flag/SelectedFlagDetail.vue";
@@ -187,6 +187,10 @@ const props = defineProps({
     viewDate: {
         type: Boolean,
         default: true,
+    },
+    showAddFlagModal: {
+        type: Boolean,
+        default: false,
     },
 });
 const showInfoModal = ref(false);
@@ -237,6 +241,15 @@ const routeToStudent = (studentId) => {
 };
 
 const auth = usePage().props.auth.user;
+
+watch(
+    () => props.showAddFlagModal,
+    (newValue) => {
+        if (newValue) {
+            showAddModal.value = true;
+        }
+    }
+);
 </script>
 
 <style scoped></style>
