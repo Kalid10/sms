@@ -1,16 +1,16 @@
 <template>
     <div
-        class="flex flex-col items-center space-y-6 rounded-lg bg-gray-50/50 p-3"
+        class="flex flex-col items-center justify-between rounded-lg bg-white p-3 px-4 shadow-sm"
     >
-        <span class="w-full text-sm font-thin text-gray-800">
+        <span class="w-full text-xs font-thin">
             {{ moment().format("ddd MMM DD, YYYY") }}
         </span>
 
-        <span class="w-full text-3xl font-semibold">
+        <span class="w-full text-2xl font-semibold">
             {{ selectedAnnouncement?.title }}</span
         >
 
-        <span class="leading-7 text-gray-600"
+        <span class="text-sm leading-7 text-gray-500"
             >{{ selectedAnnouncement?.body }}
         </span>
         <span
