@@ -1,6 +1,6 @@
 <template>
     <div class="w-10/12 py-5">
-        <Title class="pb-8" title="Absentee" />
+        <Title class="pb-8" title="Absentees" />
 
         <TabElement v-model:active="activeTab" :tabs="tabs">
             <template #staff>

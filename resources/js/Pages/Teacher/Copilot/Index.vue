@@ -24,7 +24,7 @@ import { ref } from "vue";
 import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparation.vue";
 
 const tabs = ["Chat", "Questions"];
-const activeTab = ref("Questions");
+const activeTab = ref("Chat");
 </script>
 
 <style scoped></style>
