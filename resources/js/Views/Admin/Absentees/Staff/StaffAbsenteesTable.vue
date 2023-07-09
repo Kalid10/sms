@@ -20,6 +20,10 @@
                     placeholder="Filter by user type"
                 />
 
+                <DatePicker
+                    v-model="selectedDate"
+                    class="h-fit w-2/12 rounded-2xl !text-sm"
+                />
                 <PrimaryButton class="!rounded-2xl" @click="showModal = true">
                     <span class="flex space-x-1">
                         <SquaresPlusIcon class="w-3 stroke-white stroke-2" />
@@ -49,9 +53,12 @@ import AbsenteeAddModal from "@/Views/Admin/Absentees/AbsenteeAddModal.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Modal from "@/Components/Modal.vue";
 import EmptyView from "@/Views/EmptyView.vue";
+import DatePicker from "@/Components/DatePicker.vue";
+import moment from "moment";
 
 const showModal = ref(false);
 const selectedUserType = ref(usePage().props.filters.user_type);
+
 const staffAbsenteesOfTheDay = computed(
     () => usePage().props.staff_absentees_of_the_day
 );
@@ -79,6 +86,28 @@ watch(selectedUserType, () => {
             "/admin/absentees",
             {
                 type: selectedUserType.value,
+            },
+            {
+                only: ["staff_absentees_of_the_day"],
+                preserveState: true,
+                replace: true,
+            }
+        );
+    }
+});
+
+const selectedDate = ref(null);
+
+let selectedDateString = "";
+
+watch(selectedDate, () => {
+    if (selectedDate.value) {
+        const isoDate = new Date(selectedDate.value);
+        selectedDateString = moment(isoDate).format("YYYY-MM-DD");
+        router.get(
+            "/admin/absentees",
+            {
+                date: selectedDateString,
             },
             {
                 only: ["staff_absentees_of_the_day"],
