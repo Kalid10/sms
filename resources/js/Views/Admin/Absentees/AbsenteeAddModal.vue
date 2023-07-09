@@ -1,88 +1,94 @@
 <template>
-    <Modal v-model:view="showModal">
-        <div
-            class="scrollbar-hide flex max-h-[800px] flex-col space-y-3 overflow-y-scroll rounded-lg bg-white p-4 text-center"
-        >
-            <div>
-                <Title title="Add Staff Absentee" />
+    <div
+        class="scrollbar-hide flex max-h-[800px] flex-col space-y-3 overflow-y-scroll rounded-lg bg-white p-4 text-center"
+    >
+        <div class="flex w-full flex-col justify-center space-y-6">
+            <div class="flex w-full justify-evenly">
+                <ArrowLeftCircleIcon
+                    v-if="selectedStaff"
+                    class="w-6 cursor-pointer text-zinc-600 hover:scale-110"
+                    @click="
+                        showSearchResult = true;
+                        selectedStaff = null;
+                        title = 'Add Absentee';
+                    "
+                />
+                <Title :title="title" class="w-11/12" />
             </div>
-
-            <div class="flex w-full flex-col justify-center space-y-4">
+            <div class="flex w-full flex-col items-center space-y-4 py-2">
+                <TextInput
+                    v-if="!selectedStaff"
+                    v-model="searchKey"
+                    class="w-11/12"
+                    class-style="rounded-2xl focus:ring-1 focus:border-none focus:ring-zinc-800 focus:outline-none placeholder:text-xs"
+                    placeholder="Search for a staff member by name"
+                />
                 <div
-                    v-if="selectedStaff && selectedStaff.value"
-                    class="flex w-full flex-col items-center justify-center gap-5 py-3"
+                    v-if="showSearchResult"
+                    class="flex w-full flex-col items-center"
                 >
-                    <div
-                        class="flex w-full flex-col items-center justify-center py-3"
-                    >
-                        <div class="flex w-full flex-col gap-5 py-3">
-                            <h2 class="flex justify-center">
-                                Your are about to add
-                                <span class="px-2 font-bold">
-                                    {{ selectedStaff.type }}
-                                    {{ selectedStaff.label }}
-                                </span>
-                                as an absentee:
-                            </h2>
-
-                            <div
-                                class="flex flex-col items-center justify-center"
-                            >
-                                <TextInput
-                                    v-model="form.reason"
-                                    label="Reason"
-                                    placeholder="Enter reason"
-                                    class="w-full lg:max-w-lg"
-                                    :error="form.errors.reason"
-                                />
-                            </div>
-
-                            <div class="flex items-center justify-center">
-                                <PrimaryButton
-                                    title="Add"
-                                    @click="addAbsentee"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <span class="text-md font-medium text-gray-500"
-                    >Search for a staff member to add as an absentee
-                </span>
-                <div class="flex flex-col">
-                    <input
-                        v-model="searchKey"
-                        class="mb-2 rounded-md border border-gray-300 px-3 py-2"
-                        type="text"
-                        placeholder="Search for a staff member by name"
-                    />
                     <div
                         v-for="(staff, index) in staffUsers"
                         v-show="searchKey.length > 0"
                         :key="staff"
-                        class="cursor-pointer py-2"
+                        class="w-11/12 cursor-pointer py-2 hover:rounded-lg hover:bg-zinc-700 hover:text-white"
                         :class="
                             index % 2 === 0
-                                ? 'bg-gray-100 px-10 hover:bg-gray-300'
-                                : 'bg-white px-10 hover:bg-gray-300'
+                                ? 'bg-gray-100 px-10 '
+                                : 'bg-white px-10 '
                         "
                         @click="selectStaff(staff)"
                     >
                         <p class="px-3 py-2">{{ staff.label }}</p>
                     </div>
                 </div>
+
+                <div
+                    v-if="selectedStaff && selectedStaff.value"
+                    class="flex w-full flex-col items-center justify-center gap-5 py-3"
+                >
+                    <div
+                        class="flex w-full flex-col items-center justify-center"
+                    >
+                        <div class="flex w-full flex-col">
+                            <TextArea
+                                v-model="form.reason"
+                                label="Reason"
+                                placeholder="Enter reason"
+                                class="max-h-fit w-full text-start"
+                                :subtext="
+                                    'You are about to add ' +
+                                    selectedStaff.label +
+                                    ' as an absentee'
+                                "
+                                :error="form.errors.reason"
+                            />
+                        </div>
+
+                        <div class="mt-5 flex items-center justify-center">
+                            <PrimaryButton
+                                title="Submit"
+                                class="!rounded-2xl"
+                                @click="addAbsentee"
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </Modal>
+    </div>
 </template>
 <script setup>
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Title from "@/Views/Teacher/Views/Title.vue";
-import Modal from "@/Components/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { computed, ref, watch } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import { debounce } from "lodash";
+import Title from "@/Views/Teacher/Views/Title.vue";
+import TextArea from "@/Components/TextArea.vue";
+import { ArrowLeftCircleIcon } from "@heroicons/vue/20/solid";
+
+const emit = defineEmits(["add"]);
 
 const showModal = ref(true);
 
@@ -100,9 +106,12 @@ const staffUsers = computed(() => {
 });
 
 const selectedStaff = ref(null);
-
+const showSearchResult = ref(false);
+const title = ref("Add An Absentee");
 const selectStaff = (item) => {
     selectedStaff.value = item;
+    showSearchResult.value = false;
+    title.value = item.label;
 };
 
 const searchKey = ref("");
@@ -122,6 +131,9 @@ const search = debounce(() => {
             only: ["staff"],
             preserveState: true,
             replace: true,
+            onFinish: () => {
+                showSearchResult.value = true;
+            },
         }
     );
 }, 300);
@@ -140,7 +152,6 @@ const addAbsentee = () => {
     if (form.type === "Teacher") {
         form.batch_session_id = selectedStaff.value.batch_session_id;
     }
-
     form.post("/absentee/staff/add", {
         onSuccess: () => {
             showModal.value = false;
@@ -148,6 +159,7 @@ const addAbsentee = () => {
             selectedStaff.value = null;
         },
     });
+    emit("add", form);
 };
 </script>
 <style scoped></style>

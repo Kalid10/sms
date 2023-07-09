@@ -24,16 +24,14 @@
                 </div>
             </div>
 
-            <div class="flex w-full flex-col justify-center space-y-4">
-                <span class="text-md font-medium text-gray-500"
-                    >Search and select a grade to assign as a homeroom teacher
-                </span>
-                <div>
-                    <input
+            <div class="relative flex w-full flex-col justify-center space-y-4">
+                <div
+                    class="scrollbar-hide max-h-[500px] min-h-10 w-full overflow-y-scroll rounded-md bg-white drop-shadow"
+                >
+                    <TextInput
                         v-model="searchKey"
-                        class="mb-2 rounded border border-gray-300 px-3 py-2"
-                        type="text"
                         placeholder="Search for grade level"
+                        subtext="Search for a grade"
                     />
                     <div
                         v-for="(batch, index) in batchOptions"
@@ -49,31 +47,31 @@
                     >
                         <p class="px-3 py-2">{{ batch.label }}</p>
                     </div>
+                </div>
+                <div
+                    v-if="selectedBatch && selectedBatch.value"
+                    class="flex w-full flex-col items-center justify-center gap-5 py-3"
+                >
                     <div
-                        v-if="selectedBatch && selectedBatch.value"
-                        class="flex w-full flex-col items-center justify-center gap-5 py-3"
+                        class="flex w-full flex-col items-center justify-center py-3"
                     >
-                        <div
-                            class="flex w-full flex-col items-center justify-center py-3"
-                        >
-                            <div class="flex w-full flex-col gap-5 py-3">
-                                <h2 class="flex justify-center">
-                                    Your are about to assign
-                                    <span class="px-2 font-bold">
-                                        {{ teacher.user.name }}
-                                    </span>
-                                    as a homeroom teacher to Grade:
-                                </h2>
-                                <p class="flex justify-center underline">
-                                    {{ selectedBatch.label }}
-                                </p>
+                        <div class="flex w-full flex-col gap-5 py-3">
+                            <h2 class="flex justify-center">
+                                Your are about to assign
+                                <span class="px-2 font-bold">
+                                    {{ teacher.user.name }}
+                                </span>
+                                as a homeroom teacher to Grade:
+                            </h2>
+                            <p class="flex justify-center underline">
+                                {{ selectedBatch.label }}
+                            </p>
 
-                                <div class="flex items-center justify-center">
-                                    <PrimaryButton
-                                        title="Assign Homeroom"
-                                        @click="assignHomeroom"
-                                    />
-                                </div>
+                            <div class="flex items-center justify-center">
+                                <PrimaryButton
+                                    title="Assign Homeroom"
+                                    @click="assignHomeroom"
+                                />
                             </div>
                         </div>
                     </div>
@@ -89,6 +87,9 @@ import { router, usePage } from "@inertiajs/vue3";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import { debounce } from "lodash";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+
+const emit = defineEmits(["close"]);
 
 const batches = computed(() => usePage().props.batches);
 const teacher = computed(() => usePage().props.teacher);
@@ -147,10 +148,30 @@ const search = debounce(() => {
 }, 300);
 
 const assignHomeroom = () => {
-    router.post("/teachers/assign/homeroom", {
-        teacher_id: teacher.value.id,
-        batch_id: selectedBatch.value.value,
-        replace: false,
-    });
+    router.post(
+        "/teachers/assign/homeroom",
+        {
+            teacher_id: teacher.value.id,
+            batch_id: selectedBatch.value.value,
+            replace: false,
+        },
+
+        {
+            onSuccess: () => {
+                selectedBatch.value = null;
+
+                router.get(
+                    "/admin/teachers/homeroom?teacher_id=" + teacher.value.id,
+                    {
+                        only: ["teacher"],
+                        preserveState: true,
+                        replace: true,
+                    }
+                );
+            },
+        }
+    );
+
+    emit("close", false);
 };
 </script>

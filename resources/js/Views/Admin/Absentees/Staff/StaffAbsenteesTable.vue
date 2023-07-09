@@ -36,7 +36,9 @@
         </template>
     </TableElement>
 
-    <AbsenteeAddModal v-if="showModal" />
+    <Modal v-model:view="showModal">
+        <AbsenteeAddModal @add="showModal = false" />
+    </Modal>
 </template>
 <script setup>
 import { computed, ref, watch } from "vue";
@@ -51,6 +53,7 @@ import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
 import AbsenteeAddModal from "@/Views/Admin/Absentees/AbsenteeAddModal.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import Modal from "@/Components/Modal.vue";
 
 const showModal = ref(false);
 const selectedUserType = ref(usePage().props.filters.user_type);
