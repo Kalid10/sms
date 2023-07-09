@@ -38,6 +38,7 @@ class User extends Authenticatable
         'gender',
         'date_of_birth',
         'fcm_tokens',
+        'openai_daily_usage',
     ];
 
     protected $hidden = [
