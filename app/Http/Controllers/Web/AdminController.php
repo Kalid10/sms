@@ -89,7 +89,7 @@ class AdminController extends Controller
             'school_schedule' => $schoolSchedule,
             'students' => Inertia::lazy(fn () => Student::with([
                 'user:id,name,email,phone_number,gender',
-                'currentBatch',
+                'currentBatch.level',
             ])->select('id', 'user_id')
                 ->when($searchKey, function ($query) use ($searchKey) {
                     return $query->whereHas('user', function ($query) use ($searchKey) {
