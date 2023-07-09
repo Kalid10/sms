@@ -62,11 +62,11 @@
             </div>
 
             <SecondaryButton
-                v-if="messages.length > 0 && !isLoading"
+                v-if="messages.length > 0 && !isLoading && !openAILimitReached"
                 :title="
                     isChatUpdating
                         ? 'Stop Generating'
-                        : 'Regenerate Last Message'
+                        : 'Regenerate Last Response'
                 "
                 class="w-fit !rounded-2xl !text-xs font-semibold"
                 :class="
@@ -85,6 +85,7 @@
             >
                 <TextInput
                     v-model="inputMessage"
+                    :disabled="openAILimitReached"
                     type="text"
                     class="w-full"
                     class-style="
@@ -93,7 +94,13 @@ rounded-2xl ring-purple-600 ring-2 bg-gray-50 border-none bg-white placeholder:t
                     @keyup.enter="sendMessage"
                 />
                 <button
-                    class="rounded-md bg-purple-500 p-2 text-white"
+                    :disabled="openAILimitReached"
+                    :class="
+                        openAILimitReached
+                            ? 'bg-zinc-600 cursor-not-allowed'
+                            : 'cursor-pointer bg-purple-500'
+                    "
+                    class="rounded-md p-2 text-white"
                     @click="sendMessage"
                 >
                     <PaperAirplaneIcon class="w-5" />
@@ -169,13 +176,14 @@ import {
     ClipboardDocumentIcon,
     PaperAirplaneIcon,
 } from "@heroicons/vue/20/solid";
-import { nextTick, ref, watchEffect } from "vue";
+import { nextTick, onMounted, ref, watchEffect } from "vue";
 import { copyToClipboard } from "@/utils";
 import Loading from "@/Components/Loading.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
+const emit = defineEmits(["limit-reached"]);
 defineProps({
     showGettingStarted: {
         type: Boolean,
@@ -187,7 +195,13 @@ const messages = ref([]);
 const inputMessage = ref("Who is usain bolt?");
 const isChatUpdating = ref(false);
 const chatContainer = ref(null);
+const openAIDailyUsage = ref();
+const openAILimitReached = ref(false);
 let eventSource;
+
+onMounted(() => {
+    openAIDailyUsage.value = usePage().props.auth.user.openai_daily_usage;
+});
 
 const sendMessage = () => {
     isLoading.value = true;
@@ -253,6 +267,14 @@ const startStreaming = () => {
         },
         false
     );
+    eventSource.addEventListener(
+        "usage_update",
+        (event) => {
+            // update usage
+            openAIDailyUsage.value = event.data;
+        },
+        false
+    );
 
     // Push a new message from the assistant
     messages.value.push({
@@ -262,9 +284,30 @@ const startStreaming = () => {
 
     result.value = null;
 
+    eventSource.onerror = function (event) {
+        isLoading.value = false;
+        isChatUpdating.value = false;
+
+        fetch(eventSource.url)
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then((data) => {
+                        openAILimitReached.value = true;
+                        emit("limit-reached", openAIDailyUsage.value);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
+
+    // Handle Error
     eventSource.addEventListener(
         "error",
         (event) => {
+            console.log("skdfh " + event.status);
+
             // TODO: Replace this with your preferred error handling method
             console.error("Error occurred: ", event);
             isLoading.value = false;
