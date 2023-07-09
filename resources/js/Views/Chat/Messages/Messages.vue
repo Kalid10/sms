@@ -1,43 +1,46 @@
 <template>
     <div
-        class="scrollbar-hide flex h-full w-3/12 flex-col items-center space-y-5 overflow-y-auto rounded-lg bg-white shadow-sm"
+        class="scrollbar-hide relative flex h-full w-4/12 flex-col items-center space-y-5 overflow-y-auto bg-white shadow-sm"
     >
         <div
-            class="flex w-full items-center justify-center space-x-2 rounded-t-md bg-zinc-800 py-3 text-white"
-        >
-            <ChatBubbleBottomCenterIcon class="w-4 text-zinc-100" />
-            <h1 class="text-1xl text-center font-medium text-zinc-100">
-                My Messages
-            </h1>
-        </div>
-
-        <!--        Favorites-->
-        <div
-            v-if="favorites.length"
-            class="scrollbar-hide flex max-w-full space-x-4 overflow-x-auto"
+            class="!sticky top-0 z-40 flex w-full flex-col items-center justify-center space-y-5 bg-white"
         >
             <div
-                v-for="(item, index) in favorites"
-                :key="index"
-                class="flex cursor-pointer flex-col items-center justify-center space-y-1 hover:scale-105"
+                class="flex min-h-[4.5rem] w-full items-center justify-center space-x-2 bg-gray-100"
             >
-                <img
-                    :src="item.user.avatar"
-                    alt="avatar"
-                    class="h-12 w-12 rounded-full border-2 border-violet-400 object-contain"
-                    @click="$emit('toggleConversation', item.user)"
-                />
-                <div class="text-[0.6rem]">{{ item.user.name }}</div>
+                <ChatBubbleBottomCenterIcon class="w-5" />
+                <h1 class="text-1xl text-center font-medium">My Messages</h1>
+            </div>
+
+            <TextInput
+                v-model="searchKey"
+                placeholder="Search Teacher, Admin..."
+                class="!w-11/12"
+                class-style="!w-full  rounded-2xl bg-zinc-50/80 border-none placeholder:text-xs focus:bg-white text  focus:ring-1 focus:ring-zinc-400"
+                @click.
+            />
+
+            <!--        Favorites-->
+
+            <div
+                v-if="favorites.length"
+                class="flex h-fit w-11/12 justify-evenly space-x-4 overflow-x-auto whitespace-nowrap py-1 hover:scale-105"
+            >
+                <div
+                    v-for="(item, index) in favorites"
+                    :key="index"
+                    class="flex w-fit cursor-pointer flex-col items-center justify-center"
+                >
+                    <img
+                        :src="item.user.avatar"
+                        alt="avatar"
+                        class="h-12 w-12 rounded-full border-2 border-violet-400 object-contain"
+                        @click="$emit('toggleConversation', item.user)"
+                    />
+                    <div class="text-[0.6rem]">{{ item.user.name }}</div>
+                </div>
             </div>
         </div>
-
-        <TextInput
-            v-model="searchKey"
-            placeholder="Search Teacher, Admin..."
-            class="!w-11/12"
-            class-style="!w-full rounded-2xl bg-gray-50/90 border-none placeholder:text-xs  focus:ring-1 focus:ring-zinc-600"
-            @click.
-        />
 
         <!--        Contact Search-->
         <div v-if="searchKey" class="w-full">
@@ -48,23 +51,23 @@
         </div>
 
         <!--        Chat History-->
-        <div v-else class="w-full">
+        <div v-else class="flex w-full justify-center">
             <div
                 v-if="contacts?.length"
-                class="scrollbar-hide flex w-full flex-col space-y-2 overflow-y-auto px-1"
+                class="scrollbar-hide flex w-full flex-col space-y-2 overflow-y-auto"
             >
                 <div
                     v-for="(chat, index) in contacts"
                     :key="index"
-                    class="flex w-full cursor-pointer justify-between rounded-lg p-3"
+                    class="flex h-20 w-full cursor-pointer items-center justify-between px-5 hover:bg-gray-100"
                     :class="
                         messageStore.activeChat.id === chat.id
-                            ? 'bg-violet-600 text-white'
-                            : 'bg-gray-50'
+                            ? 'bg-gray-200/50'
+                            : 'bg-white'
                     "
                     @click="$emit('toggleConversation', chat)"
                 >
-                    <div class="flex w-full items-center space-x-3">
+                    <div class="flex h-full w-full items-center space-x-3">
                         <!-- profile pic -->
                         <div class="relative">
                             <img
@@ -83,39 +86,38 @@
                         </div>
 
                         <!-- name and last message -->
-                        <div>
+                        <div class="flex flex-col space-y-2">
                             <h1
-                                class="overflow-hidden whitespace-nowrap text-xs font-medium"
+                                class="overflow-hidden whitespace-nowrap text-sm font-medium"
                             >
                                 {{ chat.name }}
                             </h1>
                             <h1
-                                class="block w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-sm text-[#A9ABAD] md:w-[600px] lg:w-[110px]"
+                                class="block w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-gray-400"
                             >
                                 {{ chat?.latest_message?.body }}
                             </h1>
                         </div>
                     </div>
 
-                    <StarIcon
-                        class="w-5 cursor-pointer hover:scale-125"
-                        :class="
-                            isInFavorites(chat.id).value
-                                ? 'text-yellow-400'
-                                : 'text-gray-400'
-                        "
-                        @click="messageStore.toggleFavorite(chat.id)"
-                    />
-
                     <!-- time, unread counter and seen -->
-                    <div class="flex w-2/12 flex-col items-end">
+                    <div class="flex w-4/12 flex-col items-end space-y-3">
+                        <StarIcon
+                            class="w-4 cursor-pointer hover:scale-125 hover:text-yellow-400"
+                            :class="
+                                isInFavorites(chat.id).value
+                                    ? 'text-yellow-400'
+                                    : 'text-gray-400'
+                            "
+                            @click="messageStore.toggleFavorite(chat.id)"
+                        />
                         <h1
                             v-if="chat?.latest_message"
-                            class="text-right text-[13px] font-medium text-[#A9ABAD]"
+                            class="text-right text-xs font-medium text-[#A9ABAD]"
                         >
                             {{
                                 moment(
-                                    chat?.latest_message?.created_at
+                                    chat?.latest_message?.updated_at
                                 ).fromNow()
                             }}
                         </h1>
@@ -148,12 +150,13 @@
             </div>
             <div
                 v-else
-                class="flex w-full items-center justify-center px-4 py-10"
+                class="flex w-10/12 items-center justify-center px-4 py-10"
             >
                 <EmptyView
-                    class="!font-light"
+                    class="!font-normal"
                     title="
 There's no chat history at the moment. Your conversations will appear here as soon as you begin chatting."
+                    :show-status-code="false"
                 />
             </div>
         </div>
@@ -181,7 +184,6 @@ const showLoading = ref(false);
 async function searchContacts(query) {
     showLoading.value = true;
     await messageStore.searchContacts(query);
-    showContacts.value = true;
     showLoading.value = false;
 }
 

@@ -8,6 +8,7 @@ use App\Models\BatchSession;
 use App\Models\StaffAbsentee;
 use App\Models\Student;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class AbsenteesController extends Controller
         $request->validate([
             'batch_session_id' => 'required|integer|exists:batch_sessions,id',
             'user_type' => 'required|in:'.User::TYPE_STUDENT.','.User::TYPE_TEACHER,
-            'absentees' => 'required|array|min:1',
+            'absentees' => 'nullable|array|min:0',
             'absentees.*.user_id' => 'required|integer|exists:users,id|distinct:strict',
             'absentees.*.reason' => 'nullable|string',
         ]);
@@ -49,6 +50,13 @@ class AbsenteesController extends Controller
             if ($request->user_type === User::TYPE_STUDENT && ! $user->student->batches()->where('batch_id', $batchId)->first()) {
                 return redirect()->back()->with('error', $user->name.' is not enrolled in this class.');
             }
+        }
+
+        // Check if the teacher is assigned to the batchSubject
+        $batchSubject = $batchSession->load('batchSchedule.batchSubject.teacher.user')->batchSchedule->batchSubject;
+
+        if (auth()->user()->id !== $batchSubject->teacher->user->id) {
+            return redirect()->back()->with('error', 'You are not assigned to this class.');
         }
 
         try {
@@ -80,6 +88,16 @@ class AbsenteesController extends Controller
 
             // Remove students from the absent list
             Absentee::where('batch_session_id', $request->batch_session_id)->whereIn('user_id', $usersToRemove)->delete();
+
+            foreach ($usersToRemove as $userId) {
+                $absentee = Absentee::where('user_id', $userId)->whereDate('created_at', Carbon::today())->latest()->first();
+
+                if ($absentee) {
+                    $absentee->update([
+                        'next_class_attended_flag' => true,
+                    ]);
+                }
+            }
 
             DB::commit();
 
@@ -120,7 +138,7 @@ class AbsenteesController extends Controller
         $request->validate([
             'batch_session_id' => 'nullable|exists:batch_sessions,id',
             'user_id' => 'required|integer|exists:users,id',
-            'reason' => 'nullable|string',
+            'reason' => 'required|string',
             'type' => 'required|string',
         ]);
 
@@ -152,22 +170,23 @@ class AbsenteesController extends Controller
             }
         }
 
-        StaffAbsentee::updateOrInsert(
+        // Check if the staff is already absent for the day
+        if (StaffAbsentee::where('user_id', $request->user_id)->whereDate('created_at', Carbon::today())->first()) {
+            return redirect()->back()->with('error', 'Staff is already absent for the day.');
+        }
+
+        StaffAbsentee::create(
             [
                 'batch_session_id' => $request->batch_session_id,
                 'user_id' => $request->user_id,
-            ],
-            [
                 'reason' => $request->reason,
                 'type' => $request->type,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]);
 
         return redirect()->back()->with('success', 'Staff Absentees updated successfully.');
     }
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $searchKey = request()->query('search');
 
@@ -178,7 +197,7 @@ class AbsenteesController extends Controller
         $staff = User::whereIn('type', [User::TYPE_TEACHER, User::TYPE_ADMIN])
             ->when($searchKey, function ($query, $searchKey) {
                 $query->where('name', 'like', '%'.$searchKey.'%');
-            })->get();
+            })->get()->take(5);
 
         $studentAbsentees = Absentee::with('user')
             ->when($studentsQueryKey, function ($query, $studentsQueryKey) {
@@ -187,17 +206,37 @@ class AbsenteesController extends Controller
                 });
             })->paginate(10);
 
-        $staffAbsentees = StaffAbsentee::with('user')
+        $userType = $request->input('type');
+
+        // Get staff absentees of the day
+        $staffAbsenteesOfTheDay = StaffAbsentee::with('user')
+            ->whereDate('created_at', Carbon::today())
             ->when($queryKey, function ($query, $queryKey) {
                 $query->whereHas('user', function ($query) use ($queryKey) {
                     $query->where('name', 'like', '%'.$queryKey.'%');
                 });
-            })->paginate(10);
+            })
+            ->when($userType, function ($query, $userType) {
+                $query->whereHas('user', function ($query) use ($userType) {
+                    if ($userType === 'all') {
+                        $query->whereIn('type', [User::TYPE_TEACHER, User::TYPE_ADMIN]);
+                    } else {
+                        $query->where('type', $userType);
+                    }
+                });
+            })
+            ->paginate(10);
+
+        $userTypes = $userType === ['all', 'admin', 'teacher'];
 
         return Inertia::render('Admin/Absentees/Index', [
-            'staff_absentees' => $staffAbsentees,
             'staff' => Inertia::lazy(fn () => $staff),
             'student_absentees' => $studentAbsentees,
+            'staff_absentees_of_the_day' => $staffAbsenteesOfTheDay,
+            'user_types' => $userTypes,
+            'filters' => [
+                'user_type' => $userType,
+            ],
         ]);
     }
 }

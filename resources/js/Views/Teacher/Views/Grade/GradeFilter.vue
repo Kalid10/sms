@@ -85,11 +85,11 @@ const schoolYears = computed(() => usePage().props.filters.school_years);
 const semesters = computed(() => usePage().props.filters.semesters);
 const quarters = computed(() => usePage().props.filters.quarters);
 
-const selectedSchoolYear = ref(null);
+const selectedSchoolYear = ref(usePage().props.filters.school_year_id);
 
-const selectedSemester = ref(null);
+const selectedSemester = ref(usePage().props.filters.semester_id);
 
-const selectedQuarter = ref(null);
+const selectedQuarter = ref(usePage().props.filters.quarter_id);
 
 const schoolYearOptions = computed(() => {
     return schoolYears.value?.map((item) => {
@@ -137,7 +137,8 @@ watch([selectedSchoolYear, selectedSemester, selectedQuarter], () => {
 function applyFilters() {
     const params = {
         batch_subject_id: usePage().props.batch_subject.id,
-        semester_id: selectedQuarter.value ? null : selectedSemester.value,
+        school_year_id: selectedSchoolYear.value,
+        semester_id: selectedQuarter.value,
         quarter_id: selectedQuarter.value,
     };
 

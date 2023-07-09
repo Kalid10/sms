@@ -13,6 +13,7 @@ use App\Models\Student as StudentModel;
 use App\Models\StudentNote;
 use App\Models\User;
 use App\Services\StudentService;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -25,6 +26,7 @@ class Student extends Controller
     public function __invoke(StudentModel $student, Request $request): Response
     {
         $request->validate([
+            'school_year_id' => 'nullable|exists:school_years,id',
             'semester_id' => 'nullable|exists:semesters,id',
             'quarter_id' => 'nullable|exists:quarters,id',
         ]);
@@ -40,7 +42,13 @@ class Student extends Controller
         $semesters = Semester::with('schoolYear')->get();
         $schoolYears = SchoolYear::all();
 
-        return Inertia::render('Teacher/Student', [
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Student',
+            User::TYPE_ADMIN => 'Admin/Students/Single',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'student' => $student,
             'guardian' => $this->loadGuardianData($student),
             'assessments' => $studentAssessment,
@@ -62,6 +70,9 @@ class Student extends Controller
                 'quarters' => $quarters,
                 'semesters' => $semesters,
                 'school_years' => $schoolYears,
+                'school_year_id' => $request->query('school_year_id') ?? SchoolYear::getActiveSchoolYear()->id,
+                'semester_id' => $request->query('semester_id') ?? Semester::getActiveSemester()->id,
+                'quarter_id' => $request->query('quarter_id') ?? Quarter::getActiveQuarter()->id,
             ],
         ]);
     }
@@ -165,7 +176,7 @@ class Student extends Controller
     private function loadStudentGrade($student, $batchSubjectId, Request $request)
     {
         if ($request->semester_id || $request->quarter_id) {
-            $grade = $student->grades()
+            return $student->grades()
                 ->when($request->semester_id, function ($query, $semesterId) {
                     $query->where('gradable_id', $semesterId)
                         ->where('gradable_type', Semester::class);
@@ -174,8 +185,6 @@ class Student extends Controller
                     $query->where('gradable_id', $quarterId)
                         ->where('gradable_type', Quarter::class);
                 })->first();
-
-            return $grade;
         }
 
         return $student->fetchStudentBatchSubjectGrade($batchSubjectId, Quarter::getActiveQuarter()->id)->first();
