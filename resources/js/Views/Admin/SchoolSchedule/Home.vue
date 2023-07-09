@@ -51,10 +51,7 @@
                 </div>
             </div>
 
-            <LinkCell
-                value="View All Schedules"
-                link="/admin/school-schedules"
-            />
+            <LinkCell value="View All Schedules" href="/admin/schedules" />
         </div>
         <div class="w-3/12">
             <DatePicker

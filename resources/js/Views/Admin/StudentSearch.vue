@@ -32,6 +32,12 @@
                 </div>
             </div>
             <div
+                v-else-if="showLoading"
+                class="mt-2 rounded-lg bg-white py-8 shadow-sm"
+            >
+                <Loading color="secondary" />
+            </div>
+            <div
                 v-else-if="query.length > 0 && showStudents"
                 class="mt-1 flex flex-col items-center justify-center rounded-lg border border-zinc-100 bg-white py-8 shadow-sm"
             >
@@ -49,10 +55,12 @@ import { computed, ref, watch } from "vue";
 import { debounce } from "lodash";
 import { router, usePage } from "@inertiajs/vue3";
 import { onClickOutside } from "@vueuse/core";
+import Loading from "@/Components/Loading.vue";
 
 const students = computed(() => usePage().props.students);
 const query = ref("");
 const showStudents = ref(false);
+const showLoading = ref(false);
 
 const container = ref(null);
 
@@ -66,6 +74,7 @@ watch(query, () => {
 });
 
 const fetchStudent = debounce(async function () {
+    showLoading.value = true;
     router.get(
         "/admin/",
         {
@@ -75,6 +84,9 @@ const fetchStudent = debounce(async function () {
             only: ["students"],
             preserveState: true,
             replace: true,
+            onFinish: () => {
+                showLoading.value = false;
+            },
         }
     );
 }, 500);
