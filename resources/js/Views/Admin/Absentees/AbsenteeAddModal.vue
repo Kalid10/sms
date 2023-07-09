@@ -10,10 +10,10 @@
                     @click="
                         showSearchResult = true;
                         selectedStaff = null;
-                        title = 'Add Absentee';
+                        titleText = 'Add Absentee';
                     "
                 />
-                <Title :title="title" class="w-11/12" />
+                <Title :title="titleText" class="w-11/12" />
             </div>
             <div class="flex w-full flex-col items-center space-y-4 py-2">
                 <TextInput
@@ -23,6 +23,8 @@
                     class-style="rounded-2xl focus:ring-1 focus:border-none focus:ring-zinc-800 focus:outline-none placeholder:text-xs"
                     placeholder="Search for a staff member by name"
                 />
+
+                <Loading v-if="showLoading" color="secondary" />
                 <div
                     v-if="showSearchResult"
                     class="flex w-full flex-col items-center"
@@ -39,7 +41,7 @@
                         "
                         @click="selectStaff(staff)"
                     >
-                        <p class="px-3 py-2">{{ staff.label }}</p>
+                        <p class="px-3 py-2 text-sm">{{ staff.label }}</p>
                     </div>
                 </div>
 
@@ -87,10 +89,12 @@ import { debounce } from "lodash";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import TextArea from "@/Components/TextArea.vue";
 import { ArrowLeftCircleIcon } from "@heroicons/vue/20/solid";
+import Loading from "@/Components/Loading.vue";
 
 const emit = defineEmits(["add"]);
 
 const showModal = ref(true);
+const showLoading = ref(false);
 
 const staff = computed(() => usePage().props.staff);
 
@@ -107,11 +111,11 @@ const staffUsers = computed(() => {
 
 const selectedStaff = ref(null);
 const showSearchResult = ref(false);
-const title = ref("Add An Absentee");
+const titleText = ref("Add An Absentee");
 const selectStaff = (item) => {
     selectedStaff.value = item;
     showSearchResult.value = false;
-    title.value = item.label;
+    titleText.value = item.label;
 };
 
 const searchKey = ref("");
@@ -122,6 +126,7 @@ watch(searchKey, () => {
 });
 
 const search = debounce(() => {
+    showLoading.value = true;
     router.get(
         "/admin/absentees",
         {
@@ -133,6 +138,7 @@ const search = debounce(() => {
             replace: true,
             onFinish: () => {
                 showSearchResult.value = true;
+                showLoading.value = false;
             },
         }
     );

@@ -13,15 +13,15 @@
                 />
                 <SelectInput
                     v-model="selectedUserType"
-                    class="h-fit w-2/12 rounded-2xl !text-sm"
+                    class="h-fit w-3/12 rounded-2xl !text-sm"
                     :options="userTypeOptions"
                     placeholder="Filter by user type"
                 />
 
-                <PrimaryButton @click="showModal = true">
-                    <span class="flex gap-2">
-                        <PlusIcon class="h-4 w-4 stroke-white stroke-2" />
-                        <span>New Absentee</span>
+                <PrimaryButton class="!rounded-2xl" @click="showModal = true">
+                    <span class="flex space-x-1">
+                        <SquaresPlusIcon class="w-3 stroke-white stroke-2" />
+                        <span class="!text-xs">New Absentee</span>
                     </span>
                 </PrimaryButton>
             </div>
@@ -46,7 +46,7 @@ import { router, usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import {
     ExclamationTriangleIcon,
-    PlusIcon,
+    SquaresPlusIcon,
 } from "@heroicons/vue/24/outline/index";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -60,8 +60,6 @@ const selectedUserType = ref(usePage().props.filters.user_type);
 const staffAbsenteesOfTheDay = computed(
     () => usePage().props.staff_absentees_of_the_day
 );
-
-const userTypes = computed(() => usePage().props.user_types);
 
 const userTypeOptions = computed(() => {
     return [
