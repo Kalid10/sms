@@ -30,20 +30,31 @@
                     <SelectedAnnouncementView
                         class="h-2/5"
                         :selected-announcement="selectedAnnouncement"
+                        @continue-reading="setContinueReading"
                     />
                     <SelectedAnnouncementView
                         class="h-2/5"
                         :selected-announcement="selectedAnnouncement2"
+                        @continue-reading="setContinueReading"
                     />
                 </div>
                 <div class="flex w-6/12 flex-col rounded-lg bg-white p-3 px-4">
-                    <Announcements :show-header="false" class-style="d" />
+                    <Announcements
+                        :conitinue-reading="continueReading"
+                        :show-header="false"
+                        class-style="d"
+                    />
                 </div>
             </div>
         </div>
     </div>
+
     <Modal v-model:view="showAddAnnouncement">
         <AddAnnouncement @success="showAddAnnouncement = false" />
+    </Modal>
+
+    <Modal v-model:view="viewAnnouncement">
+        <ShowAnnouncementView :selected-announcement="continueReading" />
     </Modal>
 </template>
 <script setup>
@@ -57,6 +68,7 @@ import { debounce } from "lodash";
 import { SquaresPlusIcon } from "@heroicons/vue/20/solid";
 import Modal from "@/Components/Modal.vue";
 import AddAnnouncement from "@/Views/Announcements/AddAnnouncement.vue";
+import ShowAnnouncementView from "@/Views/Announcements/ShowAnnouncement.vue";
 
 const props = defineProps({
     url: {
@@ -66,13 +78,18 @@ const props = defineProps({
 });
 
 const showAddAnnouncement = ref(false);
+const viewAnnouncement = ref(false);
+const continueReading = ref();
+
 const announcements = computed(() => usePage().props.announcements);
+const schoolYears = computed(() => usePage().props.school_years);
 
 const selectedAnnouncement = ref(announcements.value?.data[0]);
 const selectedAnnouncement2 = ref(announcements.value?.data[1]);
+
+// Splice the latest two announcements
 announcements.value?.data.splice(0, 2);
 
-// watch for changes in the announcements and update the selected announcements and splice the first two announcements
 watch(announcements, () => {
     selectedAnnouncement.value = announcements.value?.data[0];
     selectedAnnouncement2.value = announcements.value?.data[1];
@@ -88,6 +105,9 @@ const search = debounce(() => {
     );
 }, 300);
 
-const schoolYears = computed(() => usePage().props.school_years);
+const setContinueReading = (announcement) => {
+    viewAnnouncement.value = true;
+    continueReading.value = announcement;
+};
 </script>
 <style scoped></style>

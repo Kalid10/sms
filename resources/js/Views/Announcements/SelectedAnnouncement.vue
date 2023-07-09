@@ -15,6 +15,7 @@
         </span>
         <span
             class="flex w-full cursor-pointer space-x-2 text-sm font-medium text-violet-600 hover:font-semibold hover:underline hover:underline-offset-2"
+            @click="$emit('continue-reading', selectedAnnouncement)"
         >
             Continue reading
             <ArrowSmallRightIcon class="w-5" />
@@ -39,6 +40,7 @@
 import moment from "moment";
 import { ArrowSmallRightIcon } from "@heroicons/vue/20/solid";
 
+defineEmits(["continue-reading"]);
 defineProps({
     selectedAnnouncement: {
         type: Object,
