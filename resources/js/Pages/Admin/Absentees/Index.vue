@@ -1,6 +1,7 @@
 <template>
     <div class="w-10/12 py-5">
-        <Title class="pb-8" :title="$t('common.absentee')" />
+        <Title class="pb-8" title="Absentees" />
+        <Title class="pb-8" :title="$t('common.absentees')" />
 
         <TabElement v-model:active="activeTab" :tabs="tabs">
             <template #[staffTab]>
@@ -20,9 +21,9 @@ import TabElement from "@/Components/TabElement.vue";
 import { ref } from "vue";
 import {useI18n} from "vue-i18n";
 const {t} = useI18n()
-const tabs = [t('common.staff'), t('common.student')];
 const staffTab = t('common.staff')
 const studentTab = t('common.student')
+const tabs = [staffTab, studentTab];
 const activeTab = ref(staffTab);
 </script>
 <style scoped></style>

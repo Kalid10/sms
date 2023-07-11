@@ -120,7 +120,7 @@
     </Modal>
 
     <Modal v-model:view="showAssignModal">
-        <AssignHomeroom />
+        <AssignHomeroom @close="showAssignModal = false" />
     </Modal>
 </template>
 <script setup>

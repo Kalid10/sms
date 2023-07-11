@@ -25,7 +25,7 @@ import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparati
 import {useI18n} from "vue-i18n";
 const {t} = useI18n()
 const chatTab = t('common.chat')
-const questionsTab = t('common.question')
+const questionsTab = t('common.questions')
 const tabs = [chatTab,questionsTab];
 const activeTab = ref(chatTab);
 </script>

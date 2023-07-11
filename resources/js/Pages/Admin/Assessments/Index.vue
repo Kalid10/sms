@@ -16,7 +16,7 @@
                         <div
                             class="flex w-full flex-col justify-center space-y-2 py-2"
                         >
-                            <Filter />
+                            <Filter v-if="!assessments?.data.length === 0" />
                         </div>
                         <div class="flex w-full justify-start"></div>
                     </div>
@@ -31,6 +31,11 @@
                         >
                             <AssessmentItem :assessment="item" />
                         </div>
+
+                        <EmptyView
+                            v-if="assessments?.data.length === 0"
+                            title="No assessments found"
+                        />
                     </div>
 
                     <Pagination
@@ -57,6 +62,7 @@ import { usePage } from "@inertiajs/vue3";
 import AssessmentItem from "@/Views/Admin/Assessments/AssessmentItem.vue";
 import Filter from "@/Views/Admin/Assessments/Filter.vue";
 import AssessmentTypes from "@/Views/Admin/Assessments/AssessmentTypes/Table.vue";
+import EmptyView from "@/Views/EmptyView.vue";
 
 const assessments = computed(() => usePage().props.assessments);
 </script>

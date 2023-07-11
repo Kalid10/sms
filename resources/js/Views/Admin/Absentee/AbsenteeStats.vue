@@ -6,7 +6,7 @@
             <UserMinusIcon class="w-6" />
             <div class="grow text-sm font-medium">{{ $t('absenteeStats.todayAbsentees')}}</div>
             <EyeIcon
-                class="w-5 cursor-pointer hover:scale-125"
+                class="w-4 cursor-pointer text-gray-200 hover:scale-125 hover:text-white"
                 @click="absenteeLink"
             />
         </div>
