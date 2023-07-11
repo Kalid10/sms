@@ -295,9 +295,8 @@ class MessagesController extends Controller
     {
         $input = trim(filter_var($request['input']));
         $records = User::where('id', '!=', Auth::user()->id)
-            ->whereNot('type', User::TYPE_STUDENT)
             ->where('name', 'LIKE', "%{$input}%")
-            ->with('guardian.children.user')
+            ->whereIn('type', [User::TYPE_ADMIN, User::TYPE_TEACHER])
             ->paginate($request->per_page ?? $this->perPage);
 
         $records->getCollection()->transform(function ($record) {
