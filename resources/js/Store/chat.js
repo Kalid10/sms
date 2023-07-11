@@ -8,7 +8,7 @@ export const useMessageStore = defineStore({
     state: () => ({
         isLoading: false,
         auth_id: computed(() => usePage().props.auth.user.id),
-        messages: {},
+        messages: [],
         contacts: {},
         token: null,
         conversationStatus: false,
@@ -20,20 +20,11 @@ export const useMessageStore = defineStore({
             active_status: null,
         },
         favorites: {},
+        pusherChannel: null,
+        pusherInstance: null,
     }),
     getters: {},
     actions: {
-        async authenticate() {
-            try {
-                const response = await axiosClient.post("/chat/api/chat/auth", {
-                    socket_id: "15886.48502",
-                    channel_name: "private-chatify",
-                });
-                this.token = response.data;
-            } catch (error) {
-                console.error(error);
-            }
-        },
         async fetchMessages(from) {
             try {
                 this.isLoading = true;

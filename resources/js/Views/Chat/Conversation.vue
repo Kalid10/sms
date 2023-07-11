@@ -6,7 +6,7 @@
     >
         <!-- top -->
         <div
-            class="flex min-h-[4.5rem] w-full items-center justify-between bg-gray-100 px-5"
+            class="flex min-h-[4.5rem] w-full items-center justify-between bg-zinc-200 px-5"
         >
             <div class="flex h-full w-full items-center justify-between pr-3">
                 <div class="flex w-6/12 items-center space-x-4">
@@ -35,11 +35,11 @@
                         </h1>
                         <h1
                             v-if="activeChat.active_status"
-                            class="text-xs text-violet-100"
+                            class="text-xs text-zinc-700"
                         >
                             Active Now
                         </h1>
-                        <h1 v-else class="text-xs text-zinc-400">Offline</h1>
+                        <h1 v-else class="text-xs text-zinc-700">Offline</h1>
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@
                         :class="
                             isInFavorites(activeChat.id).value
                                 ? 'text-yellow-400'
-                                : 'text-gray-300'
+                                : 'text-gray-400'
                         "
                         @click="messageStore.toggleFavorite(null)"
                     />
@@ -76,9 +76,9 @@
             style="background-image: url('/assets/chat.png')"
         >
             <div
-                v-if="messages.length"
+                v-if="messages?.length"
                 ref="chatContent"
-                class="scrollbar-hide flex h-full w-full flex-col items-center justify-between overflow-y-auto pb-4"
+                class="scrollbar-hide flex h-full w-full flex-col items-center justify-between overflow-y-auto pb-14"
             >
                 <div
                     class="scrollbar-hide mt-1 flex w-full flex-col space-y-4 overflow-y-auto p-4"
@@ -106,7 +106,7 @@
                                     text.from_id ===
                                     usePage().props.auth.user.id
                                         ? 'bg-gradient-to-bl from-violet-500 to-purple-500 text-white rounded-l-[10px] ml-11'
-                                        : 'bg-[#F5F6FA] rounded-r-[10px] mr-11'
+                                        : 'bg-zinc-500 text-white rounded-r-[10px] mr-11'
                                 "
                             >
                                 <p class="break-all text-sm">
@@ -152,7 +152,7 @@
             </div>
 
             <!-- bottom -->
-            <div class="flex w-11/12 px-5">
+            <div class="mb-2 flex w-8/12">
                 <div class="relative w-full">
                     <div
                         class="absolute inset-y-0 left-0 z-10 flex items-center"
