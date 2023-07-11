@@ -2,7 +2,7 @@
     <div
         class="flex min-h-screen w-full flex-col items-center space-y-5 bg-gray-50 py-5"
     >
-        <Title class="w-11/12" title="School Schedules" />
+        <Title class="w-11/12" :title="$t('schedulesIndex.schoolSchedules')" />
         <div class="flex w-11/12 flex-col justify-between lg:flex-row">
             <div
                 class="flex w-full justify-between bg-gray-50 lg:w-6/12 lg:space-x-10"
@@ -24,7 +24,7 @@
                         <TextInput
                             v-model="query"
                             class="w-4/5"
-                            placeholder="Search for schedule"
+                            :placeholder="$t('schedulesIndex.searchForSchedule')"
                         />
                     </div>
 
@@ -58,7 +58,7 @@
                 />
                 <SecondaryButton
                     v-if="isAdmin()"
-                    title="Add Event"
+                    :title="$t('schedulesIndex.addEvent')"
                     class="w-7/12 rounded-lg bg-zinc-800 !py-2 text-white"
                     @click="showAddModal = true"
                 />

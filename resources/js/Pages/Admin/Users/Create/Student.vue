@@ -5,12 +5,10 @@
                 class="col-span-4 col-start-1 mb-6 flex shrink-0 flex-col px-3 md:mb-0 md:w-full"
             >
                 <Heading
-                    value="Register new
-                    Student and parents"
+                    :value="$t('createStudent.headingOne')"
                 />
                 <Heading
-                    value="Register students and parents to efficiently manage academic progress, track achievements, and
-                facilitate communications."
+                    :value="$t('createStudent.headingTwo')"
                     size="sm"
                     class="text-xs !font-light text-gray-500"
                 />
@@ -18,15 +16,15 @@
             <div class="col-span-7 col-start-5">
                 <div class="w-full max-w-4xl rounded-lg bg-white">
                     <GuardianFormElement
-                        title="Guardian's form"
+                        :title="$t('createStudent.guardianFormElementTitle')"
                         @submit="submit"
                     >
                         <div class="flex gap-3">
                             <GuardianTextInput
                                 v-model="form.name"
                                 class="w-full"
-                                label="Student's name"
-                                placeholder="Name"
+                                :label="$t('createStudent.nameLabel')"
+                                :placeholder="$t('common.name')"
                                 :error="form.errors.name"
                                 required
                             />
@@ -36,16 +34,16 @@
                                 v-model="form.level_id"
                                 class="w-full cursor-pointer"
                                 :options="levelOptions"
-                                placeholder="Select students level(grade)"
-                                label="Student's level"
+                                :label="$t('createStudent.levelIdLabel')"
+                                :placeholder="$t('createStudent.levelIdPlaceholder')"
                                 required
                             />
                             <GuardianSelectInput
                                 v-model="form.gender"
                                 class="w-full cursor-pointer"
                                 :options="genderOptions"
-                                placeholder="Select Student's Gender"
-                                label="Student's gender"
+                                :label="$t('createStudent.genderLabel')"
+                                :placeholder="$t('createStudent.genderPlaceholder')"
                                 required
                             />
                         </div>
@@ -53,15 +51,15 @@
                         <div class="flex gap-3">
                             <GuardianDatePicker
                                 v-model="form.date_of_birth"
-                                label="Student's Date Of Birth"
+                                :label="$t('createStudent.studentDateOfBirth')"
                                 class="w-full cursor-pointer"
                             />
                             <GuardianSelectInput
                                 v-model="form.guardian_relation"
                                 class="w-full cursor-pointer"
                                 :options="relationOptions"
-                                placeholder="Select Parent's Relation"
-                                label="Parent's relation"
+                                :label="$t('createStudent.guardianRelationLabel')"
+                                :placeholder="$t('createStudent.guardianRelationPlaceholder')"
                                 required
                             />
                         </div>
@@ -70,17 +68,17 @@
                             <GuardianTextInput
                                 v-model="form.guardian_name"
                                 class="w-full"
-                                label="Guardian's name"
-                                placeholder="Name"
+                                :label="$t('createStudent.guardianName')"
+                                :placeholder="$t('common.name')"
                                 :error="form.errors.guardian_name"
                                 required
                             />
                             <GuardianTextInput
                                 v-model="form.guardian_phone_number"
                                 class="w-full"
-                                label="Guardian's phone number"
+                                :label="$t('createStudent.guardianPhoneNumberLabel')"
+                                :placeholder="$t('createStudent.guardianPhoneNumberPlaceholder')"
                                 type="number"
-                                placeholder="Phone Number"
                                 :error="form.errors.guardian_phone_number"
                                 required
                             />
@@ -90,16 +88,16 @@
                                 v-model="form.guardian_email"
                                 type="email"
                                 class="w-full"
-                                label="Guardian's email"
-                                placeholder="Email"
+                                :label="$t('createStudent.guardianEmailLabel')"
+                                :placeholder="$t('common.email')"
                                 :error="form.errors.guardian_email"
                             />
                             <GuardianSelectInput
                                 v-model="form.guardian_gender"
                                 class="w-full cursor-pointer"
                                 :options="genderOptions"
-                                placeholder="Select Guardian's Gender"
-                                label="Guardian's gender"
+                                :label="$t('createStudent.guardianGenderLabel')"
+                                :placeholder="$t('createStudent.guardianGenderPlaceholder')"
                                 required
                             />
                         </div>
@@ -112,9 +110,9 @@
             <div
                 class="col-span-4 col-start-1 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full"
             >
-                <Heading value="Register student and parents in bulk" />
+                <Heading :value="$t('createStudent.headingThree')" />
                 <Heading
-                    value="only upload an excel or csv file."
+                    :value="$t('createStudent.headingFour')"
                     size="sm"
                     class="text-xs !font-light text-gray-500"
                 />
@@ -147,12 +145,13 @@ import GuardianPrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianDatePicker from "@/Components/DatePicker.vue";
 import GuardianSelectInput from "@/Components/SelectInput.vue";
 import { value } from "lodash/seq";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 defineEmits(["file-uploaded"]);
 
 const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
+    { value: "male", label: t('common.male') },
+    { value: "female", label: t('common.female') },
 ];
 
 const handleFileUploaded = (file) => {
@@ -179,9 +178,9 @@ const levelOptions = [
 ];
 
 const relationOptions = [
-    { value: "father", label: "Father" },
-    { value: "mother", label: "Mother" },
-    { value: "other", label: "Other" },
+    { value: "father", label: t('createStudent.father') },
+    { value: "mother", label:  t('createStudent.mother') },
+    { value: "other", label:  t('createStudent.other') },
 ];
 
 const form = useForm({

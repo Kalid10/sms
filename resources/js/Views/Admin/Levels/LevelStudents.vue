@@ -4,10 +4,10 @@
             v-if="!!students.data"
             :title="
                 (selectedSection &&
-                    `Section ${selectedSection} Students List`) ||
+                    ` ${$t('common.section')} ${selectedSection} ${$t('levelStudent.studentsList')}`) ||
                 'Students List'
             "
-            :subtitle="`Students enrolled in ${parseLevel(level.name)} for ${
+            :subtitle="`${$t('levelStudent.studentsEnrolledIn')}'${parseLevel(level.name)} ${$t('common.for')} ${
                 schoolYear.name
             }`"
             class="w-fit"
@@ -32,7 +32,7 @@
                     <TextInput
                         v-model="searchKey"
                         class="w-full"
-                        placeholder="Search for a student by name"
+                        :placeholder="$t('levelStudent.searchKeyPlaceHolder')"
                     />
                 </div>
             </template>
@@ -42,20 +42,22 @@
                     <ExclamationTriangleIcon
                         class="mb-2 h-6 w-6 text-negative-50"
                     />
-                    <p class="text-sm font-semibold">No data found</p>
+                    <p class="text-sm font-semibold">
+                        {{ $t('levelStudent.noDataFound') }}
+                    </p>
                     <div v-if="searchKey.length">
                         <p
                             v-if="searchKey === null"
                             class="text-sm text-gray-500"
                         >
-                            No student has been enrolled in this section
+                            {{ $t('levelStudent.noStudentEnrolled') }}
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
-                            Your search query "<span
+                            {{ $t('levelStudent.yourSearchQuery') }} "<span
                                 class="font-medium text-black"
                                 >{{ searchKey }}</span
-                            >" did not match
-                            <span class="block">any student's name</span>
+                            >" {{ $t('levelStudent.didNotMatch') }}
+                            <span class="block">{{ $t('levelStudent.anyStudentName') }}</span>
                         </p>
                     </div>
                 </div>
@@ -114,7 +116,8 @@ import {
 import moment from "moment";
 import TextInput from "@/Components/TextInput.vue";
 import Pagination from "@/Components/Pagination.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const props = {
     pagination: {
         type: Object,
@@ -202,12 +205,12 @@ const studentsConfig = [
         options: ["male", "female"],
     },
     {
-        name: "Age",
+        name: t('common.age'),
         key: "date_of_birth",
         type: "custom",
     },
     {
-        name: "Last updated",
+        name: t('common.lastUpdated'),
         key: "updated_at",
         class: "text-gray-500 text-xs",
         align: "right",

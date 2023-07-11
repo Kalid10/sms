@@ -42,8 +42,7 @@
         </div>
         <div v-else class="w-full px-3 py-4 text-center text-sm font-light">
             <div class="mb-4 w-full">
-                We're unable to provide the list currently. Once the assessments
-                are completed, we'll be able to provide the list.
+                {{$t('studentsList.noList')}}
             </div>
             <!--            <LinkCell-->
             <!--                v-if="showLink"-->

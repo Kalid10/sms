@@ -4,7 +4,7 @@
             v-if="inProgressSession"
             class="flex w-full flex-col items-center justify-evenly space-y-1 rounded-md py-2 px-3 text-center text-gray-200"
         >
-            <div class="text-[0.6rem] font-light">Current Class</div>
+            <div class="text-[0.6rem] font-light">{{$t('currentClass.currentClass')}}</div>
             <div v-if="inProgressSession.batch_schedule?.batch_subject">
                 <div class="text-xl font-bold">
                     {{
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div v-else class="w-full text-center font-light text-white">
-            No Active Class
+            {{ $t('currentClass.noActiveClass')}}
         </div>
     </div>
     <div v-else-if="view === 'absentee'">
@@ -54,7 +54,7 @@
                 </div>
                 <SecondaryButton
                     class="w-fit !rounded-2xl bg-zinc-800 !px-5 font-bold uppercase text-white"
-                    title="Add Absentees"
+                    :title="$t('currentClass.buttonTitle')"
                     @click="showModal = true"
                 />
             </div>
@@ -64,7 +64,7 @@
                 <div class="text-6xl font-bold">
                     {{ yourInProgressSession.absentees?.length }}
                 </div>
-                <div class="text-sm font-light uppercase">Absent Students</div>
+                <div class="text-sm font-light uppercase">{{$t('currentClass.absentStudents')}}</div>
             </div>
 
             <Modal v-model:view="showModal">

@@ -5,7 +5,8 @@
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import WeeklySchedule from "@/Views/Admin/Batches/WeeklySchedule.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const batchSchedules = computed(() => usePage().props.batch_schedules);
 
 const formattedSchedules = computed(() => {
@@ -24,13 +25,13 @@ const formattedSchedules = computed(() => {
 
 const config = [
     {
-        name: "Subjects",
+        name: t('common.subject'),
         key: "subject",
         class: "font-semibold",
         align: "left",
     },
     {
-        name: "Period",
+        name: t('common.period'),
         key: "period",
         class: "text-gray-500 text-xs font-semibold",
         align: "left",
@@ -43,12 +44,12 @@ const config = [
         align: "left",
     },
     {
-        name: "Start Time",
+        name: t('batchesSchedules.startTime'),
         key: "startTime",
         align: "left",
     },
     {
-        name: "Teacher",
+        name:t('common.teacher'),
         key: "teacher",
         sortable: true,
         align: "left",

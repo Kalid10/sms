@@ -4,7 +4,7 @@
     >
         <div class="flex w-full justify-evenly">
             <Header
-                title="My Lesson Plans"
+                :title="$t('lessonPlansIndex.myLessonPlans')"
                 :select-input-options="months"
                 :selected-input="selectedMonth"
                 :show-current-class="false"
@@ -18,7 +18,7 @@
                     >
                         <AdjustmentsHorizontalIcon class="w-4 text-black" />
                         <SecondaryButton
-                            title="Filter lesson plans"
+                            :title="$t('lessonPlansIndex.filterLessonPlans')"
                             class="w-fit p-0"
                         />
                     </div>

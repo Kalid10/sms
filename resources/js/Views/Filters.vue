@@ -14,7 +14,7 @@
                                   (option) =>
                                       option.value === selectedSchoolYear
                               )?.label
-                            : 'school year'
+                            : $t('filters.schoolYear')
                     "
                     class="w-full"
                 />
@@ -33,7 +33,7 @@
                             ? semesterOptions?.find(
                                   (option) => option.value === selectedSemester
                               )?.label
-                            : 'semester'
+                            : $t('filters.semester')
                     "
                     class="w-full"
                 />
@@ -52,7 +52,7 @@
                             ? quarterOptions?.find(
                                   (option) => option.value === selectedQuarter
                               )?.label
-                            : 'quarter'
+                            : $t('filters.quarter')
                     "
                     class="w-full"
                 />
@@ -66,7 +66,7 @@
                     class="w-full rounded-lg bg-black px-4 py-2 text-white"
                     @click="applyFilters"
                 >
-                    Apply
+                     {{ $t('common.apply') }}
                 </button>
             </div>
         </div>

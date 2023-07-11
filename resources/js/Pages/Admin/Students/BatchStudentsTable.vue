@@ -2,12 +2,12 @@
     <div class="my-2 flex w-full flex-row gap-4">
         <div class="flex w-full items-center">
             <label class="mx-2 flex w-32 items-center text-sm text-gray-800"
-                >Select a grade:</label
+                >{{ $t('batchStudentTable.selectGrade')}}</label
             >
             <SelectInput
                 v-model="selectedBatchId"
                 :options="batchOptions"
-                placeholder="Select a batch"
+                :placeholder="$t('batchStudentTable.selectBatch')"
                 class="w-4/12 cursor-pointer"
             />
         </div>
@@ -25,7 +25,7 @@
         :selectable="false"
         :header="false"
         :filterable="false"
-        :title="'Students in ' + selectedBatchLabel"
+        :title="$t('batchStudentTable.studentsIn')+ selectedBatchLevel"
         :data="batchStudentData"
     >
         <template #name-column="{ data }">
@@ -56,17 +56,13 @@
                 <ExclamationTriangleIcon
                     class="mb-2 h-6 w-6 text-negative-50"
                 />
-                <p class="text-sm font-semibold">No data found</p>
+                <p class="text-sm font-semibold">{{ $t('batchStudentTable.noDataFound')}}</p>
                 <div v-if="searchKey.length">
                     <p v-if="searchKey === null" class="text-sm text-gray-500">
-                        No teacher has been enrolled
+                        {{ $t('batchStudentTable.noTeacherEnrolled')}}
                     </p>
                     <p v-else class="text-center text-sm text-gray-500">
-                        Your search query "<span
-                            class="font-medium text-black"
-                            >{{ searchKey }}</span
-                        >" did not match
-                        <span class="block">any teacher's name</span>
+                        <span v-html="$t('batchStudentTable.yourSearchQuery',{searchKey})"> </span>
                     </p>
                 </div>
             </div>
@@ -81,6 +77,8 @@ import { router, usePage } from "@inertiajs/vue3";
 import { debounce } from "lodash";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 import Pagination from "@/Components/Pagination.vue";
 
 const batchStudents = computed(() => {
@@ -155,7 +153,7 @@ watch([searchKey], () => {
 });
 const config = [
     {
-        name: "Name",
+        name: t('common.name'),
         key: "name",
         link: "/admin/students/{id}",
         align: "left",
@@ -167,10 +165,10 @@ const config = [
         type: "custom",
     },
     {
-        name: "Gender",
+        name: t('common.gender'),
         key: "gender",
         type: "enum",
-        options: ["female", "male"],
+        options: [t('common.female'), t('common.male')],
     },
 ];
 </script>

@@ -9,41 +9,31 @@
             <div class="flex w-full flex-col items-center gap-6">
                 <div>
                     <Heading class="text-center" size="md"
-                        >Congratulations!
+                        >{{ $t('gettingStartedSchoolSchedule.congratulations') }}
                     </Heading>
                     <Heading
                         class="text-center !font-normal text-gray-500"
                         size="sm"
-                        >You're almost done...
+                        >{{ $t('gettingStartedSchoolSchedule.almostDone') }}
                     </Heading>
                 </div>
 
                 <div class="flex flex-col gap-3">
                     <p class="max-w-2xl text-center text-sm text-gray-500">
-                        You have successfully registered your school's grades,
-                        subjects and classes. Next, you may proceed to add your
-                        school's schedule for the current school year. We will
-                        guide you through the process.
+                        {{ $t('gettingStartedSchoolSchedule.successfullyRegisteredMessage') }}
                     </p>
 
                     <p class="max-w-2xl text-center text-sm text-gray-500">
-                        As a first step, you may add the school year's first
-                        semester start date. This will be used to notify
-                        guardians and students of the start of the school year.
-                        Calendar events such as public holidays and school
-                        holidays can also be added here.
+                        {{ $t('gettingStartedSchoolSchedule.firstStepHint') }}
                     </p>
 
                     <p class="max-w-2xl text-center text-sm text-gray-500">
-                        Do not worry, if you are not sure of the exact dates,
-                        you can always add these events and more later. Once you
-                        are done here, we will finally take you to your
-                        Dashboard.
+                        {{ $t('gettingStartedSchoolSchedule.doNotWorryMessage') }}
                     </p>
                 </div>
 
                 <div class="flex flex-col gap-3">
-                    <Heading class="text-center" size="sm">Next Steps</Heading>
+                    <Heading class="text-center" size="sm">{{ $t('gettingStartedSchoolSchedule.nextSteps') }}</Heading>
 
                     <div class="flex w-full flex-col gap-2 md:flex-row">
                         <Card
@@ -57,7 +47,7 @@
                                     class="flex w-full items-center justify-center"
                                 >
                                     <h3 class="text-xs font-semibold">
-                                        Register Semester Start Date
+                                        {{ $t('gettingStartedSchoolSchedule.registerSemesterStartDate') }}
                                     </h3>
                                     <div
                                         class="flex max-w-0 grow justify-end opacity-0 transition-all duration-150 group-hover:max-w-full group-hover:opacity-100"
@@ -69,9 +59,7 @@
                                 </div>
 
                                 <h3 class="text-center text-xs">
-                                    Add the start of the school semester in your
-                                    calendar. Guardians, Teachers and Students
-                                    will be notified once they are registered
+                                    {{ $t('gettingStartedSchoolSchedule.AddStartOfSchoolSemester') }}
                                 </h3>
                             </div>
                         </Card>
@@ -86,7 +74,7 @@
                                     class="flex w-full items-center justify-center"
                                 >
                                     <h3 class="text-xs font-semibold">
-                                        View your School Schedule
+                                        {{ $t('gettingStartedSchoolSchedule.ViewSchoolSchedule') }}
                                     </h3>
                                     <div
                                         class="flex max-w-0 grow justify-end opacity-0 transition-all duration-150 group-hover:max-w-full group-hover:opacity-100"
@@ -98,10 +86,7 @@
                                 </div>
 
                                 <h3 class="text-center text-xs">
-                                    Use our school calendar to view and add all
-                                    important school events. This includes
-                                    public and school holidays, exams, and other
-                                    special days.
+                                    {{ $t('gettingStartedSchoolSchedule.useSchoolCalenderMessage') }}
                                 </h3>
                             </div>
                         </Card>
@@ -116,7 +101,7 @@
                                     class="flex w-full items-center justify-center"
                                 >
                                     <h3 class="text-xs font-semibold">
-                                        Proceed to your Dashboard
+                                        {{ $t('gettingStartedSchoolSchedule.proceedToDashboard') }}
                                     </h3>
                                     <div
                                         class="flex max-w-0 grow justify-end opacity-0 transition-all duration-150 ease-in group-hover:max-w-full group-hover:opacity-100"
@@ -128,10 +113,7 @@
                                 </div>
 
                                 <h3 class="text-center text-xs">
-                                    Alternatively, you can skip this step and
-                                    proceed to your Dashboard. You can always
-                                    view, add, update and delete events to your
-                                    calendar later.
+                                    {{ $t('gettingStartedSchoolSchedule.youCanSkipMessage') }}
                                 </h3>
                             </div>
                         </Card>
@@ -148,9 +130,9 @@
             <div
                 class="flex h-[57px] w-full flex-col justify-center border-b pl-12"
             >
-                <h3 class="font-semibold">Add new Event</h3>
+                <h3 class="font-semibold">{{ $t('gettingStartedSchoolSchedule.addNewEvent')}} </h3>
                 <h3 class="text-sm leading-none text-gray-500">
-                    Add a new event to your school calendar.
+                    {{ $t('gettingStartedSchoolSchedule.addEvent')}}
                 </h3>
             </div>
 
@@ -158,14 +140,14 @@
                 <TextInput
                     v-model="formData.title"
                     required
-                    placeholder="Title for your new event"
-                    label="Event Name"
+                    :placeholder="$t('gettingStartedSchoolSchedule.eventTitlePlaceHolder')"
+                    :label="$t('gettingStartedSchoolSchedule.eventTitleLabel')"
                 />
 
                 <label class="flex flex-col gap-1">
                     <span class="">
                         <span class="pl-0.5 text-sm font-semibold text-gray-500"
-                            >Event Description</span
+                            >{{ $t('gettingStartedSchoolSchedule.eventDescription')}} </span
                         >
                         <span class="pl-0.5 text-xs text-red-600">*</span>
                     </span>
@@ -173,7 +155,7 @@
                         v-model="formData.body"
                         rows="5"
                         required
-                        placeholder="What is your event about? Write your description here."
+                        :placeholder="$t('gettingStartedSchoolSchedule.eventBodyPlaceHolder')"
                         class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-500"
                     ></textarea>
                 </label>
@@ -183,7 +165,7 @@
                         <Toggle
                             v-model="allDay"
                             label-location="top"
-                            label="All Day"
+                            :label="$t('gettingStartedSchoolSchedule.allDayLabel')"
                             class="min-w-fit"
                         />
                         <DatePicker
@@ -204,20 +186,20 @@
                         required
                         class="w-full"
                         :options="eventTypes"
-                        placeholder="Pick the type of Event"
-                        label="Event Type"
+                        :placeholder="$t('gettingStartedSchoolSchedule.pickTypeOfEventPlaceHolder')"
+                        :label="$t('gettingStartedSchoolSchedule.pickTypeOfEventLabel')"
                     />
                     <TextInput
                         v-model="tags"
                         label="Tags"
                         class="w-full"
-                        placeholder="holiday, special day, event"
+                        :placeholder="$t('gettingStartedSchoolSchedule.tagsPlaceHolder')"
                     />
                 </div>
 
                 <div class="flex items-center justify-end gap-3">
-                    <TertiaryButton @click="clear">Clear</TertiaryButton>
-                    <PrimaryButton @click="submit">Create Event</PrimaryButton>
+                    <TertiaryButton @click="clear">{{ $t('gettingStartedSchoolSchedule.clear')}}</TertiaryButton>
+                    <PrimaryButton @click="submit">{{ $t('gettingStartedSchoolSchedule.createEvent')}}</PrimaryButton>
                 </div>
             </div>
 
@@ -226,7 +208,7 @@
                     class="h-12 w-full place-items-center rounded-md bg-black font-semibold text-white"
                     @click="goToDashboard"
                 >
-                    Go to Dashboard
+                    {{ $t('gettingStartedSchoolSchedule.goToDashboard')}}
                 </button>
             </div>
         </div>
@@ -244,20 +226,20 @@
         <FormElement
             v-model:show-modal="isNewEventModalOpened"
             modal
-            title="Add new Event"
-            subtitle="Add a new event to the current school year in your school's schedule"
+            :title="$t('gettingStartedSchoolSchedule.addNewEventFormTitle')"
+            :subtitle="$t('gettingStartedSchoolSchedule.addNewEventFormSubtitle')"
         >
             <TextInput
                 v-model="formData.title"
                 required
-                placeholder="Title for your new event"
-                label="Event Name"
+                :placeholder="$t('gettingStartedSchoolSchedule.eventTitlePlaceHolder')"
+                :label="$t('gettingStartedSchoolSchedule.eventTitleLabel')"
             />
 
             <label class="flex flex-col gap-1">
                 <span class="">
                     <span class="pl-0.5 text-sm font-semibold text-gray-500"
-                        >Event Description</span
+                        >{{ $t('gettingStartedSchoolSchedule.eventDescription')}} </span
                     >
                     <span class="pl-0.5 text-xs text-red-600">*</span>
                 </span>
@@ -265,7 +247,7 @@
                     v-model="formData.body"
                     rows="5"
                     required
-                    placeholder="What is your event about? Write your description here."
+                    :placeholder="$t('gettingStartedSchoolSchedule.eventBodyPlaceHolder')"
                     class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-500"
                 ></textarea>
             </label>
@@ -275,7 +257,7 @@
                     <Toggle
                         v-model="allDay"
                         label-location="top"
-                        label="All Day"
+                        :label="$t('gettingStartedSchoolSchedule.allDayLabel')"
                         class="min-w-fit"
                     />
                     <DatePicker
@@ -297,8 +279,8 @@
                     required
                     class="w-full"
                     :options="eventTypes"
-                    placeholder="Pick the type of Event"
-                    label="Event Type"
+                    :placeholder="$t('gettingStartedSchoolSchedule.pickTypeOfEventPlaceHolder')"
+                    :label="$t('gettingStartedSchoolSchedule.pickTypeOfEventLabel')"
                 />
             </div>
         </FormElement>
@@ -320,7 +302,8 @@ import Card from "@/Components/Card.vue";
 import Heading from "@/Components/Heading.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const isNewEventModalOpened = ref(false);
 const welcomeModal = ref(true);
 const closeNewEventFormOnClick = ref(true);
@@ -368,15 +351,15 @@ function submit() {
 const eventTypes = [
     {
         value: "closed",
-        label: "No School Day",
+        label: t('gettingStartedSchoolSchedule.noSchoolDay'),
     },
     {
         value: "half_closed",
-        label: "Half Day Closed",
+        label: t('gettingStartedSchoolSchedule.halfDayClosed'),
     },
     {
         value: "not_closed",
-        label: "School Day",
+        label: t('gettingStartedSchoolSchedule.schoolDay'),
     },
 ];
 

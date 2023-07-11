@@ -6,13 +6,10 @@
             class="flex w-full flex-col items-center rounded-lg p-4 text-center lg:absolute lg:top-6 lg:right-0 lg:w-8/12"
         >
             <div class="text-4xl font-medium">
-                Welcome to our AI-Powered Question Preparation Platform
+               {{ $t('questionPreparation.welcome') }}
             </div>
             <div class="w-10/12 py-1 text-sm font-light">
-                Embrace our AI-powered platform that creates custom assessments
-                from your lesson plans, facilitating a streamlined teaching
-                experience. Immerse yourself in a process where you teach more
-                and prepare less, helping reshape the future of education.
+                {{ $t('questionPreparation.description') }}
             </div>
         </div>
 
@@ -23,12 +20,12 @@
                 class="flex w-full flex-col items-center space-y-6 rounded-lg bg-white px-5 pt-3 pb-5 shadow-sm lg:w-5/12"
             >
                 <div class="text-xl font-light">
-                    Question Generation Customization
+                    {{ $t('questionPreparation.questionGeneration') }}
                 </div>
                 <SelectInput
                     v-model="form.assessment_type_id"
                     class="w-full"
-                    label="Select Question Type"
+                    :label="$t('questionPreparation.selectQuestionType')"
                     :options="filteredAssessmentType"
                     :error="form.errors.assessment_type_id"
                 />
@@ -36,8 +33,8 @@
                     v-if="form.assessment_type_id"
                     v-model="form.number_of_questions"
                     class="w-full"
-                    label="Number Of Questions?"
-                    placeholder="How Many Questions?"
+                    :label="$t('questionPreparation.numberOfQuestions')"
+                    :placeholder="$t('questionPreparation.howManyQuestions')"
                     type="number"
                     :error="form.errors.number_of_questions"
                 />
@@ -46,13 +43,10 @@
                         <label
                             for="large-range"
                             class="block text-sm font-medium"
-                            >Set Difficulty Level for Questions</label
+                            >{{ $t('questionPreparation.setDifficultyLevel') }}</label
                         >
                         <p class="mb-2 py-1 text-xs font-light text-gray-600">
-                            Use this slider to set the difficulty level for the
-                            generated questions. Moving the slider to the left
-                            will make questions easier, while moving it to the
-                            right will make them more challenging.
+                            {{ $t('questionPreparation.hintForDifficulty') }}
                         </p>
                     </div>
 
@@ -70,8 +64,8 @@
                     class="flex w-full flex-col justify-evenly space-y-2 lg:flex-row lg:space-y-0 lg:space-x-4"
                 >
                     <QuestionSource
-                        title="Manual Input"
-                        description="Opt for manual input if you prefer to generate questions based on your unique inputs and parameters. This option allows for greater control and specificity."
+                        :title="$t('questionPreparation.manualInput')"
+                        :description="$t('questionPreparation.manualInputDescription')"
                         source="custom"
                         :selected-source="form.question_source"
                         @click="
@@ -81,8 +75,8 @@
                     />
 
                     <QuestionSource
-                        title="Lesson Plans"
-                        description="Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we'll load your plans, and you can choose one for us to craft tailored questions."
+                        :title="$t('questionPreparation.lessonPlans')"
+                        :description="$t('questionPreparation.lessonPlanDescription')"
                         source="lesson-plans"
                         :selected-source="form.question_source"
                         @click="form.question_source = 'lesson-plans'"
@@ -93,13 +87,13 @@
                     v-if="form.question_source === 'custom'"
                     v-model="form.manual_question"
                     class="w-full"
-                    label="Question"
-                    placeholder="Enter Question"
+                    :label="$t('common.question')"
+                    :placeholder="$t('questionPreparation.enterQuestion')"
                     rows="10"
                     :error="form.errors.manual_question"
                 />
                 <SecondaryButton
-                    title="Submit"
+                    :title="$t('common.submit')"
                     class="w-10/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
                     @click="submit"
                 />

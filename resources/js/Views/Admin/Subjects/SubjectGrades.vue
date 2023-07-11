@@ -13,7 +13,7 @@
                     {{ category[0] }}
                 </div>
                 <h3 class="text-sm font-semibold text-gray-500">
-                    {{ category }} Levels
+                    {{ category }} {{ $t('subjectGrades.levels')}}
                 </h3>
             </div>
 
@@ -28,7 +28,7 @@
                 >
                     <div class="flex flex-col gap-1">
                         <h3 class="text-sm font-semibold text-gray-500">
-                            Sections
+                            {{ $t('subjectGrades.sections')}}
                         </h3>
                         <div class="flex gap-3">
                             <div

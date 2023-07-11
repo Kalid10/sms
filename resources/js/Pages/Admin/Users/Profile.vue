@@ -18,9 +18,9 @@
                 <div
                     class="flex w-full shrink-0 flex-col justify-center space-y-2"
                 >
-                    <Heading value="Profile" />
+                    <Heading :value="$t('userProfile.profile')"/>
                     <Heading
-                        value="Update your personal information and make sure your profile accurately reflects who you are."
+                        :value="$t('userProfile.headingTwo')"
                         size="sm"
                         class="text-xs !font-light text-gray-500"
                     />
@@ -30,7 +30,7 @@
                         <UserTextInput
                             v-model="profileForm.name"
                             :placeholder="user.name"
-                            label="Name"
+                            :label="$t('common.name')"
                             :error="profileForm.errors.name"
                         />
 
@@ -38,7 +38,7 @@
                             <UserTextInput
                                 v-model="profileForm.email"
                                 class="w-5/12"
-                                label="Email"
+                                :label="$t('common.email')"
                                 type="Email"
                                 :placeholder="user.email"
                                 :error="profileForm.errors.email"
@@ -50,7 +50,7 @@
                                 class="w-5/12"
                                 :placeholder="user.username || 'Johndoe'"
                                 :error="profileForm.errors.username"
-                                label="User Name"
+                                :label="$t('userProfile.usernameLabel')"
                                 required
                             />
                         </div>
@@ -58,7 +58,7 @@
                             <UserTextInput
                                 v-model="profileForm.phone_number"
                                 class="w-5/12"
-                                label="Phone Number"
+                                :label="$t('userProfile.phoneNumberLabel')"
                                 :placeholder="
                                     user.phone_number || '09123456789'
                                 "
@@ -69,14 +69,14 @@
                                 v-model="profileForm.gender"
                                 class="w-5/12 cursor-pointer"
                                 :options="genderOptions"
-                                placeholder="select gender"
-                                label="Gender"
+                                :label="$t('common.gender')"
+                                :placeholder="$t('userProfile.genderPlaceholder')"
                                 required
                             />
                         </div>
                         <div class="flex justify-end py-3">
                             <PrimaryButton
-                                title="Update Profile"
+                                :title="$t('userProfile.updateProfile')"
                                 @click="submitProfileForm"
                             />
                         </div>
@@ -90,9 +90,9 @@
                 <div
                     class="mb-6 flex shrink-0 flex-col space-y-2 md:mb-0 md:w-full"
                 >
-                    <Heading value="Password" />
+                    <Heading :value="$t('common.password')" />
                     <Heading
-                        value="Stay ahead of potential security threats by updating your password now."
+                        :value="$t('userProfile.stayAheadOf')"
                         size="sm"
                         class="text-xs !font-light text-gray-500"
                     />
@@ -101,33 +101,33 @@
                     <div class="w-full space-y-4 rounded-lg">
                         <UserTextInput
                             v-model="passwordForm.current_password"
-                            label="Current Password"
+                            :label="$t('userProfile.currentPasswordLabel')"
                             type="password"
                             :error="passwordForm.errors.current_password"
-                            placeholder="Enter your current password"
+                            :placeholder="$t('userProfile.currentPasswordPlaceholder')"
                             required
                         />
 
                         <UserTextInput
                             v-model="passwordForm.password"
-                            label="New Password"
+                            :label="$t('userProfile.passwordLabel')"
+                            :placeholder="$t('userProfile.passwordPlaceholder')"
                             type="password"
                             :error="passwordForm.errors.password"
-                            placeholder="Enter your new password"
                             required
                         />
 
                         <UserTextInput
                             v-model="passwordForm.password_confirmation"
-                            label="Confirm Password"
+                            :label="$t('userProfile.passwordConfirmationLabel')"
+                            :placeholder="$t('userProfile.passwordPlaceholder')"
                             type="password"
                             :error="passwordForm.errors.password_confirmation"
-                            placeholder="Confirm your new password"
                             required
                         />
                         <div class="flex justify-end py-3">
                             <PrimaryButton
-                                title="Update Password"
+                                :title="$t('userProfile.updatePassword')"
                                 @click="submitPasswordForm"
                             />
                         </div>
@@ -143,13 +143,11 @@
                 <h1
                     class="w-full text-3xl font-extrabold leading-none lg:text-6xl"
                 >
-                    <span class="w-full">Hello 👋🏼 {{ user.name }}</span>
+                    <span class="w-full">{{ $t('userProfile.hello')}} 👋🏼 {{ user.name }}</span>
                 </h1>
 
                 <h3 class="py-1 font-light text-gray-500">
-                    Welcome to your profile page, where you can view and update
-                    your personal information and security settings. Enjoy your
-                    journey with us!
+                    {{ $t('userProfile.description')}}
                 </h3>
             </div>
 

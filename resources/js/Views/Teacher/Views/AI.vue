@@ -5,15 +5,14 @@
         <div
             class="-skew-x-3 bg-violet-300 px-3 text-xl font-bold uppercase text-zinc-800"
         >
-            Artificial Intelligence
+            {{$t('ai.artificialIntelligence')}}
         </div>
         <div class="px-3 text-center text-purple-50">
-            Empower your teaching with our AI Copilot, crafting unique questions
-            and sparking enriching conversations that ignite curiosity.
+            {{$t('ai.empowerYourTeaching')}}
         </div>
         <SecondaryButton
             class="w-6/12 !rounded-2xl bg-violet-300 font-semibold text-zinc-800"
-            title="Explore More"
+            :title="$t('ai.exploreMore')"
             @click="router.get('/teacher/copilot')"
         />
     </div>
@@ -21,5 +20,6 @@
 <script setup>
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { router } from "@inertiajs/vue3";
+import Header from "@/Views/Teacher/Views/Header.vue";
 </script>
 <style scoped></style>

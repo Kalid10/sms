@@ -50,7 +50,8 @@ import UserTableElement from "@/Components/TableElement.vue";
 import { debounce } from "lodash";
 import { Link, router, usePage } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const searchKey = ref(usePage().props.searchKey);
 const search = debounce(() => {
     router.get(
@@ -82,19 +83,19 @@ const userDetail = (row) => {
 };
 const config = [
     {
-        name: "Name",
+        name: t('common.name'),
         key: "name",
         sortable: true,
         searchable: true,
     },
     {
-        name: "Email",
+        name: t('common.email'),
         key: "email",
         sortable: true,
         searchable: true,
     },
     {
-        name: "Type",
+        name: t('common.type'),
         key: "type",
         sortable: true,
         searchable: true,

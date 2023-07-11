@@ -6,7 +6,7 @@
             v-if="!feedbacks.data.length"
             class="py-5 px-3 text-center text-sm font-light"
         >
-            No Feedbacks
+            {{ $t('common.noFeedbacks')}}
         </div>
 
         <div

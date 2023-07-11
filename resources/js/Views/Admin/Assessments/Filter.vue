@@ -3,7 +3,7 @@
         class="flex w-full flex-col justify-between space-y-4 rounded-lg bg-zinc-50 p-3 text-black shadow-sm"
     >
         <Loading v-if="showLoading" is-full-screen color="secondary" />
-        <div class="pl-2 text-sm font-light text-black">Filters</div>
+        <div class="pl-2 text-sm font-light text-black">{{ $t('assessmentsFilter.filters') }} </div>
         <div class="flex w-full justify-between">
             <SelectInput
                 v-if="levelOptions?.length"
@@ -14,7 +14,7 @@
                         ? levelOptions?.find(
                               (option) => option.value === selectedLevel
                           )?.label
-                        : 'Select Class'
+                        : $t('assessmentsFilter.selectClass')
                 "
                 class="w-5/12"
             />
@@ -27,7 +27,7 @@
                         ? subjectOptions?.find(
                               (option) => option.value === selectedSubject
                           )?.label
-                        : 'Select Subject'
+                        : $t('assessmentsFilter.selectSubject')
                 "
                 class="w-5/12"
             />
@@ -44,14 +44,14 @@
                               (option) =>
                                   option.value === selectedAssessmentType
                           )?.label
-                        : 'Select Assessment Type'
+                        : $t('assessmentsFilter.selectAssessmentType')
                 "
                 class="w-5/12"
             />
             <TextInput
                 v-model="query"
                 class="w-5/12"
-                placeholder="Search Assessment"
+                :placeholder="$t('assessmentsFilter.searchAssessment')"
             />
         </div>
     </div>

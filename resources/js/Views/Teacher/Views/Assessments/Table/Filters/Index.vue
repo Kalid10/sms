@@ -13,14 +13,14 @@
             >
                 <TextInput
                     v-model="search"
-                    placeholder="Search Assessment Title"
+                    :placeholder="$t('filtersIndex.searchAssessmentTitle')"
                     class="md:w-6/12"
                     class-style="h-8 bg-white border-gray-300 text-black placeholder:text-gray-500 placeholder:text-xs focus:border-none focus:ring-violet-500"
                 />
                 <SelectInput
                     v-model="selectedBatchSubjectId"
                     :options="batchSubjectOptions"
-                    placeholder="Select Subject"
+                    :placeholder="$t('filtersIndex.selectSubject')"
                     class="z-[100] w-full lg:w-5/12"
                 />
             </div>
@@ -30,7 +30,7 @@
                 @click="$emit('create')"
             >
                 <SquaresPlusIcon class="w-4" />
-                <div>Create Assessment</div>
+                <div>{{ $t('filtersIndex.createAssessment')}}</div>
             </div>
         </div>
 
@@ -64,7 +64,7 @@
             class="fixed z-50 h-fit w-9/12 rounded-md bg-gradient-to-br from-zinc-200 via-zinc-200 to-zinc-100 py-2 px-1 shadow-md backdrop-blur-none lg:ml-10 lg:w-80"
         >
             <div class="flex w-full justify-between">
-                <div class="px-2 text-sm">Filters</div>
+                <div class="px-2 text-sm">{{ $t('filtersIndex.filters')}}</div>
                 <XMarkIcon
                     class="w-4 cursor-pointer text-black hover:text-red-600"
                     @click="showFilter = !showFilter"
@@ -76,7 +76,7 @@
                     <SelectInput
                         v-model="selectedAssessmentStatus"
                         :options="assessmentStatusOptions"
-                        placeholder="Select Status"
+                        :placeholder="$t('filtersIndex.selectStatus')"
                         class="w-full"
                     />
                     <TrashIcon
@@ -92,7 +92,7 @@
                     <SelectInput
                         v-model="selectedAssessmentTypeId"
                         :options="selectedBatchAssessmentTypes"
-                        placeholder="Assessment Type"
+                        :placeholder="$t('filtersIndex.assessmentType')"
                         class="w-full"
                     />
                     <TrashIcon
@@ -106,7 +106,7 @@
                         v-model="selectedSchoolYear"
                         :options="schoolYearOptions"
                         class="w-full"
-                        placeholder="Select SchoolYear"
+                        :placeholder="$t('filtersIndex.selectSchoolYear')"
                     />
                     <TrashIcon
                         class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 group-hover:w-4 group-hover:opacity-100"
@@ -121,7 +121,7 @@
                         v-model="selectedSemester"
                         :options="semesterOptions"
                         class="w-full"
-                        placeholder="Select Semester"
+                        :placeholder="$t('filtersIndex.SelectSemester')"
                     />
                     <TrashIcon
                         class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 group-hover:w-4 group-hover:opacity-100"
@@ -136,7 +136,7 @@
                         v-model="selectedQuarter"
                         :options="quarterOptions"
                         class="w-full"
-                        placeholder="Select Quarter"
+                        :placeholder="$t('filtersIndex.SelectQuarter')"
                     />
                     <TrashIcon
                         class="ml-1 w-1 cursor-pointer text-red-600 opacity-0 group-hover:w-4 group-hover:opacity-100"
@@ -151,7 +151,7 @@
                     @click="showFilter = false"
                 >
                     <CheckCircleIcon class="w-3 text-gray-100" />
-                    <span> DONE</span>
+                    <span>{{ $t('filtersIndex.done')}}</span>
                 </div>
                 <div
                     v-if="showFilter"
@@ -159,7 +159,7 @@
                     @click="clearFilters"
                 >
                     <TrashIcon class="w-3 text-gray-100" />
-                    <span> CLEAR ALL</span>
+                    <span>{{ $t('filtersIndex.clearAll')}}</span>
                 </div>
             </div>
         </div>
@@ -181,7 +181,9 @@ import { onClickOutside } from "@vueuse/core";
 import SelectedFilters from "@/Views/Teacher/Views/Assessments/Table/Filters/SelectedFilters.vue";
 import Loading from "@/Components/Loading.vue";
 import { isAdmin, isTeacher } from "@/utils";
-
+import {useI18n} from "vue-i18n";
+import UpdateTextInput from "@/Components/TextInput.vue";
+const {t} = useI18n()
 const emit = defineEmits(["create", "filterEnabled"]);
 
 const pageProps = usePage().props;
@@ -269,12 +271,12 @@ const batchSubjectOptions = computed(() =>
 );
 
 const assessmentStatusOptions = computed(() => [
-    { label: "All", value: null },
-    { label: "Published", value: "published" },
-    { label: "Completed", value: "completed" },
-    { label: "Marking", value: "marking" },
-    { label: "Draft", value: "draft" },
-    { label: "Cancelled", value: "cancelled" },
+    { label: t('filtersIndex.all'), value: null },
+    { label: t('filtersIndex.published'), value: "published" },
+    { label: t('filtersIndex.completed'), value: "completed" },
+    { label: t('filtersIndex.marking'), value: "marking" },
+    { label: t('filtersIndex.draft'),  value: "draft" },
+    { label: t('filtersIndex.canceled'), value: "cancelled" },
 ]);
 
 // Selected Filter Values

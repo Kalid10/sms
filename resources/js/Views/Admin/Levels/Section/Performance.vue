@@ -1,13 +1,13 @@
 <template>
     <div class="flex w-full flex-col space-y-6 rounded-lg">
-        <BatchPerformance :grade="batch?.grade" />
+        <BatchPerformance :grade="batch?.grade"/>
         <div
             class="flex w-full items-center justify-between divide-x divide-gray-100"
         >
             <div class="w-6/12">
                 <StudentsList
                     progress-type="up"
-                    title="Top Students"
+                    :title="$t('sectionPerformance.topStudents')"
                     :icon="ArrowTrendingUpIcon"
                     :students="batch?.top_students"
                     :show-link="false"
@@ -17,7 +17,7 @@
             <div class="w-6/12">
                 <StudentsList
                     progress-type="down"
-                    title="Students Falling Behind"
+                    :title="$t('sectionPerformance.studentsFalling')"
                     :icon="ArrowTrendingDownIcon"
                     :students="batch?.bottom_students"
                     :show-link="false"
@@ -33,6 +33,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
+import EmptyView from "@/Views/EmptyView.vue";
 
 defineProps({
     batch: {

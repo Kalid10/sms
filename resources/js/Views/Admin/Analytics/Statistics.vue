@@ -17,13 +17,13 @@
                         :disabled="currentIndex === 0"
                         class="absolute bottom-0 left-0 mb-16 h-7 w-7 cursor-pointer rounded fill-black stroke-black text-white hover:bg-blue-500"
                         @click="previous"
-                    >Previous
+                    >{{ $t('common.previous') }}
                     </ChevronLeftIcon>
                     <ChevronRightIcon
                         :disabled="currentIndex === cards.length - 1"
                         class="absolute bottom-0 right-0 mb-16 h-7 w-7 cursor-pointer rounded fill-black stroke-black text-white hover:bg-blue-500"
                         @click="next"
-                    >Next
+                    >{{ $t('common.next') }}
                     </ChevronRightIcon>
 
 
@@ -52,7 +52,8 @@ import {
 } from "@heroicons/vue/24/outline";
 import {onMounted, onUnmounted, ref} from "vue";
 import {router} from "@inertiajs/vue3";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n();
 const props = defineProps({
     teachersCount: {
         type: Number,
@@ -81,10 +82,10 @@ let intervalId = null;
 const currentIndex = ref(0)
 
 const cards = ref([
-    {title: 'Teachers', content: props.teachersCount, icon: UsersIcon},
-    {title: 'Students', content: props.studentsCount, icon: AcademicCapIcon},
-    {title: 'Subjects', content: props.subjectsCount, icon: BookOpenIcon},
-    {title: 'Administrators', content: props.adminsCount, icon: UserIcon},
+    {title: t('common.teachers'), content: props.teachersCount, icon: UsersIcon},
+    {title: t('common.students'), content: props.studentsCount, icon: AcademicCapIcon},
+    {title: t('common.subjects'), content: props.subjectsCount, icon: BookOpenIcon},
+    {title: t('common.administrators'), content: props.adminsCount, icon: UserIcon},
 ])
 
 const next = () => {

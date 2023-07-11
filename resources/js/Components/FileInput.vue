@@ -10,10 +10,10 @@
             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                 <CloudArrowUpIcon class="h-12 w-12 text-gray-400"/>
                 <p class="pt-5 text-sm text-gray-500">
-                    <span class="font-bold">Click to upload</span> or drag and drop
+                    <span v-html="$t('fileInput.uploadText')" />
                 </p>
                 <p class="text-xs text-gray-500">
-                    (MAX. {{
+                    ( {{ $t('fileInput.max') }} {{
                         maxFileSize && !isNaN(maxFileSize) ? (maxFileSize / 1024 / 1024).toFixed(2) + ' MB' : 'N/A'
                     }}, {{ acceptedTypes }})
                 </p>
@@ -29,14 +29,14 @@
             </div>
             <div v-if="show" class="my-2">
         <span v-if="form.file" class="text-sm font-light">
-          file: {{ form.file.name }} ({{ getFileSize(form.file.size) }})
+        {{ $t('fileInput.file')}} {{ form.file.name }} ({{ getFileSize(form.file.size) }})
         </span>
                 <span v-else class="text-sm font-light">
-          No file selected.
+                    {{ $t('fileInput.noFileSelected')}}
         </span>
             </div>
             <div v-if="show">
-                <PrimaryButton @click="handleUpload">Upload</PrimaryButton>
+                <PrimaryButton @click="handleUpload">{{ $t('fileInput.upload')}}</PrimaryButton>
             </div>
         </label>
     </div>

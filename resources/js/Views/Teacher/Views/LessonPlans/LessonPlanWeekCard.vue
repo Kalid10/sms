@@ -4,11 +4,11 @@
         class="!bg-white!p-3 h-full !max-w-[26rem] !rounded-b-none !border-b-0 !border-gray-200 !font-light text-black !shadow-sm drop-shadow-sm"
     >
         <template #title>
-            <div class="pb-1 text-sm font-medium">Week {{ index }}</div>
+            <div class="pb-1 text-sm font-medium">{{ $t('lessonPlanWeekCardNew.week')}} {{ index }}</div>
         </template>
         <template #subtitle>
             <span v-if="batchSessions.length > 1">
-                Class sessions for the week starting from
+                {{ $t('lessonPlanWeekCardNew.classSessionsWeekStarting')}}
                 <span class="inline-block font-semibold">
                     {{
                         moment(batchSessions[0]["date"])
@@ -16,7 +16,7 @@
                             .format("MMMM Do")
                     }}
                 </span>
-                and ending on
+                {{ $t('lessonPlanWeekCardNew.andEndingOn')}}
                 <span class="inline-block font-semibold">
                     {{
                         moment(batchSessions[0]["date"])
@@ -36,7 +36,7 @@
             >
                 <EmptyView
                     class="mt-20"
-                    :title="'No Class Sessions for Week ' + index + '!'"
+                    :title="$t('lessonPlanWeekCardNew.noClassSessions')  + index + '!'"
                 />
             </div>
 

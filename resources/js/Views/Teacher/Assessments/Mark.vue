@@ -37,7 +37,7 @@
                 <div
                     class="-skew-x-3 bg-zinc-800 px-3 py-1 text-3xl font-bold italic text-white"
                 >
-                    {{ assessment.title }} {{ $t('views.teacher.assessments.assessmentsMark.info') }}
+                    {{ assessment.title }} {{ $t('teacherAssessmentsMark.info') }}
                 </div>
 
                 <MarkStat
@@ -70,15 +70,15 @@
                     >
                         <ExclamationTriangleIcon class="w-4 text-red-600" />
                         <span>
-                        {{ $t('views.teacher.assessments.assessmentsMark.caution') }}
+                        {{ $t('teacherAssessmentsMark.caution') }}
                         </span>
                     </div>
                     <div class="text-xs font-light">
-                        {{ $t('views.teacher.assessments.assessmentsMark.message') }}
+                        {{ $t('teacherAssessmentsMark.message') }}
                     </div>
                     <SecondaryButton
                         :is-disabled="isLoading"
-                        :title="$t('views.teacher.assessments.assessmentsMark.finishMarking')"
+                        :title="$t('teacherAssessmentsMark.finishMarking')"
                         class="w-3/5 rounded-2xl bg-zinc-800 text-white"
                         @click.="insertStudentsAssessment"
                     />

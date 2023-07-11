@@ -1,6 +1,6 @@
 <template>
     <div class="my-5 flex min-h-full w-10/12 flex-col rounded-lg">
-        <Title class="pb-8" title="Grades" />
+        <Title class="pb-8" :title="$t('common.grades')" />
         <TableElement
             :columns="config"
             :data="levels"
@@ -16,9 +16,9 @@
                         class="flex w-full items-center justify-between space-x-5 pb-4"
                     >
                         <!--    TODO: Implement Search-->
-                        <TextInput placeholder="Search Grades" class="w-6/12" />
+                        <TextInput :placeholder="$t('levelIndex.searchGrades')" class="w-6/12" />
                         <SecondaryButton
-                            title="Go to Level Categories"
+                            :title="$t('levelIndex.goToLevelCategories')"
                             value=" Go To Level Categories"
                             class="!rounded-2xl bg-zinc-700 text-white"
                         />
@@ -68,7 +68,8 @@ import moment from "moment/moment";
 import TextInput from "@/Components/TextInput.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const levels = computed(() => {
     return usePage().props.levels.map((level) => {
         return {
@@ -87,17 +88,17 @@ const levels = computed(() => {
 
 const config = [
     {
-        name: "Level Category",
+        name: t('levelIndex.levelCategory'),
         key: "level",
         type: "custom",
     },
     {
-        name: "Sections",
+        name: t('common.sections'),
         key: "batches",
         type: "custom",
     },
     {
-        name: "Updated at",
+        name: t('levelIndex.updatedAt'),
         key: "updated_at",
         type: "custom",
     },

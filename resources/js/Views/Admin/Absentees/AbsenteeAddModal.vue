@@ -21,7 +21,7 @@
                     v-model="searchKey"
                     class="w-11/12"
                     class-style="rounded-2xl focus:ring-1 focus:border-none focus:ring-zinc-800 focus:outline-none placeholder:text-xs"
-                    placeholder="Search for a staff member by name"
+                    :placeholder="$t('absenteeAddModal.searchStaffMember')"
                 />
 
                 <Loading v-if="showLoading" color="secondary" />
@@ -55,8 +55,8 @@
                         <div class="flex w-full flex-col">
                             <TextArea
                                 v-model="form.reason"
-                                label="Reason"
-                                placeholder="Enter reason"
+                                :label="$t('common.reason')"
+                                :placeholder="$t('absenteeAddModal.enterReason')"
                                 class="max-h-fit w-full text-start"
                                 :subtext="
                                     'You are about to add ' +

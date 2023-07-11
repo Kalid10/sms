@@ -53,7 +53,7 @@
         v-else
         class="flex h-2/3 w-full items-center justify-center px-5 text-center text-4xl font-bold italic"
     >
-        Select any assessment for a detailed view!
+        {{ $t('detailsIndex.selectAnyAssessment') }}
     </div>
 </template>
 <script setup>

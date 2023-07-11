@@ -29,13 +29,12 @@
                 >
                     <PlusCircleIcon class="h-6 w-6 text-gray-500" />
                     <h3 class="text-xs font-semibold text-black">
-                        Add Lesson Plan
+                       {{ $t('lessonPlanCard.addLessonPlan')}}
                     </h3>
                     <h3
                         class="max-w-[18rem] text-center text-xs font-medium text-gray-500"
                     >
-                        Lesson plan has not been added for this session. Add a
-                        new session before the session starts.
+                        {{ $t('lessonPlanCard.lessonPlanHas')}}
                     </h3>
                 </div>
             </div>
@@ -61,7 +60,7 @@
                 >
                     <div class="flex flex-col gap-1">
                         <div class="flex items-end gap-1.5">
-                            <span class="text-xs font-medium">Period</span>
+                            <span class="text-xs font-medium">{{ $t('common.period')}}</span>
                             <div
                                 class="flex origin-left scale-95 items-center gap-1 font-light"
                             >

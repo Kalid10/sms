@@ -4,18 +4,12 @@
         class="flex h-screen w-11/12 flex-col space-y-4 bg-gray-50/60 p-4"
     >
         <div class="flex w-full items-center justify-between py-3">
-            <Title title="My Question Bank (Beta)" />
+            <Title :title="$t('teacherQuestions.myQuestionBank')" />
             <p
                 class="w-8/12 rounded-lg bg-gradient-to-tr from-violet-500 to-purple-500 p-4 text-center text-xs text-white"
             >
-                Welcome to our innovative AI Question Generator. This is
-                currently a beta version, and we're actively working to refine
-                and improve it. Please note that while our AI strives to produce
-                high-quality, relevant questions, there may be occasional
-                inaccuracies or unexpected results. We appreciate your
-                understanding and patience during this testing phase. Your
-                feedback is invaluable in helping us make this tool the best it
-                can be.
+                {{ $t('teacherQuestions.questionGeneratorDescription')}}
+
             </p>
         </div>
 
@@ -29,7 +23,7 @@
                         class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
                     >
                         <span>
-                            Questions For
+                          {{ $t('teacherQuestions.questionsFor')}}
                             {{
                                 selectedQuestion.batch_subject.subject
                                     .full_name +
@@ -64,7 +58,7 @@
                         <span
                             class="rounded-lg border border-black p-4 text-xs shadow-sm group-hover:border-gray-50"
                         >
-                            Answer : {{ item.answer }}</span
+                           {{ $t('teacherQuestions.answer')}} {{ item.answer }}</span
                         >
                         <span
                             class="flex w-full justify-end space-x-6 pt-2 text-xs"
@@ -90,7 +84,7 @@
             <div
                 class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white px-4 py-6 shadow-sm"
             >
-                <div class="text-3xl font-semibold">Recent Questions</div>
+                <div class="text-3xl font-semibold">{{ $t('teacherQuestions.recentQuestions')}} </div>
                 <TableElement
                     :filterable="false"
                     :selectable="false"
@@ -130,9 +124,9 @@
         v-else
         class="flex h-screen w-full flex-col items-center justify-center space-y-3"
     >
-        <EmptyView title="No Questions Generated Yet" />
+        <EmptyView :title="$t('teacherQuestions.noQuestionsGenerated')" />
         <SecondaryButton
-            title="Generate Questions"
+            :title="$t('teacherQuestions.generateQuestions')"
             class="w-2/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
         />
     </div>
@@ -143,28 +137,28 @@
         <div
             class="flex flex-col items-center space-y-5 rounded-lg bg-white p-4 shadow-sm"
         >
-            <div class="text-xl font-semibold">Update Question</div>
+            <div class="text-xl font-semibold">{{ $t('teacherQuestions.updateQuestion')}}</div>
             <TextArea
                 v-model="updateForm.question"
-                placeholder="Add Question"
+                :placeholder="$t('teacherQuestions.addQuestion')"
+                :label="$t('common.question')"
                 class="w-full"
-                label="Question"
             />
             <TextArea
                 v-model="updateForm.answer"
                 class="w-full"
-                placeholder="Add answer"
-                label="Answer"
+                :placeholder="$t('teacherQuestions.addAnswer')"
+                :label="$t('teacherQuestions.answer')"
             />
 
             <TextArea
                 v-model="updateForm.answer"
                 class="w-full"
-                placeholder="Add answer"
-                label="Answer"
+                :placeholder="$t('teacherQuestions.addAnswer')"
+                :label="$t('teacherQuestions.answer')"
             />
             <SecondaryButton
-                title="Update"
+                :title="$t('teacherQuestions.update')"
                 class="w-3/12 !rounded-2xl bg-zinc-800 text-2xl text-white"
                 @click="updateQuestion()"
             />
@@ -189,7 +183,8 @@ import Modal from "@/Components/Modal.vue";
 import TextArea from "@/Components/TextArea.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const showUpdateModal = ref(false);
 const showDeleteDialogBox = ref(false);
 const selectedIndex = ref(null);
@@ -217,24 +212,24 @@ const formattedQuestionData = computed(() => {
 });
 const config = [
     {
-        name: "Assessment Type",
+        name: t('teacherQuestions.assessmentType'),
         key: "type",
         class: "!py-4 !text-xs",
     },
     {
-        name: "Subject",
+        name: t('common.subject'),
         key: "subject",
     },
     {
-        name: "By",
+        name: t('common.by'),
         key: "name",
     },
     {
-        name: "No Of Questions",
+        name: t('teacherQuestions.noOfQuestions'),
         key: "no_of_questions",
     },
     {
-        name: "Difficulty Level",
+        name: t('teacherQuestions.difficultyLevel'),
         key: "difficulty_level",
     },
 ];

@@ -4,7 +4,7 @@
     >
         <div class="flex h-fit w-5/12 flex-col space-y-5">
             <div class="text-2xl font-semibold uppercase text-gray-700">
-                Section {{ batch.section }}
+                {{ $t('section.section')}} {{ batch.section }}
                 <span v-if="batch?.home_room_teacher" class="font-light">
                     ( {{ batch.home_room_teacher.teacher.user.name }} )
                 </span>
@@ -21,7 +21,7 @@
                                 : 0
                         "
                         :batch="batch"
-                        title="Absent Students"
+                        :title="$t('section.absentStudents')"
                         class-style="bg-red-600"
                     />
                 </div>
@@ -30,7 +30,7 @@
                 <SummaryItem
                     class-style="bg-orange-100 text-black"
                     icon-style="bg-orange-500/20 text-white"
-                    :title="'Assessments'"
+                    :title="$t('common.assessments')"
                     value="10 /10 Completed"
                     :icon="ClipboardIcon"
                     :url="
@@ -42,7 +42,7 @@
                 <SummaryItem
                     class-style="bg-fuchsia-100 text-black"
                     icon-style="bg-fuchsia-500/20 text-white"
-                    :title="'LessonPlans'"
+                    :title="$t('common.lessonPlan')"
                     value="10 /10 Completed"
                     :icon="CalendarIcon"
                     :url="
@@ -54,7 +54,7 @@
                 <SummaryItem
                     class-style="bg-zinc-100 text-black"
                     icon-style="bg-zinc-500/20 text-white"
-                    :title="'Students'"
+                    :title="$t('common.students')"
                     value="75 Total Students"
                     :icon="UsersIcon"
                     :url="
@@ -66,7 +66,7 @@
                 <SummaryItem
                     class-style="bg-red-50 text-black"
                     icon-style="bg-red-500/20 text-white"
-                    :title="'Announcements'"
+                    :title="$t('common.announcements')"
                     value="10 Announcements Today"
                     :icon="ChatBubbleBottomCenterIcon"
                     :url="
@@ -85,7 +85,7 @@
                 <div class="w-6/12">
                     <StudentsList
                         progress-type="up"
-                        title="Top Students"
+                        :title="$t('section.topStudents')"
                         :icon="ArrowTrendingUpIcon"
                         :students="batch?.top_students ?? null"
                         :show-link="false"
@@ -95,7 +95,7 @@
                 <div class="w-6/12">
                     <StudentsList
                         progress-type="down"
-                        title="Students Falling Behind"
+                        :title="$t('section.studentsFallingBehind')"
                         :icon="ArrowTrendingDownIcon"
                         :students="batch?.bottom_students ?? null"
                         :show-link="false"
