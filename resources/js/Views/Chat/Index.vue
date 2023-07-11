@@ -10,7 +10,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, watch } from "vue";
 import Messages from "@/Views/Chat/Messages/Messages.vue";
-import Conversation from "@/Views/Chat/Conversation.vue";
+import Conversation from "@/Views/Chat/Conversation/Index.vue";
 import useMessageStore from "@/Store/chat";
 import { useChatPusherStore } from "@/Store/chatPusher";
 
