@@ -3,11 +3,15 @@
 
     <p v-html="$t('test.name')"></p>
 
-
     <div>
         <Localization :current-locale="title">
             <div class="bg-pink-400 text-2xl">english</div>
         </Localization>
+    </div>
+
+    <div>
+        <button @click="showToast = true">Copy Text</button>
+        <Toast :show-toast="showToast" @copied="showToast = false" />
     </div>
 
     <div class="grid grid-cols-4 gap-6">
@@ -275,6 +279,14 @@
 import { router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import Localization from "@/Views/Admin/Language/Localization.vue";
+import Toast from "@/Components/Toast.vue";
+
+let showToast = ref(false);
+
+// const copyText = () => {
+//     showToast.value = true;
+//     setTimeout(() => (showToast.value = false), 3000);
+// };
 
 const title = ref("fr");
 
@@ -1119,7 +1131,7 @@ function createAnnouncement() {
             body: "This is a test announcement",
             expires_on: "2020-12-13",
             target_group: ["guardians"],
-            target_batches: [1,2,3,4,30]
+            target_batches: [1, 2, 3, 4, 30],
         },
         {
             onSuccess: () => {
