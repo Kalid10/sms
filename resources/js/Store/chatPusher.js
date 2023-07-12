@@ -112,7 +112,6 @@ export const useChatPusherStore = defineStore({
                 auth_id
             );
 
-            console.log("listening");
             await this.listenToMessagingEvent(channel);
         },
 
@@ -125,7 +124,6 @@ export const useChatPusherStore = defineStore({
 
                 this.isAuthenticated = true;
             } catch (error) {
-                console.error(error);
                 this.isAuthenticated = false;
             }
         },

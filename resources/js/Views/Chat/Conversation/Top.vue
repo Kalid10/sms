@@ -24,8 +24,9 @@
                 <div>
                     <h1
                         class="w-fit overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium"
-                    ></h1>
-                    {{ activeChat.active_status }}
+                    >
+                        {{ activeChat.name }}
+                    </h1>
                     <h1
                         v-if="activeChat.active_status"
                         class="text-xs text-zinc-700"
