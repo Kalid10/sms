@@ -1,11 +1,13 @@
 <template>
     <div
-        class="flex h-screen w-full space-x-8 py-10"
+        class="flex h-screen w-full flex-col py-10 lg:flex-row lg:space-x-8"
         :class="showGettingStarted ? 'justify-between' : 'justify-center'"
     >
         <div
             class="flex h-5/6 max-h-screen flex-col items-center space-y-2 rounded-lg border border-black bg-white p-4"
-            :class="showGettingStarted ? 'w-8/12' : 'w-11/12'"
+            :class="
+                showGettingStarted ? 'w-full lg:w-8/12' : 'w-full lg:w-11/12'
+            "
         >
             <div
                 ref="chatContainer"
@@ -101,7 +103,7 @@
         </div>
         <div
             v-if="showGettingStarted"
-            class="mt-5 flex h-fit w-4/12 flex-col space-y-6 rounded-lg border border-black p-5 text-center text-sm"
+            class="mt-5 hidden h-fit w-4/12 flex-col space-y-6 rounded-lg border border-black p-5 text-center text-sm lg:block"
         >
             <h2 class="text-2xl font-bold">{{ $t('chat.gettingStarted')}}</h2>
             <p>{{ $t('chat.helloWeWant', { name: usePage().props.auth.user.name }) }}</p>
