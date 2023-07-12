@@ -12,7 +12,7 @@
             >
                 <div>
                     <div>
-                        Post Targets
+                        {{ $t('announcementsItem.postTargets') }}
                         <span
                             v-for="(target, index) in announcement.target_group"
                             :key="index"
@@ -20,7 +20,7 @@
                         >
                             {{ target }}
                         </span>
-                        and expires
+                        {{ $t('announcementsItem.andExpires') }}
                         <span>
                             {{
                                 moment(announcement.expires_on).fromNow()

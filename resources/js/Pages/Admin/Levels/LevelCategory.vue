@@ -8,12 +8,12 @@
                 :filterable="false"
                 actionable
                 row-actionable
-                subtitle="list of level categories"
-                title="Level Category"
+                :subtitle="$t('levelCategory.categoryTableSubtitle')"
+                :title="$t('levelCategory.categoryTableTitle')"
             >
                 <template #action>
                     <CategoryPrimaryButton
-                        title="Add Level Category"
+                        :title="$t('levelCategory.addLevelCategory')"
                         @click="toggleCategoryModal"
                     />
                 </template>
@@ -31,24 +31,24 @@
 
     <!-- Add Modal-->
     <Modal v-model:view="addCategory">
-        <FormElement title="Add Level Category" subtitle="" @submit="submit">
+        <FormElement :title="$t('levelCategory.addLevelCategory')"  subtitle="" @submit="submit">
             <TextInput
                 v-model="form.name"
-                label="Category"
-                placeholder="ex: ElementarySchool"
+                :label="$t('levelCategory.category')"
+                :placeholder="$t('levelCategory.addCategoryNamePlaceholder')"
             />
         </FormElement>
     </Modal>
     <!--    Update Modal-->
     <Modal v-model:view="updateCategory">
         <FormElement
-            title="Update Level Category"
+            :title="$t('levelCategory.updateLevelCategory')"
             subtitle=""
             @submit="updateCategoryForm(editForm.id)"
         >
             <TextInput
                 v-model="editForm.name"
-                label="Update Category"
+                :label="$t('levelCategory.updateCategory')"
                 placeholder=""
             />
         </FormElement>
@@ -69,7 +69,8 @@ import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/outline";
 import DialogBox from "@/Components/DialogBox.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const addCategory = ref(false);
 const updateCategory = ref(false);
 
@@ -94,7 +95,7 @@ function editCategory(row) {
 
 const config = [
     {
-        name: "Name",
+        name: t('common.name'),
         key: "name",
         sortable: true,
         searchable: true,

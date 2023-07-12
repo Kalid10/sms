@@ -76,7 +76,10 @@
                         >
                             {{ selectedYear }}
                         </button>
-                        <span v-else> Select Year </span>
+                        <span v-else>
+                {{ $t('datePicker.selectYear') }}
+
+                        </span>
                     </span>
                     <ChevronRightIcon
                         class="h-4 w-4 cursor-pointer stroke-gray-500 stroke-[3]"
@@ -202,7 +205,7 @@
                         class="flex h-10 w-full items-center justify-center gap-1 rounded-md border text-center text-sm focus:outline-none"
                         @click="selectToday"
                     >
-                        <span>Today</span>
+                        <span>{{ $t('datePicker.today') }}</span>
                         {{ new Date().toLocaleDateString() }}
                     </button>
 
@@ -218,7 +221,9 @@
                         class="flex h-10 w-full items-center justify-center gap-1 rounded-md border text-center text-sm focus:outline-none"
                         @click="clearRange"
                     >
-                        <span>Clear</span>
+                        <span>
+                       {{$t('datePicker.clear')}}
+                        </span>
                     </button>
                 </span>
             </span>
@@ -234,7 +239,8 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
 } from "@heroicons/vue/24/outline";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const props = defineProps({
     label: {
         type: String,
@@ -313,20 +319,20 @@ function changePanel(to) {
 }
 
 const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    t('datePicker.months[0]'),
+    t('datePicker.months[1]'),
+    t('datePicker.months[2]'),
+    t('datePicker.months[3]'),
+    t('datePicker.months[4]'),
+    t('datePicker.months[5]'),
+    t('datePicker.months[6]'),
+    t('datePicker.months[7]'),
+    t('datePicker.months[8]'),
+    t('datePicker.months[9]'),
+    t('datePicker.months[10]'),
+    t('datePicker.months[11]'),
 ];
-const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const days = [t('datePicker.days[0]'), t('datePicker.days[1]'), t('datePicker.days[2]'), t('datePicker.days[3]'), t('datePicker.days[4]'), t('datePicker.days[5]'), t('datePicker.days[6]')];
 
 const today = new Date();
 const selectedYear = ref(

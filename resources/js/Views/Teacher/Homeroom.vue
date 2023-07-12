@@ -6,12 +6,12 @@
         >
             <div class="">404</div>
             <div class="w-6/12 text-center text-3xl font-semibold text-black">
-                No homeroom classes found!
+                {{ $t('homeRooms.noHomeroomClasses') }}
             </div>
 
             <SecondaryButton
                 v-if="isAdmin()"
-                title="Assign Homeroom"
+                :title="$t('homeRooms.assignHomeroom')"
                 class="!rounded-2xl bg-zinc-800 text-white"
                 @click="showAssignModal = true"
             />
@@ -24,7 +24,7 @@
             <!--        Left Side-->
             <div class="flex w-9/12 flex-col space-y-4 py-5 pl-5">
                 <Header
-                    title="Homeroom Classes"
+                    :title="$t('homeRooms.homeroomClasses')"
                     :select-input-options="homeroomOptions"
                     :selected-input="selectedHomeroom"
                     @change="updateBatchInfo"
@@ -61,7 +61,7 @@
                         <div v-if="grade">{{ grade?.attendance ?? "-" }}%</div>
                         <div>-</div>
                         <span class="text-xs font-light"
-                            >CLASS ATTENDANCE
+                            >{{ $t('homeRooms.classAttendance') }}
                         </span>
                     </div>
                     <div
@@ -78,13 +78,13 @@
                         class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-5xl font-bold shadow-sm"
                     >
                         <div>{{ grade?.conduct ?? "-" }}</div>
-                        <span class="text-xs font-light">CLASS CONDUCT </span>
+                        <span class="text-xs font-light">{{ $t('homeRooms.classConduct') }} </span>
                     </div>
                 </div>
                 <div class="w-11/12 rounded-lg bg-white py-2 shadow-sm">
                     <StudentsList
                         progress-type="up"
-                        title="Top Students"
+                        :title="$t('homeRooms.topStudents')"
                         :icon="ArrowTrendingUpIcon"
                         :students="topStudents"
                     />
@@ -93,7 +93,7 @@
                 <div class="w-11/12 rounded-lg bg-white shadow-sm">
                     <StudentsList
                         progress-type="down"
-                        title="Students Falling Behind"
+                        :title="$t('homeRooms.studentsFalling')"
                         :icon="ArrowTrendingDownIcon"
                         :students="bottomStudents"
                     />

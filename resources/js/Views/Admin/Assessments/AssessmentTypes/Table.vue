@@ -7,8 +7,8 @@
                     v-model="form.name"
                     :error="form.errors.name"
                     class="w-full"
-                    label="Name"
-                    placeholder="name"
+                    :label="$t('common.name')"
+                    :placeholder="$t('assessmentIndex.name')"
                     required
                 />
                 <div class="relative flex">
@@ -17,8 +17,8 @@
                         :error="form.errors.percentage"
                         type="number"
                         class="w-full"
-                        label="Percentage"
-                        placeholder="percentage"
+                        :label="$t('assessmentIndex.percentage')"
+                        :placeholder="$t('assessmentIndex.percentage')"
                         required
                     />
                     <ReceiptPercentIcon
@@ -29,7 +29,7 @@
 
             <div v-if="isUpdate" class="w-full">
                 <label class="pl-0.5 text-sm font-semibold text-gray-500">
-                    Update level categories:</label
+                    {{ $t('assessmentIndex.updateLevelCategories')}}</label
                 >
 
                 <SelectInput
@@ -42,7 +42,7 @@
 
             <div v-else>
                 <label class="pl-0.5 text-sm font-semibold text-gray-500">
-                    Select level categories:</label
+                    {{ $t('assessmentIndex.selectLevelCategories')}}</label
                 >
 
                 <div class="flex flex-row gap-6 rounded border p-3">
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <Toggle v-model="form.customizable" label="Customizable" />
+            <Toggle v-model="form.customizable" :label="$t('assessmentIndex.customizable')" />
 
             <div v-show="form.customizable">
                 <div class="flex gap-3">
@@ -75,8 +75,8 @@
                         :error="form.errors.min_assessments"
                         class="w-full"
                         type="number"
-                        label="Minimum Assessments"
-                        placeholder="min assessment"
+                        :label="$t('assessmentIndex.minimumAssessments')"
+                        :placeholder="$t('assessmentIndex.minimumAssessmentsPlaceHolder')"
                     />
 
                     <TextInput
@@ -84,15 +84,13 @@
                         :error="form.errors.max_assessments"
                         class="w-full"
                         type="number"
-                        label="Maximum Assessments"
-                        placeholder="max assessment"
+                        :label="$t('assessmentIndex.maximumAssessments')"
+                        :placeholder="$t('assessmentIndex.maximumAssessmentsPlaceHolder')"
                     />
                 </div>
                 <div class="mt-2 pl-3">
                     <span class="text-[0.7rem] font-light">
-                        Min and max assessments are the minimum and maximum
-                        number of tests or exams that a student is required to
-                        take.
+                        {{ $t('assessmentIndex.minMaxHint')}}
                     </span>
                 </div>
             </div>
@@ -102,7 +100,7 @@
     <div
         class="flex flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
     >
-        <div class="px-3 text-2xl font-medium">Assessment Types</div>
+        <div class="px-3 text-2xl font-medium">{{ $t('assessmentIndex.assessmentType')}}</div>
 
         <TableElement
             :selectable="false"
@@ -120,7 +118,7 @@
                         <SelectInput
                             v-model="filterByLevelCategory"
                             :options="levelCategories"
-                            placeholder="filter by grade category"
+                            :placeholder="$t('assessmentIndex.filterByLevelCategory')"
                             class="w-8/12"
                         />
                     </div>
@@ -129,7 +127,7 @@
                         class="w-3/12 !rounded-3xl p-2"
                         @click="openAddModal"
                     >
-                        Add Type
+                        {{ $t('assessmentIndex.addType')}}
                     </PrimaryButton>
                 </div>
             </template>
@@ -164,7 +162,7 @@
             <template #updated_at-column="{ data }">
                 <div class="flex w-full justify-start">
                     <span class="text-xs text-gray-500"
-                        >Last updated {{ data }}</span
+                        >{{ $t('assessmentIndex.lastUpdated')}} {{ data }}</span
                     >
                 </div>
             </template>
@@ -204,7 +202,8 @@ import TableElement from "@/Components/TableElement.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
 import SelectInput from "@/Components/SelectInput.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const isModalOpen = ref(false);
 const isUpdate = ref(false);
 const filterByLevelCategory = ref(null);
@@ -228,7 +227,7 @@ function openUpdateModal(row) {
 }
 
 const modalTitle = computed(() =>
-    isUpdate.value ? "Update Assessment Type" : "Add Assessment Type"
+    isUpdate.value ? t('assessmentIndex.updateAssessmentType') : t('assessmentIndex.addAssessmentType')
 );
 
 function submitForm() {
@@ -289,22 +288,22 @@ const levelCategoriesWithoutAll = computed(() => {
 
 const config = [
     {
-        name: "Assessment type",
+        name: t('assessmentIndex.assessmentType'),
         key: "name",
         type: "custom",
     },
     {
-        name: "Percentage",
+        name: t('assessmentIndex.percentage'),
         key: "percentage",
         type: "custom",
     },
     {
-        name: "Grade Category",
+        name: t('assessmentIndex.gradeCategory'),
         key: "level_category",
         type: "custom",
     },
     {
-        name: "Updated at",
+        name:  t('assessmentIndex.updatedAt'),
         key: "updated_at",
         type: "custom",
     },

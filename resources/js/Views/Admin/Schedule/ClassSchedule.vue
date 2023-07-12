@@ -4,7 +4,7 @@
             <h2
                 class="text-4xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white"
             >
-                Schedule
+                {{ $t('classSchedule.schedule')}}
             </h2>
         </div>
 
@@ -14,12 +14,12 @@
             <SelectInput
                 v-model="month"
                 :options="months"
-                placeholder="Select month"
+                :placeholder="$t('classSchedule.selectMonthPlaceholder')"
                 class="w-9/12"
             />
 
             <PrimaryButton
-                title="Add Schedule"
+                :title="$t('classSchedule.addScheduleTitle')"
                 class="max-w-full"
                 @click="showModalToggle"
             />
@@ -30,26 +30,26 @@
                 v-if="filteredSchedules.length === 0"
                 class="mt-5 text-xl font-semibold text-gray-700"
             >
-                No school schedule in {{ months[month - 1].label }} {{ year }}
+                 {{ $t('classSchedule.noSchoolScheduleIn')}}  {{ months[month - 1].label }} {{ year }}
             </p>
             <div v-else class="mx-auto flex flex-col gap-2">
                 <h1
                     v-if="!month"
                     class="mt-5 w-full justify-center text-lg font-medium text-gray-700"
                 >
-                    {{ filteredSchedules.length }} Schedules
+                    {{ filteredSchedules.length }} {{ $t('classSchedule.schedules')}}
                 </h1>
                 <h1
                     v-else
                     class="mt-5 w-full justify-center text-lg font-medium text-gray-700"
                 >
-                    {{ filteredSchedules.length }} Schedules in
+                    {{ filteredSchedules.length }} {{ $t('classSchedule.schedulesIn')}}
                     {{ months[month - 1].label }} {{ year }}
                 </h1>
                 <TextInput
                     v-model="query"
                     class="w-full"
-                    placeholder="Search for schedule by title"
+                    :placeholder="$t('classSchedule.queryPlaceholder')"
                 />
             </div>
         </div>
@@ -99,6 +99,8 @@ import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import moment from "moment";
 
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const showModal = ref(false);
 
 function showModalToggle() {
@@ -127,51 +129,51 @@ watch([query], () => {
 
 const months = [
     {
-        label: "January",
+        label: t('classSchedule.months[0]'),
         value: 1,
     },
     {
-        label: "February",
+        label:  t('classSchedule.months[1]'),
         value: 2,
     },
     {
-        label: "March",
+        label:  t('classSchedule.months[2]'),
         value: 3,
     },
     {
-        label: "April",
+        label:  t('classSchedule.months[3]'),
         value: 4,
     },
     {
-        label: "May",
+        label:  t('classSchedule.months[4]'),
         value: 5,
     },
     {
-        label: "June",
+        label:  t('classSchedule.months[5]'),
         value: 6,
     },
     {
-        label: "July",
+        label:  t('classSchedule.months[6]'),
         value: 7,
     },
     {
-        label: "August",
+        label:  t('classSchedule.months[7]'),
         value: 8,
     },
     {
-        label: "September",
+        label:  t('classSchedule.months[8]'),
         value: 9,
     },
     {
-        label: "October",
+        label: t('classSchedule.months[9]'),
         value: 10,
     },
     {
-        label: "November",
+        label:  t('classSchedule.months[10]'),
         value: 11,
     },
     {
-        label: "December",
+        label:  t('classSchedule.months[11]'),
         value: 12,
     },
 ];

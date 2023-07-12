@@ -97,7 +97,7 @@
                         ]"
                         class="h-10 w-fit whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700"
                     >
-                        Actions
+                        {{ $t('tableElement.actions')}}
                     </th>
                 </tr>
                 <tr

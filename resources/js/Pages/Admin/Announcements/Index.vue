@@ -2,11 +2,11 @@
     <div class="flex min-h-screen w-full flex-col bg-gray-50 px-10 py-5">
         <div class="flex w-full flex-col items-center space-y-2 px-5 py-3">
             <div class="flex w-full items-center justify-between px-5">
-                <Title class="w-5/12" title="Announcements" />
+                <Title class="w-5/12" title="$t('announcementsIndex.announcementsTitle')" />
                 <div class="flex w-6/12 justify-between pr-3">
                     <TextInput
                         v-model="searchKey"
-                        placeholder="Search Announcements"
+                        :placeholder="$t('announcementsIndex.searchAnnouncements')"
                         class="w-6/12 !rounded-xl"
                         class-style="focus:ring-1 focus:ring-zinc-700 focus:border-none focus:outline-none rounded-2xl"
                         @keyup="search"

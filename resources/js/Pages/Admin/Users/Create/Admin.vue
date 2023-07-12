@@ -1,21 +1,21 @@
 <template>
     <div class="grid-rows-12 grid p-6 sm:grid-cols-12 md:w-full">
         <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0">
-            <Heading value="Register an Admin" />
+            <Heading :value="$t('createAdmin.headingOne')" />
             <Heading
-                value="Fill in the information required."
+                :value="$t('createAdmin.headingTwo')"
                 size="sm"
                 class="text-xs !font-light text-gray-500"
             />
         </div>
         <div class="col-span-8">
             <div class="w-full max-w-4xl rounded-lg bg-white">
-                <AdminFormElement title="Register Admin" @submit="submit">
+                <AdminFormElement :title="$t('createAdmin.adminFormElementTitle')" @submit="submit">
                     <AdminTextInput
                         v-model="form.name"
                         class="w-full"
-                        label="Name"
-                        placeholder="Full Name"
+                        :label="$t('common.name')"
+                        :placeholder="$t('createAdmin.namePlaceholder')"
                         :error="form.errors.name"
                         required
                     />
@@ -24,26 +24,26 @@
                         <AdminTextInput
                             v-model="form.email"
                             class="w-full"
-                            label="Email"
+                            :label="$t('common.email')"
                             type="email"
                             :error="form.errors.email"
-                            placeholder="Email"
+                            :placeholder="$t('common.email')"
                             required
                         />
                         <AdminTextInput
                             v-model="form.phone_number"
                             class="w-full"
-                            label="Phone Number"
+                            :placeholder="$t('createAdmin.phoneNumber')"
+                            :label="$t('createAdmin.phoneNumber')"
                             :error="form.errors.phone_number"
-                            placeholder="Phone Number"
                             required
                         />
                     </div>
                     <AdminTextInput
                         v-model="form.username"
                         class="w-full"
-                        label="User Name"
-                        placeholder="Username"
+                        :placeholder="$t('createAdmin.usernamePlaceholder')"
+                        :label="$t('createAdmin.usernameLabel')"
                         :error="form.errors.username"
                         required
                     />
@@ -52,8 +52,8 @@
                         <AdminTextInput
                             v-model="form.position"
                             class="w-full"
-                            label="Position"
-                            placeholder="Position"
+                            :placeholder="$t('createAdmin.position')"
+                            :label="$t('createAdmin.position')"
                             :error="form.errors.position"
                             required
                         />
@@ -61,8 +61,8 @@
                             v-model="form.gender"
                             class="w-full cursor-pointer"
                             :options="genderOptions"
-                            placeholder="Select Gender"
-                            label="Gender"
+                            :placeholder="$t('createAdmin.genderPlaceholder')"
+                            :label="$t('createAdmin.genderLabel')"
                             required
                         />
                     </div>
@@ -78,10 +78,11 @@ import AdminTextInput from "@/Components/TextInput.vue";
 import Heading from "@/Components/Heading.vue";
 import { useForm } from "@inertiajs/vue3";
 import AdminSelectInput from "@/Components/SelectInput.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
+    { value: "male", label: t('common.male') },
+    { value: "female", label:t('common.female') },
 ];
 
 const form = useForm({

@@ -1,6 +1,8 @@
 <template>
     <div>
-        <Modal v-model:view="delegateModal" title="Delegate tasks">
+        <Modal
+v-model:view="delegateModal"
+               :title="$t('delegateLink.modalTitle')">
             <div>
                 <RegisterAdmin></RegisterAdmin>
             </div>
@@ -10,7 +12,7 @@
                 <a
                     class="cursor-pointer px-6 text-blue-300 hover:text-blue-500"
                     @click="delegateModal = true"
-                    >Delegate</a
+                    >{{ $t('delegateLink.Delegate')}}</a
                 >
             </div>
         </div>
@@ -20,6 +22,7 @@
 import RegisterAdmin from "@/Views/Admin/GettingStarted/RegisterAdmin.vue";
 import Modal from "@/Components/Modal.vue";
 import { ref } from "vue";
+import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 
 const delegateModal = ref(false);
 </script>

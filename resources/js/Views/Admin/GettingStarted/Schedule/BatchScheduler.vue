@@ -24,7 +24,7 @@
             </span>
 
             <span>
-                {{ $t('batchScheduler.descriptionFour') }}
+                {{ $t('batchScheduler.descriptionFour')}}
             </span>
 
         </p>

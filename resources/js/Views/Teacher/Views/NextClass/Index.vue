@@ -25,13 +25,12 @@
             class="flex h-32 w-11/12 flex-col justify-center text-center text-sm font-light leading-relaxed lg:h-44 lg:w-10/12 lg:text-base"
         >
             <div>
-                No upcoming classes found! Please check your schedule or contact
-                the
+                {{ $t('nextClassIndex.noUpcomingClasses')}}
                 <span
                     class="cursor-pointer underline underline-offset-2 hover:font-medium"
-                    >admin</span
+                    >{{ $t('nextClassIndex.admin')}}</span
                 >
-                for assistance.
+                {{ $t('nextClassIndex.forAssistance')}}
             </div>
         </div>
     </div>

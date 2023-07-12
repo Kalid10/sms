@@ -7,15 +7,15 @@
                 <WelcomeHeader />
 
                 <TabElement v-model:active="activeTab" :tabs="tabs">
-                    <template #announcements>
+                    <template #[announcementsTab]>
                         <Announcements
                             url="/admin/announcements"
                             class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
                         />
                     </template>
 
-                    <template #flags>
-                        <Flags view="admin" title="Recent Flags" />
+                    <template #[flagsTab]>
+                        <Flags view="admin" :title="$t('adminIndex.recentFlags')" />
                     </template>
                 </TabElement>
             </div>
@@ -42,8 +42,11 @@ import TabElement from "@/Components/TabElement.vue";
 import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Home.vue";
 import Summary from "@/Views/Admin/Summary.vue";
 import StudentSearch from "@/Views/Admin/StudentSearch.vue";
-
-const tabs = ["Announcements", "Flags"];
-const activeTab = ref("Announcements");
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
+const announcementsTab = t('common.announcements')
+const flagsTab = t('common.flags')
+const tabs = [announcementsTab, flagsTab];
+const activeTab = ref(announcementsTab);
 const schoolYear = computed(() => usePage().props.school_year);
 </script>

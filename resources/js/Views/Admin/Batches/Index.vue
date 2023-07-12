@@ -5,7 +5,7 @@
         </div>
         <div class="flex w-full justify-between space-x-5 py-3">
             <div class="flex w-7/12 rounded-lg border">
-                <Flags title="Flag List" view="homeroom" />
+                <Flags :title="$t('batchesIndex.flagList')" view="homeroom" />
             </div>
             <div class="flex w-4/12 justify-between">
                 <div
@@ -15,7 +15,7 @@
                         v-if="activeSession.length > 0"
                         class="flex h-full flex-col items-center space-y-1.5"
                     >
-                        <div class="text-[0.65rem] font-light">Attending</div>
+                        <div class="text-[0.65rem] font-light">{{ $t('batchesIndex.attending')}}</div>
 
                         <div class="text-3xl font-semibold uppercase">
                             {{
@@ -23,7 +23,7 @@
                                     ?.full_name
                             }}
                         </div>
-                        <div class="text-[0.65rem] font-light">with</div>
+                        <div class="text-[0.65rem] font-light">{{ $t('common.with')}}</div>
 
                         <div
                             class="cursor-pointer text-xs font-semibold uppercase underline-offset-2 hover:scale-105 hover:underline"
@@ -31,7 +31,7 @@
                             {{ activeSession[0].teacher.user.name }}
                         </div>
                     </div>
-                    <div v-else>No active session</div>
+                    <div v-else>{{ $t('batchesIndex.noActiveSession')}}</div>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
         <div class="flex w-full justify-between rounded-lg border py-6 pr-5">
             <div class="flex h-full w-2/12 flex-col gap-5 rounded-lg px-3">
                 <Card
-                    title="Assessments"
+                    :title="$t('common.assessments')"
                     :class="`min-w-full cursor-pointer ${
                         selectedCard === 'assessments' ? 'bg-gray-200' : ''
                     }`"
@@ -47,7 +47,7 @@
                     @click="openAssessment"
                 >
                     <h3 class="text-sm text-gray-500">
-                        Click here to view scheduled assessments
+                        {{ $t('batchesIndex.clickToViewScheduledAssessments')}}
                     </h3>
                     <template #icon>
                         <ArrowRightCircleIcon />
@@ -63,7 +63,7 @@
                     @click="openStudentNotes"
                 >
                     <h3 class="text-sm text-gray-500">
-                        Click here to view students notes
+                        {{ $t('batchesIndex.clickToViewStudentsNotes')}}
                     </h3>
                     <template #icon>
                         <ArrowRightCircleIcon />

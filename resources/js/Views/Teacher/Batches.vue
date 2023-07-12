@@ -9,7 +9,7 @@
                 :class="isTeacher() ? 'py-5 pl-5' : 'py-3 pl-3 pr-10'"
             >
                 <Header
-                    :title="isTeacher() ? 'My Classes' : 'Classes'"
+                    :title="isTeacher() ? $t('batches.myClasses') : $t('batches.classes')"
                     :select-input-options="batchSubjectOptions"
                     :selected-input="batchSubject.id"
                     @change="updateBatchInfo"
@@ -36,7 +36,7 @@
                         <SummaryItem
                             class-style="bg-orange-100 text-black"
                             icon-style="bg-orange-500/20 text-white"
-                            :title="'Assessments'"
+                            :title="$t('common.assessments')"
                             value="10 /10 Completed"
                             :icon="ClipboardIcon"
                             :url="
@@ -49,7 +49,7 @@
                         <SummaryItem
                             class-style="bg-fuchsia-100 text-black"
                             icon-style="bg-fuchsia-500/20 text-white"
-                            :title="'LessonPlans'"
+                            :title="$t('common.lessonPlan')"
                             value="10 /10 Completed"
                             :icon="CalendarIcon"
                             :url="
@@ -62,7 +62,7 @@
                         <SummaryItem
                             class-style="bg-zinc-100 text-black"
                             icon-style="bg-zinc-500/20 text-white"
-                            :title="'Students'"
+                            :title="$t('common.students')"
                             value="75 Total Students"
                             :icon="UsersIcon"
                             :url="
@@ -75,7 +75,7 @@
                         <SummaryItem
                             class-style="bg-red-50 text-black"
                             icon-style="bg-red-500/20 text-white"
-                            :title="'Announcements'"
+                            :title="$t('common.announcements')"
                             value="10 Announcements Today"
                             :icon="ChatBubbleBottomCenterIcon"
                             :url="
@@ -102,7 +102,7 @@
                     <div class="w-full rounded-lg bg-white py-2 shadow-sm">
                         <StudentsList
                             progress-type="up"
-                            title="Top Students"
+                            :title="$t('batches.topStudents')"
                             :icon="ArrowTrendingUpIcon"
                             :students="topStudents"
                         />
@@ -111,7 +111,7 @@
                     <div class="w-full rounded-lg bg-white py-2 shadow-sm">
                         <StudentsList
                             progress-type="down"
-                            title="Students Falling Behind"
+                            :title="$t('batches.studentsFalling')"
                             :icon="ArrowTrendingDownIcon"
                             :students="bottomStudents"
                         />

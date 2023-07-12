@@ -3,7 +3,7 @@
         class="flex w-full justify-between divide-x divide-gray-200 rounded-md bg-gray-50 py-4 shadow-sm"
     >
         <Item
-            title="Class Average"
+            :title="$t('batchPerformanceIndex.classAverage')"
             :value="
                 grade?.score
                     ? grade?.score?.toFixed(2) + '/' + grade?.total_score
@@ -13,19 +13,19 @@
             :icon="ArrowSmallDownIcon"
         />
         <Item
-            title="Class Rank"
+            :title="$t('batchPerformanceIndex.classRank')"
             :value="grade?.rank ?? '-'"
             value-style="text-positive-100"
             :icon="ArrowSmallUpIcon"
         />
         <Item
-            title="Class Attendance"
+            :title="$t('batchPerformanceIndex.classAttendance')"
             :value="grade?.attendance ? grade?.attendance + '%' : '-'"
             value-style="text-positive-100"
             :icon="ArrowSmallUpIcon"
         />
         <Item
-            title="Class Conduct"
+            :title="$t('batchPerformanceIndex.classConduct')"
             :value="grade?.conduct ?? '-'"
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"

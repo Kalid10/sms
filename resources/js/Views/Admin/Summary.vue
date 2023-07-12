@@ -3,24 +3,24 @@
         <SummaryItem
             class-style="bg-sky-100 text-black"
             icon-style="bg-sky-500/20 text-white"
-            title="Chats"
-            value="5 Unread Messages"
+            :title="$t('common.chat')"
+            :value="$t('adminSummary.chatValue')"
             :icon="PaperAirplaneIcon"
             url="/admin/chat"
         />
         <SummaryItem
             class-style="bg-fuchsia-100 text-black"
             icon-style="bg-fuchsia-500/20 text-white"
-            title="Students"
-            value="Register, Review, explore and More"
+            :title="$t('common.students')"
+            :value="$t('adminSummary.studentValue')"
             :icon="UserGroupIcon"
             url="/admin/students"
         />
         <SummaryItem
             class-style="bg-orange-100 text-black"
             icon-style="bg-orange-500/20 text-white"
-            title="Teachers"
-            value="Register, evaluate, explore and more"
+            :title="$t('common.teachers')"
+            :value="$t('adminSummary.teacherValue')"
             :icon="UserCircleIcon"
             url="/admin/teachers"
         />
@@ -28,8 +28,8 @@
         <SummaryItem
             class-style="bg-zinc-100 text-black"
             icon-style="bg-zinc-500/20 text-white"
-            title="Admins"
-            value="Register, Review, explore and More"
+            :title="$t('common.admins')"
+            :value="$t('adminSummary.adminValue')"
             :icon="UsersIcon"
             url="/admin/admins "
         />

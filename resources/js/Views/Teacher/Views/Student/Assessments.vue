@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col">
         <div v-if="isAssessmentFound" class="flex w-full justify-between pr-2">
-            <div class="text-xl font-medium">Recent Assessments</div>
+            <div class="text-xl font-medium">{{ $t('studentAssessments.recentAssessments')}}</div>
 
             <div
                 class="flex w-1/2 flex-col justify-end space-y-3 rounded-lg bg-white p-4 text-center"
@@ -28,7 +28,7 @@
             v-else
             class="flex h-32 flex-col items-center justify-center space-y-4 lg:h-44"
         >
-            <EmptyView title="No Assessments Found!" />
+            <EmptyView :title="$t('studentAssessments.noAssessmentsFound')"/>
         </div>
     </div>
 
@@ -36,7 +36,7 @@
         <LinkCell
             class="flex w-fit items-center justify-end"
             href="/teacher/assessments"
-            value="SEE ALL"
+            :value="$t('studentAssessments.seeAll')"
         />
     </div>
 </template>

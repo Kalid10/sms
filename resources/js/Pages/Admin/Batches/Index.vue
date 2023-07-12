@@ -4,17 +4,17 @@
             <Title :title="gradeLevel" />
         </div>
         <TabElement v-model:active="activeTab" :tabs="tabs">
-            <template #home>
+            <template #[homeTab]>
                 <div class="flex flex-col items-center justify-center">
                     <Home />
                 </div>
             </template>
-            <template #schedules>
+            <template #[schedulesTab]>
                 <div class="flex flex-col items-center justify-center">
                     <Schedules />
                 </div>
             </template>
-            <template #students>
+            <template #[studentsTab]>
                 <div class="flex flex-col items-center justify-center">
                     <Students />
                 </div>
@@ -30,15 +30,19 @@ import Schedules from "@/Views/Admin/Batches/Schedules.vue";
 import Home from "@/Views/Admin/Batches/Index.vue";
 import Students from "@/Views/Admin/Batches/Students.vue";
 import { usePage } from "@inertiajs/vue3";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const batch = computed(() => usePage().props.batch);
 
 const gradeLevel = computed(() => {
     return batch.value.level.name + " " + batch.value.section;
 });
 
-const tabs = ["Home", "Schedules", "Students"];
+const homeTab = t('common.home');
+const schedulesTab = t('common.schedules');
+const studentsTab = t('common.students')
+const tabs = [homeTab, schedulesTab, studentsTab];
 
-const activeTab = ref("Home");
+const activeTab = ref(homeTab);
 </script>
 <style scoped></style>

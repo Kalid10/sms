@@ -17,12 +17,12 @@
 
             <EmptyView
                 v-if="schoolSchedule.length < 1"
-                title="No Schedule found for today!"
+                :title="$t('schoolScheduleSchedules.noScheduleFound')"
             />
         </div>
         <!--        <LinkCell href="/school-schedules" value="View All Schedules" />-->
         <SecondaryButton
-            title="View All Schedules"
+            :title="$t('schoolScheduleSchedules.viewAllSchedules')"
             class="w-2/3 !rounded-2xl bg-zinc-700 text-white"
         />
     </div>
@@ -33,6 +33,7 @@ import { usePage } from "@inertiajs/vue3";
 import EmptyView from "@/Views/EmptyView.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { CalendarDaysIcon } from "@heroicons/vue/24/solid";
+import SelectInput from "@/Components/SelectInput.vue";
 
 const schoolSchedule = computed(() => usePage().props.school_schedule);
 </script>

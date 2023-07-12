@@ -24,8 +24,8 @@
         <div>
             <EmptyView
                 v-if="!computedAnnouncements"
-                title="No Announcements Found!"
-                link-title="Go To Announcements"
+                :title="$t('announcementsIndex.noAnnouncementsFound')"
+                :link-title="$t('announcementsIndex.goToAnnouncements')"
                 :link-url="url"
                 class="flex w-full justify-center py-2"
             />
@@ -49,7 +49,7 @@
                     v-else-if="!(view === 'teacher' && isAdmin())"
                     class="flex w-full justify-center py-2"
                     :href="url"
-                    value="View All Announcements"
+                    :value="$t('announcementsIndex.viewAllAnnouncements')"
                 />
             </div>
         </div>
@@ -62,6 +62,8 @@
     </div>
 </template>
 <script setup>
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 import { computed, ref, toRefs, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import Item from "@/Views/Announcements/Item.vue";
@@ -81,7 +83,9 @@ const props = defineProps({
     },
     title: {
         type: String,
-        default: "Announcements",
+        default: function () {
+            useI18n().t('announcementsIndex.announcementsTitle')
+        },
     },
     classStyle: {
         type: String,

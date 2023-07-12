@@ -21,5 +21,6 @@ module.exports = {
         "tailwindcss/no-custom-classname": "off",
         "vue/no-template-shadow": "off",
         "vue/no-mutating-props": "off",
+        "vue/no-v-html":"off"
     },
 };

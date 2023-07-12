@@ -4,34 +4,34 @@
         <FormElement
             v-model:show-modal="isNewSubjectFormOpened"
             modal
-            title="New Subject"
-            subtitle="Create a new subject and assign it to a category"
+            :title="$t('registerSubjectForm.formElementTitle')"
+            :subtitle="$t('registerSubjectForm.formElementSubtitle')"
             @submit="submit"
         >
             <TextInput
                 v-model="newSubject.full_name"
                 required
-                placeholder="Name of the new Subject"
-                label="Subject Name"
+                :placeholder="$t('registerSubjectForm.fullNamePlaceholder')"
+                :label="$t('registerSubjectForm.fullNameLabel')"
             />
             <TextInput
                 v-model="newSubject.short_name"
                 required
-                placeholder="Short name for Subject"
-                label="Subject Short Name"
+                :placeholder="$t('registerSubjectForm.shortNamePlaceholder')"
+                :label="$t('registerSubjectForm.shortNameLabel')"
             />
             <TextInput
                 v-model="tags"
-                placeholder="Assign tags (separate multiple tags with comma)"
-                label="Subject Tags"
+                :placeholder="$t('registerSubjectForm.tagsPlaceholder')"
+                :label="$t('registerSubjectForm.tagsLabel')"
             />
 
             <div class="relative">
                 <TextInput
                     v-model="newSubject.category"
                     required
-                    placeholder="Enter a category"
-                    label="Subject Category"
+                    :placeholder="$t('registerSubjectForm.categoryPlaceholder')"
+                    :label="$t('registerSubjectForm.categoryLabel')"
                     @click="isDropdownOpen = true"
                 />
                 <div
@@ -43,7 +43,7 @@
                         <TextInput
                             v-if="isDropdownOpen"
                             v-model="newCategory"
-                            placeholder="New category"
+                            :placeholder="$t('registerSubjectForm.newCategoryPlaceholder')"
                             class="w-full"
                             @keydown.enter.prevent="addCategory"
                         />
@@ -66,7 +66,7 @@
                         </div>
                     </template>
                     <template v-else>
-                        <div class="px-3 py-2 text-gray-400">No categories found</div>
+                        <div class="px-3 py-2 text-gray-400">{{ $t('registerSubjectForm.noCategoriesFound')}}</div>
                     </template>
                 </div>
             </div>

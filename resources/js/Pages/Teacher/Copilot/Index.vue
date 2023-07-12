@@ -1,7 +1,7 @@
 <template>
     <div class="flex min-h-screen w-full flex-col space-y-4 bg-gray-50 p-5">
         <div class="flex w-full space-x-5">
-            <Title class="w-4/12 pl-8" title="Rigel Copilot" />
+            <Title class="w-4/12 pl-8" :title="$t('copilotIndex.rigelCopilot')"/>
 
             <div v-if="openAILimitReached" class="z-50 flex w-10/12">
                 <span
@@ -17,13 +17,13 @@
         </div>
         <div class="flex h-full w-full justify-center px-4">
             <TabElement v-model:active="activeTab" class="h-full" :tabs="tabs">
-                <template #chat>
+                <template #[chatTab]>
                     <div class="h-screen">
                         <Chat @limit-reached="setLimitInfo" />
                     </div>
                 </template>
-                <template #questions>
-                    <QuestionPreparation @limit-reached="setLimitInfo" />
+                <template #[questionsTab]>
+                    <QuestionPreparation />
                 </template>
             </TabElement>
         </div>
@@ -37,8 +37,12 @@ import { ref } from "vue";
 import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparation.vue";
 import { ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
-const tabs = ["Chat", "Questions"];
-const activeTab = ref("Chat");
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
+const chatTab = t('common.chat')
+const questionsTab = t('common.questions')
+const tabs = [chatTab,questionsTab];
+const activeTab = ref(chatTab);
 
 const openAILimitReached = ref(false);
 const openAIDailyUsage = ref();

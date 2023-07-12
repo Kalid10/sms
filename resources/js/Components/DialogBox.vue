@@ -43,7 +43,8 @@
                 class="flex w-full items-center justify-end gap-3"
             >
                 <TertiaryButton v-if="abortAction" @click="abort"
-                    >Cancel
+                    >
+                    {{ $t('dialogBox.cancel') }}
                 </TertiaryButton>
                 <PrimaryButton class="action-button" @click="confirm">
                     <slot name="action">

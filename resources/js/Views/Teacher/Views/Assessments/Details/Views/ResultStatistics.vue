@@ -6,17 +6,17 @@
             class="flex w-full items-center justify-between rounded-md bg-gray-100 py-3.5 shadow-sm"
         >
             <ResultCard
-                label="Average Result"
+                :label="$t('resultStatistics.averageResult')"
                 :score="assessment.average_score"
             />
             <div class="h-9 w-[0.01rem] bg-gray-200"></div>
             <ResultCard
-                label="Highest Result"
+                :label="$t('resultStatistics.highestResult')"
                 :score="assessment.highest_score"
             />
             <div class="h-9 w-[0.01rem] bg-gray-200"></div>
             <ResultCard
-                label="Lowest Result"
+                :label="$t('resultStatistics.lowestResult')"
                 :score="assessment.lowest_score"
             />
         </div>
@@ -30,6 +30,7 @@
 <script setup>
 import ResultCard from "@/Views/Teacher/Views/Assessments/Details/Views/ResultCard.vue";
 import AssessmentOutcomePercentages from "@/Views/Teacher/Views/Assessments/Details/Views/AssessmentOutcomePercentages.vue";
+import OutcomePercentageDisplay from "@/Views/Teacher/Views/Assessments/Details/Views/OutcomePercentageDisplay.vue";
 
 defineProps({
     assessment: {

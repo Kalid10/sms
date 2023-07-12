@@ -3,11 +3,11 @@
         <span>{{ text }}</span>
     </div>
     <button v-if="!readMoreActivated" class="" @click="activateReadMore">
-        Read more...
+        {{ $t('readMoreLess.readMore')}}
     </button>
     <span v-if="readMoreActivated">{{ text }}</span>
     <button v-if="readMoreActivated" class="" @click="activateReadLess">
-        Read less...
+        {{ $t('readMoreLess.readLess')}}
     </button>
 </template>
 

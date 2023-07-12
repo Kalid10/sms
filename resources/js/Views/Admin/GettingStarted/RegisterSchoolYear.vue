@@ -40,7 +40,7 @@
 
             <div class="mt-8 flex">
                 <h3 class="max-w-md text-center text-sm text-gray-500">
-                    <span v-html="$t('registerSchoolYear.welcomeText', { name: 'very good boy' })" />
+                    <span v-html="$t('registerSchoolYear.welcomeText')" />
                 </h3>
             </div>
 

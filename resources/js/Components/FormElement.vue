@@ -21,8 +21,8 @@
 
         <div class="flex min-h-10 w-full items-center justify-end gap-2 bg-neutral-100 py-2 px-4">
             <slot name="form-actions">
-            <SecondaryButton :title="modal ? 'Close' : 'Clear'" @click="cancel"/>
-            <PrimaryButton title="Submit" @click="submit"/>
+            <SecondaryButton :title="modal ? $t('common.close') : $t('common.clear')" @click="cancel"/>
+            <PrimaryButton :title="$t('common.submit')" @click="submit"/>
             </slot>
         </div>
 
@@ -33,7 +33,8 @@
 <script setup>
 import PrimaryButton from "@/Components/PrimaryButton.vue"
 import SecondaryButton from "@/Components/SecondaryButton.vue"
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 defineProps({
     modal: {
         type: Boolean,

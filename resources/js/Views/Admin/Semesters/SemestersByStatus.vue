@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto flex w-full flex-col items-center gap-3">
-        <Heading>{{ status }} Semesters</Heading>
+        <Heading>{{ status }} {{ $t('semesterByStatus.semesters')}}</Heading>
         <SemestersList
             :semesters="
                 semesters

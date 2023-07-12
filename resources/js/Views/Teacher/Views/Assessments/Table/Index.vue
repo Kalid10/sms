@@ -54,7 +54,8 @@ import { capitalize, computed, ref, watch } from "vue";
 import moment from "moment";
 import Filters from "@/Views/Teacher/Views/Assessments/Table/Filters/Index.vue";
 import Pagination from "@/Components/Pagination.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const emit = defineEmits(["click", "create"]);
 const assessments = computed(() => usePage().props.assessments);
 const filteredAssessments = computed(() => {
@@ -73,13 +74,13 @@ const filteredAssessments = computed(() => {
 
 const config = [
     {
-        name: "Title",
+        name: t('tableIndex.title'),
         key: "assessment",
         type: "custom",
         class: "text-xs py-3.5",
     },
     {
-        name: "Type",
+        name: t('tableIndex.type'),
         key: "assessment_type",
         class: "text-xs",
         type: "enum",
@@ -92,23 +93,23 @@ const config = [
         ],
     },
     {
-        name: "Max Points",
+        name: t('tableIndex.maxPoints'),
         key: "max_points",
         class: "text-xs",
     },
     {
-        name: "Status",
+        name: t('tableIndex.status'),
         key: "status",
         type: "custom",
         class: "text-xs",
     },
     {
-        name: "Due Date",
+        name: t('tableIndex.dueDate'),
         key: "due_date",
         class: "text-xs",
     },
     {
-        name: "Last Update",
+        name: t('tableIndex.lastUpdate'),
         key: "updated_at",
         class: "text-xs opacity-70",
     },

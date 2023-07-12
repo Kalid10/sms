@@ -84,6 +84,8 @@ import Loading from "@/Components/Loading.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { useUIStore } from "@/Store/ui";
 
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const props = defineProps({
     auth: {
         type: Object,
@@ -107,69 +109,69 @@ const directory = computed(() => usePage().url.split("/")[2]);
 // Populate sidebar items
 const sidebarItems = computed(() => [
     {
-        name: "Home",
+        name: t('teacherLayout.home'),
         icon: HomeIcon,
         route: "/teacher",
         active: directory.value === undefined,
     },
     {
-        name: "Chat",
+        name:  t('common.chat'),
         icon: ChatBubbleBottomCenterIcon,
         route: "/teacher/chat",
         active: directory.value === "chat",
     },
     {
-        name: "My Classes",
+        name: t('teacherLayout.myClasses'),
         icon: PuzzlePieceIcon,
         route: "/teacher/class",
         active: directory.value === "class",
     },
     {
-        name: "My Students",
+        name: t('teacherLayout.myStudents'),
         icon: UsersIcon,
         route: "/teacher/students",
         active: directory.value === "students",
     },
     {
-        name: "Lesson Plan",
+        name: t('teacherLayout.lessonPlan'),
         icon: CalendarIcon,
         route: "/teacher/lesson-plan",
         active: directory.value === "lesson-plan",
     },
     {
-        name: "Question Bank",
+        name: t('teacherLayout.questionBank'),
         icon: QuestionMarkCircleIcon,
         route: "/teacher/questions",
         active: directory.value === "questions",
     },
     {
-        name: "Assessments",
+        name: t('teacherLayout.assessments'),
         icon: NewspaperIcon,
         route: "/teacher/assessments",
         active: directory.value === "assessments",
     },
     {
-        name: "Copilot",
+        name: t('common.copilot'),
         icon: SparklesIcon,
         route: "/teacher/copilot",
         active: directory.value === "copilot",
     },
     {
-        name: "Homerooms",
+        name: t('teacherLayout.homeRooms'),
         icon: UserIcon,
         route: "/teacher/homeroom",
         active: directory.value === "homeroom",
     },
 
     {
-        name: "Announcements",
+        name: t('teacherLayout.announcements'),
         icon: MegaphoneIcon,
         route: "/teacher/announcements",
         active: directory.value === "announcements",
     },
 
     {
-        name: "Schedule",
+        name: t('teacherLayout.schedule'),
         icon: CalendarDaysIcon,
         route: "/teacher/school-schedule",
         active: directory.value === "school-schedule",
@@ -178,14 +180,14 @@ const sidebarItems = computed(() => [
 
 const footerItems = [
     {
-        name: "Settings",
+        name: t('teacherLayout.settings'),
         icon: Cog6ToothIcon,
         route: "/user/profile",
         active: directory.value === "settings",
     },
     {
         icon: ArrowLeftOnRectangleIcon,
-        name: "Logout",
+        name: t('teacherLayout.logout'),
         route: "/logout",
         method: "POST",
     },

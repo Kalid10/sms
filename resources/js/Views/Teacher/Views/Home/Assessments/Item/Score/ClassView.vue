@@ -6,7 +6,7 @@
         <div
             class="flex w-6/12 items-end justify-center px-1 text-[0.65rem] text-gray-500"
         >
-            PTS
+            {{ $t('common.pts')}}
         </div>
     </div>
 </template>

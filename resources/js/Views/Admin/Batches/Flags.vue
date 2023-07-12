@@ -4,14 +4,15 @@
         :filterable="false"
         :columns="config"
         :data="flaggedStudentsData"
-        title="Flagged Students"
+        :title="$t('batchFlags.flaggedStudents')"
     />
 </template>
 <script setup>
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const flaggedStudents = computed(() => usePage().props.flagged_students);
 
 const flaggedStudentsData = computed(() => {
@@ -29,31 +30,31 @@ const flaggedStudentsData = computed(() => {
 
 const config = [
     {
-        name: "Student",
+        name: t('common.student'),
         key: "name",
         class: "font-semibold",
     },
     {
-        name: "Username",
+        name: t('batchFlags.userName'),
         key: "username",
         class: "text-gray-500 text-xs font-semibold",
     },
     {
-        name: "Gender",
+        name:  t('common.gender'),
         key: "gender",
         type: "enum",
         options: ["male", "female"],
     },
     {
-        name: "Type",
+        name:  t('common.type'),
         key: "type",
     },
     {
-        name: "Description",
+        name:  t('common.description'),
         key: "description",
     },
     {
-        name: "Flagged by",
+        name: t('batchFlags.flaggedBy'),
         key: "flagged_by",
     },
 ];

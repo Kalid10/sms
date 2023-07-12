@@ -88,9 +88,8 @@
                     :disabled="openAILimitReached"
                     type="text"
                     class="w-full"
-                    class-style="
-rounded-2xl ring-purple-600 ring-2 bg-gray-50 border-none bg-white placeholder:text-xs focus:ring-2 ring-black focus:ring-purple-500"
-                    placeholder="Type your message here..."
+                    class-style="rounded-2xl ring-purple-600 ring-2 bg-gray-50 border-none bg-white placeholder:text-xs focus:ring-2 ring-black focus:ring-purple-500"
+                    :placeholder="$t('chat.typeYourMessageHere')"
                     @keyup.enter="sendMessage"
                 />
                 <button
@@ -111,62 +110,58 @@ rounded-2xl ring-purple-600 ring-2 bg-gray-50 border-none bg-white placeholder:t
             v-if="showGettingStarted"
             class="mt-5 flex h-fit w-4/12 flex-col space-y-6 rounded-lg border border-black p-5 text-center text-sm"
         >
-            <h2 class="text-2xl font-bold">Getting Started with the AI Chat</h2>
+            <h2 class="text-2xl font-bold">{{ $t('chat.gettingStarted')}}</h2>
+            <p>{{ $t('chat.helloWeWant', { name: usePage().props.auth.user.name }) }}</p>
+
             <p>
-                Hello, {{ usePage().props.auth.user.name }}! We want to make
-                sure you get the most out of our AI chat feature, Rigel Copilot.
-                Here are some tips to guide you:
+<!--                Hello, {{ usePage().props.auth.user.name }}! We want to make-->
+<!--                sure you get the most out of our AI chat feature, Rigel Copilot.-->
+<!--                Here are some tips to guide you:-->
             </p>
 
             <div>
-                <h3 class="text-xl font-semibold">Ask Specific Questions</h3>
+                <h3 class="text-xl font-semibold">{{ $t('chat.askSpecificQuestions')}} </h3>
                 <p class="font-light">
-                    The AI chat is more effective when you ask specific
-                    questions...
+                    {{ $t('chat.theAiChat')}}
                 </p>
             </div>
 
             <div>
                 <h3 class="text-xl font-semibold">
-                    Experiment with Different Queries
+                    {{ $t('chat.experimentWithDifferent')}}
                 </h3>
                 <p class="font-light">
-                    Feel free to experiment with different types of questions or
-                    queries...
+                    {{ $t('chat.feelFree')}}
                 </p>
             </div>
 
             <div>
                 <h3 class="text-xl font-semibold">
-                    Use It as a Resource Finder
+                    {{ $t('chat.useItAsResource')}}
                 </h3>
                 <p class="font-normal">
-                    Need help finding educational resources? You can ask the AI
-                    chat for recommendations...
+                    {{ $t('chat.needHelpFinding')}}
                 </p>
             </div>
 
             <div>
                 <h3 class="text-xl font-semibold">
-                    Seek Clarification on Complex Topics
+                    {{ $t('chat.seekClarification')}}
                 </h3>
                 <p class="font-light">
-                    If you're dealing with complex educational topics, don't
-                    hesitate to ask the AI chat...
+                    {{ $t('chat.ifYourAreDealing')}}
                 </p>
             </div>
 
             <div>
-                <h3 class="text-xl font-semibold">Explore Creative Ideas</h3>
+                <h3 class="text-xl font-semibold">{{ $t('chat.exploreCreativeIdeas')}} </h3>
                 <p class="font-light">
-                    The AI chat can be a great tool to brainstorm new teaching
-                    techniques...
+                    {{ $t('chat.theAIChat')}}
                 </p>
             </div>
 
             <p class="py-4 italic">
-                Remember, while the AI chat is a powerful tool, it's not a
-                replacement for human interaction...
+                {{ $t('chat.RememberWhile')}}
             </p>
         </div>
     </div>
