@@ -21,8 +21,10 @@
             </div>
         </div>
 
-        <div class="flex w-full justify-between p-8">
-            <div class="flex w-8/12 flex-col space-y-8">
+        <div
+            class="flex w-full flex-col justify-between p-2 lg:flex-row lg:p-8"
+        >
+            <div class="flex w-full flex-col space-y-8 lg:w-8/12">
                 <WelcomeHeader v-if="isTeacher()" />
                 <TabElement v-model:active="activeTab" :tabs="tabs">
                     <template #[announcementsTab]>
@@ -47,7 +49,9 @@
                 </div>
                 <Flags :title="$t('teacherIndex.recentFlags')" view="teacher" />
             </div>
-            <div class="flex h-full w-3/12 flex-col items-center space-y-8">
+            <div
+                class="flex h-full w-full flex-col items-center space-y-8 lg:w-3/12"
+            >
                 <NextClass
                     class="!w-11/12"
                     @view="activeTab = toDaysScheduleTab"

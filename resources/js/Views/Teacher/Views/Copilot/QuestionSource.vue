@@ -1,6 +1,6 @@
 <template>
     <div
-        class="group flex w-1/2 cursor-pointer flex-col justify-evenly space-y-2 rounded-lg border border-black p-3 text-center shadow-sm hover:border-zinc-700 hover:bg-purple-600 hover:text-white"
+        class="group flex w-full cursor-pointer flex-col justify-evenly space-y-2 rounded-lg border border-black p-3 text-center shadow-sm hover:border-zinc-700 hover:bg-purple-600 hover:text-white lg:w-1/2"
         :class="selected ? 'bg-purple-600 text-white' : ''"
         @click="handleClick"
     >

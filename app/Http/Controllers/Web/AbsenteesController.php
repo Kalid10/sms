@@ -208,6 +208,8 @@ class AbsenteesController extends Controller
 
         $userType = $request->input('type');
 
+        $date = $request->input('date');
+
         // Get staff absentees of the day
         $staffAbsenteesOfTheDay = StaffAbsentee::with('user')
             ->whereDate('created_at', Carbon::today())
@@ -225,6 +227,9 @@ class AbsenteesController extends Controller
                     }
                 });
             })
+            ->when($date, function ($query, $date) {
+                $query->whereDate('created_at', $date);
+            })
             ->paginate(10);
 
         $userTypes = $userType === ['all', 'admin', 'teacher'];
@@ -236,6 +241,7 @@ class AbsenteesController extends Controller
             'user_types' => $userTypes,
             'filters' => [
                 'user_type' => $userType,
+                'date' => $date,
             ],
         ]);
     }

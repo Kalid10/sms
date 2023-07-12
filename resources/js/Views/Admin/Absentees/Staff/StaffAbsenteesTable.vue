@@ -17,13 +17,19 @@
                     v-model="selectedUserType"
                     class="h-fit w-3/12 rounded-2xl !text-sm"
                     :options="userTypeOptions"
-                    placeholder="Filter by user type"
+                    :placeholder="$t('staffAbsenteesTable.userType')"
                 />
 
+                <DatePicker
+                    v-model="selectedDate"
+                    class="h-fit w-2/12 rounded-2xl !text-sm"
+                />
                 <PrimaryButton class="!rounded-2xl" @click="showModal = true">
                     <span class="flex space-x-1">
                         <SquaresPlusIcon class="w-3 stroke-white stroke-2" />
-                        <span class="!text-xs">{{ $t('staffAbsenteesTable.newAbsentee')}}</span>
+                        <span class="!text-xs">{{
+                            $t("staffAbsenteesTable.newAbsentee")
+                        }}</span>
                     </span>
                 </PrimaryButton>
             </div>
@@ -49,10 +55,15 @@ import AbsenteeAddModal from "@/Views/Admin/Absentees/AbsenteeAddModal.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Modal from "@/Components/Modal.vue";
 import EmptyView from "@/Views/EmptyView.vue";
+import DatePicker from "@/Components/DatePicker.vue";
+import moment from "moment";
+
 import { useI18n } from "vue-i18n";
-const {t} = useI18n()
+
+const { t } = useI18n();
 const showModal = ref(false);
 const selectedUserType = ref(usePage().props.filters.user_type);
+
 const staffAbsenteesOfTheDay = computed(
     () => usePage().props.staff_absentees_of_the_day
 );
@@ -90,6 +101,28 @@ watch(selectedUserType, () => {
     }
 });
 
+const selectedDate = ref(null);
+
+let selectedDateString = "";
+
+watch(selectedDate, () => {
+    if (selectedDate.value) {
+        const isoDate = new Date(selectedDate.value);
+        selectedDateString = moment(isoDate).format("YYYY-MM-DD");
+        router.get(
+            "/admin/absentees",
+            {
+                date: selectedDateString,
+            },
+            {
+                only: ["staff_absentees_of_the_day"],
+                preserveState: true,
+                replace: true,
+            }
+        );
+    }
+});
+
 const filteredStaffAbsentees = computed(() => {
     return staffAbsenteesOfTheDay.value.data.map((staffAbsentee) => {
         return {
@@ -104,20 +137,19 @@ const filteredStaffAbsentees = computed(() => {
 const config = [
     {
         key: "name",
-        name: t('common.name'),
+        name: t("common.name"),
     },
     {
         key: "email",
-        name: t('common.email'),
+        name: t("common.email"),
     },
     {
         key: "reason",
-        name: t('common.reason'),
+        name: t("common.reason"),
     },
     {
         key: "type",
-        name: t('common.type'),
-
+        name: t("common.type"),
     },
 ];
 
