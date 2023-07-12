@@ -87,6 +87,7 @@ const chatContainer = ref(null);
 
 onUpdated(() => {
     const container = chatContainer.value;
+    if (!container) return;
     container.scrollTop = container.scrollHeight;
 });
 </script>
