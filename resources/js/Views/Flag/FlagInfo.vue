@@ -1,7 +1,12 @@
 <template>
-    <div class="flex w-full flex-col space-y-5 rounded-lg bg-white p-5">
-        <div class="text-center text-2xl font-medium uppercase">
-            Understanding Student Flags
+    <div
+        class="flex w-full flex-col items-center space-y-5 rounded-lg bg-white p-5"
+    >
+        <div
+            class="flex w-fit space-x-2 bg-red-600 px-3 text-center text-2xl font-semibold uppercase text-white"
+        >
+            <FlagIcon class="w-5 text-white" />
+            <span> Understanding Student Flags </span>
         </div>
 
         <div class="flex flex-col space-y-4 px-4 py-3 text-sm text-gray-700">
@@ -39,6 +44,8 @@
         </div>
     </div>
 </template>
-<script setup></script>
+<script setup>
+import { FlagIcon } from "@heroicons/vue/20/solid";
+</script>
 
 <style scoped></style>
