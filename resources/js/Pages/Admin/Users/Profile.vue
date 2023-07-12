@@ -5,10 +5,9 @@
         >
             <div class="block lg:hidden">
                 <div class="flex w-full flex-col items-center">
-                    <span class="text-lg font-bold">Hello {{ user.name }}</span>
-                    <span class="text-xs font-light">
-                        You can update your profile and password here.
-                    </span>
+                    <span class="text-lg font-bold"
+                        >{{ $t("userProfile.hello") }} {{ user.name }}</span
+                    >
                 </div>
             </div>
             <!--            Profile -->
@@ -18,7 +17,7 @@
                 <div
                     class="flex w-full shrink-0 flex-col justify-center space-y-2"
                 >
-                    <Heading :value="$t('userProfile.profile')"/>
+                    <Heading :value="$t('userProfile.profile')" />
                     <Heading
                         :value="$t('userProfile.headingTwo')"
                         size="sm"
@@ -70,7 +69,9 @@
                                 class="w-5/12 cursor-pointer"
                                 :options="genderOptions"
                                 :label="$t('common.gender')"
-                                :placeholder="$t('userProfile.genderPlaceholder')"
+                                :placeholder="
+                                    $t('userProfile.genderPlaceholder')
+                                "
                                 required
                             />
                         </div>
@@ -104,7 +105,9 @@
                             :label="$t('userProfile.currentPasswordLabel')"
                             type="password"
                             :error="passwordForm.errors.current_password"
-                            :placeholder="$t('userProfile.currentPasswordPlaceholder')"
+                            :placeholder="
+                                $t('userProfile.currentPasswordPlaceholder')
+                            "
                             required
                         />
 
@@ -143,11 +146,13 @@
                 <h1
                     class="w-full text-3xl font-extrabold leading-none lg:text-6xl"
                 >
-                    <span class="w-full">{{ $t('userProfile.hello')}} 👋🏼 {{ user.name }}</span>
+                    <span class="w-full"
+                        >{{ $t("userProfile.hello") }} 👋🏼 {{ user.name }}</span
+                    >
                 </h1>
 
                 <h3 class="py-1 font-light text-gray-500">
-                    {{ $t('userProfile.description')}}
+                    {{ $t("userProfile.description") }}
                 </h3>
             </div>
 

@@ -17,7 +17,7 @@
                     v-model="selectedUserType"
                     class="h-fit w-3/12 rounded-2xl !text-sm"
                     :options="userTypeOptions"
-                    placeholder="Filter by user type"
+                    :placeholder="$t('staffAbsenteesTable.userType')"
                 />
 
                 <DatePicker
@@ -27,7 +27,9 @@
                 <PrimaryButton class="!rounded-2xl" @click="showModal = true">
                     <span class="flex space-x-1">
                         <SquaresPlusIcon class="w-3 stroke-white stroke-2" />
-                        <span class="!text-xs">{{ $t('staffAbsenteesTable.newAbsentee')}}</span>
+                        <span class="!text-xs">{{
+                            $t("staffAbsenteesTable.newAbsentee")
+                        }}</span>
                     </span>
                 </PrimaryButton>
             </div>
@@ -57,7 +59,8 @@ import DatePicker from "@/Components/DatePicker.vue";
 import moment from "moment";
 
 import { useI18n } from "vue-i18n";
-const {t} = useI18n()
+
+const { t } = useI18n();
 const showModal = ref(false);
 const selectedUserType = ref(usePage().props.filters.user_type);
 
@@ -134,20 +137,19 @@ const filteredStaffAbsentees = computed(() => {
 const config = [
     {
         key: "name",
-        name: t('common.name'),
+        name: t("common.name"),
     },
     {
         key: "email",
-        name: t('common.email'),
+        name: t("common.email"),
     },
     {
         key: "reason",
-        name: t('common.reason'),
+        name: t("common.reason"),
     },
     {
         key: "type",
-        name: t('common.type'),
-
+        name: t("common.type"),
     },
 ];
 

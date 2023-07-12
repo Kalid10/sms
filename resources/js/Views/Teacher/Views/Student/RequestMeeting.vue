@@ -1,6 +1,9 @@
 <template>
     <FormElement
-        :title="`Meeting Request to ${guardian.user.name}`"
+        :title="`${$t('requestMeeting.meetingRequestTo')} ${
+            guardian.user.name
+        }`"
+        :placeholder="$t('staffAbsenteesTable.userType')"
         subtitle=""
         @submit="submit"
     >
