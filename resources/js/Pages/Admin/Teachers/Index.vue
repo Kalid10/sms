@@ -5,17 +5,18 @@
             :selectable="false"
             :data="formattedTeachersData"
             :filterable="false"
+            class="rounded-lg p-5 shadow-sm"
         >
             <template #table-header>
                 <div class="flex w-full items-center justify-between pb-5">
-                    <div class="flex w-full">
+                    <div class="flex w-4/12">
                         <Title :title="$t('common.teachers')" />
                     </div>
 
                     <div class="flex w-full justify-between space-x-2">
                         <TextInput
                             v-model="searchKey"
-                            class="w-full"
+                            class="w-6/12"
                             :placeholder="$t('teachersIndex.searchTeacher')"
                         />
                         <div class="flex w-full justify-between space-x-2">

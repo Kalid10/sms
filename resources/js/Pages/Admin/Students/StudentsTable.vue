@@ -6,7 +6,7 @@
             :header="false"
             row-actionable
             :filterable="false"
-            class="px-3 pt-4 pb-2"
+            class="rounded-lg p-5 shadow-sm"
             :data="formattedStudentsData"
         >
             <template #table-header>

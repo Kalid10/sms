@@ -14,7 +14,9 @@
             :value="modelValue"
             class="h-9 w-full outline-none placeholder:text-xs placeholder:text-gray-400"
             :class="
-                classStyle
+                disabled
+                    ? 'blur-0 cursor-not-allowed rounded-2xl'
+                    : classStyle
                     ? classStyle
                     : 'border border-gray-200 text-sm focus:ring-1 focus:ring-zinc-700 focus:border-none focus:outline-none rounded-md '
             "

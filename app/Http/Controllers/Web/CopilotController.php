@@ -6,6 +6,7 @@ use App\Models\AssessmentType;
 use App\Models\SchoolYear;
 use App\Services\OpenAIService;
 use App\Services\TeacherService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -36,10 +37,10 @@ class CopilotController extends Controller
         ]);
     }
 
-    public function chat(Request $request, OpenAIService $openAIService): StreamedResponse
+    public function chat(Request $request, OpenAIService $openAIService): StreamedResponse|JsonResponse
     {
         $messages = json_decode($request->input('messages'), true);
 
-        return $openAIService->createChatStream($messages, 1000);
+        return $openAIService->createChatStream($messages);
     }
 }

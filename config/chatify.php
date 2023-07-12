@@ -28,7 +28,7 @@ return [
     ],
     'api_routes' => [
         'prefix' => env('CHATIFY_API_ROUTES_PREFIX', 'chat/api'),
-        'middleware' => env('CHATIFY_API_ROUTES_MIDDLEWARE', ['api', 'web', 'auth']),
+        'middleware' => env('CHATIFY_API_ROUTES_MIDDLEWARE', ['web', 'auth']),
         'namespace' => env('CHATIFY_API_ROUTES_NAMESPACE', 'App\Http\Controllers\API'),
     ],
 

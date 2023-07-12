@@ -2,7 +2,7 @@
     <div id="top-view"></div>
 
     <div class="relative flex h-screen w-full flex-col">
-        <div class="hide-scrollbar w-full grow overflow-y-auto bg-white p-0">
+        <div class="hide-scrollbar w-full grow overflow-y-auto bg-gray-50 p-0">
             <div class="flex w-full">
                 <SideBar
                     v-model:open="openSideBar"

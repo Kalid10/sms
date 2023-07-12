@@ -116,9 +116,9 @@ import TextArea from "@/Components/TextArea.vue";
 import { useUIStore } from "@/Store/ui";
 
 const assessmentTypes = computed(() => usePage().props.assessment_types);
-
 const questions = computed(() => usePage().props.questions);
 
+const emit = defineEmits(["limit-reached"]);
 onMounted(() => {
     loadLessonPlans();
 });
@@ -162,6 +162,10 @@ const submit = () => {
     uiStore.setQuestionGenerationLoading(true);
     form.post("/teacher/questions/create", {
         preserveState: true,
+        onError: (error) => {
+            uiStore.setQuestionGenerationLoading(false);
+            emit("limit-reached");
+        },
     });
 };
 

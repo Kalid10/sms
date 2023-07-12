@@ -1,6 +1,7 @@
 <template>
     <div class="flex w-full flex-col space-y-5 rounded-lg bg-white p-5">
-        <div class="text-center text-2xl font-medium uppercase">
+        <div class="w-fit bg-red-400 px-3 text-center text-2xl font-semibold uppercase text-white">
+            <FlagIcon class="w-5 text-white" />
           {{ $t('flagInfo.understandingStudentFlags')}}
         </div>
 
@@ -20,6 +21,8 @@
         </div>
     </div>
 </template>
-<script setup></script>
+<script setup>
+import { FlagIcon } from "@heroicons/vue/20/solid";
+</script>
 
 <style scoped></style>

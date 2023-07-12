@@ -11,6 +11,22 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
     <link href="https://fonts.bunny.net/css?family=inter:200,400,500,600,800" rel="stylesheet"/>
     <!-- Scripts -->
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        // Global Chatify variables from PHP to JS
+        window.chatify = {
+            name: "{{ config('chatify.name') }}",
+            sounds: {!! json_encode(config('chatify.sounds')) !!},
+            allowedImages: {!! json_encode(config('chatify.attachments.allowed_images')) !!},
+            allowedFiles: {!! json_encode(config('chatify.attachments.allowed_files')) !!},
+            maxUploadSize: {{ Chatify::getMaxUploadSize() }},
+            pusher: {!! json_encode(config('chatify.pusher')) !!},
+            pusherAuthEndpoint: '{{route("api.pusher.auth")}}'
+        };
+        window.chatify.allAllowedExtensions = chatify.allowedImages.concat(chatify.allowedFiles);
+    </script>
+
     @routes
     @vite('resources/js/app.js')
     @inertiaHead
