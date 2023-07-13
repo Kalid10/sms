@@ -283,11 +283,6 @@ import Toast from "@/Components/Toast.vue";
 
 let showToast = ref(false);
 
-// const copyText = () => {
-//     showToast.value = true;
-//     setTimeout(() => (showToast.value = false), 3000);
-// };
-
 const title = ref("fr");
 
 // Listen for student import broadcast events

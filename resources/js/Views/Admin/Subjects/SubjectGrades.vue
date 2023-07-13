@@ -13,11 +13,11 @@
                     {{ category[0] }}
                 </div>
                 <h3 class="text-sm font-semibold text-gray-500">
-                    {{ category }} {{ $t('subjectGrades.levels')}}
+                    {{ category }} {{ $t("subjectGrades.levels") }}
                 </h3>
             </div>
 
-            <div class="grid grid-cols-4 gap-3">
+            <div class="grid grid-cols-1 gap-3 lg:grid-cols-4">
                 <Card
                     v-for="(level, l) in levels.filter(
                         (l) => l['level']['level_category'] === category
@@ -28,7 +28,7 @@
                 >
                     <div class="flex flex-col gap-1">
                         <h3 class="text-sm font-semibold text-gray-500">
-                            {{ $t('subjectGrades.sections')}}
+                            {{ $t("subjectGrades.sections") }}
                         </h3>
                         <div class="flex gap-3">
                             <div

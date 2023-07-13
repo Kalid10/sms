@@ -1,5 +1,5 @@
 <template>
-    <div class="w-10/12 py-5">
+    <div class="w-full py-2 lg:w-10/12 lg:py-5">
         <Title class="pb-8" :title="$t('common.subjects')" />
 
         <SubjectsTable
@@ -20,7 +20,7 @@
             @confirm="archiveSubject"
         >
             <template #description>
-                {{ $t('subjectsIndex.message')}}
+                {{ $t("subjectsIndex.message") }}
             </template>
         </DialogBox>
     </div>

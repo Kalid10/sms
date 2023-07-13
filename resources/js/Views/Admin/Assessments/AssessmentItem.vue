@@ -17,7 +17,7 @@
         <div class="w-3/12 text-center font-medium">
             {{ assessment.title }}
         </div>
-        <div class="w-3/12 text-center font-light">
+        <div class="hidden w-3/12 text-center font-light lg:block">
             {{ assessment.description }}
         </div>
         <div class="w-3/12 text-center font-light">

@@ -10,7 +10,9 @@
                 <div
                     class="h-fit w-full rounded-lg bg-white px-5 py-3 shadow-sm"
                 >
-                    <div class="flex w-full items-center justify-between">
+                    <div
+                        class="flex w-full flex-col items-center justify-between lg:flex-row"
+                    >
                         <div
                             class="flex w-full flex-col justify-center space-y-2 py-2"
                         >
@@ -23,8 +25,10 @@
                         </div>
                         <TextInput
                             v-model="query"
-                            class="w-4/5"
-                            :placeholder="$t('schedulesIndex.searchForSchedule')"
+                            class="w-full lg:w-4/5"
+                            :placeholder="
+                                $t('schedulesIndex.searchForSchedule')
+                            "
                         />
                     </div>
 

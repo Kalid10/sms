@@ -1,5 +1,5 @@
 <template>
-    <div class="my-5 flex min-h-full w-10/12 flex-col rounded-lg">
+    <div class="my-5 flex min-h-full w-10/12 flex-col">
         <Title class="pb-8" :title="$t('common.grades')" />
         <TableElement
             :columns="config"
@@ -8,7 +8,7 @@
             :footer="false"
             :selectable="false"
             :header="false"
-            class="!shadow-none"
+            class="rounded-lg p-5 shadow-sm"
         >
             <template #table-header>
                 <div class="flex items-center justify-between">
@@ -16,7 +16,10 @@
                         class="flex w-full items-center justify-between space-x-5 pb-4"
                     >
                         <!--    TODO: Implement Search-->
-                        <TextInput :placeholder="$t('levelIndex.searchGrades')" class="w-6/12" />
+                        <TextInput
+                            :placeholder="$t('levelIndex.searchGrades')"
+                            class="w-6/12"
+                        />
                         <SecondaryButton
                             :title="$t('levelIndex.goToLevelCategories')"
                             value=" Go To Level Categories"
@@ -68,8 +71,9 @@ import moment from "moment/moment";
 import TextInput from "@/Components/TextInput.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const levels = computed(() => {
     return usePage().props.levels.map((level) => {
         return {
@@ -88,17 +92,17 @@ const levels = computed(() => {
 
 const config = [
     {
-        name: t('levelIndex.levelCategory'),
+        name: t("levelIndex.levelCategory"),
         key: "level",
         type: "custom",
     },
     {
-        name: t('common.sections'),
+        name: t("common.sections"),
         key: "batches",
         type: "custom",
     },
     {
-        name: t('levelIndex.updatedAt'),
+        name: t("levelIndex.updatedAt"),
         key: "updated_at",
         type: "custom",
     },

@@ -1,10 +1,10 @@
 <template>
     <div
-        class="flex w-full items-center justify-between space-x-10 rounded-lg bg-white px-5 py-3 shadow-sm"
+        class="flex w-full flex-col items-center justify-between space-y-4 rounded-lg bg-white px-5 py-3 shadow-sm lg:flex-row lg:space-x-10"
     >
         <Loading v-if="showLoading" is-full-screen />
         <div
-            class="flex h-full w-8/12 flex-col items-center justify-evenly space-y-2"
+            class="flex h-full w-full flex-col items-center justify-evenly space-y-2 lg:w-8/12"
         >
             <div class="w-full px-3 text-2xl font-medium">
                 School Schedules
@@ -53,7 +53,7 @@
 
             <LinkCell value="View All Schedules" href="/admin/schedules" />
         </div>
-        <div class="w-3/12">
+        <div class="w-full lg:w-3/12">
             <DatePicker
                 v-model:start-date="startDate"
                 v-model:end-date="endDate"

@@ -1,14 +1,14 @@
 <template>
-    <div class="my-2 flex w-full flex-row gap-4">
+    <div class="my-2 flex w-full flex-col gap-4 lg:flex-row">
         <div class="flex w-full items-center">
-            <label class="mx-2 flex w-32 items-center text-sm text-gray-800"
-                >{{ $t('batchStudentTable.selectGrade')}}</label
-            >
+            <label class="mx-2 flex w-32 items-center text-sm text-gray-800">{{
+                $t("batchStudentTable.selectGrade")
+            }}</label>
             <SelectInput
                 v-model="selectedBatchId"
                 :options="batchOptions"
                 :placeholder="$t('batchStudentTable.selectBatch')"
-                class="w-4/12 cursor-pointer"
+                class="w-full cursor-pointer lg:w-4/12"
             />
         </div>
         <SecondaryButton
@@ -25,7 +25,7 @@
         :selectable="false"
         :header="false"
         :filterable="false"
-        :title="$t('batchStudentTable.studentsIn')+ selectedBatchLevel"
+        :title="$t('batchStudentTable.studentsIn') + selectedBatchLevel"
         :data="batchStudentData"
     >
         <template #name-column="{ data }">
@@ -56,13 +56,22 @@
                 <ExclamationTriangleIcon
                     class="mb-2 h-6 w-6 text-negative-50"
                 />
-                <p class="text-sm font-semibold">{{ $t('batchStudentTable.noDataFound')}}</p>
+                <p class="text-sm font-semibold">
+                    {{ $t("batchStudentTable.noDataFound") }}
+                </p>
                 <div v-if="searchKey.length">
                     <p v-if="searchKey === null" class="text-sm text-gray-500">
-                        {{ $t('batchStudentTable.noTeacherEnrolled')}}
+                        {{ $t("batchStudentTable.noTeacherEnrolled") }}
                     </p>
                     <p v-else class="text-center text-sm text-gray-500">
-                        <span v-html="$t('batchStudentTable.yourSearchQuery',{searchKey})"> </span>
+                        <span
+                            v-html="
+                                $t('batchStudentTable.yourSearchQuery', {
+                                    searchKey,
+                                })
+                            "
+                        >
+                        </span>
                     </p>
                 </div>
             </div>
@@ -77,9 +86,10 @@ import { router, usePage } from "@inertiajs/vue3";
 import { debounce } from "lodash";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
 import Pagination from "@/Components/Pagination.vue";
+
+const { t } = useI18n();
 
 const batchStudents = computed(() => {
     return usePage().props.batch_students;
@@ -153,7 +163,7 @@ watch([searchKey], () => {
 });
 const config = [
     {
-        name: t('common.name'),
+        name: t("common.name"),
         key: "name",
         link: "/admin/students/{id}",
         align: "left",
@@ -165,10 +175,10 @@ const config = [
         type: "custom",
     },
     {
-        name: t('common.gender'),
+        name: t("common.gender"),
         key: "gender",
         type: "enum",
-        options: [t('common.female'), t('common.male')],
+        options: [t("common.female"), t("common.male")],
     },
 ];
 </script>
