@@ -3,10 +3,10 @@
         :selectable="false"
         :data="filteredStaffAbsentees"
         :columns="config"
-        class="!rounded-lg p-5 shadow-sm"
+        class="!rounded-lg shadow-sm lg:p-5"
     >
         <template #filter>
-            <div class="flex justify-between gap-2">
+            <div class="flex flex-col justify-between gap-2 lg:flex-row">
                 <TextInput
                     v-model="query"
                     class="w-full lg:max-w-lg"
@@ -15,23 +15,30 @@
                 />
                 <SelectInput
                     v-model="selectedUserType"
-                    class="h-fit w-3/12 rounded-2xl !text-sm"
+                    class="h-fit w-full rounded-2xl !text-sm lg:w-3/12"
                     :options="userTypeOptions"
                     :placeholder="$t('staffAbsenteesTable.userType')"
                 />
 
                 <DatePicker
                     v-model="selectedDate"
-                    class="h-fit w-2/12 rounded-2xl !text-sm"
+                    class="h-fit w-full rounded-2xl !text-sm lg:w-2/12"
                 />
-                <PrimaryButton class="!rounded-2xl" @click="showModal = true">
-                    <span class="flex space-x-1">
-                        <SquaresPlusIcon class="w-3 stroke-white stroke-2" />
-                        <span class="!text-xs">{{
-                            $t("staffAbsenteesTable.newAbsentee")
-                        }}</span>
-                    </span>
-                </PrimaryButton>
+                <div class="flex justify-end">
+                    <PrimaryButton
+                        class="!rounded-2xl"
+                        @click="showModal = true"
+                    >
+                        <span class="flex space-x-1">
+                            <SquaresPlusIcon
+                                class="w-3 stroke-white stroke-2"
+                            />
+                            <span class="!text-xs">{{
+                                $t("staffAbsenteesTable.newAbsentee")
+                            }}</span>
+                        </span>
+                    </PrimaryButton>
+                </div>
             </div>
         </template>
         <template #empty-data>

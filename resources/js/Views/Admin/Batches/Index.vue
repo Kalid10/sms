@@ -3,11 +3,13 @@
         <div class="rounded-lg border">
             <BatchPerformance :grade="selectedBatch.grade" />
         </div>
-        <div class="flex w-full justify-between space-x-5 py-3">
-            <div class="flex w-7/12 rounded-lg border">
+        <div
+            class="flex w-full flex-col justify-between space-x-5 py-3 lg:flex-row"
+        >
+            <div class="flex w-full rounded-lg border lg:w-7/12">
                 <Flags :title="$t('batchesIndex.flagList')" view="homeroom" />
             </div>
-            <div class="flex w-4/12 justify-between">
+            <div class="flex w-full justify-between lg:w-4/12">
                 <div
                     class="flex min-h-full w-full flex-col items-center justify-center rounded-lg bg-gradient-to-bl from-violet-500 to-purple-500 py-2 text-center uppercase text-white shadow-sm"
                 >
@@ -15,7 +17,9 @@
                         v-if="activeSession.length > 0"
                         class="flex h-full flex-col items-center space-y-1.5"
                     >
-                        <div class="text-[0.65rem] font-light">{{ $t('batchesIndex.attending')}}</div>
+                        <div class="text-[0.65rem] font-light">
+                            {{ $t("batchesIndex.attending") }}
+                        </div>
 
                         <div class="text-3xl font-semibold uppercase">
                             {{
@@ -23,7 +27,9 @@
                                     ?.full_name
                             }}
                         </div>
-                        <div class="text-[0.65rem] font-light">{{ $t('common.with')}}</div>
+                        <div class="text-[0.65rem] font-light">
+                            {{ $t("common.with") }}
+                        </div>
 
                         <div
                             class="cursor-pointer text-xs font-semibold uppercase underline-offset-2 hover:scale-105 hover:underline"
@@ -31,23 +37,27 @@
                             {{ activeSession[0].teacher.user.name }}
                         </div>
                     </div>
-                    <div v-else>{{ $t('batchesIndex.noActiveSession')}}</div>
+                    <div v-else>{{ $t("batchesIndex.noActiveSession") }}</div>
                 </div>
             </div>
         </div>
 
-        <div class="flex w-full justify-between rounded-lg border py-6 pr-5">
-            <div class="flex h-full w-2/12 flex-col gap-5 rounded-lg px-3">
+        <div
+            class="flex w-full flex-col justify-between rounded-lg border py-6 lg:flex-row lg:pr-5"
+        >
+            <div
+                class="flex h-full w-full flex-row gap-2 rounded-lg lg:w-2/12 lg:flex-col lg:gap-5"
+            >
                 <Card
                     :title="$t('common.assessments')"
-                    :class="`min-w-full cursor-pointer ${
+                    :class="`lg:min-w-full cursor-pointer ${
                         selectedCard === 'assessments' ? 'bg-gray-200' : ''
                     }`"
                     icon
                     @click="openAssessment"
                 >
                     <h3 class="text-sm text-gray-500">
-                        {{ $t('batchesIndex.clickToViewScheduledAssessments')}}
+                        {{ $t("batchesIndex.clickToViewScheduledAssessments") }}
                     </h3>
                     <template #icon>
                         <ArrowRightCircleIcon />
@@ -56,14 +66,14 @@
 
                 <Card
                     title="Students Notes"
-                    :class="`min-w-full cursor-pointer ${
+                    :class="`lg:min-w-full cursor-pointer ${
                         selectedCard === 'studentNotes' ? 'bg-gray-200' : ''
                     }`"
                     icon
                     @click="openStudentNotes"
                 >
                     <h3 class="text-sm text-gray-500">
-                        {{ $t('batchesIndex.clickToViewStudentsNotes')}}
+                        {{ $t("batchesIndex.clickToViewStudentsNotes") }}
                     </h3>
                     <template #icon>
                         <ArrowRightCircleIcon />
@@ -72,7 +82,7 @@
 
                 <Card
                     title="Today's Absentees"
-                    :class="`min-w-full cursor-pointer ${
+                    :class="`lg:min-w-full cursor-pointer ${
                         selectedCard === 'absentees' ? 'bg-gray-200' : ''
                     }`"
                     icon
@@ -86,7 +96,7 @@
                     </template>
                 </Card>
             </div>
-            <div class="flex w-10/12 border p-3 shadow-lg">
+            <div class="flex w-full rounded border p-3 shadow-lg lg:w-10/12">
                 <BatchAssessment v-if="showAssessment" />
                 <StudentNotes v-if="showStudentNotes" />
                 <Absentees v-if="showAbsentees" />

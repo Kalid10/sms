@@ -5,10 +5,12 @@
         :class="[
             isOpen
                 ? 'min-w-[16rem] lg:w-80 lg:min-w-0 2xl:w-96'
-                : 'w-2/12 min-w-0 lg:w-16',
+                : 'min-w-8 lg:w-16',
             'transition-all duration-300 ease-in-out ',
         ]"
         @click="toggleSidebar"
+        @mouseover="handleMouseover"
+        @mouseleave="handleMouseleave"
     >
         <div
             class="flex min-h-screen w-full flex-col items-center justify-between pt-1 pb-4 text-white lg:pt-5"
@@ -65,8 +67,23 @@ const sidebarStore = useSidebarStore();
 const isOpen = computed(() => sidebarStore.isOpen);
 
 function toggleSidebar() {
-    if (isOpen.value) return sidebarStore.toggle();
-    else sidebarStore.open();
+    if (window.innerWidth <= 768) {
+        sidebarStore.close();
+    } else {
+        sidebarStore.open();
+    }
+}
+
+function handleMouseover() {
+    if (window.innerWidth > 768) {
+        sidebarStore.open();
+    }
+}
+
+function handleMouseleave() {
+    if (window.innerWidth > 768) {
+        sidebarStore.close();
+    }
 }
 
 // Close sidebar when clicking outside of it

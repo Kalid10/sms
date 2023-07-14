@@ -1,9 +1,9 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col space-y-8 bg-gray-50 p-5 lg:px-1 2xl:px-10"
+        class="flex min-h-screen w-full flex-col space-y-8 bg-gray-50 py-2 lg:p-5 lg:px-1 2xl:px-10"
     >
-        <div class="flex h-fit w-full justify-between">
-            <div class="flex w-7/12 flex-col space-y-8">
+        <div class="flex h-fit w-full flex-col justify-between lg:flex-row">
+            <div class="flex w-full flex-col space-y-8 lg:w-7/12">
                 <WelcomeHeader />
 
                 <TabElement v-model:active="activeTab" :tabs="tabs">
@@ -15,15 +15,18 @@
                     </template>
 
                     <template #[flagsTab]>
-                        <Flags view="admin" :title="$t('adminIndex.recentFlags')" />
+                        <Flags
+                            view="admin"
+                            :title="$t('adminIndex.recentFlags')"
+                        />
                     </template>
                 </TabElement>
             </div>
 
-            <div class="flex w-4/12 flex-col items-center space-y-8">
+            <div class="flex w-full flex-col items-center space-y-8 lg:w-4/12">
                 <StudentSearch />
 
-                <AbsenteeStats class="w-11/12" />
+                <AbsenteeStats class="w-full lg:w-11/12" />
 
                 <Summary />
             </div>
@@ -42,10 +45,11 @@ import TabElement from "@/Components/TabElement.vue";
 import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Home.vue";
 import Summary from "@/Views/Admin/Summary.vue";
 import StudentSearch from "@/Views/Admin/StudentSearch.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
-const announcementsTab = t('common.announcements')
-const flagsTab = t('common.flags')
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+const announcementsTab = t("common.announcements");
+const flagsTab = t("common.flags");
 const tabs = [announcementsTab, flagsTab];
 const activeTab = ref(announcementsTab);
 const schoolYear = computed(() => usePage().props.school_year);

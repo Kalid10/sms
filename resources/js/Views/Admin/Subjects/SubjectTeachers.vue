@@ -6,22 +6,29 @@
         :header="false"
     >
         <template #filter>
-            <div class="flex items-end justify-between gap-3">
-                <div class="flex flex-col">
+            <div
+                class="flex flex-col items-end justify-between gap-3 lg:flex-row"
+            >
+                <div class="flex w-full flex-col">
                     <h3 class="whitespace-nowrap font-semibold">
                         {{ subject["full_name"] }}
                     </h3>
 
                     <h3 class="whitespace-nowrap text-sm text-gray-500">
-                        {{ $t('subjectTeachers.listOfTeachers')}}
-                        {{ subject["short_name"] }} {{ $t('subjectTeachers.faculty')}}
+                        {{ $t("subjectTeachers.listOfTeachers") }}
+                        {{ subject["short_name"] }}
+                        {{ $t("subjectTeachers.faculty") }}
                     </h3>
                 </div>
-                <div class="flex grow flex-col justify-end gap-2 md:flex-row">
+                <div
+                    class="flex w-full grow flex-col justify-end gap-2 md:flex-row"
+                >
                     <TextInput
                         v-model="searchKey"
                         class="grow"
-                        :placeholder="$t('subjectTeachers.searchKeyPlaceholder')"
+                        :placeholder="
+                            $t('subjectTeachers.searchKeyPlaceholder')
+                        "
                     />
                     <RadioGroup
                         v-model="filteredLevelCategory"
@@ -37,15 +44,21 @@
                 <ExclamationTriangleIcon
                     class="mb-2 h-6 w-6 text-negative-50"
                 />
-                <p class="text-sm font-semibold"> {{ $t('subjectTeachers.noDataFound')}}</p>
+                <p class="text-sm font-semibold">
+                    {{ $t("subjectTeachers.noDataFound") }}
+                </p>
                 <div v-if="searchKey.length">
                     <p v-if="searchKey === null" class="text-sm text-gray-500">
-                        {{ $t('subjectTeachers.NoTeacherEnrolled')}}
+                        {{ $t("subjectTeachers.NoTeacherEnrolled") }}
                     </p>
                     <p v-else class="text-center text-sm text-gray-500">
-
-                        <span v-html="$t('subjectTeachers.yourQueryDidNotMatch',{searchKey})" />
-
+                        <span
+                            v-html="
+                                $t('subjectTeachers.yourQueryDidNotMatch', {
+                                    searchKey,
+                                })
+                            "
+                        />
                     </p>
                 </div>
             </div>
@@ -105,9 +118,9 @@ import RadioGroup from "@/Components/RadioGroup.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline/index";
-import SelectInput from "@/Components/SelectInput.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const filteredLevelCategory = ref(null);
 
 const teacher = computed(
@@ -155,14 +168,14 @@ const subject = computed(() => usePage().props.subject);
 const config = [
     {
         key: "teacher",
-        name: t('subjectTeachers.views'),
+        name: t("subjectTeachers.views"),
         type: "custom",
         align: "left",
         class: "w-full",
     },
     {
         key: "batches",
-        name: t('subjectTeachers.grades'),
+        name: t("subjectTeachers.grades"),
         type: "custom",
         align: "right",
     },
