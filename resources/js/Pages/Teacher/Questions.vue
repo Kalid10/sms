@@ -8,8 +8,7 @@
             <p
                 class="w-8/12 rounded-lg bg-gradient-to-tr from-violet-500 to-purple-500 p-4 text-center text-xs text-white"
             >
-                {{ $t('teacherQuestions.questionGeneratorDescription')}}
-
+                {{ $t("teacherQuestions.questionGeneratorDescription") }}
             </p>
         </div>
 
@@ -23,7 +22,7 @@
                         class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
                     >
                         <span>
-                          {{ $t('teacherQuestions.questionsFor')}}
+                            {{ $t("teacherQuestions.questionsFor") }}
                             {{
                                 selectedQuestion.batch_subject.subject
                                     .full_name +
@@ -58,7 +57,8 @@
                         <span
                             class="rounded-lg border border-black p-4 text-xs shadow-sm group-hover:border-gray-50"
                         >
-                           {{ $t('teacherQuestions.answer')}} {{ item.answer }}</span
+                            {{ $t("teacherQuestions.answer") }}
+                            {{ item.answer }}</span
                         >
                         <span
                             class="flex w-full justify-end space-x-6 pt-2 text-xs"
@@ -84,7 +84,9 @@
             <div
                 class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white px-4 py-6 shadow-sm"
             >
-                <div class="text-3xl font-semibold">{{ $t('teacherQuestions.recentQuestions')}} </div>
+                <div class="text-3xl font-semibold">
+                    {{ $t("teacherQuestions.recentQuestions") }}
+                </div>
                 <TableElement
                     :filterable="false"
                     :selectable="false"
@@ -128,6 +130,7 @@
         <SecondaryButton
             :title="$t('teacherQuestions.generateQuestions')"
             class="w-2/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
+            @click="routeToQuestionGenerator"
         />
     </div>
 
@@ -137,7 +140,9 @@
         <div
             class="flex flex-col items-center space-y-5 rounded-lg bg-white p-4 shadow-sm"
         >
-            <div class="text-xl font-semibold">{{ $t('teacherQuestions.updateQuestion')}}</div>
+            <div class="text-xl font-semibold">
+                {{ $t("teacherQuestions.updateQuestion") }}
+            </div>
             <TextArea
                 v-model="updateForm.question"
                 :placeholder="$t('teacherQuestions.addQuestion')"
@@ -183,8 +188,9 @@ import Modal from "@/Components/Modal.vue";
 import TextArea from "@/Components/TextArea.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const showUpdateModal = ref(false);
 const showDeleteDialogBox = ref(false);
 const selectedIndex = ref(null);
@@ -212,24 +218,24 @@ const formattedQuestionData = computed(() => {
 });
 const config = [
     {
-        name: t('teacherQuestions.assessmentType'),
+        name: t("teacherQuestions.assessmentType"),
         key: "type",
         class: "!py-4 !text-xs",
     },
     {
-        name: t('common.subject'),
+        name: t("common.subject"),
         key: "subject",
     },
     {
-        name: t('common.by'),
+        name: t("common.by"),
         key: "name",
     },
     {
-        name: t('teacherQuestions.noOfQuestions'),
+        name: t("teacherQuestions.noOfQuestions"),
         key: "no_of_questions",
     },
     {
-        name: t('teacherQuestions.difficultyLevel'),
+        name: t("teacherQuestions.difficultyLevel"),
         key: "difficulty_level",
     },
 ];
@@ -279,6 +285,19 @@ const updateQuestion = () => {
 const setSelectedQuestion = (id) => {
     selectedQuestion.value = questions.value.data.find(
         (item) => item.id === id
+    );
+};
+
+const questionsTab = t("common.questions");
+const routeToQuestionGenerator = () => {
+    router.get(
+        "/teacher/copilot",
+        {
+            active_tab: questionsTab,
+        },
+        {
+            preserveState: true,
+        }
     );
 };
 </script>
