@@ -28,7 +28,7 @@ class StudentFactory extends Factory
                 'type' => 'student',
                 'username' => 'GSN/'.$this->faker->unique()->numberBetween(1000, 9999).'/2021',
             ])->id,
-            'guardian_id' => Guardian::factory(),
+            'guardian_id' => Guardian::inRandomOrder()->first() ?? Guardian::factory(),
         ];
     }
 }

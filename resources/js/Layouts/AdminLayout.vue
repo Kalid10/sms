@@ -28,7 +28,7 @@
 <script setup>
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
-import { computed, ref } from "vue";
+import { computed, provide, ref } from "vue";
 import {
     ChatBubbleBottomCenterIcon,
     Cog6ToothIcon,
@@ -143,6 +143,16 @@ const footerItems = [
         method: "POST",
     },
 ];
+
+const notificationData = ref(null);
+
+const showNotification = (data) => {
+    notificationData.value = data;
+};
+
+// TODO: Migrate the two providers
+provide("showNotification", showNotification);
+provide("notificationData", notificationData);
 </script>
 
 <style scoped></style>

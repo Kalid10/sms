@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Resources\Guardian\Resource;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class GuardianController extends Controller

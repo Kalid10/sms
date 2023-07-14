@@ -264,7 +264,7 @@
             class="h-14 bg-fuchsia-500 p-1 text-white"
             @click="insertStudentsAssessment"
         >
-            Test Create Student Note
+            Test Grade Students' Assessments
         </button>
 
         <button
@@ -1025,19 +1025,114 @@ function deleteUserPosition() {
     });
 }
 
-function addSchoolSchedule() {
-    router.post(
-        "/school-schedules/create",
+function addSchoolSchedule(event, i = 0) {
+
+    const dates = [
         {
-            start_date: "2024-01-01",
-            end_date: "2024-12-31",
-            title: "Easter",
-            type: "closed",
-            tags: ["Holiday"],
+            "body": "New Year's Day",
+            "start_date": "2024-01-01",
+            "end_date": "2024-01-01",
+            "title": "New Year's Day",
+            "type": "closed",
+            "tags": ["holiday", "bank holiday"]
         },
         {
+            "body": "Ethiopian Christmas",
+            "start_date": "2024-01-07",
+            "end_date": "2024-01-07",
+            "title": "Ethiopian Christmas",
+            "type": "closed",
+            "tags": ["holiday", "religious holiday"]
+        },
+        {
+            "body": "Victory of Adwa",
+            "start_date": "2024-03-02",
+            "end_date": "2024-03-02",
+            "title": "Victory of Adwa",
+            "type": "closed",
+            "tags": ["holiday"]
+        },
+        {
+            "body": "Good Friday",
+            "start_date": "2024-04-07",
+            "end_date": "2024-04-07",
+            "title": "Good Friday",
+            "type": "closed",
+            "tags": ["holiday", "religious holiday"]
+        },
+        {
+            "body": "Easter Monday",
+            "start_date": "2024-04-10",
+            "end_date": "2024-04-10",
+            "title": "Easter Monday",
+            "type": "closed",
+            "tags": ["holiday", "religious holiday"]
+        },
+        {
+            "body": "International Labor Day",
+            "start_date": "2024-05-01",
+            "end_date": "2024-05-01",
+            "title": "International Labor Day",
+            "type": "closed",
+            "tags": ["holiday", "bank holiday"]
+        },
+        {
+            "body": "Ethiopian Patriots' Victory Day",
+            "start_date": "2024-05-05",
+            "end_date": "2024-05-05",
+            "title": "Ethiopian Patriots' Victory Day",
+            "type": "closed",
+            "tags": ["holiday"]
+        },
+        {
+            "body": "Eid al-Fitr",
+            "start_date": "2024-05-27",
+            "end_date": "2024-05-27",
+            "title": "Eid al-Fitr",
+            "type": "closed",
+            "tags": ["holiday", "religious holiday"]
+        },
+        {
+            "body": "Eid al-Adha",
+            "start_date": "2024-08-20",
+            "end_date": "2024-08-20",
+            "title": "Eid al-Adha",
+            "type": "closed",
+            "tags": ["holiday", "religious holiday"]
+        },
+        {
+            "body": "Ethiopian New Year",
+            "start_date": "2024-09-11",
+            "end_date": "2024-09-11",
+            "title": "Ethiopian New Year",
+            "type": "closed",
+            "tags": ["holiday", "bank holiday"]
+        },
+        {
+            "body": "Meskel",
+            "start_date": "2024-09-27",
+            "end_date": "2024-09-27",
+            "title": "Meskel",
+            "type": "closed",
+            "tags": ["holiday", "religious holiday"]
+        },
+        {
+            "body": "Ethiopian Christmas",
+            "start_date": "2024-12-29",
+            "end_date": "2024-12-29",
+            "title": "Ethiopian Christmas",
+            "type": "closed",
+            "tags": ["holiday", "religious holiday"]
+        }
+    ]
+
+    router.post(
+        "/school-schedules/create",
+        dates[i],
+        {
             onSuccess: () => {
-                console.log("Success");
+                if (i < dates.length - 1)
+                    addSchoolSchedule(event, i + 1);
             },
             onError: (error) => {
                 console.log("Error");
@@ -1581,26 +1676,58 @@ function updateStudentNote() {
 }
 
 function insertStudentsAssessment() {
-    router.post("student-assessments/17/insert", {
+    router.post("student-assessments/2/insert", {
         points: [
-            {
-                student_id: 5,
-                point: 80,
-            },
-            {
-                student_id: 308,
-                point: 42,
-            },
-            {
-                student_id: 631,
-                point: 24,
-            },
-            {
-                student_id: 453,
-                point: 89,
-            },
+            { student_id: 1, point: 30 },
+            { student_id: 15, point: 25 },
+            { student_id: 16, point: 29 },
+            { student_id: 30, point: 31 },
+            { student_id: 45, point: 27 },
+            { student_id: 46, point: 33 },
+            { student_id: 60, point: 26 },
+            { student_id: 61, point: 31 },
+            { student_id: 75, point: 29 },
+            { student_id: 76, point: 24 },
+            { student_id: 90, point: 30 },
+            { student_id: 91, point: 26 },
+            { student_id: 105, point: 28 },
+            { student_id: 120, point: 29 },
+            { student_id: 135, point: 32 },
+            { student_id: 150, point: 30 },
+            { student_id: 165, point: 29 },
+            { student_id: 180, point: 26 },
+            { student_id: 181, point: 28 },
+            { student_id: 195, point: 31 },
+            { student_id: 210, point: 28 },
+            { student_id: 211, point: 27 },
+            { student_id: 225, point: 26 },
+            { student_id: 226, point: 33 },
+            { student_id: 240, point: 32 },
+            { student_id: 255, point: 24 },
+            { student_id: 270, point: 32 },
+            { student_id: 285, point: 25 },
+            { student_id: 286, point: 26 },
+            { student_id: 300, point: 28 },
+            { student_id: 301, point: 32 },
+            { student_id: 315, point: 27 },
+            { student_id: 316, point: 29 },
+            { student_id: 330, point: 33 },
+            { student_id: 331, point: 30 },
+            { student_id: 345, point: 29 },
+            { student_id: 346, point: 26 },
+            { student_id: 360, point: 31 },
+            { student_id: 375, point: 31 }
         ],
+    },
+    {
+        onSuccess: () => {
+            console.log("Success");
+        },
+        onError: (error) => {
+            console.log("Error", error);
+        },
     });
+
 }
 
 function addStaffAbsentee() {
