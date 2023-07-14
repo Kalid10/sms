@@ -2,7 +2,7 @@
     <div class="my-2 flex w-full flex-col gap-4 lg:flex-row">
         <div class="flex w-full items-center">
             <label
-                class="mx-2 flex w-32 items-center text-sm text-brand-text-450"
+                class="mx-2 flex w-32 items-center text-sm text-brand-text-50"
                 >{{ $t("batchStudentTable.selectGrade") }}</label
             >
             <SelectInput

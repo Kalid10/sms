@@ -4,7 +4,7 @@
     >
         <!--        Left side-->
         <div
-            class="ml-2 mr-5 flex w-full grow flex-col items-center space-y-7 p-4 lg:w-7/12 2xl:py-6"
+            class="flex w-full grow flex-col items-center space-y-7 lg:ml-2 lg:mr-5 lg:w-7/12 lg:p-4 2xl:py-6"
         >
             <!--        Assessments and NextClass section-->
             <div
@@ -25,22 +25,28 @@
 
                 <!--           Assessments section-->
                 <div class="flex w-full justify-between lg:w-full">
-                    <div class="flex w-full justify-between space-x-7">
-                        <div class="w-8/12 rounded-lg bg-white p-3">
+                    <div
+                        class="flex w-full flex-col justify-between lg:flex-row lg:space-x-7"
+                    >
+                        <div class="w-full rounded-lg bg-white p-3 lg:w-8/12">
                             <Assessments />
                         </div>
 
-                        <div class="w-4/12">
+                        <div class="w-full lg:w-4/12">
                             <AssessmentBreakDown v-if="selectedBatchSubject" />
                         </div>
                     </div>
                 </div>
 
-                <div class="flex w-full justify-between space-x-5 pr-3">
-                    <div class="w-1/2 rounded-lg bg-white p-3 shadow-sm">
+                <div
+                    class="flex w-full flex-col justify-between space-x-5 pr-3 lg:flex-row"
+                >
+                    <div
+                        class="w-full rounded-lg bg-white p-3 shadow-sm lg:w-1/2"
+                    >
                         <AbsenteeRecords />
                     </div>
-                    <div class="w-1/2">
+                    <div class="w-full lg:w-1/2">
                         <Flag
                             :batch-subject-options="batchSubjectOptions"
                             :student="student"

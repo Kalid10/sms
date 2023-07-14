@@ -29,12 +29,13 @@
                     v-model="searchKey"
                     class="w-7/12"
                     :title="$t('adminStudentsTable.searchForStudent')"
+                    :placeholder="$t('adminStudentsTable.searchForStudent')"
                 />
                 <div
                     class="mt-3 flex w-full flex-col justify-between divide-y divide-gray-200 rounded-lg border bg-brand-50 p-3 lg:flex-row lg:divide-x"
                 >
                     <div class="w-full text-center lg:w-4/12">
-                        <div class="text-xl font-semibold text-brand-text-500">
+                        <div class="text-xl font-semibold text-brand-text-50">
                             {{ studentsCount }}
                         </div>
                         <div
@@ -45,7 +46,7 @@
                     </div>
                     <div class="w-full text-center lg:w-4/12">
                         <div
-                            class="cursor-pointer text-xl font-semibold text-brand-text-500"
+                            class="cursor-pointer text-xl font-semibold text-brand-text-50"
                             @click="showAbsentees = true"
                         >
                             {{ todayAbsentees.length }}
@@ -58,7 +59,7 @@
                     </div>
                     <div class="w-full text-center lg:w-4/12">
                         <div
-                            class="cursor-pointer text-xl font-semibold text-brand-text-500"
+                            class="cursor-pointer text-xl font-semibold text-brand-text-50"
                             @click="showLatestPeriodAbsentees = true"
                         >
                             {{ latestPeriodAbsentees.length }}

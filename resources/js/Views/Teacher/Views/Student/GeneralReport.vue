@@ -1,7 +1,9 @@
 <template>
-    <div class="flex w-full justify-between space-x-5 rounded-lg py-4">
+    <div
+        class="flex w-full flex-col justify-between rounded-lg py-4 lg:flex-row lg:space-x-5"
+    >
         <div
-            class="flex w-3/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center shadow-sm"
+            class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center shadow-sm lg:w-3/12"
             :class="{
                 'bg-positive-100 text-white': grade?.grade_scale?.label === 'A',
                 'bg-yellow-400 text-white': grade?.grade_scale?.label === 'B',
@@ -43,7 +45,7 @@
                     attendancePercentage < 65,
                 'bg-brand-100': !attendancePercentage,
             }"
-            class="flex w-3/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm"
+            class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm lg:w-3/12"
         >
             <div>{{ attendancePercentage }}%</div>
             <span class="text-xs font-light">
@@ -61,7 +63,7 @@
                 'bg-red-600 text-white': student.conduct === 'F',
                 'bg-brand-100': !student.conduct,
             }"
-            class="flex w-3/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm"
+            class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm lg:w-3/12"
         >
             <div class="flex items-center justify-center space-x-2 pl-3">
                 <div class="">{{ student.conduct ?? "NC" }}</div>
@@ -87,7 +89,7 @@
                     rank,
                 'bg-brand-100': !rank,
             }"
-            class="flex w-3/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm"
+            class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm lg:w-3/12"
         >
             <div>{{ rank ? numberWithOrdinal(rank) : "-" }}</div>
             <span class="text-xs font-light">

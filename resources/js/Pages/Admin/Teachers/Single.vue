@@ -1,5 +1,5 @@
 <template>
-    <div class="flex min-h-screen w-full flex-col pl-5">
+    <div class="flex min-h-screen w-full flex-col lg:pl-5">
         <Title
             class="w-full rounded-t-md bg-brand-550 px-3 !py-6 text-white shadow-sm"
             :title="teacher.user.name"

@@ -42,66 +42,17 @@
             </div>
         </div>
 
-        <div
-            class="flex w-full flex-col justify-between rounded-lg border py-6 lg:flex-row lg:pr-5"
-        >
-            <div
-                class="flex h-full w-full flex-row gap-2 rounded-lg lg:w-2/12 lg:flex-col lg:gap-5"
-            >
-                <Card
-                    :title="$t('common.assessments')"
-                    :class="`lg:min-w-full cursor-pointer ${
-                        selectedCard === 'assessments' ? 'bg-brand-150' : ''
-                    }`"
-                    icon
-                    @click="openAssessment"
-                >
-                    <h3 class="text-sm text-brand-text-300">
-                        {{ $t("batchesIndex.clickToViewScheduledAssessments") }}
-                    </h3>
-                    <template #icon>
-                        <ArrowRightCircleIcon />
-                    </template>
-                </Card>
-
-                <Card
-                    title="Students Notes"
-                    :class="`lg:min-w-full cursor-pointer ${
-                        selectedCard === 'studentNotes' ? 'bg-brand-150' : ''
-                    }`"
-                    icon
-                    @click="openStudentNotes"
-                >
-                    <h3 class="text-sm text-brand-text-300">
-                        {{ $t("batchesIndex.clickToViewStudentsNotes") }}
-                    </h3>
-                    <template #icon>
-                        <ArrowRightCircleIcon />
-                    </template>
-                </Card>
-
-                <Card
-                    title="Today's Absentees"
-                    :class="`lg:min-w-full cursor-pointer ${
-                        selectedCard === 'absentees' ? 'bg-brand-150' : ''
-                    }`"
-                    icon
-                    @click="openAbsentees"
-                >
-                    <h3 class="text-sm text-brand-text-300">
-                        Click here to view today's absentees
-                    </h3>
-                    <template #icon>
-                        <ArrowRightCircleIcon />
-                    </template>
-                </Card>
-            </div>
-            <div class="flex w-full rounded border p-3 shadow-lg lg:w-10/12">
-                <BatchAssessment v-if="showAssessment" />
-                <StudentNotes v-if="showStudentNotes" />
-                <Absentees v-if="showAbsentees" />
-            </div>
-        </div>
+        <TabElement v-model:active="activeTab" :tabs="tabs">
+            <template #assessments>
+                <Assessments />
+            </template>
+            <template #notes>
+                <StudentNotes />
+            </template>
+            <template #absentees>
+                <Absentees />
+            </template>
+        </TabElement>
     </div>
 </template>
 <script setup>
@@ -109,11 +60,18 @@ import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Ind
 import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import Flags from "@/Views/Flag/Index.vue";
-import BatchAssessment from "@/Views/Admin/Batches/Assessments.vue";
-import Card from "@/Components/Card.vue";
-import { ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
-import StudentNotes from "@/Views/Admin/Batches/StudentNotes.vue";
 import Absentees from "@/Views/Admin/Batches/Absentees.vue";
+import StudentNotes from "@/Views/Admin/Batches/StudentNotes.vue";
+import Assessments from "@/Views/Admin/Batches/Assessments.vue";
+import TabElement from "@/Components/TabElement.vue";
+
+const tabs = ["Assessments", "Notes", "Absentees"];
+
+const assessmentsTab = "Assessments";
+const NotesTab = "Notes";
+const absenteesTab = "Absentees";
+
+const activeTab = ref(assessmentsTab);
 
 const selectedBatch = computed(() => usePage().props.selected_batch);
 
