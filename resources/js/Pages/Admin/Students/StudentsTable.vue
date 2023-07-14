@@ -12,9 +12,11 @@
             <template #table-header>
                 <div v-if="showTitle" class="flex w-full justify-between pb-4">
                     <div class="pl-4">
-                        <div class="pb-2 text-xl font-semibold"> {{ $t('adminStudentsTable.students')}}</div>
+                        <div class="pb-2 text-xl font-semibold">
+                            {{ $t("adminStudentsTable.students") }}
+                        </div>
                         <div class="text-xs font-light text-gray-500">
-                            {{ $t('adminStudentsTable.listAllStudents')}}
+                            {{ $t("adminStudentsTable.listAllStudents") }}
                         </div>
                     </div>
                     <SecondaryButton
@@ -27,20 +29,19 @@
                     v-model="searchKey"
                     class="w-7/12"
                     :title="$t('adminStudentsTable.searchForStudent')"
-
                 />
                 <div
-                    class="mt-3 flex w-full justify-between divide-x divide-gray-200 rounded-lg border bg-gray-50 p-3"
+                    class="mt-3 flex w-full flex-col justify-between divide-y divide-gray-200 rounded-lg border bg-gray-50 p-3 lg:flex-row lg:divide-x"
                 >
-                    <div class="w-4/12 text-center">
+                    <div class="w-full text-center lg:w-4/12">
                         <div class="text-xl font-semibold text-gray-900">
                             {{ studentsCount }}
                         </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
-                            {{ $t('adminStudentsTable.totalStudents')}}
+                            {{ $t("adminStudentsTable.totalStudents") }}
                         </div>
                     </div>
-                    <div class="w-4/12 text-center">
+                    <div class="w-full text-center lg:w-4/12">
                         <div
                             class="cursor-pointer text-xl font-semibold text-gray-900"
                             @click="showAbsentees = true"
@@ -48,10 +49,10 @@
                             {{ todayAbsentees.length }}
                         </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
-                            {{ $t('adminStudentsTable.absenteesToday')}}
+                            {{ $t("adminStudentsTable.absenteesToday") }}
                         </div>
                     </div>
-                    <div class="w-4/12 text-center">
+                    <div class="w-full text-center lg:w-4/12">
                         <div
                             class="cursor-pointer text-xl font-semibold text-gray-900"
                             @click="showLatestPeriodAbsentees = true"
@@ -59,7 +60,7 @@
                             {{ latestPeriodAbsentees.length }}
                         </div>
                         <div class="text-[0.65rem] font-medium text-gray-500">
-                            {{ $t('adminStudentsTable.latestPeriodAbsentees')}}
+                            {{ $t("adminStudentsTable.latestPeriodAbsentees") }}
                         </div>
                     </div>
                 </div>
@@ -105,16 +106,25 @@
                     <ExclamationTriangleIcon
                         class="mb-2 h-6 w-6 text-negative-50"
                     />
-                    <p class="text-sm font-semibold">{{ $t('adminStudentsTable.noDataFound')}}</p>
+                    <p class="text-sm font-semibold">
+                        {{ $t("adminStudentsTable.noDataFound") }}
+                    </p>
                     <div v-if="searchKey.length">
                         <p
                             v-if="searchKey === null"
                             class="text-sm text-gray-500"
                         >
-                            {{ $t('adminStudentsTable.noStudentEnrolled')}}
+                            {{ $t("adminStudentsTable.noStudentEnrolled") }}
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
-                             <span v-html="$t('adminStudentsTable.yourSearchQuery',{searchKey})"> </span>
+                            <span
+                                v-html="
+                                    $t('adminStudentsTable.yourSearchQuery', {
+                                        searchKey,
+                                    })
+                                "
+                            >
+                            </span>
                         </p>
                     </div>
                 </div>
@@ -133,8 +143,8 @@
             @submit="submit"
         >
             <p class="text-xs text-gray-500">
-                {{ $t('adminStudentsTable.transferringStudent')}}
-              </p>
+                {{ $t("adminStudentsTable.transferringStudent") }}
+            </p>
 
             <RadioGroupPanel
                 v-model="transferForm.destination_batch_id"
@@ -179,7 +189,9 @@
     <Modal v-model:view="showLatestPeriodAbsentees">
         <div class="lex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
             <div>
-                <Title :title="$t('adminStudentsTable.latestPeriodAbsentees')" />
+                <Title
+                    :title="$t('adminStudentsTable.latestPeriodAbsentees')"
+                />
             </div>
 
             <div
@@ -223,8 +235,9 @@ import Pagination from "@/Components/Pagination.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import EmptyView from "@/Views/EmptyView.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const props = defineProps({
     url: {
         type: String,
@@ -342,25 +355,25 @@ watch([searchKey, perPage], () => {
 
 const config = [
     {
-        name: t('common.name'),
+        name: t("common.name"),
         key: "name",
         link: "/admin/teachers/students/{id}",
         align: "left",
         type: "custom",
     },
     {
-        name:  t('common.email'),
+        name: t("common.email"),
         key: "email",
         type: "custom",
     },
     {
-        name: t('common.gender'),
+        name: t("common.gender"),
         key: "gender",
         type: "enum",
         options: ["female", "male"],
     },
     {
-        name: t('common.grade'),
+        name: t("common.grade"),
         key: "grade",
         type: "custom",
         align: "right",

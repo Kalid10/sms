@@ -1,5 +1,5 @@
 <template>
-    <div class="my-5 h-full w-10/12">
+    <div class="my-5 h-full w-full lg:w-10/12">
         <TeacherTableElement
             :columns="config"
             :selectable="false"
@@ -13,13 +13,17 @@
                         <Title :title="$t('common.teachers')" />
                     </div>
 
-                    <div class="flex w-full justify-between space-x-2">
+                    <div
+                        class="flex w-full flex-col justify-between space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2"
+                    >
                         <TextInput
                             v-model="searchKey"
-                            class="w-6/12"
+                            class="w-full lg:w-6/12"
                             :placeholder="$t('teachersIndex.searchTeacher')"
                         />
-                        <div class="flex w-full justify-between space-x-2">
+                        <div
+                            class="flex w-full flex-col justify-between space-y-2 lg:flex-row lg:space-x-2"
+                        >
                             <SelectInput
                                 v-model="selectedSubject"
                                 class="h-fit w-full rounded-2xl !text-sm"
@@ -70,13 +74,15 @@
                     <ExclamationTriangleIcon
                         class="mb-2 h-6 w-6 text-negative-50"
                     />
-                    <p class="text-sm font-semibold">{{ $t('common.noDataFound') }}</p>
+                    <p class="text-sm font-semibold">
+                        {{ $t("common.noDataFound") }}
+                    </p>
                     <div v-if="searchKey.length">
                         <p
                             v-if="searchKey === null"
                             class="text-sm text-gray-500"
                         >
-                            {{ $t('teachersIndex.noTeacher') }}
+                            {{ $t("teachersIndex.noTeacher") }}
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
                             Your search query "<span
@@ -139,8 +145,9 @@ import DialogBox from "@/Components/DialogBox.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const isDialogBoxOpen = ref(false);
 
 const teachers = computed(() => {
@@ -282,36 +289,36 @@ const markTeacherAsAbsent = () => {
 
 const config = [
     {
-        name: t('common.name'),
+        name: t("common.name"),
         key: "name",
         link: "/admin/teachers/{id}",
         align: "left",
         type: "custom",
     },
     {
-        name: t('common.email'),
+        name: t("common.email"),
         key: "email",
         type: "custom",
         align: "left",
     },
     {
-        name: t('common.homeroom'),
+        name: t("common.homeroom"),
         key: "homerooms",
     },
     {
-        name: t('common.gender'),
+        name: t("common.gender"),
         key: "gender",
         type: "enum",
         options: ["female", "male"],
     },
     {
-        name: t('common.subjects'),
+        name: t("common.subjects"),
         key: "subjects",
         align: "left",
         type: "custom",
     },
     {
-        name: t('teachersIndex.absentee'),
+        name: t("teachersIndex.absentee"),
         key: "session",
         type: "custom",
     },

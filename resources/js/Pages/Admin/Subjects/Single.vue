@@ -1,5 +1,5 @@
 <template>
-    <div class="my-5 flex w-10/12 flex-col space-y-5">
+    <div class="my-5 flex w-full flex-col space-y-5 p-3 lg:w-10/12 lg:p-0">
         <div class="flex items-center justify-center gap-2">
             <div
                 :class="subjectPriorityLabels[subject['priority'] - 1]"
@@ -39,15 +39,15 @@ import TabElement from "@/Components/TabElement.vue";
 import SubjectTeachers from "@/Views/Admin/Subjects/SubjectTeachers.vue";
 import SubjectGrades from "@/Views/Admin/Subjects/SubjectGrades.vue";
 import { subjectPriorityLabels, toHashTag } from "@/utils";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const subject = computed(() => usePage().props.subject);
 
-const teachersTab = t('common.teachers')
-const gradesTab = t('common.grades')
+const teachersTab = t("common.teachers");
+const gradesTab = t("common.grades");
 const subjectTabs = [gradesTab, teachersTab];
 const activeTab = ref(gradesTab);
-
 </script>
 
 <style scoped></style>

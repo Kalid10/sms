@@ -1,5 +1,7 @@
 <template>
-    <div class="flex w-full flex-col items-center space-y-8 bg-white p-5">
+    <div
+        class="flex w-full flex-col items-center space-y-8 bg-white p-3 lg:p-5"
+    >
         <div class="flex w-full gap-3">
             <div class="flex w-5/12 flex-col">
                 <div class="text-xl font-semibold lg:text-2xl">
@@ -45,13 +47,14 @@ import LevelSubjects from "@/Views/Admin/Levels/LevelSubjects.vue";
 import LevelStudents from "@/Views/Admin/Levels/LevelStudents.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Section from "@/Pages/Admin/Levels/Section.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const level = computed(() => usePage().props.level);
 const schoolYear = computed(() => usePage().props.school_year);
-const sectionsTab = t('common.sections');
-const subjectsTab = t('common.subjects');
-const studentTab = t('common.students');
+const sectionsTab = t("common.sections");
+const subjectsTab = t("common.subjects");
+const studentTab = t("common.students");
 const tabs = [sectionsTab, subjectsTab, studentTab];
 const activeTab = ref(sectionsTab);
 

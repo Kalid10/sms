@@ -1,10 +1,10 @@
 <template>
     <div
-        class="flex h-full w-full justify-between space-x-5 divide-x divide-gray-100 py-4 px-2"
+        class="flex h-full w-full flex-col justify-between divide-x divide-gray-100 py-4 lg:flex-row lg:space-x-5 lg:px-2"
     >
-        <div class="flex h-fit w-5/12 flex-col space-y-5">
+        <div class="flex h-fit w-full flex-col space-y-5 lg:w-5/12">
             <div class="text-2xl font-semibold uppercase text-gray-700">
-                {{ $t('section.section')}} {{ batch.section }}
+                {{ $t("section.section") }} {{ batch.section }}
                 <span v-if="batch?.home_room_teacher" class="font-light">
                     ( {{ batch.home_room_teacher.teacher.user.name }} )
                 </span>
@@ -77,12 +77,14 @@
                 />
             </div>
         </div>
-        <div class="flex h-full w-8/12 flex-col justify-evenly px-8">
+        <div
+            class="flex h-full w-full flex-col justify-evenly lg:w-8/12 lg:px-8"
+        >
             <BatchPerformance :grade="batch?.grade" />
             <div
-                class="flex w-full items-center justify-between divide-x divide-gray-200 rounded-lg bg-gray-50 shadow-sm"
+                class="flex w-full flex-col items-center justify-between divide-x divide-gray-200 rounded-lg bg-gray-50 shadow-sm lg:flex-row"
             >
-                <div class="w-6/12">
+                <div class="w-full lg:w-6/12">
                     <StudentsList
                         progress-type="up"
                         :title="$t('section.topStudents')"
@@ -92,7 +94,7 @@
                     />
                 </div>
 
-                <div class="w-6/12">
+                <div class="w-full lg:w-6/12">
                     <StudentsList
                         progress-type="down"
                         :title="$t('section.studentsFallingBehind')"
