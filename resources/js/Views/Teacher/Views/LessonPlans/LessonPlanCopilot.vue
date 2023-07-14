@@ -9,9 +9,11 @@
         />
         <div class="flex justify-between">
             <div>
-                <div class="mb-1 text-2xl font-bold">{{ $t('lessonPlanCopilot.rigelCopilot')}} </div>
+                <div class="mb-1 text-2xl font-bold">
+                    {{ $t("lessonPlanCopilot.rigelCopilot") }}
+                </div>
                 <div class="w-full text-sm text-gray-700">
-                    {{ $t('lessonPlanCopilot.intro')}}
+                    {{ $t("lessonPlanCopilot.intro") }}
                 </div>
             </div>
 
@@ -26,14 +28,14 @@
                 class="mt-3 w-fit cursor-pointer rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:scale-105 hover:font-medium"
                 @click="showQuestionSection = true"
             >
-                {{ $t('lessonPlanCopilot.generateQuestions')}}
+                {{ $t("lessonPlanCopilot.generateQuestions") }}
             </div>
 
             <div
                 class="mt-3 w-fit cursor-pointer rounded-2xl bg-yellow-400 px-3 py-1.5 text-xs hover:scale-105 hover:font-medium"
                 @click="showChatSection = true"
             >
-                {{ $t('lessonPlanCopilot.orDoYouWant')}}
+                {{ $t("lessonPlanCopilot.orDoYouWant") }}
             </div>
         </div>
 
@@ -43,26 +45,25 @@
             :lesson-plan-id="lessonPlanId"
         />
 
-        <div
+        <Chat
             v-if="showChatSection && !generateNoteSuggestions"
-            class="flex w-full flex-col items-center justify-center space-y-5 pt-5"
-        >
-            <div class="w-fit px-3 py-1">
-                {{ $t('lessonPlanCopilot.needAssistanceWith')}}
-            </div>
-            <Chat :show-getting-started="false" />
-        </div>
+            class="!w-full"
+            :show-getting-started="false"
+        />
 
         <div
             v-if="
                 !showChatSection &&
                 !showQuestionSection &&
-                !generateNoteSuggestions
+                !generateNoteSuggestions &&
+                !showLoading &&
+                !isNoteUpdating &&
+                !noteSuggestions
             "
             class="flex h-full w-full items-center justify-center px-5 text-center"
         >
             <div class="space-x- flex w-9/12 font-light leading-7">
-                {{ $t('lessonPlanCopilot.needHandWith')}}
+                {{ $t("lessonPlanCopilot.needHandWith") }}
             </div>
         </div>
 
@@ -72,7 +73,7 @@
             class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 text-sm text-black shadow-sm"
         >
             <div class="text-center text-xl font-semibold">
-                {{ $t('lessonPlanCopilot.lessonPlanExplained')}}
+                {{ $t("lessonPlanCopilot.lessonPlanExplained") }}
             </div>
             <div
                 class="px-4"
@@ -88,14 +89,24 @@
                 <div class="flex w-full justify-end px-2 pt-2">
                     <ClipboardDocumentIcon
                         class="w-4 cursor-pointer text-zinc-400 hover:text-black"
-                        @click="copyToClipboard(noteSuggestions)"
+                        @click="
+                            copyToClipboardAndShowToast(noteSuggestions, $event)
+                        "
+                    />
+                    <Toast
+                        :show-toast="showCopyToast"
+                        class="!bg-purple-500 !text-white"
+                        :event="toastEvent"
+                        @copied="showCopyToast = false"
                     />
                 </div>
             </div>
         </div>
 
         <div v-if="questionSuggestions" class="flex flex-col space-y-1 p-3">
-            <div class="pb-3 text-zinc-800">{{ $t('lessonPlanCopilot.potentialQuestions')}}</div>
+            <div class="pb-3 text-zinc-800">
+                {{ $t("lessonPlanCopilot.potentialQuestions") }}
+            </div>
             <div class="flex flex-col space-y-2">
                 <div
                     v-for="(item, index) in questionSuggestions"
@@ -105,7 +116,13 @@
                     {{ item }}
                     <ClipboardDocumentIcon
                         class="w-4 text-zinc-400 group-hover:text-black"
-                        @click="copyToClipboard(item)"
+                        @click="copyToClipboardAndShowToast(item, $event)"
+                    />
+                    <Toast
+                        :show-toast="showCopyToast"
+                        class="!bg-purple-500 !text-white"
+                        :event="toastEvent"
+                        @copied="showCopyToast = false"
                     />
                 </div>
             </div>
@@ -129,7 +146,7 @@
                         class="!py-0.5 !px-0 text-xs font-medium"
                         @click="addToDescription"
                     >
-                        {{ $t('lessonPlanCopilot.copyToLessonPlan')}}
+                        {{ $t("lessonPlanCopilot.copyToLessonPlan") }}
                     </div>
                 </div>
                 <div
@@ -146,7 +163,7 @@
                             )
                         "
                     >
-                        {{ $t('lessonPlanCopilot.searchGoogle')}}
+                        {{ $t("lessonPlanCopilot.searchGoogle") }}
                     </div>
                 </div>
             </div>
@@ -166,7 +183,8 @@ import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
 import { copyToClipboard } from "@/utils";
 import QuestionPreparation from "@/Views/Teacher/Views/LessonPlans/QuestionPreparation.vue";
-import Chat from "@/Views/Teacher/Views/Copilot/Chat.vue";
+import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
+import Toast from "@/Components/Toast.vue";
 
 const emit = defineEmits(["selectedText", "finish", "close"]);
 const props = defineProps({
@@ -273,5 +291,13 @@ onClickOutside(selectedTextPopUp, () => {
     showPopup.value = !showPopup.value;
     if (!showPopup.value) selectedText.value;
 });
+
+const showCopyToast = ref(false);
+const toastEvent = ref(null);
+const copyToClipboardAndShowToast = (value, event) => {
+    copyToClipboard(value);
+    showCopyToast.value = true;
+    toastEvent.value = event;
+};
 </script>
 <style scoped></style>

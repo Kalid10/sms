@@ -25,7 +25,7 @@
                 >
                     <div
                         v-if="message.content"
-                        class="flex w-fit max-w-3xl space-x-2 p-1"
+                        class="flex w-fit max-w-3xl flex-col space-y-2 p-1"
                     >
                         <div
                             :class="
@@ -45,16 +45,26 @@
                                 >|</span
                             >
                         </div>
-                    </div>
-
-                    <div
-                        v-if="message.role === 'assistant'"
-                        class="hidden px-1 group-hover:flex"
-                    >
-                        <ClipboardDocumentIcon
-                            class="w-3 cursor-pointer text-zinc-700"
-                            @click="copyToClipboard(message.content)"
-                        />
+                        <div
+                            v-if="message.role === 'assistant'"
+                            class="hidden px-1 group-hover:flex"
+                        >
+                            <ClipboardDocumentIcon
+                                class="w-3 cursor-pointer text-zinc-700"
+                                @click="
+                                    copyToClipboardAndShowToast(
+                                        message.content,
+                                        $event
+                                    )
+                                "
+                            />
+                            <Toast
+                                :show-toast="showCopyToast"
+                                class="!bg-purple-200 !text-black"
+                                :event="toastEvent"
+                                @copied="showCopyToast = false"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -93,6 +103,7 @@
                     :placeholder="$t('chat.typeYourMessageHere')"
                     :style="{ maxHeight: `${maxRows * lineHeight}px` }"
                     @input="autoResize"
+                    @keydown.enter.prevent="sendMessage"
                 />
 
                 <button
@@ -123,6 +134,7 @@ import Loading from "@/Components/Loading.vue";
 import { usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import GettingStarted from "@/Views/Teacher/Views/Copilot/Chat/GettingStarted.vue";
+import Toast from "@/Components/Toast.vue";
 
 const emit = defineEmits(["limit-reached"]);
 defineProps({
@@ -138,6 +150,7 @@ const isChatUpdating = ref(false);
 const chatContainer = ref(null);
 const openAIDailyUsage = ref();
 const openAILimitReached = ref(false);
+const toastEvent = ref();
 let eventSource;
 
 onMounted(() => {
@@ -309,5 +322,12 @@ const autoResize = () => {
 watchEffect(() => {
     autoResize();
 });
+
+const showCopyToast = ref(false);
+const copyToClipboardAndShowToast = (value, event) => {
+    copyToClipboard(value);
+    showCopyToast.value = true;
+    toastEvent.value = event;
+};
 </script>
 <style scoped></style>
