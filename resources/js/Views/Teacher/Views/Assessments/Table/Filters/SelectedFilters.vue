@@ -14,7 +14,7 @@
             v-if="status"
             :value="capitalize(status)"
             class-style="bg-red-500 text-white"
-            icon-style="text-gray-200"
+            icon-style="text-brand-text-150"
             @remove="$emit('removeStatus')"
         />
         <FilterItem
@@ -33,7 +33,7 @@
             v-if="selectedSchoolYear"
             :value="selectedSchoolYear"
             class-style="bg-neutral-700 text-white"
-            icon-style="text-gray-200"
+            icon-style="text-brand-text-150"
             @remove="$emit('removeSchoolYear')"
         />
         <FilterItem

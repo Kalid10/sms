@@ -20,7 +20,9 @@
                                 <PlusIcon
                                     class="h-4 w-4 stroke-white stroke-2"
                                 />
-                                <span> {{ $t('subjectsTable.newSubject')}}</span>
+                                <span>
+                                    {{ $t("subjectsTable.newSubject") }}</span
+                                >
                             </span>
                         </PrimaryButton>
                     </div>
@@ -36,15 +38,25 @@
                             class="mb-2 h-6 w-6 text-negative-50"
                         />
                         <p class="mb-0.5 text-sm font-semibold">
-                            {{ $t('subjectsTable.noDataFound')}}
+                            {{ $t("subjectsTable.noDataFound") }}
                         </p>
-                        <p v-if="query === null" class="text-sm text-gray-500">
-                            {{ $t('subjectsTable.noSubjectEnrolled')}}
+                        <p
+                            v-if="query === null"
+                            class="text-sm text-brand-text-300"
+                        >
+                            {{ $t("subjectsTable.noSubjectEnrolled") }}
                         </p>
-                        <p v-else class="text-center text-sm text-gray-500">
-
-                            <span v-html="$t('subjectsTable.yourQueryDidNotMatch',{query})" />
-
+                        <p
+                            v-else
+                            class="text-center text-sm text-brand-text-300"
+                        >
+                            <span
+                                v-html="
+                                    $t('subjectsTable.yourQueryDidNotMatch', {
+                                        query,
+                                    })
+                                "
+                            />
                         </p>
                     </div>
                 </template>
@@ -58,7 +70,7 @@
                     </Link>
                 </template>
                 <template #short_name-column="{ data }">
-                    <span class="text-xs text-gray-500">{{ data }}</span>
+                    <span class="text-xs text-brand-text-300">{{ data }}</span>
                 </template>
                 <template #tags-column="{ data }">
                     <div class="flex w-full items-center justify-center gap-2">
@@ -79,11 +91,13 @@
                 <template #teacher-column="{ data }">
                     <div class="flex justify-end gap-2 text-xs">
                         <span>{{ data["name"] }}</span>
-                        <span class="text-gray-500">{{ data["email"] }}</span>
+                        <span class="text-brand-text-300">{{
+                            data["email"]
+                        }}</span>
                     </div>
                 </template>
                 <template #updated_at-column="{ data }">
-                    <span class="text-xs text-gray-500">
+                    <span class="text-xs text-brand-text-300">
                         {{ moment(data).fromNow() }}
                     </span>
                 </template>
@@ -130,8 +144,9 @@
 
         <template #[gradesTab]>
             <div class="my-2 flex flex-row">
-                <label class="mx-2 flex w-32 items-center text-sm text-gray-800"
-                    >{{ $t('subjectsTable.selectGrade')}}</label
+                <label
+                    class="mx-2 flex w-32 items-center text-sm text-brand-text-450"
+                    >{{ $t("subjectsTable.selectGrade") }}</label
                 >
                 <SelectInput
                     v-model="selectedBatchId"
@@ -157,7 +172,7 @@
                     </div>
                 </template>
                 <template #short_name-column="{ data }">
-                    <span class="text-xs text-gray-500">{{ data }}</span>
+                    <span class="text-xs text-brand-text-300">{{ data }}</span>
                 </template>
                 <template #tags-column="{ data }">
                     <div class="flex w-full items-center justify-center gap-2">
@@ -170,7 +185,7 @@
                     </div>
                 </template>
                 <template #updated_at-column="{ data }">
-                    <span class="text-xs text-gray-500">
+                    <span class="text-xs text-brand-text-300">
                         {{ moment(data).fromNow() }}
                     </span>
                 </template>
@@ -201,12 +216,13 @@ import SelectInput from "@/Components/SelectInput.vue";
 import TabElement from "@/Components/TabElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
 
-const tabs = [t('common.subjects'), t('common.grades')];
-const subjectsTab = t('common.subjects')
-const gradesTab = t('common.grades')
+const { t } = useI18n();
+
+const tabs = [t("common.subjects"), t("common.grades")];
+const subjectsTab = t("common.subjects");
+const gradesTab = t("common.grades");
 const activeTab = ref(subjectsTab);
 
 // Map the batch_subjects data
@@ -302,7 +318,7 @@ const config = [
     },
     {
         key: "full_name",
-        name: t('subjectsTable.subjects'),
+        name: t("subjectsTable.subjects"),
         type: "custom",
         align: "right",
     },
@@ -318,13 +334,13 @@ const config = [
     },
     {
         key: "updated_at",
-        name:t('subjectsTable.lastUpdated'),
+        name: t("subjectsTable.lastUpdated"),
         type: "custom",
         align: "right",
     },
     {
         key: "deleted_at",
-        name: t('subjectsTable.active'),
+        name: t("subjectsTable.active"),
         type: "custom",
     },
 ];
@@ -332,7 +348,7 @@ const config = [
 const batch_subject_config = [
     {
         key: "full_name",
-        name:  t('common.subjects'),
+        name: t("common.subjects"),
         type: "custom",
         align: "left",
     },
@@ -348,7 +364,7 @@ const batch_subject_config = [
     },
     {
         key: "updated_at",
-        name: t('common.lastUpdated'),
+        name: t("common.lastUpdated"),
         type: "custom",
         align: "right",
     },

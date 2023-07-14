@@ -11,7 +11,8 @@
         <TrashIcon class="w-5 text-white" />
         <SecondaryButton
             :title="$t('deleteAssessment.buttonTitle')"
-            class="text-white" />
+            class="text-white"
+        />
     </div>
 
     <div
@@ -22,7 +23,7 @@
             class="flex w-full items-center justify-between space-x-1 bg-gradient-to-bl from-red-600 to-orange-500 px-4 py-2 text-center text-white"
         >
             <span class="grow text-center">
-                {{ $t('deleteAssessment.deleteAssessment') }}
+                {{ $t("deleteAssessment.deleteAssessment") }}
             </span>
 
             <XMarkIcon
@@ -30,8 +31,8 @@
                 @click="showDeleteConfirmation = false"
             />
         </div>
-        <div class="w-10/12 text-center font-semibold text-zinc-800">
-            {{ $t('deleteAssessment.deleteMessage') }}
+        <div class="w-10/12 text-center font-semibold text-brand-text-450">
+            {{ $t("deleteAssessment.deleteMessage") }}
         </div>
 
         <div
@@ -42,19 +43,20 @@
             <TrashIcon class="w-4 text-white" />
             <SecondaryButton
                 :title="$t('deleteAssessment.deleteAssessment')"
-                class="text-white" />
+                class="text-white"
+            />
         </div>
         <div v-else class="flex w-full justify-center space-x-2">
             <TextInput
                 v-model="deleteConfirmationText"
                 :placeholder="'Type ' + assessment.title + ' to confirm'"
                 class="w-8/12"
-                class-style=" focus:border-none focus:ring-red-600  placeholder:text-gray-500 placeholder:text-xs"
+                class-style=" focus:border-none focus:ring-red-600  placeholder:text-brand-text-300 placeholder:text-xs"
                 :error="deleteConfirmationError"
             />
             <div
                 v-if="!isLoading"
-                class="flex h-9 cursor-pointer items-center justify-center rounded-md bg-zinc-800 px-2 shadow-md"
+                class="flex h-9 cursor-pointer items-center justify-center rounded-md bg-brand-450 px-2 shadow-md"
                 @click="deleteAssessment"
             >
                 <CheckIcon class="w-5 text-white" />

@@ -3,7 +3,10 @@
         <div
             class="col-span-1 flex h-full w-full flex-col items-center justify-center p-6 lg:items-end lg:p-16"
         >
-            <form class="flex min-h-10 w-full max-w-lg flex-col gap-8" @submit.prevent="submitForm">
+            <form
+                class="flex min-h-10 w-full max-w-lg flex-col gap-8"
+                @submit.prevent="submitForm"
+            >
                 <div class="flex items-center gap-3 lg:hidden">
                     <svg
                         fill="none"
@@ -40,16 +43,13 @@
 
                 <div class="flex flex-col gap-1">
                     <h3 class="text-xl font-semibold">
-                        {{ $t('signUp.messageOne') }}
-
+                        {{ $t("signUp.messageOne") }}
                     </h3>
-                    <h3 class="text-gray-500">
-                        {{ $t('signUp.messageTwo') }}
-                        <a class="text-brand-100" href="#"
-                        >
-                            {{ $t('signUp.notifyYourSchool') }}
-                        </a
-                        >
+                    <h3 class="text-brand-text-300">
+                        {{ $t("signUp.messageTwo") }}
+                        <a class="text-brand-100" href="#">
+                            {{ $t("signUp.notifyYourSchool") }}
+                        </a>
                     </h3>
                 </div>
 
@@ -97,14 +97,13 @@
                         class="h-10 w-full rounded-md border-brand-50 bg-brand-100 text-center font-semibold text-white"
                         type="submit"
                     >
-                        {{ $t('signUp.signUp') }}
+                        {{ $t("signUp.signUp") }}
                     </button>
                 </fieldset>
 
                 <div class="flex w-full justify-end">
-                    <Link class="text-brand-100" href="login"
-                    >
-                        {{ $t('signUp.alreadyRegistered') }}
+                    <Link class="text-brand-100" href="login">
+                        {{ $t("signUp.alreadyRegistered") }}
                     </Link>
                 </div>
             </form>
@@ -147,12 +146,16 @@
                 </h3>
             </div>
 
-            <h1 class="text-3xl font-extrabold leading-none text-white lg:text-6xl">
+            <h1
+                class="text-3xl font-extrabold leading-none text-white lg:text-6xl"
+            >
                 <transition name="fade" mode="out-in">
                     <span :key="firstText">{{ firstText }}</span>
                 </transition>
                 <transition name="fade" mode="out-in">
-                    <span :key="secondText" class="inline lg:block">{{ secondText }}</span>
+                    <span :key="secondText" class="inline lg:block">{{
+                        secondText
+                    }}</span>
                 </transition>
             </h1>
 
@@ -167,9 +170,9 @@
 </template>
 
 <script setup>
-import {Link, router, useForm} from "@inertiajs/vue3";
+import { Link, router, useForm } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
-import {onMounted, onUnmounted, ref} from 'vue';
+import { onMounted, onUnmounted, ref } from "vue";
 
 const form = useForm({
     emailOrPhone: "",
@@ -190,8 +193,16 @@ const submitForm = () => {
     });
 };
 
-const firstTexts = ['Innovate and Elevate:', 'Create and Inspire:', 'Dream and Achieve:'];
-const secondTexts = ['Empower Your School', 'Foster Creativity', 'Build Futures'];
+const firstTexts = [
+    "Innovate and Elevate:",
+    "Create and Inspire:",
+    "Dream and Achieve:",
+];
+const secondTexts = [
+    "Empower Your School",
+    "Foster Creativity",
+    "Build Futures",
+];
 
 let index = 0;
 
@@ -200,7 +211,7 @@ const secondText = ref(secondTexts[index]);
 
 onMounted(() => {
     const interval = setInterval(() => {
-        index = (index + 1) % firstTexts.length;  // loop back to 0 when we reach the end
+        index = (index + 1) % firstTexts.length; // loop back to 0 when we reach the end
         firstText.value = firstTexts[index];
         secondText.value = secondTexts[index];
     }, 5000);
@@ -210,16 +221,16 @@ onMounted(() => {
         clearInterval(interval);
     });
 });
-
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
     transition: opacity 0.5s;
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
     opacity: 0;
 }
 </style>
-

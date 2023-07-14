@@ -1,12 +1,12 @@
 <template>
     <div class="w-full">
         <div class="mb-4">
-            <h2 class="text-base font-semibold text-gray-900">
-                {{ $t('periodForm.classSchedule') }}
+            <h2 class="text-base font-semibold text-brand-text-500">
+                {{ $t("periodForm.classSchedule") }}
             </h2>
 
-            <p class="text-xs font-light text-gray-500">
-                {{ $t('periodForm.description') }}
+            <p class="text-xs font-light text-brand-text-300">
+                {{ $t("periodForm.description") }}
             </p>
         </div>
 
@@ -46,10 +46,11 @@
             <div class="flex flex-col space-y-2">
                 <!--            Level Category Section-->
                 <div class="my-2">
-                    <label class="pl-0.5 text-xs font-semibold text-gray-500">
-                        {{ $t('periodForm.selectLevelCategories') }}
-                    </label
+                    <label
+                        class="pl-0.5 text-xs font-semibold text-brand-text-300"
                     >
+                        {{ $t("periodForm.selectLevelCategories") }}
+                    </label>
 
                     <div
                         class="mt-1.5 flex justify-between gap-6 rounded border border-zinc-200 p-3"
@@ -71,11 +72,11 @@
                         </div>
                     </div>
                     <InformationCircleIcon
-                        class="inline-block w-4 text-gray-500"
+                        class="inline-block w-4 text-brand-text-300"
                     />
 
-                    <span class="text-xs text-gray-500">
-                        {{ $t('periodForm.note') }}
+                    <span class="text-xs text-brand-text-300">
+                        {{ $t("periodForm.note") }}
                     </span>
                 </div>
 
@@ -83,19 +84,18 @@
                 <div>
                     <div class="flex items-center space-x-2">
                         <span
-                            class="mb-1 grow pl-0.5 text-xs font-semibold text-gray-500"
-                            >{{ $t('periodForm.customPeriod') }}</span
+                            class="mb-1 grow pl-0.5 text-xs font-semibold text-brand-text-300"
+                            >{{ $t("periodForm.customPeriod") }}</span
                         >
                         <div
                             class="flex justify-center"
                             @click="addCustomTimeInput()"
                         >
                             <a
-                                class="cursor-pointer text-xs text-zinc-700 hover:text-zinc-900"
+                                class="cursor-pointer text-xs text-brand-text-400 hover:text-brand-text-500"
                             >
-                                {{ $t('periodForm.addNew') }}
-                            </a
-                            >
+                                {{ $t("periodForm.addNew") }}
+                            </a>
                         </div>
                     </div>
                     <div
@@ -111,7 +111,9 @@
                                 v-model="customTimeInput.name"
                                 type="text"
                                 :label="$t('periodForm.customTimeNameLabel')"
-                                :placeholder="$t('periodForm.customTimeNamePlaceholder')"
+                                :placeholder="
+                                    $t('periodForm.customTimeNamePlaceholder')
+                                "
                                 :required="true"
                             />
                             <div class="flex justify-between">
@@ -119,7 +121,9 @@
                                     v-model="customTimeInput.duration"
                                     class="w-5/12"
                                     type="number"
-                                    :label="$t('periodForm.customTimeDurationLabel')"
+                                    :label="
+                                        $t('periodForm.customTimeDurationLabel')
+                                    "
                                     placeholder="0"
                                     :required="true"
                                 />
@@ -129,7 +133,9 @@
                                     type="number"
                                     min="1"
                                     :max="schoolPeriodForm.minutes_per_period"
-                                    :label="$t('periodForm.customBeforePeriodLabel')"
+                                    :label="
+                                        $t('periodForm.customBeforePeriodLabel')
+                                    "
                                     placeholder="0"
                                     :required="true"
                                 />
@@ -148,8 +154,8 @@
                             class="inline-block w-3 stroke-2"
                         />
 
-                        <span class="text-[0.65rem] text-gray-500">
-                        {{ $t('periodForm.hintAddCustomPeriods') }}
+                        <span class="text-[0.65rem] text-brand-text-300">
+                            {{ $t("periodForm.hintAddCustomPeriods") }}
                         </span>
                     </div>
                 </div>
@@ -159,8 +165,8 @@
                 class="mt-3 bg-black text-xs text-white"
                 :title="$t('periodForm.title')"
                 @click="addClassSchedule"
-                >
-                {{ $t('periodForm.submit') }}
+            >
+                {{ $t("periodForm.submit") }}
             </SecondaryButton>
         </div>
     </div>
@@ -172,7 +178,6 @@ import TimePicker from "@/Components/TimePicker.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import { computed, onMounted, watch } from "vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
     form: {

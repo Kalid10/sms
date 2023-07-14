@@ -33,8 +33,8 @@
                 v-else
                 class="flex h-full flex-col items-center justify-center space-y-6"
             >
-                <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
-                <div> {{ $t('lessonPlans.noLessonPlan')}} </div>
+                <ExclamationTriangleIcon class="h-6 w-6 text-brand-text-300" />
+                <div>{{ $t("lessonPlans.noLessonPlan") }}</div>
                 <LinkCell
                     href="/teacher/lesson-plan"
                     :value="$t('lessonPlans.viewAllLessonPlans')"

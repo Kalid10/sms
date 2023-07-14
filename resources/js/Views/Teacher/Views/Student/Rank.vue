@@ -1,12 +1,12 @@
 <template>
     <div
-        class="flex w-full flex-col items-center space-y-3 rounded-lg bg-zinc-100 py-2 text-white shadow-sm"
+        class="flex w-full flex-col items-center space-y-3 rounded-lg bg-brand-100 py-2 text-white shadow-sm"
     >
         <div
             class="flex space-x-2 text-center text-xl font-semibold underline-offset-4"
         >
             <ArrowTrendingUpIcon class="w-6" />
-            <span>{{ $t('studentRank.rank')}}</span>
+            <span>{{ $t("studentRank.rank") }}</span>
         </div>
         <div
             v-if="rank"
@@ -15,13 +15,13 @@
             {{ numberWithOrdinal(rank) }}
         </div>
         <div v-else class="text-4xl font-bold">-</div>
-        <div class="text-sm text-gray-300">
+        <div class="text-sm text-brand-text-200">
             From
-            <span class="text-zinc-100">{{ totalStudents }}</span>
+            <span class="text-brand-text-100">{{ totalStudents }}</span>
             students
             <span
                 v-if="batchSubject"
-                class="font-semibold uppercase text-zinc-100"
+                class="font-semibold uppercase text-brand-text-100"
                 >in {{ batchSubject?.subject?.full_name }}</span
             >
         </div>

@@ -43,16 +43,16 @@
         <button class="h-14 bg-pink-900 text-white" @click="logout">
             Test Logout
         </button>
-        <button class="h-14 bg-gray-600 text-white" @click="assignRoles">
+        <button class="h-14 bg-brand-350 text-white" @click="assignRoles">
             Test Assign Role
         </button>
-        <button class="h-14 bg-gray-600 text-white" @click="removeRoles">
+        <button class="h-14 bg-brand-350 text-white" @click="removeRoles">
             Test Remove Role
         </button>
-        <button class="h-14 bg-gray-600 text-white" @click="showAllRoles">
+        <button class="h-14 bg-brand-350 text-white" @click="showAllRoles">
             Get Roles
         </button>
-        <button class="h-14 bg-gray-600 text-white" @click="userDetails">
+        <button class="h-14 bg-brand-350 text-white" @click="userDetails">
             User Details
         </button>
         <button class="h-14 bg-red-600 text-white" @click="roleActivities">
@@ -249,13 +249,13 @@
             Test Get Assessment Types
         </button>
         <button
-            class="h-14 bg-gray-900 p-1 text-white"
+            class="h-14 bg-brand-500 p-1 text-white"
             @click="createStudentNote"
         >
             Test Create Student Note
         </button>
         <button
-            class="h-14 bg-gray-900 p-1 text-white"
+            class="h-14 bg-brand-500 p-1 text-white"
             @click="updateStudentNote"
         >
             Test Update Student Note

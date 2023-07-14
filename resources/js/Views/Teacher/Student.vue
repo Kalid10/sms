@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col items-start justify-between bg-gray-50 lg:flex-row lg:pl-4 2xl:pr-5 2xl:pl-2"
+        class="flex min-h-screen w-full flex-col items-start justify-between bg-brand-50 lg:flex-row lg:pl-4 2xl:pr-5 2xl:pl-2"
     >
         <!--        Left side-->
         <div
@@ -73,7 +73,7 @@
             "
         >
             <div
-                class="flex h-36 w-full flex-col items-center justify-evenly rounded-lg bg-gradient-to-tl from-purple-500 to-violet-500 shadow-sm"
+                class="flex h-36 w-full flex-col items-center justify-evenly rounded-lg bg-brand-300 shadow-sm"
             >
                 <div class="px-4 text-center text-white">
                     <span
@@ -90,7 +90,7 @@
 
                 <SecondaryButton
                     :title="$t('viewsTeacherStudent.viewFullGrade')"
-                    class="w-2/3 !rounded-2xl !border-none bg-purple-100 font-semibold"
+                    class="w-2/3 !rounded-2xl !border-none bg-brand-100 font-semibold"
                     @click="showGrade = true"
                 />
             </div>

@@ -3,7 +3,7 @@
         class="flex h-full w-full flex-col justify-between divide-x divide-gray-100 py-4 lg:flex-row lg:space-x-5 lg:px-2"
     >
         <div class="flex h-fit w-full flex-col space-y-5 lg:w-5/12">
-            <div class="text-2xl font-semibold uppercase text-gray-700">
+            <div class="text-2xl font-semibold uppercase text-brand-text-50">
                 {{ $t("section.section") }} {{ batch.section }}
                 <span v-if="batch?.home_room_teacher" class="font-light">
                     ( {{ batch.home_room_teacher.teacher.user.name }} )
@@ -52,8 +52,8 @@
                     "
                 />
                 <SummaryItem
-                    class-style="bg-zinc-100 text-black"
-                    icon-style="bg-zinc-500/20 text-white"
+                    class-style="bg-brand-100 text-black"
+                    icon-style="bg-brand-300/20 text-white"
                     :title="$t('common.students')"
                     value="75 Total Students"
                     :icon="UsersIcon"
@@ -82,7 +82,7 @@
         >
             <BatchPerformance :grade="batch?.grade" />
             <div
-                class="flex w-full flex-col items-center justify-between divide-x divide-gray-200 rounded-lg bg-gray-50 shadow-sm lg:flex-row"
+                class="flex w-full flex-col items-center justify-between divide-x divide-gray-200 rounded-lg bg-brand-50 shadow-sm lg:flex-row"
             >
                 <div class="w-full lg:w-6/12">
                     <StudentsList

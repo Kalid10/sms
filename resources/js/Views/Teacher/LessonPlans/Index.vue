@@ -13,7 +13,7 @@
             >
                 <template #default>
                     <div
-                        class="mx-4 flex w-3/12 cursor-pointer justify-center !rounded-2xl bg-zinc-200 px-2 font-semibold"
+                        class="mx-4 flex w-3/12 cursor-pointer justify-center !rounded-2xl bg-brand-150 px-2 font-semibold"
                         @click="showFilter = true"
                     >
                         <AdjustmentsHorizontalIcon class="w-4 text-black" />
@@ -36,8 +36,8 @@
                                 subject.batch.level.name &&
                             lessonPlanSubject.batch.section ===
                                 subject.batch.section
-                                ? ' text-zinc-800 bg-zinc-200/60  rounded-2xl'
-                                : 'text-gray-800'
+                                ? ' text-brand-text-450 bg-brand-150/60  rounded-2xl'
+                                : 'text-brand-text-450'
                         "
                         class="relative grid min-w-[4rem] cursor-pointer place-items-center py-2 px-5 text-center text-sm font-medium"
                     >

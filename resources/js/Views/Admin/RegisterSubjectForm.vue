@@ -1,6 +1,5 @@
 <template>
     <Modal v-model:view="isNewSubjectFormOpened">
-
         <FormElement
             v-model:show-modal="isNewSubjectFormOpened"
             modal
@@ -37,36 +36,41 @@
                 <div
                     v-if="isDropdownOpen"
                     class="absolute z-10 mt-2 max-h-60 w-8/12 overflow-auto rounded-md border border-gray-200 bg-white py-1 text-base shadow-lg"
-
                 >
-                    <div class="relative flex items-center justify-between px-3 py-2">
+                    <div
+                        class="relative flex items-center justify-between px-3 py-2"
+                    >
                         <TextInput
                             v-if="isDropdownOpen"
                             v-model="newCategory"
-                            :placeholder="$t('registerSubjectForm.newCategoryPlaceholder')"
+                            :placeholder="
+                                $t('registerSubjectForm.newCategoryPlaceholder')
+                            "
                             class="w-full"
                             @keydown.enter.prevent="addCategory"
                         />
                         <button
-                            class="absolute right-0 mr-3 grid h-10 w-10 place-items-center rounded bg-gray-100"
+                            class="absolute right-0 mr-3 grid h-10 w-10 place-items-center rounded bg-brand-100"
                             type="button"
                             @click="addCategory"
                         >
-                            <PlusIcon class="h-4 w-4"/>
+                            <PlusIcon class="h-4 w-4" />
                         </button>
                     </div>
                     <template v-if="categoriesToShow.length">
                         <div
                             v-for="category in categoriesToShow"
                             :key="category"
-                            class="cursor-pointer px-3 py-2 hover:bg-gray-100"
+                            class="cursor-pointer px-3 py-2 hover:bg-brand-100"
                             @click="selectCategory(category)"
                         >
                             {{ category }}
                         </div>
                     </template>
                     <template v-else>
-                        <div class="px-3 py-2 text-gray-400">{{ $t('registerSubjectForm.noCategoriesFound')}}</div>
+                        <div class="px-3 py-2 text-brand-text-250">
+                            {{ $t("registerSubjectForm.noCategoriesFound") }}
+                        </div>
                     </template>
                 </div>
             </div>
@@ -75,13 +79,13 @@
 </template>
 
 <script setup>
-import {computed, ref, watch} from "vue";
+import { computed, ref, watch } from "vue";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
-import {useSubjectStore} from "@/Store/subjects";
-import {router} from "@inertiajs/vue3";
-import {PlusIcon} from "@heroicons/vue/24/solid";
+import { useSubjectStore } from "@/Store/subjects";
+import { router } from "@inertiajs/vue3";
+import { PlusIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
     open: {
@@ -101,7 +105,7 @@ const isNewSubjectFormOpened = computed({
     },
 });
 
-const {subjects} = useSubjectStore();
+const { subjects } = useSubjectStore();
 
 const categories = computed(() => {
     return subjects.reduce((acc, subject) => {
@@ -119,12 +123,10 @@ const newSubject = ref({
 });
 
 const tags = ref("");
-const computedShortName = computed(
-    () =>
-        newSubject.value.full_name.substring(
-            0,
-            Math.min(3, newSubject.value.full_name.length)
-        ).toUpperCase()
+const computedShortName = computed(() =>
+    newSubject.value.full_name
+        .substring(0, Math.min(3, newSubject.value.full_name.length))
+        .toUpperCase()
 );
 const formShortName = ref(null);
 
@@ -133,7 +135,8 @@ watch(tags, (value) => {
 });
 
 watch([computedShortName, formShortName], () => {
-    newSubject.value.short_name = formShortName.value ?? computedShortName.value;
+    newSubject.value.short_name =
+        formShortName.value ?? computedShortName.value;
 });
 
 const selectCategory = (category) => {

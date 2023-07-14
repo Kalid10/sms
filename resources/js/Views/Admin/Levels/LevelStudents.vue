@@ -33,7 +33,7 @@
                     </div>
                     <TextInput
                         v-model="searchKey"
-                        class="w-full"
+                        class="w-full lg:w-4/12"
                         :placeholder="$t('levelStudent.searchKeyPlaceHolder')"
                     />
                 </div>
@@ -50,11 +50,14 @@
                     <div v-if="searchKey.length">
                         <p
                             v-if="searchKey === null"
-                            class="text-sm text-gray-500"
+                            class="text-sm text-brand-text-300"
                         >
                             {{ $t("levelStudent.noStudentEnrolled") }}
                         </p>
-                        <p v-else class="text-center text-sm text-gray-500">
+                        <p
+                            v-else
+                            class="text-center text-sm text-brand-text-300"
+                        >
                             {{ $t("levelStudent.yourSearchQuery") }} "<span
                                 class="font-medium text-black"
                                 >{{ searchKey }}</span
@@ -195,13 +198,13 @@ const studentsConfig = [
     {
         name: "",
         key: "email",
-        class: "text-gray-500 text-xs w-full",
+        class: "text-brand-text-300 text-xs w-full",
         align: "left",
     },
     {
         name: "",
         key: "username",
-        class: "text-gray-500 text-xs font-semibold",
+        class: "text-brand-text-300 text-xs font-semibold",
     },
     {
         name: "",
@@ -217,7 +220,7 @@ const studentsConfig = [
     {
         name: t("common.lastUpdated"),
         key: "updated_at",
-        class: "text-gray-500 text-xs",
+        class: "text-brand-text-300 text-xs",
         align: "right",
     },
 ];

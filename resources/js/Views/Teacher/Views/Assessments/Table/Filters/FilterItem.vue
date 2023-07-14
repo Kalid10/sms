@@ -11,7 +11,9 @@
                 v-if="showRemoveIcon"
                 class="hover:w-4.5 w-4 cursor-pointer"
                 :class="
-                    iconStyle ? iconStyle : 'text-zinc-600 hover:text-black'
+                    iconStyle
+                        ? iconStyle
+                        : 'text-brand-text-350 hover:text-black'
                 "
                 @click="$emit('remove')"
             />

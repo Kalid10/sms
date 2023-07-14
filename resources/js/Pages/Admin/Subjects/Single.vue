@@ -9,8 +9,10 @@
                 {{ subject["full_name"] }}
             </h3>
             <div class="flex flex-col items-baseline gap-1">
-                <h3 class="text-md text-gray-500">{{ subject["category"] }}</h3>
-                <h3 class="text-xs text-gray-500">
+                <h3 class="text-md text-brand-text-300">
+                    {{ subject["category"] }}
+                </h3>
+                <h3 class="text-xs text-brand-text-300">
                     {{
                         subject["tags"]
                             .map((tag) => toHashTag(tag))

@@ -80,11 +80,14 @@
                     <div v-if="searchKey.length">
                         <p
                             v-if="searchKey === null"
-                            class="text-sm text-gray-500"
+                            class="text-sm text-brand-text-300"
                         >
                             {{ $t("teachersIndex.noTeacher") }}
                         </p>
-                        <p v-else class="text-center text-sm text-gray-500">
+                        <p
+                            v-else
+                            class="text-center text-sm text-brand-text-300"
+                        >
                             Your search query "<span
                                 class="font-medium text-black"
                                 >{{ searchKey }}</span
@@ -99,7 +102,7 @@
                 <SecondaryButton
                     v-if="data.batch_session_id"
                     :title="$t('teachersIndex.absentee')"
-                    class="!rounded-2xl bg-zinc-700 text-white"
+                    class="!rounded-2xl bg-brand-400 text-white"
                     @click="toggleDialogBox(data.id, data.batch_session_id)"
                 />
             </template>

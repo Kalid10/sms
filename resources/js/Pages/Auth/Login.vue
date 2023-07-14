@@ -42,16 +42,12 @@
                 </div>
 
                 <div class="flex flex-col gap-4">
-
-
                     <h3 class="text-xl font-semibold">
-                        {{ $t('login.welcomeBack') }}
+                        {{ $t("login.welcomeBack") }}
                     </h3>
 
-
-                    <h3 class="text-gray-500">
-                        {{ $t('login.messageOne') }}
-
+                    <h3 class="text-brand-text-300">
+                        {{ $t("login.messageOne") }}
                     </h3>
                 </div>
 
@@ -79,11 +75,9 @@
                     <button
                         class="h-10 w-full rounded-md border-brand-50 bg-brand-100 text-center font-semibold text-white"
                         type="submit"
-                         >
-                        {{ $t('login.logIn') }}
-
+                    >
+                        {{ $t("login.logIn") }}
                     </button>
-
                 </fieldset>
             </form>
         </div>
@@ -125,34 +119,34 @@
                 </h3>
             </div>
 
-            <h1 class="text-3xl font-extrabold leading-none text-white lg:text-6xl">
+            <h1
+                class="text-3xl font-extrabold leading-none text-white lg:text-6xl"
+            >
                 <transition name="fade" mode="out-in">
                     <span :key="firstText">{{ firstText }}</span>
                 </transition>
                 <transition name="fade" mode="out-in">
-                    <span :key="secondText" class="inline lg:block">{{ secondText }}</span>
+                    <span :key="secondText" class="inline lg:block">{{
+                        secondText
+                    }}</span>
                 </transition>
             </h1>
 
-            <h3 class="max-w-xl font-medium text-white"
-            >
-                {{ $t('login.messageTwo') }}
-                <span
-class="block py-3"
-                      v-html="$t('login.signIn')"
-                > </span
-                >
+            <h3 class="max-w-xl font-medium text-white">
+                {{ $t("login.messageTwo") }}
+                <span class="block py-3" v-html="$t('login.signIn')"> </span>
             </h3>
         </div>
     </div>
 </template>
 
 <script setup>
-import {useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
-import {onMounted, onUnmounted, ref} from "vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { onMounted, onUnmounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const form = useForm({
     emailOrPhone: "",
@@ -170,8 +164,16 @@ const submit = () => {
     });
 };
 
-const firstTexts = [t('login.firstTexts[0]'), t('login.firstTexts[1]'),t('login.firstTexts[2]')];
-const secondTexts = [t('login.secondTexts[0]'), t('login.secondTexts[1]'), t('login.secondTexts[2]')];
+const firstTexts = [
+    t("login.firstTexts[0]"),
+    t("login.firstTexts[1]"),
+    t("login.firstTexts[2]"),
+];
+const secondTexts = [
+    t("login.secondTexts[0]"),
+    t("login.secondTexts[1]"),
+    t("login.secondTexts[2]"),
+];
 
 let index = 0;
 
@@ -180,10 +182,10 @@ const secondText = ref(secondTexts[index]);
 
 onMounted(() => {
     const interval = setInterval(() => {
-        index = (index + 1) % firstTexts.length;  // loop back to 0 when we reach the end
+        index = (index + 1) % firstTexts.length; // loop back to 0 when we reach the end
         firstText.value = firstTexts[index];
         secondText.value = secondTexts[index];
-    }, 5000);  // change text every 3 seconds-->
+    }, 5000); // change text every 3 seconds-->
 
     // Clear the interval when the component is unmounted
     onUnmounted(() => {
@@ -193,11 +195,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
     transition: opacity 0.2s;
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
     opacity: 0;
 }
 </style>

@@ -15,12 +15,12 @@
                         <div class="pb-2 text-xl font-semibold">
                             {{ $t("adminStudentsTable.students") }}
                         </div>
-                        <div class="text-xs font-light text-gray-500">
+                        <div class="text-xs font-light text-brand-text-300">
                             {{ $t("adminStudentsTable.listAllStudents") }}
                         </div>
                     </div>
                     <SecondaryButton
-                        class="h-fit !rounded-2xl bg-zinc-700 text-white"
+                        class="h-fit !rounded-2xl bg-brand-400 text-white"
                         :title="$t('adminStudentsTable.registerStudent')"
                         @click="router.get('/register/student')"
                     />
@@ -31,35 +31,41 @@
                     :title="$t('adminStudentsTable.searchForStudent')"
                 />
                 <div
-                    class="mt-3 flex w-full flex-col justify-between divide-y divide-gray-200 rounded-lg border bg-gray-50 p-3 lg:flex-row lg:divide-x"
+                    class="mt-3 flex w-full flex-col justify-between divide-y divide-gray-200 rounded-lg border bg-brand-50 p-3 lg:flex-row lg:divide-x"
                 >
                     <div class="w-full text-center lg:w-4/12">
-                        <div class="text-xl font-semibold text-gray-900">
+                        <div class="text-xl font-semibold text-brand-text-500">
                             {{ studentsCount }}
                         </div>
-                        <div class="text-[0.65rem] font-medium text-gray-500">
+                        <div
+                            class="text-[0.65rem] font-medium text-brand-text-300"
+                        >
                             {{ $t("adminStudentsTable.totalStudents") }}
                         </div>
                     </div>
                     <div class="w-full text-center lg:w-4/12">
                         <div
-                            class="cursor-pointer text-xl font-semibold text-gray-900"
+                            class="cursor-pointer text-xl font-semibold text-brand-text-500"
                             @click="showAbsentees = true"
                         >
                             {{ todayAbsentees.length }}
                         </div>
-                        <div class="text-[0.65rem] font-medium text-gray-500">
+                        <div
+                            class="text-[0.65rem] font-medium text-brand-text-300"
+                        >
                             {{ $t("adminStudentsTable.absenteesToday") }}
                         </div>
                     </div>
                     <div class="w-full text-center lg:w-4/12">
                         <div
-                            class="cursor-pointer text-xl font-semibold text-gray-900"
+                            class="cursor-pointer text-xl font-semibold text-brand-text-500"
                             @click="showLatestPeriodAbsentees = true"
                         >
                             {{ latestPeriodAbsentees.length }}
                         </div>
-                        <div class="text-[0.65rem] font-medium text-gray-500">
+                        <div
+                            class="text-[0.65rem] font-medium text-brand-text-300"
+                        >
                             {{ $t("adminStudentsTable.latestPeriodAbsentees") }}
                         </div>
                     </div>
@@ -112,11 +118,14 @@
                     <div v-if="searchKey.length">
                         <p
                             v-if="searchKey === null"
-                            class="text-sm text-gray-500"
+                            class="text-sm text-brand-text-300"
                         >
                             {{ $t("adminStudentsTable.noStudentEnrolled") }}
                         </p>
-                        <p v-else class="text-center text-sm text-gray-500">
+                        <p
+                            v-else
+                            class="text-center text-sm text-brand-text-300"
+                        >
                             <span
                                 v-html="
                                     $t('adminStudentsTable.yourSearchQuery', {
@@ -142,7 +151,7 @@
             "
             @submit="submit"
         >
-            <p class="text-xs text-gray-500">
+            <p class="text-xs text-brand-text-300">
                 {{ $t("adminStudentsTable.transferringStudent") }}
             </p>
 
@@ -169,7 +178,7 @@
                     v-for="(absentee, index) in todayAbsentees"
                     :key="index"
                     class="flex w-full flex-col justify-start rounded-lg py-2"
-                    :class="index % 2 === 0 ? 'bg-gray-50' : ''"
+                    :class="index % 2 === 0 ? 'bg-brand-50' : ''"
                 >
                     <div class="flex w-full px-4 text-sm font-medium">
                         <div class="">

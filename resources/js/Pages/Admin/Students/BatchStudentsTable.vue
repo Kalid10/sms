@@ -1,9 +1,10 @@
 <template>
     <div class="my-2 flex w-full flex-col gap-4 lg:flex-row">
         <div class="flex w-full items-center">
-            <label class="mx-2 flex w-32 items-center text-sm text-gray-800">{{
-                $t("batchStudentTable.selectGrade")
-            }}</label>
+            <label
+                class="mx-2 flex w-32 items-center text-sm text-brand-text-450"
+                >{{ $t("batchStudentTable.selectGrade") }}</label
+            >
             <SelectInput
                 v-model="selectedBatchId"
                 :options="batchOptions"
@@ -15,7 +16,7 @@
             :title="
                 'Go To Grade ' + selectedBatchLevel + ' ' + selectedBatchLabel
             "
-            class="!rounded-2xl bg-zinc-700 text-white"
+            class="!rounded-2xl bg-brand-400 text-white"
             @click="levelDetailLink"
         />
     </div>
@@ -60,10 +61,13 @@
                     {{ $t("batchStudentTable.noDataFound") }}
                 </p>
                 <div v-if="searchKey.length">
-                    <p v-if="searchKey === null" class="text-sm text-gray-500">
+                    <p
+                        v-if="searchKey === null"
+                        class="text-sm text-brand-text-300"
+                    >
                         {{ $t("batchStudentTable.noTeacherEnrolled") }}
                     </p>
-                    <p v-else class="text-center text-sm text-gray-500">
+                    <p v-else class="text-center text-sm text-brand-text-300">
                         <span
                             v-html="
                                 $t('batchStudentTable.yourSearchQuery', {

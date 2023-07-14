@@ -1,20 +1,23 @@
 <template>
     <div class="flex grow flex-col justify-between gap-3">
         <h3 v-if="student" class="font-semibold">
-            {{ student.user.name.split(" ").slice(-1)[0] }}{{ $t('studentSemesterSchedule.selectGrade')}}
+            {{ student.user.name.split(" ").slice(-1)[0]
+            }}{{ $t("studentSemesterSchedule.selectGrade") }}
         </h3>
 
-        <h3 v-else class="font-semibold"> {{ $t('studentSemesterSchedule.classSchedule')}}</h3>
+        <h3 v-else class="font-semibold">
+            {{ $t("studentSemesterSchedule.classSchedule") }}
+        </h3>
 
         <div class="flex h-full w-full rounded-md border-l border-t">
             <div class="hours grid w-fit grid-cols-1 flex-col">
                 <div
-                    class="grid w-[5rem] max-w-[5rem] place-items-center whitespace-nowrap border-r border-b px-3 text-xs font-semibold text-gray-500 last:border-b-0"
+                    class="grid w-[5rem] max-w-[5rem] place-items-center whitespace-nowrap border-r border-b px-3 text-xs font-semibold text-brand-text-300 last:border-b-0"
                 ></div>
                 <div
                     v-for="(period, p) in periods"
                     :key="p"
-                    class="flex w-[5rem] max-w-[5rem] flex-col items-center justify-center whitespace-nowrap border-r border-b px-3 text-xs font-semibold text-gray-500"
+                    class="flex w-[5rem] max-w-[5rem] flex-col items-center justify-center whitespace-nowrap border-r border-b px-3 text-xs font-semibold text-brand-text-300"
                 >
                     <span>
                         {{ period["start_time"] }}
@@ -33,7 +36,7 @@
                             'Friday',
                         ]"
                         :key="d"
-                        class="grid place-items-center border-b border-r text-xs font-semibold text-gray-500"
+                        class="grid place-items-center border-b border-r text-xs font-semibold text-brand-text-300"
                     >
                         {{ day }}
                     </div>

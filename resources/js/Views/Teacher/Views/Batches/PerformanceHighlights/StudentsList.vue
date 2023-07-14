@@ -18,8 +18,8 @@
             <div
                 v-for="(item, index) in students"
                 :key="index"
-                class="flex h-fit w-full cursor-pointer items-center justify-center space-x-2 rounded-lg py-1.5 hover:bg-zinc-700 hover:text-white"
-                :class="index % 2 === 0 ? 'bg-gray-50/70' : 'bg-white'"
+                class="flex h-fit w-full cursor-pointer items-center justify-center space-x-2 rounded-lg py-1.5 hover:bg-brand-400 hover:text-white"
+                :class="index % 2 === 0 ? 'bg-brand-50/70' : 'bg-white'"
             >
                 <Item
                     :progress-type="progressType"
@@ -42,7 +42,7 @@
         </div>
         <div v-else class="w-full px-3 py-4 text-center text-sm font-light">
             <div class="mb-4 w-full">
-                {{$t('studentsList.noList')}}
+                {{ $t("studentsList.noList") }}
             </div>
             <!--            <LinkCell-->
             <!--                v-if="showLink"-->

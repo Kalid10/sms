@@ -9,7 +9,7 @@
             >
                 <span class="text-xs font-semibold">Period</span>
             </div>
-            <div class="flex w-full gap-2 rounded-lg bg-zinc-200">
+            <div class="flex w-full gap-2 rounded-lg bg-brand-150">
                 <div
                     v-for="(period, p) in schoolPeriodNames"
                     :key="p"

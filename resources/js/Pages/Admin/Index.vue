@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col space-y-8 bg-gray-50 py-2 lg:p-5 lg:px-1 2xl:px-10"
+        class="flex min-h-screen w-full flex-col space-y-8 bg-brand-50 py-2 lg:p-5 lg:px-1 2xl:px-10"
     >
         <div class="flex h-fit w-full flex-col justify-between lg:flex-row">
             <div class="flex w-full flex-col space-y-8 lg:w-7/12">

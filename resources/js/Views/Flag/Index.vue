@@ -5,7 +5,7 @@
         <!--        Header-->
         <div class="flex h-fit w-full items-center justify-between px-2">
             <InformationCircleIcon
-                class="w-4 cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
+                class="w-4 cursor-pointer text-brand-text-350 hover:scale-125 hover:text-black"
                 @click="showInfoModal = true"
             />
             <span
@@ -13,7 +13,7 @@
                 :class="flags?.data?.length ? '' : ' '"
             >
                 <span v-if="view === 'student'">
-                    {{ student.user.name }} {{ $t('flagIndex.flagList')}}
+                    {{ student.user.name }} {{ $t("flagIndex.flagList") }}
                 </span>
                 <span v-else class="text-center"> {{ title }} </span>
             </span>
@@ -27,20 +27,26 @@
         <!--        List-->
         <div v-if="flags?.data?.length" class="flex w-full flex-col">
             <div
-                class="mb-2 flex w-full bg-zinc-800 py-2 text-center text-xs text-white"
+                class="mb-2 flex w-full bg-brand-450 py-2 text-center text-xs text-white"
             >
-                <span :class="viewDate ? 'w-3/12' : 'w-4/12'"> {{ $t('common.name')}}</span>
-                <span :class="viewDate ? 'w-3/12' : 'w-4/12'"> {{ $t('common.by')}}</span>
-                <span :class="viewDate ? 'w-3/12' : 'w-4/12'"> {{ $t('common.type')}} </span>
+                <span :class="viewDate ? 'w-3/12' : 'w-4/12'">
+                    {{ $t("common.name") }}</span
+                >
+                <span :class="viewDate ? 'w-3/12' : 'w-4/12'">
+                    {{ $t("common.by") }}</span
+                >
+                <span :class="viewDate ? 'w-3/12' : 'w-4/12'">
+                    {{ $t("common.type") }}
+                </span>
                 <span v-if="viewDate" class="w-3/12 text-center"
-                    >{{ $t('flagIndex.duration')}}
+                    >{{ $t("flagIndex.duration") }}
                 </span>
             </div>
             <div
                 v-for="(item, index) in flags.data"
                 :key="index"
-                class="group flex w-full cursor-pointer items-center justify-evenly space-x-2 py-3 text-xs hover:rounded-lg hover:bg-zinc-800 hover:text-white"
-                :class="index % 2 === 1 ? 'bg-gray-50' : ''"
+                class="group flex w-full cursor-pointer items-center justify-evenly space-x-2 py-3 text-xs hover:rounded-lg hover:bg-brand-450 hover:text-white"
+                :class="index % 2 === 1 ? 'bg-brand-50' : ''"
                 @click="
                     showDetailModal = true;
                     selectedFlag = item;
@@ -78,8 +84,8 @@
                         <span v-else>{{ item.flaggable.user.admin }}</span>
                     </span>
                     <span v-else class="text-xs font-medium"
-                        >{{ $t('flagIndex.systemGenerated')}} </span
-                    >
+                        >{{ $t("flagIndex.systemGenerated") }}
+                    </span>
                 </span>
 
                 <span class="flex w-3/12 justify-center space-x-1 text-center">
@@ -93,7 +99,7 @@
                 </span>
                 <div v-if="item?.flagged_by?.id === auth.id">
                     <PencilIcon
-                        class="my-1 ml-3 w-4 cursor-pointer text-zinc-700 hover:text-black group-hover:fill-white"
+                        class="my-1 ml-3 w-4 cursor-pointer text-brand-text-400 hover:text-black group-hover:fill-white"
                         @click="handleUpdateFlag($event, item)"
                     />
                 </div>
@@ -102,7 +108,7 @@
                     class="py-1 pl-3 hover:scale-110 hover:stroke-red-50 hover:px-1"
                 >
                     <TrashIcon
-                        class="w-4 cursor-pointer stroke-red-500 text-gray-600"
+                        class="w-4 cursor-pointer stroke-red-500 text-brand-text-350"
                         @click="deleteFlag($event, item)"
                     />
                 </div>
@@ -121,7 +127,7 @@
             <Pagination :links="flags.links" class="pt-3" position="center" />
         </div>
         <div v-else class="flex h-48 w-full items-center justify-center">
-            <EmptyView :title="$t('flagIndex.noFlagsFound')"/>
+            <EmptyView :title="$t('flagIndex.noFlagsFound')" />
         </div>
     </div>
 

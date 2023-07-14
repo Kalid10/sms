@@ -3,7 +3,7 @@
         <div class="relative w-full">
             <div class="absolute inset-y-0 left-0 z-10 flex items-center">
                 <FaceSmileIcon
-                    class="w-8 cursor-pointer pl-3 text-zinc-700 hover:scale-125 hover:text-purple-500"
+                    class="w-8 cursor-pointer pl-3 text-brand-text-400 hover:scale-125 hover:text-purple-500"
                     @click="showEmoji = true"
                 />
             </div>
@@ -19,7 +19,7 @@
             <input
                 v-model="messageField"
                 type="text"
-                class="block w-full rounded-3xl border border-gray-300 p-3 px-10 text-sm text-gray-900 focus:border-none focus:outline-none focus:ring-1 focus:ring-violet-500"
+                class="block w-full rounded-3xl border border-gray-300 p-3 px-10 text-sm text-brand-text-500 focus:border-none focus:outline-none focus:ring-1 focus:ring-violet-500"
                 placeholder="Type a message..."
                 required
                 @keydown.enter="sendMessage()"

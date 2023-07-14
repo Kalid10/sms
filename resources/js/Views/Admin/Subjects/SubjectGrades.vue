@@ -12,7 +12,7 @@
                 >
                     {{ category[0] }}
                 </div>
-                <h3 class="text-sm font-semibold text-gray-500">
+                <h3 class="text-sm font-semibold text-brand-text-300">
                     {{ category }} {{ $t("subjectGrades.levels") }}
                 </h3>
             </div>
@@ -27,7 +27,7 @@
                     :title="`${parseLevel(level['level']['name'])}`"
                 >
                     <div class="flex flex-col gap-1">
-                        <h3 class="text-sm font-semibold text-gray-500">
+                        <h3 class="text-sm font-semibold text-brand-text-300">
                             {{ $t("subjectGrades.sections") }}
                         </h3>
                         <div class="flex gap-3">

@@ -1,51 +1,50 @@
 <template>
-
     <div class="flex items-center justify-center">
-        <p :class="color" class="scale-[.85] rounded-xl px-2 py-0.5 font-semibold">
+        <p
+            :class="color"
+            class="scale-[.85] rounded-xl px-2 py-0.5 font-semibold"
+        >
             {{ value }}
         </p>
     </div>
-
 </template>
 
 <script setup>
-import {computed} from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
     options: {
         type: Array, // Array of enum values
-        required: true
+        required: true,
     },
     value: {
         type: String,
-        required: true
-    }
-})
+        required: true,
+    },
+});
 
 const color = computed(() => {
-    return colors[props.options.indexOf(props.value)]
-})
+    return colors[props.options.indexOf(props.value)];
+});
 
 const colors = [
-    'blue',
-    'purple',
-    'black',
-    'white',
-    'red',
-    'green',
-    'yellow',
-    'gray',
-    'blue-darker',
-    'purple-darker',
-    'yellow-darker',
-    'red-darker',
-    'green-darker',
+    "blue",
+    "purple",
+    "black",
+    "white",
+    "red",
+    "green",
+    "yellow",
+    "gray",
+    "blue-darker",
+    "purple-darker",
+    "yellow-darker",
+    "red-darker",
+    "green-darker",
 ];
-
 </script>
 
 <style scoped>
-
 .green {
     @apply bg-green-200 text-green-800;
 }
@@ -95,7 +94,6 @@ const colors = [
 }
 
 .gray {
-    @apply bg-gray-200 text-gray-800;
+    @apply bg-brand-150 text-brand-text-450;
 }
-
 </style>

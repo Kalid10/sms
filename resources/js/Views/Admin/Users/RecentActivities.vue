@@ -2,14 +2,16 @@
     <div
         class="flex flex-col space-y-4 rounded-lg border border-gray-100 bg-white p-3 py-4 shadow-sm"
     >
-        <div class="text-center text-xl font-semibold">{{$t('recentActivities.recentActivities')}}</div>
+        <div class="text-center text-xl font-semibold">
+            {{ $t("recentActivities.recentActivities") }}
+        </div>
 
         <div class="flex flex-col space-y-1">
             <div
                 v-for="(item, index) in activityLogs.data"
                 :key="index"
                 class="w-full p-2 py-3 text-xs font-medium capitalize"
-                :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+                :class="index % 2 === 0 ? 'bg-brand-50' : 'bg-white'"
             >
                 {{ item.properties.attributes.name }}
                 {{ item.event }}

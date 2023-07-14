@@ -10,7 +10,7 @@
                 v-for="(item, index) in schoolSchedule"
                 :key="index"
                 class="rounded-lg px-1"
-                :class="index % 2 === 0 ? 'bg-gray-50/50 ' : ''"
+                :class="index % 2 === 0 ? 'bg-brand-50/50 ' : ''"
             >
                 <SchoolScheduleItem
                     class="!py-2"

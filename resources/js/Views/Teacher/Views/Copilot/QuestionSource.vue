@@ -9,8 +9,8 @@
             class="text-xs"
             :class="
                 selected
-                    ? 'text-gray-200'
-                    : 'text-gray-600 group-hover:text-gray-200'
+                    ? 'text-brand-text-150'
+                    : 'text-brand-text-350 group-hover:text-brand-text-150'
             "
         >
             {{ description }}

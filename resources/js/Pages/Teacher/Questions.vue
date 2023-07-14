@@ -1,15 +1,14 @@
 <template>
     <div
         v-if="questions?.data?.length"
-        class="flex h-screen w-11/12 flex-col space-y-4 bg-gray-50/60 p-4"
+        class="flex h-screen w-11/12 flex-col space-y-4 bg-brand-50/60 p-4"
     >
         <div class="flex w-full items-center justify-between py-3">
             <Title :title="$t('teacherQuestions.myQuestionBank')" />
             <p
                 class="w-8/12 rounded-lg bg-gradient-to-tr from-violet-500 to-purple-500 p-4 text-center text-xs text-white"
             >
-                {{ $t('teacherQuestions.questionGeneratorDescription')}}
-
+                {{ $t("teacherQuestions.questionGeneratorDescription") }}
             </p>
         </div>
 
@@ -23,7 +22,7 @@
                         class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
                     >
                         <span>
-                          {{ $t('teacherQuestions.questionsFor')}}
+                            {{ $t("teacherQuestions.questionsFor") }}
                             {{
                                 selectedQuestion.batch_subject.subject
                                     .full_name +
@@ -41,14 +40,14 @@
                         >
                     </div>
                     <PrinterIcon
-                        class="w-5 cursor-pointer text-zinc-600 hover:scale-125 hover:text-black"
+                        class="w-5 cursor-pointer text-brand-text-350 hover:scale-125 hover:text-black"
                     />
                 </div>
                 <div
                     v-for="(item, index) in selectedQuestion?.questions"
                     :key="index"
-                    class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-4 font-medium shadow-sm hover:bg-zinc-600 hover:text-white"
-                    :class="index % 2 === 1 ? 'bg-gray-50' : 'bg-gray-50/50'"
+                    class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-4 font-medium shadow-sm hover:bg-brand-350 hover:text-white"
+                    :class="index % 2 === 1 ? 'bg-brand-50' : 'bg-brand-50/50'"
                 >
                     <div class="flex w-full flex-col space-y-3 text-sm">
                         <span>
@@ -58,7 +57,8 @@
                         <span
                             class="rounded-lg border border-black p-4 text-xs shadow-sm group-hover:border-gray-50"
                         >
-                           {{ $t('teacherQuestions.answer')}} {{ item.answer }}</span
+                            {{ $t("teacherQuestions.answer") }}
+                            {{ item.answer }}</span
                         >
                         <span
                             class="flex w-full justify-end space-x-6 pt-2 text-xs"
@@ -84,11 +84,13 @@
             <div
                 class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white px-4 py-6 shadow-sm"
             >
-                <div class="text-3xl font-semibold">{{ $t('teacherQuestions.recentQuestions')}} </div>
+                <div class="text-3xl font-semibold">
+                    {{ $t("teacherQuestions.recentQuestions") }}
+                </div>
                 <TableElement
                     :filterable="false"
                     :selectable="false"
-                    header-style="bg-zinc-800 text-white "
+                    header-style="bg-brand-450 text-white "
                     class="cursor-pointer !rounded-none !shadow-none"
                     :data="formattedQuestionData"
                     :columns="config"
@@ -97,7 +99,7 @@
                 >
                     <template #row-actions="{ row }">
                         <EyeIcon
-                            class="w-4 cursor-pointer text-gray-800 hover:scale-125"
+                            class="w-4 cursor-pointer text-brand-text-450 hover:scale-125"
                             @click="setSelectedQuestion(row.id)"
                         />
                         <TrashIcon
@@ -137,7 +139,9 @@
         <div
             class="flex flex-col items-center space-y-5 rounded-lg bg-white p-4 shadow-sm"
         >
-            <div class="text-xl font-semibold">{{ $t('teacherQuestions.updateQuestion')}}</div>
+            <div class="text-xl font-semibold">
+                {{ $t("teacherQuestions.updateQuestion") }}
+            </div>
             <TextArea
                 v-model="updateForm.question"
                 :placeholder="$t('teacherQuestions.addQuestion')"
@@ -159,7 +163,7 @@
             />
             <SecondaryButton
                 :title="$t('teacherQuestions.update')"
-                class="w-3/12 !rounded-2xl bg-zinc-800 text-2xl text-white"
+                class="w-3/12 !rounded-2xl bg-brand-450 text-2xl text-white"
                 @click="updateQuestion()"
             />
         </div>
@@ -183,8 +187,9 @@ import Modal from "@/Components/Modal.vue";
 import TextArea from "@/Components/TextArea.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const showUpdateModal = ref(false);
 const showDeleteDialogBox = ref(false);
 const selectedIndex = ref(null);
@@ -212,24 +217,24 @@ const formattedQuestionData = computed(() => {
 });
 const config = [
     {
-        name: t('teacherQuestions.assessmentType'),
+        name: t("teacherQuestions.assessmentType"),
         key: "type",
         class: "!py-4 !text-xs",
     },
     {
-        name: t('common.subject'),
+        name: t("common.subject"),
         key: "subject",
     },
     {
-        name: t('common.by'),
+        name: t("common.by"),
         key: "name",
     },
     {
-        name: t('teacherQuestions.noOfQuestions'),
+        name: t("teacherQuestions.noOfQuestions"),
         key: "no_of_questions",
     },
     {
-        name: t('teacherQuestions.difficultyLevel'),
+        name: t("teacherQuestions.difficultyLevel"),
         key: "difficulty_level",
     },
 ];

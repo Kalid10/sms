@@ -51,12 +51,12 @@
                 <Card
                     :title="$t('common.assessments')"
                     :class="`lg:min-w-full cursor-pointer ${
-                        selectedCard === 'assessments' ? 'bg-gray-200' : ''
+                        selectedCard === 'assessments' ? 'bg-brand-150' : ''
                     }`"
                     icon
                     @click="openAssessment"
                 >
-                    <h3 class="text-sm text-gray-500">
+                    <h3 class="text-sm text-brand-text-300">
                         {{ $t("batchesIndex.clickToViewScheduledAssessments") }}
                     </h3>
                     <template #icon>
@@ -67,12 +67,12 @@
                 <Card
                     title="Students Notes"
                     :class="`lg:min-w-full cursor-pointer ${
-                        selectedCard === 'studentNotes' ? 'bg-gray-200' : ''
+                        selectedCard === 'studentNotes' ? 'bg-brand-150' : ''
                     }`"
                     icon
                     @click="openStudentNotes"
                 >
-                    <h3 class="text-sm text-gray-500">
+                    <h3 class="text-sm text-brand-text-300">
                         {{ $t("batchesIndex.clickToViewStudentsNotes") }}
                     </h3>
                     <template #icon>
@@ -83,12 +83,12 @@
                 <Card
                     title="Today's Absentees"
                     :class="`lg:min-w-full cursor-pointer ${
-                        selectedCard === 'absentees' ? 'bg-gray-200' : ''
+                        selectedCard === 'absentees' ? 'bg-brand-150' : ''
                     }`"
                     icon
                     @click="openAbsentees"
                 >
-                    <h3 class="text-sm text-gray-500">
+                    <h3 class="text-sm text-brand-text-300">
                         Click here to view today's absentees
                     </h3>
                     <template #icon>
@@ -146,7 +146,7 @@ function openAbsentees() {
 }
 </script>
 <style scoped>
-.bg-gray-200 {
+.bg-brand-150 {
     background-color: #edf2f7;
 }
 </style>

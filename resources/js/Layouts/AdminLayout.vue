@@ -2,7 +2,7 @@
     <div id="top-view"></div>
 
     <div class="relative flex h-screen w-full flex-col">
-        <div class="hide-scrollbar w-full grow overflow-y-auto bg-gray-50 p-0">
+        <div class="hide-scrollbar w-full grow overflow-y-auto bg-brand-50 p-0">
             <div class="flex w-full">
                 <SideBar
                     v-model:open="openSideBar"
@@ -47,8 +47,9 @@ import {
     UsersIcon,
 } from "@heroicons/vue/24/solid";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/vue/20/solid/index";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n();
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const props = defineProps({
     auth: {
         type: Object,
@@ -62,67 +63,67 @@ const directory = computed(() => usePage().url.split("/")[2]);
 // Populate sidebar items
 const sidebarItems = computed(() => [
     {
-        name: t('adminLayout.home'),
+        name: t("adminLayout.home"),
         icon: HomeIcon,
         route: "/admin",
         active: directory.value === undefined,
     },
     {
-        name:  t('common.chat'),
+        name: t("common.chat"),
         icon: ChatBubbleBottomCenterIcon,
         route: "/admin/chat",
         active: directory.value === "chat",
     },
     {
-        name: t('common.teachers'),
+        name: t("common.teachers"),
         icon: UserIcon,
         route: "/admin/teachers",
         active: directory.value === "teachers",
     },
     {
-        name:  t('common.students'),
+        name: t("common.students"),
         icon: UsersIcon,
         route: "/admin/students",
         active: directory.value === "students",
     },
     {
-        name:  t('common.grades'),
+        name: t("common.grades"),
         icon: AcademicCapIcon,
         route: "/admin/levels",
         active: directory.value === "levels",
     },
     {
-        name:  t('common.subjects'),
+        name: t("common.subjects"),
         icon: BookOpenIcon,
         route: "/admin/subjects",
         active: directory.value === "subjects",
     },
     {
-        name:  t('common.announcements'),
+        name: t("common.announcements"),
         icon: MegaphoneIcon,
         route: "/admin/announcements",
         active: directory.value === "announcements",
     },
     {
-        name: t('common.schedule'),
+        name: t("common.schedule"),
         icon: CalendarDaysIcon,
         route: "/admin/schedules",
         active: directory.value === "schedules",
     },
     {
-        name: t('common.assessments'),
+        name: t("common.assessments"),
         icon: NewspaperIcon,
         route: "/admin/assessments",
         active: directory.value === "assessments",
     },
     {
-        name: t('common.users'),
+        name: t("common.users"),
         icon: UserGroupIcon,
         route: "/admin/users",
         active: directory.value === "users",
     },
     {
-        name: t('common.absentees'),
+        name: t("common.absentees"),
         icon: FingerPrintIcon,
         route: "/admin/absentees",
         active: directory.value === "absentees",
@@ -131,14 +132,14 @@ const sidebarItems = computed(() => [
 
 const footerItems = [
     {
-        name: t('adminLayout.settings'),
+        name: t("adminLayout.settings"),
         icon: Cog6ToothIcon,
         route: "/user/profile",
         // active: directory.value === 'settings'
     },
     {
         icon: ArrowLeftOnRectangleIcon,
-        name: t('adminLayout.logout'),
+        name: t("adminLayout.logout"),
         route: "/logout",
         method: "POST",
     },

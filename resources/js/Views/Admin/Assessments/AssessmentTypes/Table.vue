@@ -28,8 +28,8 @@
             </div>
 
             <div v-if="isUpdate" class="w-full">
-                <label class="pl-0.5 text-sm font-semibold text-gray-500">
-                    {{ $t('assessmentIndex.updateLevelCategories')}}</label
+                <label class="pl-0.5 text-sm font-semibold text-brand-text-300">
+                    {{ $t("assessmentIndex.updateLevelCategories") }}</label
                 >
 
                 <SelectInput
@@ -41,8 +41,8 @@
             </div>
 
             <div v-else>
-                <label class="pl-0.5 text-sm font-semibold text-gray-500">
-                    {{ $t('assessmentIndex.selectLevelCategories')}}</label
+                <label class="pl-0.5 text-sm font-semibold text-brand-text-300">
+                    {{ $t("assessmentIndex.selectLevelCategories") }}</label
                 >
 
                 <div class="flex flex-row gap-6 rounded border p-3">
@@ -66,7 +66,10 @@
                 </div>
             </div>
 
-            <Toggle v-model="form.customizable" :label="$t('assessmentIndex.customizable')" />
+            <Toggle
+                v-model="form.customizable"
+                :label="$t('assessmentIndex.customizable')"
+            />
 
             <div v-show="form.customizable">
                 <div class="flex gap-3">
@@ -76,7 +79,9 @@
                         class="w-full"
                         type="number"
                         :label="$t('assessmentIndex.minimumAssessments')"
-                        :placeholder="$t('assessmentIndex.minimumAssessmentsPlaceHolder')"
+                        :placeholder="
+                            $t('assessmentIndex.minimumAssessmentsPlaceHolder')
+                        "
                     />
 
                     <TextInput
@@ -85,12 +90,14 @@
                         class="w-full"
                         type="number"
                         :label="$t('assessmentIndex.maximumAssessments')"
-                        :placeholder="$t('assessmentIndex.maximumAssessmentsPlaceHolder')"
+                        :placeholder="
+                            $t('assessmentIndex.maximumAssessmentsPlaceHolder')
+                        "
                     />
                 </div>
                 <div class="mt-2 pl-3">
                     <span class="text-[0.7rem] font-light">
-                        {{ $t('assessmentIndex.minMaxHint')}}
+                        {{ $t("assessmentIndex.minMaxHint") }}
                     </span>
                 </div>
             </div>
@@ -100,7 +107,9 @@
     <div
         class="flex flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
     >
-        <div class="px-3 text-2xl font-medium">{{ $t('assessmentIndex.assessmentType')}}</div>
+        <div class="px-3 text-2xl font-medium">
+            {{ $t("assessmentIndex.assessmentType") }}
+        </div>
 
         <TableElement
             :selectable="false"
@@ -118,7 +127,9 @@
                         <SelectInput
                             v-model="filterByLevelCategory"
                             :options="levelCategories"
-                            :placeholder="$t('assessmentIndex.filterByLevelCategory')"
+                            :placeholder="
+                                $t('assessmentIndex.filterByLevelCategory')
+                            "
                             class="w-8/12"
                         />
                     </div>
@@ -127,7 +138,7 @@
                         class="w-3/12 !rounded-3xl p-2"
                         @click="openAddModal"
                     >
-                        {{ $t('assessmentIndex.addType')}}
+                        {{ $t("assessmentIndex.addType") }}
                     </PrimaryButton>
                 </div>
             </template>
@@ -161,8 +172,9 @@
 
             <template #updated_at-column="{ data }">
                 <div class="flex w-full justify-start">
-                    <span class="text-xs text-gray-500"
-                        >{{ $t('assessmentIndex.lastUpdated')}} {{ data }}</span
+                    <span class="text-xs text-brand-text-300"
+                        >{{ $t("assessmentIndex.lastUpdated") }}
+                        {{ data }}</span
                     >
                 </div>
             </template>
@@ -202,8 +214,9 @@ import TableElement from "@/Components/TableElement.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
 import SelectInput from "@/Components/SelectInput.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const isModalOpen = ref(false);
 const isUpdate = ref(false);
 const filterByLevelCategory = ref(null);
@@ -227,7 +240,9 @@ function openUpdateModal(row) {
 }
 
 const modalTitle = computed(() =>
-    isUpdate.value ? t('assessmentIndex.updateAssessmentType') : t('assessmentIndex.addAssessmentType')
+    isUpdate.value
+        ? t("assessmentIndex.updateAssessmentType")
+        : t("assessmentIndex.addAssessmentType")
 );
 
 function submitForm() {
@@ -288,22 +303,22 @@ const levelCategoriesWithoutAll = computed(() => {
 
 const config = [
     {
-        name: t('assessmentIndex.assessmentType'),
+        name: t("assessmentIndex.assessmentType"),
         key: "name",
         type: "custom",
     },
     {
-        name: t('assessmentIndex.percentage'),
+        name: t("assessmentIndex.percentage"),
         key: "percentage",
         type: "custom",
     },
     {
-        name: t('assessmentIndex.gradeCategory'),
+        name: t("assessmentIndex.gradeCategory"),
         key: "level_category",
         type: "custom",
     },
     {
-        name:  t('assessmentIndex.updatedAt'),
+        name: t("assessmentIndex.updatedAt"),
         key: "updated_at",
         type: "custom",
     },
