@@ -25,6 +25,7 @@
                     :key="l"
                     class="!w-full"
                     :title="`${parseLevel(level['level']['name'])}`"
+                    @click="openBatchPage(level)"
                 >
                     <div class="flex flex-col gap-1">
                         <h3 class="text-sm font-semibold text-gray-500">
@@ -48,11 +49,12 @@
 
 <script setup>
 import { computed } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import {router, usePage} from "@inertiajs/vue3";
 import { levelCategoryLabels, parseLevel } from "@/utils.js";
 import Card from "@/Components/Card.vue";
 
 const levels = computed(() => usePage().props.levels);
+const subject = computed(() => usePage().props.subject)
 const levelCategories = computed(() =>
     levels.value.reduce((acc, level) => {
         if (!acc.includes(level["level"]["level_category"])) {
@@ -61,6 +63,10 @@ const levelCategories = computed(() =>
         return acc;
     }, [])
 );
+
+function openBatchPage(level) {
+    router.get(`/batches/subjects/${level.batches[0].batch_id}/${subject.value.id}`)
+}
 </script>
 
 <style scoped></style>

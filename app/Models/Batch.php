@@ -143,6 +143,25 @@ class Batch extends Model
         return $this->hasMany(BatchGrade::class);
     }
 
+    public function totalScheduleSlots(): int
+    {
+        return SchoolPeriod::where([
+            'school_year_id' => SchoolYear::getActiveSchoolYear()->id,
+            'level_category_id' => $this->load('level.levelCategory')->level->levelCategory->id,
+            'is_custom' => 0,
+        ])->count() * 5;
+    }
+
+    public function occupiedScheduleSlots(): int
+    {
+        return $this->loadCount('schedule')->schedule_count;
+    }
+
+    public function availableScheduleSlots(): int
+    {
+        return $this->totalScheduleSlots() - $this->occupiedScheduleSlots();
+    }
+
     protected $casts = [
         'session_last_synced' => 'datetime',
     ];

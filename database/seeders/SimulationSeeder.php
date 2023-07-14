@@ -45,6 +45,7 @@ class SimulationSeeder extends Seeder
             HomeroomTeacherSeeder::class,
             AssessmentTypeSeeder::class,
             AssessmentSeeder::class,
+            LessonPlanSeeder::class,
             GradeScaleSeeder::class,
         ]);
 
@@ -54,11 +55,15 @@ class SimulationSeeder extends Seeder
 
     private function admin()
     {
-        return User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Biniyam Lemma',
             'email' => 'biniyam.lemma@gibson.edu.et',
             'type' => User::TYPE_ADMIN,
         ]);
+
+        return $user->admin()->create([
+            'position' => 'System Administrator',
+        ])->user;
     }
 
     protected function gender(): string
