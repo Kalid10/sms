@@ -34,7 +34,7 @@
 </template>
 <script setup>
 import Title from "@/Views/Teacher/Views/Title.vue";
-import Chat from "@/Views/Teacher/Views/Copilot/Chat.vue";
+import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
 import TabElement from "@/Components/TabElement.vue";
 import { computed, ref } from "vue";
 import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparation.vue";
