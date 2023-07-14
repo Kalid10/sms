@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Web;
 
 use App\Jobs\QuestionGeneratorJob;
 use App\Models\Question;
+use App\Services\OpenAIService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -25,8 +27,15 @@ class QuestionsController extends Controller
         ]);
     }
 
-    public function create(Request $request): RedirectResponse
+    public function create(Request $request, OpenAIService $openAIService): RedirectResponse
     {
+        $checkLimit = $openAIService->checkUsageLimit();
+        if (! $checkLimit) {
+            throw ValidationException::withMessages([
+                'limit' => ['You have exceeded your daily usage limit.'],
+            ]);
+        }
+
         QuestionGeneratorJob::dispatch($request->all(), auth()->user()->id);
 
         return redirect()->back()->with('success', 'You have successfully started generating questions, we will notify you once we are done');

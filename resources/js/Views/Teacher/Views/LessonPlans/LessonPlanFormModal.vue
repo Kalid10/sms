@@ -96,7 +96,7 @@
                                 <div class="flex items-center gap-1.5">
                                     <span
                                         class="text-xs font-medium text-gray-500"
-                                        >Period</span
+                                        >{{ $t('common.period')}} </span
                                     >
                                     <div
                                         class="flex origin-left scale-95 items-center gap-1"
@@ -132,7 +132,7 @@
                             @click="showAISection = true"
                         >
                             <SparklesIcon class="w-3.5 text-white" />
-                            <div>Show AI Section</div>
+                            <div>{{ $t('lessonPlanFormModal.showAISection')}} </div>
                         </div>
                     </div>
 
@@ -159,11 +159,10 @@
                                     class="flex flex-col"
                                 >
                                     <h3 class="text-sm font-semibold">
-                                        New Lesson Plan
+                                        {{ $t('lessonPlanFormModal.newLessonPlan')}}
                                     </h3>
                                     <h3 class="text-sm text-gray-500">
-                                        Add the topic and description of the
-                                        lesson plan for the session here
+                                        {{ $t('lessonPlanFormModal.addTheTopic')}}
                                     </h3>
                                 </div>
 
@@ -173,8 +172,8 @@
                                     <TextInput
                                         v-model="form.topic"
                                         required
-                                        label="Topic"
-                                        placeholder="Topic of the Lesson Plan"
+                                        :label="$t('lessonPlanFormModal.topic')"
+                                        :placeholder="$t('lessonPlanFormModal.topicOfLessonPlan')"
                                         class="w-full"
                                     />
                                     <div class="flex h-8 items-center">
@@ -192,11 +191,11 @@
                                 >
                                     <TextArea
                                         v-model="form.description"
-                                        label="Description"
                                         rows="30"
                                         leading="leading-loose"
                                         class="w-full"
-                                        placeholder="Add your Lesson Plan description"
+                                        :label="$t('common.description')"
+                                        :placeholder="$t('lessonPlanFormModal.addLessonPlanDescription')"
                                     />
                                     <div class="mt-8 flex h-8 items-center">
                                         <SparklesIcon
@@ -210,7 +209,7 @@
                                 </div>
                                 <div class="flex w-full justify-end px-7">
                                     <SecondaryButton
-                                        title="Submit"
+                                        :title="$t('common.submit')"
                                         class="w-2/12 !rounded-2xl bg-zinc-800 text-white"
                                         @click="handleSubmit"
                                     />
@@ -251,7 +250,7 @@
                                                 class="w-4 text-white"
                                             />
                                             <SecondaryButton
-                                                title="Edit"
+                                                :title="$t('lessonPlanFormModal.edit')"
                                                 class="text-white"
                                                 @click="updateLessonPlan = true"
                                             />
@@ -275,10 +274,10 @@
                         >
                             <div class="flex w-11/12 flex-col">
                                 <h3 class="text-sm font-semibold">
-                                    Previous Lesson Plans
+                                    {{ $t('lessonPlanFormModal.previousLessonPlans')}}
                                 </h3>
                                 <h3 class="text-sm text-gray-500">
-                                    Other lesson plans for class sessions before
+                                    {{ $t('lessonPlanFormModal.otherLessonPlans')}}
                                     <span class="font-semibold">
                                         {{
                                             moment(
@@ -308,16 +307,12 @@
                                             <h3
                                                 class="text-sm font-medium text-black"
                                             >
-                                                No Previous Lesson Plans
+                                                {{ $t('lessonPlanFormModal.noPreviousLessonPlans')}}
                                             </h3>
                                             <h3
                                                 class="max-w-[18rem] text-center text-xs text-gray-500"
                                             >
-                                                Previous lesson plans have not
-                                                been added for this session.
-                                                Make sure you have populated
-                                                your lesson plans to view them
-                                                here.
+                                                {{ $t('lessonPlanFormModal.lessonPlansNotAdded')}}
                                             </h3>
                                         </div>
                                     </div>
@@ -391,7 +386,7 @@
                                                         >
                                                             <span
                                                                 class="text-sm font-semibold text-gray-500"
-                                                                >Period</span
+                                                                >{{ $t('common.period')}}</span
                                                             >
                                                             <div
                                                                 class="flex origin-left scale-95 items-center gap-1"

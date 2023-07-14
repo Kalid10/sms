@@ -4,9 +4,9 @@
     >
         <div class="flex items-center space-x-2.5 pl-3">
             <UserMinusIcon class="w-6" />
-            <div class="grow text-sm font-medium">Today's Absentees</div>
+            <div class="grow text-sm font-medium">{{ $t('absenteeStats.todayAbsentees')}}</div>
             <EyeIcon
-                class="w-5 cursor-pointer hover:scale-125"
+                class="w-4 cursor-pointer text-gray-200 hover:scale-125 hover:text-white"
                 @click="absenteeLink"
             />
         </div>
@@ -16,17 +16,17 @@
             <AbsenteeStatItem
                 class="w-1/3"
                 :value="absenteeRecords"
-                title="Students"
+                :title="$t('common.students')"
             />
             <AbsenteeStatItem
                 class="w-1/3"
                 :value="teacherAbsenteeRecords"
-                title="Teachers"
+                :title="$t('common.teachers')"
             />
             <AbsenteeStatItem
                 class="w-1/3"
                 :value="adminAbsenteeRecords"
-                title="Admins"
+                :title="$t('common.admins')"
             />
         </div>
     </div>

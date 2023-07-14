@@ -1,25 +1,25 @@
 <template>
     <div class="flex w-full justify-between space-x-8">
         <StatCard
-            title="Grade"
+            :title="$t('studentStatistics.grade')"
             color="blue"
             value="50/60"
             :icon="ChartBarIcon"
         />
         <StatCard
-            title="Attendance"
+            :title="$t('studentStatistics.attendance')"
             color="red"
             value="80%"
             :icon="CalendarDaysIcon"
         />
         <StatCard
-            title="Conduct"
+            :title="$t('studentStatistics.conduct')"
             color="emerald"
             value="C"
             :icon="HandThumbUpIcon"
         />
         <StatCard
-            title="Vitals"
+            :title="$t('studentStatistics.vitals')"
             color="emerald"
             value="Norm"
             :icon="BeakerIcon"
@@ -34,5 +34,6 @@ import {
     ChartBarIcon,
     HandThumbUpIcon,
 } from "@heroicons/vue/24/outline";
+import TextArea from "@/Components/TextArea.vue";
 </script>
 <style scoped></style>

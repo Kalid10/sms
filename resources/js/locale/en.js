@@ -1,1230 +1,1822 @@
-
 const en = {
-    "datePicker":{
-        "selectYear":"Select Year",
-        "today":"Today",
-        "clear":"Clear"
+    absenteeRecords: {
+        absenteeRecords: "Absentee Records",
+        period: "Period",
+        noAbsentee: "No absentee records found!",
     },
-    "dialogBox":{
-        "cancel":"Cancel"        },
-    "fileInput":{
-        "uploadText":"Click to upload or drag and drop",
-        "max" : "Max",
-        "file": "file:",
-        "noFileSelected.": "No file selected.",
-        "upload": "Upload"
+    absenteeStats: {
+        todayAbsentees: "Today's Absentees",
     },
-    "readMoreLess":{
-        "readMore": "Read more...",
-        "readLess": "Read less..."
+    activityLogsDetails: {
+        previousValue: "Previous value:",
+        whoIs: "who is",
+        withAnEmail: "with an email:",
+        newValue: "New value:",
+        createdAt: "Created At:",
     },
-    "selectInput": {
-        "placeHolder": "Select an option"  },
-    "tableElement": {
-        "actions": "Actions"  },
-    "teacherLayout": {
-        "home": "Home",
-        "myClasses": "My Classes",
-        "myStudents": "My Students",
-        "lessonPlan": "Lesson Plan",
-        "assessments": "Assessments",
-        "homeRooms": "Home Rooms",
-        "schedule": "Schedule",
-        "feedbacks": "Feedbacks",
-        "settings": "Settings"
+    activityLogsIndex: {
+        noDataFound: "No data found.",
+        system: "System",
+        detail: "Detail",
+        previous: "Previous",
+        next: "Next",
     },
-    "announcementsIndex": {
-        "announcements":"Announcements",
-        "searchAnnouncements": "Search Announcements",
-        "recentAnnouncements": " Recent Announcements",
-        "emptyViewTitle": "No Announcements Found!",
-        "emptyViewLinkTitle": "Go To Announcements",
-        "linkCellValue": "Show All Announcements",
-        "postTargets": "Post Targets",
-        "expires": "Expires",
-        "posted": "Posted",
-        "by":"By"
+    addAbsentees: {
+        searchTextPlaceholder: "Search Student",
+        absenteeStudents: "Absentee Students",
+        reasonLabel: "Reason",
+        reasonPlaceholder: "Add reason on why the student is absentee",
     },
-    "assessmentIndex": {
-        "name": "name",
-        "percentage": "percentage",
-        "updateLevelCategories": "Update level categories",
-        "selectLevelCategories": "Select level categories",
-        "customizable": "Customizable",
-        "minimumAssessments": "Minimum Assessments",
-        "minimumAssessmentsPlaceHolder": "min assessment",
-        "maximumAssessments": "Maximum Assessments",
-        "maximumAssessmentsPlaceHolder": "max assessment",
-        "minMaxHint": "Min and max assessments are the minimum and maximum number of tests or exams that a student is required to take.",
-        "listOfAssessmentTypes": "List of Assessment Types",
-        "filterByLevelCategory": "filter by level category",
-        "addAssessmentType": "Add Assessment Type"
+    addFlag: {
+        flagForm: "Flag Form",
+        selectFlagType: "Select flag type(s) :",
+        selectSubject: "Select Subject",
+        enterFlagDescription: "Enter Flag Description",
+        expiryDate: "Expiry Date",
     },
-    "gettingStartedSchoolSchedule": {
-        "congratulations": "Congratulations !",
-        "almostDone": "You're almost done...",
-        "successfullyRegisteredMessage": "You have successfully registered your school's grades,subjects and classes. Next, you may proceed to add your school's schedule for the current school year. We will guide you through the process.",
-        "firstStepHint":"As a first step, you may add the school year's first semester start date. This will be used to notify guardians and students of the start of the school year.Calendar events such as public holidays and school holidays can also be added here.",
-        "doNotWorryMessage": "Do not worry, if you are not sure of the exact dates,you can always add these events and more later. Once you are done here, we will finally take you to your Dashboard.",
-        "nextSteps":"Next Steps",
-        "registerSemesterStartDate": "Register Semester Start Date",
-        "AddStartOfSchoolSemester": "Add the start of the school semester in your calendar. Guardians, Teachers and Students will be notified once they are registered",
-        "ViewSchoolSchedule": "View your School Schedule",
-        "useSchoolCalenderMessage": "Use our school calendar to view and add all important school events. This includes public and school holidays, exams, and other special days.",
-        "proceedToDashboard": "Proceed to your Dashboard",
-        "youCanSkipMessage": "Alternatively, you can skip this step and proceed to your Dashboard. You can always view, add, update and delete events to your calendar later.",
-        "addNewEvent": "Add new Event",
-        "addEvent": "Add a new event to your school calendar.",
+    adminLayout: {
+        home: "Home",
+        settings: "Settings",
+        logout: "Logout",
+    },
+    adminStudentsTable: {
+        students: "Students",
+        listAllStudents: " List of all students in the school",
+        registerStudent: "Register Student",
+        searchForStudent: "Search for a student by name",
+        totalStudents: " Total Students",
+        absenteesToday: "Absentees Today",
+        latestPeriodAbsentees: "Latest Period Absentees",
+        noDataFound: "No data found",
+        noStudentEnrolled: "No student has been enrolled",
+        yourSearchQuery:
+            "<span>Your search query '<span class='font-medium text-black' >{ searchKey }</span >' did not match <span class='block'>any students name</span></span>",
+        "transferringStudent ":
+            "Transferring a student will remove them from their current section and add them to the selected section.",
+        selectDestinationSection: "Select Destination Section",
+        sections: "sections",
+        todayAbsentees: "Today's Absentees",
+    },
+    adminTeacherIndex: {
+        searchTeacherByName: "Search for a teacher by name",
+        noDataFound: "No data found",
+        noTeacherEnrolled: "No teacher has been enrolled",
+        yourSearchQuery: "Your search query",
+        anyTeacherName: "any teacher's name",
+        name: "Name",
+        email: "Email",
+        homerooms: "Homerooms",
+        gender: "Gender",
+        subjects: "Subjects",
+    },
+    adminsTable: {
+        tableElementTitle: "Administrator Staff",
+        tableElementSubtitle: "Admins registered this year",
+        updated: "updated",
+        noDataFound: "No data found",
+    },
+    allSemesters: {
+        allSemesters: "All Semesters",
+        queryPlaceholder: "Search for Semesters by name",
+        selectedYearPlaceholder: "Filter by School Year",
+        appliedFilters: "Applied filters:",
+    },
+    analyticsGraph: {
+        title: "Graphical Reports based on statistics and student information.",
+    },
+    analyticsStatistics: {
+        previous: "Previous",
+        next: "Next",
+        teachers: "Teachers",
+        students: "Students",
+        subjects: "Subjects",
+        administrators: "Administrators",
+    },
+    announcementsIndex: {
+        announcementsTitle: "Announcements",
+        addAnnouncement: "Add Announcement",
+        searchAnnouncements: "Search Announcements",
+        recentAnnouncements: " Recent Announcements",
+        emptyViewTitle: "No Announcements Found!",
+        emptyViewLinkTitle: "Go To Announcements",
+        linkCellValue: "Show All Announcements",
+        postTargets: "Post Targets",
+        expires: "Expires",
+        posted: "Posted",
+        by: "By",
+        title: "Title",
+        body: "Body",
+        bodyDescription: "the body or description",
+        selectTargetGroup: "Select target group:",
+        expireDate: "Expire date",
+        expiresOn: "Expires On",
+        announcements: ["all", "students", "teachers", "guardians", "admins"],
+        filterAssessments: "Filter Assessments",
+        filterBySchoolYear: "Filter by School Year",
+        noAnnouncementsFound: "No Announcements Found!",
+        goToAnnouncements: "Go To Announcements",
+        viewAllAnnouncements: "View All Announcements",
+    },
+    announcementsItem: {
+        postTargets: "Post Targets",
+        andExpires: "and expires",
+        posted: "Posted",
+        byAuthor: "by Author",
+    },
+    assessmentBreakDown: {
+        assessmentBreakDown: "Assessment BreakDown",
+        noGradesRecorded: "No Grades Recorded!",
+        atPresent: "At present,",
+        noAssociatedGrades:
+            "has no associated grades. As grades are recorded and registered,they will become visible in this space, segregated based on the type of assessment.",
+    },
+    assessmentForm: {
+        formElementTitle: "Assessment Form",
+        titlePlaceholder: "Add title for the assessment",
+        titleLabel: "Title",
+        descriptionPlaceholder: "Add description for the assessment",
+        descriptionLabel: "Description",
+        maximumPointPlaceholder: "Maximum Point",
+        maximumPointLabel: "Maximum Point",
+        dueDatePlaceholder: "Due Date",
+        batchSubjectIdPlaceholder: "Select Subject",
+        assessmentTypeId: "Select type",
+        statusPlaceholder: "Select Status",
+        SettingAnAssessment: "Setting an assessment as",
+        published: "published",
+        publish: "Publish",
+        Schedule: "Schedule",
+        or: "or",
+        scheduled: "Scheduled",
+        message:
+            "Setting an assessment as <span class='font-semibold uppercase'>' {published} '</span> or <span class='font-semibold uppercase' >' {scheduled} '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
+        title: "Submit Assessment",
+        alertMessage:
+            "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?",
+        draft: "Draft",
+        schedule: "Schedule",
+    },
+    assessmentIndex: {
+        addType: "Add Type",
+        name: "name",
+        percentage: "Percentage",
+        updateLevelCategories: "Update level categories:",
+        selectLevelCategories: "Select level categories:",
+        customizable: "Customizable",
+        minimumAssessments: "Minimum Assessments",
+        minimumAssessmentsPlaceHolder: "min assessment",
+        maximumAssessments: "Maximum Assessments",
+        maximumAssessmentsPlaceHolder: "max assessment",
+        minMaxHint:
+            "Min and max assessments are the minimum and maximum number of tests or exams that a student is required to take.",
+        listOfAssessmentTypes: "List of Assessment Types",
+        filterByLevelCategory: "filter by level category",
+        addAssessmentType: "Add Assessment Type",
+        "lastUpdated ": "Last updated",
+        updateAssessmentType: "Update Assessment Type",
+        assessmentType: "Assessment Type",
+        gradeCategory: "Grade Category",
+        updatedAt: "Updated at",
+        recentAssessments: "Recent Assessments",
+    },
 
-        "eventTitlePlaceHolder": "Title for your new event",
-        "eventTitleLabel": "Event Name",
-        "eventDescription": "Event Description",
-        "eventBodyPlaceHolder": "What is your event about? Write your description here.",
-        "allDayLabel": "All Day",
-        "dayOfEvent":"Day of Event",
-        "eventStartAndEndDays":"Event's Starting and End Days",
-        "pickTypeOfEventPlaceHolder":"Pick the type of Event",
-        "pickTypeOfEventLabel":"Event Type",
-        "tagsLabel": "Tags",
-        "tagsPlaceHolder": "holiday, special day, event",
-        "clear": "Clear",
-        "createEvent": "Create Event",
-        "goToDashboard": "Go to Dashboard",
-        "addNewEventFormTitle":"Add new Event",
-        "addNewEventFormSubtitle":"Add new Event"
+    assessmentOutcomePercentages: {
+        passedPercentTitle: "Passed",
+        failedPercentTitle: "Failed",
     },
-    "levelCategory": {
-        "categoryTableSubtitle": "list of level categories",
-        "categoryTableTitle": "Level Category",
-        "categoryPrimaryButtonTitle":"Add Level Category",
-        "addLevelCategoryTitle": "Add Level Category",
-        "addCategoryNameLabel": "Category",
-        "addCategoryNamePlaceholder": "ex: ElementarySchool",
-        "updateLevelCategory": "Update Level Category",
-        "updateCategory":"Update Category"
+    assessmentTypeDetailInfo: {
+        youHave: "You have",
+        assessmentsRemaining: "assessments remaining for this quarter.",
+        maxPts: "MAX PTS",
+        previous: "Previous",
+        count: "COUNT",
+        totalPts: "TOTAL PTS",
+        assessmentCompleted:
+            "You have successfully completed this assessment, and as a result, any further modifications or creation of new assessments are no longer permitted.",
+        hintAssessmentAdministered:
+            "This assessment is administered on a quarterly basis, so please ensure that you are taking the appropriate actions accordingly.",
+        atTheConclusion:
+            "At the conclusion of the quarter or semester, all the",
+        willBeConverted: "will be converted to account for",
+        "ofTheFinalGrade.": "of the final grade.",
+        note: "Note: This does not include this assessment.",
+        updateAssessment: "UPDATE ASSESSMENT",
     },
-    "section": {
-        "section": "Section",
-        "absent Students": "Absent Students",
-        "topStudents": "Top Students",
-        "studentsFallingBehind": "Students Falling Behind"
+    assessmentsFilter: {
+        filters: "Filters",
+        selectClass: "Select Class",
+        selectSubject: "Select Subject",
+        selectAssessmentType: "Select Assessment Type",
+        searchAssessment: "Search Assessment",
     },
-    "single": {
-        "selectSection": "Select Section"
+    assignHomeroom: {
+        assignHomeroom: "Assign Homeroom",
+        teacher: "Teacher:",
+        currentlyAssigned: "s currently assigned to Grade:",
+        searchAndSelect:
+            "Search and select a grade to assign as a homeroom teacher",
+        searchGradeLevel: "Search for grade level",
+        yourAreAbout: " Your are about to assign",
+        asAHomeroomTeacher: "as a homeroom teacher to Grade:",
     },
-    "rolesDetail": {
-        "Roles": "Roles",
-        "listOfAvailableRoles": "List of available roles",
-        "logs": "Logs",
-        "Role": "Role",
-        "by": "by"
+    assignSubjects: {
+        assignSubjects: "Assign Subjects",
+        assignClassHint:
+            "Now that you have registered your classes and subjects, it's time to assign each class to the subject they will be taking.",
+        subjects: "Subjects",
+        queryPlaceholder: "Search for a subject, tag or category",
+        levels: "Levels",
+        classes: "Classes",
+        selectClasses: "Select the classes that will be taking",
+        selectSubject: "First, Select a Subject",
+        chooseSubject: "Choose a subject from the list",
+        onTheLeft: "on the left",
+        startAssigningClass: "to start assigning classes",
+        pickOne: " ...or pick one of these subjects to start",
+        english: "English",
+        mathematics: "Mathematics",
+        amharic: "አማርኛ",
+        selectedLevels: "15 Levels Selected",
+        classesSelected: "Classes Selected",
+        selectClassesInLevels: "Select Classes in Levels",
+        deselectAll: "Deselect All",
+        selectAll: "Select All",
+        selectIndividualClasses: "Select Individual Classes",
+        selectAllSections: "Select All Sections",
+        listAllSections: "List All Sections",
+        allSections: "All Sections",
+        section: "Section",
+        collapse: "Collapse",
+        allSectionSelected: "All Sections Selected",
+        someSectionsSelected: "Some Sections Selected",
+        noneSelected: "None Selected",
+        save: "Save",
+        finish: "Finish",
+        kindergarten: "Select only Kindergarten level grades (Pre-KG to KG-2)",
+        elementary: "Select only Elementary level grades (Grades 1 - 8)",
+        highSchool: "Select only High School level grades (Grades 9 - 12)",
     },
-    "rolesIndex": {
-        "userTableTitle":"list of all Users",
-        "userTableSubtitle":"list of all Users",
+    batchAssessments: {
+        studentNotes: "Student Notes",
+        noScheduledAssessment: "No Scheduled Assessment Found",
+        dueDate: "Due Date",
+        assessmentType: "Assessment Type",
+    },
+    batchFlags: {
+        flaggedStudents: "Flagged Students",
+        flaggedBy: "Flagged by",
+        userName: "Username",
+    },
+    batchPerformanceIndex: {
+        classAverage: "Class Average",
+        classRank: "Class Rank",
+        classAttendance: "Class Attendance",
+        classConduct: "Class Conduct",
+    },
+    batchScheduler: {
+        header: "Great! Now, Generate Schedules for your Classes",
+        generateScheduleMessage:
+            "It's time to generate your class schedules. Our advanced class scheduler is here to assist you in creating optimal schedules for your classes.",
+        descriptionOne:
+            "1. The class scheduler utilizes a powerful algorithm that automatically generates schedules based on subject priorities and handles overlapping schedules. This means that you can trust the system to create the best fit schedule for each class, taking into account various factors to ensure an efficient timetable.",
+        descriptionTwo:
+            "2. Rest assured that the schedules generated by the system are not set in stone. You will have the flexibility to make edits and adjustments later on. If there are any changes required, simply access the schedule editing feature to customize it according to your school's needs.",
+        descriptionThree:
+            "3. We understand that time is precious, so generating the schedules will be done seamlessly in the background. You can continue exploring and utilizing the system's other features while the class schedules are being generated. No need to wait around!",
+        descriptionFour:
+            "4. Once the class schedules are complete, the system will promptly notify you. You will receive a notification or an email informing you that the schedules are ready for review. At that point, you can access the finalized schedules and proceed with distributing them to teachers and students.",
+        runTheScheduler: "Run the Scheduler",
+    },
+    batchStudentNote: {
+        noStudentNotes: "No Student Notes Found",
+        Author: "Author",
+        authorType: "Author Type",
+    },
+    batchStudentTable: {
+        selectGrade: "Select a grade:",
+        selectBatch: "Select a batch",
+        "goToGrade ": "Go To Grade ",
+        fullInformation: "Full information on",
+        studentsIn: "Students in",
+        noDataFound: "No data found",
+        noTeacherEnrolled: "No teacher has been enrolled",
+        yourSearchQuery:
+            "Your search query '<span class='font-medium text-black' >{ searchKey }</span >' did not match <span class='block>any teacher name</span>",
+        name: "Name",
+        email: "Email",
+        gender: "Gender",
+        female: "Female",
+        male: "Male",
+    },
+    batches: {
+        myClasses: "My Classes",
+        classes: "Classes",
+        assessments: "Assessments",
+        lessonPlans: "LessonPlans",
+        students: "Students",
+        announcements: "Announcements",
+        recentAssessments: "Recent Assessments",
+        topStudents: "Top Students",
+        studentsFalling: "Students Falling Behind",
+    },
+    batchesIndex: {
+        flagList: "Flag List",
+        attending: "Attending",
+        clickToViewScheduledAssessments:
+            "Click here to view scheduled assessments",
+        clickToViewStudentsNotes: "Click here to view students notes",
+        noActiveSession: "No active session",
+    },
+    batchesSchedules: {
+        noSchedulesFound: "No Schedules Found For Today",
+        startTime: "Start Time",
+    },
+    calenderMonthView: {
+        allDay: "All-Day",
+        days: [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+        ],
+        shortDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        months: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ],
+    },
+    classSchedule: {
+        schedule: "Schedule",
+        selectMonthPlaceholder: "Select month",
+        addScheduleTitle: "Add Schedule",
+        noSchoolScheduleIn: "No school schedule in",
+        schedules: "Schedules",
+        schedulesIn: "Schedules in",
+        queryPlaceholder: "Search for schedule by title",
+        months: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ],
+    },
+    common: {
+        for: "for",
+        add: "Add",
+        absentees: "Absentees",
+        all: "all",
+        password: "Password",
+        home: "Home",
+        classes: "Classes",
+        homeroomClasses: "Homeroom Classes",
+        flags: "Flags",
+        chat: "Chat",
+        sections: "Sections",
+        section: "Section",
+        question: "Question",
+        questions: "Questions",
+        studentNotes: "Student Notes",
+        days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        months: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ],
+        pts: "PTS",
+        noFeedbacks: "No Feedbacks",
+        grades: "Grades",
+        grade: "Grade",
+        admins: "Admins",
+        subjects: "Subjects",
+        subject: "Subject",
+        students: "Students",
+        student: "Student",
+        assessments: "Assessments",
+        assessment: "Assessments",
+        description: "Description",
+        lessonPlans: "LessonPlans",
+        viewAllGrades: "View All Grades",
+        noGradesFound: "No Grades Found!",
+        goToGrades: "Go To Grades",
+        and: "And",
+        period: "Period",
+        attendance: "Attendance",
+        homeroom: "Homeroom",
+        viewAll: "VIEW ALL",
+        teachers: "Teachers",
+        teacher: "Teacher",
+        announcements: "Announcements",
+        schedule: "Schedule",
+        schedules: "Schedules",
+        users: "Users",
+        noDataFound: "No data found",
+        name: "Name",
+        email: "Email",
+        gender: "Gender",
+        male: "Male",
+        female: "Female",
+        close: "Close",
+        clear: "Clear",
+        submit: "Submit",
+        copilot: "Copilot",
+        previous: "Previous",
+        next: "Next",
+        administrators: "Administrators",
+        reason: "Reason",
+        type: "Type",
+        age: "Age",
+        lastUpdated: "Last Updated",
+        with: "with",
+        title: "Title",
+        lessonPlan: "Lesson Plan",
+        absentee: "Absentee",
+        staff: "Staff",
+        apply: "Apply",
+    },
+    copilotIndex: {
+        rigelCopilot: "Rigel Copilot",
+        chat: "Chat",
+    },
+    createAdmin: {
+        headingOne: "Register an Admin",
+        headingTwo: "Fill in the information required.",
+        adminFormElementTitle: "Register Admin",
+        namePlaceholder: "Full Name",
+        phoneNumber: "Phone Number",
+        usernameLabel: "User Name",
+        usernamePlaceholder: "Username",
+        position: "Position",
+        genderLabel: "Gender",
+        genderPlaceholder: "Select Gender",
+        male: "male",
+        female: "Female",
+    },
+    createStudent: {
+        headingOne: "Register new Student and parents",
+        headingTwo:
+            "Register students and parents to efficiently manage academic progress, track achievements, and facilitate communications.",
+        guardianFormElementTitle: "Guardian's form",
+        nameLabel: "Student's name",
+        levelIdLabel: "Student's level",
+        levelIdPlaceholder: "Select students level(grade)",
+        genderLabel: "Student's gender",
+        genderPlaceholder: "Select Student's Gender",
+        studentDateOfBirth: "Student's Date Of Birth",
+        guardianRelationLabel: "Parent's relation",
+        guardianRelationPlaceholder: "Select Parent's Relation",
+        guardianName: "Guardian's name",
+        guardianPhoneNumberLabel: "Guardian's phone number",
+        guardianPhoneNumberPlaceholder: "Phone Number",
+        guardianEmailLabel: "Guardian's email",
+        guardianGenderLabel: "Guardian's gender",
+        guardianGenderPlaceholder: "Select Guardian's Gender",
+        headingThree: "Register student and parents in bulk",
+        headingFour: "only upload an excel or csv file.",
+        father: "Father",
+        mother: "Mother",
+        other: "Other",
+    },
+    createTeacher: {
+        headerOne: "Register new teacher",
+        headerTwo: "Fill in the information required.",
+        registerTeacher: "Register Teacher",
+        namePlaceholder: "Full name of new teacher",
+        usernameLabel: "User Name",
+        usernamePlaceholder: "username",
+        phoneNumberLabel: "Phone number",
+        phoneNUmberPlaceholder: "Phone number",
+        genderLabel: "Gender",
+        genderPlaceholder: "Gender",
+    },
+    currentClass: {
+        currentClass: "Current Class",
+        noActiveClass: "No Active Class",
+        youAreNowHaving: "You are now having",
+        classWith: "class with",
+        students: "students",
+        buttonTitle: "Add Absentees",
+        absentStudents: "Absent Students",
+        youAreNowHavingAll:
+            "<span>You are now having{x}class with {y} students!</span>",
+    },
+    currentDaySchedule: {
+        schedule: "'s Schedule",
+        period: "Period",
+        noScheduleFound: " No schedule found!",
+    },
+    datePicker: {
+        selectYear: "Select Year",
+        today: "Today",
+        clear: "Clear",
+        days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        months: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ],
+    },
+    delegateLink: {
+        modalTitle: "Delegate tasks",
+        Delegate: "Delegate",
+    },
+    deleteAssessment: {
+        buttonTitle: "DELETE ASSESSMENT",
+        deleteAssessment: "DELETE ASSESSMENT",
+        deleteMessage:
+            "You are about to delete this assessment. This action is irreversible!",
+        pleaseTypeAssessment:
+            "Please type the assessment title correctly to confirm deletion",
+    },
+    detailsIndex: {
+        selectAnyAssessment: "Select any assessment for a detailed view!",
+    },
+    dialogBox: {
+        cancel: "Cancel",
+    },
+    draft: {
+        currently: "Currently, this assessment is in",
+        draft: "DRAFT",
+        stateYouCan: "state! You can",
+        settingAnAssessment: "Setting an assessment as",
+        published: "PUBLISHED",
+        or: "or",
+        scheduled: "SCHEDULED",
+        willTrigger:
+            "will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
+        publishAssessment: "Publish Assessment",
+        scheduleAssessment: "Schedule Assessment",
+        finishUpdating: "FINISH UPDATING",
+        updateAssessment: "Update Assessment",
+        alertMessage:
+            "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?",
+    },
+    feedbacks: {
+        noFeedbacks: "No Feedbacks",
+    },
+    fileInput: {
+        uploadText:
+            "<span class='font-bold'>Click to upload</span> or drag and drop",
+        max: "Max",
+        file: "file:",
+        "noFileSelected.": "No file selected.",
+        upload: "Upload",
+    },
+    filters: {
+        filters: "Filters",
+        schoolYear: "school year",
+        semester: "semester",
+        quarter: "quarter",
+        apply: "Apply",
+    },
+    filtersIndex: {
+        searchAssessmentTitle: "Search Assessment Title",
+        selectSubject: "Select Subject",
+        createAssessment: "Create Assessment",
+        filters: "Filters",
+        selectStatus: "Select Status",
+        assessmentType: "Assessment Type",
+        selectSchoolYear: "Select SchoolYear",
+        SelectSemester: "Select Semester",
+        SelectQuarter: "Select Quarter",
+        done: "DONE",
+        clearAll: "CLEAR ALL",
+        all: "All",
+        published: "Published",
+        completed: "Completed",
+        marking: "Marking",
+        draft: "Draft",
+        canceled: "Canceled",
+    },
+    flagInfo: {
+        understandingStudentFlags: "Understanding Student Flags",
+        descriptionOne:
+            "The flagging feature for teachers serves as an intuitive mechanism for highlighting particular students for a variety of reasons. By 'flagging' a student, teachers effectively mark that student's profile with a note or symbol, indicating that they require special attention or have achieved exceptional performance.",
+        descriptionTwo:
+            "Flags can represent a range of scenarios. For instance, a flag can signal academic struggles, requiring additional assistance in certain subjects, or it may indicate a student's exceptional performance that calls for more challenging work. Flags can also highlight attendance issues, behavioral concerns, or other specific circumstances.",
+        descriptionThree:
+            "Once a teacher applies a flag to a student, it stays visible on their profile, making it straightforward for the educator to track the student's status and progress. This system aids teachers in adapting their teaching strategies according to each student's distinct requirements and performance levels.",
+        descriptionFour:
+            "In essence, the flagging feature cultivates an environment that supports individualized learning and progress, ensuring that every student's needs are recognized and addressed. By employing flags, teachers can help students overcome their challenges, boost their achievements, and ultimately, enable them to realize their full potential.",
+    },
+
+    forgotPassword: {
+        emailOrPhoneLabel: "Email or Phone",
+        emailOrPhonePlaceholder: "Email or Phone",
+        submit: "Submit",
+        backToLogin: "Back to Login",
+        forgotCardTitle: "Account recovery",
+        forgotCardSubtitle:
+            "Confirm the phone number you provided in your security settings: ••• ••• ••74",
+        confirmationCodeLabel: "Confirmation Code",
+        resetPassword: "Reset Password",
+        password: "Password",
+        confirmPassword: "Confirm Password",
+        cancel: "Cancel",
+    },
+
+    formIntroduction: {
+        header: "Create Your School's Weekly Period Schedule",
+        descriptionOne:
+            "This tool is designed to assist school administrators in creating a weekly schedule for their school. By providing key information such as the start time of the school day, the number of periods per day, and the duration of each period, you can easily generate a well-structured timetable.",
+        descriptionTwo:
+            "Additionally, you have the flexibility to include custom periods such as recess and lunch breaks in your schedule. These breaks are crucial for students' well-being and playtime.",
+        descriptionThree:
+            "Let's get started! Simply enter the requested information, including the start time, number of periods, duration, and any custom periods, and let the module assist you in creating an organized and efficient weekly schedule for your school.",
+        getStarted: "Get Started",
+    },
+    generalReport: {
+        grade: "GRADE",
+        attendance: "ATTENDANCE",
+        conduct: "CONDUCT",
+        formElementTitle: "Update Conduct",
+        conductPlaceholder: "Select Conduct",
+        rankFrom: "Rank From",
+    },
+    gettingStartedSchoolSchedule: {
+        congratulations: "Congratulations !",
+        almostDone: "You're almost done...",
+        successfullyRegisteredMessage:
+            "You have successfully registered your school's grades,subjects and classes. Next, you may proceed to add your school's schedule for the current school year. We will guide you through the process.",
+        firstStepHint:
+            "As a first step, you may add the school year's first semester start date. This will be used to notify guardians and students of the start of the school year.Calendar events such as public holidays and school holidays can also be added here.",
+        doNotWorryMessage:
+            "Do not worry, if you are not sure of the exact dates,you can always add these events and more later. Once you are done here, we will finally take you to your Dashboard.",
+        nextSteps: "Next Steps",
+        registerSemesterStartDate: "Register Semester Start Date",
+        AddStartOfSchoolSemester:
+            "Add the start of the school semester in your calendar. Guardians, Teachers and Students will be notified once they are registered",
+        ViewSchoolSchedule: "View your School Schedule",
+        useSchoolCalenderMessage:
+            "Use our school calendar to view and add all important school events. This includes public and school holidays, exams, and other special days.",
+        proceedToDashboard: "Proceed to your Dashboard",
+        youCanSkipMessage:
+            "Alternatively, you can skip this step and proceed to your Dashboard. You can always view, add, update and delete events to your calendar later.",
+        addNewEvent: "Add new Event",
+        addEvent: "Add a new event to your school calendar.",
+        eventTitlePlaceHolder: "Title for your new event",
+        eventTitleLabel: "Event Name",
+        eventDescription: "Event Description",
+        eventBodyPlaceHolder:
+            "What is your event about? Write your description here.",
+        allDayLabel: "All Day",
+        dayOfEvent: "Day of Event",
+        eventStartAndEndDays: "Event's Starting and End Days",
+        pickTypeOfEventPlaceHolder: "Pick the type of Event",
+        pickTypeOfEventLabel: "Event Type",
+        tagsLabel: "Tags",
+        tagsPlaceHolder: "holiday, special day, event",
+        clear: "Clear",
+        createEvent: "Create Event",
+        goToDashboard: "Go to Dashboard",
+        addNewEventFormTitle: "Add new Event",
+        addNewEventFormSubtitle:
+            "Add a new event to the current school year in your school's schedule",
+        noSchoolDay: "No School Day",
+        halfDayClosed: "Half Day Closed",
+        schoolDay: "School Day",
+    },
+    guardianInformation: {
+        guardianInfo: "Guardian Info",
+        name: "Name:",
+        relation: "Relation:",
+        phoneNumber: "Phone Number:",
+        email: "Email:",
+        requestMeeting: "Request Meeting",
+    },
+    requestMeeting: {
+        meetingRequestTo: "Meeting Request to",
+    },
+    header: {
+        classRankFrom: "Class Rank From Total ",
+    },
+    homeAssessments: {
+        viewAll: "VIEW ALL",
+        noAssessmentsFound: "No Assessments Found!",
+        goToAssessments: "Go To Assessments",
+    },
+    homeGrades: {
+        grades: "Grades",
+        subjects: "Subjects",
+        viewAllGrades: "View All Grades",
+        "noGradesFound!": "No Grades Found!",
+        goToGrades: "Go To Grades",
+    },
+    homeLessonPlans: {
+        viewAllLessonPlans: "View All Lesson Plans",
+        noLessonPlanFound: "No Lesson Plan Found!",
+    },
+    homeRoomClasses: {
+        homerooms: "Homerooms",
+        noHomeroomClass: "No homeroom class attached yet!",
+    },
+    homeRooms: {
+        noHomeroomClasses: "No homeroom classes found!",
+        assignHomeroom: "Assign Homeroom",
+        homeroomClasses: "Homeroom Classes",
+        classAttendance: "CLASS ATTENDANCE",
+        classConduct: "CLASS CONDUCT",
+        topStudents: "Top Students",
+        studentsFalling: "Students Falling Behind",
+    },
+    homeSchedule: {
+        Period: "Period",
+        days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        daysOfWeek: [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+        ],
+    },
+    homeSubjects: {
+        subjects: "Subjects",
+        noSubjectAttached: "No subject attached yet!",
+        and: "and",
+        grade: "Grade",
+    },
+    homeroomClasses: {
+        homerooms: "Homerooms",
+        noHomeroomClassAttached: "No homeroom class attached yet!",
+    },
+    info: {
+        totalStudents: "Total Students",
+    },
+    lastAssessment: {
+        lastAssessment: "Last Assessment",
+        dueOn: "Due On",
+        viewAllAssessments: "View All Assessments",
+        noPreviousAssessments:
+            "No previous assessments found. After your first evaluation, the most recent assessment will be displayed here.",
+        viewAssessments: "View Assessments",
+    },
+    lessonPLanCard: {
+        addLessonPlan: "Add Lesson Plan",
+        lessonPlanNotAdded:
+            "Lesson plan has not been added for this session. Add a new session before the session starts.",
+        Period: "Period",
+    },
+    lessonPLanFormModal: {
+        Period: "Period",
+        NewLessonPlan: "New Lesson Plan",
+        "addTopicAndDescription ":
+            "Add the topic and description of the lesson plan for the session here",
+        topicLabel: "Topic",
+        topicPlaceholder: "Topic of the Lesson Plan",
+        descriptionLabel: "Description",
+        descriptionPlaceholder: "Add your Lesson Plan description",
+        submit: "Submit",
+        edit: "Edit",
+        previousLessonPlans: "Previous Lesson Plans",
+        otherLessonPlans: "Other lesson plans for class sessions before",
+        noPreviousLessonPlans: "No Previous Lesson Plans",
+        noPreviousLessonPlansMessage:
+            "Previous lesson plans have not been added for this session. Make sure you have populated your lesson plans to view them here.",
+        period: "Period",
+    },
+    lessonPlanIndex: {
+        updated: "Updated",
+        scheduledFor: "Scheduled For",
+    },
+    lessonPlanWeekCard: {
+        week: "Week",
+        classSessionsStarting: "Class sessions for the week starting from",
+        noClassSessionsOne: "No Class Sessions",
+        noClassSessionsTwo: "There will be no class sessions for Week",
+    },
+    lessonPlans: {
+        viewAllLessonPlans: "View All Lesson Plans",
+        noLessonPlan: "No Lesson Plan Found!",
+    },
+    lessonPlansIndex: {
+        myLessonPlans: "My Lesson Plans",
+        filterLessonPlans: "Filter lesson plans",
+    },
+    lessonPlansUpdate: {
+        formElementTitle: "Update Lesson plan",
+        formElementSubtitle: "Update a new lesson plan",
+        topicLabel: "Topic",
+        topicPlaceholder: "topic",
+        descriptionLabel: "Description",
+        descriptionPlaceholder: "description",
+        batchSession: "Batch Session",
+    },
+    levelCategory: {
+        categoryTableSubtitle: "list of level categories",
+        categoryTableTitle: "Level Category",
+        addLevelCategory: "Add Level Category",
+        category: "Category",
+        addCategoryNamePlaceholder: "ex: ElementarySchool",
+        updateLevelCategory: "Update Level Category",
+        updateCategory: "Update Category",
+    },
+    levelIndex: {
+        searchGrades: "Search Grades",
+        goToLevelCategories: "Go to Level Categories",
+        activeSections: "active sections",
+        levelCategory: "Level Category",
+        updatedAt: "Updated at",
+    },
+    levelSingle: {
+        selectSection: "Select Section",
+    },
+    levelStudent: {
+        section: "Section",
+        studentsList: "Students List",
+        studentsEnrolledIn: "Students enrolled in",
+        for: "for",
+        years: "years",
+        searchKeyPlaceHolder: "Search for a student by name",
+        noDataFound: "No data found",
+        noStudentEnrolled: "No student has been enrolled in this section",
+        yourSearchQuery: "Your search query",
+        didNotMatch: "did not match",
+        anyStudentName: "any student's name",
+        perPage: "Per page",
+    },
+    levelSubjects: {
+        Views: "Views",
+        lastUpdated: "Last Updated",
+    },
+    login: {
+        welcomeBack: "Welcome Back! Sign In and Ignite The Learning Adventure",
+        messageOne:
+            "Reconnect with our collaborative platform to continue empowering your school and elevating educational experiences.",
+        emailOrPhoneLabel: "Email or Phone",
+        passwordLabel: "Password",
+        logIn: "Log In",
+        messageTwo:
+            "Maximize your school's potential with our all-inclusive management platform. Simplify operations, boost communication,and create a teamwork-driven learning space for a brilliant future.",
+        signIn: "Sign in to start your journey towards educational excellence.",
+        firstTexts: [
+            "Innovate and Elevate:",
+            "Create and Inspire:",
+            "Dream and Achieve:",
+        ],
+        secondTexts: [
+            "Empower Your School",
+            "Foster Creativity",
+            "Build Futures",
+        ],
+    },
+    markHeader: {
+        headerTitle: "Mark Students",
+    },
+    markItem: {
+        commentLabel: "Comment",
+        pointPlaceholder1: "'Please provide your assessment feedback for '",
+        pointPlaceholder2:
+            "'.nNote: This feedback will be accessible to parents, teachers, and principals.'",
+    },
+    markStat: {
+        students: "Students",
+        maxPoints: "Max Points",
+        highestScore: "Highest Score",
+        "Lowest Score": "Lowest Score",
+    },
+    markStudentInfo: {
+        headerOne:
+            "These statistics are specifically related to the student's performance in",
+        headerTwo:
+            "If you would like to see the student's overall performance, you can click",
+        here: "here",
+        attendance: "Attendance",
+        total: "Total",
+        result: "Result",
+        rank: "Rank",
+        quarterRank: "Quarter Rank",
+    },
+    marking: {
+        continueMarking: "CONTINUE MARKING",
+    },
+    nextClass: {
+        nextUp: "Next Up Is Your Class",
+        nextClass: "NextClass",
+        lessonPlan: "Lesson Plan",
+        addLessonPlan: "Add Lesson Plan",
+        teacher: "Teacher",
+        viewFullSchedule: "View Full Schedule",
+    },
+    nextClassIndex: {
+        noUpcomingClasses:
+            "No upcoming classes found! Please check your schedule or contact the",
+        admin: "admin",
+        forAssistance: "for assistance.",
+    },
+    performanceHighlightsIndex: {
+        classPerformance: "Class Performance",
+        topStudents: "Top Students",
+        StudentsFallingBehind: "Students Falling Behind",
+    },
+    periodForm: {
+        classSchedule: "Class Schedule",
+        description:
+            "Below the title, there's a brief description of what the user can do on this page.",
+        startTimePickerSubtext:
+            "The start time of the day is the time when the school day begins.If you set the start time of the day to 7:00 AM, then the school day will begin at 7:00 AM.",
+        startTimePickerPlaceholder: "0",
+        startTimePickerLabel: "Starting time",
+
+        minutesPerPeriodPlaceholder: "0",
+        minutesPerPeriodLabel: "Time for single period (minutes)",
+        minutesPerPeriodSubtext:
+            "Define how long each class period lasts in minutes.This could vary based on your school's specific needs, this also excludes custom periods.For example: if your input is 45, that means each period has 45 minutes.",
+
+        noOfPeriodPlaceholder: "0",
+        noOfPeriodsLabel: "Number of Periods Per Day",
+        noOfPeriodSubtext:
+            "Enter the number of periods you have in a typical school day. This will be the number of class sessions that are held in a day. For example: if your input is is 8, that means there each day has 8 periods a day",
+        selectLevelCategories: "Select level categories:",
+        note: "Note: Similar schedules will be applied for all classes in selected categories.",
+        customPeriod: "Custom Period",
+        addNew: "+ Add New",
+
+        customTimeNameLabel: "Name",
+        customTimeNamePlaceholder: "Breakfast",
+
+        customTimeDurationLabel: "Duration (minutes)",
+        customTimeDurationPlaceholder: "0",
+
+        customBeforePeriodLabel: "Period before",
+        customBeforePeriodPlaceholder: "0",
+        hintAddCustomPeriods:
+            "Add custom periods like lunch or recess. Fill in the name, duration (in minutes), and specify which period it precedes. For instance, to add a 'Breakfast' break before the 4th period, enter 'Breakfast', its length, and '4' in the respective fields.",
+        title: "Submit",
+        submit: "Submit",
+    },
+    published: {
+        startMarking: "START MARKING",
+    },
+    questionPreparation: {
+        welcome: " Welcome to our AI-Powered Question Preparation Platform",
+        description:
+            "Embrace our AI-powered platform that creates custom assessments from your lesson plans, facilitating a streamlined teaching experience. Immerse yourself in a process where you teach more and prepare less, helping reshape the future of education.",
+        questionGeneration: "Question Generation Customization",
+        selectQuestionType: "Select Question Type",
+        numberOfQuestions: "Number Of Questions?",
+        howManyQuestions: "How Many Questions?",
+        setDifficultyLevel: "Set Difficulty Level for Questions",
+        hintForDifficulty:
+            "Use this slider to set the difficulty level for the generated questions. Moving the slider to the left will make questions easier, while moving it to the right will make them more challenging.",
+        manualInput: "Manual Input",
+        manualInputDescription:
+            "Opt for manual input if you prefer to generate questions based on your unique inputs and parameters. This option allows for greater control and specificity.",
+        lessonPlans: "Lesson Plans",
+        lessonPlanDescription:
+            "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we'll load your plans, and you can choose one for us to craft tailored questions.",
+        question: "Question",
+        enterQuestion: "Enter Question",
+    },
+    readMoreLess: {
+        readMore: "Read more...",
+        readLess: "Read less...",
+    },
+    recentActivities: {
+        recentActivities: "Recent Activities",
+    },
+    registerAdmin: {
+        title: "New Admin Registration",
+        subtitle:
+            "Register and assign a position with predefined roles into the system",
+        nameLabel: "Name",
+        namePlaceholder: "Full name",
+        phoneLabel: "Phone",
+        phonePlaceholder: "+251...",
+        emailLabel: "Email",
+        emailPlaceholder: "example@example.com",
+        unitLeaderLabel: "Unit Leader",
+        unitLeaderDescription:
+            "Unit Leader responsible for managing the batches. Has manage access to batches, schedules, students, teachers, assessments",
+        secretaryLabel: "Secretary",
+        secretaryDescription:
+            "Secretary responsible for managing the batches. Has manage access to students, guardians, teachers, schedules",
+        PrincipalLabel: "Principal",
+        PrincipalDescription:
+            "Principal has access to all resources in the system. Can view, update and delete all resources",
+    },
+    registerBatches: {
+        registerGrades: "Register Grades",
+        hintOne:
+            "We have selected a set of default grades for you. You can remove grades you don't need, add new grades or edit the number of sections in each grade.",
+        hintTwo:
+            'Click on the "Finish" to proceed, and "Next" to save and proceed.',
+        gradesSelected: "Grades Selected",
+        sectionsSelected: "Sections Selected",
+        buttonTitle: "Add New Grade",
+        grade: "Grade",
+        sections: "Sections",
+        finish: "Finish",
+        updateLevelSectionTitle: "Number of Sections",
+        updateLevelSectionSubtitle: "Update the number of Sections for Grade 7",
+        updateLevelSectionInputPlaceholder:
+            "Specify the number of sections for Grade 7",
+    },
+    registerSchoolYear: {
+        welcomeText:
+            "Please enter the <span class='text-black'>start date</span> of the new school year and the number of semesters it includes. You can also change the school year name by clicking the <span id='pencilIcon'></span> icon on the right. You can always change this in the school year settings later",
+        welcome: "Welcome to the",
+        schoolYear: "School Year",
+        pleaseEnter: "Please enter the",
+        startDate: "start date",
+        ofTheNew: "of the new school year and the",
+        numberOfSemesters: "number of semesters",
+        itIncludes:
+            "it includes. You can also change the school year name by clicking the",
+        iconOnTheRight: "icon on the right.",
+        youCanAlwaysChange:
+            "You can always change this in the school year settings later",
+        chooseStartDate: "Choose a Start Date",
+        numberOfQuarters: "Number of Quarters in a Semester",
+        ifThereIs:
+            "If there is no quarter in your school system, you can remove the quarter ?",
+        removeQuarter: "Remove Quarter",
+        theUpcoming: "The upcoming academic year,",
+        willConsistOf: ", will consist of",
+        semesters: "semesters,",
+        eachDividedInto: "each divided into",
+        quarters: "quarters",
+        resultingInTotalOf: "resulting in a total of",
+        createAndProceed: "Create and Proceed",
+        summaryText:
+            "<p class='text-xs'> The upcoming academic year <span class='font-bold text-gray-700'>{academicYear}</span>, will consist of <span class='font-bold text-gray-700'>{semesters} semesters,</span > each divided into <span class='font-bold text-gray-700'>{quartersPerSemester} quarters, </span> resulting in a total of <span class='font-bold text-gray-700' >{totalQuarters} quarters.</span > </p>",
+    },
+    registerSubjectForm: {
+        formElementTitle: "New Subject",
+        formElementSubtitle: "Create a new subject and assign it to a category",
+        fullNamePlaceholder: "Name of the new Subject",
+        fullNameLabel: "Subject Name",
+        shortNamePlaceholder: "Short name for Subject",
+        shortNameLabel: "Subject Short Name",
+        tagsLabel: "Subject Tags",
+        tagsPlaceholder: "Assign tags (separate multiple tags with comma)",
+        categoryLabel: "Enter a category",
+        categoryPlaceholder: "Subject Category",
+        newCategoryPlaceholder: "New category",
+        noCategoriesFound: "No categories found",
+    },
+    registerSubjects: {
+        registerSubjects: "Register Subjects",
+        descriptionOne:
+            "We have selected a set predefined subjects for you. You can remove the subjects you don't provide or add more subjects not listed here.",
+        descriptionTwo:
+            'Click on the "Finish" to proceed, and "Next" to save and proceed.',
+        totalSubjects: "Total Subjects",
+        subjectsSelected: "Subjects Selected",
+        newSubject: "New Subject",
+        other: "Other",
+        createNewSubject: "Create new Subject",
+        createNewCategory: "Create new Category",
+        finish: "Finish",
+        reset: "Reset",
+        newSubjectTitle: "New Subject",
+        newSubjectSubtitle: "Create a new subject and assign it to a category",
+        subjectFullNamePlaceholder: "Name of the new Subject",
+        newSubjectFullNameLabel: "Subject Name",
+        subjectShortNamePlaceholder: "Short name for Subject",
+        subjectShortNameLabel: "Subject Short Name",
+        subjectTagPlaceholder:
+            "Assign tags (separate multiple tags with comma)",
+        subjectTagLabel: "Subject Tags",
+        subjectCategoryOptionsPlaceholder: "Category of the new Subject",
+        subjectCategoryOptionsLabel: "Subject Category",
+        subjectCategoryPlaceholder: "Create a custom Category",
+        subjectCategoryLabel: "Subject Category",
+    },
+    registerUser: {
+        header: "Choose user type",
+        guardianStudentRegisterTitle: "Guardian and Student",
+        guardianStudentRegisterSubtitle:
+            "Students and their guardians are required to provide personal information such as name,contact information and any special needs or accommodations required. Depending on the institution, guardians may also need to provide legal documentation such as proof of guardianship or custody.",
+        teacherRegisterTitle: "Teacher",
+        teacherRegisterSubtitle:
+            " Teachers are typically required to provide personal information such as name,contact information, and educational qualifications.They may also need to provide teaching experience, references, and any specialized training or certifications.",
+        adminRegisterTitle: "Admin",
+        adminRegisterSubtitle:
+            "Administrators may need to provide personal information such as name, contact information, and job position.They may also need to provide professional qualifications and references.",
+    },
+    resultStatistics: {
+        averageResult: "Average Result",
+        highestResult: "Highest Result",
+        lowestResult: "Lowest Result",
+    },
+    rolesDetail: {
+        Roles: "Roles",
+        listOfAvailableRoles: "List of available roles",
+        logs: "Logs",
+        Role: "Role",
+        by: "by",
+    },
+    rolesIndex: {
+        userTableTitle: "list of all Users",
+        userTableSubtitle: "list of all Users",
         "Name or Email": "Name or Email",
-        "search": "search"
+        search: "search",
     },
-    "schedulesIndex": {
-        "from": "From",
-        "searchForSchedule": "Search for schedule",
-        "addEvent": "Add Event"
+    scheduled: {
+        currentlyThisAssessment: "Currently, this assessment is in",
+        scheduled: "SCHEDULED",
+        stateYouCan: "state! You can",
+        publishAssessment: "Publish Assessment",
+        alertMessage:
+            "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?",
     },
-    "semestersSingle": {
-        "upcomingSchedule": "Upcoming Schedule",
-        "recentActivities": "Recent Activities"
+    schedulesIndex: {
+        schoolSchedules: "School Schedules",
+        from: "From",
+        searchForSchedule: "Search for schedule",
+        addEvent: "Add Event",
     },
-    "batchStudentTable": {
-        "select a grade": "Select a grade:",
-        "full information on": "Full information on",
-        "studentsIn": "Students in"
+    schoolPeriodForm: {
+        weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
     },
-    "studentsIndex": {
-        "students": "Students"
+    schoolPeriodFormWrapper: {
+        step: "Step",
+        of4: "of 4",
+        1: "1",
+        startTimeOfTheDay: "Start time of the day",
+        whatTimeFirstPeriod:
+            "What time does the first period of the school day start?",
+        2: "2",
+        durationSinglePeriod: "Duration of a single period",
+        howManyMinutesSinglePeriod: "How many minutes are in a single period?",
+        setMinute: "Set Minute",
+        back: "Back",
+        next: "Next",
+        hintCustomDuration:
+            'For your periods with a custom duration, you can add them later in Step 4, "Custom Periods"',
+        3: "3",
+        periodsPerDay: "Periods per day",
+        howManyPeriods:
+            "How many periods (sessions) will a typical school day have?",
+        setPeriods: "Set Periods",
+        hint: "This does not include your recess, lunch break or any other custom periods",
+        4: "4",
+        customPeriods: "Custom Periods",
+        addCustomPeriods: "Add your custom periods here. Examples can be",
+        breakTime: '"Break time"',
+        lunchBreak: '"Lunch break"',
+        recess: '"Recess"',
+        homeroom: '"Homeroom"',
+        customPeriodLabel: "Custom Period Name",
+        customPeriodPlaceHolder: "Break time",
+        durationMin: "Duration (min)",
+        beforePeriod: "Before Period",
+        day: "Day",
+        finishHint:
+            'Click on the "Finish" button on the bottom of the screen to finish setting up your schedule.',
+        addNewPeriod: "Add new Period",
+        days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
     },
-    "adminStudentsTable": {
-        "students": "Students",
-        "ListAllStudent": "List of all students in the school",
-        "registerStudent": "Register Student",
-        "searchForStudent":"Search for a student by name",
-        "totalStudents": "Total Students",
-        "absenteesToday": "Absentees Today",
-        "latestPeriodAbsentees": "Latest Period Absentees",
-        "suspendedStudents": "Suspended Students",
-        "noDataFound": "No data found",
-        "yourSearchQuery": "Your search query",
-        "didNotMatch": "did not match",
-        "anyStudentName": "any student's name",
-        "transferringStudent": "Transferring a student will remove them from their current section and add them to the selected section.",
-        "selectDestinationSection": "Select Destination Section",
-        "name": "Name",
-        "email": "Email",
-        "gender": "Gender",
-        "grade": "Grade"
+    schoolPeriodModal: {
+        almostThere: "Almost there!",
+        descriptionOne:
+            "You have successfully registered and assigned your school's year, semesters, and subjects, and classes. Next, you will need to set up your school's class schedule. We will guide you through the process.",
+        descriptionTwo:
+            "Create a custom class schedule to fit your school's needs. You can define the number of periods in a day, duration of each period, starting time, and even add custom periods such as lunch or recess. You can also assign these schedules to different level categories. Let's get started!\"",
+        descriptionThree:
+            "Don't worry if you don't have all the details yet,you can always update class times and other schedule information later.",
+        addSchoolPeriodTitle: "Now Lets Add School Periods",
     },
-    "subjectsIndex": {
-        "message":"You are about to archive this subject. Are you sure you want to continue? Do not worry, all the batches and students under this subject will be available, and you can restore this subject anytime."
+    schoolPeriodScheduleViewer: {
+        days: {
+            monday: "Monday",
+            tuesday: "Tuesday",
+            wednesday: "Wednesday",
+            thursday: "Thursday",
+            friday: "Friday",
+        },
     },
-    "adminTeacherIndex": {
-        "searchTeacherByName": "Search for a teacher by name",
-        "noDataFound": "No data found",
-        "noTeacherEnrolled": "No teacher has been enrolled",
-        "yourSearchQuery": "Your search query",
-        "anyTeacherName": "any teacher's name",
-        "name": "Name",
-        "email": "Email",
-        "homerooms": "Homerooms",
-        "gender": "Gender",
-        "subjects": "Subjects"
+    schoolSchedule: {
+        formTitle: "Create school schedule",
+        formSubTitle: "Registration form",
+        titleLabel: "Name",
+        titlePlaceholder: "name",
+        bodyLabel: "Description",
+        bodyPlaceholder: "Its about...",
+        inputTagsLabel: "Tags",
+        inputTagsPlaceholder: "tag1,tag2,tag3",
+        datePickerLabel: "Date",
+        typeLabel: "Type",
+
+        fullDay: "Full Day",
+        fullDayDescription: "There is no school for the whole day.",
+        halfDay: "Half Day",
+        halfDayDescription: "There will be no class for the half day.",
+        none: "None",
+        noneDescription: "There will be class all day.",
     },
-    "createAdmin": {
-        "headingOne": "Register an Admin",
-        "headingTwo": "Fill in the information required.",
-        "adminFormElementTitle": "Register Admin",
-        "nameLabel": "Name",
-        "namePlaceholder": "Full Name",
-        "emailLabel": "Email",
-        "phoneNumberLabel": "Phone Number",
-        "phoneNumberPlaceholder": "Phone Number",
-        "usernameLabel": "User Name",
-        "usernamePlaceholder": "Username",
-        "positionLabel": "Position",
-        "positionPlaceholder": "Position",
-        "genderLabel": "Gender",
-        "genderPlaceholder": "Gender",
-        "male": "male",
-        "female": "Female"
+    schoolScheduleItem: {
+        "updateSchoolSchedule ": "Update school schedule",
+        update: "update",
+        titleLabel: "Name",
+        titlePlaceholder: "name",
+        bodyLabel: "Description",
+        bodyPlaceholder: "Its about...",
+        inputTagsLabel: "Tags",
+        inputTagsPlaceholder: "tag1,tag2,tag3",
+        datePickerLabel: "Date",
+        typeLabel: "Type",
+        fullDay: "Full Day",
+        fullDayDescription: "There is no school for the whole day.",
+        halfDay: "Half Day",
+        halfDayDescription: "There will be no class for the half day.",
+        none: "None",
+        noneDescription: "There will be class all day.",
     },
-    "createStudent": {
-        "headingOne": "Register new Student and parents",
-        "headingTwo": "Register students and parents to efficiently manage academic progress, track achievements, and facilitate communications.",
-        "guardianFormElementTitle": "Guardian's form",
-        "nameLabel": "Student's name",
-        "namePlaceholder": "Name",
-        "levelIdLabel": "Student's level",
-        "levelIdPlaceholder": "Select students level(grade)",
-        "genderLabel": "Student's gender",
-        "genderPlaceholder": "Select Student's Gender",
-        "studentDateOfBirth": "Student's Date Of Birth",
-        "guardianRelationLabel": "Parent's relation",
-        "guardianRelationPlaceholder": "Select Parent's Relation",
-        "guardianNameLabel": "Name",
-        "guardianNamePlaceholder": "Guardian's name",
-        "guardianPhoneNumberLabel": "Guardian's phone number",
-        "guardianPhoneNumberPlaceholder": "Phone Number",
-        "guardianEmailLabel": "Guardian's email",
-        "guardianEmailPlaceholder": "Email",
-        "guardianGenderLabel": "Guardian's gender",
-        "guardianGenderPlaceholder":"Select Guardian's Gender",
-        "headingThree": "Register student and parents in bulk",
-        "headingFour":"only upload an excel or csv file.",
-        "father": "Father",
-        "mother": "Mother",
-        "other": "Other"
+    schoolScheduleSchedules: {
+        noScheduleFound: "No Schedule found for today!",
+        viewAllSchedules: "View All Schedules",
     },
-    "createTeacher": {
-        "headerOne": "Register new teacher",
-        "headerTwo": "Fill in the information required.",
-        "nameLabel": "Name",
-        "namePlaceholder": "Full name of new teacher",
-        "usernameLabel": "User Name",
-        "usernamePlaceholder": "username",
-        "phoneNumberLabel": "Phone number",
-        "phoneNUmberPlaceholder": "Phone number",
-        "emailLabel": "Email",
-        "emailPlaceholder": "email",
-        "genderLabel": "Gender",
-        "genderPlaceholder": "Gender"
+    scoreDisplay: {
+        pts: "PTS",
     },
-    "usersIndex": {
-        "activityLogTitle": "Activity Logs",
-        "activityLogSubtitle": "users activity logs",
-        "previous": "Previous",
-        "next": "Next",
-        "usersListTableTitle": "Users List",
-        "usersListTableSubtitle": "List of personnel registered on your system, with user types and contact information",
-        "queryPlaceholder": "Search for Users by Name or Email",
+    section: {
+        section: "Section",
+        absentStudents: "Absent Students",
+        topStudents: "Top Students",
+        studentsFallingBehind: "Students Falling Behind",
+    },
+    sectionActiveSession: {
+        attending: "Attending",
+        with: "with",
+        noActiveSession: "No active session",
+    },
+    sectionHomeroom: {
+        homeroomTeacher: "Homeroom teacher",
+        noHomeroomTeacherAssigned: "No homeroom teacher assigned",
+        assignHomeroom: "Assign Homeroom",
+    },
+    sectionPerformance: {
+        topStudents: "Top Students",
+        studentsFalling: "Students Falling Behind",
+    },
+    selectInput: {
+        placeHolder: "Select an option",
+    },
+    selectedAnnouncement: {
+        continueReading: "Continue reading",
+    },
+    semesterByStatus: {
+        semesters: "Semesters",
+    },
+    semesterCard: {
+        updated: "Updated",
+    },
+    semestersBySchoolYear: {
+        semesters: "Semesters",
+    },
+    semestersBySeason: {
+        semesters: "Semesters",
+        first: "First",
+        second: "Second",
+        third: "Third",
+    },
+    semestersSingle: {
+        upcomingSchedule: "Upcoming Schedule",
+        recentActivities: "Recent Activities",
+    },
+    semestersStatistics: {
+        semestersCountTitle: "Semesters",
+        semestersCountSubtitle: "Semesters tracked on the system",
+        schoolYearsCountTitle: "School Years",
+        schoolYearsCountSubtitle: "School Years registered on the system",
+        activeSchoolYearSemestersCountTitle:
+            "Current(Active) School year Semesters",
+        activeSchoolYearSemestersCountSubtitle:
+            "Semesters currently in progress",
+    },
+    signUp: {
+        messageOne: "Transform Learning Today. Start Here.",
+        messageTwo:
+            "You should find an invitation in your inbox with your first time password. Can't find your invitation?",
+        notifyYourSchool: "Notify your school.",
+        emailOrPhoneLabel: "Your Email",
+        currentPasswordLabel: "First-time Password",
+        currentPasswordSubtext:
+            "You first time password should be in your inbox",
+        newPassword: "New Password",
+        confirmPassword: "Confirm Password",
+        signUp: "Sign Up",
+        alreadyRegistered: "Already registered? Sign in instead.",
+    },
+    single: {
+        selectSection: "Select Section",
+    },
+    sms: {
+        hint: "Hello there, With a single click, you can instantly send crucial message;",
+        parentsPhoneInformation: "Parents phone information",
+        teachersPhoneInformation: "Teachers phone information",
+        sms: "SMS",
+        phoneNumber: "phone number",
+        message: "message",
+    },
+    staffAbsenteesTable: {
+        searchStaff: "Search for an absent staff by name",
+        newAbsentee: "New Absentee",
+        userType: "User Type",
+    },
+
+    studentAbsenteesTable: {
+        searchStudent: "Search for an absent student by name",
+    },
+    studentAssessments: {
+        recentAssessments: "Recent Assessments",
+        seeAll: "SEE ALL",
+        noAssessmentsFound: "No Assessments Found!",
+        linkCellValue: "Go To Assessments",
+    },
+    studentGradeDetail: {
+        gradeReport: "Grade Report",
+        subject: "Subject",
+        attendance: "Attendance%",
+        grade: "Grade",
+        rank: "Rank",
+        conduct: "Conduct",
+        flagStudent: "Flag Student",
+    },
+    studentNotes: {
+        notes: "Notes",
+        noNotesAssociated: "No Notes Associated with",
+        addNoteFor: "Add Note For",
+        addNote: "Add Note",
+        description: "Description",
+        Update: "Update",
+        note: "'s note",
+        title: "Title",
+        titlePlaceholder: "title",
+        by: "By",
+    },
+    studentRank: {
+        rank: "Rank",
+        from: "From",
+        students: "students",
+        in: "in",
+    },
+    studentScoreList: {
+        exemplary: "Exemplary",
+        underAchievers: "UnderAchievers",
+        viewAllResults: "View All Results",
+    },
+    studentSemesterSchedule: {
+        semesterSchedule: "'s Semester Schedule",
+        classSchedule: "Class Schedule",
+    },
+    studentStatistics: {
+        grade: "Grade",
+        attendance: "Attendance",
+        conduct: "Conduct",
+        vitals: "Vitals",
+    },
+    studentsIndex: {
+        students: "Students",
+        grades: "Grades",
+    },
+    studentsList: {
+        noList: "We're unable to provide the list currently. Once the assessments are completed, we'll be able to provide the list.",
+    },
+
+    studentsTable: {
+        search: "Search",
+        assignHomeroom: "Assign Homeroom",
+        homeroomTeacher: "Homeroom Teacher",
+        name: "Name",
+        attendance: "Attendance%",
+        grade: "Grade",
+        rank: "Rank",
+        conduct: "Conduct",
+    },
+
+    subjectGrades: {
+        levels: "Levels",
+        sections: "Sections",
+    },
+
+    subjectTeachers: {
+        listOfTeachers: "List of teachers in the",
+        faculty: "Faculty",
+        searchKeyPlaceholder: "Search for a teacher by name",
+        noDataFound: "No data found",
+        NoTeacherEnrolled: "No teacher has been enrolled",
+        yourQueryDidNotMatch:
+            "Your search query <span class='font-medium text-black' >'{ searchKey }</span >' did not match <span class='block' >any subject, category or tag</span > </span>",
+        teacher: "Teacher",
+        grades: "Grades",
+        views: "Views",
+    },
+
+    subjectUpdate: {
+        updateFormElementTitle: "Update Subject",
+        fullName: "Full Name",
+        shortName: "Short Name",
+        tagsLabel: "Subject Tags",
+        tagsPlaceholder: "Assign tags (separate multiple tags with comma)",
+        categoryPlaceholder: "Enter a category",
+        categoryLabel: "Subject Category",
+    },
+
+    subjectsIndex: {
+        message:
+            "You are about to archive this subject. Are you sure you want to continue? Do not worry, all the batches and students under this subject will be available, and you can restore this subject anytime.",
+    },
+
+    subjectsTable: {
+        header: "Welcome to Subjects page",
+        tableElementTitle: "Subjects List",
+        tableElementSubtitle: "List of all subjects given at",
+        newSubject: "New Subject",
+        noDataFound: "No data found",
+        queryPlaceholder: "Search for a subject by name or tags",
+        yourQueryDidNotMatch:
+            "Your search query <span class='font-medium text-black' >'{ searchKey }</span >' did not match <span class='block' >any teacher's name</span > </span>",
+        noSubjectEnrolled: "No subject has been enrolled in this section",
+        selectGrade: "Select a grade:",
+        selectBatch: "Select a batch",
+        lastUpdated: "Last Updated",
+        subjects: "Subjects",
+        active: "Active",
+        grades: "Grades",
+    },
+
+    tableElement: {
+        actions: "Actions",
+    },
+
+    tableFiltersIndex: {
+        searchPlaceholder: "Search Assessment Title",
+        selectSubjectPlaceholder: "Select Subject",
+        createAssessment: "Create Assessment",
+        filters: "Filters",
+        selectedAssessmentStatusPlaceholder: "Select Status",
+        selectedAssessmentTypeIdPlaceholder: "Assessment Type",
+        selectedSchoolYearPlaceholder: "Select SchoolYear",
+        selectedSemesterPlaceholder: "Select Semester",
+        selectedQuarterPlaceholder: "Select Quarter",
+        done: "DONE",
+        clearAll: "CLEAR ALL",
+    },
+    tableIndex: {
+        title: "Title",
+        type: "Type",
+        homework: "Homework",
+        classwork: "Classwork",
+        finalQuarterlyExam: "Final Quarterly Exam",
+        finalExam: "Final Exam",
+        test: "Test",
+        maxPoints: "Max Points",
+        status: "Status",
+        dueDate: "Due Date",
+        lastUpdate: "Last Update",
+    },
+
+    teacherAnnouncementIndex: {
+        announcements: "Announcements",
+        searchAnnouncements: "Search Announcements",
+        feedbacks: "Feedbacks",
+    },
+
+    teacherAssessmentsIndex: {
+        assessments: "Assessments",
+        createAssessment: "Create Assessment",
+    },
+    teacherAssessmentsMark: {
+        info: "Info",
+        caution: "CAUTION",
+        message:
+            "Please note, upon clicking 'Finish Marking', notifications, emails and SMS will be sent to parents and relevant authorities regarding the students' performance. However, rest assured, you will retain the ability to make necessary adjustments to these assessments until the end of the current quarter or semester.",
+        finishMarking: "Finish Marking",
+    },
+
+    teacherIndex: {
+        yourNexClass:
+            "Your next class is <span class='font-semibold'>{fullName}</span> with grade <span class='font-semibold'>{levelName} {section}</span> during period <span class='font-semibold'>{schoolPeriodName}</span><span class='font-semibold'>approximately{time}</span>",
+        homeroomClasses: "Homeroom Classes",
+        upcomingSchedules: "Upcoming Schedules",
+        schoolSchedules: "School-Schedules",
+        toDaysSchedule: "Todays-Schedule",
+        recentFlags: "Recent Flags",
+    },
+    teacherLayout: {
+        home: "Home",
+        myClasses: "My Classes",
+        myStudents: "My Students",
+        lessonPlan: "Lesson Plan",
+        assessments: "Assessments",
+        homeRooms: "Home Rooms",
+        announcements: "Announcements",
+        schedule: "Schedule",
+        feedbacks: "Feedbacks",
+        settings: "Settings",
+        logout: "Logout",
+        questionBank: "Question Bank",
+    },
+    teacherStudents: {
+        myStudents: "My Students",
+        filterStudents: "Filter students",
+        classAttendance: "CLASS ATTENDANCE",
+        classConduct: "CLASS CONDUCT",
+        topStudents: "Top Students",
+        studentsFallingBehind: "Students Falling Behind",
+    },
+    teachersIndex: {
+        absentee: "Absentee",
+        confirmIf: "confirm if you want to mark this teacher as absent",
+        absent: "Absent",
+        reason: "Reason",
+        noTeacher: "No teacher has been enrolled",
+        searchTeacher: "Search for a teacher by name",
+    },
+    userProfile: {
+        hello: "Hello",
+        description:
+            "Welcome to your profile page, where you can view and update your personal information and security settings. Enjoy your journey with us!",
+        profile: "Profile",
+        headingTwo:
+            "Update your personal information and make sure your profile accurately reflects who you are.",
+        usernameLabel: "User Name",
+        phoneNumberLabel: "Phone number",
+        phoneNUmberPlaceholder: "'e.g. 09123456789'",
+        genderPlaceholder: "select gender",
+        stayAheadOf:
+            "Stay ahead of potential security threats by updating your password now.",
+        currentPasswordLabel: "Current Password",
+        currentPasswordPlaceholder: "Enter your current password",
+        passwordLabel: "New Password",
+        passwordPlaceholder: "enter your new password",
+        passwordConfirmationLabel: "Confirm Password",
+        passwordConfirmationPlaceholder: "confirm your new password",
+        male: "Male",
+        female: "Female",
+        updateProfile: "Update Profile",
+        updatePassword: "Update Password",
+    },
+
+    userStatistics: {
+        adminsTitle: "Admins",
+        adminStatSubtitle: "Admins registered in the system",
+        studentsStatTitle: "Students",
+        studentsStatSubtitle: "Students registered into the school (all-time)",
+        teacherStatTitle: "Teachers",
+        teacherStatSubtitle: "Teachers registered into the school (all-time)",
+        newUsersStatTitle: "New Users",
+        newUserStatSubtitle: "New Users (last 30 days)",
+    },
+
+    usersAbsentee: {
+        classAbsentStudents: " Class Absent Students List",
+        teacher: "Teacher:",
+        absentTeachers: "Absent Teachers",
+    },
+    usersIndex: {
+        activityLogTitle: "Activity Logs",
+        activityLogSubtitle: "users activity logs",
+        previous: "Previous",
+        next: "Next",
+        usersListTableTitle: "Users List",
+        usersListTableSubtitle:
+            "List of personnel registered on your system, with user types and contact information",
+        queryPlaceholder: "Search for Users by Name or Email",
         "move Items": "Move Items",
         "update Items": "Update Items",
         "create New User": "Create New User",
-        "download": "Download",
-        "csv": "CSV",
-        "addUser": "Add User",
-        "perPage": "Per page",
-        "updateSelectedUser": "Update the selected user",
-        "updateUser": "Update user",
-        "updateNameLabel": "Name",
-        "updateNamePlaceholder": "Update user name",
-        "roleLabel": "Role",
-        "rolePlaceholder": "Update user role",
-        "positionLabel": "Position",
-        "positionPlaceholder": "Update user position",
-        "newUserFormTitle": "Register new User",
-        "newUserFormSubtitle": "Fill in the information required about the new user",
-        "newUserNameLabel":"Name",
-        "newUserNamePlaceholder":"Full name of new user",
-        "newUserPositionLabel":"Position",
-        "newUserPositionPlaceholder":"Position of user",
-        "datePickerLabel":"Start Date",
-        "datePickerPlaceholder":"Select a Date",
-        "userTypeLabel":"User Type"
-
-    },
-    "userProfile": {
-        "hello": "Hello",
-        "description": "Welcome to your profile page, where you can view and update your personal information and security settings. Enjoy your journey with us!",
-        "headingOne": "Profile",
-        "headingTwo": "Update your personal information and make sure your profile accurately reflects who you are.",
-        "nameLabel": "Name",
-        "emailLabel": "Email",
-        "usernameLabel": "User Name",
-        "phoneNumberLabel": "Phone number",
-        "phoneNUmberPlaceholder": "'e.g. 09123456789'",
-        "genderLabel": "Gender",
-        "genderPlaceholder": "select gender",
-        "currentPasswordLabel": "Current Password",
-        "currentPasswordPlaceholder": "enter your current password",
-        "passwordLabel": "New Password",
-        "passwordPlaceholder": "enter your new password",
-        "passwordConfirmationLabel":"Confirm Password",
-        "passwordConfirmationPlaceholder":"confirm your new password",
-        "male": "Male",
-        "female":"Female"
-    },
-    "sms": {
-        "hint": "Hello there, With a single click, you can instantly send crucial message;",
-        "parentsPhoneInformation": "Parents phone information",
-        "teachersPhoneInformation":"Teachers phone information",
-        "sms": "SMS",
-        "phoneNumber": "phone number",
-        "message": "message"
-    },
-    "forgotPassword": {
-        "emailOrPhoneLabel": "Email or Phone",
-        "emailOrPhonePlaceholder": "Email or Phone",
-        "submit": "Submit",
-        "backToLogin": "Back to Login",
-        "forgotCardTitle": "Account recovery",
-        "forgotCardSubtitle": "Confirm the phone number you provided in your security settings: ••• ••• ••74",
-        "confirmationCodeLabel": "Confirmation Code",
-        "resetPassword": "Reset Password",
-        "password": "Password",
-        "confirmPassword": "Confirm Password",
-        "cancel": "Cancel"
-    },
-    "login": {
-        "welcomeBack": "Welcome Back! Sign In and Ignite The Learning Adventure",
-        "messageOne": "Reconnect with our collaborative platform to continue empowering your school and elevating educational experiences.",
-        "emailOrPhoneLabel": "Email or Phone",
-        "passwordLabel": "Password",
-        "logIn": "Log In",
-        "messageTwo": "Maximize your school's potential with our all-inclusive management platform. Simplify operations, boost communication,and create a teamwork-driven learning space for a brilliant future.",
-        "signIn": "Sign in to start your journey towards educational excellence.",
-        "firstTexts": [
-            "Innovate and Elevate:",
-            "Create and Inspire:",
-            "Dream and Achieve:"
-        ],
-        "secondTexts": [
-            "Empower Your School",
-            "Foster Creativity",
-            "Build Futures"
-        ]
-    },
-    "signUp": {
-        "messageOne": "Transform Learning Today. Start Here.",
-        "messageTwo": "You should find an invitation in your inbox with your first time password. Can't find your invitation?",
-        "notifyYourSchool": "Notify your school.",
-        "emailOrPhoneLabel": "Your Email",
-        "currentPasswordLabel": "First-time Password",
-        "currentPasswordSubtext": "You first time password should be in your inbox",
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password",
-        "signUp":"Sign Up",
-        "alreadyRegistered":"Already registered? Sign in instead."
-    },
-    "activityLogsDetails": {
-        "previousValue": "Previous value:",
-        "whoIs":"who is",
-        "withAnEmail": "with an email:",
-        "newValue": "New value:",
-        "createdAt": "Created At:"
-    },
-    "activityLogsIndex": {
-        "noDataFound": "No data found.",
-        "system": "System",
-        "detail": "Detail",
-        "previous": "Previous",
-        "next": "Next"
-    },
-    "analyticsGraph": {
-        "title": "Graphical Reports based on statistics and student information."
-    },
-    "analyticsStatistics": {
-        "previous": "Previous",
-        "next": "Next",
-        "teachers": "Teachers",
-        "students": "Students",
-        "subjects": "Subjects",
-        "administrators": "Administrators"
-    },
-    "calenderMonthView":{
-        "allDay": "All-Day",
-        "days":{
-            "sunday":"Sunday",
-            "monday":"Monday",
-            "tuesday":"Tuesday",
-            "wednesday":"Wednesday",
-            "thursday":"Thursday",
-            "friday":"Friday",
-            "saturday":"Saturday"
-        },
-        "shortDays": {
-            "sun": "Sun",
-            "mon": "Mon",
-            "tue": "Tue",
-            "wed": "Wed",
-            "thu": "Thu",
-            "fri": "Fri",
-            "sat": "Sat"
-        },
-        "months": {
-            "january":"January",
-            "february":"February",
-            "march":"March",
-            "april":"April",
-            "may":"May",
-            "june":"June",
-            "july":"July",
-            "august":"August",
-            "september":"September",
-            "october":"October",
-            "november":"November",
-            "december":"December"
-        }
-    },
-    "batchScheduler": {
-        "header":"Great! Now, Generate Schedules for your Classes",
-        "generateScheduleMessage": "It's time to generate your class schedules. Our advanced class scheduler is here to assist you in creating optimal schedules for your classes.",
-        "descriptionOne": "1. The class scheduler utilizes a powerful algorithm that automatically generates schedules based on subject priorities and handles overlapping schedules. This means that you can trust the system to create the best fit schedule for each class, taking into account various factors to ensure an efficient timetable.",
-        "descriptionTwo": "2. Rest assured that the schedules generated by the system are not set in stone. You will have the flexibility to make edits and adjustments later on. If there are any changes required, simply access the schedule editing feature to customize it according to your school's needs.",
-        "descriptionThree": "3. We understand that time is precious, so generating the schedules will be done seamlessly in the background. You can continue exploring and utilizing the system's other features while the class schedules are being generated. No need to wait around!",
-        "descriptionFour": "4. Once the class schedules are complete, the system will promptly notify you. You will receive a notification or an email informing you that the schedules are ready for review. At that point, you can access the finalized schedules and proceed with distributing them to teachers and students.",
-        "runTheScheduler": "Run the Scheduler"
-    },
-    "formIntroduction": {
-        "header":"Create Your School's Weekly Period Schedule",
-        "descriptionOne": "This tool is designed to assist school administrators in creating a weekly schedule for their school. By providing key information such as the start time of the school day, the number of periods per day, and the duration of each period, you can easily generate a well-structured timetable.",
-        "descriptionTwo": "Additionally, you have the flexibility to include custom periods such as recess and lunch breaks in your schedule. These breaks are crucial for students' well-being and playtime.",
-        "descriptionThree": "Let's get started! Simply enter the requested information, including the start time, number of periods, duration, and any custom periods, and let the module assist you in creating an organized and efficient weekly schedule for your school.",
-        "getStarted": "Get Started"
-    },
-    "schoolPeriodForm":{
-        "weekdays": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-    },
-    "schoolPeriodFormWrapper": {
-        "step": "Step",
-        "of4": "of 4",
-        "1": "1",
-        "startTimeOfTheDay": "Start time of the day",
-        "whatTimeFirstPeriod": "What time does the first period of the school day start?",
-        "2": "2",
-        "durationSinglePeriod": "Duration of a single period",
-        "howManyMinutesSinglePeriod":"How many minutes are in a single period?",
-        "setMinute": "Set Minute",
-        "back": "Back",
-        "next":"Next",
-        "hintCustomDuration": "For your periods with a custom duration, you can add them later in Step 4, \"Custom Periods\"",
-        "3":"3",
-        "periodsPerDay": "Periods per day",
-        "howManyPeriods": "How many periods (sessions) will a typical school day have?",
-        "setPeriods": "Set Periods",
-        "hint": "This does not include your recess, lunch break or any other custom periods",
-        "4": "4",
-        "customPeriods": "Custom Periods",
-        "addCustomPeriods": "Add your custom periods here. Examples can be",
-        "breakTime":"\"Break time\"",
-        "lunchBreak": "\"Lunch break\"",
-        "recess": "\"Recess\"",
-        "homeroom": "\"Homeroom\"",
-        "customPeriodLabel": "Custom Period Name",
-        "customPeriodPlaceHolder": "Break time",
-        "durationMin":"Duration (min)",
-        "beforePeriod": "Before Period",
-        "day":"Day",
-        "finishHint": "Click on the \"Finish\" button on the bottom of the screen to finish setting up your schedule.",
-        "addNewPeriod": "Add new Period",
-        "days":["Monday","Tuesday","Wednesday","Thursday","Friday"],
-
-    },
-    "schoolPeriodModal": {
-        "almostThere": "Almost there!",
-        "descriptionOne": "You have successfully registered and assigned your school's year, semesters, and subjects, and classes. Next, you will need to set up your school's class schedule. We will guide you through the process.",
-        "descriptionTwo": "Create a custom class schedule to fit your school's needs. You can define the number of periods in a day, duration of each period, starting time, and even add custom periods such as lunch or recess. You can also assign these schedules to different level categories. Let's get started!\"",
-        "descriptionThree":"Don't worry if you don't have all the details yet,you can always update class times and other schedule information later.",
-        "addSchoolPeriodTitle": "Now Lets Add School Periods"
-    },
-    "schoolPeriodScheduleViewer": {
-        "days":{
-            "monday":"Monday",
-            "tuesday":"Tuesday",
-            "wednesday":"Wednesday",
-            "thursday":"Thursday",
-            "friday":"Friday"
-        }
-    },
-    "schoolSchedule":{
-        "formTitle":"Create school schedule",
-        "formSubTitle":"Registration form",
-        "titleLabel": "Name",
-        "titlePlaceholder": "name",
-        "bodyLabel": "Description",
-        "bodyPlaceholder": "Its about...",
-        "inputTagsLabel": "Tags",
-        "inputTagsPlaceholder": "tag1,tag2,tag3",
-        "datePickerLabel": "Date",
-        "typeLabel": "Type",
-
-        "fullDay":"Full Day",
-        "fullDayDescription":"There is no school for the whole day.",
-        "halfDay":"Half Day",
-        "halfDayDescription":"There will be no class for the half day.",
-        "none":"None",
-        "noneDescription":"There will be class all day.",
-    },
-    "periodForm": {
-        "classSchedule": "Class Schedule",
-        "description": "Below the title, there's a brief description of what the user can do on this page.",
-        "startTimePickerSubtext": "The start time of the day is the time when the school day begins.If you set the start time of the day to 7:00 AM, then the school day will begin at 7:00 AM.",
-        "startTimePickerPlaceholder": "0",
-        "startTimePickerLabel": "Starting time",
-
-        "minutesPerPeriodPlaceholder":"0",
-        "minutesPerPeriodLabel":"Time for single period (minutes)",
-        "minutesPerPeriodSubtext":"Define how long each class period lasts in minutes.This could vary based on your school's specific needs, this also excludes custom periods.For example: if your input is 45, that means each period has 45 minutes.",
-
-        "noOfPeriodPlaceholder": "0",
-        "noOfPeriodsLabel": "Number of Periods Per Day",
-        "noOfPeriodSubtext": "Enter the number of periods you have in a typical school day. This will be the number of class sessions that are held in a day. For example: if your input is is 8, that means there each day has 8 periods a day",
-        "selectLevelCategories": "Select level categories:",
-        "note": "Note: Similar schedules will be applied for all classes in selected categories.",
-        "customPeriod":"Custom Period",
-        "addNew": "+ Add New",
-
-        "customTimeNameLabel": "Name",
-        "customTimeNamePlaceholder": "Breakfast",
-
-        "customTimeDurationLabel": "Duration (minutes)",
-        "customTimeDurationPlaceholder": "0",
-
-        "customBeforePeriodLabel": "Period before",
-        "customBeforePeriodPlaceholder": "0",
-        "hintAddCustomPeriods": "Add custom periods like lunch or recess. Fill in the name, duration (in minutes), and specify which period it precedes. For instance, to add a 'Breakfast' break before the 4th period, enter 'Breakfast', its length, and '4' in the respective fields.",
-        "title": "Submit",
-        "submit": "Submit"
-    },
-    "viewPeriod": {
-        "scheduleDisplay": "Schedule real time display",
-        "noPeriodsFound": "No periods found, enter the number (amount) of periods to display in real time.",
-        "Period": "Period",
-        "weekdays":["Monday","Tuesday","Wednesday","Thursday","Friday"]
-    },
-    "assignSubjects":{
-        "assignSubjects": "Assign Subjects",
-        "assignClassHint": "Now that you have registered your classes and subjects, it's time to assign each class to the subject they will be taking.",
-        "subjects": "Subjects",
-        "queryPlaceholder": "Search for a subject, tag or category",
-        "levels": "Levels",
-        "classes": "Classes",
-        "selectClasses": "Select the classes that will be taking",
-        "selectSubject": "First, Select a Subject",
-        "chooseSubject": "Choose a subject from the list",
-        "onTheLeft": "on the left",
-        "startAssigningClass": "to start assigning classes",
-        "pickOne": " ...or pick one of these subjects to start",
-        "english": "English",
-        "mathematics": "Mathematics",
-        "amharic": "አማርኛ",
-        "selectedLevels": "15 Levels Selected",
-        "classesSelected": "Classes Selected",
-        "selectClassesInLevels": "Select Classes in Levels",
-        "deselectAll":"Deselect All",
-        "selectAll":"Select All",
-        "selectIndividualClasses": "Select Individual Classes",
-        "selectAllSections": "Select All Sections",
-        "listAllSections": "List All Sections",
-        "allSections": "All Sections",
-        "section": "Section",
-        "collapse": "Collapse",
-        "allSectionSelected":"All Sections Selected",
-        "someSectionsSelected":"Some Sections Selected",
-        "noneSelected":"None Selected",
-        "save": "Save",
-        "finish": "Finish",
-        "kindergarten": "Select only Kindergarten level grades (Pre-KG to KG-2)",
-        "elementary": "Select only Elementary level grades (Grades 1 - 8)",
-        "highSchool": "Select only High School level grades (Grades 9 - 12)"
-    },
-    "registerAdmin": {
-        "title":"New Admin Registration",
-        "subtitle":"Register and assign a position with predefined roles into the system",
-        "nameLabel": "Name",
-        "namePlaceholder": "Full name",
-        "phoneLabel": "Phone",
-        "phonePlaceholder": "+251...",
-        "emailLabel": "Email",
-        "emailPlaceholder": "example@example.com",
-
-        "adminTypes":[
-            {
-                "id": "unit-leader",
-                "value": "unit-leader",
-                "label": "Unit Leader",
-                "description": "Unit Leader responsible for managing the batches. Has manage access to batches, schedules, students, teachers, assessments"
-            },
-            {
-                "id": "secretary",
-                "value": "secretary",
-                "label": "Secretary",
-                "description": "Secretary responsible for managing the batches. Has manage access to students, guardians, teachers, schedules"
-            },
-            {
-                "id": "principal",
-                "value": "principal",
-                "label": "Principal",
-                "description": "Principal has access to all resources in the system. Can view, update and delete all resources"
-            }
-        ]
-    },
-    "registerBatches": {
-        "registerGrades": "Register Grades",
-        "hintOne": "We have selected a set of default grades for you. You can remove grades you don't need, add new grades or edit the number of sections in each grade.",
-        "hintTwo": "Click on the \"Finish\" to proceed, and \"Next\" to save and proceed.",
-        "gradesSelected": "Grades Selected",
-        "sectionsSelected": "Sections Selected",
-        "buttonTitle":"Add New Grade",
-        "grade": "Grade",
-        "sections": "Sections",
-        "finish": "Finish",
-        "updateLevelSectionTitle": "Number of Sections",
-        "updateLevelSectionSubtitle": "Update the number of Sections for Grade 7",
-        "updateLevelSectionInputPlaceholder": "Specify the number of sections for Grade 7"
-    },
-    "registerSchoolYear": {
-        "welcomeText": "{name} Please enter the <span class='text-black'>start date</span> of the new school year and the number of semesters it includes. You can also change the school year name by clicking the <span id='pencilIcon'></span> icon on the right. You can always change this in the school year settings later",
-        "welcome": "Welcome to the",
-        "schoolYear": "School Year",
-        "pleaseEnter": "Please enter the",
-        "startDate": "start date",
-        "ofTheNew":"of the new school year and the",
-        "numberOfSemesters": "number of semesters",
-        "itIncludes": "it includes. You can also change the school year name by clicking the",
-        "iconOnTheRight": "icon on the right.",
-        "youCanAlwaysChange": "You can always change this in the school year settings later",
-        "chooseStartDate": "Choose a Start Date",
-        "numberOfQuarters":"Number of Quarters in a Semester",
-        "ifThereIs": "If there is no quarter in your school system, you can remove the quarter ?",
-        "removeQuarter": "Remove Quarter",
-        "theUpcoming": "The upcoming academic year,",
-        "willConsistOf":", will consist of",
-        "semesters": "semesters,",
-        "eachDividedInto": "each divided into",
-        "quarters": "quarters",
-        "resultingInTotalOf":"resulting in a total of",
-        "createAndProceed": "Create and Proceed",
-        "summaryText":"<p class='text-xs'> The upcoming academic year <span class='font-bold text-gray-700'>{academicYear}</span>, will consist of <span class='font-bold text-gray-700'>{semesters} semesters,</span > each divided into <span class='font-bold text-gray-700'>{quartersPerSemester} quarters, </span> resulting in a total of <span class='font-bold text-gray-700' >{totalQuarters} quarters.</span > </p>"
-
-
-
-
-    },
-    "registerSubjects": {
-        "registerSubjects": "Register Subjects",
-        "descriptionOne": "We have selected a set predefined subjects for you. You can remove the subjects you don't provide or add more subjects not listed here.",
-        "descriptionTwo":"Click on the \"Finish\" to proceed, and \"Next\" to save and proceed.",
-        "totalSubjects": "Total Subjects",
-        "subjectsSelected": "Subjects Selected",
-        "newSubject": "New Subject",
-        "other": "Other",
-        "createNewSubject": "Create new Subject",
-        "createNewCategory": "Create new Category",
-        "finish": "Finish",
-        "reset": "Reset",
-        "newSubjectTitle": "New Subject",
-        "newSubjectSubtitle":"Create a new subject and assign it to a category",
-        "subjectFullNamePlaceholder": "Name of the new Subject",
-        "newSubjectFullNameLabel": "Subject Name",
-        "subjectShortNamePlaceholder": "Short name for Subject",
-        "subjectShortNameLabel": "Subject Short Name",
-        "subjectTagPlaceholder": "Assign tags (separate multiple tags with comma)",
-        "subjectTagLabel":"Subject Tags",
-        "subjectCategoryOptionsPlaceholder":"Category of the new Subject",
-        "subjectCategoryOptionsLabel":"Subject Category",
-        "subjectCategoryPlaceholder":"Create a custom Category",
-        "subjectCategoryLabel":"Subject Category"
-    },
-    "sectionActiveSession": {
-        "attending": "Attending",
-        "with": "with",
-        "noActiveSession": "No active session"
-    },
-    "sectionHomeroom": {
-        "homeroomTeacher": "Homeroom teacher",
-        "noHomeroomTeacherAssigned": "No homeroom teacher assigned"
-    },
-    "sectionPerformance": {
-        "topStudents": "Top Students",
-        "studentsFalling": "Students Falling Behind"
+        download: "Download",
+        csv: "CSV",
+        addUser: "Add User",
+        perPage: "Per page",
+        updateSelectedUser: "Update the selected user",
+        updateUser: "Update user",
+        updateNameLabel: "Name",
+        updateNamePlaceholder: "Update user name",
+        roleLabel: "Role",
+        rolePlaceholder: "Update user role",
+        positionLabel: "Position",
+        positionPlaceholder: "Update user position",
+        newUserFormTitle: "Register new User",
+        newUserFormSubtitle:
+            "Fill in the information required about the new user",
+        newUserNameLabel: "Name",
+        newUserNamePlaceholder: "Full name of new user",
+        newUserPositionLabel: "Position",
+        newUserPositionPlaceholder: "Position of user",
+        datePickerLabel: "Start Date",
+        datePickerPlaceholder: "Select a Date",
+        userTypeLabel: "User Type",
     },
 
-    "levelStudent": {
-        "section": "Section",
-        "studentsList": "Students List",
-        "studentsEnrolledIn": "Students enrolled in",
-        "for": "for",
-        "years":"years",
-        "searchKeyPlaceHolder": "Search for a student by name",
-        "noDataFound": "No data found",
-        "noStudentEnrolled": "No student has been enrolled in this section",
-        "yourSearchQuery": "Your search query",
-        "didNotMatch": "did not match",
-        "anyStudentName": "any student's name",
-        "perPage": "Per page"
+    usersTable: {
+        tableElementTitle: "Users List",
+        tableElementSubtitle: "List of users registered in the system",
+        queryPlaceholder: "Search for Users by Name or Email",
+        moveItems: "Move Items",
+        updateItems: "Update Items",
+        fullName: "Full Name",
+        email: "Email",
+        userType: "User Type",
+        gender: "Gender",
+        active: "Active",
+        options: ["admin", "teacher", "student", "guardian"],
     },
 
-    "classSchedule": {
-        "schedule": "Schedule",
-        "selectMonthPlaceholder": "Select month",
-        "addScheduleTitle": "Add Schedule",
-        "noSchoolScheduleIn": "No school schedule in",
-        "schedules": "Schedules",
-        "schedulesIn": "Schedules in",
-        "queryPlaceholder": "Search for schedule by title",
-        "months": {
-            "january":"January",
-            "february":"February",
-            "march":"March",
-            "april":"April",
-            "may":"May",
-            "june":"June",
-            "july":"July",
-            "august":"August",
-            "september":"September",
-            "october":"October",
-            "november":"November",
-            "december":"December"
-        }
+    viewPeriod: {
+        scheduleDisplay: "Schedule real time display",
+        noPeriodsFound:
+            "No periods found, enter the number (amount) of periods to display in real time.",
+        Period: "Period",
+        weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
     },
-    "allSemesters": {
-        "allSemesters": "All Semesters",
-        "queryPlaceholder":"Search for Semesters by name",
-        "selectedYearPlaceholder": "Filter by School Year",
-        "appliedFilters": "Applied filters"
-    },
-    "semesterCard": {
-        "updated": "Updated"
-    },
-    "semestersBySchoolYear": {
-        "semesters": "Semesters"
-    },
-    "semestersBySeason": {
-        "semesters": "Semesters",
-        "seasons" : {
-            "first": "First",
-            "second": "Second",
-            "third": "Third"
-        }
-    },
-    "semesterByStatus": {
-        "semesters": "Semesters"
-    },
-    "semestersStatistics": {
-        "semestersCountTitle":"Semesters",
-        "semestersCountSubtitle":"Semesters tracked on the system",
-        "schoolYearsCountTitle":"School Years",
-        "schoolYearsCountSubtitle": "School Years registered on the system",
-        "activeSchoolYearSemestersCountTitle":"Current(Active) School year Semesters",
-        "activeSchoolYearSemestersCountSubtitle": "Semesters currently in progress"
-    },
-    "subjectGrades": {
-        "levels": "Levels",
-        "sections": "Sections"
-    },
-    "subjectsTable": {
-        "header": "Welcome to Subjects page",
-        "tableElementTitle": "Subjects List",
-        "tableElementSubtitle": "List of all subjects given at",
-        "newSubject": "New Subject",
-        "queryPlaceholder": "Search for a subject by name or tags",
-        "noStudentEnrolled": "No student has been enrolled in this section",
-        "searchQuery": "Your search query",
-        "didNotMatch": "did not match",
-        "anySubjectCategory": "any subject, category or tag",
-        "selectGrade": "Select a grade"
-    },
-    "subjectTeachers": {
-        "listOfTeachers": "List of teachers in the",
-        "faculty": "Faculty",
-        "searchKeyPlaceholder": "Search for a teacher by name",
-        "noDataFound": "No data found",
-        "NoTeacherEnrolled": "No teacher has been enrolled",
-        "searchQuery":"Your search query",
-        "didNotMatch": "did not match",
-        "anyTeacherName": "any teacher's name",
-        "teacher": "Teacher",
-        "grades": "Grades"
-    },
-    "adminsTable":{
-        "tableElementTitle": "Administrator Staff",
-        "tableElementSubtitle": "Admins registered this year",
-        "updated": "updated",
-        "noDataFound":"No data found"
-    },
-    "delegateLink": {
-        "modalTitle":"Delegate tasks",
-        "Delegate": "Delegate"
-    },
-    "registerSubjectForm":{
-        "formElementTitle": "New Subject",
-        "formElementSubtitle": "Create a new subject and assign it to a category",
-        "fullNamePlaceholder": "Name of the new Subject",
-        "fullNameLabel": "Subject Name",
-        "shortNamePlaceholder": "Short name for Subject",
-        "shortNameLabel": "Subject Short Name",
-        "tagsLabel": "Subject Tags",
-        "tagsPlaceholder":"Assign tags (separate multiple tags with comma)",
-        "categoryLabel": "Enter a category",
-        "categoryPlaceholder":"Subject Category",
-        "newCategoryPlaceholder":"New category",
-        "noCategoriesFound": "No categories found"
-    },
-    "registerUser": {
-        "header": "Choose user type",
-        "guardianStudentRegisterTitle": "Guardian and Student",
-        "guardianStudentRegisterSubtitle":"Students and their guardians are required to provide personal information such as name,contact information and any special needs or accommodations required. Depending on the institution, guardians may also need to provide legal documentation such as proof of guardianship or custody.",
-        "teacherRegisterTitle": "Teacher",
-        "teacherRegisterSubtitle":" Teachers are typically required to provide personal information such as name,contact information, and educational qualifications.They may also need to provide teaching experience, references, and any specialized training or certifications.",
-        "adminRegisterTitle": "Admin",
-        "adminRegisterSubtitle": "Administrators may need to provide personal information such as name, contact information, and job position.They may also need to provide professional qualifications and references."
-    },
-    "subjectUpdate": {
-        "updateFormElementTitle": "Update Subject",
-        "fullNameLabel": "Full Name",
-        "fullNamePlaceholder":"Full Name",
-        "shortNameLabel": "Short Name",
-        "shortNamePlaceholder":"Short Name",
-        "tagsLabel": "Subject Tags",
-        "tagsPlaceholder":"Assign tags (separate multiple tags with comma)",
-        "categoryPlaceholder": "Enter a category",
-        "categoryLabel": "Subject Category"
-    },
-    "userStatistics": {
-        "adminStaTitle":"Admins",
-        "adminStatSubtitle":"Admins registered in the system",
-        "studentsStatTitle": "Students",
-        "studentsStatSubtitle": "Students registered into the school (all-time)",
-        "teacherStatTitle": "Teachers",
-        "teacherStatSubtitle": "Teachers registered into the school (all-time)",
-        "newUsersStatTitle": "New Users",
-        "newUserStatSubtitle": "New Users (last 30 days)"
-    },
-    "announcementsItem": {
-        "postTargets": "Post Targets",
-        "andExpires": "and expires",
-        "posted": "Posted",
-        "byAuthor": "by Author"
-    },
-    "teacherAnnouncementIndex": {
-        "announcements":"Announcements",
-        "searchAnnouncements":"Search Announcements",
-        "feedbacks":"Feedbacks"
-    },
-    "teacherAssessmentsIndex": {
-        "assessments": "Assessments",
-        "createAssessment": "Create Assessment"
-    },
-    "teacherAssessmentsMark": {
-        "info": "Info",
-        "caution": "CAUTION",
-        "message":"Please note, upon clicking 'Finish Marking', notifications, emails and SMS will be sent to parents and relevant authorities regarding the students' performance. However, rest assured, you will retain the ability to make necessary adjustments to these assessments until the end of the current quarter or semester.",
-        "finishMarking":"Finish Marking"
-    },
-    "lessonPlansIndex": {
-        "myLessonPlans":"My Lesson Plans"
-    },
-    "lessonPlansUpdate": {
-        "formElementTitle":"Update Lesson plan",
-        "formElementSubtitle":"Update a new lesson plan",
-        "topicLabel":"Topic",
-        "topicPlaceholder":"topic",
-        "descriptionLabel": "Description",
-        "descriptionPlaceholder": "description",
-        "batchSession": "Batch Session"
-    },
-    "assessmentOutcomePercentages": {
-        "passedPercentTitle": "Passed",
-        "failedPercentTitle": "Failed"
-    },
-    "assessmentTypeDetailInfo": {
-        "youHave": "You have",
-        "assessmentsRemaining": "assessments remaining for this quarter.",
-        "maxPts": "MAX PTS",
-        "previous": "Previous",
-        "count": "COUNT",
-        "totalPts": "TOTAL PTS",
-        "assessmentCompleted": "You have successfully completed this assessment, and as a result, any further modifications or creation of new assessments are no longer permitted.",
-        "hintAssessmentAdministered": "This assessment is administered on a quarterly basis, so please ensure that you are taking the appropriate actions accordingly.",
-        "atTheConclusion": "At the conclusion of the quarter or semester, all the",
-        "willBeConverted": "will be converted to account for",
-        "ofTheFinalGrade.": "of the final grade.",
-        "note": "Note: This does not include this assessment.",
-        "updateAssessment": "UPDATE ASSESSMENT"
-    },
-    "deleteAssessment": {
-        "buttonTitle":"DELETE ASSESSMENT",
-        "deleteAssessment": "DELETE ASSESSMENT",
-        "deleteMessage": "You are about to delete this assessment. This action is irreversible!",
-        "pleaseTypeAssessment": "Please type the assessment title correctly to confirm deletion"
-    },
-    "info": {
-        "totalStudents": "Total Students"
-    },
-    "resultStatistics": {
-        "averageResult": "Average Result",
-        "highestResult": "Highest Result",
-        "lowestResult": "Lowest Result"
-    },
-    "scoreDisplay": {
-        "pts": "PTS"
-    },
-    "studentScoreList": {
-        "exemplary": "Exemplary",
-        "underAchievers": "UnderAchievers",
-        "viewAllResults": "View All Results"
-    },
-    "draft":{
-        "currently": "Currently, this assessment is in",
-        "draft": "DRAFT",
-        "stateYouCan": "state! You can",
-        "settingAnAssessment": "Setting an assessment as",
-        "published": "PUBLISHED",
-        "or": "or",
-        "scheduled": "SCHEDULED",
-        "willTrigger":"will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
-        "publishAssessment": "Publish Assessment",
-        "scheduleAssessment": "Schedule Assessment",
-        "finishUpdating": "FINISH UPDATING",
-        "updateAssessment": "Update Assessment",
-        "alertMessage": "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?"
 
+    viewsTeacherStudent: {
+        wantToSee: "Want to see how { student } is doing on otherclasses?",
+        viewFullGrade: "View Full Grade Report",
     },
-    "detailsIndex": {
-        "title": "title",
-        "selectAnyAssessment": "Select any assessment for a detailed view!"
+    welcomeHeader: {
+        welcomeBack: "Welcome back,",
     },
-    "marking": {
-        "continueMarking": "CONTINUE MARKING"
-    },
-    "published":{
-        "startMarking":"START MARKING"
-    },
-    "scheduled": {
-        "currentlyThisAssessment": "Currently, this assessment is in",
-        "scheduled":"SCHEDULED",
-        "stateYouCan":"state! You can",
-        "publishAssessment":"Publish Assessment",
-        "alertMessage": "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?"
-    },
-    "markHeader": {
-        "headerTitle": "Mark Students"
-    },
-    "markItem": {
-        "commentLabel": "Comment",
-        "pointPlaceholder1": "'Please provide your assessment feedback for '",
-        "pointPlaceholder2": "'.nNote: This feedback will be accessible to parents, teachers, and principals.'"
-    },
-    "markStat": {
-        "students": "Students",
-        "maxPoints": "Max Points",
-        "highestScore": "Highest Score",
-        "Lowest Score": "Lowest Score"
-    },
-    "markStudentInfo": {
-        "headerOne": "These statistics are specifically related to the student's performance in",
-        "headerTwo": "If you would like to see the student's overall performance, you can click",
-        "here": "here",
-        "attendance": "Attendance",
-        "total": "Total",
-        "result": "Result",
-        "rank": "Rank",
-        "quarterRank": "Quarter Rank"
-    },
-    "tableFiltersIndex": {
-        "searchPlaceholder": "Search Assessment Title",
-        "selectSubjectPlaceholder": "Select Subject",
-        "createAssessment": "Create Assessment",
-        "filters": "Filters",
-        "selectedAssessmentStatusPlaceholder": "Select Status",
-        "selectedAssessmentTypeIdPlaceholder": "Assessment Type",
-        "selectedSchoolYearPlaceholder": "Select SchoolYear",
-        "selectedSemesterPlaceholder": "Select Semester",
-        "selectedQuarterPlaceholder": "Select Quarter",
-        "done": "DONE",
-        "clearAll": "CLEAR ALL"
-    },
-    "tableIndex": {
-        "title": "Title",
-        "type": "Type",
-        "homework": "Homework",
-        "classwork": "Classwork",
-        "finalQuarterlyExam": "Final Quarterly Exam",
-        "finalExam": "Final Exam",
-        "test": "Test",
-        "maxPoints":"Max Points",
-        "status": "Status",
-        "dueDate": "Due Date",
-        "lastUpdate": "Last Update"
-    },
-    "assessmentBreakDown": {
-        "assessmentBreakDown": "Assessment BreakDown",
-        "atPresent": "At present,",
-        "noAssociatedGrades": "has no associated grades. As grades are recorded and registered,they will become visible in this space, segregated based on the type of assessment."
-    },
-    "assessmentForm": {
-        "formElementTitle": "Assessment Form",
-        "titlePlaceholder": "Add title for the assessment",
-        "titleLabel": "Title",
-        "descriptionPlaceholder": "Add description for the assessment",
-        "descriptionLabel": "Description",
-        "maximumPointPlaceholder":"Maximum Point",
-        "maximumPointLabel":"Maximum Point",
-        "dueDatePlaceholder": "Due Date",
-        "batchSubjectIdPlaceholder":"Select Subject",
-        "assessmentTypeId": "Select type",
-        "statusPlaceholder":"Select Status",
-        "SettingAnAssessment": "Setting an assessment as",
-        "published": "PUBLISHED",
-        "or": "or",
-        "scheduled": "SCHEDULED",
-        "message": "will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
-        "title": "Submit Assessment",
-        "alertMessage": "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?"
-    },
-    "batchPerformanceIndex": {
-        "classAverage": "Class Average",
-        "classRank": "Class Rank",
-        "classAttendance": "Class Attendance",
-        "classConduct": "Class Conduct"
-    },
-    "performanceHighlightsIndex": {
-        "classPerformance": "Class Performance",
-        "topStudents": "Top Students",
-        "StudentsFallingBehind": "Students Falling Behind"
-    },
-    "studentsList": {
-        "noList": "We're unable to provide the list currently. Once the assessments are completed, we'll be able to provide the list."
-    },
-    "addAbsentees": {
-        "searchTextPlaceholder": "Search Student",
-        "absenteeStudents": "Absentee Students",
-        "reasonLabel": "Reason",
-        "reasonPlaceholder": "Add reason on why the student is absentee"
-    },
-    "currentClass": {
-        "currentClass": "Current Class",
-        "noActiveClass": "No Active Class",
-        "youAreNowHaving": "You are now having",
-        "classWith": "class with",
-        "students": "students",
-        "buttonTitle": "Add Absentees",
-        "absentStudents": "Absent Students"
-    },
-    "lessonPlanIndex": {
-        "updated": "Updated",
-        "scheduledFor":"Scheduled For"
-    },
-    "homeAssessments":{
-        "viewAll": "VIEW ALL",
-        "noAssessmentsFound": "No Assessments Found!",
-        "goToAssessments": "Go To Assessments"
-    },
-    "feedbacks": {
-        "noFeedbacks": "No Feedbacks"
-    },
-    "homeGrades":{
-        "grades": "Grades",
-        "subjects": "Subjects",
-        "viewAllGrades": "View All Grades",
-        "noGradesFound!": "No Grades Found!",
-        "goToGrades":"Go To Grades"
-    },
-    "homeRoomClasses": {
-        "homerooms":"Homerooms",
-        "noHomeroomClass": "No homeroom class attached yet!"
-    },
-    "homeLessonPlans": {
-        "viewAllLessonPlans": "View All Lesson Plans",
-        "noLessonPlanFound": "No Lesson Plan Found!"
-    },
-    "homeSchedule": {
-        "Period": "Period",
-        "calenderMonthView": {
-            "days": {
-                "monday": "Monday",
-                "tuesday": "Tuesday",
-                "wednesday": "Wednesday",
-                "thursday": "Thursday",
-                "friday": "Friday"
-            },
-            "daysOfWeek":{
-                "sunday":"Sunday",
-                "monday":"Monday",
-                "tuesday":"Tuesday",
-                "wednesday":"Wednesday",
-                "thursday":"Thursday",
-                "friday":"Friday",
-                "saturday":"Saturday"
-            }
-        }
-    },
-    "homeSubjects": {
-        "subjects": "Subjects",
-        "noSubjectAttached": "No subject attached yet!",
-        "and": "and",
-        "grade": "Grade"
-    },
-    "assignHomeroom":{
-        "assignHomeroom": "Assign Homeroom",
-        "teacher": "Teacher:",
-        "currentlyAssigned":"s currently assigned to Grade:",
-        "searchAndSelect": "Search and select a grade to assign as a homeroom teacher",
-        "searchGradeLevel": "Search for grade level",
-        "yourAreAbout": " Your are about to assign",
-        "asAHomeroomTeacher": "as a homeroom teacher to Grade:"
-    },
-    "studentGradeDetail": {
-        "gradeReport": "Grade Report",
-        "subject": "Subject",
-        "attendance": "Attendance%",
-        "grade": "Grade",
-        "rank": "Rank",
-        "conduct": "Conduct"
-    },
-    "lessonPLanCard": {
-        "addLessonPlan": "Add Lesson Plan",
-        "lessonPlanNotAdded": "Lesson plan has not been added for this session. Add a new session before the session starts.",
-        "Period": "Period"
 
+    teacherQuestions: {
+        myQuestionBank: "My Question Bank (Beta)",
+        questionGeneratorDescription:
+            "Welcome to our innovative AI Question Generator. This is currently a beta version, and we're actively working to refine and improve it. Please note that while our AI strives to produce high-quality, relevant questions, there may be occasional inaccuracies or unexpected results. We appreciate your understanding and patience during this testing phase. Your feedback is invaluable in helping us make this tool the best it can be.",
+        questionsFor: "Questions For",
+        answer: "Answer :",
+        recentQuestions: "Recent Questions",
+        noQuestionsGenerated: "No Questions Generated Yet",
+        generateQuestions: "Generate Questions",
+        updateQuestion: "Update Question",
+        addQuestion: "Add Question",
+        addAnswer: "Add answer",
+        update: "Update",
+        assessmentType: "Assessment Type",
+        noOfQuestions: "No Of Questions",
+        difficultyLevel: "Difficulty Level",
     },
-    "lessonPlanCopilot": {
-        "rigelCopilot": "Rigel Copilot",
-        "introText":"I'm your Rigel co-pilot. I will assist you as you create your lesson plan.",
-        "notes": "Notes",
-        "potentialQuestions": "Potential Questions",
-        "copyToLessonPlan": "Copy To Lesson Plan",
-        "searchGoogle": "Search Google"
+    adminUserIndex: {
+        signUpAdministrators: "Sign up administrators with ease",
+        registerStudents: "Register Students With there Guardians",
+        registerTeachers: "Register Teachers",
     },
-    "lessonPLanFormModal": {
-        "Period": "Period",
-        "NewLessonPlan": "New Lesson Plan",
-        "addTopicAndDescription ": "Add the topic and description of the lesson plan for the session here",
-        "topicLabel": "Topic",
-        "topicPlaceholder": "Topic of the Lesson Plan",
-        "descriptionLabel": "Description",
-        "descriptionPlaceholder": "Add your Lesson Plan description",
-        "submit": "Submit",
-        "edit": "Edit",
-        "previousLessonPlans":"Previous Lesson Plans",
-        "otherLessonPlans": "Other lesson plans for class sessions before",
-        "noPreviousLessonPlans": "No Previous Lesson Plans",
-        "noPreviousLessonPlansMessage": "Previous lesson plans have not been added for this session. Make sure you have populated your lesson plans to view them here.",
-        "period": "Period"
+    adminIndex: {
+        recentFlags: "Recent Flags",
+        searchStudent: "Search Student",
+        registerReview: "Register, Review, explore and More",
+        noStudentsFound: "No students found",
     },
-    "lessonPlanWeekCard": {
-        "week":"Week",
-        "classSessionsStarting": "Class sessions for the week starting from",
-        "noClassSessionsOne": "No Class Sessions",
-        "noClassSessionsTwo": "There will be no class sessions for Week"
+    attendanceCard: {
+        YourAttendance: "Your Attendance For This Quarter",
     },
-    "nextClassIndex": {
-        "noUpcomingClasses": "No upcoming classes found! Please check your schedule or contact the",
-        "admin": "admin",
-        "forAssistance": "for assistance."
+    ai: {
+        artificialIntelligence: "Artificial Intelligence",
+        empowerYourTeaching:
+            "Empower your teaching with our AI Copilot, crafting unique questions and sparking enriching conversations that ignite curiosity.",
+        exploreMore: "Explore More",
     },
-    "lastAssessment": {
-        "lastAssessment": "Last Assessment",
-        "pts": "Pts",
-        "dueOn": "Due On",
-        "viewAllAssessments": "View All Assessments",
-        "noPreviousAssessments": "No previous assessments found. After your first evaluation, the most recent assessment will be displayed here."
 
+    flagIndex: {
+        flagList: "'s Flag List",
+        add: "Add",
+        duration: "Duration",
+        systemGenerated: "System Generated",
+        noFlagsFound: "No Flags Found",
     },
-    "nextClass": {
-        "nextUp": "Next Up Is Your Class",
-        "nextClass": "NextClass",
-        "period": "Period",
-        "lessonPlan": "Lesson Plan",
-        "addLessonPlan": "Add Lesson Plan",
-        "teacher": "Teacher",
-        "viewFullSchedule": "View Full Schedule"
+    selectedFlagDetail: {
+        flagDetail: "'s Flag Detail",
+        expiryDate: "Expiry Date:",
     },
-    "studentAssessments": {
-        "recentAssessments": "Recent Assessments",
-        "noAssessmentsFound": "No Assessments Found!",
-        "linkCellValue": "Go To Assessments"
+    chat: {
+        typeYourMessageHere: "Type your message here...",
+        gettingStarted: "Getting Started with the AI Chat",
+        hello: "Hello, {name}! We want to make sure you get the most out of our AI chat feature, Rigel Copilot. Here are some tips to guide you:",
+        askSpecificQuestions: "Ask Specific Questions",
+        theAiChat:
+            "The AI chat is more effective when you ask specific questions...",
+        experimentWithDifferent: "Experiment with Different Queries",
+        feelFree:
+            "Feel free to experiment with different types of questions or queries...",
+        useItAsResource: "Use It as a Resource Finder",
+        needHelpFinding:
+            "Need help finding educational resources? You can ask the AI chat for recommendations...",
+        seekClarification: "Seek Clarification on Complex Topics",
+        ifYourAreDealing:
+            "If you're dealing with complex educational topics, don't hesitate to ask the AI chat...",
+        exploreCreativeIdeas: "Explore Creative Ideas",
+        theAIChat:
+            "The AI chat can be a great tool to brainstorm new teaching techniques...",
+        RememberWhile:
+            "Remember, while the AI chat is a powerful tool, it's not a replacement for human interaction...",
     },
-    "generalReport": {
-        "grade": "GRADE",
-        "attendance": "ATTENDANCE",
-        "conduct": "CONDUCT",
-        "formElementTitle": "Update Conduct",
-        "conductPlaceholder": "Select Conduct"
+    studentNotesPreview: {
+        notesAbout: "Notes about",
+        viewAll: "View All",
     },
-    "guardianInformation": {
-        "guardianInfo": "Guardian Info",
-        "name:": "Name:",
-        "relation:":"Relation:",
-        "phoneNumber:":"Phone Number:",
-        "email": "Email:"
+    lessonPlanCard: {
+        addLessonPlan: "Add Lesson Plan",
+        lessonPlanHas:
+            "Lesson plan has not been added for this session. Add a new session before the session starts.",
     },
-    "studentNotes": {
-        "notes": "Notes",
-        "noNotesAssociated": "No Notes Associated with",
-        "addNoteFor": "Add Note For",
-        "descriptionPlaceholder": "description",
-        "descriptionLabel": "Description",
-        "Update": "Update",
-        "note": "'s note",
-        "titleLabel": "Title",
-        "titlePlaceholder": "title",
-        "by": "By"
+    lessonPlanCopilot: {
+        rigelCopilot: "Rigel Copilot (AI)",
+        intro: "I am your Rigel Co-Pilot, a dedicated AI assistant, here to simplify your lesson planning and elaboration needs.",
+        generateQuestions: "Generate Questions ?",
+        orDoYouWant: "Or Do You Want To Chat ?",
+        needAssistanceWith:
+            "Need assistance with anything? Rigel AI chat is here to help!",
+        needHandWith:
+            "Need a hand with anything from creating questions to lively chats, or understanding lesson plans? Rigel Copilot(AI) is ready to assist! Just tap on the sparkle icon for clear explanations,or click on the buttons above for specific actions. Let's make learning a fun journey together!",
+        lessonPlanExplained: "Lesson Plan Explained- Rigel Copilot (AI)",
+        potentialQuestions: "Potential Questions",
+        copyToLessonPlan: "Copy To Lesson Plan",
+        searchGoogle: "Search Google",
     },
-    "studentRank": {
-        "Rank": "Rank",
-        "From": "From",
-        "students": "students",
-        "in": "in"
-    },
-    "studentStatistics":{
-        "Grade": "Grade",
-        "Attendance": "Attendance",
-        "Conduct":"Conduct",
-        "Vitals": "Vitals"
-    },
-    "header": {
-        "classRankFrom":"Class Rank From Total "
-    },
-    "studentsTable": {
-        "searchTextPlaceholder": "Search",
-        "name": "Name",
-        "attendance": "Attendance",
-        "grade": "Grade",
-        "rank": "Rank",
-        "conduct":"Conduct"
-    }
 
+    lessonPlanFormModal: {
+        showAISection: "Show AI Section",
+        newLessonPlan: "New Lesson Plan",
+        addTheTopic:
+            "Add the topic and description of the lesson plan for the session here",
+        topicOfLessonPlan: "Topic of the Lesson Plan",
+        topic: "Topic",
+        addLessonPlanDescription: "Add your Lesson Plan description",
+        edit: "Edit",
+        previousLessonPlans: "Previous Lesson Plans",
+        otherLessonPlans: "Other lesson plans for class sessions before",
+        noPreviousLessonPlans: " No Previous Lesson Plans",
+        "lessonPlansNotAdded ":
+            "Previous lesson plans have not been added for this session. Make sure you have populated your lesson plans to view them here.",
+    },
 
-}
+    lessonPlanWeekCardNew: {
+        week: "Week",
+        classSessionsWeekStarting: "Class sessions for the week starting from",
+        andEndingOn: "and ending on",
+        noClassSessions: "No Class Sessions for Week ",
+    },
 
+    lessonPlanQuestionPreparation: {
+        lessonPlanQuestionGenerator: "LessonPlan Question Generator",
+        somethingWentWrong: "Something went wrong! Please try again later.",
+        selectQuestionType: "Select Question Type",
+        numberOfQuestions: "Number Of Questions?",
+        howManyQuestions: "How Many Questions?",
+        setDifficultyLevel: "Set Difficulty Level for Questions",
+        useThisSlider:
+            "Use this slider to set the difficulty level for the generated questions. Moving the slider to the left will make questions easier, while moving it to the right will make them more challenging.",
+    },
+
+    adminSummary: {
+        chatValue: "5 Unread Messages",
+        studentValue: "Register, Review, explore and More",
+        teacherValue: "Register, evaluate, explore and more",
+        adminValue: "Register, Review, explore and More",
+    },
+
+    absenteeAddModal: {
+        addStaffAbsentee: "Add Staff Absentee",
+        yourAreAbout:
+            "Your are about to add <span class='px-2 font-bold'> { type } { label } </span> as an absentee:",
+        enterReason: "Enter reason",
+        searchAddAbsentee: "Search for a staff member to add as an absentee",
+        searchStaffMember: "Search for a staff member by name",
+    },
+};
 
 export default en;

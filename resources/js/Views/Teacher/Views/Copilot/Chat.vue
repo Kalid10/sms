@@ -1,11 +1,13 @@
 <template>
     <div
-        class="flex h-screen w-full space-x-8 py-10"
+        class="flex h-screen w-full flex-col py-10 lg:flex-row lg:space-x-8"
         :class="showGettingStarted ? 'justify-between' : 'justify-center'"
     >
         <div
             class="flex h-5/6 max-h-screen flex-col items-center space-y-2 rounded-lg border border-black bg-white p-4"
-            :class="showGettingStarted ? 'w-8/12' : 'w-11/12'"
+            :class="
+                showGettingStarted ? 'w-full lg:w-8/12' : 'w-full lg:w-11/12'
+            "
         >
             <div
                 ref="chatContainer"
@@ -62,11 +64,11 @@
             </div>
 
             <SecondaryButton
-                v-if="messages.length > 0 && !isLoading"
+                v-if="messages.length > 0 && !isLoading && !openAILimitReached"
                 :title="
                     isChatUpdating
                         ? 'Stop Generating'
-                        : 'Regenerate Last Message'
+                        : 'Regenerate Last Response'
                 "
                 class="w-fit !rounded-2xl !text-xs font-semibold"
                 :class="
@@ -85,15 +87,21 @@
             >
                 <TextInput
                     v-model="inputMessage"
+                    :disabled="openAILimitReached"
                     type="text"
                     class="w-full"
-                    class-style="
-rounded-2xl ring-purple-600 ring-2 bg-gray-50 border-none bg-white placeholder:text-xs focus:ring-2 ring-black focus:ring-purple-500"
-                    placeholder="Type your message here..."
+                    class-style="rounded-2xl ring-purple-600 ring-2 bg-gray-50 border-none bg-white placeholder:text-xs focus:ring-2 ring-black focus:ring-purple-500"
+                    :placeholder="$t('chat.typeYourMessageHere')"
                     @keyup.enter="sendMessage"
                 />
                 <button
-                    class="rounded-md bg-purple-500 p-2 text-white"
+                    :disabled="openAILimitReached"
+                    :class="
+                        openAILimitReached
+                            ? 'bg-zinc-600 cursor-not-allowed'
+                            : 'cursor-pointer bg-purple-500'
+                    "
+                    class="rounded-md p-2 text-white"
                     @click="sendMessage"
                 >
                     <PaperAirplaneIcon class="w-5" />
@@ -102,64 +110,60 @@ rounded-2xl ring-purple-600 ring-2 bg-gray-50 border-none bg-white placeholder:t
         </div>
         <div
             v-if="showGettingStarted"
-            class="mt-5 flex h-fit w-4/12 flex-col space-y-6 rounded-lg border border-black p-5 text-center text-sm"
+            class="mt-5 hidden h-fit w-4/12 flex-col space-y-6 rounded-lg border border-black p-5 text-center text-sm lg:block"
         >
-            <h2 class="text-2xl font-bold">Getting Started with the AI Chat</h2>
+            <h2 class="text-2xl font-bold">{{ $t('chat.gettingStarted')}}</h2>
+            <p>{{ $t('chat.helloWeWant', { name: usePage().props.auth.user.name }) }}</p>
+
             <p>
-                Hello, {{ usePage().props.auth.user.name }}! We want to make
-                sure you get the most out of our AI chat feature, Rigel Copilot.
-                Here are some tips to guide you:
+<!--                Hello, {{ usePage().props.auth.user.name }}! We want to make-->
+<!--                sure you get the most out of our AI chat feature, Rigel Copilot.-->
+<!--                Here are some tips to guide you:-->
             </p>
 
             <div>
-                <h3 class="text-xl font-semibold">Ask Specific Questions</h3>
+                <h3 class="text-xl font-semibold">{{ $t('chat.askSpecificQuestions')}} </h3>
                 <p class="font-light">
-                    The AI chat is more effective when you ask specific
-                    questions...
+                    {{ $t('chat.theAiChat')}}
                 </p>
             </div>
 
             <div>
                 <h3 class="text-xl font-semibold">
-                    Experiment with Different Queries
+                    {{ $t('chat.experimentWithDifferent')}}
                 </h3>
                 <p class="font-light">
-                    Feel free to experiment with different types of questions or
-                    queries...
+                    {{ $t('chat.feelFree')}}
                 </p>
             </div>
 
             <div>
                 <h3 class="text-xl font-semibold">
-                    Use It as a Resource Finder
+                    {{ $t('chat.useItAsResource')}}
                 </h3>
                 <p class="font-normal">
-                    Need help finding educational resources? You can ask the AI
-                    chat for recommendations...
+                    {{ $t('chat.needHelpFinding')}}
                 </p>
             </div>
 
             <div>
                 <h3 class="text-xl font-semibold">
-                    Seek Clarification on Complex Topics
+                    {{ $t('chat.seekClarification')}}
                 </h3>
                 <p class="font-light">
-                    If you're dealing with complex educational topics, don't
-                    hesitate to ask the AI chat...
+                    {{ $t('chat.ifYourAreDealing')}}
                 </p>
             </div>
 
             <div>
-                <h3 class="text-xl font-semibold">Explore Creative Ideas</h3>
+                <h3 class="text-xl font-semibold">{{ $t('chat.exploreCreativeIdeas')}} </h3>
                 <p class="font-light">
-                    The AI chat can be a great tool to brainstorm new teaching
-                    techniques...
+                    {{ $t('chat.theAIChat')}}
                 </p>
             </div>
 
             <p class="py-4 italic">
-                Remember, while the AI chat is a powerful tool, it's not a
-                replacement for human interaction...
+                {{ $t('chat.RememberWhile')}}
             </p>
         </div>
     </div>
@@ -169,13 +173,14 @@ import {
     ClipboardDocumentIcon,
     PaperAirplaneIcon,
 } from "@heroicons/vue/20/solid";
-import { nextTick, ref, watchEffect } from "vue";
+import { nextTick, onMounted, ref, watchEffect } from "vue";
 import { copyToClipboard } from "@/utils";
 import Loading from "@/Components/Loading.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
+const emit = defineEmits(["limit-reached"]);
 defineProps({
     showGettingStarted: {
         type: Boolean,
@@ -187,7 +192,13 @@ const messages = ref([]);
 const inputMessage = ref("Who is usain bolt?");
 const isChatUpdating = ref(false);
 const chatContainer = ref(null);
+const openAIDailyUsage = ref();
+const openAILimitReached = ref(false);
 let eventSource;
+
+onMounted(() => {
+    openAIDailyUsage.value = usePage().props.auth.user.openai_daily_usage;
+});
 
 const sendMessage = () => {
     isLoading.value = true;
@@ -253,6 +264,14 @@ const startStreaming = () => {
         },
         false
     );
+    eventSource.addEventListener(
+        "usage_update",
+        (event) => {
+            // update usage
+            openAIDailyUsage.value = event.data;
+        },
+        false
+    );
 
     // Push a new message from the assistant
     messages.value.push({
@@ -262,9 +281,30 @@ const startStreaming = () => {
 
     result.value = null;
 
+    eventSource.onerror = function (event) {
+        isLoading.value = false;
+        isChatUpdating.value = false;
+
+        fetch(eventSource.url)
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then((data) => {
+                        openAILimitReached.value = true;
+                        emit("limit-reached", openAIDailyUsage.value);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
+
+    // Handle Error
     eventSource.addEventListener(
         "error",
         (event) => {
+            console.log("skdfh " + event.status);
+
             // TODO: Replace this with your preferred error handling method
             console.error("Error occurred: ", event);
             isLoading.value = false;

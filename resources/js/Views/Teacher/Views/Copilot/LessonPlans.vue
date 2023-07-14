@@ -5,17 +5,19 @@
         <div class="w-fit px-2 text-center text-2xl capitalize">
             Your Lesson Plans
         </div>
-        <div class="flex w-full space-x-5 p-2 text-black">
-            <div v-if="subjectOptions?.length > 0" class="w-4/12">
+        <div
+            class="flex w-full flex-col space-y-2 p-2 text-black lg:flex-row lg:space-y-0 lg:space-x-5"
+        >
+            <div v-if="subjectOptions?.length > 0" class="w-full lg:w-4/12">
                 <SelectInput
                     v-model="selectedSubject"
                     :options="subjectOptions"
                 />
             </div>
-            <div v-if="monthOptions?.length > 0" class="w-4/12">
+            <div v-if="monthOptions?.length > 0" class="w-full lg:w-4/12">
                 <SelectInput v-model="selectedMonth" :options="monthOptions" />
             </div>
-            <div class="w-4/12">
+            <div class="w-full lg:w-4/12">
                 <SelectInput v-model="selectedWeek" :options="weekOptions" />
             </div>
         </div>
@@ -24,12 +26,14 @@
                 v-if="selectedWeekPlans.length"
                 class="flex flex-col space-y-1 py-2"
             >
-                <div class="flex w-full flex-wrap justify-between space-x-1">
+                <div
+                    class="flex w-full flex-col space-x-1 lg:flex-row lg:flex-wrap lg:justify-between"
+                >
                     <div
                         v-for="(item, index) in selectedWeekPlans"
                         :key="index"
                         :class="[
-                            'my-3 flex w-5/12 cursor-pointer flex-col items-center justify-evenly space-y-3 rounded-lg p-2 px-3 text-center text-xs shadow-sm',
+                            'my-3 flex w-full cursor-pointer flex-col items-center justify-evenly space-y-3 rounded-lg p-2 px-3 text-center text-xs shadow-sm lg:w-5/12',
                             isSelected(item.lesson_plan.id)
                                 ? 'border border-zinc-700 bg-gradient-to-bl from-violet-500 to-purple-500 text-white'
                                 : 'border border-zinc-700 bg-white from-violet-500 to-purple-500 hover:scale-105 hover:border-zinc-700 hover:bg-gradient-to-bl hover:text-white',

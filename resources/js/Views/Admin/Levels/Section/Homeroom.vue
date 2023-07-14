@@ -11,12 +11,14 @@
             >
                 {{ batch.home_room_teacher.teacher.user.name }}
             </div>
-            <div class="text-sm font-light">Homeroom teacher</div>
+            <div class="text-sm font-light">
+                {{ $t('sectionHomeroom.homeroomTeacher')}}
+            </div>
         </div>
         <div v-else class="h-full">
             <EmptyView
-                title="No homeroom teacher assigned"
-                link-title="Assign Homeroom"
+                :title="$t('sectionHomeroom.noHomeroomTeacherAssigned')"
+                :link-title="$t('sectionHomeroom.assignHomeroom')"
                 link-url="/homeroom/assign"
                 class="!h-full"
             />
@@ -26,6 +28,7 @@
 
 <script setup>
 import EmptyView from "@/Views/EmptyView.vue";
+import TextInput from "@/Components/TextInput.vue";
 
 const props = defineProps({
     batch: {

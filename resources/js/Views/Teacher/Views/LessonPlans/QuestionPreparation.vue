@@ -2,15 +2,15 @@
     <div
         class="flex h-fit w-full flex-col items-center space-y-6 rounded-lg bg-zinc-100 px-5 pt-3 pb-5 shadow-sm"
     >
-        <div class="text-xl font-light">LessonPlan Question Generator</div>
+        <div class="text-xl font-light">{{ $t('lessonPlanQuestionPreparation.lessonPlanQuestionGenerator')}}</div>
         <Error
             v-if="questionForm.errors?.length"
-            error="Something went wrong! Please try again later."
+            :error="$t('lessonPlanQuestionPreparation.somethingWentWrong')"
         />
         <SelectInput
             v-model="questionForm.assessment_type_id"
             class="w-full"
-            label="Select Question Type"
+            :label="$t('lessonPlanQuestionPreparation.selectQuestionType')"
             :options="filteredAssessmentType"
             :error="questionForm.errors.assessment_type_id"
         />
@@ -18,21 +18,18 @@
             v-if="questionForm.assessment_type_id"
             v-model="questionForm.number_of_questions"
             class="w-full"
-            label="Number Of Questions?"
-            placeholder="How Many Questions?"
+            :label="$t('lessonPlanQuestionPreparation.numberOfQuestions')"
+            :placeholder="$t('lessonPlanQuestionPreparation.howManyQuestions')"
             type="number"
             :error="questionForm.errors.number_of_questions"
         />
         <div class="w-full flex-col space-y-1">
             <div>
                 <label for="large-range" class="block text-sm font-medium"
-                    >Set Difficulty Level for Questions</label
+                    >{{ $t('lessonPlanQuestionPreparation.setDifficultyLevel')}}</label
                 >
                 <p class="mb-2 py-1 text-xs font-light text-gray-600">
-                    Use this slider to set the difficulty level for the
-                    generated questions. Moving the slider to the left will make
-                    questions easier, while moving it to the right will make
-                    them more challenging.
+                    {{ $t('lessonPlanQuestionPreparation.useThisSlider')}}
                 </p>
             </div>
 
@@ -47,7 +44,7 @@
         </div>
 
         <SecondaryButton
-            title="Submit"
+            :title="$t('common.submit')"
             class="w-4/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
             @click="submit"
         />

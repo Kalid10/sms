@@ -26,7 +26,7 @@
                 <LinkCell
                     class="flex w-full justify-end"
                     href="/teacher/lesson-plan"
-                    value="View All Lesson Plans"
+                    :value="$t('lessonPlans.viewAllLessonPlans')"
                 />
             </div>
             <div
@@ -34,10 +34,10 @@
                 class="flex h-full flex-col items-center justify-center space-y-6"
             >
                 <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
-                <div>No Lesson Plan Found!</div>
+                <div> {{ $t('lessonPlans.noLessonPlan')}} </div>
                 <LinkCell
                     href="/teacher/lesson-plan"
-                    value="View All LessonPlans"
+                    :value="$t('lessonPlans.viewAllLessonPlans')"
                 />
             </div>
         </div>

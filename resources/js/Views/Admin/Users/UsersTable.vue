@@ -9,13 +9,13 @@
         actionable
         row-actionable
         selectable
-        subtitle="List of users registered in the system"
-        title="Users List"
+        :title="$t('usersTable.tableElementTitle')"
+        :subtitle="$t('usersTable.tableElementSubtitle')"
     >
         <template #filter>
             <TextInput
                 v-model="query"
-                placeholder="Search for Users by Name or Email"
+                :placeholder="$t('usersTable.queryPlaceholder')"
             />
         </template>
 
@@ -23,11 +23,11 @@
             <div class="flex flex-row space-x-4">
                 <div v-if="selected.selected" class="flex items-center gap-2">
                     <TertiaryButton
-                        title="Move Items"
+                        :title="$t('usersTable.moveItems')"
                         @click="moveItems(selected.items)"
                     />
                     <PrimaryButton
-                        title="Update Items"
+                        :title="$t('usersTable.updateItems')"
                         @click="updateItems(selected.items)"
                     />
                 </div>
@@ -80,6 +80,8 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
 
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const users = computed(() => {
     return usePage().props.users;
 });
@@ -107,33 +109,33 @@ watch([query], () => {
 
 const users_config = [
     {
-        name: "Full Name",
+        name: t('usersTable.fullName'),
         key: "name",
         link: "/admin/{type}s/{id}",
         class: "w-[35%]",
         align: "left",
     },
     {
-        name: "Email",
+        name: t('usersTable.email'),
         key: "email",
         link: "mailto:{email}",
         class: "w-[35%]",
         align: "left",
     },
     {
-        name: "User Type",
+        name: t('usersTable.userType'),
         key: "type",
         type: "enum",
-        options: ["admin", "teacher", "student", "guardian"],
+        options: [t('usersTable.options[0]'),t('usersTable.options[1]'),t('usersTable.options[2]'), t('usersTable.options[3]')],
     },
     {
-        name: "Gender",
+        name: t('usersTable.gender'),
         key: "gender",
         type: "enum",
         options: ["male", "female"],
     },
     {
-        name: "Active",
+        name: t('usersTable.active'),
         key: "active",
         type: Boolean,
         class: "w-fit",

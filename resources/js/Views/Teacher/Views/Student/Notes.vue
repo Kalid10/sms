@@ -10,7 +10,7 @@
                 class="flex grow justify-center space-x-2 text-center text-xl font-semibold underline-offset-4"
             >
                 <DocumentChartBarIcon class="w-4" />
-                <span>Notes</span>
+                <span>{{ $t('studentNotes.notes')}}</span>
             </div>
             <div class="flex w-1/12 justify-center">
                 <PlusIcon
@@ -63,7 +63,7 @@
                     :title="'No notes found for ' + student?.user.name"
                 />
                 <SecondaryButton
-                    title="Add Note"
+                    :title="$t('studentNotes.addNote')"
                     class="mt-4 w-9/12 !rounded-2xl border-none bg-zinc-700 text-white"
                 />
             </div>
@@ -74,11 +74,11 @@
                 :title="'Add Note For ' + student.user.name"
                 @submit="submit"
             >
-                <TextInput v-model="form.title" placeholder="Title" />
+                <TextInput v-model="form.title" :placeholder="$t('studentNotes.title')"/>
                 <TextArea
                     v-model="form.description"
-                    placeholder="description"
-                    label="Description"
+                    :placeholder="$t('studentNotes.description')"
+                    :label="$t('studentNotes.description')"
                 />
             </FormElement>
         </Modal>
@@ -91,14 +91,14 @@
             >
                 <TextInput
                     v-model="form.title"
-                    label="Title"
-                    placeholder="title"
+                    :label="$t('studentNotes.title')"
+                    :placeholder="$t('studentNotes.title')"
                 >
                 </TextInput>
                 <TextArea
                     v-model="form.description"
-                    label="Description"
-                    placeholder="description"
+                    :placeholder="$t('studentNotes.description')"
+                    :label="$t('studentNotes.description')"
                 />
             </FormElement>
 

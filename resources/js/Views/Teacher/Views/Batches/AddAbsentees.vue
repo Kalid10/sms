@@ -4,7 +4,7 @@
             <div class="flex h-full flex-col space-y-3 overflow-y-auto">
                 <TextInput
                     v-model="searchText"
-                    placeholder="Search Student"
+                    :placeholder="$t('addAbsentees.searchTextPlaceholder')"
                     class="w-full"
                 />
 
@@ -12,7 +12,7 @@
                     v-if="absenteeStudents.length"
                     class="flex w-full flex-col space-y-2 rounded-lg bg-zinc-200 py-3 px-4 shadow-md"
                 >
-                    <div class="text-sm font-light">Absentee Students</div>
+                    <div class="text-sm font-light">{{$t('addAbsentees.absenteeStudents')}}</div>
                     <div class="flex w-full flex-wrap space-x-1.5">
                         <div
                             v-for="(item, index) in absenteeStudents"
@@ -68,8 +68,8 @@
                         <TextArea
                             v-model="studentList[index].reason"
                             rows="4"
-                            label="Reason"
-                            placeholder="Add reason on why the student is absentee"
+                            :label="$t('addAbsentees.reasonLabel')"
+                            :placeholder="$t('addAbsentees.reasonPlaceholder')"
                         />
                     </div>
                 </div>
@@ -97,6 +97,7 @@ import { ChatBubbleBottomCenterIcon } from "@heroicons/vue/20/solid/index";
 import debounce from "lodash/debounce";
 import { toInteger } from "lodash";
 import Loading from "@/Components/Loading.vue";
+import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 
 const inProgressSession = computed(() => usePage().props.in_progress_session);
 const searchText = ref(usePage().props.filters.search);

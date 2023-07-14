@@ -9,7 +9,7 @@
         >
             <div class="flex w-full justify-between">
                 <div class="text-xl font-semibold text-zinc-800 lg:text-4xl">
-                    {{ $t('views.teacher.assessments.assessmentsIndex.assessments') }}
+                    {{ $t('teacherAssessmentsIndex.assessments') }}
 
                 </div>
                 <div
@@ -17,7 +17,7 @@
                     @click="showModal = true"
                 >
                     <div>
-                        {{ $t('views.teacher.assessments.assessmentsIndex.createAssessment') }}
+                        {{ $t('teacherAssessmentsIndex.createAssessment') }}
                     </div>
                 </div>
             </div>

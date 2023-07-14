@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Heading size="lg">Homerooms</Heading>
+        <Heading size="lg">{{ $t('homeroomClasses.homerooms')}}</Heading>
         <div
             v-if="teacher.homeroom.length > 0"
             class="flex w-fit flex-wrap space-x-1.5 "
@@ -12,11 +12,11 @@
                     {{ item.batch.level.name + item.batch.section }}
                 </a>
                 <span v-if="index < teacher.homeroom.length - 2">, </span>
-                <span v-else-if="index === teacher.homeroom.length - 2"> and </span>
+                <span v-else-if="index === teacher.homeroom.length - 2"> {{ $t('common.and')}} </span>
             </template>
         </div>
         <div v-else class="flex h-24 items-center justify-center">
-            <div>No homeroom class attached yet!</div>
+            <div>{{ $t('homeroomClasses.noHomeroomClassAttached')}}</div>
         </div>
     </div>
 </template>

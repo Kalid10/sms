@@ -4,7 +4,7 @@
         :class="classStyle ? classStyle : ' p-5 space-y-3 bg-white'"
     >
         <div v-if="schedule?.length" class="text-xl font-medium text-gray-800">
-            {{ moment().format("dddd") }}'s Class Schedule
+            {{ moment().format("dddd") }}{{ $t('currentDaySchedule.schedule')}}
         </div>
         <div
             v-if="schedule?.length"
@@ -34,7 +34,7 @@
                     </div>
                     <div class="text-[0.65rem] uppercase">
                         {{ numberWithOrdinal(Number(item.school_period.name)) }}
-                        Period
+                        {{ $t('currentDaySchedule.period') }}
                     </div>
                 </div>
             </div>

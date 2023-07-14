@@ -13,24 +13,24 @@
                     <SummaryItem
                         class-style="bg-orange-100 text-black"
                         icon-style="bg-orange-500/20 text-white"
-                        title="Admins"
-                        value="Sign up administrators with ease"
+                        :title="$t('common.admins')"
+                        :value="$t('adminUserIndex.signUpAdministrators')"
                         :icon="ClipboardIcon"
                         url="/admin/user/register/admin"
                     />
                     <SummaryItem
                         class-style="bg-zinc-100 text-black"
                         icon-style="bg-zinc-500/20 text-white"
-                        title="Students"
-                        value="Register Students With there Guardians"
+                        :title="$t('common.students')"
+                        :value="$t('adminUserIndex.registerStudents')"
                         :icon="UsersIcon"
                         url="/admin/user/register/student"
                     />
                     <SummaryItem
                         class-style="bg-fuchsia-100 text-black"
                         icon-style="bg-fuchsia-500/20 text-white"
-                        title="Teachers"
-                        value="Register Students With there Guardians"
+                        :title="$t('common.teachers')"
+                        :value="$t('adminUserIndex.registerTeachers')"
                         :icon="CalendarIcon"
                         url="/admin/user/register/teacher"
                     />

@@ -6,6 +6,7 @@ use App\Models\ChFavorite as Favorite;
 use App\Models\User;
 use Carbon\Carbon;
 use Chatify\Facades\ChatifyMessenger as Chatify;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -46,6 +47,7 @@ class MessagesController extends Controller
             'id' => $id ?? 0,
             'messengerColor' => $messenger_color ? $messenger_color : Chatify::getFallbackColor(),
             'dark_mode' => Auth::user()->dark_mode < 1 ? 'light' : 'dark',
+            'similar_users' => Inertia::lazy(fn () => $this->getSimilarUsers()),
         ]);
     }
 
@@ -295,9 +297,8 @@ class MessagesController extends Controller
     {
         $input = trim(filter_var($request['input']));
         $records = User::where('id', '!=', Auth::user()->id)
-            ->whereNot('type', User::TYPE_STUDENT)
             ->where('name', 'LIKE', "%{$input}%")
-            ->with('guardian.children.user')
+            ->whereIn('type', [User::TYPE_ADMIN, User::TYPE_TEACHER])
             ->paginate($request->per_page ?? $this->perPage);
 
         $records->getCollection()->transform(function ($record) {
@@ -422,5 +423,31 @@ class MessagesController extends Controller
         return Response::json([
             'status' => $status,
         ], 200);
+    }
+
+    public function getSimilarUsers(): Collection
+    {
+        $loggedUserType = Auth::user()->type;
+
+        $similarUserTypes = [];
+
+        // Check if logged user is admin
+        if ($loggedUserType == User::TYPE_ADMIN) {
+            $admins = User::where('type', User::TYPE_ADMIN)->get()->take(10);
+            $similarUserTypes = $admins;
+        }
+
+        if ($loggedUserType == User::TYPE_TEACHER) {
+            // Get the logged in teacher grade
+            $levelId = Auth::user()->teacher->load('batchSubjects.batch')->batchSubjects->pluck('batch')->first()->level_id;
+
+            // Get all teachers that are in the same level
+            $similarUserTypes = User::where('type', User::TYPE_TEACHER)
+                ->whereHas('teacher.batchSubjects.batch', function ($query) use ($levelId) {
+                    $query->where('level_id', $levelId);
+                })->with('teacher.batchSubjects.subject')->get();
+        }
+
+        return $similarUserTypes;
     }
 }

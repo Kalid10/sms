@@ -6,12 +6,12 @@
         >
             <div class="">404</div>
             <div class="w-6/12 text-center text-3xl font-semibold text-black">
-                No homeroom classes found!
+                {{ $t('homeRooms.noHomeroomClasses') }}
             </div>
 
             <SecondaryButton
                 v-if="isAdmin()"
-                title="Assign Homeroom"
+                :title="$t('homeRooms.assignHomeroom')"
                 class="!rounded-2xl bg-zinc-800 text-white"
                 @click="showAssignModal = true"
             />
@@ -19,12 +19,14 @@
 
         <div
             v-else
-            class="flex min-h-screen w-full justify-between space-x-6 divide-x divide-gray-200 bg-gray-50"
+            class="flex min-h-screen w-full flex-col justify-between divide-x divide-gray-200 bg-gray-50 lg:flex-row lg:space-x-6"
         >
             <!--        Left Side-->
-            <div class="flex w-9/12 flex-col space-y-4 py-5 pl-5">
+            <div
+                class="flex w-full flex-col space-y-4 py-5 px-3 lg:w-9/12 lg:pl-5"
+            >
                 <Header
-                    title="Homeroom Classes"
+                    :title="$t('homeRooms.homeroomClasses')"
                     :select-input-options="homeroomOptions"
                     :selected-input="selectedHomeroom"
                     @change="updateBatchInfo"
@@ -32,15 +34,15 @@
 
                 <Statistics class="!bg-white" />
 
-                <div class="flex w-full justify-between">
-                    <div class="!w-6/12">
+                <div class="flex w-full flex-col justify-between lg:flex-row">
+                    <div class="w-full lg:!w-6/12">
                         <StudentsTable
                             :show-homeroom-detail="false"
                             @search="updateBatchInfo"
                             @click="getStudentDetails"
                         />
                     </div>
-                    <div class="h-fit w-5/12">
+                    <div class="h-fit w-full lg:w-5/12">
                         <Flag
                             view="homeroom"
                             :title="
@@ -53,15 +55,19 @@
             </div>
 
             <!--        Right side-->
-            <div class="flex w-3/12 flex-col space-y-6 bg-gray-50 py-5 pl-5">
-                <div class="flex w-full justify-evenly">
+            <div
+                class="flex w-full flex-col space-y-6 bg-gray-50 py-5 lg:w-3/12 lg:pl-5"
+            >
+                <div
+                    class="flex w-full flex-col space-y-3 px-3 lg:flex-row lg:justify-evenly lg:space-y-0 lg:px-0"
+                >
                     <div
-                        class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg bg-positive-100 py-5 text-center text-5xl font-bold text-white shadow-sm"
+                        class="flex w-full flex-col justify-evenly space-y-4 rounded-lg bg-positive-100 py-5 text-center text-5xl font-bold text-white shadow-sm lg:w-5/12"
                     >
                         <div v-if="grade">{{ grade?.attendance ?? "-" }}%</div>
                         <div>-</div>
                         <span class="text-xs font-light"
-                            >CLASS ATTENDANCE
+                            >{{ $t('homeRooms.classAttendance') }}
                         </span>
                     </div>
                     <div
@@ -75,16 +81,16 @@
                                 grade?.conduct === 'F',
                             'bg-zinc-700 text-white': !grade?.conduct,
                         }"
-                        class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-5xl font-bold shadow-sm"
+                        class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-5xl font-bold shadow-sm lg:w-5/12"
                     >
                         <div>{{ grade?.conduct ?? "-" }}</div>
-                        <span class="text-xs font-light">CLASS CONDUCT </span>
+                        <span class="text-xs font-light">{{ $t('homeRooms.classConduct') }} </span>
                     </div>
                 </div>
                 <div class="w-11/12 rounded-lg bg-white py-2 shadow-sm">
                     <StudentsList
                         progress-type="up"
-                        title="Top Students"
+                        :title="$t('homeRooms.topStudents')"
                         :icon="ArrowTrendingUpIcon"
                         :students="topStudents"
                     />
@@ -93,7 +99,7 @@
                 <div class="w-11/12 rounded-lg bg-white shadow-sm">
                     <StudentsList
                         progress-type="down"
-                        title="Students Falling Behind"
+                        :title="$t('homeRooms.studentsFalling')"
                         :icon="ArrowTrendingDownIcon"
                         :students="bottomStudents"
                     />

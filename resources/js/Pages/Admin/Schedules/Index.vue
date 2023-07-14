@@ -2,13 +2,17 @@
     <div
         class="flex min-h-screen w-full flex-col items-center space-y-5 bg-gray-50 py-5"
     >
-        <Title class="w-11/12" title="School Schedules" />
-        <div class="flex w-11/12 justify-between">
-            <div class="flex w-6/12 justify-between space-x-10 bg-gray-50">
+        <Title class="w-11/12" :title="$t('schedulesIndex.schoolSchedules')" />
+        <div class="flex w-11/12 flex-col justify-between lg:flex-row">
+            <div
+                class="flex w-full justify-between bg-gray-50 lg:w-6/12 lg:space-x-10"
+            >
                 <div
                     class="h-fit w-full rounded-lg bg-white px-5 py-3 shadow-sm"
                 >
-                    <div class="flex w-full items-center justify-between">
+                    <div
+                        class="flex w-full flex-col items-center justify-between lg:flex-row"
+                    >
                         <div
                             class="flex w-full flex-col justify-center space-y-2 py-2"
                         >
@@ -21,8 +25,10 @@
                         </div>
                         <TextInput
                             v-model="query"
-                            class="w-4/5"
-                            placeholder="Search for schedule"
+                            class="w-full lg:w-4/5"
+                            :placeholder="
+                                $t('schedulesIndex.searchForSchedule')
+                            "
                         />
                     </div>
 
@@ -44,17 +50,19 @@
                     />
                 </div>
             </div>
-            <div class="mt-5 flex h-fit w-5/12 flex-col items-center space-y-6">
+            <div
+                class="mt-5 flex h-fit w-full flex-col items-center space-y-6 lg:w-5/12"
+            >
                 <DatePicker
                     v-model:start-date="startDate"
                     v-model:end-date="endDate"
                     visible
                     range
-                    class="w-7/12"
+                    class="w-full px-5 lg:w-7/12 lg:px-0"
                 />
                 <SecondaryButton
                     v-if="isAdmin()"
-                    title="Add Event"
+                    :title="$t('schedulesIndex.addEvent')"
                     class="w-7/12 rounded-lg bg-zinc-800 !py-2 text-white"
                     @click="showAddModal = true"
                 />

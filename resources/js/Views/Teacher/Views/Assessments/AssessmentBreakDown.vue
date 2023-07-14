@@ -11,7 +11,8 @@
 
             <div>
                 <span v-if="student">{{ student.user.name }}'s</span>
-                Assessment BreakDown
+
+                {{ $t('assessmentBreakDown.assessmentBreakDown') }}
             </div>
         </div>
         <div
@@ -50,7 +51,7 @@
             v-if="!assessmentGrade?.length"
             class="flex h-full w-9/12 items-center justify-center text-xs font-light lg:text-xs"
         >
-            <EmptyView :title="'No Grades Recorded!'" />
+            <EmptyView :title="$t('assessmentBreakDown.noGradesRecorded')"/>
         </div>
     </div>
 </template>

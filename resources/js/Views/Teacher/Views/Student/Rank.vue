@@ -6,7 +6,7 @@
             class="flex space-x-2 text-center text-xl font-semibold underline-offset-4"
         >
             <ArrowTrendingUpIcon class="w-6" />
-            <span>Rank</span>
+            <span>{{ $t('studentRank.rank')}}</span>
         </div>
         <div
             v-if="rank"

@@ -1,11 +1,11 @@
 <template>
     <div
-        class="flex min-h-screen w-full justify-between space-x-6 divide-x divide-gray-200 bg-gray-50"
+        class="flex min-h-screen w-full flex-col justify-between divide-x divide-gray-200 bg-gray-50 px-3 lg:flex-row lg:space-x-6 lg:px-0"
     >
         <!--        Left Side-->
-        <div class="flex w-8/12 flex-col space-y-5 py-5 pl-6 pr-5">
+        <div class="flex w-full flex-col space-y-5 py-5 pl-6 pr-5 lg:w-8/12">
             <Header
-                title="My Students"
+                :title="$t('teacherStudents.myStudents')"
                 :batch-subject-rank="batchSubjectGrade?.rank"
                 :total-batches-count="totalBatchesCount"
                 :select-input-options="batchSubjectOptions"
@@ -15,7 +15,7 @@
             />
             <div class="flex">
                 <SecondaryButton
-                    title="Filter students"
+                    :title="$t('teacherStudents.filterStudents')"
                     class="!rounded-2xl bg-zinc-800 text-white"
                     @click="showFilter = true"
                 />
@@ -28,13 +28,17 @@
             />
         </div>
 
-        <div class="flex w-4/12 flex-col space-y-10 bg-gray-50 py-5 pl-5">
-            <div class="flex w-full justify-evenly">
+        <div
+            class="flex w-full flex-col space-y-10 bg-gray-50 py-5 lg:w-4/12 lg:pl-5"
+        >
+            <div
+                class="flex w-full flex-col justify-evenly space-y-3 lg:flex-row lg:space-y-0"
+            >
                 <div
-                    class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg bg-positive-100 py-5 text-center text-5xl font-bold text-white shadow-sm"
+                    class="flex w-full flex-col justify-center space-y-4 rounded-lg bg-positive-100 py-5 text-center text-5xl font-bold text-white shadow-sm lg:w-5/12"
                 >
                     <div>99%</div>
-                    <span class="text-xs font-light">CLASS ATTENDANCE </span>
+                    <span class="text-xs font-light">{{ $t('teacherStudents.classAttendance')}}(attendance) </span>
                 </div>
                 <div
                     :class="{
@@ -48,16 +52,16 @@
                             batchSubjectGrade?.conduct === 'F',
                         'bg-zinc-700 text-white': !batchSubjectGrade?.conduct,
                     }"
-                    class="flex w-5/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-5xl font-bold shadow-sm"
+                    class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-5xl font-bold shadow-sm lg:w-5/12"
                 >
                     <div>{{ batchSubjectGrade?.conduct ?? "-" }}</div>
-                    <span class="text-xs font-light">CLASS CONDUCT </span>
+                    <span class="text-xs font-light">{{ $t('teacherStudents.classConduct')}}</span>
                 </div>
             </div>
             <div class="w-11/12 rounded-lg bg-white py-2 shadow-sm">
                 <StudentsList
                     progress-type="up"
-                    title="Top Students"
+                    :title="$t('teacherStudents.topStudents')"
                     :icon="ArrowTrendingUpIcon"
                     :students="topStudents"
                 />
@@ -66,7 +70,7 @@
             <div class="w-11/12 rounded-lg bg-white shadow-sm">
                 <StudentsList
                     progress-type="down"
-                    title="Students Falling Behind"
+                    :title="$t('teacherStudents.studentsFallingBehind')"
                     :icon="ArrowTrendingDownIcon"
                     :students="bottomStudents"
                 />

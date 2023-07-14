@@ -34,7 +34,7 @@
                     </div>
                     <div v-else>-</div>
                     <span class="text-xs font-light">
-                        Class Rank From Total {{ totalBatchesCount ?? "-" }}
+                      {{ $t('header.classRankFrom')}} {{ totalBatchesCount ?? "-" }}
                     </span>
                 </div>
             </div>

@@ -17,7 +17,7 @@
                         <span class="text-xs">
                         {{ data.sections.length }}
                         <span class="hidden md:inline">
-                            sections
+                            {{ $t('common.sections')}}
                         </span>
                     </span>
                     </div>
@@ -26,7 +26,7 @@
                         <span class="text-xs">
                         {{ data.subjects }}
                         <span class="hidden md:inline">
-                            subjects
+                         {{ $t('common.subjects')}}
                         </span>
                     </span>
                     </div>
@@ -62,13 +62,13 @@
 
     <div class="flex flex-col gap-4">
         <Heading>
-            Recent Activities
+            {{ $t('semestersSingle.recentActivities')}}
         </Heading>
     </div>
 
     <div class="flex flex-col gap-4">
         <Heading>
-            Upcoming Schedule
+            {{ $t('semestersSingle.upcomingSchedule')}}
         </Heading>
     </div>
 
@@ -81,7 +81,6 @@ import {LockClosedIcon} from "@heroicons/vue/24/outline";
 import {levels as fake} from "@/fake";
 import Heading from "@/Components/Heading.vue";
 import TableElement from "@/Components/TableElement.vue";
-
 const levels = computed(() => {
     return fake.map((level) => {
         return {

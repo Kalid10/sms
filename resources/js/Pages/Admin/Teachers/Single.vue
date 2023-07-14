@@ -10,51 +10,51 @@
             in-active-tab-text="text-gray-300"
             :tabs="tabs"
         >
-            <template #home>
+            <template #[homeTab]>
                 <Home
-                    v-if="activeTab === 'Home' && !showLoading"
+                    v-if="activeTab === homeTab && !showLoading"
                     class="bg-white py-3"
                 />
             </template>
 
-            <template #classes>
+            <template #[classesTab]>
                 <Batches
-                    v-if="activeTab === 'Classes' && !showLoading"
+                    v-if="activeTab === classesTab && !showLoading"
                     class="bg-white p-4"
                 />
             </template>
 
-            <template #students>
+            <template #[studentsTab]>
                 <Students
-                    v-if="activeTab === 'Students' && !showLoading"
+                    v-if="activeTab === studentsTab && !showLoading"
                     class="bg-white"
                 />
             </template>
 
-            <template #lessonplans>
+            <template #[lessonPlans]>
                 <LessonPlans
-                    v-if="activeTab === 'LessonPlans' && !showLoading"
+                    v-if="activeTab === lessonPlans && !showLoading"
                 />
             </template>
 
-            <template #assessments>
+            <template #[assessmentsTab]>
                 <Assessments
-                    v-if="activeTab === 'Assessments' && !showLoading"
+                    v-if="activeTab === assessmentsTab && !showLoading"
                     class="bg-white"
                     :teacher-id="teacher.id"
                 />
             </template>
 
-            <template #homerooms>
+            <template #[homeroomTab]>
                 <Homeroom
-                    v-if="activeTab === 'Homerooms' && !showLoading"
+                    v-if="activeTab === homeroomTab && !showLoading"
                     class="bg-white"
                 />
             </template>
 
-            <template #announcements>
+            <template #[announcementsTab]>
                 <Announcement
-                    v-if="activeTab === 'Announcements' && !showLoading"
+                    v-if="activeTab === announcementsTab && !showLoading"
                     class="bg-white"
                 />
             </template>
@@ -75,10 +75,19 @@ import Batches from "@/Views/Teacher/Batches.vue";
 import Homeroom from "@/Views/Teacher/Homeroom.vue";
 import Announcement from "@/Views/Teacher/Announcement/Index.vue";
 import Loading from "@/Components/Loading.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const showLoading = ref(false);
 const teacher = computed(() => usePage().props.teacher);
-const activeTab = ref("Home");
+const homeTab = t('common.home');
+const classesTab =  t('common.classes');
+const studentsTab = t('common.students');
+const lessonPlans = t('common.lessonPlans');
+const assessmentsTab = t('common.assessments');
+const homeroomTab = t('common.homeroom');
+const announcementsTab = t('common.announcements');
+
+const activeTab = ref(homeTab);
 
 const location = computed(() => usePage().props.ziggy.location);
 watch(location, (location) => {
@@ -91,37 +100,38 @@ onMounted(() => {
 watch(activeTab, (tab) => {
     handleTabClick(tab);
 });
+
 const tabs = [
-    "Home",
-    "Classes",
-    "Students",
-    "LessonPlans",
-    "Assessments",
-    "Homerooms",
-    "Announcements",
+    homeTab,
+    classesTab,
+    studentsTab,
+    lessonPlans,
+    assessmentsTab,
+    homeroomTab,
+    announcementsTab,
 ];
 
 const handleTabClick = (tab) => {
     switch (tab) {
-        case "Home":
+        case homeTab:
             fetchData(teacher.value.id, tab);
             break;
-        case "Classes":
+        case classesTab:
             fetchData("class", tab);
             break;
-        case "Students":
+        case studentsTab:
             fetchData("students", tab);
             break;
-        case "LessonPlans":
+        case lessonPlans:
             fetchData("lesson-plan", tab);
             break;
-        case "Assessments":
+        case assessmentsTab:
             fetchData("assessments", tab);
             break;
-        case "Homerooms":
+        case homeroomTab:
             fetchData("homeroom", tab);
             break;
-        case "Announcements":
+        case announcementsTab:
             fetchData("announcements", tab);
             break;
         default:
@@ -158,25 +168,25 @@ function checkUrl() {
 
     switch (tab) {
         case "home":
-            activeTab.value = "Home";
+            activeTab.value = homeTab;
             break;
         case "class":
-            activeTab.value = "Classes";
+            activeTab.value = classesTab;
             break;
         case "students":
-            activeTab.value = "Students";
+            activeTab.value = studentsTab;
             break;
         case "lesson-plan":
-            activeTab.value = "LessonPlans";
+            activeTab.value = lessonPlans;
             break;
         case "assessments":
-            activeTab.value = "Assessments";
+            activeTab.value = assessmentsTab;
             break;
         case "homeroom":
-            activeTab.value = "Homerooms";
+            activeTab.value = homeroomTab;
             break;
         case "announcements":
-            activeTab.value = "Announcements";
+            activeTab.value = announcementsTab;
             break;
         default:
             break;

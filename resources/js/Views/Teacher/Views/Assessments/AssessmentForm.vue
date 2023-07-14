@@ -1,7 +1,7 @@
 <template>
     <div>
         <FormElement
-            title="Assessment Form"
+            :title="$t('assessmentForm.formElementTitle')"
             class="my-2"
             @submit="handleSubmit"
         >
@@ -9,45 +9,45 @@
             <TextInput
                 v-model="form.title"
                 :error="form.errors.title"
-                placeholder="Add title for the assessment"
-                label="Title"
+                :placeholder="$t('assessmentForm.titlePlaceholder')"
+                :label="$t('assessmentForm.titleLabel')"
             />
             <TextArea
                 v-model="form.description"
                 :error="form.errors.description"
                 :rows="7"
-                label="Description"
-                placeholder="Add description for the assessment"
+                :placeholder="$t('assessmentForm.descriptionPlaceholder')"
+                :label="$t('assessmentForm.descriptionLabel')"
             />
             <TextInput
                 v-model="form.maximum_point"
                 :error="form.errors.maximum_point"
-                placeholder="Maximum Point"
-                label="Maximum Point"
+                :placeholder="$t('assessmentForm.maximumPointPlaceholder')"
+                :label="$t('assessmentForm.maximumPointLabel')"
                 type="number"
             />
             <DatePicker
                 v-model="form.due_date"
-                placeholder="Due Date"
+                :placeholder="$t('assessmentForm.dueDatePlaceholder')"
                 :error="form.errors.due_date"
             />
             <SelectInput
                 v-model="form.batch_subject_id"
                 :options="batchSubjectOptions"
                 :error="form.errors.batch_subject_id"
-                placeholder="Select Subject"
+                :placeholder="$t('assessmentForm.batchSubjectIdPlaceholder')"
             />
             <SelectInput
                 v-if="form.batch_subject_id"
                 v-model="form.assessment_type_id"
                 :options="selectedBatchAssessmentTypes"
                 :error="form.errors.assessment_type_id"
-                placeholder="Select type"
+                :placeholder="$t('assessmentForm.assessmentTypeId')"
             />
             <SelectInput
                 v-model="form.status"
                 :options="statusOptions"
-                placeholder="Select Status"
+                :placeholder="$t('assessmentForm.statusPlaceholder')"
                 :error="form.errors.status"
             />
             <div
@@ -57,11 +57,16 @@
                 class="flex w-full bg-gray-50 px-4 py-2 text-center text-[0.65rem] font-light"
             >
                 <InformationCircleIcon class="mr-2 w-7 text-zinc-800" />
+<!--                "የማረጋገጫውን ሁኔታ ወደ <span class="font-semibold upper/case">'{published}'</span> ወይም <span class="font-semibold uppercase">'{scheduled}'</span> መቀየር ወዲያውኑ ለአሳዳጊዎች እና ለመምህራን ማሳወቂያዎችን ያስነሳል። ለተጨማሪ ግንዛቤ የማረጋገጫው ዝርዝር መረጃ ሊደረስበት ይችላል።"-->
+
+
+                <span v-html="$t('assessmentForm.message',[])" ></span>
+
 
                 <div>
                     Setting an assessment as
-                    <span class="font-semibold">" PUBLISHED "</span> or
-                    <span class="font-semibold">" SCHEDULED "</span>
+                    <span class="font-semibold uppercase">" PUBLISHED "</span> or
+                    <span class="font-semibold uppercase" >" SCHEDULED "</span>
                     will trigger immediate notifications to guardians and
                     principals. Detailed information about the assessment can be
                     accessed for further insight.
@@ -72,12 +77,11 @@
         <DialogBox
             v-model:open="showDialog"
             type="update"
-            title="Submit Assessment"
+            :title="$t('assessmentForm.title')"
             @confirm="handleSubmit"
         >
             <template #description>
-                Performing this action will result significant change across the
-                entire subject, Are you sure you want to proceed?
+                {{ $t('assessmentForm.alertMessage') }}
             </template>
         </DialogBox>
     </div>
@@ -93,7 +97,8 @@ import DialogBox from "@/Components/DialogBox.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
 import { InformationCircleIcon } from "@heroicons/vue/24/outline";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const props = defineProps({
     assessment: {
         type: Object,
@@ -169,15 +174,15 @@ const batchSubjectOptions = computed(() => {
 
 const statusOptions = [
     {
-        label: "Draft",
+        label: t('assessmentForm.draft'),
         value: "draft",
     },
     {
-        label: "Schedule",
+        label: t('assessmentForm.schedule'),
         value: "scheduled",
     },
     {
-        label: "Publish",
+        label:t('assessmentForm.publish'),
         value: "published",
     },
 ];

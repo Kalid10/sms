@@ -9,7 +9,9 @@
         @click="showDeleteConfirmation = true"
     >
         <TrashIcon class="w-5 text-white" />
-        <SecondaryButton title="DELETE ASSESSMENT" class="text-white" />
+        <SecondaryButton
+            :title="$t('deleteAssessment.buttonTitle')"
+            class="text-white" />
     </div>
 
     <div
@@ -19,7 +21,9 @@
         <div
             class="flex w-full items-center justify-between space-x-1 bg-gradient-to-bl from-red-600 to-orange-500 px-4 py-2 text-center text-white"
         >
-            <span class="grow text-center"> DELETE ASSESSMENT </span>
+            <span class="grow text-center">
+                {{ $t('deleteAssessment.deleteAssessment') }}
+            </span>
 
             <XMarkIcon
                 class="w-4 cursor-pointer hover:scale-125 hover:text-black"
@@ -27,8 +31,7 @@
             />
         </div>
         <div class="w-10/12 text-center font-semibold text-zinc-800">
-            You are about to delete this assessment. This action is
-            irreversible!
+            {{ $t('deleteAssessment.deleteMessage') }}
         </div>
 
         <div
@@ -37,7 +40,9 @@
             @click="showDeleteConfirmationText = true"
         >
             <TrashIcon class="w-4 text-white" />
-            <SecondaryButton title="DELETE ASSESSMENT" class="text-white" />
+            <SecondaryButton
+                :title="$t('deleteAssessment.deleteAssessment')"
+                class="text-white" />
         </div>
         <div v-else class="flex w-full justify-center space-x-2">
             <TextInput

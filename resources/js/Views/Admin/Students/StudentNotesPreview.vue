@@ -22,7 +22,7 @@
             </li>
         </ul>
 
-        <TertiaryButton>View All</TertiaryButton>
+        <TertiaryButton>{{ $t('studentNotesPreview.viewAll')}}</TertiaryButton>
 
     </Card>
 

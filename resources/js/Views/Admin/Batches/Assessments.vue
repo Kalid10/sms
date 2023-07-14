@@ -5,11 +5,11 @@
             :filterable="false"
             :columns="config"
             :data="assessmentsData"
-            title="Student Notes"
+            :title="$t('batchAssessments.studentNotes')"
         />
     </div>
     <div v-else class="flex w-full items-center justify-center">
-        <EmptyView title="No Scheduled Assessment Found" />
+        <EmptyView :title="$t('batchAssessments.noScheduledAssessment')"/>
     </div>
 </template>
 <script setup>
@@ -17,7 +17,8 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import EmptyView from "@/Views/EmptyView.vue";
-
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 const assessments = computed(() => usePage().props.assessments);
 
 const assessmentsData = computed(() => {
@@ -34,25 +35,25 @@ const assessmentsData = computed(() => {
 
 const config = [
     {
-        name: "Assessment",
+        name: t('common.assessment'),
         key: "name",
         class: "font-semibold",
     },
     {
-        name: "Description",
+        name: t('common.description'),
         key: "description",
         class: "text-gray-500 text-xs font-semibold",
     },
     {
-        name: "Due Date",
+        name: t('batchAssessments.dueDate'),
         key: "due_date",
     },
     {
-        name: "Subject",
+        name: t('common.subjects'),
         key: "subject",
     },
     {
-        name: "Assessment Type",
+        name: t('batchAssessments.assessmentType'),
         key: "assessment_type",
     },
 ];

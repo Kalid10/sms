@@ -1,10 +1,10 @@
 <template>
     <div
-        class="flex min-h-screen w-full items-start justify-between bg-gray-50 pl-4 2xl:pr-5 2xl:pl-2"
+        class="flex min-h-screen w-full flex-col items-start justify-between bg-gray-50 lg:flex-row lg:pl-4 2xl:pr-5 2xl:pl-2"
     >
         <!--        Left side-->
         <div
-            class="ml-2 mr-5 flex w-7/12 grow flex-col items-center space-y-7 p-4 2xl:py-6"
+            class="ml-2 mr-5 flex w-full grow flex-col items-center space-y-7 p-4 lg:w-7/12 2xl:py-6"
         >
             <!--        Assessments and NextClass section-->
             <div
@@ -66,18 +66,30 @@
         <!--        Right side-->
         <div
             class="flex min-h-screen flex-col items-center space-y-8 border-l border-gray-200 py-4 pl-5"
-            :class="isSidebarOpenOnXlDevice ? 'w-4/12' : 'w-3/12'"
+            :class="
+                isSidebarOpenOnXlDevice
+                    ? 'w-full lg:w-4/12'
+                    : 'w-full lg:w-3/12'
+            "
         >
             <div
                 class="flex h-36 w-full flex-col items-center justify-evenly rounded-lg bg-gradient-to-tl from-purple-500 to-violet-500 shadow-sm"
             >
                 <div class="px-4 text-center text-white">
-                    Want to see how {{ student?.user.name }} is doing on other
-                    classes?
+                    <span
+                        v-html="
+                            $t('viewsTeacherStudent.wantToSee', {
+                                student: student?.user.name,
+                            })
+                        "
+                    />
+
+                    <!--                    Want to see how {{ student?.user.name }} is doing on other-->
+                    <!--                    classes?-->
                 </div>
 
                 <SecondaryButton
-                    title="View Full Grade Report"
+                    :title="$t('viewsTeacherStudent.viewFullGrade')"
                     class="w-2/3 !rounded-2xl !border-none bg-purple-100 font-semibold"
                     @click="showGrade = true"
                 />

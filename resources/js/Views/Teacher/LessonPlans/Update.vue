@@ -1,21 +1,21 @@
 <template>
     <div>
         <FormElement
-            :title="$t('views.teacher.lessonPlans.lessonPlansUpdate.formElementTitle')"
-            :subtitle="$t('views.teacher.lessonPlans.lessonPlansUpdate.formElementSubtitle')"
+            :title="$t('lessonPlansUpdate.formElementTitle')"
+            :subtitle="$t('lessonPlansUpdate.formElementSubtitle')"
             @submit="update"
         >
             <TextInput
                 v-model="form.topic"
                 required
-                :placeholder="$t('views.teacher.lessonPlans.lessonPlansUpdate.topicPlaceholder')"
-                :label="$t('views.teacher.lessonPlans.lessonPlansUpdate.topicLabel')"
+                :placeholder="$t('lessonPlansUpdate.topicPlaceholder')"
+                :label="$t('lessonPlansUpdate.topicLabel')"
             />
             <TextArea
                 v-model="form.description"
                 required
-                :placeholder="$t('views.teacher.lessonPlans.lessonPlansUpdate.descriptionPlaceholder')"
-                :label="$t('views.teacher.lessonPlans.lessonPlansUpdate.descriptionLabel')"
+                :placeholder="$t('lessonPlansUpdate.descriptionPlaceholder')"
+                :label="$t('lessonPlansUpdate.descriptionLabel')"
             />
 
             <TextInput
@@ -23,7 +23,7 @@
                 disabled
                 required
                 :placeholder="form.batch_session_id"
-                :label="$t('views.teacher.lessonPlans.lessonPlansUpdate.batchSession')"
+                :label="$t('lessonPlansUpdate.batchSession')"
             />
         </FormElement>
     </div>

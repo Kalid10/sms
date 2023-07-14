@@ -1,24 +1,29 @@
 <template>
-    <div class="my-5 h-full w-10/12">
+    <div class="my-5 h-full w-full lg:w-10/12">
         <TeacherTableElement
             :columns="config"
             :selectable="false"
             :data="formattedTeachersData"
             :filterable="false"
+            class="rounded-lg p-5 shadow-sm"
         >
             <template #table-header>
                 <div class="flex w-full items-center justify-between pb-5">
-                    <div class="flex w-full">
-                        <Title title="Teachers" />
+                    <div class="flex w-4/12">
+                        <Title :title="$t('common.teachers')" />
                     </div>
 
-                    <div class="flex w-full justify-between space-x-2">
+                    <div
+                        class="flex w-full flex-col justify-between space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2"
+                    >
                         <TextInput
                             v-model="searchKey"
-                            class="w-full"
-                            placeholder="Search for a teacher by name"
+                            class="w-full lg:w-6/12"
+                            :placeholder="$t('teachersIndex.searchTeacher')"
                         />
-                        <div class="flex w-full justify-between space-x-2">
+                        <div
+                            class="flex w-full flex-col justify-between space-y-2 lg:flex-row lg:space-x-2"
+                        >
                             <SelectInput
                                 v-model="selectedSubject"
                                 class="h-fit w-full rounded-2xl !text-sm"
@@ -69,13 +74,15 @@
                     <ExclamationTriangleIcon
                         class="mb-2 h-6 w-6 text-negative-50"
                     />
-                    <p class="text-sm font-semibold">No data found</p>
+                    <p class="text-sm font-semibold">
+                        {{ $t("common.noDataFound") }}
+                    </p>
                     <div v-if="searchKey.length">
                         <p
                             v-if="searchKey === null"
                             class="text-sm text-gray-500"
                         >
-                            No teacher has been enrolled
+                            {{ $t("teachersIndex.noTeacher") }}
                         </p>
                         <p v-else class="text-center text-sm text-gray-500">
                             Your search query "<span
@@ -91,7 +98,7 @@
             <template #session-column="{ data }">
                 <SecondaryButton
                     v-if="data.batch_session_id"
-                    title="Absentee"
+                    :title="$t('teachersIndex.absentee')"
                     class="!rounded-2xl bg-zinc-700 text-white"
                     @click="toggleDialogBox(data.id, data.batch_session_id)"
                 />
@@ -101,8 +108,8 @@
 
     <DialogBox
         v-if="isDialogBoxOpen"
-        title="Absent"
-        description="confirm if you want to mark this teacher as absent"
+        :title="$t('teachersIndex.absent')"
+        :description="$t('teachersIndex.confirmIf')"
         open
         accent="gray"
         @abort="isDialogBoxOpen = false"
@@ -115,7 +122,7 @@
         <template #content>
             <TextInput
                 v-model="form.reason"
-                label="Reason"
+                :label="$t('teachersIndex.reason')"
                 placeholder="ex: sick"
             />
         </template>
@@ -138,6 +145,9 @@ import DialogBox from "@/Components/DialogBox.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const isDialogBoxOpen = ref(false);
 
 const teachers = computed(() => {
@@ -279,36 +289,36 @@ const markTeacherAsAbsent = () => {
 
 const config = [
     {
-        name: "Name",
+        name: t("common.name"),
         key: "name",
         link: "/admin/teachers/{id}",
         align: "left",
         type: "custom",
     },
     {
-        name: "Email",
+        name: t("common.email"),
         key: "email",
         type: "custom",
         align: "left",
     },
     {
-        name: "Homerooms",
+        name: t("common.homeroom"),
         key: "homerooms",
     },
     {
-        name: "Gender",
+        name: t("common.gender"),
         key: "gender",
         type: "enum",
         options: ["female", "male"],
     },
     {
-        name: "Subjects",
+        name: t("common.subjects"),
         key: "subjects",
         align: "left",
         type: "custom",
     },
     {
-        name: "Absentee",
+        name: t("teachersIndex.absentee"),
         key: "session",
         type: "custom",
     },

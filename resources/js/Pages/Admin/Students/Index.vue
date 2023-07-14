@@ -1,12 +1,15 @@
 <template>
-    <div class="my-5 w-10/12">
-        <Title class="pb-8" title="Students" />
+    <div class="mx-3 my-5 w-full lg:mx-0 lg:w-10/12">
+        <Title class="pb-8" :title="$t('studentsIndex.students')" />
 
         <TabElement v-model:active="activeTab" :tabs="tabs">
-            <template #students>
-                <StudentsTable :show-title="false" @search="searchKey = $event" />
+            <template #[studentsTab]>
+                <StudentsTable
+                    :show-title="false"
+                    @search="searchKey = $event"
+                />
             </template>
-            <template #grades>
+            <template #[gradesTab]>
                 <BatchStudentsTable />
             </template>
         </TabElement>
@@ -21,11 +24,17 @@ import StudentsTable from "@/Pages/Admin/Students/StudentsTable.vue";
 import TabElement from "@/Components/TabElement.vue";
 import BatchStudentsTable from "@/Pages/Admin/Students/BatchStudentsTable.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
+import { useI18n } from "vue-i18n";
 
-const tabs = ["Students", "Grades"];
+const { t } = useI18n();
+
+const tabs = [t("studentsIndex.students"), t("studentsIndex.grades")];
+const studentsTab = t("studentsIndex.students");
+const gradesTab = t("studentsIndex.grades");
+
+const activeTab = ref(studentsTab);
 
 const selectedBatchId = ref(usePage().props.selected_batch.id);
-const activeTab = ref("Students");
 
 const searchKey = ref("");
 

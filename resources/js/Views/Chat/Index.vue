@@ -1,5 +1,5 @@
 <template>
-    <div class="flex max-h-screen min-h-screen w-full justify-between">
+    <div className="flex max-h-screen min-h-screen w-full justify-between">
         <Messages @toggle-conversation="toggleConversation" />
 
         <!-- conversation -->
@@ -8,12 +8,14 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted } from "vue";
+import { computed, onMounted, onUnmounted, watch } from "vue";
 import Messages from "@/Views/Chat/Messages/Messages.vue";
-import Conversation from "@/Views/Chat/Conversation.vue";
+import Conversation from "@/Views/Chat/Conversation/Index.vue";
 import useMessageStore from "@/Store/chat";
+import { useChatPusherStore } from "@/Store/chatPusher";
 
 const messageStore = useMessageStore();
+const messagePusherStore = useChatPusherStore();
 
 const messages = computed(() => messageStore.messages);
 
@@ -29,9 +31,20 @@ onMounted(() => {
     messageStore.getContacts();
     messageStore.setActiveStatus(true);
     messageStore.getFavorites();
+    messagePusherStore.authenticate();
 });
 
 onUnmounted(() => {
     messageStore.setActiveStatus(false);
 });
+
+// Watch for active chat changes
+watch(
+    () => messageStore.activeChat,
+    async (chat) => {
+        if (chat) {
+            await messagePusherStore.listen();
+        }
+    }
+);
 </script>

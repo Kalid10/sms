@@ -1,28 +1,30 @@
 <template>
     <div class="flex h-full w-full flex-col space-y-2">
         <div
-            class="flex h-full w-full justify-between space-x-6 divide-x divide-gray-100"
+            class="flex h-full w-full flex-col justify-between divide-x divide-gray-100 px-1 lg:flex-row lg:space-x-6 lg:px-0"
         >
             <!--        Left Side-->
             <div
-                class="flex w-8/12 flex-col space-y-5"
+                class="flex w-full flex-col space-y-5 lg:w-8/12"
                 :class="isTeacher() ? 'py-5 pl-5' : 'py-3 pl-3 pr-10'"
             >
                 <Header
-                    :title="isTeacher() ? 'My Classes' : 'Classes'"
+                    :title="isTeacher() ? $t('batches.myClasses') : $t('batches.classes')"
                     :select-input-options="batchSubjectOptions"
                     :selected-input="batchSubject.id"
                     @change="updateBatchInfo"
                 />
 
-                <div class="bg w-full px-3 py-4">
+                <div class="w-full px-3 py-4">
                     <div class="w-full pr-5">
                         <BatchPerformance />
                     </div>
                 </div>
 
-                <div class="flex w-full justify-between space-x-10">
-                    <div class="w-6/12">
+                <div
+                    class="flex w-full flex-col justify-between lg:flex-row lg:space-x-10"
+                >
+                    <div class="w-full lg:w-6/12">
                         <StudentsTable
                             :title="tableTitle"
                             :table-model-value="batchSubject.id"
@@ -31,12 +33,12 @@
                         />
                     </div>
                     <div
-                        class="flex h-full w-5/12 flex-col justify-center space-y-8"
+                        class="flex h-full w-full flex-col justify-center space-y-8 lg:w-5/12"
                     >
                         <SummaryItem
                             class-style="bg-orange-100 text-black"
                             icon-style="bg-orange-500/20 text-white"
-                            :title="'Assessments'"
+                            :title="$t('common.assessments')"
                             value="10 /10 Completed"
                             :icon="ClipboardIcon"
                             :url="
@@ -49,7 +51,7 @@
                         <SummaryItem
                             class-style="bg-fuchsia-100 text-black"
                             icon-style="bg-fuchsia-500/20 text-white"
-                            :title="'LessonPlans'"
+                            :title="$t('common.lessonPlan')"
                             value="10 /10 Completed"
                             :icon="CalendarIcon"
                             :url="
@@ -62,7 +64,7 @@
                         <SummaryItem
                             class-style="bg-zinc-100 text-black"
                             icon-style="bg-zinc-500/20 text-white"
-                            :title="'Students'"
+                            :title="$t('common.students')"
                             value="75 Total Students"
                             :icon="UsersIcon"
                             :url="
@@ -75,7 +77,7 @@
                         <SummaryItem
                             class-style="bg-red-50 text-black"
                             icon-style="bg-red-500/20 text-white"
-                            :title="'Announcements'"
+                            :title="$t('common.announcements')"
                             value="10 Announcements Today"
                             :icon="ChatBubbleBottomCenterIcon"
                             :url="
@@ -91,7 +93,7 @@
 
             <!--        Right side-->
             <div
-                class="flex w-4/12 flex-col px-3 pl-5"
+                class="flex w-full flex-col px-3 pl-5 lg:w-4/12"
                 :class="isTeacher() ? 'py-5' : ''"
             >
                 <CurrentClass view="absentee" />
@@ -102,7 +104,7 @@
                     <div class="w-full rounded-lg bg-white py-2 shadow-sm">
                         <StudentsList
                             progress-type="up"
-                            title="Top Students"
+                            :title="$t('batches.topStudents')"
                             :icon="ArrowTrendingUpIcon"
                             :students="topStudents"
                         />
@@ -111,7 +113,7 @@
                     <div class="w-full rounded-lg bg-white py-2 shadow-sm">
                         <StudentsList
                             progress-type="down"
-                            title="Students Falling Behind"
+                            :title="$t('batches.studentsFalling')"
                             :icon="ArrowTrendingDownIcon"
                             :students="bottomStudents"
                         />

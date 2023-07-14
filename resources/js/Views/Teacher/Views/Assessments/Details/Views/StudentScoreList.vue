@@ -2,7 +2,7 @@
     <div class="flex w-full flex-col space-y-3">
         <div class="flex w-full items-center">
             <StudentsScoreSection
-                label="Exemplary"
+                :label="$t('studentScoreList.exemplary')"
                 :icon="ArrowTrendingUpIcon"
                 icon-color="text-emerald-500"
                 :students="exemplaryStudents"
@@ -12,7 +12,7 @@
             />
             <div class="h-full w-[0.01rem] bg-gray-200"></div>
             <StudentsScoreSection
-                label="UnderAchievers"
+                :label="$t('studentScoreList.underAchievers')"
                 :icon="ArrowTrendingDownIcon"
                 icon-color="text-red-600"
                 :students="underAchievingStudents"
@@ -25,7 +25,7 @@
             v-if="view === 'detail'"
             :href="'/teacher/assessments/mark/' + assessment.id"
             class="w-full pr-2 text-end"
-            value="View All Results"
+            :value="$t('studentScoreList.viewAllResults')"
         />
     </div>
 </template>
@@ -38,6 +38,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import LinkCell from "@/Components/LinkCell.vue";
 import { watch } from "vue";
+import OutcomePercentageDisplay from "@/Views/Teacher/Views/Assessments/Details/Views/OutcomePercentageDisplay.vue";
 
 defineEmits(["student-clicked"]);
 const props = defineProps({
