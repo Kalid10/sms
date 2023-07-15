@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\AssessmentType;
+use App\Models\BatchSubject;
 use App\Models\SchoolYear;
 use App\Services\OpenAIService;
 use App\Services\TeacherService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -33,12 +33,19 @@ class CopilotController extends Controller
                 'level_category_id', 1,
             ]])->get(['name', 'id']);
 
-        Log::info($request->input('active_tab'));
+        $teacherSubjects = BatchSubject::with([
+            'subject:id,full_name',
+            'batch:id,section,level_id',
+            'batch.level:id,name,level_category_id',
+        ])->where('teacher_id', $teacherId)
+            ->whereHas('batch', fn ($query) => $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id))
+            ->get(['id', 'subject_id', 'batch_id']);
 
         return Inertia::render('Teacher/Copilot/Index', [
             'assessment_types' => $assessmentTypes,
             'lesson_plans_data' => $lessonPlansData,
             'active_tab' => $request->input('active_tab'),
+            'batch_subjects' => $teacherSubjects,
         ]);
     }
 

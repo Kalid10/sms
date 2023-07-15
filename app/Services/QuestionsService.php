@@ -7,11 +7,12 @@ use App\Models\AssessmentType;
 use App\Models\BatchSubject;
 use App\Models\LessonPlan;
 use App\Models\Question;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class QuestionsService
 {
-    public function generateQuestions(array $requestData, OpenAIService $openAIService, $userId): array
+    public function generateQuestions(array $requestData, OpenAIService $openAIService, $userId): ?array
     {
         Validator::make($requestData, [
             'assessment_type_id' => 'required|exists:assessment_types,id',
@@ -26,11 +27,21 @@ class QuestionsService
 
         // Get the assessment type and batch subject
         $assessmentType = AssessmentType::find($requestData['assessment_type_id']);
-        $batchSubject = BatchSubject::find($requestData['batch_subject_id'])->load('batch.level', 'subject');
+        $batchSubject = BatchSubject::find($requestData['batch_subject_id'])->load(['batch.level', 'subject']);
 
-        $finalPrompt = "\nPlease generate a mix of questions, making sure they are diverse and cover the key concepts provided.
-        The difficulty of these questions should range from 1 (very easy) to 10 (very hard), with an average difficulty of {$requestData['difficulty_level']}.
-        For each question, provide the question itself, the answer, and the question type EXCLUDING MULTIPLE CHOICE. Also specify the difficulty level for each question on a scale from 1 to 10.\n";
+        $bannedLevels = explode(',', env('BANNED_LEVELS'));
+        $bannedSubjects = explode(',', env('BANNED_SUBJECTS'));
+
+        if (in_array(strtolower($batchSubject->batch->level->name), $bannedLevels)) {
+            return event(new QuestionGeneratorEvent('error', 'Questions cannot be generated for this class, ci '));
+        }
+
+        if (in_array(strtolower($batchSubject->subject->name), $bannedSubjects)) {
+            return event(new QuestionGeneratorEvent('error', 'Questions cannot be generated for this subject'));
+        }
+
+        // Updated final prompt
+        $finalPrompt = "\nAs a proficient Grade {$batchSubject->batch->level->name} teacher specializing in {$batchSubject->subject->name}, generate a diverse mix of questions based on the key concepts provided. These questions should cover a range of difficulty levels from 1 (very easy) to 10 (very hard), with an average difficulty of {$requestData['difficulty_level']}. For each question, provide the question itself and the answer, and exclude multiple-choice question types. Also specify the difficulty level for each question on a scale from 1 to 10.\n";
 
         if ($requestData['question_source'] === 'lesson-plans') {
             $questions = $this->generateQuestionFromLessonPlan($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt);
@@ -50,15 +61,16 @@ class QuestionsService
     private function generateQuestionFromLessonPlan($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt): array
     {
         $lessonPlans = LessonPlan::whereIn('id', $requestData['lesson_plan_ids'])->get();
+        Log::info($lessonPlans);
 
-        $prompt = "Generate {$requestData['number_of_questions']} {$assessmentType->name} questions for Grade 11 , subject Biology. Consider the following lesson plans:\n\n";
+        $prompt = "As an experienced Grade 11 Biology teacher, generate {$requestData['number_of_questions']} {$assessmentType->name} questions based on the following lesson plans:\n\n";
 
         // Adding topics from lesson plans to the prompt
         foreach ($lessonPlans as $lessonPlan) {
-            $prompt .= "- Topic: {$lessonPlan->topic}";
+            $prompt .= "- Topic: {$lessonPlan->topic}\n";
         }
 
-        $prompt .= $finalPrompt;
+        $prompt .= "\nEnsure the questions are diverse, covering key concepts in each topic. The difficulty of these questions should range from 1 (very easy) to 10 (very hard), with an average difficulty of {$requestData['difficulty_level']}. For each question, provide the question itself, the answer, and exclude multiple-choice question types. Also specify the difficulty level for each question on a scale from 1 to 10.";
 
         // Pass the prompt to the completion method
         return $this->passThePromptToTheCompletionMethod($openAIService, $prompt);
@@ -66,9 +78,9 @@ class QuestionsService
 
     private function generateManualInputQuestions($requestData, $openAIService, $assessmentType, $batchSubject, $finalPrompt): array
     {
-        $prompt = "Generate {$requestData['number_of_questions']} {$assessmentType->name} questions for Grade {$batchSubject->batch->level->name}, subject Biology, based on the following topic:\n\n";
-        $prompt .= "Topic: {$requestData['manual_question']}\n";
-        $prompt .= $finalPrompt;
+        $prompt = "As a proficient Grade {$batchSubject->batch->level->name} Biology teacher, generate {$requestData['number_of_questions']} {$assessmentType->name} questions based on the following topic:\n\n";
+        $prompt .= "- Topic: {$requestData['manual_question']}\n";
+        $prompt .= "\nEnsure the questions are diversified, covering key aspects of the topic. The difficulty of these questions should range from 1 (very easy) to 10 (very hard), with an average difficulty of {$requestData['difficulty_level']}. For each question, provide the question itself, the answer, and exclude multiple-choice question types. Also specify the difficulty level for each question on a scale from 1 to 10.";
 
         // Pass the prompt to the completion method
         return $this->passThePromptToTheCompletionMethod($openAIService, $prompt);
@@ -80,15 +92,15 @@ class QuestionsService
 
         // Parsing the response to extract the question details
         $questions = [];
-        for ($i = 0; $i < count($questionResponses); $i += 5) {
-            if (isset($questionResponses[$i], $questionResponses[$i + 1], $questionResponses[$i + 2], $questionResponses[$i + 3])) {
+        foreach ($questionResponses as $response) {
+            // Checking the presence of all required fields in each question
+            if (str_contains($response, 'Question:') && str_contains($response, 'Answer:') && str_contains($response, 'Question Type:') && str_contains($response, 'Difficulty Level:')) {
                 $questionDetails = [
-                    'question' => trim(str_replace('Question:', '', $questionResponses[$i])),
-                    'answer' => trim(str_replace('Answer:', '', $questionResponses[$i + 1])),
-                    'question_type' => trim(str_replace('Question Type:', '', $questionResponses[$i + 2])),
-                    'difficulty' => trim(str_replace('Difficulty Level:', '', $questionResponses[$i + 3])),
+                    'question' => trim(str_replace('Question:', '', $response)),
+                    'answer' => trim(str_replace('Answer:', '', $response)),
+                    'question_type' => trim(str_replace('Question Type:', '', $response)),
+                    'difficulty' => trim(str_replace('Difficulty Level:', '', $response)),
                 ];
-
                 $questions[] = $questionDetails;
             }
         }
@@ -96,9 +108,9 @@ class QuestionsService
         return $questions;
     }
 
-    private function saveQuestion($questions, $requestData, $assessmentType, $userId)
+    private function saveQuestion($questions, $requestData, $assessmentType, $userId): void
     {
-        return Question::create([
+        Question::create([
             'user_id' => $userId,
             'batch_subject_id' => $requestData['batch_subject_id'],
             'questions' => $questions,
