@@ -103,7 +103,7 @@
                 </div>
 
                 <TextArea
-                    v-if="selectedSubject"
+                    v-if="selectedSubject && form.question_source === 'custom'"
                     v-model="form.manual_question"
                     class="w-full"
                     :label="$t('common.question')"
@@ -111,6 +111,7 @@
                     rows="10"
                     :error="form.errors.manual_question"
                 />
+
                 <SecondaryButton
                     :title="$t('common.submit')"
                     class="w-10/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
@@ -217,6 +218,22 @@ Echo.private("question-generator").listen(".question-generator", (e) => {
         });
         uiStore.setQuestionGenerationStatus("error");
     }
+});
+
+const isSubmitDisabled = computed(() => {
+    if (!form.question_source) return true;
+
+    if (
+        form.question_source === "custom" &&
+        (!form.manual_question || form.manual_question.trim() === "")
+    ) {
+        return true;
+    }
+
+    return (
+        form.question_source === "lesson-plans" &&
+        (!form.lesson_plan_ids || form.lesson_plan_ids.length < 1)
+    );
 });
 </script>
 
