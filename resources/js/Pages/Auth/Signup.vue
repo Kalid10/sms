@@ -94,7 +94,7 @@
                     </div>
 
                     <button
-                        class="h-10 w-full rounded-md border-brand-50 bg-brand-100 text-center font-semibold text-white"
+                        class="h-10 w-full rounded-md border-brand-50 bg-brand-500 text-center font-semibold text-white"
                         type="submit"
                     >
                         {{ $t("signUp.signUp") }}
@@ -110,7 +110,7 @@
         </div>
 
         <div
-            class="col-span-1 flex h-full w-full flex-col justify-center gap-4 bg-brand-100 p-6 lg:items-start lg:p-16"
+            class="col-span-1 flex h-full w-full flex-col justify-center gap-4 bg-brand-500 p-6 lg:items-start lg:p-16"
         >
             <div class="hidden items-center gap-3 lg:flex">
                 <svg

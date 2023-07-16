@@ -46,10 +46,11 @@ import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Home.vue";
 import Summary from "@/Views/Admin/Summary.vue";
 import StudentSearch from "@/Views/Admin/StudentSearch.vue";
 import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
 
 const { t } = useI18n();
-const announcementsTab = t("common.announcements");
-const flagsTab = t("common.flags");
+const announcementsTab = toUnderscore(t("common.announcements"));
+const flagsTab = toUnderscore(t("common.flags"));
 const tabs = [announcementsTab, flagsTab];
 const activeTab = ref(announcementsTab);
 const schoolYear = computed(() => usePage().props.school_year);

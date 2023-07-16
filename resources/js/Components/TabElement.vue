@@ -13,7 +13,7 @@
                             ? 'text-brand-text-400'
                             : inActiveTabText,
                     ]"
-                    class="w-full whitespace-nowrap text-sm font-semibold transition-colors duration-300"
+                    class="w-full whitespace-nowrap text-sm font-semibold capitalize transition-colors duration-300"
                     @click="setActiveTab(tab)"
                 >
                     {{ tab }}

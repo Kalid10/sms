@@ -1,26 +1,25 @@
 import "./bootstrap";
 import "../css/app.css";
 
-import {createApp, h} from "vue";
-import {createInertiaApp} from "@inertiajs/vue3";
-import {ZiggyVue} from "../../vendor/tightenco/ziggy/dist/vue.m";
+import { createApp, h } from "vue";
+import { createInertiaApp } from "@inertiajs/vue3";
+import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import Layout from "@/Layouts/Layout.vue";
 import GettingStartedLayout from "@/Layouts/GettingStartedLayout.vue";
 
-import {createPinia} from "pinia";
+import { createPinia } from "pinia";
 import TeacherLayout from "@/Layouts/TeacherLayout.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
-import  {useI18nStore} from './Store/lang.js'
+import { useI18nStore } from "./Store/lang.js";
 
 // Localization section
 // import { lang } from './Store/lang.js'
-import en from './locale/en.js'
-import am from './locale/am.js'
-
+import en from "./locale/en.js";
+import am from "./locale/am.js";
 
 import base from "./base";
-import {createI18n, useI18n} from "vue-i18n";
+import { createI18n } from "vue-i18n";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText ||
@@ -48,38 +47,34 @@ function getLayout(name, page) {
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => {
-        const pages = import.meta.glob("./Pages/**/*.vue", {eager: true});
+        const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
         let page = pages[`./Pages/${name}.vue`];
         page.default.layout = getLayout(name, page);
         return page;
     },
-    setup({el, App, props, plugin}) {
-        const app = createApp({render: () => h(App, props)})
+    setup({ el, App, props, plugin }) {
+        const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
-            .use(pinia)
+            .use(pinia);
 
-        const langStore = useI18nStore()
+        const langStore = useI18nStore();
 
         const i18n = createI18n({
-            legacy:false,
+            legacy: false,
             locale: "am",
             globalInjection: true,
             messages: {
                 en,
                 am,
             },
-        })
+        });
 
-        app
-            .use(i18n)
-            .mixin(base)
-            .mount(el);
+        app.use(i18n).mixin(base).mount(el);
 
-        return app
+        return app;
     },
     progress: {
         color: "#4B5563",
     },
-})
-
+});
