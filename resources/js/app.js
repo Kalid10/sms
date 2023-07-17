@@ -62,7 +62,7 @@ createInertiaApp({
 
         const i18n = createI18n({
             legacy: false,
-            locale: "am",
+            locale: "en",
             globalInjection: true,
             messages: {
                 en,

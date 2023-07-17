@@ -72,7 +72,7 @@ import { usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/Views/NextClass/Index.vue";
 import moment from "moment/moment";
 import { computed, ref } from "vue";
-import { isTeacher } from "@/utils";
+import { isTeacher, toUnderscore } from "@/utils";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import CurrentDaySchedule from "@/Views/CurrentDaySchedule.vue";
 import Announcements from "@/Views/Announcements/Index.vue";
@@ -94,9 +94,9 @@ const scrollToNextClass = () => {
 };
 const currentDayScheduleRef = ref(null);
 
-const announcementsTab = t("common.announcements");
-const schoolSchedulesTab = t("teacherIndex.schoolSchedules");
-const toDaysScheduleTab = t("teacherIndex.toDaysSchedule");
+const announcementsTab = toUnderscore(t("common.announcements"));
+const schoolSchedulesTab = toUnderscore(t("teacherIndex.schoolSchedules"));
+const toDaysScheduleTab = toUnderscore(t("teacherIndex.toDaysSchedule"));
 const tabs = [announcementsTab, schoolSchedulesTab, toDaysScheduleTab];
 const activeTab = ref(announcementsTab);
 </script>

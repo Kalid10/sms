@@ -40,14 +40,14 @@ import { usePage } from "@inertiajs/vue3";
 import TabElement from "@/Components/TabElement.vue";
 import SubjectTeachers from "@/Views/Admin/Subjects/SubjectTeachers.vue";
 import SubjectGrades from "@/Views/Admin/Subjects/SubjectGrades.vue";
-import { subjectPriorityLabels, toHashTag } from "@/utils";
+import { subjectPriorityLabels, toHashTag, toUnderscore } from "@/utils";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const subject = computed(() => usePage().props.subject);
 
-const teachersTab = t("common.teachers");
-const gradesTab = t("common.grades");
+const teachersTab = toUnderscore(t("common.teachers"));
+const gradesTab = toUnderscore(t("common.grades"));
 const subjectTabs = [gradesTab, teachersTab];
 const activeTab = ref(gradesTab);
 </script>

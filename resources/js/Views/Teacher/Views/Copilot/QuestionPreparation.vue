@@ -48,7 +48,7 @@
                             }}</label
                         >
                         <p
-                            class="mb-2 py-1 text-xs font-light text-brand-text-350"
+                            class="mb-2 py-1 text-xs font-light text-brand-text-100"
                         >
                             {{ $t("questionPreparation.hintForDifficulty") }}
                         </p>

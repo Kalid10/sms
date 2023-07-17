@@ -32,7 +32,7 @@
                         {{ $t("lessonPlanCard.addLessonPlan") }}
                     </h3>
                     <h3
-                        class="max-w-[18rem] text-center text-xs font-medium text-brand-text-300"
+                        class="max-w-[18rem] text-center text-xs font-medium text-brand-text-200"
                     >
                         {{ $t("lessonPlanCard.lessonPlanHas") }}
                     </h3>
@@ -44,7 +44,7 @@
                     class="flex origin-bottom-left scale-[.8] items-center gap-2"
                 >
                     <span
-                        class="bg-white py-0.5 text-xs font-semibold uppercase text-brand-text-400"
+                        class="bg-white py-0.5 text-xs font-semibold uppercase text-brand-text-300"
                     >
                         {{
                             session["batch_schedule"]["day_of_week"]

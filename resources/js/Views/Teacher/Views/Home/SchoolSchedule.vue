@@ -5,7 +5,10 @@
         <div class="px-2 text-xl font-medium lg:text-2xl">
             Upcoming Schedules
         </div>
-        <div class="flex w-full flex-col justify-center">
+        <div
+            v-if="schoolSchedule.length > 0"
+            class="flex w-full flex-col justify-center"
+        >
             <div
                 v-for="(item, index) in schoolSchedule"
                 :key="index"
@@ -19,6 +22,13 @@
                 />
             </div>
         </div>
+        <div v-else>
+            <EmptyView
+                :title="$t('currentDaySchedule.noScheduleFound')"
+                class="flex w-full justify-center py-2"
+            />
+        </div>
+
         <LinkCell
             class="flex w-full items-center justify-center"
             value="View All Schedules"
@@ -33,6 +43,7 @@ import SchoolScheduleItem from "@/Views/Admin/Schedule/SchoolScheduleItem.vue";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import LinkCell from "@/Components/LinkCell.vue";
+import EmptyView from "@/Views/EmptyView.vue";
 
 const schoolSchedule = computed(() => usePage().props.school_schedule);
 </script>

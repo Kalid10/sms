@@ -46,7 +46,7 @@
                         {{ $t("login.welcomeBack") }}
                     </h3>
 
-                    <h3 class="text-brand-text-300">
+                    <h3 class="text-brand-text-200">
                         {{ $t("login.messageOne") }}
                     </h3>
                 </div>

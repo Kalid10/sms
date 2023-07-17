@@ -41,10 +41,11 @@ import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparati
 import { ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
 import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
 
 const { t } = useI18n();
-const chatTab = t("common.chat");
-const questionsTab = t("common.questions");
+const chatTab = toUnderscore(t("common.chat"));
+const questionsTab = toUnderscore(t("common.questions"));
 const tabs = [chatTab, questionsTab];
 const activeTab = ref(chatTab);
 

@@ -43,13 +43,13 @@
         </div>
 
         <TabElement v-model:active="activeTab" :tabs="tabs">
-            <template #assessments>
+            <template #[assessmentsTab]>
                 <Assessments />
             </template>
-            <template #notes>
+            <template #[StudentNotesTab]>
                 <StudentNotes />
             </template>
-            <template #absentees>
+            <template #[absenteesTab]>
                 <Absentees />
             </template>
         </TabElement>
@@ -64,12 +64,16 @@ import Absentees from "@/Views/Admin/Batches/Absentees.vue";
 import StudentNotes from "@/Views/Admin/Batches/StudentNotes.vue";
 import Assessments from "@/Views/Admin/Batches/Assessments.vue";
 import TabElement from "@/Components/TabElement.vue";
+import { toUnderscore } from "@/utils";
+import { useI18n } from "vue-i18n";
 
-const tabs = ["Assessments", "Notes", "Absentees"];
+const { t } = useI18n();
 
-const assessmentsTab = "Assessments";
-const NotesTab = "Notes";
-const absenteesTab = "Absentees";
+const assessmentsTab = toUnderscore(t("common.assessments"));
+const StudentNotesTab = toUnderscore(t("common.studentNotes"));
+const absenteesTab = toUnderscore(t("common.absentees"));
+
+const tabs = [assessmentsTab, StudentNotesTab, absenteesTab];
 
 const activeTab = ref(assessmentsTab);
 

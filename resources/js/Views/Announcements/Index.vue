@@ -23,7 +23,7 @@
 
         <div>
             <EmptyView
-                v-if="!computedAnnouncements"
+                v-if="computedAnnouncements"
                 :title="$t('announcementsIndex.noAnnouncementsFound')"
                 :link-title="$t('announcementsIndex.goToAnnouncements')"
                 :link-url="url"
@@ -40,7 +40,7 @@
                     />
                 </div>
                 <Pagination
-                    v-if="announcements.links"
+                    v-if="announcements?.links"
                     :links="announcements.links"
                     position="center"
                     class="pt-3"

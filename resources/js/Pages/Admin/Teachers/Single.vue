@@ -74,17 +74,18 @@ import Homeroom from "@/Views/Teacher/Homeroom.vue";
 import Announcement from "@/Views/Teacher/Announcement/Index.vue";
 import Loading from "@/Components/Loading.vue";
 import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
 
 const { t } = useI18n();
 const showLoading = ref(false);
 const teacher = computed(() => usePage().props.teacher);
-const homeTab = t("common.home");
-const classesTab = t("common.classes");
-const studentsTab = t("common.students");
-const lessonPlans = t("common.lessonPlans");
-const assessmentsTab = t("common.assessments");
-const homeroomTab = t("common.homeroom");
-const announcementsTab = t("common.announcements");
+const homeTab = toUnderscore(t("common.home"));
+const classesTab = toUnderscore(t("common.classes"));
+const studentsTab = toUnderscore(t("common.students"));
+const lessonPlans = toUnderscore(t("common.lessonPlans"));
+const assessmentsTab = toUnderscore(t("common.assessments"));
+const homeroomTab = toUnderscore(t("common.homeroom"));
+const announcementsTab = toUnderscore(t("common.announcements"));
 
 const activeTab = ref(homeTab);
 

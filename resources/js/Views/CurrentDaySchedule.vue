@@ -28,14 +28,14 @@
                             : 'text-black w-full'
                     "
                 >
-                    <div class="text-black">
+                    <div class="text-brand-500">
                         {{ item.batch_subject.subject.short_name }}
                         <span v-if="item?.batch" class="text-xs"
                             >({{ item.batch.level.name }}
                             {{ item.batch.section }})</span
                         >
                     </div>
-                    <div class="text-[0.65rem] uppercase">
+                    <div class="text-[0.65rem] uppercase text-brand-400">
                         {{ numberWithOrdinal(Number(item.school_period.name)) }}
                         {{ $t("currentDaySchedule.period") }}
                     </div>

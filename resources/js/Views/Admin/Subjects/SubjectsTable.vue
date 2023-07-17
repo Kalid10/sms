@@ -195,7 +195,7 @@
 </template>
 
 <script setup>
-import { toHashTag } from "@/utils.js";
+import { toHashTag, toUnderscore } from "@/utils.js";
 import moment from "moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {
@@ -220,10 +220,10 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
-const tabs = [t("common.subjects"), t("common.grades")];
-const subjectsTab = t("common.subjects");
-const gradesTab = t("common.grades");
+const subjectsTab = toUnderscore(t("common.subjects"));
+const gradesTab = toUnderscore(t("common.grades"));
 const activeTab = ref(subjectsTab);
+const tabs = [subjectsTab, gradesTab];
 
 // Map the batch_subjects data
 const batchSubjects = computed(() => {

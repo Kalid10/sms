@@ -36,8 +36,8 @@
                                 subject.batch.level.name &&
                             lessonPlanSubject.batch.section ===
                                 subject.batch.section
-                                ? ' text-brand-text-450 bg-brand-150/60  rounded-2xl'
-                                : 'text-brand-text-450'
+                                ? ' text-brand-text-450 bg-brand-500  rounded-2xl'
+                                : 'text-brand-text-50'
                         "
                         class="relative grid min-w-[4rem] cursor-pointer place-items-center py-2 px-5 text-center text-sm font-medium"
                     >
