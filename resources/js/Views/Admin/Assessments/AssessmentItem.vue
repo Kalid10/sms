@@ -1,6 +1,6 @@
 <template>
     <div
-        class="group flex w-full cursor-pointer items-center justify-between py-4 text-sm hover:scale-105 hover:rounded-lg hover:bg-zinc-800 hover:text-white"
+        class="group flex w-full cursor-pointer items-center justify-between py-4 text-sm hover:scale-105 hover:rounded-lg hover:bg-brand-450 hover:text-white"
     >
         <div
             :class="{

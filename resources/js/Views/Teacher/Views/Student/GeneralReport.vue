@@ -1,14 +1,16 @@
 <template>
-    <div class="flex w-full justify-between space-x-5 rounded-lg py-4">
+    <div
+        class="flex w-full flex-col justify-between rounded-lg py-4 lg:flex-row lg:space-x-5"
+    >
         <div
-            class="flex w-3/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center shadow-sm"
+            class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center shadow-sm lg:w-3/12"
             :class="{
                 'bg-positive-100 text-white': grade?.grade_scale?.label === 'A',
                 'bg-yellow-400 text-white': grade?.grade_scale?.label === 'B',
                 'bg-orange-500 text-white': grade?.grade_scale?.label === 'C',
                 'bg-orange-400 text-black': grade?.grade_scale?.label === 'D',
                 'bg-red-600 text-white': grade?.grade_scale?.label === 'F',
-                'bg-zinc-100': !grade?.score,
+                'bg-brand-100': !grade?.score,
             }"
         >
             <div v-if="grade?.grade_scale">
@@ -23,7 +25,8 @@
                 <span class="text-4xl font-semibold"> - </span>
             </div>
             <span class="text-xs font-light">
-                {{ batchSubject?.subject.short_name }}   {{ $t('generalReport.grade')}}
+                {{ batchSubject?.subject.short_name }}
+                {{ $t("generalReport.grade") }}
             </span>
         </div>
 
@@ -40,13 +43,14 @@
                     attendancePercentage < 75 && attendancePercentage > 65,
                 'bg-gradient-to-b from-orange-500 to-red-500 text-white':
                     attendancePercentage < 65,
-                'bg-zinc-100': !attendancePercentage,
+                'bg-brand-100': !attendancePercentage,
             }"
-            class="flex w-3/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm"
+            class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm lg:w-3/12"
         >
             <div>{{ attendancePercentage }}%</div>
             <span class="text-xs font-light">
-                {{ batchSubject?.subject?.short_name }}  {{ $t('generalReport.attendance')}}
+                {{ batchSubject?.subject?.short_name }}
+                {{ $t("generalReport.attendance") }}
             </span>
         </div>
 
@@ -57,9 +61,9 @@
                 'bg-orange-500 text-white': student.conduct === 'C',
                 'bg-red-500 text-white': student.conduct === 'D',
                 'bg-red-600 text-white': student.conduct === 'F',
-                'bg-zinc-100': !student.conduct,
+                'bg-brand-100': !student.conduct,
             }"
-            class="flex w-3/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm"
+            class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm lg:w-3/12"
         >
             <div class="flex items-center justify-center space-x-2 pl-3">
                 <div class="">{{ student.conduct ?? "NC" }}</div>
@@ -75,25 +79,30 @@
                 </div>
             </div>
             <span class="text-xs font-light">
-                {{ batchSubject?.subject?.short_name }} {{ $t('generalReport.conduct')}}
+                {{ batchSubject?.subject?.short_name }}
+                {{ $t("generalReport.conduct") }}
             </span>
         </div>
         <div
             :class="{
                 ' bg-gradient-to-tl from-purple-500 to-violet-500 text-white':
                     rank,
-                'bg-zinc-100': !rank,
+                'bg-brand-100': !rank,
             }"
-            class="flex w-3/12 flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm"
+            class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-4xl font-semibold shadow-sm lg:w-3/12"
         >
             <div>{{ rank ? numberWithOrdinal(rank) : "-" }}</div>
             <span class="text-xs font-light">
-                {{ batchSubject?.subject.short_name }} {{ $t('generalReport.rankFrom')}}
-                {{ totalStudents }} {{ $t('common.students')}}
+                {{ batchSubject?.subject.short_name }}
+                {{ $t("generalReport.rankFrom") }} {{ totalStudents }}
+                {{ $t("common.students") }}
             </span>
         </div>
         <Modal v-model:view="showConductModal">
-            <FormElement :title="$t('generalReport.formElementTitle')" @submit="submit">
+            <FormElement
+                :title="$t('generalReport.formElementTitle')"
+                @submit="submit"
+            >
                 <SelectInput
                     v-model="conductForm.conduct"
                     :placeholder="$t('generalReport.conductPlaceholder')"

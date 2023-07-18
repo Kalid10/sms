@@ -11,7 +11,7 @@
             class="w-full text-center text-xs font-light opacity-70"
             :class="fontSize"
         >
-            {{ $t('lastAssessment.lastAssessment')}}
+            {{ $t("lastAssessment.lastAssessment") }}
         </div>
         <div class="font-medium">
             <span
@@ -19,7 +19,7 @@
                 :class="fontSizeLarge"
                 >{{ lastAssessment.maximum_point }}</span
             >
-            {{ $t('common.pts')}}
+            {{ $t("common.pts") }}
         </div>
         <div
             class="flex flex-col items-center justify-center space-y-1"
@@ -37,15 +37,15 @@
             class="text-xs font-light"
             :class="fontSizeSmall"
         >
-            {{ $t('lastAssessment.dueOn')}}
+            {{ $t("lastAssessment.dueOn") }}
             {{ moment(lastAssessment.due_date).format(" dddd MMMM D  YYYY") }}
         </div>
         <PrimaryButton
-            class="w-8/12 !border-none bg-zinc-700 !text-xs lg:w-10/12 2xl:w-11/12"
+            class="w-8/12 !border-none bg-brand-400 !text-xs lg:w-10/12 2xl:w-11/12"
             :class="buttonWidth"
             @click="router.visit('/teacher/assessments')"
-            >
-            {{ $t('lastAssessment.viewAllAssessments')}}
+        >
+            {{ $t("lastAssessment.viewAllAssessments") }}
         </PrimaryButton>
     </div>
     <div
@@ -53,10 +53,12 @@
         class="flex h-64 w-full flex-col items-center justify-center space-y-5 text-center font-light lg:w-5/12"
     >
         <div class="h-fit text-sm">
-            {{ $t('lastAssessment.noPreviousAssessments')}}
-
+            {{ $t("lastAssessment.noPreviousAssessments") }}
         </div>
-        <LinkCell :value="$t('lastAssessment.viewAssessments')"  href="/teacher/assessments" />
+        <LinkCell
+            :value="$t('lastAssessment.viewAssessments')"
+            href="/teacher/assessments"
+        />
     </div>
 </template>
 

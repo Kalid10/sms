@@ -7,7 +7,9 @@
                 <div class="text-xl font-semibold lg:text-2xl">
                     {{ parseLevel(level.name) }}
                 </div>
-                <h3 class="text-sm text-gray-500">{{ schoolYear.name }}</h3>
+                <h3 class="text-sm text-brand-text-300">
+                    {{ schoolYear.name }}
+                </h3>
             </div>
 
             <SelectInput
@@ -41,7 +43,7 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import { parseLevel } from "@/utils.js";
+import { parseLevel, toUnderscore } from "@/utils.js";
 import TabElement from "@/Components/TabElement.vue";
 import LevelSubjects from "@/Views/Admin/Levels/LevelSubjects.vue";
 import LevelStudents from "@/Views/Admin/Levels/LevelStudents.vue";
@@ -52,9 +54,9 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const level = computed(() => usePage().props.level);
 const schoolYear = computed(() => usePage().props.school_year);
-const sectionsTab = t("common.sections");
-const subjectsTab = t("common.subjects");
-const studentTab = t("common.students");
+const sectionsTab = toUnderscore(t("common.sections"));
+const subjectsTab = toUnderscore(t("common.subjects"));
+const studentTab = toUnderscore(t("common.students"));
 const tabs = [sectionsTab, subjectsTab, studentTab];
 const activeTab = ref(sectionsTab);
 

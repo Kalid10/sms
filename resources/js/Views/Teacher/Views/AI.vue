@@ -3,15 +3,15 @@
         class="flex h-44 w-full flex-col items-center justify-evenly rounded-lg bg-gradient-to-b from-violet-500 to-purple-500 text-white shadow-sm"
     >
         <div
-            class="-skew-x-3 bg-violet-300 px-3 text-xl font-bold uppercase text-zinc-800"
+            class="-skew-x-3 bg-violet-300 px-3 text-xl font-bold uppercase text-brand-text-450"
         >
-            {{$t('ai.artificialIntelligence')}}
+            {{ $t("ai.artificialIntelligence") }}
         </div>
         <div class="px-3 text-center text-purple-50">
-            {{$t('ai.empowerYourTeaching')}}
+            {{ $t("ai.empowerYourTeaching") }}
         </div>
         <SecondaryButton
-            class="w-6/12 !rounded-2xl bg-violet-300 font-semibold text-zinc-800"
+            class="w-6/12 !rounded-2xl bg-violet-300 font-semibold text-brand-text-450"
             :title="$t('ai.exploreMore')"
             @click="router.get('/teacher/copilot')"
         />
@@ -20,6 +20,5 @@
 <script setup>
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { router } from "@inertiajs/vue3";
-import Header from "@/Views/Teacher/Views/Header.vue";
 </script>
 <style scoped></style>

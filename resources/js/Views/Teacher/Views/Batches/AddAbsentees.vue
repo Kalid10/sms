@@ -10,14 +10,16 @@
 
                 <div
                     v-if="absenteeStudents.length"
-                    class="flex w-full flex-col space-y-2 rounded-lg bg-zinc-200 py-3 px-4 shadow-md"
+                    class="flex w-full flex-col space-y-2 rounded-lg bg-brand-150 py-3 px-4 shadow-md"
                 >
-                    <div class="text-sm font-light">{{$t('addAbsentees.absenteeStudents')}}</div>
+                    <div class="text-sm font-light">
+                        {{ $t("addAbsentees.absenteeStudents") }}
+                    </div>
                     <div class="flex w-full flex-wrap space-x-1.5">
                         <div
                             v-for="(item, index) in absenteeStudents"
                             :key="index"
-                            class="flex w-fit space-x-1 rounded-md bg-zinc-800 py-1 px-2 text-xs text-white"
+                            class="flex w-fit space-x-1 rounded-md bg-brand-450 py-1 px-2 text-xs text-white"
                         >
                             <div>
                                 {{ item.name }}
@@ -36,7 +38,7 @@
                     v-for="(item, index) in studentList"
                     :key="index"
                     class="mt-3 flex w-full flex-col justify-between p-2 text-sm font-semibold"
-                    :class="index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'"
+                    :class="index % 2 === 0 ? 'bg-brand-100' : 'bg-white'"
                 >
                     <div class="flex w-full justify-between px-4">
                         <div class="w-6/12">
@@ -57,7 +59,7 @@
                             :class="
                                 studentList[index].reason
                                     ? 'text-black'
-                                    : 'text-gray-300 hover:text-black'
+                                    : 'text-brand-text-200 hover:text-black'
                             "
                             class="w-5 cursor-pointer hover:scale-125"
                             @click="handleReasonClick(index, item)"
@@ -97,7 +99,6 @@ import { ChatBubbleBottomCenterIcon } from "@heroicons/vue/20/solid/index";
 import debounce from "lodash/debounce";
 import { toInteger } from "lodash";
 import Loading from "@/Components/Loading.vue";
-import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 
 const inProgressSession = computed(() => usePage().props.in_progress_session);
 const searchText = ref(usePage().props.filters.search);

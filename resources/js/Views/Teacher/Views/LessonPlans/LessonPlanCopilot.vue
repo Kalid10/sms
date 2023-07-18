@@ -9,9 +9,11 @@
         />
         <div class="flex justify-between">
             <div>
-                <div class="mb-1 text-2xl font-bold">{{ $t('lessonPlanCopilot.rigelCopilot')}} </div>
-                <div class="w-full text-sm text-gray-700">
-                    {{ $t('lessonPlanCopilot.intro')}}
+                <div class="mb-1 text-2xl font-bold">
+                    {{ $t("lessonPlanCopilot.rigelCopilot") }}
+                </div>
+                <div class="w-full text-sm text-brand-text-400">
+                    {{ $t("lessonPlanCopilot.intro") }}
                 </div>
             </div>
 
@@ -26,14 +28,14 @@
                 class="mt-3 w-fit cursor-pointer rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:scale-105 hover:font-medium"
                 @click="showQuestionSection = true"
             >
-                {{ $t('lessonPlanCopilot.generateQuestions')}}
+                {{ $t("lessonPlanCopilot.generateQuestions") }}
             </div>
 
             <div
                 class="mt-3 w-fit cursor-pointer rounded-2xl bg-yellow-400 px-3 py-1.5 text-xs hover:scale-105 hover:font-medium"
                 @click="showChatSection = true"
             >
-                {{ $t('lessonPlanCopilot.orDoYouWant')}}
+                {{ $t("lessonPlanCopilot.orDoYouWant") }}
             </div>
         </div>
 
@@ -48,7 +50,7 @@
             class="flex w-full flex-col items-center justify-center space-y-5 pt-5"
         >
             <div class="w-fit px-3 py-1">
-                {{ $t('lessonPlanCopilot.needAssistanceWith')}}
+                {{ $t("lessonPlanCopilot.needAssistanceWith") }}
             </div>
             <Chat :show-getting-started="false" />
         </div>
@@ -62,7 +64,7 @@
             class="flex h-full w-full items-center justify-center px-5 text-center"
         >
             <div class="space-x- flex w-9/12 font-light leading-7">
-                {{ $t('lessonPlanCopilot.needHandWith')}}
+                {{ $t("lessonPlanCopilot.needHandWith") }}
             </div>
         </div>
 
@@ -72,7 +74,7 @@
             class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 text-sm text-black shadow-sm"
         >
             <div class="text-center text-xl font-semibold">
-                {{ $t('lessonPlanCopilot.lessonPlanExplained')}}
+                {{ $t("lessonPlanCopilot.lessonPlanExplained") }}
             </div>
             <div
                 class="px-4"
@@ -87,7 +89,7 @@
 
                 <div class="flex w-full justify-end px-2 pt-2">
                     <ClipboardDocumentIcon
-                        class="w-4 cursor-pointer text-zinc-400 hover:text-black"
+                        class="w-4 cursor-pointer text-brand-text-250 hover:text-black"
                         @click="copyToClipboard(noteSuggestions)"
                     />
                 </div>
@@ -95,16 +97,18 @@
         </div>
 
         <div v-if="questionSuggestions" class="flex flex-col space-y-1 p-3">
-            <div class="pb-3 text-zinc-800">{{ $t('lessonPlanCopilot.potentialQuestions')}}</div>
+            <div class="pb-3 text-brand-text-450">
+                {{ $t("lessonPlanCopilot.potentialQuestions") }}
+            </div>
             <div class="flex flex-col space-y-2">
                 <div
                     v-for="(item, index) in questionSuggestions"
                     :key="index"
-                    class="group flex cursor-pointer justify-between rounded-lg bg-zinc-100 p-3 text-sm font-medium text-zinc-800 hover:bg-zinc-200 hover:text-zinc-900"
+                    class="group flex cursor-pointer justify-between rounded-lg bg-brand-100 p-3 text-sm font-medium text-brand-text-450 hover:bg-brand-150 hover:text-brand-text-500"
                 >
                     {{ item }}
                     <ClipboardDocumentIcon
-                        class="w-4 text-zinc-400 group-hover:text-black"
+                        class="w-4 text-brand-text-250 group-hover:text-black"
                         @click="copyToClipboard(item)"
                     />
                 </div>
@@ -122,18 +126,18 @@
             </p>
             <div class="flex w-full justify-center space-x-3">
                 <div
-                    class="flex w-fit cursor-pointer items-center space-x-1 !rounded-2xl bg-gray-100 px-3 py-1 text-black hover:scale-105"
+                    class="flex w-fit cursor-pointer items-center space-x-1 !rounded-2xl bg-brand-100 px-3 py-1 text-black hover:scale-105"
                 >
                     <ClipboardDocumentIcon class="w-3" />
                     <div
                         class="!py-0.5 !px-0 text-xs font-medium"
                         @click="addToDescription"
                     >
-                        {{ $t('lessonPlanCopilot.copyToLessonPlan')}}
+                        {{ $t("lessonPlanCopilot.copyToLessonPlan") }}
                     </div>
                 </div>
                 <div
-                    class="flex w-fit cursor-pointer items-center space-x-1 !rounded-2xl bg-gray-100 px-2 py-1 text-black hover:scale-105"
+                    class="flex w-fit cursor-pointer items-center space-x-1 !rounded-2xl bg-brand-100 px-2 py-1 text-black hover:scale-105"
                 >
                     <MagnifyingGlassIcon class="w-3" />
                     <div
@@ -146,7 +150,7 @@
                             )
                         "
                     >
-                        {{ $t('lessonPlanCopilot.searchGoogle')}}
+                        {{ $t("lessonPlanCopilot.searchGoogle") }}
                     </div>
                 </div>
             </div>

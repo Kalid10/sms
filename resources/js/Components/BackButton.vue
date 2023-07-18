@@ -1,7 +1,7 @@
 <template>
     <Link :href="link">
         <ArrowLeftCircleIcon
-            class="w-6 cursor-pointer text-zinc-700 hover:text-black"
+            class="w-6 cursor-pointer text-brand-text-400 hover:text-black"
         />
     </Link>
 </template>

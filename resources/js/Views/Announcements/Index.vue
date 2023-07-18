@@ -16,14 +16,14 @@
                 </div>
                 <SquaresPlusIcon
                     v-if="isAdmin() && view === 'admin'"
-                    class="w-5 cursor-pointer text-zinc-700 hover:scale-105"
+                    class="w-5 cursor-pointer text-brand-text-400 hover:scale-105"
                 />
             </div>
         </div>
 
         <div>
             <EmptyView
-                v-if="!computedAnnouncements"
+                v-if="computedAnnouncements"
                 :title="$t('announcementsIndex.noAnnouncementsFound')"
                 :link-title="$t('announcementsIndex.goToAnnouncements')"
                 :link-url="url"
@@ -35,12 +35,12 @@
                         v-for="(item, index) in computedAnnouncements"
                         :key="index"
                         :announcement="item"
-                        :class="index % 2 === 0 ? 'bg-gray-50/50' : ''"
+                        :class="index % 2 === 0 ? 'bg-brand-50/50' : ''"
                         @click="handleClick(item)"
                     />
                 </div>
                 <Pagination
-                    v-if="announcements.links"
+                    v-if="announcements?.links"
                     :links="announcements.links"
                     position="center"
                     class="pt-3"
@@ -62,8 +62,7 @@
     </div>
 </template>
 <script setup>
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
 import { computed, ref, toRefs, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import Item from "@/Views/Announcements/Item.vue";
@@ -76,6 +75,8 @@ import { isAdmin } from "@/utils";
 import { SquaresPlusIcon } from "@heroicons/vue/20/solid";
 import ShowAnnouncementView from "@/Views/Announcements/ShowAnnouncement.vue";
 
+const { t } = useI18n();
+
 const props = defineProps({
     url: {
         type: String,
@@ -84,7 +85,7 @@ const props = defineProps({
     title: {
         type: String,
         default: function () {
-            useI18n().t('announcementsIndex.announcementsTitle')
+            useI18n().t("announcementsIndex.announcementsTitle");
         },
     },
     classStyle: {

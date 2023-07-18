@@ -1,11 +1,11 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col items-center space-y-5 bg-gray-50 py-5"
+        class="flex min-h-screen w-full flex-col items-center space-y-5 bg-brand-50 py-5"
     >
         <Title class="w-11/12" :title="$t('schedulesIndex.schoolSchedules')" />
         <div class="flex w-11/12 flex-col justify-between lg:flex-row">
             <div
-                class="flex w-full justify-between bg-gray-50 lg:w-6/12 lg:space-x-10"
+                class="flex w-full justify-between bg-brand-50 lg:w-6/12 lg:space-x-10"
             >
                 <div
                     class="h-fit w-full rounded-lg bg-white px-5 py-3 shadow-sm"
@@ -63,7 +63,7 @@
                 <SecondaryButton
                     v-if="isAdmin()"
                     :title="$t('schedulesIndex.addEvent')"
-                    class="w-7/12 rounded-lg bg-zinc-800 !py-2 text-white"
+                    class="w-7/12 rounded-lg bg-brand-450 !py-2 text-white"
                     @click="showAddModal = true"
                 />
             </div>

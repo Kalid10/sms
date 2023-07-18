@@ -25,12 +25,13 @@ import TabElement from "@/Components/TabElement.vue";
 import BatchStudentsTable from "@/Pages/Admin/Students/BatchStudentsTable.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
 
 const { t } = useI18n();
 
-const tabs = [t("studentsIndex.students"), t("studentsIndex.grades")];
-const studentsTab = t("studentsIndex.students");
-const gradesTab = t("studentsIndex.grades");
+const studentsTab = toUnderscore(t("studentsIndex.students"));
+const gradesTab = toUnderscore(t("studentsIndex.grades"));
+const tabs = [studentsTab, gradesTab];
 
 const activeTab = ref(studentsTab);
 

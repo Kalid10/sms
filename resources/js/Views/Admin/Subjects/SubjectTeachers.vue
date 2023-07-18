@@ -14,7 +14,7 @@
                         {{ subject["full_name"] }}
                     </h3>
 
-                    <h3 class="whitespace-nowrap text-sm text-gray-500">
+                    <h3 class="whitespace-nowrap text-sm text-brand-text-300">
                         {{ $t("subjectTeachers.listOfTeachers") }}
                         {{ subject["short_name"] }}
                         {{ $t("subjectTeachers.faculty") }}
@@ -48,10 +48,13 @@
                     {{ $t("subjectTeachers.noDataFound") }}
                 </p>
                 <div v-if="searchKey.length">
-                    <p v-if="searchKey === null" class="text-sm text-gray-500">
+                    <p
+                        v-if="searchKey === null"
+                        class="text-sm text-brand-text-300"
+                    >
                         {{ $t("subjectTeachers.NoTeacherEnrolled") }}
                     </p>
-                    <p v-else class="text-center text-sm text-gray-500">
+                    <p v-else class="text-center text-sm text-brand-text-300">
                         <span
                             v-html="
                                 $t('subjectTeachers.yourQueryDidNotMatch', {
@@ -81,7 +84,7 @@
                             >{{ data["gender"] }}</span
                         >
                     </div>
-                    <span class="text-gray-500">{{ data["email"] }}</span>
+                    <span class="text-brand-text-300">{{ data["email"] }}</span>
                 </div>
             </Link>
         </template>

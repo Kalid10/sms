@@ -4,13 +4,11 @@
             <div
                 class="col-span-4 col-start-1 mb-6 flex shrink-0 flex-col px-3 md:mb-0 md:w-full"
             >
-                <Heading
-                    :value="$t('createStudent.headingOne')"
-                />
+                <Heading :value="$t('createStudent.headingOne')" />
                 <Heading
                     :value="$t('createStudent.headingTwo')"
                     size="sm"
-                    class="text-xs !font-light text-gray-500"
+                    class="text-xs !font-light text-brand-text-300"
                 />
             </div>
             <div class="col-span-7 col-start-5">
@@ -35,7 +33,9 @@
                                 class="w-full cursor-pointer"
                                 :options="levelOptions"
                                 :label="$t('createStudent.levelIdLabel')"
-                                :placeholder="$t('createStudent.levelIdPlaceholder')"
+                                :placeholder="
+                                    $t('createStudent.levelIdPlaceholder')
+                                "
                                 required
                             />
                             <GuardianSelectInput
@@ -43,7 +43,9 @@
                                 class="w-full cursor-pointer"
                                 :options="genderOptions"
                                 :label="$t('createStudent.genderLabel')"
-                                :placeholder="$t('createStudent.genderPlaceholder')"
+                                :placeholder="
+                                    $t('createStudent.genderPlaceholder')
+                                "
                                 required
                             />
                         </div>
@@ -58,8 +60,14 @@
                                 v-model="form.guardian_relation"
                                 class="w-full cursor-pointer"
                                 :options="relationOptions"
-                                :label="$t('createStudent.guardianRelationLabel')"
-                                :placeholder="$t('createStudent.guardianRelationPlaceholder')"
+                                :label="
+                                    $t('createStudent.guardianRelationLabel')
+                                "
+                                :placeholder="
+                                    $t(
+                                        'createStudent.guardianRelationPlaceholder'
+                                    )
+                                "
                                 required
                             />
                         </div>
@@ -76,8 +84,14 @@
                             <GuardianTextInput
                                 v-model="form.guardian_phone_number"
                                 class="w-full"
-                                :label="$t('createStudent.guardianPhoneNumberLabel')"
-                                :placeholder="$t('createStudent.guardianPhoneNumberPlaceholder')"
+                                :label="
+                                    $t('createStudent.guardianPhoneNumberLabel')
+                                "
+                                :placeholder="
+                                    $t(
+                                        'createStudent.guardianPhoneNumberPlaceholder'
+                                    )
+                                "
                                 type="number"
                                 :error="form.errors.guardian_phone_number"
                                 required
@@ -97,7 +111,11 @@
                                 class="w-full cursor-pointer"
                                 :options="genderOptions"
                                 :label="$t('createStudent.guardianGenderLabel')"
-                                :placeholder="$t('createStudent.guardianGenderPlaceholder')"
+                                :placeholder="
+                                    $t(
+                                        'createStudent.guardianGenderPlaceholder'
+                                    )
+                                "
                                 required
                             />
                         </div>
@@ -114,7 +132,7 @@
                 <Heading
                     :value="$t('createStudent.headingFour')"
                     size="sm"
-                    class="text-xs !font-light text-gray-500"
+                    class="text-xs !font-light text-brand-text-300"
                 />
             </div>
             <div class="col-span-7 col-start-5">
@@ -145,13 +163,14 @@ import GuardianPrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianDatePicker from "@/Components/DatePicker.vue";
 import GuardianSelectInput from "@/Components/SelectInput.vue";
 import { value } from "lodash/seq";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 defineEmits(["file-uploaded"]);
 
 const genderOptions = [
-    { value: "male", label: t('common.male') },
-    { value: "female", label: t('common.female') },
+    { value: "male", label: t("common.male") },
+    { value: "female", label: t("common.female") },
 ];
 
 const handleFileUploaded = (file) => {
@@ -178,9 +197,9 @@ const levelOptions = [
 ];
 
 const relationOptions = [
-    { value: "father", label: t('createStudent.father') },
-    { value: "mother", label:  t('createStudent.mother') },
-    { value: "other", label:  t('createStudent.other') },
+    { value: "father", label: t("createStudent.father") },
+    { value: "mother", label: t("createStudent.mother") },
+    { value: "other", label: t("createStudent.other") },
 ];
 
 const form = useForm({

@@ -1,7 +1,7 @@
 <template>
     <div class="flex cursor-pointer flex-col">
         <label v-if="!!label && labelLocation === 'top'" class="">
-            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{
+            <span class="pl-0.5 text-sm font-semibold text-brand-text-300">{{
                 label
             }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
@@ -15,13 +15,15 @@
                 <span class="flex grow flex-col justify-center px-3">
                     <span
                         v-if="labelLocation === 'inside'"
-                        class="text-[0.7rem] text-gray-500"
+                        class="text-[0.7rem] text-brand-text-300"
                         >{{ label }}</span
                     >
                     <span
                         :aria-placeholder="placeholder"
                         :class="[
-                            !!selectedLabel ? 'text-black' : 'text-gray-500',
+                            !!selectedLabel
+                                ? 'text-black'
+                                : 'text-brand-text-300',
                         ]"
                         class="flex text-xs capitalize 2xl:text-sm"
                         >{{ selectedLabel ?? placeholder }}

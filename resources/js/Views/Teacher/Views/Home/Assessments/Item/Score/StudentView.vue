@@ -13,9 +13,9 @@
             </div>
         </div>
         <span
-            class="-mt-1 w-full text-end text-[0.5rem] font-light text-gray-500"
-            >{{$t('common.pts')}} </span
-        >
+            class="-mt-1 w-full text-end text-[0.5rem] font-light text-brand-text-300"
+            >{{ $t("common.pts") }}
+        </span>
     </div>
 </template>
 

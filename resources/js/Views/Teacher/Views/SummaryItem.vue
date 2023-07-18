@@ -38,7 +38,7 @@ defineProps({
     },
     classStyle: {
         type: String,
-        default: "bg-zinc-700",
+        default: "bg-brand-400",
     },
     iconStyle: {
         type: String,

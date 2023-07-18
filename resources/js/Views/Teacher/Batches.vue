@@ -9,7 +9,11 @@
                 :class="isTeacher() ? 'py-5 pl-5' : 'py-3 pl-3 pr-10'"
             >
                 <Header
-                    :title="isTeacher() ? $t('batches.myClasses') : $t('batches.classes')"
+                    :title="
+                        isTeacher()
+                            ? $t('batches.myClasses')
+                            : $t('batches.classes')
+                    "
                     :select-input-options="batchSubjectOptions"
                     :selected-input="batchSubject.id"
                     @change="updateBatchInfo"
@@ -62,8 +66,8 @@
                             "
                         />
                         <SummaryItem
-                            class-style="bg-zinc-100 text-black"
-                            icon-style="bg-zinc-500/20 text-white"
+                            class-style="bg-brand-100 text-black"
+                            icon-style="bg-brand-300/20 text-white"
                             :title="$t('common.students')"
                             value="75 Total Students"
                             :icon="UsersIcon"

@@ -7,10 +7,10 @@
             <div
                 v-for="(chat, index) in contacts"
                 :key="index"
-                class="flex h-20 w-full cursor-pointer items-center justify-between px-5 hover:bg-gray-100"
+                class="flex h-20 w-full cursor-pointer items-center justify-between px-5 hover:bg-brand-100"
                 :class="
                     messageStore.activeChat.id === chat.id
-                        ? 'bg-gray-200/50'
+                        ? 'bg-brand-150/50'
                         : 'bg-white'
                 "
                 @click="$emit('loadChat', chat)"
@@ -28,7 +28,7 @@
                             :class="
                                 chat.active_status
                                     ? 'bg-green-500'
-                                    : 'bg-gray-600'
+                                    : 'bg-brand-350'
                             "
                         ></div>
                     </div>
@@ -41,7 +41,7 @@
                             {{ chat.name }}
                         </h1>
                         <h1
-                            class="block w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-gray-400"
+                            class="block w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-brand-text-250"
                         >
                             {{ chat?.latest_message?.body }}
                         </h1>
@@ -55,7 +55,7 @@
                         :class="
                             isInFavorites(chat.id).value
                                 ? 'text-yellow-400'
-                                : 'text-gray-400'
+                                : 'text-brand-text-250'
                         "
                         @click="messageStore.toggleFavorite(chat.id)"
                     />

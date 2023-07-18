@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-fit w-full items-center justify-evenly rounded-t-lg bg-zinc-800 py-3 text-white"
+        class="flex h-fit w-full items-center justify-evenly rounded-t-lg bg-brand-450 py-3 text-white"
     >
         <div class="flex w-1/12 items-center justify-center">
             <ChevronLeftIcon

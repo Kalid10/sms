@@ -6,7 +6,7 @@ module.exports = {
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
-        "./resources/js/**/*.vue"
+        "./resources/js/**/*.vue",
     ],
 
     theme: {
@@ -29,8 +29,29 @@ module.exports = {
                     100: "#FACC15",
                 },
                 brand: {
-                    50: "rgb(233 213 255)",
-                    100: "rgb(147 51 234)",
+                    50: "#fafafa",
+                    100: "#f4f4f5",
+                    150: "#e4e4e7",
+                    200: "#d4d4d8",
+                    250: "#a1a1aa",
+                    300: "#71717a",
+                    350: "#52525b",
+                    400: "#3f3f46",
+                    450: "#27272a",
+                    500: "#18181b",
+                    550: "#09090b",
+                },
+                "brand-text": {
+                    50: "#18181b",
+                    100: "#27272a",
+                    150: "#3f3f46",
+                    200: "#52525b",
+                    250: "#71717a",
+                    300: "#a1a1aa",
+                    350: "#d4d4d8",
+                    400: "#e4e4e7",
+                    450: "#f4f4f5",
+                    500: "#fafafa",
                 },
             },
             minHeight: {

@@ -1,7 +1,5 @@
 <template>
-
     <div class="flex w-full flex-col">
-
         <div class="flex items-center">
             <div class="flex w-full items-center gap-4 border-b p-4">
                 <ChevronLeftIcon
@@ -25,7 +23,7 @@
                 <label
                     v-for="(day, d) in days"
                     :key="d"
-                    class="hidden place-items-center text-xs font-semibold text-gray-500 lg:grid"
+                    class="hidden place-items-center text-xs font-semibold text-brand-text-300 lg:grid"
                 >
                     {{ day }}
                 </label>
@@ -33,7 +31,7 @@
                 <label
                     v-for="(day, d) in shortDays"
                     :key="d"
-                    class="grid place-items-center text-xs font-semibold uppercase text-gray-500 lg:hidden"
+                    class="grid place-items-center text-xs font-semibold uppercase text-brand-text-300 lg:hidden"
                 >
                     {{ day }}
                 </label>
@@ -48,7 +46,7 @@
                     class="col-span-1 row-span-1 flex cursor-auto flex-col items-center border-b"
                 >
                     <div
-                        class="w-full p-2 text-left text-xs font-semibold text-gray-500"
+                        class="w-full p-2 text-left text-xs font-semibold text-brand-text-300"
                     >
                         {{ numberOfPreviousDays - offsetDays + o }}
                     </div>
@@ -66,7 +64,7 @@
                     "
                 >
                     <div
-                        class="w-full p-2 text-left text-xs font-semibold text-gray-500"
+                        class="w-full p-2 text-left text-xs font-semibold text-brand-text-300"
                     >
                         {{ day }}
                     </div>
@@ -100,7 +98,7 @@
                                     class="hidden overflow-hidden md:flex lg:min-w-fit"
                                 >
                                     <p
-                                        class="truncate whitespace-nowrap text-xs text-gray-500"
+                                        class="truncate whitespace-nowrap text-xs text-brand-text-300"
                                     >
                                         All-Day
                                     </p>
@@ -137,24 +135,24 @@
                     class="col-span-1 row-span-1 flex cursor-auto flex-col items-center border-b"
                 >
                     <div
-                        class="w-full p-2 text-left text-xs font-semibold text-gray-500"
+                        class="w-full p-2 text-left text-xs font-semibold text-brand-text-300"
                     >
                         {{ k }}
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
 </template>
 
 <script setup>
-
-import {computed, onMounted, ref} from "vue";
-import {router} from "@inertiajs/vue3";
+import { computed, onMounted, ref } from "vue";
+import { router } from "@inertiajs/vue3";
 import moment from "moment";
-import {ChevronLeftIcon, ChevronRightIcon} from "@heroicons/vue/24/outline/index.js";
+import {
+    ChevronLeftIcon,
+    ChevronRightIcon,
+} from "@heroicons/vue/24/outline/index.js";
 
 const emits = defineEmits(["select"]);
 
@@ -247,11 +245,9 @@ function getDaySchedule(day) {
         ).isBetween(schedule.start_date, schedule.end_date);
     });
 }
-
 </script>
 
 <style scoped>
-
 .calendar > div:not(:nth-child(7n)) {
     @apply border-r;
 }
@@ -268,5 +264,4 @@ function getDaySchedule(day) {
 .event:hover .event-detail {
     max-height: 100rem;
 }
-
 </style>

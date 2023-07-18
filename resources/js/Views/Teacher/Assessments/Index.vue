@@ -8,16 +8,17 @@
             :class="isSidebarOpenOnXlDevice ? 'w-full' : ' w-full lg:w-7/12 '"
         >
             <div class="flex w-full justify-between">
-                <div class="text-xl font-semibold text-zinc-800 lg:text-4xl">
-                    {{ $t('teacherAssessmentsIndex.assessments') }}
-
+                <div
+                    class="text-xl font-semibold text-brand-text-100 lg:text-4xl"
+                >
+                    {{ $t("teacherAssessmentsIndex.assessments") }}
                 </div>
                 <div
-                    class="flex w-fit cursor-pointer items-center space-x-1 rounded-md px-2 text-[0.65rem] text-zinc-800 underline decoration-zinc-800 underline-offset-2 hover:font-semibold lg:hidden"
+                    class="flex w-fit cursor-pointer items-center space-x-1 rounded-md px-2 text-[0.65rem] text-brand-text-450 underline decoration-zinc-800 underline-offset-2 hover:font-semibold lg:hidden"
                     @click="showModal = true"
                 >
                     <div>
-                        {{ $t('teacherAssessmentsIndex.createAssessment') }}
+                        {{ $t("teacherAssessmentsIndex.createAssessment") }}
                     </div>
                 </div>
             </div>
@@ -28,7 +29,7 @@
             :class="
                 isSidebarOpenOnXlDevice
                     ? 'hidden'
-                    : 'h-full w-[0.01rem] bg-gray-300'
+                    : 'h-full w-[0.01rem] bg-brand-200'
             "
         ></div>
 

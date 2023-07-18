@@ -1,25 +1,25 @@
 <template>
-    <div class="flex h-screen w-full flex-col space-y-2 bg-gray-50">
+    <div class="flex h-screen w-full flex-col space-y-2 bg-brand-50">
         <div
             v-if="!selectedHomeroom"
             class="flex h-96 flex-col items-center justify-center space-y-5"
         >
             <div class="">404</div>
             <div class="w-6/12 text-center text-3xl font-semibold text-black">
-                {{ $t('homeRooms.noHomeroomClasses') }}
+                {{ $t("homeRooms.noHomeroomClasses") }}
             </div>
 
             <SecondaryButton
                 v-if="isAdmin()"
                 :title="$t('homeRooms.assignHomeroom')"
-                class="!rounded-2xl bg-zinc-800 text-white"
+                class="!rounded-2xl bg-brand-450 text-white"
                 @click="showAssignModal = true"
             />
         </div>
 
         <div
             v-else
-            class="flex min-h-screen w-full flex-col justify-between divide-x divide-gray-200 bg-gray-50 lg:flex-row lg:space-x-6"
+            class="flex min-h-screen w-full flex-col justify-between divide-x divide-gray-200 bg-brand-50 lg:flex-row lg:space-x-6"
         >
             <!--        Left Side-->
             <div
@@ -56,7 +56,7 @@
 
             <!--        Right side-->
             <div
-                class="flex w-full flex-col space-y-6 bg-gray-50 py-5 lg:w-3/12 lg:pl-5"
+                class="flex w-full flex-col space-y-6 bg-brand-50 py-5 lg:w-3/12 lg:pl-5"
             >
                 <div
                     class="flex w-full flex-col space-y-3 px-3 lg:flex-row lg:justify-evenly lg:space-y-0 lg:px-0"
@@ -67,7 +67,7 @@
                         <div v-if="grade">{{ grade?.attendance ?? "-" }}%</div>
                         <div>-</div>
                         <span class="text-xs font-light"
-                            >{{ $t('homeRooms.classAttendance') }}
+                            >{{ $t("homeRooms.classAttendance") }}
                         </span>
                     </div>
                     <div
@@ -79,12 +79,14 @@
                             'bg-red-500 text-white': grade?.conduct === 'D',
                             'bg-negative-100 text-white':
                                 grade?.conduct === 'F',
-                            'bg-zinc-700 text-white': !grade?.conduct,
+                            'bg-brand-400 text-white': !grade?.conduct,
                         }"
                         class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-5xl font-bold shadow-sm lg:w-5/12"
                     >
                         <div>{{ grade?.conduct ?? "-" }}</div>
-                        <span class="text-xs font-light">{{ $t('homeRooms.classConduct') }} </span>
+                        <span class="text-xs font-light"
+                            >{{ $t("homeRooms.classConduct") }}
+                        </span>
                     </div>
                 </div>
                 <div class="w-11/12 rounded-lg bg-white py-2 shadow-sm">

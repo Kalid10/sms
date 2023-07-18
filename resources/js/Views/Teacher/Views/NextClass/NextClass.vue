@@ -20,9 +20,9 @@
             <span
                 v-if="isNextClassSubjectTeacher"
                 class="break-words text-sm font-light"
-                >{{ $t('nextClass.nextUp')}}</span
+                >{{ $t("nextClass.nextUp") }}</span
             >
-            <span v-else> {{ $t('nextClass.nextClass')}}</span>
+            <span v-else> {{ $t("nextClass.nextClass") }}</span>
         </div>
 
         <!--         Views View-->
@@ -45,7 +45,7 @@
                 <span class="font-semibold">{{
                     nextClass.school_period.name
                 }}</span>
-                {{ $t('common.period')}}
+                {{ $t("common.period") }}
                 <br />
                 {{ moment(nextClass.date).fromNow() }}</span
             >
@@ -76,24 +76,26 @@
             :class="fontSizeSmall"
         >
             <span v-if="nextClass.lesson_plan">
-              {{ $t('nextClass.lessonPlan')}} #{{ nextClass.lesson_plan_id }}</span
+                {{ $t("nextClass.lessonPlan") }} #{{
+                    nextClass.lesson_plan_id
+                }}</span
             >
-            <span v-else>{{ $t('nextClass.addLessonPlan')}}</span>
+            <span v-else>{{ $t("nextClass.addLessonPlan") }}</span>
         </span>
         <div
             v-else-if="!isTeacherView"
             class="flex w-full flex-col items-center break-words text-[0.65rem] font-light"
         >
-            <div class="font-normal">{{ $t('nextClass.teacher')}}</div>
+            <div class="font-normal">{{ $t("nextClass.teacher") }}</div>
             <div>
                 {{ nextClass.batch_subject.teacher.user.name }}
             </div>
         </div>
         <PrimaryButton
-            class="w-8/12 !border-none bg-zinc-700 !text-xs lg:w-10/12 2xl:w-10/12"
+            class="w-8/12 !border-none bg-brand-400 !text-xs lg:w-10/12 2xl:w-10/12"
             :class="buttonWidth"
             @click="$emit('view')"
-            >{{ $t('nextClass.viewFullSchedule')}}
+            >{{ $t("nextClass.viewFullSchedule") }}
         </PrimaryButton>
     </div>
 </template>

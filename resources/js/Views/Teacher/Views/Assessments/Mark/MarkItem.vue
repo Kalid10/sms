@@ -14,10 +14,10 @@
                 'focus-effect bg-black text-white':
                     focusedInputIndex === index &&
                     selectedCommentInput === null,
-                'bg-zinc-100 hover:bg-gray-50':
+                'bg-brand-100 hover:bg-brand-50':
                     index % 2 === 0 && !isInputFocused && item.status === null,
 
-                'bg-zinc-700 text-white hover:bg-zinc-700':
+                'bg-brand-400 text-white hover:bg-brand-400':
                     isInputFocused &&
                     focusedInputIndex === index &&
                     selectedCommentInput === null,
@@ -70,7 +70,7 @@
                             type="number"
                             class="mr-2 w-20 rounded-md border-none bg-white text-xs text-black transition-transform focus:ring-black"
                             :class="{
-                                'bg-zinc-100 ': index % 2 === 0,
+                                'bg-brand-100 ': index % 2 === 0,
                                 'border-red-600':
                                     errors[`points.${index}.point`],
                                 'bg-white opacity-20':
@@ -91,7 +91,7 @@
                         :class="
                             points[index].status === 'valid_reassessment'
                                 ? 'text-black'
-                                : 'text-gray-300 hover:text-purple-500'
+                                : 'text-brand-text-200 hover:text-purple-500'
                         "
                         @click="handleStatusClick(index, 'valid_reassessment')"
                     />
@@ -100,7 +100,7 @@
                         :class="
                             points[index].status === 'disqualified'
                                 ? 'text-black'
-                                : 'text-gray-300 hover:text-orange-500'
+                                : 'text-brand-text-200 hover:text-orange-500'
                         "
                         @click="handleStatusClick(index, 'disqualified')"
                     />
@@ -109,7 +109,7 @@
                         :class="
                             points[index].status === 'misconduct'
                                 ? 'text-black'
-                                : 'text-gray-300 hover:text-red-600'
+                                : 'text-brand-text-200 hover:text-red-600'
                         "
                         @click="handleStatusClick(index, 'misconduct')"
                     />
@@ -118,7 +118,7 @@
                         :class="
                             points[index].comment
                                 ? 'text-black'
-                                : 'text-gray-300 hover:text-black'
+                                : 'text-brand-text-200 hover:text-black'
                         "
                         @click="
                             selectedCommentInput === index

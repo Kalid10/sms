@@ -1,8 +1,12 @@
 <template>
     <div
-        class="flex h-fit w-full flex-col items-center space-y-6 rounded-lg bg-zinc-100 px-5 pt-3 pb-5 shadow-sm"
+        class="flex h-fit w-full flex-col items-center space-y-6 rounded-lg bg-brand-100 px-5 pt-3 pb-5 shadow-sm"
     >
-        <div class="text-xl font-light">{{ $t('lessonPlanQuestionPreparation.lessonPlanQuestionGenerator')}}</div>
+        <div class="text-xl font-light">
+            {{
+                $t("lessonPlanQuestionPreparation.lessonPlanQuestionGenerator")
+            }}
+        </div>
         <Error
             v-if="questionForm.errors?.length"
             :error="$t('lessonPlanQuestionPreparation.somethingWentWrong')"
@@ -25,11 +29,11 @@
         />
         <div class="w-full flex-col space-y-1">
             <div>
-                <label for="large-range" class="block text-sm font-medium"
-                    >{{ $t('lessonPlanQuestionPreparation.setDifficultyLevel')}}</label
-                >
-                <p class="mb-2 py-1 text-xs font-light text-gray-600">
-                    {{ $t('lessonPlanQuestionPreparation.useThisSlider')}}
+                <label for="large-range" class="block text-sm font-medium">{{
+                    $t("lessonPlanQuestionPreparation.setDifficultyLevel")
+                }}</label>
+                <p class="mb-2 py-1 text-xs font-light text-brand-text-350">
+                    {{ $t("lessonPlanQuestionPreparation.useThisSlider") }}
                 </p>
             </div>
 

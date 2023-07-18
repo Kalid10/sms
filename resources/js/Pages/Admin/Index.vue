@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col space-y-8 bg-gray-50 py-2 lg:p-5 lg:px-1 2xl:px-10"
+        class="flex min-h-screen w-full flex-col space-y-8 bg-brand-50 py-2 lg:p-5 lg:px-1 2xl:px-10"
     >
         <div class="flex h-fit w-full flex-col justify-between lg:flex-row">
             <div class="flex w-full flex-col space-y-8 lg:w-7/12">
@@ -46,10 +46,11 @@ import SchoolSchedule from "@/Views/Admin/SchoolSchedule/Home.vue";
 import Summary from "@/Views/Admin/Summary.vue";
 import StudentSearch from "@/Views/Admin/StudentSearch.vue";
 import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
 
 const { t } = useI18n();
-const announcementsTab = t("common.announcements");
-const flagsTab = t("common.flags");
+const announcementsTab = toUnderscore(t("common.announcements"));
+const flagsTab = toUnderscore(t("common.flags"));
 const tabs = [announcementsTab, flagsTab];
 const activeTab = ref(announcementsTab);
 const schoolYear = computed(() => usePage().props.school_year);

@@ -30,7 +30,7 @@
                     <div
                         class="absolute right-[0px] bottom-[4px] h-3 w-3 rounded-full border-2 border-white"
                         :class="
-                            chat.active_status ? 'bg-green-500' : 'bg-gray-600'
+                            chat.active_status ? 'bg-green-500' : 'bg-brand-350'
                         "
                     ></div>
                 </div>

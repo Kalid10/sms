@@ -10,11 +10,11 @@
                 class="flex grow justify-center space-x-2 text-center text-xl font-semibold underline-offset-4"
             >
                 <DocumentChartBarIcon class="w-4" />
-                <span>{{ $t('studentNotes.notes')}}</span>
+                <span>{{ $t("studentNotes.notes") }}</span>
             </div>
             <div class="flex w-1/12 justify-center">
                 <PlusIcon
-                    class="w-4 cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
+                    class="w-4 cursor-pointer text-brand-text-350 hover:scale-125 hover:text-black"
                     @click="handleAddNote"
                 />
             </div>
@@ -25,12 +25,12 @@
             <div
                 v-for="(item, index) in notes.data"
                 :key="index"
-                class="flex w-full cursor-pointer justify-center space-x-3 rounded-lg p-2.5 hover:bg-zinc-700 hover:text-gray-50"
-                :class="index % 2 === 1 ? 'bg-gray-50' : ''"
+                class="flex w-full cursor-pointer justify-center space-x-3 rounded-lg p-2.5 hover:bg-brand-400 hover:text-brand-text-50"
+                :class="index % 2 === 1 ? 'bg-brand-50' : ''"
                 @click="handleClicked(item)"
             >
                 <div
-                    class="min-h-full w-[0.01rem] rounded-t-lg rounded-b-md bg-zinc-600 py-2"
+                    class="min-h-full w-[0.01rem] rounded-t-lg rounded-b-md bg-brand-350 py-2"
                 ></div>
 
                 <div class="relative flex w-full flex-col space-y-2 pt-1">
@@ -64,7 +64,7 @@
                 />
                 <SecondaryButton
                     :title="$t('studentNotes.addNote')"
-                    class="mt-4 w-9/12 !rounded-2xl border-none bg-zinc-700 text-white"
+                    class="mt-4 w-9/12 !rounded-2xl border-none bg-brand-300 text-white"
                 />
             </div>
         </div>
@@ -74,7 +74,10 @@
                 :title="'Add Note For ' + student.user.name"
                 @submit="submit"
             >
-                <TextInput v-model="form.title" :placeholder="$t('studentNotes.title')"/>
+                <TextInput
+                    v-model="form.title"
+                    :placeholder="$t('studentNotes.title')"
+                />
                 <TextArea
                     v-model="form.description"
                     :placeholder="$t('studentNotes.description')"

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full justify-between divide-x divide-gray-200 rounded-md bg-gray-50 py-4 shadow-sm"
+        class="flex w-full justify-between divide-x divide-gray-200 rounded-md bg-brand-50 py-4 shadow-sm"
     >
         <Item
             :title="$t('batchPerformanceIndex.classAverage')"

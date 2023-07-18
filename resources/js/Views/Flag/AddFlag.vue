@@ -1,14 +1,14 @@
 <template>
     <div class="flex w-full flex-col space-y-5 rounded-lg bg-white p-5">
         <div class="w-full text-center text-2xl font-medium">
-            {{ flaggable.user.name }} {{ $t('addFlag.flagForm')}}
+            {{ flaggable.user.name }} {{ $t("addFlag.flagForm") }}
         </div>
 
         <div class="flex flex-col">
             <label
                 for="target-group"
-                class="block text-sm font-medium text-gray-700"
-                >{{ $t('addFlag.selectFlagType')}}</label
+                class="block text-sm font-medium text-brand-text-400"
+                >{{ $t("addFlag.selectFlagType") }}</label
             >
             <div
                 class="mt-1 flex w-full justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -17,9 +17,10 @@
                     v-for="type in flagTypeOptions"
                     :key="type"
                     :class="{
-                        'bg-zinc-800 text-white': form.flag_type.includes(type),
+                        'bg-brand-450 text-white':
+                            form.flag_type.includes(type),
                     }"
-                    class="flex cursor-pointer flex-row justify-between rounded bg-zinc-100 p-2 px-8 text-black"
+                    class="flex cursor-pointer flex-row justify-between rounded bg-brand-100 p-2 px-8 text-black"
                     @click="toggleSelection(type)"
                 >
                     {{ type }}
@@ -49,11 +50,14 @@
             :error="form.errors.description"
         />
 
-        <DatePicker v-model="form.expires_at" :label="$t('addFlag.expiryDate')"  />
+        <DatePicker
+            v-model="form.expires_at"
+            :label="$t('addFlag.expiryDate')"
+        />
 
         <div class="flex w-full justify-end">
             <PrimaryButton
-                class="w-3/12 !rounded-2xl bg-zinc-800 text-white shadow-sm"
+                class="w-3/12 !rounded-2xl bg-brand-450 text-white shadow-sm"
                 :title="$t('common.submit')"
                 @click="handleAddFlag"
             />
@@ -68,7 +72,6 @@ import moment from "moment/moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import TextArea from "@/Components/TextArea.vue";
-import Modal from "@/Components/Modal.vue";
 
 const emit = defineEmits(["done"]);
 const props = defineProps({

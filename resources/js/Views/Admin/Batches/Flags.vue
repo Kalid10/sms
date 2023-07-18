@@ -11,8 +11,9 @@
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const flaggedStudents = computed(() => usePage().props.flagged_students);
 
 const flaggedStudentsData = computed(() => {
@@ -30,31 +31,31 @@ const flaggedStudentsData = computed(() => {
 
 const config = [
     {
-        name: t('common.student'),
+        name: t("common.student"),
         key: "name",
         class: "font-semibold",
     },
     {
-        name: t('batchFlags.userName'),
+        name: t("batchFlags.userName"),
         key: "username",
-        class: "text-gray-500 text-xs font-semibold",
+        class: "text-brand-text-300 text-xs font-semibold",
     },
     {
-        name:  t('common.gender'),
+        name: t("common.gender"),
         key: "gender",
         type: "enum",
         options: ["male", "female"],
     },
     {
-        name:  t('common.type'),
+        name: t("common.type"),
         key: "type",
     },
     {
-        name:  t('common.description'),
+        name: t("common.description"),
         key: "description",
     },
     {
-        name: t('batchFlags.flaggedBy'),
+        name: t("batchFlags.flaggedBy"),
         key: "flagged_by",
     },
 ];

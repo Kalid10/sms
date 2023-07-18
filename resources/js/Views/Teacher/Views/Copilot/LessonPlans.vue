@@ -79,7 +79,7 @@
                 {{ selectedLessonPlan.lesson_plan.topic }}
             </div>
 
-            <div class="text-xs leading-6 text-gray-600">
+            <div class="text-xs leading-6 text-brand-text-350">
                 {{ selectedLessonPlan.lesson_plan.description }}
             </div>
 

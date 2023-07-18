@@ -4,9 +4,9 @@
         <div v-if="total" :class="dividerClass">/</div>
         <span :class="totalClass">{{ total }}</span>
         <span
-            class="flex h-5 items-end justify-center text-[0.55rem] text-gray-600"
+            class="flex h-5 items-end justify-center text-[0.55rem] text-brand-text-350"
         >
-            {{ $t('scoreDisplay.pts') }}
+            {{ $t("scoreDisplay.pts") }}
         </span>
     </div>
 </template>

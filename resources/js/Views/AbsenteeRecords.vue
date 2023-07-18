@@ -4,12 +4,14 @@
             v-if="absenteeRecords?.data.length"
             class="flex w-full flex-col space-y-2"
         >
-            <div class="text-xl font-medium">{{ $t('absenteeRecords.absenteeRecords') }}</div>
+            <div class="text-xl font-medium">
+                {{ $t("absenteeRecords.absenteeRecords") }}
+            </div>
             <div
                 v-for="(item, index) in absenteeRecords.data"
                 :key="index"
                 class="flex w-full justify-evenly space-x-2 rounded-lg p-3 text-sm"
-                :class="index % 2 === 1 ? 'bg-gray-50' : ''"
+                :class="index % 2 === 1 ? 'bg-brand-50' : ''"
             >
                 <div class="w-5/12">
                     {{
@@ -19,7 +21,7 @@
                     }}
                 </div>
                 <div class="w-2/12">
-                    {{ $t('absenteeRecords.period') }}
+                    {{ $t("absenteeRecords.period") }}
                     {{ item.batch_session.school_period.name }}
                 </div>
                 <div class="w-2/12">
@@ -39,7 +41,7 @@
             />
         </div>
         <div v-else class="py-5">
-            <EmptyView :title="$t('absenteeRecords.noAbsentee')"  />
+            <EmptyView :title="$t('absenteeRecords.noAbsentee')" />
         </div>
     </div>
 </template>

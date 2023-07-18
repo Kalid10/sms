@@ -8,7 +8,7 @@
             v-for="(student, index) in students"
             :key="student.id"
             class="w-full"
-            :class="index % 2 === 0 ? 'bg-gray-100/70' : ''"
+            :class="index % 2 === 0 ? 'bg-brand-100/70' : ''"
             @click="$emit('student-clicked', student.id)"
         >
             <div class="flex h-10 w-full items-center justify-evenly">

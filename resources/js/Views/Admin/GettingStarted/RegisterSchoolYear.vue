@@ -5,10 +5,8 @@
         <form
             class="flex min-h-max w-full flex-col items-center justify-center py-4"
         >
-            <Heading class="mb-1 text-center !font-normal text-black" size="md"
-                >
-                {{ $t('registerSchoolYear.welcome') }}
-
+            <Heading class="mb-1 text-center !font-normal text-black" size="md">
+                {{ $t("registerSchoolYear.welcome") }}
             </Heading>
 
             <div class="relative flex items-center">
@@ -34,12 +32,11 @@
             </div>
 
             <Heading class="mt-1 text-center !font-normal">
-                {{ $t('registerSchoolYear.schoolYear') }}
-
+                {{ $t("registerSchoolYear.schoolYear") }}
             </Heading>
 
             <div class="mt-8 flex">
-                <h3 class="max-w-md text-center text-sm text-gray-500">
+                <h3 class="max-w-md text-center text-sm text-brand-text-300">
                     <span v-html="$t('registerSchoolYear.welcomeText')" />
                 </h3>
             </div>
@@ -81,29 +78,35 @@
                             !!formData.number_of_quarters ? 'inside' : ''
                         "
                         :placeholder="$t('registerSchoolYear.numberOfQuarters')"
-
                         class="w-72"
                     />
 
-                    <div class="p-2 text-xs text-gray-400">
+                    <div class="p-2 text-xs text-brand-text-250">
                         <span>
-                    {{ $t('registerSchoolYear.ifThereIs') }}
-
-
+                            {{ $t("registerSchoolYear.ifThereIs") }}
                         </span>
                         <span
                             class="ml-1 cursor-pointer text-red-500 underline-offset-2 hover:font-medium hover:underline"
                             @click="hideQuarters"
                         >
-                    {{ $t('registerSchoolYear.removeQuarter') }}
+                            {{ $t("registerSchoolYear.removeQuarter") }}
                         </span>
                     </div>
 
                     <div
-                        class="mt-5 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center text-gray-500"
+                        class="mt-5 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center text-brand-text-300"
                     >
-
-                        <span v-html="$t('registerSchoolYear.summaryText', { academicYear: formData.name, semesters: formData.number_of_semesters, quartersPerSemester: formData.number_of_quarters, totalQuarters } )" />
+                        <span
+                            v-html="
+                                $t('registerSchoolYear.summaryText', {
+                                    academicYear: formData.name,
+                                    semesters: formData.number_of_semesters,
+                                    quartersPerSemester:
+                                        formData.number_of_quarters,
+                                    totalQuarters,
+                                })
+                            "
+                        />
                     </div>
                 </div>
 
@@ -111,56 +114,51 @@
                     v-if="formComplete"
                     class="w-72"
                     @click="handleSubmit"
-                    >
-                    {{ $t('registerSchoolYear.createAndProceed') }}
+                >
+                    {{ $t("registerSchoolYear.createAndProceed") }}
                 </PrimaryButton>
             </div>
         </form>
     </div>
 </template>
 <script setup>
-import {computed, createApp, getCurrentInstance, onMounted, ref} from "vue";
-import {
-    ArrowPathIcon,
-    InformationCircleIcon,
-    PencilIcon,
-} from "@heroicons/vue/24/outline";
+import { computed, createApp, getCurrentInstance, onMounted, ref } from "vue";
+import { ArrowPathIcon, PencilIcon } from "@heroicons/vue/24/outline";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { useForm } from "@inertiajs/vue3";
 import SelectInput from "@/Components/SelectInput.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import Heading from "@/Components/Heading.vue";
-import TextInput from "@/Components/TextInput.vue";
 
 // for pencil icon
 function renderComponent({ el, component, props, appContext }) {
-    let app = createApp(component, props)
-    Object.assign(app._context, appContext) // must use Object.assign on _context
-    app.mount(el)
+    let app = createApp(component, props);
+    Object.assign(app._context, appContext); // must use Object.assign on _context
+    app.mount(el);
 
     return () => {
         // destroy app/component
-        app?.unmount()
-        app = undefined
-    }
+        app?.unmount();
+        app = undefined;
+    };
 }
 
-const appContext = getCurrentInstance()
+const appContext = getCurrentInstance();
 
 async function insertPencilIcon() {
     renderComponent({
         el: document.getElementById("pencilIcon"),
         component: PencilIcon,
         props: {
-            class: "h-3 w-3 inline stroke-black stroke-2"
+            class: "h-3 w-3 inline stroke-black stroke-2",
         },
-        appContext
-    })
+        appContext,
+    });
 }
 
 onMounted(async () => {
-    await insertPencilIcon()
-})
+    await insertPencilIcon();
+});
 
 const emits = defineEmits(["success"]);
 
