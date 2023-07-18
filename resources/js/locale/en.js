@@ -1803,7 +1803,7 @@ const en = {
     },
 
     adminSummary: {
-        chatValue: "5 Unread Messages",
+        chatValue: "Chat with teachers and admins",
         studentValue: "Register, Review, explore and More",
         teacherValue: "Register, evaluate, explore and more",
         adminValue: "Register, Review, explore and More",
