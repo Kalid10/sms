@@ -9,8 +9,6 @@
             'transition-all duration-300 ease-in-out ',
         ]"
         @click="toggleSidebar"
-        @mouseover="handleMouseover"
-        @mouseleave="handleMouseleave"
     >
         <div
             class="flex min-h-screen w-full flex-col items-center justify-between pt-1 pb-4 text-white lg:pt-5"

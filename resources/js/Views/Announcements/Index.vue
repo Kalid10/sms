@@ -23,7 +23,7 @@
 
         <div>
             <EmptyView
-                v-if="computedAnnouncements"
+                v-if="!computedAnnouncements"
                 :title="$t('announcementsIndex.noAnnouncementsFound')"
                 :link-title="$t('announcementsIndex.goToAnnouncements')"
                 :link-url="url"

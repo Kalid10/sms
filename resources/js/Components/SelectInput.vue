@@ -1,7 +1,7 @@
 <template>
     <div class="flex cursor-pointer flex-col">
         <label v-if="!!label && labelLocation === 'top'" class="">
-            <span class="pl-0.5 text-sm font-semibold text-brand-text-300">{{
+            <span class="pl-0.5 text-sm font-semibold text-brand-text-200">{{
                 label
             }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
