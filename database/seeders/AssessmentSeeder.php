@@ -45,10 +45,11 @@ class AssessmentSeeder extends Seeder
                     'description' => "This is assessment {$i}.",
                     'maximum_point' => rand(10, 100),
                     'status' => fake()->randomElement([
-                        Assessment::STATUS_CLOSED,
-                        Assessment::STATUS_COMPLETED,
-                        Assessment::STATUS_PUBLISHED,
-                        Assessment::STATUS_MARKING,
+                        // Uncomment the following statuses whenever needed
+                        //                        Assessment::STATUS_CLOSED,
+                        //                        Assessment::STATUS_COMPLETED,
+                        //                        Assessment::STATUS_PUBLISHED,
+                        //                        Assessment::STATUS_MARKING,
                         Assessment::STATUS_DRAFT,
                     ]),
                 ]);
