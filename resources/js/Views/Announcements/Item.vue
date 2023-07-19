@@ -1,6 +1,6 @@
 <template>
     <div
-        class="group flex w-full cursor-pointer justify-between p-3.5 hover:rounded-lg hover:bg-zinc-700 hover:text-gray-50"
+        class="group flex w-full cursor-pointer justify-between p-3.5 hover:rounded-lg hover:bg-brand-400 hover:text-brand-text-500"
     >
         <div
             class="flex w-full flex-col space-y-2 border-gray-100 pl-3 text-sm font-medium"
@@ -8,11 +8,11 @@
             <div>{{ announcement.title }}</div>
 
             <div
-                class="flex w-full justify-between text-[0.62rem] font-light text-black group-hover:text-gray-50"
+                class="flex w-full justify-between text-[0.62rem] font-light text-black group-hover:text-brand-text-500"
             >
                 <div>
                     <div>
-                        {{ $t('announcementsItem.postTargets') }}
+                        {{ $t("announcementsItem.postTargets") }}
                         <span
                             v-for="(target, index) in announcement.target_group"
                             :key="index"
@@ -20,7 +20,7 @@
                         >
                             {{ target }}
                         </span>
-                        {{ $t('announcementsItem.andExpires') }}
+                        {{ $t("announcementsItem.andExpires") }}
                         <span>
                             {{
                                 moment(announcement.expires_on).fromNow()

@@ -42,66 +42,17 @@
             </div>
         </div>
 
-        <div
-            class="flex w-full flex-col justify-between rounded-lg border py-6 lg:flex-row lg:pr-5"
-        >
-            <div
-                class="flex h-full w-full flex-row gap-2 rounded-lg lg:w-2/12 lg:flex-col lg:gap-5"
-            >
-                <Card
-                    :title="$t('common.assessments')"
-                    :class="`lg:min-w-full cursor-pointer ${
-                        selectedCard === 'assessments' ? 'bg-gray-200' : ''
-                    }`"
-                    icon
-                    @click="openAssessment"
-                >
-                    <h3 class="text-sm text-gray-500">
-                        {{ $t("batchesIndex.clickToViewScheduledAssessments") }}
-                    </h3>
-                    <template #icon>
-                        <ArrowRightCircleIcon />
-                    </template>
-                </Card>
-
-                <Card
-                    title="Students Notes"
-                    :class="`lg:min-w-full cursor-pointer ${
-                        selectedCard === 'studentNotes' ? 'bg-gray-200' : ''
-                    }`"
-                    icon
-                    @click="openStudentNotes"
-                >
-                    <h3 class="text-sm text-gray-500">
-                        {{ $t("batchesIndex.clickToViewStudentsNotes") }}
-                    </h3>
-                    <template #icon>
-                        <ArrowRightCircleIcon />
-                    </template>
-                </Card>
-
-                <Card
-                    title="Today's Absentees"
-                    :class="`lg:min-w-full cursor-pointer ${
-                        selectedCard === 'absentees' ? 'bg-gray-200' : ''
-                    }`"
-                    icon
-                    @click="openAbsentees"
-                >
-                    <h3 class="text-sm text-gray-500">
-                        Click here to view today's absentees
-                    </h3>
-                    <template #icon>
-                        <ArrowRightCircleIcon />
-                    </template>
-                </Card>
-            </div>
-            <div class="flex w-full rounded border p-3 shadow-lg lg:w-10/12">
-                <BatchAssessment v-if="showAssessment" />
-                <StudentNotes v-if="showStudentNotes" />
-                <Absentees v-if="showAbsentees" />
-            </div>
-        </div>
+        <TabElement v-model:active="activeTab" :tabs="tabs">
+            <template #[assessmentsTab]>
+                <Assessments />
+            </template>
+            <template #[StudentNotesTab]>
+                <StudentNotes />
+            </template>
+            <template #[absenteesTab]>
+                <Absentees />
+            </template>
+        </TabElement>
     </div>
 </template>
 <script setup>
@@ -109,11 +60,22 @@ import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Ind
 import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import Flags from "@/Views/Flag/Index.vue";
-import BatchAssessment from "@/Views/Admin/Batches/Assessments.vue";
-import Card from "@/Components/Card.vue";
-import { ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
-import StudentNotes from "@/Views/Admin/Batches/StudentNotes.vue";
 import Absentees from "@/Views/Admin/Batches/Absentees.vue";
+import StudentNotes from "@/Views/Admin/Batches/StudentNotes.vue";
+import Assessments from "@/Views/Admin/Batches/Assessments.vue";
+import TabElement from "@/Components/TabElement.vue";
+import { toUnderscore } from "@/utils";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
+const assessmentsTab = toUnderscore(t("common.assessments"));
+const StudentNotesTab = toUnderscore(t("common.studentNotes"));
+const absenteesTab = toUnderscore(t("common.absentees"));
+
+const tabs = [assessmentsTab, StudentNotesTab, absenteesTab];
+
+const activeTab = ref(assessmentsTab);
 
 const selectedBatch = computed(() => usePage().props.selected_batch);
 
@@ -146,7 +108,7 @@ function openAbsentees() {
 }
 </script>
 <style scoped>
-.bg-gray-200 {
+.bg-brand-150 {
     background-color: #edf2f7;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen w-full items-center justify-evenly bg-gray-100">
+    <div class="flex h-screen w-full items-center justify-evenly bg-brand-100">
         <div
             class="flex w-full flex-col items-center justify-between rounded-lg bg-white px-12 py-3 lg:h-5/6 lg:w-7/12"
         >
@@ -21,7 +21,7 @@
                     <Heading
                         :value="$t('userProfile.headingTwo')"
                         size="sm"
-                        class="text-xs !font-light text-gray-500"
+                        class="text-xs !font-light text-brand-text-300"
                     />
                 </div>
                 <div class="flex w-full justify-center">
@@ -85,7 +85,7 @@
                 </div>
             </div>
 
-            <div class="h-[0.01rem] min-w-full bg-zinc-200/80"></div>
+            <div class="h-[0.01rem] min-w-full bg-brand-150/80"></div>
             <!--            Password-->
             <div class="flex w-full flex-col space-y-6">
                 <div
@@ -95,7 +95,7 @@
                     <Heading
                         :value="$t('userProfile.stayAheadOf')"
                         size="sm"
-                        class="text-xs !font-light text-gray-500"
+                        class="text-xs !font-light text-brand-text-300"
                     />
                 </div>
                 <div class="flex w-full justify-center">
@@ -151,7 +151,7 @@
                     >
                 </h1>
 
-                <h3 class="py-1 font-light text-gray-500">
+                <h3 class="py-1 font-light text-brand-text-300">
                     {{ $t("userProfile.description") }}
                 </h3>
             </div>

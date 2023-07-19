@@ -4,43 +4,41 @@
     >
         <div class="flex flex-col">
             <Heading>
-                {{ $t('registerSubjects.registerSubjects') }}
+                {{ $t("registerSubjects.registerSubjects") }}
             </Heading>
-            <h3 class="text-sm text-gray-500">
-                {{ $t('registerSubjects.descriptionOne') }}
+            <h3 class="text-sm text-brand-text-300">
+                {{ $t("registerSubjects.descriptionOne") }}
                 <span class="inline-block">
-                {{ $t('registerSubjects.descriptionTwo') }}
-                </span
-                >
+                    {{ $t("registerSubjects.descriptionTwo") }}
+                </span>
             </h3>
         </div>
 
         <div class="flex flex-wrap gap-2 md:gap-5">
             <span
-                class="col-span-1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="col-span-1 text-sm text-brand-text-300 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
                 <span class="whitespace-nowrap font-semibold text-black">{{
                     updatedSubjects.length
                 }}</span>
-                {{ $t('registerSubjects.totalSubjects') }}
-
+                {{ $t("registerSubjects.totalSubjects") }}
             </span>
             <span
-                class="col-span-1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="col-span-1 text-sm text-brand-text-300 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
                 <span class="whitespace-nowrap font-semibold text-black">{{
                     selectedSubjects.length
                 }}</span>
-                {{ $t('registerSubjects.subjectsSelected') }}
+                {{ $t("registerSubjects.subjectsSelected") }}
             </span>
             <span
                 v-if="newSubjects.length > 0"
-                class="col-span-1 text-sm text-gray-500 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="col-span-1 text-sm text-brand-text-300 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
                 <span class="whitespace-nowrap font-semibold text-black">{{
                     newSubjects.length
                 }}</span>
-                {{ $t('registerSubjects.newSubject') }}
+                {{ $t("registerSubjects.newSubject") }}
                 {{ newSubjects.length > 1 ? "s" : "" }}
             </span>
         </div>
@@ -56,7 +54,7 @@
                         class="z-10 h-3.5 w-3.5 rounded-full"
                         :class="colors[c]"
                     />
-                    <Heading size="sm" class="font-normal text-gray-500"
+                    <Heading size="sm" class="font-normal text-brand-text-300"
                         >{{ category }}
                     </Heading>
                 </div>
@@ -93,7 +91,7 @@
                                             {{ subject.full_name }}
                                         </span>
                                         <span
-                                            class="text-sm uppercase text-gray-500"
+                                            class="text-sm uppercase text-brand-text-300"
                                         >
                                             {{ subject.short_name }}
                                         </span>
@@ -118,10 +116,10 @@
                                         v-for="(label, l) in subject.tags"
                                         :key="l"
                                         :class="{
-                                            'bg-gray-300':
+                                            'bg-brand-200':
                                                 filteredLabel === label,
                                         }"
-                                        class="cursor-pointer whitespace-nowrap rounded-xl px-1.5 py-0.5 text-xs font-semibold leading-none transition duration-300 hover:scale-110 hover:bg-gray-300"
+                                        class="cursor-pointer whitespace-nowrap rounded-xl px-1.5 py-0.5 text-xs font-semibold leading-none transition duration-300 hover:scale-110 hover:bg-brand-200"
                                         @click="
                                             ($e) => {
                                                 $e.preventDefault();
@@ -141,10 +139,9 @@
 
             <div class="flex flex-col gap-2">
                 <div class="flex items-center gap-2">
-                    <div class="z-10 h-3.5 w-3.5 rounded-full bg-gray-300" />
-                    <Heading size="sm" class="font-normal text-gray-500"
-                        >
-                        {{ $t('registerSubjects.other') }}
+                    <div class="z-10 h-3.5 w-3.5 rounded-full bg-brand-200" />
+                    <Heading size="sm" class="font-normal text-brand-text-300">
+                        {{ $t("registerSubjects.other") }}
                     </Heading>
                 </div>
 
@@ -158,8 +155,9 @@
                         <PlusCircleIcon
                             class="h-5 w-5 stroke-gray-500 stroke-2"
                         />
-                        <span class="text-sm font-semibold text-gray-500"
-                            >{{ $t('registerSubjects.createNewSubject') }}</span
+                        <span
+                            class="text-sm font-semibold text-brand-text-300"
+                            >{{ $t("registerSubjects.createNewSubject") }}</span
                         >
                     </button>
                     <button
@@ -181,8 +179,11 @@
                                 />
                             </span>
                         </span>
-                        <span class="text-sm font-semibold text-gray-500"
-                            >{{ $t('registerSubjects.createNewCategory') }}</span
+                        <span
+                            class="text-sm font-semibold text-brand-text-300"
+                            >{{
+                                $t("registerSubjects.createNewCategory")
+                            }}</span
                         >
                     </button>
                 </div>
@@ -190,11 +191,13 @@
         </div>
 
         <div class="flex items-center gap-3">
-            <PrimaryButton @click="submitSubjects">{{ $t('registerSubjects.finish') }}</PrimaryButton>
+            <PrimaryButton @click="submitSubjects"
+                >{{ $t("registerSubjects.finish") }}
+            </PrimaryButton>
             <TertiaryButton
                 v-if="selectedSubjects.length < updatedSubjects.length"
                 @click="resetSubjects"
-                >{{ $t('registerSubjects.reset') }}
+                >{{ $t("registerSubjects.reset") }}
             </TertiaryButton>
         </div>
 
@@ -209,13 +212,17 @@
                 <TextInput
                     v-model="newSubject.full_name"
                     required
-                    :placeholder="$t('registerSubjects.subjectFullNamePlaceholder')"
+                    :placeholder="
+                        $t('registerSubjects.subjectFullNamePlaceholder')
+                    "
                     :label="$t('registerSubjects.newSubjectFullNameLabel')"
                 />
                 <TextInput
                     v-model="newSubject.short_name"
                     required
-                    :placeholder="$t('registerSubjects.subjectShortNamePlaceholder')"
+                    :placeholder="
+                        $t('registerSubjects.subjectShortNamePlaceholder')
+                    "
                     :label="$t('registerSubjects.subjectShortNameLabel')"
                 />
                 <TextInput
@@ -228,7 +235,9 @@
                     v-model="newSubject.category"
                     :options="categoryOptions"
                     required
-                    :placeholder="$t('registerSubjects.subjectCategoryOptionsPlaceholder')"
+                    :placeholder="
+                        $t('registerSubjects.subjectCategoryOptionsPlaceholder')
+                    "
                     :label="$t('registerSubjects.subjectCategoryOptionsLabel')"
                 />
                 <TextInput
@@ -236,7 +245,9 @@
                     id="categoryInput"
                     v-model="newSubject.category"
                     required
-                    :placeholder="$t('registerSubjects.subjectCategoryPlaceholder')"
+                    :placeholder="
+                        $t('registerSubjects.subjectCategoryPlaceholder')
+                    "
                     :label="$t('registerSubjects.subjectCategoryLabel')"
                 />
             </FormElement>
@@ -295,7 +306,7 @@ const colors = [
     "bg-purple-500",
     "bg-pink-500",
     "bg-indigo-500",
-    "bg-gray-500",
+    "bg-brand-300",
 ];
 
 function submitSubjects() {

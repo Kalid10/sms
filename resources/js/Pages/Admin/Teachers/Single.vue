@@ -1,13 +1,13 @@
 <template>
-    <div class="flex min-h-screen w-full flex-col pl-5">
+    <div class="flex min-h-screen w-full flex-col lg:pl-5">
         <Title
-            class="w-full rounded-t-md bg-gradient-to-r from-violet-600 to-purple-700 px-3 !py-6 text-white shadow-sm"
+            class="w-full rounded-t-md bg-brand-550 px-3 !py-6 text-white shadow-sm"
             :title="teacher.user.name"
         />
         <TabElement
             v-model:active="activeTab"
-            background-color="bg-gradient-to-r from-violet-600 to-purple-700"
-            in-active-tab-text="text-gray-300"
+            background-color="bg-brand-550"
+            in-active-tab-text="text-brand-text-400"
             :tabs="tabs"
         >
             <template #[homeTab]>
@@ -32,9 +32,7 @@
             </template>
 
             <template #[lessonPlans]>
-                <LessonPlans
-                    v-if="activeTab === lessonPlans && !showLoading"
-                />
+                <LessonPlans v-if="activeTab === lessonPlans && !showLoading" />
             </template>
 
             <template #[assessmentsTab]>
@@ -75,17 +73,19 @@ import Batches from "@/Views/Teacher/Batches.vue";
 import Homeroom from "@/Views/Teacher/Homeroom.vue";
 import Announcement from "@/Views/Teacher/Announcement/Index.vue";
 import Loading from "@/Components/Loading.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
+
+const { t } = useI18n();
 const showLoading = ref(false);
 const teacher = computed(() => usePage().props.teacher);
-const homeTab = t('common.home');
-const classesTab =  t('common.classes');
-const studentsTab = t('common.students');
-const lessonPlans = t('common.lessonPlans');
-const assessmentsTab = t('common.assessments');
-const homeroomTab = t('common.homeroom');
-const announcementsTab = t('common.announcements');
+const homeTab = toUnderscore(t("common.home"));
+const classesTab = toUnderscore(t("common.classes"));
+const studentsTab = toUnderscore(t("common.students"));
+const lessonPlans = toUnderscore(t("common.lessonPlans"));
+const assessmentsTab = toUnderscore(t("common.assessments"));
+const homeroomTab = toUnderscore(t("common.homeroom"));
+const announcementsTab = toUnderscore(t("common.announcements"));
 
 const activeTab = ref(homeTab);
 

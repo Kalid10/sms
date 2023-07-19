@@ -1,74 +1,77 @@
 <template>
-
     <form
-        v-if="! modal || (modal && showModal)"
-        :class="[ modal ? 'container fixed inset-x-0 top-0 z-50 mx-auto max-w-3xl animate-slide-down rounded-b-md shadow-md' : 'rounded-md shadow-sm' ]"
-        class="flex min-h-10 w-full flex-col border bg-white">
-
+        v-if="!modal || (modal && showModal)"
+        :class="[
+            modal
+                ? 'container fixed inset-x-0 top-0 z-50 mx-auto max-w-3xl animate-slide-down rounded-b-md shadow-md'
+                : 'rounded-md shadow-sm',
+        ]"
+        class="flex min-h-10 w-full flex-col border bg-white"
+    >
         <div class="flex flex-col gap-3 p-4">
             <div class="flex flex-col">
                 <h3>{{ title }}</h3>
-                <h5 class="text-sm text-gray-500">
+                <h5 class="text-sm text-brand-text-300">
                     {{ subtitle }}
                 </h5>
             </div>
 
-            <hr>
+            <hr />
 
-            <slot/>
-
+            <slot />
         </div>
 
-        <div class="flex min-h-10 w-full items-center justify-end gap-2 bg-neutral-100 py-2 px-4">
+        <div
+            class="flex min-h-10 w-full items-center justify-end gap-2 bg-neutral-100 py-2 px-4"
+        >
             <slot name="form-actions">
-            <SecondaryButton :title="modal ? $t('common.close') : $t('common.clear')" @click="cancel"/>
-            <PrimaryButton :title="$t('common.submit')" @click="submit"/>
+                <SecondaryButton
+                    :title="modal ? $t('common.close') : $t('common.clear')"
+                    @click="cancel"
+                />
+                <PrimaryButton :title="$t('common.submit')" @click="submit" />
             </slot>
         </div>
-
     </form>
-
 </template>
 
 <script setup>
-import PrimaryButton from "@/Components/PrimaryButton.vue"
-import SecondaryButton from "@/Components/SecondaryButton.vue"
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 defineProps({
     modal: {
         type: Boolean,
-        default: false
+        default: false,
     },
     showModal: {
         type: Boolean,
-        default: false
+        default: false,
     },
     title: {
         type: String,
-        required: true
+        required: true,
     },
     subtitle: {
         type: String,
-        default: null
-    }
-})
+        default: null,
+    },
+});
 
-const emits = defineEmits(['update:showModal', 'cancel', 'submit'])
+const emits = defineEmits(["update:showModal", "cancel", "submit"]);
 
 function cancel() {
-    emits('cancel')
-    emits('update:showModal', false)
+    emits("cancel");
+    emits("update:showModal", false);
 }
 
 function submit() {
     // TODO: implement Inertia form handling
-    emits('submit')
-    emits('update:showModal', false)
+    emits("submit");
+    emits("update:showModal", false);
 }
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

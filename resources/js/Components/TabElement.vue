@@ -4,14 +4,16 @@
             <li
                 v-for="(tab, t) in tabs"
                 :key="t"
-                :class="[active === tab ? 'bg-brand-50' : '']"
+                :class="[active === tab ? 'bg-brand-400' : '']"
                 class="mx-2 rounded-full px-4 py-2 transition-colors duration-300"
             >
                 <button
                     :class="[
-                        active === tab ? 'text-gray-900' : inActiveTabText,
+                        active === tab
+                            ? 'text-brand-text-400'
+                            : inActiveTabText,
                     ]"
-                    class="w-full whitespace-nowrap text-sm font-semibold transition-colors duration-300"
+                    class="w-full whitespace-nowrap text-sm font-semibold capitalize transition-colors duration-300"
                     @click="setActiveTab(tab)"
                 >
                     {{ tab }}
@@ -46,7 +48,7 @@ const props = defineProps({
     },
     inActiveTabText: {
         type: String,
-        default: "text-gray-500",
+        default: "text-brand-text-50",
     },
     backgroundColor: {
         type: String,

@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto flex w-full flex-col items-center gap-3">
-        <Heading :value="$t('allSemesters.allSemesters')"  />
+        <Heading :value="$t('allSemesters.allSemesters')" />
         <div class="flex w-full flex-col gap-3 xl:flex-row">
             <TextInput
                 v-model="query"
@@ -25,7 +25,9 @@
             v-if="filtersApplied"
             class="flex min-h-8 w-full flex-wrap items-center justify-start gap-3"
         >
-            <span class="text-sm text-gray-500">{{ $t('allSemesters.appliedFilters')}}</span>
+            <span class="text-sm text-brand-text-300">{{
+                $t("allSemesters.appliedFilters")
+            }}</span>
             <div class="flex flex-wrap items-start justify-center gap-3">
                 <ButtonLabel
                     v-if="!!query"

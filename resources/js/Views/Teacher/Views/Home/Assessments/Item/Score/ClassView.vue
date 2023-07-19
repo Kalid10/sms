@@ -4,9 +4,9 @@
             item.maximum_point
         }}</span>
         <div
-            class="flex w-6/12 items-end justify-center px-1 text-[0.65rem] text-gray-500"
+            class="flex w-6/12 items-end justify-center px-1 text-[0.65rem] text-brand-text-300"
         >
-            {{ $t('common.pts')}}
+            {{ $t("common.pts") }}
         </div>
     </div>
 </template>

@@ -37,7 +37,7 @@
                         'h-4 w-4 rounded-full': size === 'medium',
                         'h-2 w-2 rounded-full': size === 'small',
                         'h-1 w-1 rounded-full': size === 'extra-small',
-                        'bg-gray-100': color === 'primary',
+                        'bg-brand-100': color === 'primary',
                         'bg-black': color === 'secondary',
                         'bg-emerald-400': color === 'success',
                         'bg-negative-100': color === 'danger',

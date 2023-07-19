@@ -16,7 +16,7 @@
             </Link>
         </template>
         <template #short_name-column="{ data }">
-            <span class="text-xs text-gray-500">{{ data }}</span>
+            <span class="text-xs text-brand-text-300">{{ data }}</span>
         </template>
         <template #tags-column="{ data }">
             <div class="flex w-full items-center justify-center gap-2">
@@ -34,11 +34,11 @@
         <template #teacher-column="{ data }">
             <div class="flex justify-end gap-2 text-xs">
                 <span>{{ data["name"] }}</span>
-                <span class="text-gray-500">{{ data["email"] }}</span>
+                <span class="text-brand-text-300">{{ data["email"] }}</span>
             </div>
         </template>
         <template #updated_at-column="{ data }">
-            <span class="text-xs text-gray-500">
+            <span class="text-xs text-brand-text-300">
                 {{ moment(data).fromNow() }}
             </span>
         </template>
@@ -51,8 +51,9 @@ import { Link, usePage } from "@inertiajs/vue3";
 import { toHashTag } from "@/utils.js";
 import TableElement from "@/Components/TableElement.vue";
 import moment from "moment";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const batchesSubjects = computed(() =>
     usePage().props.batches.map((batch) => batch.subjects)
 );
@@ -88,7 +89,7 @@ const subjectsConfig = [
     },
     {
         key: "full_name",
-        name: t('common.subject'),
+        name: t("common.subject"),
         type: "custom",
         align: "right",
     },

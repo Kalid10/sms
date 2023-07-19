@@ -1,7 +1,7 @@
 <template>
     <label class="relative flex flex-col gap-1">
         <span v-if="label && labelLocation === 'top'" class="">
-            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{
+            <span class="pl-0.5 text-sm font-semibold text-brand-text-300">{{
                 label
             }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
@@ -9,7 +9,7 @@
 
         <span
             v-if="visible && labelLocation === 'inside'"
-            class="text-[0.7rem] text-gray-500"
+            class="text-[0.7rem] text-brand-text-300"
         >
             {{ label }}
         </span>
@@ -29,11 +29,13 @@
             <span class="flex flex-col">
                 <span
                     v-if="labelLocation === 'inside'"
-                    class="text-[0.7rem] text-gray-500"
+                    class="text-[0.7rem] text-brand-text-300"
                     >{{ label }}</span
                 >
                 <span
-                    :class="[!!selectedDate ? 'text-black' : 'text-gray-500']"
+                    :class="[
+                        !!selectedDate ? 'text-black' : 'text-brand-text-300',
+                    ]"
                     class="truncate whitespace-nowrap text-sm"
                 >
                     {{ selectedDate ?? placeholder }}
@@ -53,14 +55,14 @@
         >
             <span class="flex min-w-fit flex-col overflow-hidden rounded-md">
                 <span
-                    class="col-span-7 flex h-12 min-w-fit items-center justify-between border-b bg-zinc-800 p-2 shadow"
+                    class="col-span-7 flex h-12 min-w-fit items-center justify-between border-b bg-brand-450 p-2 shadow"
                 >
                     <ChevronLeftIcon
                         class="h-4 w-4 min-w-fit cursor-pointer stroke-gray-500 stroke-[3]"
                         @click="previous"
                     />
                     <span
-                        class="flex min-w-fit select-none gap-1 font-light text-gray-100"
+                        class="flex min-w-fit select-none gap-1 font-light text-brand-text-100"
                     >
                         <button
                             v-if="panel === 'date'"
@@ -77,8 +79,7 @@
                             {{ selectedYear }}
                         </button>
                         <span v-else>
-                {{ $t('datePicker.selectYear') }}
-
+                            {{ $t("datePicker.selectYear") }}
                         </span>
                     </span>
                     <ChevronRightIcon
@@ -95,7 +96,7 @@
                     <span
                         v-for="i in days"
                         :key="i"
-                        class="grid place-items-center p-2.5 text-xs font-medium text-gray-500"
+                        class="grid place-items-center p-2.5 text-xs font-medium text-brand-text-300"
                     >
                         {{ i }}
                     </span>
@@ -103,7 +104,7 @@
                     <span
                         v-for="i in offsetDays"
                         :key="i"
-                        class="grid place-items-center p-2.5 text-sm text-gray-500"
+                        class="grid place-items-center p-2.5 text-sm text-brand-text-300"
                     >
                         {{ numberOfPreviousDays - offsetDays + i }}
                     </span>
@@ -141,7 +142,7 @@
                     <span
                         v-for="k in 7 - ((offsetDays + numberOfDays) % 7)"
                         :key="k"
-                        class="grid place-items-center p-2.5 text-sm text-gray-500"
+                        class="grid place-items-center p-2.5 text-sm text-brand-text-300"
                     >
                         {{ k }}
                     </span>
@@ -200,12 +201,12 @@
                             modelValue?.toDateString() ===
                             new Date().toDateString()
                                 ? 'bg-black/10 border-black text-black'
-                                : 'text-gray-500 hover:bg-black/10'
+                                : 'text-brand-text-300 hover:bg-black/10'
                         "
                         class="flex h-10 w-full items-center justify-center gap-1 rounded-md border text-center text-sm focus:outline-none"
                         @click="selectToday"
                     >
-                        <span>{{ $t('datePicker.today') }}</span>
+                        <span>{{ $t("datePicker.today") }}</span>
                         {{ new Date().toLocaleDateString() }}
                     </button>
 
@@ -215,14 +216,14 @@
                         :class="
                             !!startDate
                                 ? 'bg-black/5 border-black text-black'
-                                : 'text-gray-500'
+                                : 'text-brand-text-300'
                         "
                         :disabled="!!!startDate"
                         class="flex h-10 w-full items-center justify-center gap-1 rounded-md border text-center text-sm focus:outline-none"
                         @click="clearRange"
                     >
                         <span>
-                       {{$t('datePicker.clear')}}
+                            {{ $t("datePicker.clear") }}
                         </span>
                     </button>
                 </span>
@@ -239,8 +240,9 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
 } from "@heroicons/vue/24/outline";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const props = defineProps({
     label: {
         type: String,
@@ -319,20 +321,28 @@ function changePanel(to) {
 }
 
 const months = [
-    t('datePicker.months[0]'),
-    t('datePicker.months[1]'),
-    t('datePicker.months[2]'),
-    t('datePicker.months[3]'),
-    t('datePicker.months[4]'),
-    t('datePicker.months[5]'),
-    t('datePicker.months[6]'),
-    t('datePicker.months[7]'),
-    t('datePicker.months[8]'),
-    t('datePicker.months[9]'),
-    t('datePicker.months[10]'),
-    t('datePicker.months[11]'),
+    t("datePicker.months[0]"),
+    t("datePicker.months[1]"),
+    t("datePicker.months[2]"),
+    t("datePicker.months[3]"),
+    t("datePicker.months[4]"),
+    t("datePicker.months[5]"),
+    t("datePicker.months[6]"),
+    t("datePicker.months[7]"),
+    t("datePicker.months[8]"),
+    t("datePicker.months[9]"),
+    t("datePicker.months[10]"),
+    t("datePicker.months[11]"),
 ];
-const days = [t('datePicker.days[0]'), t('datePicker.days[1]'), t('datePicker.days[2]'), t('datePicker.days[3]'), t('datePicker.days[4]'), t('datePicker.days[5]'), t('datePicker.days[6]')];
+const days = [
+    t("datePicker.days[0]"),
+    t("datePicker.days[1]"),
+    t("datePicker.days[2]"),
+    t("datePicker.days[3]"),
+    t("datePicker.days[4]"),
+    t("datePicker.days[5]"),
+    t("datePicker.days[6]"),
+];
 
 const today = new Date();
 const selectedYear = ref(

@@ -10,7 +10,7 @@
                     (student) => $emit('student-clicked', student)
                 "
             />
-            <div class="h-full w-[0.01rem] bg-gray-200"></div>
+            <div class="h-full w-[0.01rem] bg-brand-150"></div>
             <StudentsScoreSection
                 :label="$t('studentScoreList.underAchievers')"
                 :icon="ArrowTrendingDownIcon"
@@ -38,7 +38,6 @@ import {
 } from "@heroicons/vue/24/outline";
 import LinkCell from "@/Components/LinkCell.vue";
 import { watch } from "vue";
-import OutcomePercentageDisplay from "@/Views/Teacher/Views/Assessments/Details/Views/OutcomePercentageDisplay.vue";
 
 defineEmits(["student-clicked"]);
 const props = defineProps({

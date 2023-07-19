@@ -2,9 +2,11 @@
     <div v-if="view === 'default'">
         <div
             v-if="inProgressSession"
-            class="flex w-full flex-col items-center justify-evenly space-y-1 rounded-md py-2 px-3 text-center text-gray-200"
+            class="flex w-full flex-col items-center justify-evenly space-y-1 rounded-md py-2 px-3 text-center text-brand-text-150"
         >
-            <div class="text-[0.6rem] font-light">{{$t('currentClass.currentClass')}}</div>
+            <div class="text-[0.6rem] font-light">
+                {{ $t("currentClass.currentClass") }}
+            </div>
             <div v-if="inProgressSession.batch_schedule?.batch_subject">
                 <div class="text-xl font-bold">
                     {{
@@ -25,7 +27,7 @@
             </div>
         </div>
         <div v-else class="w-full text-center font-light text-white">
-            {{ $t('currentClass.noActiveClass')}}
+            {{ $t("currentClass.noActiveClass") }}
         </div>
     </div>
     <div v-else-if="view === 'absentee'">
@@ -53,7 +55,7 @@
                     students!
                 </div>
                 <SecondaryButton
-                    class="w-fit !rounded-2xl bg-zinc-800 !px-5 font-bold uppercase text-white"
+                    class="w-fit !rounded-2xl bg-brand-450 !px-5 font-bold uppercase text-white"
                     :title="$t('currentClass.buttonTitle')"
                     @click="showModal = true"
                 />
@@ -64,7 +66,9 @@
                 <div class="text-6xl font-bold">
                     {{ yourInProgressSession.absentees?.length }}
                 </div>
-                <div class="text-sm font-light uppercase">{{$t('currentClass.absentStudents')}}</div>
+                <div class="text-sm font-light uppercase">
+                    {{ $t("currentClass.absentStudents") }}
+                </div>
             </div>
 
             <Modal v-model:view="showModal">

@@ -1,66 +1,66 @@
 <template>
-
     <div
         tabindex="0"
-        class="flex w-full flex-col justify-between gap-3 rounded-md border bg-white p-4 shadow-sm md:w-1/2 md:max-w-xl">
-
+        class="flex w-full flex-col justify-between gap-3 rounded-md border bg-white p-4 shadow-sm md:w-1/2 md:max-w-xl"
+    >
         <div
             v-if="header"
-            :class="[ header && !!! title || header && !!! subtitle ? 'items-center' : 'items-start' ]"
+            :class="[
+                (header && !!!title) || (header && !!!subtitle)
+                    ? 'items-center'
+                    : 'items-start',
+            ]"
             class="flex justify-between"
         >
-
             <div class="flex flex-col">
                 <h3 class="font-semibold">
                     <slot name="title">
                         {{ title }}
                     </slot>
                 </h3>
-                <h3 class="text-sm text-gray-500">
+                <h3 class="text-sm text-brand-text-300">
                     <slot name="subtitle">
                         {{ subtitle }}
                     </slot>
                 </h3>
             </div>
 
-            <div v-if="icon" class="stroke-1.5 my-0.5 grid h-6 w-6 place-items-center">
+            <div
+                v-if="icon"
+                class="stroke-1.5 my-0.5 grid h-6 w-6 place-items-center"
+            >
                 <slot name="icon">
-                    <UsersIcon/>
+                    <UsersIcon />
                 </slot>
             </div>
-
         </div>
 
-        <slot/>
-
+        <slot />
     </div>
-
 </template>
 
 <script setup>
-import {computed} from "vue"
-import {UsersIcon} from "@heroicons/vue/24/outline"
+import { computed } from "vue";
+import { UsersIcon } from "@heroicons/vue/24/outline";
 
 const header = computed(() => {
-    return (!!props.title || !!props.subtitle)
-})
+    return !!props.title || !!props.subtitle;
+});
 
 const props = defineProps({
     title: {
         type: String,
-        default: null
+        default: null,
     },
     subtitle: {
         type: String,
-        default: null
+        default: null,
     },
     icon: {
         type: Boolean,
-        default: false
-    }
-})
+        default: false,
+    },
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

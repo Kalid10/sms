@@ -6,10 +6,10 @@
             class="flex w-full flex-col items-center rounded-lg p-4 text-center lg:absolute lg:top-6 lg:right-0 lg:w-8/12"
         >
             <div class="text-4xl font-medium">
-               {{ $t('questionPreparation.welcome') }}
+                {{ $t("questionPreparation.welcome") }}
             </div>
             <div class="w-10/12 py-1 text-sm font-light">
-                {{ $t('questionPreparation.description') }}
+                {{ $t("questionPreparation.description") }}
             </div>
         </div>
 
@@ -20,7 +20,7 @@
                 class="flex w-full flex-col items-center space-y-6 rounded-lg bg-white px-5 pt-3 pb-5 shadow-sm lg:w-5/12"
             >
                 <div class="text-xl font-light">
-                    {{ $t('questionPreparation.questionGeneration') }}
+                    {{ $t("questionPreparation.questionGeneration") }}
                 </div>
                 <SelectInput
                     v-model="form.assessment_type_id"
@@ -43,10 +43,14 @@
                         <label
                             for="large-range"
                             class="block text-sm font-medium"
-                            >{{ $t('questionPreparation.setDifficultyLevel') }}</label
+                            >{{
+                                $t("questionPreparation.setDifficultyLevel")
+                            }}</label
                         >
-                        <p class="mb-2 py-1 text-xs font-light text-gray-600">
-                            {{ $t('questionPreparation.hintForDifficulty') }}
+                        <p
+                            class="mb-2 py-1 text-xs font-light text-brand-text-100"
+                        >
+                            {{ $t("questionPreparation.hintForDifficulty") }}
                         </p>
                     </div>
 
@@ -56,7 +60,7 @@
                         min="1"
                         max="10"
                         type="range"
-                        class="range-lg h-3 w-full cursor-pointer appearance-none rounded-lg bg-gray-100"
+                        class="range-lg h-3 w-full cursor-pointer appearance-none rounded-lg bg-brand-100"
                     />
                 </div>
                 <div
@@ -65,7 +69,9 @@
                 >
                     <QuestionSource
                         :title="$t('questionPreparation.manualInput')"
-                        :description="$t('questionPreparation.manualInputDescription')"
+                        :description="
+                            $t('questionPreparation.manualInputDescription')
+                        "
                         source="custom"
                         :selected-source="form.question_source"
                         @click="
@@ -76,7 +82,9 @@
 
                     <QuestionSource
                         :title="$t('questionPreparation.lessonPlans')"
-                        :description="$t('questionPreparation.lessonPlanDescription')"
+                        :description="
+                            $t('questionPreparation.lessonPlanDescription')
+                        "
                         source="lesson-plans"
                         :selected-source="form.question_source"
                         @click="form.question_source = 'lesson-plans'"

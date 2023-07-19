@@ -1,7 +1,7 @@
- <template>
+<template>
     <label class="flex flex-col gap-1">
         <span v-if="label" class="">
-            <span class="pl-0.5 text-xs font-semibold text-gray-500">{{
+            <span class="pl-0.5 text-xs font-semibold text-brand-text-300">{{
                 label
             }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
@@ -12,12 +12,12 @@
             :placeholder="placeholder"
             :required="required"
             :value="modelValue"
-            class="h-10 w-full rounded-md border border-gray-200 placeholder:text-sm placeholder:text-gray-500"
+            class="h-10 w-full rounded-md border border-gray-200 placeholder:text-sm placeholder:text-brand-text-300"
             @input="$emit('update:modelValue', $event.target.value)"
             @focusin="toggleSubtext ? (showSubText = true) : null"
             @focusout="toggleSubtext ? (showSubText = false) : null"
         />
-        <span v-if="subtext && showSubText" class="text-xs text-gray-500">
+        <span v-if="subtext && showSubText" class="text-xs text-brand-text-300">
             <component
                 :is="descriptionIcon"
                 class="inline-block h-4 w-4 stroke-2"

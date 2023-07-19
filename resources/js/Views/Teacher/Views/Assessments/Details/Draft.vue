@@ -9,7 +9,7 @@
             state! You can:
         </div>
         <div
-            class="flex w-full bg-gray-50 px-4 py-2 text-center text-[0.65rem] font-light"
+            class="flex w-full bg-brand-50 px-4 py-2 text-center text-[0.65rem] font-light"
         >
             <div>
                 Setting an assessment as
@@ -26,7 +26,7 @@
             <div
                 class="flex h-8 w-11/12 items-center justify-center rounded-2xl bg-emerald-400 text-white lg:w-6/12"
             >
-                <DocumentCheckIcon class="w-4 text-gray-700" />
+                <DocumentCheckIcon class="w-4 text-brand-text-400" />
                 <SecondaryButton
                     title="Publish Assessment"
                     class="w-fit font-semibold"
@@ -40,7 +40,7 @@
             <div
                 class="flex h-8 w-11/12 items-center justify-center rounded-2xl bg-cyan-400 lg:w-6/12"
             >
-                <CalendarDaysIcon class="w-4 text-gray-700" />
+                <CalendarDaysIcon class="w-4 text-brand-text-400" />
                 <SecondaryButton
                     title="Schedule Assessment"
                     class="w-fit font-semibold"
@@ -57,9 +57,9 @@
 
                 <div
                     v-if="dueDate && status === 'scheduled'"
-                    class="flex h-8 w-10/12 items-center justify-center rounded-2xl bg-zinc-800 shadow-md lg:w-8/12"
+                    class="flex h-8 w-10/12 items-center justify-center rounded-2xl bg-brand-450 shadow-md lg:w-8/12"
                 >
-                    <CheckCircleIcon class="w-4 text-zinc-100" />
+                    <CheckCircleIcon class="w-4 text-brand-text-100" />
                     <SecondaryButton
                         title="FINISH UPDATING"
                         class="font-semibold text-white"

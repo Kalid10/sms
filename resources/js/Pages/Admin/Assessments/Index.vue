@@ -1,5 +1,5 @@
 <template>
-    <div class="flex min-h-screen w-full justify-center bg-gray-50">
+    <div class="flex min-h-screen w-full justify-center bg-brand-50">
         <div class="flex w-full flex-col space-y-6 lg:w-11/12">
             <Title class="w-5/12" :title="$t('common.assessments')" />
 

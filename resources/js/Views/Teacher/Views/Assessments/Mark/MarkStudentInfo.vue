@@ -6,9 +6,9 @@
         <div class="flex w-full flex-col space-y-2">
             <div
                 v-if="showInfo"
-                class="flex bg-gray-50 px-4 py-2 text-center text-[0.6rem] font-light"
+                class="flex bg-brand-50 px-4 py-2 text-center text-[0.6rem] font-light"
             >
-                <InformationCircleIcon class="mr-2 w-7 text-gray-500" />
+                <InformationCircleIcon class="mr-2 w-7 text-brand-text-300" />
                 <div>
                     These statistics are specifically related to the student's
                     performance in
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div
-            class="flex w-full items-center justify-between divide-x divide-gray-300 bg-zinc-700 text-white"
+            class="flex w-full items-center justify-between divide-x divide-gray-300 bg-brand-400 text-white"
         >
             <div class="w-3/12 text-center">
                 <div class="text-2xl font-bold">

@@ -23,7 +23,7 @@
                         <SecondaryButton
                             :title="$t('levelIndex.goToLevelCategories')"
                             value=" Go To Level Categories"
-                            class="!rounded-2xl bg-zinc-700 text-white"
+                            class="!rounded-2xl bg-brand-400 text-white"
                         />
                     </div>
                 </div>
@@ -55,7 +55,7 @@
 
             <template #updated_at-column="{ data }">
                 <div class="flex w-full justify-end">
-                    <span class="text-xs text-gray-500">{{ data }}</span>
+                    <span class="text-xs text-brand-text-300">{{ data }}</span>
                 </div>
             </template>
         </TableElement>

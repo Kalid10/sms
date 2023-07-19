@@ -11,7 +11,7 @@
         >
             <div
                 ref="chatContainer"
-                class="scrollbar-hide flex w-full grow flex-col space-y-4 overflow-y-auto rounded-lg bg-gray-50 p-4 shadow"
+                class="scrollbar-hide flex w-full grow flex-col space-y-4 overflow-y-auto rounded-lg bg-brand-50 p-4 shadow"
             >
                 <div
                     v-for="(message, index) in messages"
@@ -30,7 +30,7 @@
                         <div
                             :class="
                                 message.role === 'user'
-                                    ? 'ml-auto bg-zinc-700'
+                                    ? 'ml-auto bg-brand-400'
                                     : 'mr-auto bg-purple-500'
                             "
                             class="w-fit max-w-5xl rounded-lg px-4 py-1 text-sm leading-6 text-white"
@@ -52,7 +52,7 @@
                         class="hidden px-1 group-hover:flex"
                     >
                         <ClipboardDocumentIcon
-                            class="w-3 cursor-pointer text-zinc-700"
+                            class="w-3 cursor-pointer text-brand-text-400"
                             @click="copyToClipboard(message.content)"
                         />
                     </div>
@@ -74,7 +74,7 @@
                 :class="
                     isChatUpdating
                         ? 'bg-red-600 text-white'
-                        : 'bg-violet-100 text-zinc-700'
+                        : 'bg-violet-100 text-brand-text-400'
                 "
                 @click="
                     regenerateResponseAndStopStreaming(
@@ -83,14 +83,14 @@
                 "
             />
             <div
-                class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-gray-50/70 p-4 shadow-sm"
+                class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-brand-50/70 p-4 shadow-sm"
             >
                 <TextInput
                     v-model="inputMessage"
                     :disabled="openAILimitReached"
                     type="text"
                     class="w-full"
-                    class-style="rounded-2xl ring-purple-600 ring-2 bg-gray-50 border-none bg-white placeholder:text-xs focus:ring-2 ring-black focus:ring-purple-500"
+                    class-style="rounded-2xl ring-purple-600 ring-2 bg-brand-50 border-none bg-white placeholder:text-xs focus:ring-2 ring-black focus:ring-purple-500"
                     :placeholder="$t('chat.typeYourMessageHere')"
                     @keyup.enter="sendMessage"
                 />
@@ -98,7 +98,7 @@
                     :disabled="openAILimitReached"
                     :class="
                         openAILimitReached
-                            ? 'bg-zinc-600 cursor-not-allowed'
+                            ? 'bg-brand-350 cursor-not-allowed'
                             : 'cursor-pointer bg-purple-500'
                     "
                     class="rounded-md p-2 text-white"
@@ -112,58 +112,68 @@
             v-if="showGettingStarted"
             class="mt-5 hidden h-fit w-4/12 flex-col space-y-6 rounded-lg border border-black p-5 text-center text-sm lg:block"
         >
-            <h2 class="text-2xl font-bold">{{ $t('chat.gettingStarted')}}</h2>
-            <p>{{ $t('chat.helloWeWant', { name: usePage().props.auth.user.name }) }}</p>
+            <h2 class="text-2xl font-bold">{{ $t("chat.gettingStarted") }}</h2>
+            <p>
+                {{
+                    $t("chat.helloWeWant", {
+                        name: usePage().props.auth.user.name,
+                    })
+                }}
+            </p>
 
             <p>
-<!--                Hello, {{ usePage().props.auth.user.name }}! We want to make-->
-<!--                sure you get the most out of our AI chat feature, Rigel Copilot.-->
-<!--                Here are some tips to guide you:-->
+                <!--                Hello, {{ usePage().props.auth.user.name }}! We want to make-->
+                <!--                sure you get the most out of our AI chat feature, Rigel Copilot.-->
+                <!--                Here are some tips to guide you:-->
             </p>
 
             <div>
-                <h3 class="text-xl font-semibold">{{ $t('chat.askSpecificQuestions')}} </h3>
-                <p class="font-light">
-                    {{ $t('chat.theAiChat')}}
-                </p>
-            </div>
-
-            <div>
                 <h3 class="text-xl font-semibold">
-                    {{ $t('chat.experimentWithDifferent')}}
+                    {{ $t("chat.askSpecificQuestions") }}
                 </h3>
                 <p class="font-light">
-                    {{ $t('chat.feelFree')}}
+                    {{ $t("chat.theAiChat") }}
                 </p>
             </div>
 
             <div>
                 <h3 class="text-xl font-semibold">
-                    {{ $t('chat.useItAsResource')}}
+                    {{ $t("chat.experimentWithDifferent") }}
+                </h3>
+                <p class="font-light">
+                    {{ $t("chat.feelFree") }}
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold">
+                    {{ $t("chat.useItAsResource") }}
                 </h3>
                 <p class="font-normal">
-                    {{ $t('chat.needHelpFinding')}}
+                    {{ $t("chat.needHelpFinding") }}
                 </p>
             </div>
 
             <div>
                 <h3 class="text-xl font-semibold">
-                    {{ $t('chat.seekClarification')}}
+                    {{ $t("chat.seekClarification") }}
                 </h3>
                 <p class="font-light">
-                    {{ $t('chat.ifYourAreDealing')}}
+                    {{ $t("chat.ifYourAreDealing") }}
                 </p>
             </div>
 
             <div>
-                <h3 class="text-xl font-semibold">{{ $t('chat.exploreCreativeIdeas')}} </h3>
+                <h3 class="text-xl font-semibold">
+                    {{ $t("chat.exploreCreativeIdeas") }}
+                </h3>
                 <p class="font-light">
-                    {{ $t('chat.theAIChat')}}
+                    {{ $t("chat.theAIChat") }}
                 </p>
             </div>
 
             <p class="py-4 italic">
-                {{ $t('chat.RememberWhile')}}
+                {{ $t("chat.RememberWhile") }}
             </p>
         </div>
     </div>
