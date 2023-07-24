@@ -6,7 +6,7 @@
             <div class="flex w-full justify-evenly">
                 <ArrowLeftCircleIcon
                     v-if="selectedStaff"
-                    class="w-6 cursor-pointer text-zinc-600 hover:scale-110"
+                    class="w-6 cursor-pointer text-brand-text-350 hover:scale-110"
                     @click="
                         showSearchResult = true;
                         selectedStaff = null;
@@ -33,10 +33,10 @@
                         v-for="(staff, index) in staffUsers"
                         v-show="searchKey.length > 0"
                         :key="staff"
-                        class="w-11/12 cursor-pointer py-2 hover:rounded-lg hover:bg-zinc-700 hover:text-white"
+                        class="w-11/12 cursor-pointer py-2 hover:rounded-lg hover:bg-brand-400 hover:text-white"
                         :class="
                             index % 2 === 0
-                                ? 'bg-gray-100 px-10 '
+                                ? 'bg-brand-100 px-10 '
                                 : 'bg-white px-10 '
                         "
                         @click="selectStaff(staff)"
@@ -56,7 +56,9 @@
                             <TextArea
                                 v-model="form.reason"
                                 :label="$t('common.reason')"
-                                :placeholder="$t('absenteeAddModal.enterReason')"
+                                :placeholder="
+                                    $t('absenteeAddModal.enterReason')
+                                "
                                 class="max-h-fit w-full text-start"
                                 :subtext="
                                     'You are about to add ' +

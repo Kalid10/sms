@@ -25,7 +25,7 @@
             </div>
 
             <!--Divider -->
-            <div class="min-h-screen w-[0.01rem] bg-gray-100"></div>
+            <div class="min-h-screen w-[0.01rem] bg-brand-100"></div>
 
             <!--Loading-->
             <Loading v-if="isLoading" color="primary" is-full-screen />
@@ -35,9 +35,10 @@
                 class="scrollbar-hide sticky top-0 flex h-screen w-5/12 flex-col items-center space-y-6 overflow-auto py-5"
             >
                 <div
-                    class="-skew-x-3 bg-zinc-800 px-3 py-1 text-3xl font-bold italic text-white"
+                    class="-skew-x-3 bg-brand-450 px-3 py-1 text-3xl font-bold italic text-white"
                 >
-                    {{ assessment.title }} {{ $t('teacherAssessmentsMark.info') }}
+                    {{ assessment.title }}
+                    {{ $t("teacherAssessmentsMark.info") }}
                 </div>
 
                 <MarkStat
@@ -57,7 +58,7 @@
                     />
                 </div>
 
-                <div class="h-[0.01rem] w-full bg-gray-100"></div>
+                <div class="h-[0.01rem] w-full bg-brand-100"></div>
 
                 <MarkStudentInfo ref="studentInfo" class="animate-scale-up" />
 
@@ -70,16 +71,16 @@
                     >
                         <ExclamationTriangleIcon class="w-4 text-red-600" />
                         <span>
-                        {{ $t('teacherAssessmentsMark.caution') }}
+                            {{ $t("teacherAssessmentsMark.caution") }}
                         </span>
                     </div>
                     <div class="text-xs font-light">
-                        {{ $t('teacherAssessmentsMark.message') }}
+                        {{ $t("teacherAssessmentsMark.message") }}
                     </div>
                     <SecondaryButton
                         :is-disabled="isLoading"
                         :title="$t('teacherAssessmentsMark.finishMarking')"
-                        class="w-3/5 rounded-2xl bg-zinc-800 text-white"
+                        class="w-3/5 rounded-2xl bg-brand-450 text-white"
                         @click.="insertStudentsAssessment"
                     />
                 </div>
@@ -102,7 +103,6 @@ import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import Loading from "@/Components/Loading.vue";
 import BackButton from "@/Components/BackButton.vue";
 import { isTeacher } from "@/utils";
-import TextInput from "@/Components/TextInput.vue";
 
 const showNotification = inject("showNotification");
 const isLoading = ref(false);

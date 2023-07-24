@@ -47,7 +47,9 @@
                                 $t("questionPreparation.setDifficultyLevel")
                             }}</label
                         >
-                        <p class="mb-2 py-1 text-xs font-light text-gray-600">
+                        <p
+                            class="mb-2 py-1 text-xs font-light text-brand-text-100"
+                        >
                             {{ $t("questionPreparation.hintForDifficulty") }}
                         </p>
                     </div>
@@ -58,7 +60,7 @@
                         min="1"
                         max="10"
                         type="range"
-                        class="range-lg h-3 w-full cursor-pointer appearance-none rounded-lg bg-gray-100"
+                        class="range-lg h-3 w-full cursor-pointer appearance-none rounded-lg bg-brand-100"
                     />
                 </div>
                 <div

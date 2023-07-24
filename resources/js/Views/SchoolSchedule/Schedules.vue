@@ -7,10 +7,10 @@
                 v-for="(item, index) in schoolSchedule"
                 :key="index"
                 class="my-1 flex w-full items-center justify-center space-x-2 rounded-lg py-3 font-medium"
-                :class="index % 2 === 1 ? 'bg-gray-50' : 'bg-white'"
+                :class="index % 2 === 1 ? 'bg-brand-50' : 'bg-white'"
             >
-                <CalendarDaysIcon class="w-4 text-zinc-500" />
-                <div class="text-xs text-zinc-500 2xl:text-sm">
+                <CalendarDaysIcon class="w-4 text-brand-text-300" />
+                <div class="text-xs text-brand-text-300 2xl:text-sm">
                     {{ item.title }}
                 </div>
             </div>
@@ -23,7 +23,7 @@
         <!--        <LinkCell href="/school-schedules" value="View All Schedules" />-->
         <SecondaryButton
             :title="$t('schoolScheduleSchedules.viewAllSchedules')"
-            class="w-2/3 !rounded-2xl bg-zinc-700 text-white"
+            class="w-2/3 !rounded-2xl bg-brand-400 text-white"
         />
     </div>
 </template>
@@ -33,7 +33,6 @@ import { usePage } from "@inertiajs/vue3";
 import EmptyView from "@/Views/EmptyView.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { CalendarDaysIcon } from "@heroicons/vue/24/solid";
-import SelectInput from "@/Components/SelectInput.vue";
 
 const schoolSchedule = computed(() => usePage().props.school_schedule);
 </script>

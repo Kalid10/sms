@@ -3,8 +3,11 @@
         class="flex h-full w-full flex-col justify-center rounded-lg bg-white shadow-sm"
         :class="classStyle ? classStyle : ' p-5 space-y-3 bg-white'"
     >
-        <div v-if="schedule?.length" class="text-xl font-medium text-gray-800">
-            {{ moment().format("dddd") }}{{ $t('currentDaySchedule.schedule')}}
+        <div
+            v-if="schedule?.length"
+            class="text-xl font-medium text-brand-text-450"
+        >
+            {{ moment().format("dddd") }}{{ $t("currentDaySchedule.schedule") }}
         </div>
         <div
             v-if="schedule?.length"
@@ -18,30 +21,30 @@
                 class="flex w-full justify-center"
             >
                 <div
-                    class="flex flex-col space-y-2 py-3 text-center text-gray-500"
+                    class="flex flex-col space-y-2 py-3 text-center text-brand-text-300"
                     :class="
                         activeBatchScheduleId === item.id
                             ? 'bg-gradient-to-bl from-violet-500 to-purple-500 text-white rounded-lg w-11/12 '
                             : 'text-black w-full'
                     "
                 >
-                    <div class="text-black">
+                    <div class="text-brand-500">
                         {{ item.batch_subject.subject.short_name }}
                         <span v-if="item?.batch" class="text-xs"
                             >({{ item.batch.level.name }}
                             {{ item.batch.section }})</span
                         >
                     </div>
-                    <div class="text-[0.65rem] uppercase">
+                    <div class="text-[0.65rem] uppercase text-brand-400">
                         {{ numberWithOrdinal(Number(item.school_period.name)) }}
-                        {{ $t('currentDaySchedule.period') }}
+                        {{ $t("currentDaySchedule.period") }}
                     </div>
                 </div>
             </div>
         </div>
         <div
             v-else
-            class="flex h-44 items-center justify-center py-5 text-center text-2xl font-bold uppercase text-gray-600"
+            class="flex h-44 items-center justify-center py-5 text-center text-2xl font-bold uppercase text-brand-text-350"
         >
             <EmptyView
                 :title="'No Schedule found for ' + moment().format('dddd')"

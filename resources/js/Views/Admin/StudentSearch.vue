@@ -15,11 +15,11 @@
                     v-for="(student, index) in filteredStudents"
                     v-show="query.length > 0"
                     :key="student"
-                    class="cursor-pointer py-2 text-xs hover:rounded-lg hover:bg-zinc-700 hover:text-white"
+                    class="cursor-pointer py-2 text-xs hover:rounded-lg hover:bg-brand-400 hover:text-white"
                     :class="
                         index % 2 === 0
-                            ? 'bg-gray-50 px-10 hover:bg-gray-300'
-                            : 'bg-white px-10 hover:bg-gray-300'
+                            ? 'bg-brand-50 px-10 hover:bg-brand-200'
+                            : 'bg-white px-10 hover:bg-brand-200'
                     "
                     @click="goToStudentPage(student)"
                 >
@@ -41,7 +41,7 @@
                 v-else-if="query.length > 0 && showStudents"
                 class="mt-1 flex flex-col items-center justify-center rounded-lg border border-zinc-100 bg-white py-8 shadow-sm"
             >
-                <p v-if="!!query" class="text-sm text-zinc-800">
+                <p v-if="!!query" class="text-sm text-brand-text-450">
                     No students found with the name "{{ query }}"
                 </p>
             </div>

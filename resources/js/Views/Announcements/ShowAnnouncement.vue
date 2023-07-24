@@ -13,7 +13,7 @@
                 <span
                     v-for="(target, index) in selectedAnnouncement.target_group"
                     :key="index"
-                    class="mr-2 rounded-md bg-zinc-700 px-3 py-1 text-xs font-medium uppercase text-white"
+                    class="mr-2 rounded-md bg-brand-400 px-3 py-1 text-xs font-medium uppercase text-white"
                 >
                     {{ target }}
                 </span>

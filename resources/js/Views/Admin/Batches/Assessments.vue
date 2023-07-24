@@ -9,7 +9,7 @@
         />
     </div>
     <div v-else class="flex w-full items-center justify-center">
-        <EmptyView :title="$t('batchAssessments.noScheduledAssessment')"/>
+        <EmptyView :title="$t('batchAssessments.noScheduledAssessment')" />
     </div>
 </template>
 <script setup>
@@ -17,8 +17,9 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import EmptyView from "@/Views/EmptyView.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const assessments = computed(() => usePage().props.assessments);
 
 const assessmentsData = computed(() => {
@@ -35,25 +36,25 @@ const assessmentsData = computed(() => {
 
 const config = [
     {
-        name: t('common.assessment'),
+        name: t("common.assessment"),
         key: "name",
         class: "font-semibold",
     },
     {
-        name: t('common.description'),
+        name: t("common.description"),
         key: "description",
-        class: "text-gray-500 text-xs font-semibold",
+        class: "text-brand-text-300 text-xs font-semibold",
     },
     {
-        name: t('batchAssessments.dueDate'),
+        name: t("batchAssessments.dueDate"),
         key: "due_date",
     },
     {
-        name: t('common.subjects'),
+        name: t("common.subjects"),
         key: "subject",
     },
     {
-        name: t('batchAssessments.assessmentType'),
+        name: t("batchAssessments.assessmentType"),
         key: "assessment_type",
     },
 ];

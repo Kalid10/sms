@@ -11,7 +11,7 @@
         >
             <div
                 ref="chatContainer"
-                class="scrollbar-hide flex w-full grow flex-col space-y-4 overflow-y-auto rounded-lg bg-gray-50 p-4 shadow"
+                class="scrollbar-hide flex w-full grow flex-col space-y-4 overflow-y-auto rounded-lg bg-brand-50 p-4 shadow"
             >
                 <div
                     v-for="(message, index) in messages"
@@ -30,7 +30,7 @@
                         <div
                             :class="
                                 message.role === 'user'
-                                    ? 'ml-auto bg-zinc-700'
+                                    ? 'ml-auto bg-brand-400'
                                     : 'mr-auto bg-purple-500'
                             "
                             class="w-fit max-w-5xl rounded-lg px-4 py-1 text-sm leading-6 text-white"
@@ -50,7 +50,7 @@
                             class="hidden px-1 group-hover:flex"
                         >
                             <ClipboardDocumentIcon
-                                class="w-3 cursor-pointer text-zinc-700"
+                                class="w-3 cursor-pointer text-brand-text-400"
                                 @click="
                                     copyToClipboardAndShowToast(
                                         message.content,
@@ -84,7 +84,7 @@
                 :class="
                     isChatUpdating
                         ? 'bg-red-600 text-white'
-                        : 'bg-violet-100 text-zinc-700'
+                        : 'bg-violet-100 text-brand-text-400'
                 "
                 @click="
                     regenerateResponseAndStopStreaming(
@@ -93,13 +93,13 @@
                 "
             />
             <div
-                class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-gray-50/70 p-4 shadow-sm"
+                class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-brand-50/70 p-4 shadow-sm"
             >
                 <textarea
                     ref="inputRef"
                     v-model="inputMessage"
                     :disabled="openAILimitReached"
-                    class="scrollbar-hide w-full rounded-2xl border-none bg-gray-50 ring-2 ring-purple-600 placeholder:text-xs focus:ring-2 focus:ring-purple-500"
+                    class="scrollbar-hide w-full rounded-2xl border-none bg-brand-50 ring-2 ring-purple-600 placeholder:text-xs focus:ring-2 focus:ring-purple-500"
                     :placeholder="$t('chat.typeYourMessageHere')"
                     :style="{ maxHeight: `${maxRows * lineHeight}px` }"
                     @input="autoResize"
@@ -110,7 +110,7 @@
                     :disabled="openAILimitReached"
                     :class="
                         openAILimitReached
-                            ? 'bg-zinc-600 cursor-not-allowed'
+                            ? 'bg-brand-350 cursor-not-allowed'
                             : 'cursor-pointer bg-purple-500'
                     "
                     class="rounded-md p-2 text-white"

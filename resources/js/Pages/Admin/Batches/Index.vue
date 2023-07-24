@@ -31,6 +31,7 @@ import Home from "@/Views/Admin/Batches/Index.vue";
 import Students from "@/Views/Admin/Batches/Students.vue";
 import { usePage } from "@inertiajs/vue3";
 import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
 
 const { t } = useI18n();
 const batch = computed(() => usePage().props.batch);
@@ -39,9 +40,9 @@ const gradeLevel = computed(() => {
     return batch.value.level.name + " " + batch.value.section;
 });
 
-const homeTab = t("common.home");
-const schedulesTab = t("common.schedules");
-const studentsTab = t("common.students");
+const homeTab = toUnderscore(t("common.home"));
+const schedulesTab = toUnderscore(t("common.schedules"));
+const studentsTab = toUnderscore(t("common.students"));
 const tabs = [homeTab, schedulesTab, studentsTab];
 
 const activeTab = ref(homeTab);

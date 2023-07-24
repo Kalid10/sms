@@ -12,7 +12,7 @@
             :class="filterEnabled ? 'blur-lg' : 'blur-none'"
             :selectable="false"
             :columns="config"
-            header-style="!bg-zinc-800 text-white text-xs"
+            header-style="!bg-brand-450 text-white text-xs"
             :filterable="false"
             :footer="true"
         >
@@ -29,7 +29,7 @@
                     <div
                         class="w-fit rounded-xl py-1 px-2 text-center text-[0.55rem] font-semibold lg:px-2"
                         :class="{
-                            'bg-zinc-800 text-white': data === 'Draft',
+                            'bg-brand-450 text-white': data === 'Draft',
                             'bg-emerald-400': data === 'Published',
                             'bg-indigo-400 text-white': data === 'Marking',
                             'bg-yellow-400': data === 'Completed',
@@ -54,8 +54,9 @@ import { capitalize, computed, ref, watch } from "vue";
 import moment from "moment";
 import Filters from "@/Views/Teacher/Views/Assessments/Table/Filters/Index.vue";
 import Pagination from "@/Components/Pagination.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const emit = defineEmits(["click", "create"]);
 const assessments = computed(() => usePage().props.assessments);
 const filteredAssessments = computed(() => {
@@ -74,13 +75,13 @@ const filteredAssessments = computed(() => {
 
 const config = [
     {
-        name: t('tableIndex.title'),
+        name: t("tableIndex.title"),
         key: "assessment",
         type: "custom",
         class: "text-xs py-3.5",
     },
     {
-        name: t('tableIndex.type'),
+        name: t("tableIndex.type"),
         key: "assessment_type",
         class: "text-xs",
         type: "enum",
@@ -93,23 +94,23 @@ const config = [
         ],
     },
     {
-        name: t('tableIndex.maxPoints'),
+        name: t("tableIndex.maxPoints"),
         key: "max_points",
         class: "text-xs",
     },
     {
-        name: t('tableIndex.status'),
+        name: t("tableIndex.status"),
         key: "status",
         type: "custom",
         class: "text-xs",
     },
     {
-        name: t('tableIndex.dueDate'),
+        name: t("tableIndex.dueDate"),
         key: "due_date",
         class: "text-xs",
     },
     {
-        name: t('tableIndex.lastUpdate'),
+        name: t("tableIndex.lastUpdate"),
         key: "updated_at",
         class: "text-xs opacity-70",
     },

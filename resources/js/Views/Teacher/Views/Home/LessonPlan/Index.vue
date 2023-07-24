@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="flex w-full items-center justify-between hover:bg-zinc-800 hover:text-white hover:shadow-sm"
+            class="flex w-full items-center justify-between hover:bg-brand-450 hover:text-white hover:shadow-sm"
             :class="
                 view === 'class'
                     ? ' bg-white hover:rounded-lg py-3'
@@ -10,7 +10,7 @@
         >
             <div
                 v-if="view === 'class'"
-                class="mr-1 min-h-full w-0.5 bg-gray-600 hover:bg-gray-100"
+                class="mr-1 min-h-full w-0.5 bg-brand-350 hover:bg-brand-100"
             ></div>
             <div
                 v-else

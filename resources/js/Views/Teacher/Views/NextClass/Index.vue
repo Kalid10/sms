@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-fit w-full flex-col items-center rounded-xl bg-zinc-800 text-white"
+        class="flex h-fit w-full flex-col items-center rounded-xl bg-brand-450 text-white"
         :class="isSidebarOpenOnXlDevice ? 'lg:py-3' : 'lg:py-5'"
     >
         <div
@@ -25,12 +25,12 @@
             class="flex h-32 w-11/12 flex-col justify-center text-center text-sm font-light leading-relaxed lg:h-44 lg:w-10/12 lg:text-base"
         >
             <div>
-                {{ $t('nextClassIndex.noUpcomingClasses')}}
+                {{ $t("nextClassIndex.noUpcomingClasses") }}
                 <span
                     class="cursor-pointer underline underline-offset-2 hover:font-medium"
-                    >{{ $t('nextClassIndex.admin')}}</span
+                    >{{ $t("nextClassIndex.admin") }}</span
                 >
-                {{ $t('nextClassIndex.forAssistance')}}
+                {{ $t("nextClassIndex.forAssistance") }}
             </div>
         </div>
     </div>

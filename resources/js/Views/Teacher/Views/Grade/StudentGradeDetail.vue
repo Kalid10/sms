@@ -16,7 +16,7 @@
                                 .full_name
                         }}
                     </span>
- {{ $t('studentGradeDetail.gradeReport')}}
+                    {{ $t("studentGradeDetail.gradeReport") }}
                 </span>
             </div>
 
@@ -39,7 +39,7 @@
             class="!!text-[0.5rem] border-none bg-red-400"
             :footer="true"
             :filterable="false"
-            header-style="!bg-zinc-700 text-white !text-[0.65rem]"
+            header-style="!bg-brand-400 text-white !text-[0.65rem]"
         >
             <template #subject-column="{ data }">
                 <span
@@ -72,10 +72,11 @@ import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue
 import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import GradeFilter from "@/Views/Teacher/Views/Grade/GradeFilter.vue";
+import { useI18n } from "vue-i18n";
 
 const emit = defineEmits(["flag"]);
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+
+const { t } = useI18n();
 const props = defineProps({
     studentName: {
         type: Object,
@@ -118,32 +119,32 @@ const studentGrades = computed(() => {
 const config = [
     {
         key: "subject",
-        name: t('common.subjects'),
+        name: t("common.subjects"),
         align: "center",
         class: "h-12 !text-[0.6rem]",
         type: "custom",
     },
     {
         key: "attendance",
-        name: t('studentGradeDetail.attendance'),
+        name: t("studentGradeDetail.attendance"),
         align: "center",
         class: "h-12 !text-[0.65rem]",
     },
     {
         key: "grade",
-        name: t('common.grade'),
+        name: t("common.grade"),
         align: "center",
         class: "h-12 !text-[0.65rem]",
     },
     {
         key: "rank",
-        name: t('studentGradeDetail.rank'),
+        name: t("studentGradeDetail.rank"),
         align: "center",
         class: "h-12 !text-[0.65rem]",
     },
     {
         key: "conduct",
-        name: t('studentGradeDetail.conduct'),
+        name: t("studentGradeDetail.conduct"),
         align: "center",
         class: "h-12 !text-[0.65rem]",
     },

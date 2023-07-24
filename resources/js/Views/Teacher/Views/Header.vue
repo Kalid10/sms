@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full items-center justify-between space-x-4 rounded-lg bg-gradient-to-bl from-neutral-700 to-zinc-800 py-6 pl-4 text-gray-200 shadow-sm"
+        class="flex w-full items-center justify-between space-x-4 rounded-lg bg-brand-500 from-neutral-700 to-zinc-800 py-6 pl-4 text-brand-text-500 shadow-sm"
     >
         <img
             v-if="image"
@@ -34,7 +34,8 @@
                     </div>
                     <div v-else>-</div>
                     <span class="text-xs font-light">
-                      {{ $t('header.classRankFrom')}} {{ totalBatchesCount ?? "-" }}
+                        {{ $t("header.classRankFrom") }}
+                        {{ totalBatchesCount ?? "-" }}
                     </span>
                 </div>
             </div>

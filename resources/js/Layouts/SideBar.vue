@@ -1,7 +1,7 @@
 <template>
     <div
         ref="parentDiv"
-        class="max-h-screen bg-zinc-800 text-white"
+        class="max-h-screen bg-brand-450 text-white"
         :class="[
             isOpen
                 ? 'min-w-[16rem] lg:w-80 lg:min-w-0 2xl:w-96'

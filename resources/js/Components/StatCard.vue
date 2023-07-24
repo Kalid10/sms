@@ -6,7 +6,7 @@
             class="flex h-full w-4/12 items-center justify-center p-0.5 font-light"
         >
             <div
-                class="flex items-center justify-center rounded-full bg-gray-50 p-1.5"
+                class="flex items-center justify-center rounded-full bg-brand-50 p-1.5"
             >
                 <component :is="icon" class="w-6 fill-black" />
             </div>
@@ -14,7 +14,7 @@
 
         <div class="flex h-full w-8/12 flex-col justify-evenly py-2">
             <div
-                class="text-[0.5rem] font-bold text-gray-300/90 2xl:text-[0.57rem]"
+                class="text-[0.5rem] font-bold text-brand-text-200/90 2xl:text-[0.57rem]"
             >
                 {{ title }}
             </div>

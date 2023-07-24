@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="questions?.data?.length"
-        class="flex h-screen w-11/12 flex-col space-y-4 bg-gray-50/60 p-4"
+        class="flex h-screen w-11/12 flex-col space-y-4 bg-brand-50/60 p-4"
     >
         <div class="flex w-full items-center justify-between py-3">
             <Title :title="$t('teacherQuestions.myQuestionBank')" />
@@ -40,14 +40,14 @@
                         >
                     </div>
                     <PrinterIcon
-                        class="w-5 cursor-pointer text-zinc-600 hover:scale-125 hover:text-black"
+                        class="w-5 cursor-pointer text-brand-text-350 hover:scale-125 hover:text-black"
                     />
                 </div>
                 <div
                     v-for="(item, index) in selectedQuestion?.questions"
                     :key="index"
-                    class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-4 font-medium shadow-sm hover:bg-zinc-600 hover:text-white"
-                    :class="index % 2 === 1 ? 'bg-gray-50' : 'bg-gray-50/50'"
+                    class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-4 font-medium shadow-sm hover:bg-brand-350 hover:text-white"
+                    :class="index % 2 === 1 ? 'bg-brand-50' : 'bg-brand-50/50'"
                 >
                     <div class="flex w-full flex-col space-y-3 text-sm">
                         <span>
@@ -90,7 +90,7 @@
                 <TableElement
                     :filterable="false"
                     :selectable="false"
-                    header-style="bg-zinc-800 text-white "
+                    header-style="bg-brand-450 text-white "
                     class="cursor-pointer !rounded-none !shadow-none"
                     :data="formattedQuestionData"
                     :columns="config"
@@ -99,7 +99,7 @@
                 >
                     <template #row-actions="{ row }">
                         <EyeIcon
-                            class="w-4 cursor-pointer text-gray-800 hover:scale-125"
+                            class="w-4 cursor-pointer text-brand-text-450 hover:scale-125"
                             @click="setSelectedQuestion(row.id)"
                         />
                         <TrashIcon
@@ -164,7 +164,7 @@
             />
             <SecondaryButton
                 :title="$t('teacherQuestions.update')"
-                class="w-3/12 !rounded-2xl bg-zinc-800 text-2xl text-white"
+                class="w-3/12 !rounded-2xl bg-brand-450 text-2xl text-white"
                 @click="updateQuestion()"
             />
         </div>

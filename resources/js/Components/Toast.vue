@@ -2,7 +2,7 @@
     <transition name="fade">
         <div
             v-if="show"
-            class="fixed flex w-24 items-center rounded-lg bg-zinc-200 px-2 text-gray-500 shadow transition-all duration-300 ease-out"
+            class="fixed flex w-24 items-center rounded-lg bg-brand-150 px-2 text-brand-text-300 shadow transition-all duration-300 ease-out"
             :style="{ top: y - 50 + 'px', left: x - 50 + 'px' }"
         >
             <div

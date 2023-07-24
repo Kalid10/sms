@@ -9,31 +9,47 @@
             <div class="flex w-full flex-col items-center gap-6">
                 <div>
                     <Heading class="text-center" size="md"
-                        >{{ $t('gettingStartedSchoolSchedule.congratulations') }}
+                        >{{
+                            $t("gettingStartedSchoolSchedule.congratulations")
+                        }}
                     </Heading>
                     <Heading
-                        class="text-center !font-normal text-gray-500"
+                        class="text-center !font-normal text-brand-text-300"
                         size="sm"
-                        >{{ $t('gettingStartedSchoolSchedule.almostDone') }}
+                        >{{ $t("gettingStartedSchoolSchedule.almostDone") }}
                     </Heading>
                 </div>
 
                 <div class="flex flex-col gap-3">
-                    <p class="max-w-2xl text-center text-sm text-gray-500">
-                        {{ $t('gettingStartedSchoolSchedule.successfullyRegisteredMessage') }}
+                    <p
+                        class="max-w-2xl text-center text-sm text-brand-text-300"
+                    >
+                        {{
+                            $t(
+                                "gettingStartedSchoolSchedule.successfullyRegisteredMessage"
+                            )
+                        }}
                     </p>
 
-                    <p class="max-w-2xl text-center text-sm text-gray-500">
-                        {{ $t('gettingStartedSchoolSchedule.firstStepHint') }}
+                    <p
+                        class="max-w-2xl text-center text-sm text-brand-text-300"
+                    >
+                        {{ $t("gettingStartedSchoolSchedule.firstStepHint") }}
                     </p>
 
-                    <p class="max-w-2xl text-center text-sm text-gray-500">
-                        {{ $t('gettingStartedSchoolSchedule.doNotWorryMessage') }}
+                    <p
+                        class="max-w-2xl text-center text-sm text-brand-text-300"
+                    >
+                        {{
+                            $t("gettingStartedSchoolSchedule.doNotWorryMessage")
+                        }}
                     </p>
                 </div>
 
                 <div class="flex flex-col gap-3">
-                    <Heading class="text-center" size="sm">{{ $t('gettingStartedSchoolSchedule.nextSteps') }}</Heading>
+                    <Heading class="text-center" size="sm">{{
+                        $t("gettingStartedSchoolSchedule.nextSteps")
+                    }}</Heading>
 
                     <div class="flex w-full flex-col gap-2 md:flex-row">
                         <Card
@@ -47,7 +63,11 @@
                                     class="flex w-full items-center justify-center"
                                 >
                                     <h3 class="text-xs font-semibold">
-                                        {{ $t('gettingStartedSchoolSchedule.registerSemesterStartDate') }}
+                                        {{
+                                            $t(
+                                                "gettingStartedSchoolSchedule.registerSemesterStartDate"
+                                            )
+                                        }}
                                     </h3>
                                     <div
                                         class="flex max-w-0 grow justify-end opacity-0 transition-all duration-150 group-hover:max-w-full group-hover:opacity-100"
@@ -59,7 +79,11 @@
                                 </div>
 
                                 <h3 class="text-center text-xs">
-                                    {{ $t('gettingStartedSchoolSchedule.AddStartOfSchoolSemester') }}
+                                    {{
+                                        $t(
+                                            "gettingStartedSchoolSchedule.AddStartOfSchoolSemester"
+                                        )
+                                    }}
                                 </h3>
                             </div>
                         </Card>
@@ -74,7 +98,11 @@
                                     class="flex w-full items-center justify-center"
                                 >
                                     <h3 class="text-xs font-semibold">
-                                        {{ $t('gettingStartedSchoolSchedule.ViewSchoolSchedule') }}
+                                        {{
+                                            $t(
+                                                "gettingStartedSchoolSchedule.ViewSchoolSchedule"
+                                            )
+                                        }}
                                     </h3>
                                     <div
                                         class="flex max-w-0 grow justify-end opacity-0 transition-all duration-150 group-hover:max-w-full group-hover:opacity-100"
@@ -86,7 +114,11 @@
                                 </div>
 
                                 <h3 class="text-center text-xs">
-                                    {{ $t('gettingStartedSchoolSchedule.useSchoolCalenderMessage') }}
+                                    {{
+                                        $t(
+                                            "gettingStartedSchoolSchedule.useSchoolCalenderMessage"
+                                        )
+                                    }}
                                 </h3>
                             </div>
                         </Card>
@@ -101,7 +133,11 @@
                                     class="flex w-full items-center justify-center"
                                 >
                                     <h3 class="text-xs font-semibold">
-                                        {{ $t('gettingStartedSchoolSchedule.proceedToDashboard') }}
+                                        {{
+                                            $t(
+                                                "gettingStartedSchoolSchedule.proceedToDashboard"
+                                            )
+                                        }}
                                     </h3>
                                     <div
                                         class="flex max-w-0 grow justify-end opacity-0 transition-all duration-150 ease-in group-hover:max-w-full group-hover:opacity-100"
@@ -113,7 +149,11 @@
                                 </div>
 
                                 <h3 class="text-center text-xs">
-                                    {{ $t('gettingStartedSchoolSchedule.youCanSkipMessage') }}
+                                    {{
+                                        $t(
+                                            "gettingStartedSchoolSchedule.youCanSkipMessage"
+                                        )
+                                    }}
                                 </h3>
                             </div>
                         </Card>
@@ -130,9 +170,11 @@
             <div
                 class="flex h-[57px] w-full flex-col justify-center border-b pl-12"
             >
-                <h3 class="font-semibold">{{ $t('gettingStartedSchoolSchedule.addNewEvent')}} </h3>
-                <h3 class="text-sm leading-none text-gray-500">
-                    {{ $t('gettingStartedSchoolSchedule.addEvent')}}
+                <h3 class="font-semibold">
+                    {{ $t("gettingStartedSchoolSchedule.addNewEvent") }}
+                </h3>
+                <h3 class="text-sm leading-none text-brand-text-300">
+                    {{ $t("gettingStartedSchoolSchedule.addEvent") }}
                 </h3>
             </div>
 
@@ -140,23 +182,34 @@
                 <TextInput
                     v-model="formData.title"
                     required
-                    :placeholder="$t('gettingStartedSchoolSchedule.eventTitlePlaceHolder')"
+                    :placeholder="
+                        $t('gettingStartedSchoolSchedule.eventTitlePlaceHolder')
+                    "
                     :label="$t('gettingStartedSchoolSchedule.eventTitleLabel')"
                 />
 
                 <label class="flex flex-col gap-1">
                     <span class="">
-                        <span class="pl-0.5 text-sm font-semibold text-gray-500"
-                            >{{ $t('gettingStartedSchoolSchedule.eventDescription')}} </span
-                        >
+                        <span
+                            class="pl-0.5 text-sm font-semibold text-brand-text-300"
+                            >{{
+                                $t(
+                                    "gettingStartedSchoolSchedule.eventDescription"
+                                )
+                            }}
+                        </span>
                         <span class="pl-0.5 text-xs text-red-600">*</span>
                     </span>
                     <textarea
                         v-model="formData.body"
                         rows="5"
                         required
-                        :placeholder="$t('gettingStartedSchoolSchedule.eventBodyPlaceHolder')"
-                        class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-500"
+                        :placeholder="
+                            $t(
+                                'gettingStartedSchoolSchedule.eventBodyPlaceHolder'
+                            )
+                        "
+                        class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-brand-text-300"
                     ></textarea>
                 </label>
 
@@ -165,7 +218,9 @@
                         <Toggle
                             v-model="allDay"
                             label-location="top"
-                            :label="$t('gettingStartedSchoolSchedule.allDayLabel')"
+                            :label="
+                                $t('gettingStartedSchoolSchedule.allDayLabel')
+                            "
                             class="min-w-fit"
                         />
                         <DatePicker
@@ -186,20 +241,34 @@
                         required
                         class="w-full"
                         :options="eventTypes"
-                        :placeholder="$t('gettingStartedSchoolSchedule.pickTypeOfEventPlaceHolder')"
-                        :label="$t('gettingStartedSchoolSchedule.pickTypeOfEventLabel')"
+                        :placeholder="
+                            $t(
+                                'gettingStartedSchoolSchedule.pickTypeOfEventPlaceHolder'
+                            )
+                        "
+                        :label="
+                            $t(
+                                'gettingStartedSchoolSchedule.pickTypeOfEventLabel'
+                            )
+                        "
                     />
                     <TextInput
                         v-model="tags"
                         label="Tags"
                         class="w-full"
-                        :placeholder="$t('gettingStartedSchoolSchedule.tagsPlaceHolder')"
+                        :placeholder="
+                            $t('gettingStartedSchoolSchedule.tagsPlaceHolder')
+                        "
                     />
                 </div>
 
                 <div class="flex items-center justify-end gap-3">
-                    <TertiaryButton @click="clear">{{ $t('gettingStartedSchoolSchedule.clear')}}</TertiaryButton>
-                    <PrimaryButton @click="submit">{{ $t('gettingStartedSchoolSchedule.createEvent')}}</PrimaryButton>
+                    <TertiaryButton @click="clear">{{
+                        $t("gettingStartedSchoolSchedule.clear")
+                    }}</TertiaryButton>
+                    <PrimaryButton @click="submit">{{
+                        $t("gettingStartedSchoolSchedule.createEvent")
+                    }}</PrimaryButton>
                 </div>
             </div>
 
@@ -208,7 +277,7 @@
                     class="h-12 w-full place-items-center rounded-md bg-black font-semibold text-white"
                     @click="goToDashboard"
                 >
-                    {{ $t('gettingStartedSchoolSchedule.goToDashboard')}}
+                    {{ $t("gettingStartedSchoolSchedule.goToDashboard") }}
                 </button>
             </div>
         </div>
@@ -227,28 +296,37 @@
             v-model:show-modal="isNewEventModalOpened"
             modal
             :title="$t('gettingStartedSchoolSchedule.addNewEventFormTitle')"
-            :subtitle="$t('gettingStartedSchoolSchedule.addNewEventFormSubtitle')"
+            :subtitle="
+                $t('gettingStartedSchoolSchedule.addNewEventFormSubtitle')
+            "
         >
             <TextInput
                 v-model="formData.title"
                 required
-                :placeholder="$t('gettingStartedSchoolSchedule.eventTitlePlaceHolder')"
+                :placeholder="
+                    $t('gettingStartedSchoolSchedule.eventTitlePlaceHolder')
+                "
                 :label="$t('gettingStartedSchoolSchedule.eventTitleLabel')"
             />
 
             <label class="flex flex-col gap-1">
                 <span class="">
-                    <span class="pl-0.5 text-sm font-semibold text-gray-500"
-                        >{{ $t('gettingStartedSchoolSchedule.eventDescription')}} </span
-                    >
+                    <span
+                        class="pl-0.5 text-sm font-semibold text-brand-text-300"
+                        >{{
+                            $t("gettingStartedSchoolSchedule.eventDescription")
+                        }}
+                    </span>
                     <span class="pl-0.5 text-xs text-red-600">*</span>
                 </span>
                 <textarea
                     v-model="formData.body"
                     rows="5"
                     required
-                    :placeholder="$t('gettingStartedSchoolSchedule.eventBodyPlaceHolder')"
-                    class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-gray-500"
+                    :placeholder="
+                        $t('gettingStartedSchoolSchedule.eventBodyPlaceHolder')
+                    "
+                    class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-brand-text-300"
                 ></textarea>
             </label>
 
@@ -279,8 +357,14 @@
                     required
                     class="w-full"
                     :options="eventTypes"
-                    :placeholder="$t('gettingStartedSchoolSchedule.pickTypeOfEventPlaceHolder')"
-                    :label="$t('gettingStartedSchoolSchedule.pickTypeOfEventLabel')"
+                    :placeholder="
+                        $t(
+                            'gettingStartedSchoolSchedule.pickTypeOfEventPlaceHolder'
+                        )
+                    "
+                    :label="
+                        $t('gettingStartedSchoolSchedule.pickTypeOfEventLabel')
+                    "
                 />
             </div>
         </FormElement>
@@ -302,8 +386,9 @@ import Card from "@/Components/Card.vue";
 import Heading from "@/Components/Heading.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const isNewEventModalOpened = ref(false);
 const welcomeModal = ref(true);
 const closeNewEventFormOnClick = ref(true);
@@ -351,15 +436,15 @@ function submit() {
 const eventTypes = [
     {
         value: "closed",
-        label: t('gettingStartedSchoolSchedule.noSchoolDay'),
+        label: t("gettingStartedSchoolSchedule.noSchoolDay"),
     },
     {
         value: "half_closed",
-        label: t('gettingStartedSchoolSchedule.halfDayClosed'),
+        label: t("gettingStartedSchoolSchedule.halfDayClosed"),
     },
     {
         value: "not_closed",
-        label: t('gettingStartedSchoolSchedule.schoolDay'),
+        label: t("gettingStartedSchoolSchedule.schoolDay"),
     },
 ];
 

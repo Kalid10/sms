@@ -24,7 +24,7 @@
         <div class="flex flex-col">
             <label
                 for="target-group"
-                class="block text-sm font-medium text-gray-700"
+                class="block text-sm font-medium text-brand-text-400"
                 >Select target group :</label
             >
             <div
@@ -34,10 +34,10 @@
                     v-for="target in targetGroupOptions"
                     :key="target"
                     :class="{
-                        'bg-zinc-800 text-white':
+                        'bg-brand-450 text-white':
                             form.target_group.includes(target),
                     }"
-                    class="flex cursor-pointer flex-row justify-between rounded bg-zinc-100 p-2 px-8 text-black"
+                    class="flex cursor-pointer flex-row justify-between rounded bg-brand-100 p-2 px-8 text-black"
                     @click="toggleSelection(target)"
                 >
                     {{ target }}

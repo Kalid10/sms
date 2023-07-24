@@ -6,36 +6,44 @@
             class="flex space-x-2 text-center text-xl font-semibold underline-offset-4"
         >
             <UserGroupIcon class="w-6" />
-            <span> {{ $t('guardianInformation.guardianInfo')}}</span>
+            <span> {{ $t("guardianInformation.guardianInfo") }}</span>
         </div>
 
         <div
             class="flex w-11/12 flex-col items-center space-y-2 pt-3 text-center text-xs 2xl:text-xs"
         >
             <div class="flex h-8 w-full items-center justify-center space-x-2">
-                <div class="font-semibold text-gray-500">{{ $t('guardianInformation.name')}}</div>
-                <div class="text-gray-700">{{ guardian.user.name }}</div>
+                <div class="font-semibold text-brand-text-50">
+                    {{ $t("guardianInformation.name") }}
+                </div>
+                <div class="text-brand-text-100">{{ guardian.user.name }}</div>
             </div>
             <div class="flex h-8 w-full items-center justify-center space-x-2">
-                <div class="font-semibold text-gray-500">{{ $t('guardianInformation.relation')}}</div>
-                <div class="text-gray-700">{{ guardianRelation }}</div>
+                <div class="font-semibold text-brand-text-50">
+                    {{ $t("guardianInformation.relation") }}
+                </div>
+                <div class="text-brand-text-100">{{ guardianRelation }}</div>
             </div>
             <div class="flex h-8 w-full items-center justify-center space-x-2">
-                <div class="font-semibold text-gray-500">{{ $t('guardianInformation.phoneNumber')}}</div>
-                <div class="text-gray-700">
+                <div class="font-semibold text-brand-text-50">
+                    {{ $t("guardianInformation.phoneNumber") }}
+                </div>
+                <div class="text-brand-text-100">
                     {{ guardian.user.phone_number }}
                 </div>
             </div>
             <div class="flex h-8 w-full items-center justify-center space-x-2">
-                <div class="font-semibold text-gray-500">{{ $t('guardianInformation.email')}}</div>
-                <div class="text-gray-700">{{ guardian.user.email }}</div>
+                <div class="font-semibold text-brand-text-50">
+                    {{ $t("guardianInformation.email") }}
+                </div>
+                <div class="text-brand-text-100">{{ guardian.user.email }}</div>
             </div>
         </div>
 
         <div class="flex w-full justify-center py-1">
             <SecondaryButton
                 :title="$t('guardianInformation.requestMeeting')"
-                class="mt-3 w-8/12 !rounded-2xl bg-zinc-700 py-1 text-white"
+                class="mt-3 w-8/12 !rounded-2xl bg-brand-300 py-1 text-white"
                 @click="showModal = true"
             />
         </div>

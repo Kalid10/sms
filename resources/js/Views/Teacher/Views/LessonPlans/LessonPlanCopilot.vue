@@ -12,7 +12,7 @@
                 <div class="mb-1 text-2xl font-bold">
                     {{ $t("lessonPlanCopilot.rigelCopilot") }}
                 </div>
-                <div class="w-full text-sm text-gray-700">
+                <div class="w-full text-sm text-brand-text-400">
                     {{ $t("lessonPlanCopilot.intro") }}
                 </div>
             </div>
@@ -88,7 +88,7 @@
 
                 <div class="flex w-full justify-end px-2 pt-2">
                     <ClipboardDocumentIcon
-                        class="w-4 cursor-pointer text-zinc-400 hover:text-black"
+                        class="w-4 cursor-pointer text-brand-text-250 hover:text-black"
                         @click="
                             copyToClipboardAndShowToast(noteSuggestions, $event)
                         "
@@ -104,18 +104,18 @@
         </div>
 
         <div v-if="questionSuggestions" class="flex flex-col space-y-1 p-3">
-            <div class="pb-3 text-zinc-800">
+            <div class="pb-3 text-brand-text-450">
                 {{ $t("lessonPlanCopilot.potentialQuestions") }}
             </div>
             <div class="flex flex-col space-y-2">
                 <div
                     v-for="(item, index) in questionSuggestions"
                     :key="index"
-                    class="group flex cursor-pointer justify-between rounded-lg bg-zinc-100 p-3 text-sm font-medium text-zinc-800 hover:bg-zinc-200 hover:text-zinc-900"
+                    class="group flex cursor-pointer justify-between rounded-lg bg-brand-100 p-3 text-sm font-medium text-brand-text-450 hover:bg-brand-150 hover:text-brand-text-500"
                 >
                     {{ item }}
                     <ClipboardDocumentIcon
-                        class="w-4 text-zinc-400 group-hover:text-black"
+                        class="w-4 text-brand-text-250 group-hover:text-black"
                         @click="copyToClipboardAndShowToast(item, $event)"
                     />
                     <Toast
@@ -139,7 +139,7 @@
             </p>
             <div class="flex w-full justify-center space-x-3">
                 <div
-                    class="flex w-fit cursor-pointer items-center space-x-1 !rounded-2xl bg-gray-100 px-3 py-1 text-black hover:scale-105"
+                    class="flex w-fit cursor-pointer items-center space-x-1 !rounded-2xl bg-brand-100 px-3 py-1 text-black hover:scale-105"
                 >
                     <ClipboardDocumentIcon class="w-3" />
                     <div
@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div
-                    class="flex w-fit cursor-pointer items-center space-x-1 !rounded-2xl bg-gray-100 px-2 py-1 text-black hover:scale-105"
+                    class="flex w-fit cursor-pointer items-center space-x-1 !rounded-2xl bg-brand-100 px-2 py-1 text-black hover:scale-105"
                 >
                     <MagnifyingGlassIcon class="w-3" />
                     <div

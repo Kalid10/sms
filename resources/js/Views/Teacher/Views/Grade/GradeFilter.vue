@@ -23,7 +23,7 @@
     <div class="flex items-center space-x-2">
         <div
             v-if="selectedSchoolYear"
-            class="flex items-center space-x-2 rounded-lg bg-zinc-700 p-2 text-white"
+            class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
         >
             <span class="text-xs">School Year:</span>
             <span class="text-xs font-semibold">
@@ -42,7 +42,7 @@
         </div>
         <div
             v-if="selectedSemester"
-            class="flex items-center space-x-2 rounded-lg bg-zinc-700 p-2 text-white"
+            class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
         >
             <span class="text-xs">Semester:</span>
             <span class="text-xs font-semibold">
@@ -60,7 +60,7 @@
         </div>
         <div
             v-if="selectedQuarter"
-            class="flex items-center space-x-2 rounded-lg bg-zinc-700 p-2 text-white"
+            class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
         >
             <span class="text-xs">Quarter:</span>
             <span class="text-xs font-semibold">

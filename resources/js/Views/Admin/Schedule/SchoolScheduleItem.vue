@@ -1,6 +1,6 @@
 <template>
     <div
-        class="group flex h-full cursor-pointer items-center space-x-10 py-4 hover:scale-105 hover:rounded-lg hover:bg-zinc-800 hover:text-white"
+        class="group flex h-full cursor-pointer items-center space-x-10 py-4 hover:scale-105 hover:rounded-lg hover:bg-brand-450 hover:text-white"
         :class="isTeacher() ? 'justify-evenly' : ''"
     >
         <div
@@ -18,7 +18,7 @@
                 {{ schoolSchedule.type }}
             </div>
             <div class="flex items-center space-x-2">
-                <CalendarDaysIcon class="w-4 text-gray-500" />
+                <CalendarDaysIcon class="w-4 text-brand-text-300" />
                 <span class="text-xs font-light">{{
                     moment(schoolSchedule.start_date).format(
                         "dddd MMM DD YYYY"
@@ -38,7 +38,7 @@
                 @click="toggleUpdateModal(schoolSchedule)"
             />
             <PencilSquareIcon
-                class="w-4 cursor-pointer text-gray-500 hover:scale-110 group-hover:text-gray-200"
+                class="w-4 cursor-pointer text-brand-text-300 hover:scale-110 group-hover:text-brand-text-500"
                 @click="edit(schoolSchedule)"
             />
         </div>
@@ -108,8 +108,9 @@ import TextInput from "@/Components/TextInput.vue";
 import { router, useForm } from "@inertiajs/vue3";
 import DialogBox from "@/Components/DialogBox.vue";
 import { isAdmin, isTeacher } from "@/utils";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const isDialogBoxOpen = ref(false);
 
 const props = defineProps({
@@ -127,18 +128,18 @@ const showUpdateModal = ref(false);
 const eventTypes = [
     {
         value: "closed",
-        label: t('schoolScheduleItem.fullDay'),
-        description: t('schoolScheduleItem.fullDayDescription'),
+        label: t("schoolScheduleItem.fullDay"),
+        description: t("schoolScheduleItem.fullDayDescription"),
     },
     {
         value: "half_closed",
-        label: t('schoolScheduleItem.halfDay'),
-        description: t('schoolScheduleItem.halfDayDescription'),
+        label: t("schoolScheduleItem.halfDay"),
+        description: t("schoolScheduleItem.halfDayDescription"),
     },
     {
         value: "not_closed",
-        label: t('schoolScheduleItem.none'),
-        description: t('schoolScheduleItem.noneDescription'),
+        label: t("schoolScheduleItem.none"),
+        description: t("schoolScheduleItem.noneDescription"),
     },
 ];
 

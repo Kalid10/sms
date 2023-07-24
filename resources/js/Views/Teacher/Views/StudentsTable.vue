@@ -8,7 +8,7 @@
             :columns="config"
             class="!!text-[0.5rem] border-none bg-red-400"
             :footer="true"
-            header-style="!bg-zinc-700 text-white !text-[0.65rem]"
+            header-style="!bg-brand-400 text-white !text-[0.65rem]"
         >
             <template #filter>
                 <div class="flex h-full w-full justify-between text-center">
@@ -20,13 +20,13 @@
                     <div v-if="!homeroomTeacher && isAdmin()">
                         <SecondaryButton
                             :title="$t('studentsTable.assignHomeroom')"
-                            class="!rounded-2xl bg-zinc-800 text-white"
+                            class="!rounded-2xl bg-brand-450 text-white"
                             @click="showAssignModal = true"
                         />
                     </div>
                     <div v-if="homeroomTeacher" class="text-xs font-semibold">
                         <div class="mb-1 text-[0.55rem] font-light">
-                           {{ $t('studentsTable.homeroomTeacher')}}
+                            {{ $t("studentsTable.homeroomTeacher") }}
                         </div>
                         <div
                             class="cursor-pointer text-xs font-semibold underline-offset-2 hover:underline"
@@ -69,9 +69,9 @@ import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 import { isAdmin } from "@/utils";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
-import {useI18n} from "vue-i18n";
-import Header from "@/Views/Teacher/Views/Header.vue";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const emit = defineEmits(["click", "search"]);
 const props = defineProps({
     showHomeroomDetail: {
@@ -119,7 +119,7 @@ const filteredStudents = computed(() => {
 const config = [
     {
         key: "name",
-        name: t('studentsTable.name'),
+        name: t("studentsTable.name"),
         align: "center",
         class: "h-12 !text-[0.7rem]",
         type: "custom",
@@ -132,25 +132,25 @@ const config = [
     },
     {
         key: "attendance",
-        name: t('studentsTable.attendance'),
+        name: t("studentsTable.attendance"),
         align: "center",
         class: "h-12 !text-[0.7rem]",
     },
     {
         key: "grade",
-        name: t('studentsTable.grade'),
+        name: t("studentsTable.grade"),
         align: "center",
         class: "h-12 !text-[0.7rem]",
     },
     {
         key: "rank",
-        name: t('studentsTable.rank'),
+        name: t("studentsTable.rank"),
         align: "center",
         class: "h-12 !text-[0.7rem]",
     },
     {
         key: "conduct",
-        name: t('studentsTable.conduct'),
+        name: t("studentsTable.conduct"),
         align: "center",
         class: "h-12 !text-[0.7rem]",
     },
