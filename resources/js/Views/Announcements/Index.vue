@@ -22,14 +22,7 @@
         </div>
 
         <div>
-            <EmptyView
-                v-if="computedAnnouncements"
-                :title="$t('announcementsIndex.noAnnouncementsFound')"
-                :link-title="$t('announcementsIndex.goToAnnouncements')"
-                :link-url="url"
-                class="flex w-full justify-center py-2"
-            />
-            <div v-else class="flex flex-col space-y-2">
+            <div class="flex flex-col space-y-2">
                 <div class="flex flex-col divide-y divide-gray-50">
                     <Item
                         v-for="(item, index) in computedAnnouncements"
@@ -68,7 +61,6 @@ import { router, usePage } from "@inertiajs/vue3";
 import Item from "@/Views/Announcements/Item.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 import Modal from "@/Components/Modal.vue";
-import EmptyView from "@/Views/EmptyView.vue";
 import { debounce } from "lodash";
 import Pagination from "@/Components/Pagination.vue";
 import { isAdmin } from "@/utils";
