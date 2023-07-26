@@ -20,7 +20,7 @@
                 v-model="messageField"
                 type="text"
                 class="block w-full rounded-3xl border border-gray-300 p-3 px-10 text-sm text-gray-900 focus:border-none focus:outline-none focus:ring-1 focus:ring-violet-500"
-                placeholder="Type a message..."
+                :placeholder="$t('rigelChat.typeMessage')"
                 required
                 @keydown.enter="sendMessage()"
             />

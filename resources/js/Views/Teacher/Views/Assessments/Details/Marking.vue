@@ -1,7 +1,7 @@
 <template>
     <div class="flex w-full items-center justify-center">
         <SecondaryButton
-            title="CONTINUE MARKING"
+            :title="$t('marking.continueMarking')"
             class="w-44 rounded-xl bg-indigo-400 font-semibold text-white lg:w-56"
             @click="startMarking"
         />

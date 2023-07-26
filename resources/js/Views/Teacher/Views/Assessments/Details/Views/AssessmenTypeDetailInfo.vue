@@ -32,7 +32,7 @@
                     v-if="isAssessmentRemaing"
                     class="w-full text-center text-xs font-semibold"
                 >
-                    {{ $t('assessmentTypeDetailInfo.youHave') }}
+                    {{ $t("assessmentTypeDetailInfo.youHave") }}
                     <span class="font-bold">
                         {{
                             Number(
@@ -43,7 +43,7 @@
                             )
                         }}
                     </span>
-                    {{ $t('assessmentTypeDetailInfo.assessmentsRemaining') }}
+                    {{ $t("assessmentTypeDetailInfo.assessmentsRemaining") }}
                 </div>
             </div>
 
@@ -53,7 +53,7 @@
                         {{ assessment.maximum_point }}
                     </div>
                     <div class="text-[0.65rem] font-light">
-                        {{ $t('assessmentTypeDetailInfo.maxPts') }}
+                        {{ $t("assessmentTypeDetailInfo.maxPts") }}
                     </div>
                 </div>
                 <div
@@ -67,9 +67,10 @@
                             {{ assessment.assessment_type_completed_count }}
                         </div>
                         <div class="text-[0.62rem] font-light uppercase">
-                            {{ $t('assessmentTypeDetailInfo.previous') }}
+                            {{ $t("assessmentTypeDetailInfo.previous") }}
 
-                            {{ assessment.assessment_type.name }} {{ $t('assessmentTypeDetailInfo.count') }}
+                            {{ assessment.assessment_type.name }}
+                            {{ $t("assessmentTypeDetailInfo.count") }}
                         </div>
                     </div>
                     <div class="flex w-1/2 flex-col space-y-1 text-center">
@@ -77,7 +78,8 @@
                             {{ assessment.assessment_type_points_sum }}
                         </div>
                         <div class="text-[0.62rem] font-light uppercase">
-                            Previous {{ assessment.assessment_type.name }} {{ $t('assessmentTypeDetailInfo.totalPts') }}
+                            Previous {{ assessment.assessment_type.name }}
+                            {{ $t("assessmentTypeDetailInfo.totalPts") }}
                         </div>
                     </div>
                 </div>
@@ -86,13 +88,14 @@
                     class="flex w-8/12 flex-col items-center justify-center space-y-1 text-center text-xs font-semibold"
                 >
                     <div v-if="assessment.status === 'completed'">
-                        {{ $t('assessmentTypeDetailInfo.assessmentCompleted') }}
+                        {{ $t("assessmentTypeDetailInfo.assessmentCompleted") }}
                     </div>
                     <div v-else>
-                        {{ $t('assessmentTypeDetailInfo.hintAssessmentAdministered') }}
-                        This assessment is administered on a quarterly basis, so
-                        please ensure that you are taking the appropriate
-                        actions accordingly.
+                        {{
+                            $t(
+                                "assessmentTypeDetailInfo.hintAssessmentAdministered"
+                            )
+                        }}
                     </div>
                 </div>
             </div>
@@ -101,17 +104,17 @@
                 class="flex w-full items-center justify-center bg-gray-50 px-4 py-2 text-[0.65rem] font-light"
             >
                 <div class="text-center">
-                    {{ $t('assessmentTypeDetailInfo.atTheConclusion') }}
+                    {{ $t("assessmentTypeDetailInfo.atTheConclusion") }}
                     <span class="font-semibold"
                         >{{ assessment.assessment_type.name }}s</span
                     >
-                    {{ $t('assessmentTypeDetailInfo.willBeConverted') }}
+                    {{ $t("assessmentTypeDetailInfo.willBeConverted") }}
                     <span class="font-semibold"
                         >{{ assessment.assessment_type.percentage }}%</span
                     >
-                    {{ $t('assessmentTypeDetailInfo.ofTheFinalGrade') }}
+                    {{ $t("assessmentTypeDetailInfo.ofTheFinalGrade") }}
                     <span v-if="assessment.assessment_type_completed_count > 0">
-                        {{ $t('assessmentTypeDetailInfo.note') }}
+                        {{ $t("assessmentTypeDetailInfo.note") }}
                     </span>
                 </div>
             </div>
@@ -120,7 +123,7 @@
                 class="my-1 flex w-11/12 cursor-pointer justify-center rounded-2xl bg-zinc-800 py-1.5 text-center text-[0.6rem] font-semibold text-white lg:w-1/2 2xl:w-5/12 2xl:text-xs"
                 @click="$emit('update')"
             >
-                {{ $t('assessmentTypeDetailInfo.updateAssessment') }}
+                {{ $t("assessmentTypeDetailInfo.updateAssessment") }}
             </div>
             <LinkCell
                 v-if="assessment.lesson_plan_id"

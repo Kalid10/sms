@@ -18,9 +18,11 @@
         style="background-image: url('/assets/chat.png')"
         class="flex max-h-screen w-8/12 flex-col items-center justify-center space-y-2 rounded-lg border-zinc-500 bg-gray-100 shadow-sm"
     >
-        <div class="text-3xl font-medium">Welcome back to rigel chat.</div>
+        <div class="text-3xl font-medium">
+            {{ $t("rigelChat.welcome") }}
+        </div>
         <div class="text-sm font-light">
-            Please select chat to start messaging
+            {{ $t("rigelChat.selectChat") }}
         </div>
     </div>
 </template>

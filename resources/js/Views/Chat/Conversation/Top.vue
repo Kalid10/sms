@@ -31,9 +31,11 @@
                         v-if="activeChat.active_status"
                         class="text-xs text-zinc-700"
                     >
-                        Active Now
+                        {{ $t("rigelChat.activeNow") }}
                     </h1>
-                    <h1 v-else class="text-xs text-zinc-700">Offline</h1>
+                    <h1 v-else class="text-xs text-zinc-700">
+                        {{ $t("rigelChat.offline") }}
+                    </h1>
                 </div>
             </div>
 

@@ -10,7 +10,7 @@
                 class="flex grow justify-center space-x-2 text-center text-xl font-semibold underline-offset-4"
             >
                 <DocumentChartBarIcon class="w-4" />
-                <span>{{ $t('studentNotes.notes')}}</span>
+                <span>{{ $t("studentNotes.notes") }}</span>
             </div>
             <div class="flex w-1/12 justify-center">
                 <PlusIcon
@@ -74,7 +74,10 @@
                 :title="'Add Note For ' + student.user.name"
                 @submit="submit"
             >
-                <TextInput v-model="form.title" :placeholder="$t('studentNotes.title')"/>
+                <TextInput
+                    v-model="form.title"
+                    :placeholder="$t('studentNotes.title')"
+                />
                 <TextArea
                     v-model="form.description"
                     :placeholder="$t('studentNotes.description')"
@@ -86,7 +89,9 @@
         <Modal v-model:view="selectedNote">
             <FormElement
                 v-if="selectedNote.author.id === user.id"
-                :title="`Update ` + student.user.name + `'s note`"
+                :title="
+                    $t('studentNotes.updateNote', { name: student.user.name })
+                "
                 @submit="update"
             >
                 <TextInput
@@ -107,7 +112,7 @@
                 class="flex flex-col space-y-2 rounded-lg bg-white p-5"
             >
                 <div class="text-center text-xl font-semibold">
-                    {{ student.user.name }}'s Note
+                    {{ $t("studentNotes.snote", { name: student.user.name }) }}
                 </div>
                 <div class="flex flex-col gap-5 space-y-4 rounded-t-lg p-2">
                     <div class="flex items-center font-medium">
@@ -125,7 +130,8 @@
                             {{ moment(selectedNote.created_at).fromNow() }}
                         </div>
                         <div class="font-medium">
-                            By {{ selectedNote.author.name }}
+                            {{ $t("studentNotes.by") }}
+                            {{ selectedNote.author.name }}
                         </div>
                     </div>
                 </div>

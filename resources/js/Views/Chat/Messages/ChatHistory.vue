@@ -95,8 +95,7 @@
         <div v-else class="flex w-10/12 items-center justify-center px-4 py-10">
             <EmptyView
                 class="!font-normal"
-                title="
-There's no chat history at the moment. Your conversations will appear here as soon as you begin chatting."
+                :title="$t('rigelChat.noChatHistory')"
                 :show-status-code="false"
             />
         </div>

@@ -69,7 +69,7 @@
         class="flex h-5/6 w-full items-center justify-center text-sm font-light"
     >
         <span class="rounded-2xl bg-gray-200 px-6 py-1">
-            No previous messages found!
+            {{ $t("rigelChat.noMessages") }}
         </span>
     </div>
 </template>

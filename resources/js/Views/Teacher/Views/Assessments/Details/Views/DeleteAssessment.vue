@@ -10,8 +10,9 @@
     >
         <TrashIcon class="w-5 text-white" />
         <SecondaryButton
-            :title="$t('deleteAssessment.buttonTitle')"
-            class="text-white" />
+            :title="$t('deleteAssessment.deleteAssessment')"
+            class="text-white"
+        />
     </div>
 
     <div
@@ -22,7 +23,7 @@
             class="flex w-full items-center justify-between space-x-1 bg-gradient-to-bl from-red-600 to-orange-500 px-4 py-2 text-center text-white"
         >
             <span class="grow text-center">
-                {{ $t('deleteAssessment.deleteAssessment') }}
+                {{ $t("deleteAssessment.deleteAssessment") }}
             </span>
 
             <XMarkIcon
@@ -31,7 +32,7 @@
             />
         </div>
         <div class="w-10/12 text-center font-semibold text-zinc-800">
-            {{ $t('deleteAssessment.deleteMessage') }}
+            {{ $t("deleteAssessment.deleteMessage") }}
         </div>
 
         <div
@@ -42,7 +43,8 @@
             <TrashIcon class="w-4 text-white" />
             <SecondaryButton
                 :title="$t('deleteAssessment.deleteAssessment')"
-                class="text-white" />
+                class="text-white"
+            />
         </div>
         <div v-else class="flex w-full justify-center space-x-2">
             <TextInput
@@ -71,7 +73,9 @@ import TextInput from "@/Components/TextInput.vue";
 import Loading from "@/Components/Loading.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const props = defineProps({
     assessment: {
         type: Object,
@@ -87,8 +91,9 @@ const isLoading = ref(false);
 
 function deleteAssessment() {
     if (deleteConfirmationText.value !== props.assessment.title) {
-        return (deleteConfirmationError.value =
-            "Please type the assessment title correctly to confirm deletion");
+        return (deleteConfirmationError.value = t(
+            "deleteAssessment.pleaseTypeAssessment"
+        ));
     }
 
     isLoading.value = true;
