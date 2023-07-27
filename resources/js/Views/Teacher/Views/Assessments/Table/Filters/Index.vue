@@ -15,7 +15,7 @@
                     v-model="search"
                     :placeholder="$t('filtersIndex.searchAssessmentTitle')"
                     class="md:w-6/12"
-                    class-style="h-8 bg-white border-gray-300 text-black placeholder:text-gray-500 placeholder:text-xs focus:border-none focus:ring-violet-500"
+                    class-style="h-8 bg-white border-gray-300 text-black placeholder:text-brand-text-300 placeholder:text-xs focus:border-none focus:ring-violet-500"
                 />
                 <SelectInput
                     v-model="selectedBatchSubjectId"
@@ -26,11 +26,11 @@
             </div>
             <div
                 v-if="isTeacher()"
-                class="hidden w-fit cursor-pointer space-x-2 rounded-md bg-zinc-800 px-2 py-1.5 text-xs font-medium text-white hover:font-semibold lg:flex"
+                class="hidden w-fit cursor-pointer space-x-2 rounded-md bg-brand-450 px-2 py-1.5 text-xs font-medium text-white hover:font-semibold lg:flex"
                 @click="$emit('create')"
             >
                 <SquaresPlusIcon class="w-4" />
-                <div>{{ $t('filtersIndex.createAssessment')}}</div>
+                <div>{{ $t("filtersIndex.createAssessment") }}</div>
             </div>
         </div>
 
@@ -64,7 +64,7 @@
             class="fixed z-50 h-fit w-9/12 rounded-md bg-gradient-to-br from-zinc-200 via-zinc-200 to-zinc-100 py-2 px-1 shadow-md backdrop-blur-none lg:ml-10 lg:w-80"
         >
             <div class="flex w-full justify-between">
-                <div class="px-2 text-sm">{{ $t('filtersIndex.filters')}}</div>
+                <div class="px-2 text-sm">{{ $t("filtersIndex.filters") }}</div>
                 <XMarkIcon
                     class="w-4 cursor-pointer text-black hover:text-red-600"
                     @click="showFilter = !showFilter"
@@ -147,19 +147,19 @@
             <div class="flex justify-between px-2">
                 <div
                     v-if="showFilter"
-                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-zinc-800 from-violet-600 to-fuchsia-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
+                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-brand-450 from-violet-600 to-fuchsia-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
                     @click="showFilter = false"
                 >
-                    <CheckCircleIcon class="w-3 text-gray-100" />
-                    <span>{{ $t('filtersIndex.done')}}</span>
+                    <CheckCircleIcon class="w-3 text-brand-text-100" />
+                    <span>{{ $t("filtersIndex.done") }}</span>
                 </div>
                 <div
                     v-if="showFilter"
-                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-zinc-800 from-red-600 to-orange-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
+                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-brand-450 from-red-600 to-orange-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
                     @click="clearFilters"
                 >
-                    <TrashIcon class="w-3 text-gray-100" />
-                    <span>{{ $t('filtersIndex.clearAll')}}</span>
+                    <TrashIcon class="w-3 text-brand-text-100" />
+                    <span>{{ $t("filtersIndex.clearAll") }}</span>
                 </div>
             </div>
         </div>
@@ -181,9 +181,9 @@ import { onClickOutside } from "@vueuse/core";
 import SelectedFilters from "@/Views/Teacher/Views/Assessments/Table/Filters/SelectedFilters.vue";
 import Loading from "@/Components/Loading.vue";
 import { isAdmin, isTeacher } from "@/utils";
-import {useI18n} from "vue-i18n";
-import UpdateTextInput from "@/Components/TextInput.vue";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const emit = defineEmits(["create", "filterEnabled"]);
 
 const pageProps = usePage().props;
@@ -271,12 +271,12 @@ const batchSubjectOptions = computed(() =>
 );
 
 const assessmentStatusOptions = computed(() => [
-    { label: t('filtersIndex.all'), value: null },
-    { label: t('filtersIndex.published'), value: "published" },
-    { label: t('filtersIndex.completed'), value: "completed" },
-    { label: t('filtersIndex.marking'), value: "marking" },
-    { label: t('filtersIndex.draft'),  value: "draft" },
-    { label: t('filtersIndex.canceled'), value: "cancelled" },
+    { label: t("filtersIndex.all"), value: null },
+    { label: t("filtersIndex.published"), value: "published" },
+    { label: t("filtersIndex.completed"), value: "completed" },
+    { label: t("filtersIndex.marking"), value: "marking" },
+    { label: t("filtersIndex.draft"), value: "draft" },
+    { label: t("filtersIndex.canceled"), value: "cancelled" },
 ]);
 
 // Selected Filter Values

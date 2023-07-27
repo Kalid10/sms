@@ -5,10 +5,10 @@
             <div
                 class="cursor-pointer text-xs font-light underline-offset-2 hover:font-medium hover:underline"
             >
-                {{ $t('info.totalStudents') }}
+                {{ $t("info.totalStudents") }}
             </div>
         </div>
-        <div class="h-full w-[0.01rem] bg-gray-200"></div>
+        <div class="h-full w-[0.01rem] bg-brand-150"></div>
         <div class="flex w-6/12 flex-col items-center justify-evenly">
             <div
                 class="flex w-fit justify-evenly space-x-0.5 rounded-xl px-2 py-1 text-end text-xs font-medium"
@@ -19,7 +19,9 @@
                     v-if="statusIcon"
                     class="w-3.5"
                     :class="
-                        status === 'Completed' ? 'text-black' : 'text-gray-50'
+                        status === 'Completed'
+                            ? 'text-black'
+                            : 'text-brand-text-50'
                     "
                 />
                 <div>{{ status }}</div>
@@ -27,7 +29,7 @@
             <div
                 class="mt-2 cursor-pointer text-xs font-light underline-offset-2 hover:font-semibold hover:underline"
             >
-             {{ teacherName }}
+                {{ teacherName }}
             </div>
         </div>
     </div>
@@ -66,7 +68,7 @@ const statusClass = computed(() => {
         case "Published":
             return "bg-emerald-400 text-black";
         default:
-            return "bg-gray-500";
+            return "bg-brand-300";
     }
 });
 

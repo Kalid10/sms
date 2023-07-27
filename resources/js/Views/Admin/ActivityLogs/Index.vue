@@ -2,12 +2,12 @@
     <div class="relative overflow-x-auto rounded-t-lg border">
         <div class="flex flex-col justify-center p-2 sm:grow">
             <h3 class="font-semibold capitalize">{{ title }}</h3>
-            <h5 v-if="subtitle" class="text-sm text-gray-500">
+            <h5 v-if="subtitle" class="text-sm text-brand-text-300">
                 {{ subtitle }}
             </h5>
         </div>
-        <table class="w-full text-left text-gray-500">
-            <thead class="bg-gray-100 text-xs uppercase text-gray-700">
+        <table class="w-full text-left text-brand-text-300">
+            <thead class="bg-brand-100 text-xs uppercase text-brand-text-400">
                 <tr>
                     <th
                         v-for="column in columns"
@@ -23,13 +23,15 @@
                 <template v-for="(log, index) in logs" :key="index">
                     <tr v-if="logs.length === 0">
                         <td colspan="100%" class="py-4 text-center">
-                            <div class="text-gray-500">No data found.</div>
+                            <div class="text-brand-text-300">
+                                No data found.
+                            </div>
                         </td>
                     </tr>
 
                     <tr class="cursor-pointer" @click="toggleDetails(log.id)">
                         <td class="whitespace-nowrap px-6 py-2">
-                            <div class="text-xs text-gray-900">
+                            <div class="text-xs text-brand-text-500">
                                 {{ log.properties.attributes.name }}
                             </div>
                         </td>
@@ -54,13 +56,13 @@
                             </div>
                         </td>
                         <td class="whitespace-nowrap px-6 py-2">
-                            <div class="text-xs text-gray-500">
+                            <div class="text-xs text-brand-text-300">
                                 {{ moment(log.updated_at).fromNow() }}
                             </div>
                         </td>
                     </tr>
                     <tr v-if="expandedRow === log.id">
-                        <td colspan="100%" class="bg-gray-100">
+                        <td colspan="100%" class="bg-brand-100">
                             <Details
                                 :log="expandedRow === log.id ? log : null"
                                 label="Detail"

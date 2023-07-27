@@ -13,7 +13,7 @@
                     "
                 >
                     <span
-                        class="-skew-x-3 bg-zinc-800 px-2.5 py-0.5 italic text-white"
+                        class="-skew-x-3 bg-brand-450 px-2.5 py-0.5 italic text-white"
                     >
                         {{ assessment.assessment_type.name }} (
 
@@ -101,7 +101,7 @@
             </div>
 
             <div
-                class="flex w-full items-center justify-center bg-gray-50 px-4 py-2 text-[0.65rem] font-light"
+                class="flex w-full items-center justify-center bg-brand-50 px-4 py-2 text-[0.65rem] font-light"
             >
                 <div class="text-center">
                     {{ $t("assessmentTypeDetailInfo.atTheConclusion") }}
@@ -120,7 +120,7 @@
             </div>
             <div
                 v-if="assessment.status !== 'completed' && isTeacher()"
-                class="my-1 flex w-11/12 cursor-pointer justify-center rounded-2xl bg-zinc-800 py-1.5 text-center text-[0.6rem] font-semibold text-white lg:w-1/2 2xl:w-5/12 2xl:text-xs"
+                class="my-1 flex w-11/12 cursor-pointer justify-center rounded-2xl bg-brand-450 py-1.5 text-center text-[0.6rem] font-semibold text-white lg:w-1/2 2xl:w-5/12 2xl:text-xs"
                 @click="$emit('update')"
             >
                 {{ $t("assessmentTypeDetailInfo.updateAssessment") }}

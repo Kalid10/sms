@@ -26,8 +26,8 @@
         />
 
         <SummaryItem
-            class-style="bg-zinc-100 text-black"
-            icon-style="bg-zinc-500/20 text-white"
+            class-style="bg-brand-100 text-black"
+            icon-style="bg-brand-300/20 text-white"
             :title="$t('common.admins')"
             :value="$t('adminSummary.adminValue')"
             :icon="UsersIcon"

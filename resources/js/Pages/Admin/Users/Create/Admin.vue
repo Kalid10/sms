@@ -5,12 +5,15 @@
             <Heading
                 :value="$t('createAdmin.headingTwo')"
                 size="sm"
-                class="text-xs !font-light text-gray-500"
+                class="text-xs !font-light text-brand-text-300"
             />
         </div>
         <div class="col-span-8">
             <div class="w-full max-w-4xl rounded-lg bg-white">
-                <AdminFormElement :title="$t('createAdmin.adminFormElementTitle')" @submit="submit">
+                <AdminFormElement
+                    :title="$t('createAdmin.adminFormElementTitle')"
+                    @submit="submit"
+                >
                     <AdminTextInput
                         v-model="form.name"
                         class="w-full"
@@ -78,11 +81,12 @@ import AdminTextInput from "@/Components/TextInput.vue";
 import Heading from "@/Components/Heading.vue";
 import { useForm } from "@inertiajs/vue3";
 import AdminSelectInput from "@/Components/SelectInput.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const genderOptions = [
-    { value: "male", label: t('common.male') },
-    { value: "female", label:t('common.female') },
+    { value: "male", label: t("common.male") },
+    { value: "female", label: t("common.female") },
 ];
 
 const form = useForm({

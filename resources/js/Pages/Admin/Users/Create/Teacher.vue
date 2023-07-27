@@ -1,16 +1,19 @@
 <template>
     <div class="grid-rows-12 grid h-screen p-6 sm:grid-cols-12 md:w-full">
         <div class="col-span-3 mb-6 flex shrink-0 flex-col md:mb-0">
-            <Heading :value="$t('createTeacher.headerOne')"/>
+            <Heading :value="$t('createTeacher.headerOne')" />
             <Heading
                 :value="$t('createTeacher.headerTwo')"
                 size="sm"
-                class="text-xs !font-light text-gray-500"
+                class="text-xs !font-light text-brand-text-300"
             />
         </div>
         <div class="col-span-8">
             <div class="w-full max-w-4xl rounded-lg bg-white">
-                <TeacherFormElement :title="$t('createTeacher.registerTeacher')" @submit="submit">
+                <TeacherFormElement
+                    :title="$t('createTeacher.registerTeacher')"
+                    @submit="submit"
+                >
                     <TeacherTextInput
                         v-model="form.name"
                         :label="$t('common.name')"
@@ -24,7 +27,9 @@
                             v-model="form.username"
                             class="w-full"
                             :label="$t('createTeacher.usernameLabel')"
-                            :placeholder="$t('createTeacher.usernamePlaceholder')"
+                            :placeholder="
+                                $t('createTeacher.usernamePlaceholder')
+                            "
                             :error="form.errors.username"
                             required
                         />
@@ -33,7 +38,9 @@
                             v-model="form.phone_number"
                             class="w-full"
                             :label="$t('createTeacher.phoneNumberLabel')"
-                            :placeholder="$t('createTeacher.phoneNUmberPlaceholder')"
+                            :placeholder="
+                                $t('createTeacher.phoneNUmberPlaceholder')
+                            "
                             :error="form.errors.phone_number"
                             required
                         />
@@ -71,12 +78,12 @@ import TeacherTextInput from "@/Components/TextInput.vue";
 import TeacherSelectInput from "@/Components/SelectInput.vue";
 import Heading from "@/Components/Heading.vue";
 import { useForm } from "@inertiajs/vue3";
-import Title from "@/Views/Teacher/Views/Title.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const genderOptions = [
-    { value: "male", label: t('common.male') },
-    { value: "female", label: t('common.female') },
+    { value: "male", label: t("common.male") },
+    { value: "female", label: t("common.female") },
 ];
 
 const form = useForm({

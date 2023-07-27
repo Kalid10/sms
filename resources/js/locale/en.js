@@ -1075,7 +1075,7 @@ const en = {
         resultingInTotalOf: "resulting in a total of",
         createAndProceed: "Create and Proceed",
         summaryText:
-            "<p class='text-xs'> The upcoming academic year <span class='font-bold text-gray-700'>{academicYear}</span>, will consist of <span class='font-bold text-gray-700'>{semesters} semesters,</span > each divided into <span class='font-bold text-gray-700'>{quartersPerSemester} quarters, </span> resulting in a total of <span class='font-bold text-gray-700' >{totalQuarters} quarters.</span > </p>",
+            "<p class='text-xs'> The upcoming academic year <span class='font-bold text-brand-text-400'>{academicYear}</span>, will consist of <span class='font-bold text-brand-text-400'>{semesters} semesters,</span > each divided into <span class='font-bold text-brand-text-400'>{quartersPerSemester} quarters, </span> resulting in a total of <span class='font-bold text-brand-text-400' >{totalQuarters} quarters.</span > </p>",
     },
     registerSubjectForm: {
         formElementTitle: "New Subject",

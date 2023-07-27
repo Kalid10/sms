@@ -9,7 +9,7 @@
             >
                 <div class="flex flex-col justify-center p-4 sm:grow">
                     <h3 class="font-semibold capitalize">{{ title }}</h3>
-                    <h5 v-if="subtitle" class="text-sm text-gray-500">
+                    <h5 v-if="subtitle" class="text-sm text-brand-text-300">
                         {{ subtitle }}
                     </h5>
                 </div>
@@ -97,7 +97,7 @@
                         ]"
                         class="h-10 w-fit whitespace-nowrap bg-neutral-50 px-3 text-xs font-semibold uppercase text-neutral-700"
                     >
-                        {{ $t('tableElement.actions')}}
+                        {{ $t("tableElement.actions") }}
                     </th>
                 </tr>
                 <tr
@@ -164,7 +164,7 @@
                 class="grid h-48 w-full place-items-center border-t"
             >
                 <slot name="empty-data">
-                    <p class="text-sm font-semibold text-gray-500">
+                    <p class="text-sm font-semibold text-brand-text-300">
                         No data found
                     </p>
                 </slot>
@@ -176,7 +176,7 @@
             class="flex gap-3 p-4"
             :class="footerStyle"
         >
-            <slot name="footer"> </slot>
+            <slot name="footer"></slot>
         </div>
     </div>
 </template>

@@ -1,10 +1,12 @@
 <template>
     <div class="flex w-full flex-col space-y-1 rounded-md lg:items-center">
-        <div class="font-medium lg:px-4 2xl:text-2xl"> {{ $t('common.grades')}}</div>
+        <div class="font-medium lg:px-4 2xl:text-2xl">
+            {{ $t("common.grades") }}
+        </div>
         <div
             class="flex h-fit w-full items-center justify-evenly rounded-sm border-b border-gray-200 py-1 text-center text-xs font-medium lg:font-bold 2xl:text-base"
         >
-            <div class="w-4/12">{{ $t('common.grade')}}</div>
+            <div class="w-4/12">{{ $t("common.grade") }}</div>
             <div class="w-8/12">Subjects</div>
         </div>
 
@@ -15,7 +17,7 @@
                     :key="index"
                     class="my-1 flex h-fit w-full items-center justify-evenly py-3 text-center text-xs 2xl:text-sm"
                     :class="
-                        index % 2 === 1 ? 'bg-white' : 'bg-zinc-500 text-white'
+                        index % 2 === 1 ? 'bg-white' : 'bg-brand-300 text-white'
                     "
                 >
                     <div class="w-4/12">{{ item.class }}</div>
@@ -27,14 +29,14 @@
                 class="w-full cursor-pointer text-end text-xs font-light underline decoration-neutral-500 underline-offset-2 hover:font-medium lg:text-sm"
                 @click="$inertia.get('/teacher/grades')"
             >
-                {{ $t('common.viewAllGrades')}}
+                {{ $t("common.viewAllGrades") }}
             </div>
         </div>
 
         <div v-else class="mt-8 flex flex-col items-center space-y-6">
-            <ExclamationTriangleIcon class="h-6 w-6 text-gray-500" />
-            <div>{{ $t('common.noGradesFound')}}</div>
-            <PrimaryButton>{{ $t('common.goToGrades')}}</PrimaryButton>
+            <ExclamationTriangleIcon class="h-6 w-6 text-brand-text-300" />
+            <div>{{ $t("common.noGradesFound") }}</div>
+            <PrimaryButton>{{ $t("common.goToGrades") }}</PrimaryButton>
         </div>
     </div>
 </template>

@@ -1,14 +1,16 @@
 <template>
     <Card
         title="true"
-        class="!bg-white!p-3 h-full !max-w-[26rem] !rounded-b-none !border-b-0 !border-gray-200 !font-light text-black !shadow-sm drop-shadow-sm"
+        class="!bg-white!p-3 h-full !max-w-[26rem] !rounded-b-none !border-b-0 !border-gray-200 !font-light text-brand-500 !shadow-sm drop-shadow-sm"
     >
         <template #title>
-            <div class="pb-1 text-sm font-medium">{{ $t('lessonPlanWeekCardNew.week')}} {{ index }}</div>
+            <div class="pb-1 text-sm font-medium">
+                {{ $t("lessonPlanWeekCardNew.week") }} {{ index }}
+            </div>
         </template>
         <template #subtitle>
-            <span v-if="batchSessions.length > 1">
-                {{ $t('lessonPlanWeekCardNew.classSessionsWeekStarting')}}
+            <span v-if="batchSessions.length > 1" class="text-brand-500">
+                {{ $t("lessonPlanWeekCardNew.classSessionsWeekStarting") }}
                 <span class="inline-block font-semibold">
                     {{
                         moment(batchSessions[0]["date"])
@@ -16,7 +18,7 @@
                             .format("MMMM Do")
                     }}
                 </span>
-                {{ $t('lessonPlanWeekCardNew.andEndingOn')}}
+                {{ $t("lessonPlanWeekCardNew.andEndingOn") }}
                 <span class="inline-block font-semibold">
                     {{
                         moment(batchSessions[0]["date"])
@@ -36,7 +38,11 @@
             >
                 <EmptyView
                     class="mt-20"
-                    :title="$t('lessonPlanWeekCardNew.noClassSessions')  + index + '!'"
+                    :title="
+                        $t('lessonPlanWeekCardNew.noClassSessions') +
+                        index +
+                        '!'
+                    "
                 />
             </div>
 

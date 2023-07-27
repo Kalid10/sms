@@ -18,7 +18,7 @@
                 <div
                     v-for="(item, index) in schoolSchedule"
                     :key="index"
-                    class="m-3 flex w-5/12 flex-col justify-center space-y-3 rounded-lg bg-gray-50/70 px-2 py-3 shadow-sm"
+                    class="m-3 flex w-5/12 flex-col justify-center space-y-3 rounded-lg bg-brand-50/70 px-2 py-3 shadow-sm"
                 >
                     <div class="flex items-center justify-between">
                         <div
@@ -38,7 +38,7 @@
 
                         <!--                        Todo: Open the clicked schedule on schedules page-->
                         <EyeIcon
-                            class="w-3 cursor-pointer text-zinc-400 hover:scale-105 hover:text-zinc-800"
+                            class="w-3 cursor-pointer text-brand-text-250 hover:scale-105 hover:text-brand-text-450"
                             @click="router.get('/admin/schedules')"
                         />
                     </div>

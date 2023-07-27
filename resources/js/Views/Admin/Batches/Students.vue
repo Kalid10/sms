@@ -15,7 +15,9 @@
                 <ExclamationTriangleIcon
                     class="mb-2 h-6 w-6 text-negative-50"
                 />
-                <p class="text-sm font-semibold">{{ $t('common.noDataFound') }}</p>
+                <p class="text-sm font-semibold">
+                    {{ $t("common.noDataFound") }}
+                </p>
             </div>
         </template>
 
@@ -34,8 +36,9 @@ import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 import moment from "moment";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const students = computed(() => usePage().props.students);
 
 const studentsData = computed(() => {
@@ -59,7 +62,7 @@ const config = [
     {
         name: "",
         key: "username",
-        class: "text-gray-500 text-xs font-semibold",
+        class: "text-brand-text-300 text-xs font-semibold",
         align: "left",
     },
     {
@@ -70,7 +73,7 @@ const config = [
         align: "left",
     },
     {
-        name: t('common.age'),
+        name: t("common.age"),
         key: "date_of_birth",
         type: "custom",
         align: "left",

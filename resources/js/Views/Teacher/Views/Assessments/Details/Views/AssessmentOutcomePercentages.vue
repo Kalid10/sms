@@ -8,7 +8,7 @@
             type="positive"
         />
 
-        <div class="h-12 w-[0.01rem] bg-gray-200"></div>
+        <div class="h-12 w-[0.01rem] bg-brand-150"></div>
         <OutcomePercentageDisplay
             icon-class="icon-close text-red-500"
             :title="$t('AssessmentOutcomePercentages.failedPercentTitle')"
@@ -23,7 +23,6 @@
 import { defineProps } from "vue";
 import OutcomePercentageDisplay from "./OutcomePercentageDisplay.vue";
 import { ArrowSmallDownIcon, ArrowSmallUpIcon } from "@heroicons/vue/24/solid";
-import TextArea from "@/Components/TextArea.vue";
 
 defineProps({
     passedPercent: {

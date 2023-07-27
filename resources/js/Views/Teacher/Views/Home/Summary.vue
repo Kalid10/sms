@@ -21,8 +21,8 @@
             "
         />
         <SummaryItem
-            class-style="bg-zinc-100 text-black"
-            icon-style="bg-zinc-500/20 text-white"
+            class-style="bg-brand-100 text-black"
+            icon-style="bg-brand-300/20 text-white"
             :title="$t('common.students')"
             value="75 Total Students"
             :icon="UsersIcon"
@@ -69,7 +69,6 @@ import { isTeacher } from "@/utils";
 import SummaryItem from "@/Views/Teacher/Views/SummaryItem.vue";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import EmptyView from "@/Views/EmptyView.vue";
 
 const teacher = computed(() => usePage().props.teacher);
 </script>

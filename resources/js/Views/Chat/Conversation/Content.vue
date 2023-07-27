@@ -30,7 +30,7 @@
                         :class="
                             text.from_id === usePage().props.auth.user.id
                                 ? 'bg-gradient-to-bl from-violet-500 to-purple-500 text-white rounded-l-[10px] ml-11'
-                                : 'bg-zinc-500 text-white rounded-r-[10px] mr-11'
+                                : 'bg-brand-300 text-white rounded-r-[10px] mr-11'
                         "
                     >
                         <p class="break-all text-sm">
@@ -52,7 +52,7 @@
                                         usePage().props.auth.user.id &&
                                     text.seen
                                 "
-                                class="w-3 text-gray-200"
+                                class="w-3 text-brand-text-150"
                             />
                         </span>
                     </div>
@@ -68,7 +68,7 @@
         v-else
         class="flex h-5/6 w-full items-center justify-center text-sm font-light"
     >
-        <span class="rounded-2xl bg-gray-200 px-6 py-1">
+        <span class="rounded-2xl bg-brand-150 px-6 py-1">
             {{ $t("rigelChat.noMessages") }}
         </span>
     </div>

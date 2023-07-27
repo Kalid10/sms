@@ -7,8 +7,8 @@
             <div
                 v-for="(question, index) in questions"
                 :key="index"
-                class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-3 font-medium hover:bg-zinc-800 hover:text-white"
-                :class="index % 2 === 1 ? 'bg-gray-50' : ''"
+                class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-3 font-medium hover:bg-brand-450 hover:text-white"
+                :class="index % 2 === 1 ? 'bg-brand-50' : ''"
             >
                 <div class="flex w-full flex-col space-y-3">
                     <span>

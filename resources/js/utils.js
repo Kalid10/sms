@@ -87,6 +87,11 @@ const copyToClipboard = async (text) => {
         console.error("Failed to copy text", err);
     }
 };
+
+function toUnderscore(str) {
+    return str.replace(" ", "_").toLowerCase();
+}
+
 export {
     toHashTag,
     capitalize,
@@ -100,4 +105,5 @@ export {
     isAdmin,
     isTeacher,
     copyToClipboard,
+    toUnderscore,
 };

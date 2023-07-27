@@ -51,7 +51,9 @@
                         <div
                             class="flex w-full origin-left items-center justify-between pr-8"
                         >
-                            <h3 class="text-xs font-semibold text-gray-500">
+                            <h3
+                                class="text-xs font-semibold text-brand-text-300"
+                            >
                                 {{
                                     moment(selectedBatchSession.date).fromNow()
                                 }}
@@ -63,7 +65,7 @@
                                         class="h-4 w-4 stroke-gray-500 stroke-2"
                                     />
                                     <h3
-                                        class="text-xs font-medium text-gray-500"
+                                        class="text-xs font-medium text-brand-text-300"
                                     >
                                         {{
                                             moment(
@@ -78,7 +80,7 @@
                                         class="h-4 w-4 stroke-gray-500 stroke-2"
                                     />
                                     <h3
-                                        class="text-xs font-medium text-gray-500"
+                                        class="text-xs font-medium text-brand-text-300"
                                     >
                                         {{
                                             moment(
@@ -95,14 +97,14 @@
 
                                 <div class="flex items-center gap-1.5">
                                     <span
-                                        class="text-xs font-medium text-gray-500"
-                                        >{{ $t('common.period')}} </span
-                                    >
+                                        class="text-xs font-medium text-brand-text-300"
+                                        >{{ $t("common.period") }}
+                                    </span>
                                     <div
                                         class="flex origin-left scale-95 items-center gap-1"
                                     >
                                         <span
-                                            class="grid h-5 w-5 place-items-center rounded-full border border-black bg-zinc-500 text-xs font-semibold leading-none text-white"
+                                            class="grid h-5 w-5 place-items-center rounded-full border border-black bg-brand-300 text-xs font-semibold leading-none text-white"
                                         >
                                             {{
                                                 selectedBatchSession[
@@ -132,7 +134,9 @@
                             @click="showAISection = true"
                         >
                             <SparklesIcon class="w-3.5 text-white" />
-                            <div>{{ $t('lessonPlanFormModal.showAISection')}} </div>
+                            <div>
+                                {{ $t("lessonPlanFormModal.showAISection") }}
+                            </div>
                         </div>
                     </div>
 
@@ -159,10 +163,18 @@
                                     class="flex flex-col"
                                 >
                                     <h3 class="text-sm font-semibold">
-                                        {{ $t('lessonPlanFormModal.newLessonPlan')}}
+                                        {{
+                                            $t(
+                                                "lessonPlanFormModal.newLessonPlan"
+                                            )
+                                        }}
                                     </h3>
-                                    <h3 class="text-sm text-gray-500">
-                                        {{ $t('lessonPlanFormModal.addTheTopic')}}
+                                    <h3 class="text-sm text-brand-text-300">
+                                        {{
+                                            $t(
+                                                "lessonPlanFormModal.addTheTopic"
+                                            )
+                                        }}
                                     </h3>
                                 </div>
 
@@ -173,7 +185,11 @@
                                         v-model="form.topic"
                                         required
                                         :label="$t('lessonPlanFormModal.topic')"
-                                        :placeholder="$t('lessonPlanFormModal.topicOfLessonPlan')"
+                                        :placeholder="
+                                            $t(
+                                                'lessonPlanFormModal.topicOfLessonPlan'
+                                            )
+                                        "
                                         class="w-full"
                                     />
                                     <div class="flex h-8 items-center">
@@ -195,7 +211,11 @@
                                         leading="leading-loose"
                                         class="w-full"
                                         :label="$t('common.description')"
-                                        :placeholder="$t('lessonPlanFormModal.addLessonPlanDescription')"
+                                        :placeholder="
+                                            $t(
+                                                'lessonPlanFormModal.addLessonPlanDescription'
+                                            )
+                                        "
                                     />
                                     <div class="mt-8 flex h-8 items-center">
                                         <SparklesIcon
@@ -210,7 +230,7 @@
                                 <div class="flex w-full justify-end px-7">
                                     <SecondaryButton
                                         :title="$t('common.submit')"
-                                        class="w-2/12 !rounded-2xl bg-zinc-800 text-white"
+                                        class="w-2/12 !rounded-2xl bg-brand-450 text-white"
                                         @click="handleSubmit"
                                     />
                                 </div>
@@ -244,13 +264,17 @@
                                         </div>
 
                                         <div
-                                            class="flex justify-evenly rounded-2xl bg-zinc-700 px-4 hover:scale-105"
+                                            class="flex justify-evenly rounded-2xl bg-brand-400 px-4 hover:scale-105"
                                         >
                                             <PencilIcon
                                                 class="w-4 text-white"
                                             />
                                             <SecondaryButton
-                                                :title="$t('lessonPlanFormModal.edit')"
+                                                :title="
+                                                    $t(
+                                                        'lessonPlanFormModal.edit'
+                                                    )
+                                                "
                                                 class="text-white"
                                                 @click="updateLessonPlan = true"
                                             />
@@ -270,14 +294,22 @@
 
                         <div
                             v-if="!showAISection"
-                            class="scrollbar-hide flex h-screen w-4/12 flex-col items-center space-y-4 overflow-y-scroll rounded-tl-md border-l border-t border-zinc-300 bg-zinc-100 p-4"
+                            class="scrollbar-hide flex h-screen w-4/12 flex-col items-center space-y-4 overflow-y-scroll rounded-tl-md border-l border-t border-zinc-300 bg-brand-100 p-4"
                         >
                             <div class="flex w-11/12 flex-col">
                                 <h3 class="text-sm font-semibold">
-                                    {{ $t('lessonPlanFormModal.previousLessonPlans')}}
+                                    {{
+                                        $t(
+                                            "lessonPlanFormModal.previousLessonPlans"
+                                        )
+                                    }}
                                 </h3>
-                                <h3 class="text-sm text-gray-500">
-                                    {{ $t('lessonPlanFormModal.otherLessonPlans')}}
+                                <h3 class="text-sm text-brand-text-300">
+                                    {{
+                                        $t(
+                                            "lessonPlanFormModal.otherLessonPlans"
+                                        )
+                                    }}
                                     <span class="font-semibold">
                                         {{
                                             moment(
@@ -302,17 +334,25 @@
                                             class="flex w-full flex-col items-center justify-center gap-1"
                                         >
                                             <ExclamationTriangleIcon
-                                                class="h-6 w-6 text-gray-500"
+                                                class="h-6 w-6 text-brand-text-300"
                                             />
                                             <h3
                                                 class="text-sm font-medium text-black"
                                             >
-                                                {{ $t('lessonPlanFormModal.noPreviousLessonPlans')}}
+                                                {{
+                                                    $t(
+                                                        "lessonPlanFormModal.noPreviousLessonPlans"
+                                                    )
+                                                }}
                                             </h3>
                                             <h3
-                                                class="max-w-[18rem] text-center text-xs text-gray-500"
+                                                class="max-w-[18rem] text-center text-xs text-brand-text-300"
                                             >
-                                                {{ $t('lessonPlanFormModal.lessonPlansNotAdded')}}
+                                                {{
+                                                    $t(
+                                                        "lessonPlanFormModal.lessonPlansNotAdded"
+                                                    )
+                                                }}
                                             </h3>
                                         </div>
                                     </div>
@@ -367,7 +407,7 @@
                                                         }}
                                                     </span>
                                                     <h3
-                                                        class="font-semibold text-gray-500"
+                                                        class="font-semibold text-brand-text-300"
                                                     >
                                                         {{
                                                             moment(
@@ -385,14 +425,18 @@
                                                             class="flex items-end gap-1.5"
                                                         >
                                                             <span
-                                                                class="text-sm font-semibold text-gray-500"
-                                                                >{{ $t('common.period')}}</span
+                                                                class="text-sm font-semibold text-brand-text-300"
+                                                                >{{
+                                                                    $t(
+                                                                        "common.period"
+                                                                    )
+                                                                }}</span
                                                             >
                                                             <div
                                                                 class="flex origin-left scale-95 items-center gap-1"
                                                             >
                                                                 <span
-                                                                    class="grid h-5 w-5 place-items-center rounded-full border border-black bg-zinc-500 text-xs font-semibold leading-none text-white"
+                                                                    class="grid h-5 w-5 place-items-center rounded-full border border-black bg-brand-300 text-xs font-semibold leading-none text-white"
                                                                 >
                                                                     {{
                                                                         prevBatchSession[
@@ -408,7 +452,7 @@
                                                         </div>
 
                                                         <h3
-                                                            class="text-sm font-semibold text-gray-500"
+                                                            class="text-sm font-semibold text-brand-text-300"
                                                         >
                                                             {{ "09:30 AM" }}
                                                         </h3>

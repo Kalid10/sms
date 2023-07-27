@@ -26,7 +26,7 @@
                             {{ title || types[type].title }}
                         </slot>
                     </h3>
-                    <h3 class="text-sm text-gray-500">
+                    <h3 class="text-sm text-brand-text-300">
                         <slot name="description">
                             {{ description || types[type].description }}
                         </slot>
@@ -42,9 +42,8 @@
                 :class="accent || types[type].accent"
                 class="flex w-full items-center justify-end gap-3"
             >
-                <TertiaryButton v-if="abortAction" @click="abort"
-                    >
-                    {{ $t('dialogBox.cancel') }}
+                <TertiaryButton v-if="abortAction" @click="abort">
+                    {{ $t("dialogBox.cancel") }}
                 </TertiaryButton>
                 <PrimaryButton class="action-button" @click="confirm">
                     <slot name="action">
@@ -149,7 +148,7 @@ const types = {
 }
 
 .gray.icon-wrapper {
-    @apply bg-gray-200;
+    @apply bg-brand-150;
 }
 
 .gray .icon {

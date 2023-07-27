@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col space-y-3 bg-gray-50"
+        class="flex min-h-screen w-full flex-col space-y-3 bg-brand-50"
         :class="isTeacher() ? '2xl:pl-4 2xl:pr-2 p-1' : ''"
     >
         <!--                 Next Class Header On Mobile Devices-->
@@ -10,14 +10,17 @@
             @click="scrollToNextClass"
         >
             <div class="w-full">
-                <span>{{ $t('teacherIndex.yourNexClass', {
-                    fullName: nextClass.batch_subject.subject.full_name,
-                    levelName:nextClass.batch_subject.batch.level.name,
-                    section:nextClass.batch_subject.batch.section,
-                    schoolPeriodName:nextClass.school_period.name,
-                    time:moment(nextClass.date).fromNow() }) }}
+                <span
+                    >{{
+                        $t("teacherIndex.yourNexClass", {
+                            fullName: nextClass.batch_subject.subject.full_name,
+                            levelName: nextClass.batch_subject.batch.level.name,
+                            section: nextClass.batch_subject.batch.section,
+                            schoolPeriodName: nextClass.school_period.name,
+                            time: moment(nextClass.date).fromNow(),
+                        })
+                    }}
                 </span>
-
             </div>
         </div>
 
@@ -36,7 +39,7 @@
                     <template #[schoolSchedulesTab]>
                         <SchoolSchedule class="!w-11/12" />
                     </template>
-                    <template  #[toDaysScheduleTab]>
+                    <template #[toDaysScheduleTab]>
                         <CurrentDaySchedule
                             ref="currentDayScheduleRef"
                             :schedule="teacherSchedule"
@@ -69,7 +72,7 @@ import { usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/Views/NextClass/Index.vue";
 import moment from "moment/moment";
 import { computed, ref } from "vue";
-import { isTeacher } from "@/utils";
+import { isTeacher, toUnderscore } from "@/utils";
 import WelcomeHeader from "@/Views/WelcomeHeader.vue";
 import CurrentDaySchedule from "@/Views/CurrentDaySchedule.vue";
 import Announcements from "@/Views/Announcements/Index.vue";
@@ -78,9 +81,9 @@ import Flags from "@/Views/Flag/Index.vue";
 import TabElement from "@/Components/TabElement.vue";
 import SchoolSchedule from "@/Views/Teacher/Views/Home/SchoolSchedule.vue";
 import Summary from "@/Views/Teacher/Views/Home/Summary.vue";
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 
-const {t} = useI18n()
+const { t } = useI18n();
 const teacher = usePage().props.teacher;
 const filters = computed(() => usePage().props.filters);
 const nextClass = usePage().props.teacher.next_batch_session;
@@ -91,9 +94,9 @@ const scrollToNextClass = () => {
 };
 const currentDayScheduleRef = ref(null);
 
-const announcementsTab = t('common.announcements')
-const schoolSchedulesTab = t('teacherIndex.schoolSchedules')
-const toDaysScheduleTab = t('teacherIndex.toDaysSchedule')
+const announcementsTab = toUnderscore(t("common.announcements"));
+const schoolSchedulesTab = toUnderscore(t("teacherIndex.schoolSchedules"));
+const toDaysScheduleTab = toUnderscore(t("teacherIndex.toDaysSchedule"));
 const tabs = [announcementsTab, schoolSchedulesTab, toDaysScheduleTab];
 const activeTab = ref(announcementsTab);
 </script>

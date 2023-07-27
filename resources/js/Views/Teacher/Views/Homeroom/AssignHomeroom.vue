@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
         <div>
-            <Title :title="$t('assignHomeroom.assignHomeroom')"/>
+            <Title :title="$t('assignHomeroom.assignHomeroom')" />
         </div>
 
         <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
@@ -13,7 +13,7 @@
                         <span
                             v-for="homeroom in teacher.homeroom"
                             :key="homeroom"
-                            class="mr-2 cursor-pointer rounded-md bg-gray-200 text-gray-500"
+                            class="mr-2 cursor-pointer rounded-md bg-brand-150 text-brand-text-300"
                         >
                             <p class="px-3 py-2 text-sm font-bold">
                                 {{ homeroom.batch?.level?.name }} -
@@ -40,8 +40,8 @@
                         class="cursor-pointer py-2"
                         :class="
                             index % 2 === 0
-                                ? 'bg-gray-100 px-10 hover:bg-gray-300'
-                                : 'bg-white px-10 hover:bg-gray-300'
+                                ? 'bg-brand-100 px-10 hover:bg-brand-200'
+                                : 'bg-white px-10 hover:bg-brand-200'
                         "
                         @click="selectBatch(batch)"
                     >

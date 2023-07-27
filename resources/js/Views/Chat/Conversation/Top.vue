@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-[4.5rem] w-full items-center justify-between bg-zinc-200 px-5"
+        class="flex min-h-[4.5rem] w-full items-center justify-between bg-brand-150 px-5"
     >
         <div class="flex h-full w-full items-center justify-between pr-3">
             <div class="flex w-6/12 items-center space-x-4">
@@ -29,13 +29,11 @@
                     </h1>
                     <h1
                         v-if="activeChat.active_status"
-                        class="text-xs text-zinc-700"
+                        class="text-xs text-brand-text-400"
                     >
                         {{ $t("rigelChat.activeNow") }}
                     </h1>
-                    <h1 v-else class="text-xs text-zinc-700">
-                        {{ $t("rigelChat.offline") }}
-                    </h1>
+                    <h1 v-else class="text-xs text-brand-text-400">{{ $t("rigelChat.offline") }}</h1>
                 </div>
             </div>
 
@@ -45,7 +43,7 @@
                     :class="
                         isInFavorites(activeChat.id).value
                             ? 'text-yellow-400'
-                            : 'text-gray-400'
+                            : 'text-brand-text-250'
                     "
                     @click="messageStore.toggleFavorite(null)"
                 />

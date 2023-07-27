@@ -1,7 +1,10 @@
 <template>
-    <div class="flex min-h-screen w-full flex-col space-y-4 bg-gray-50 p-5">
+    <div class="flex min-h-screen w-full flex-col space-y-4 bg-brand-50 p-5">
         <div class="flex w-full space-x-5">
-            <Title class="w-4/12 pl-8" :title="$t('copilotIndex.rigelCopilot')"/>
+            <Title
+                class="w-4/12 pl-8"
+                :title="$t('copilotIndex.rigelCopilot')"
+            />
 
             <div v-if="openAILimitReached" class="z-50 flex w-10/12">
                 <span
@@ -37,11 +40,13 @@ import { ref } from "vue";
 import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparation.vue";
 import { ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
-const chatTab = t('common.chat')
-const questionsTab = t('common.questions')
-const tabs = [chatTab,questionsTab];
+import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
+
+const { t } = useI18n();
+const chatTab = toUnderscore(t("common.chat"));
+const questionsTab = toUnderscore(t("common.questions"));
+const tabs = [chatTab, questionsTab];
 const activeTab = ref(chatTab);
 
 const openAILimitReached = ref(false);

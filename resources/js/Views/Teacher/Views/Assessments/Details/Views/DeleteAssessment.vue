@@ -31,7 +31,7 @@
                 @click="showDeleteConfirmation = false"
             />
         </div>
-        <div class="w-10/12 text-center font-semibold text-zinc-800">
+        <div class="w-10/12 text-center font-semibold text-brand-text-450">
             {{ $t("deleteAssessment.deleteMessage") }}
         </div>
 
@@ -51,12 +51,12 @@
                 v-model="deleteConfirmationText"
                 :placeholder="'Type ' + assessment.title + ' to confirm'"
                 class="w-8/12"
-                class-style=" focus:border-none focus:ring-red-600  placeholder:text-gray-500 placeholder:text-xs"
+                class-style=" focus:border-none focus:ring-red-600  placeholder:text-brand-text-300 placeholder:text-xs"
                 :error="deleteConfirmationError"
             />
             <div
                 v-if="!isLoading"
-                class="flex h-9 cursor-pointer items-center justify-center rounded-md bg-zinc-800 px-2 shadow-md"
+                class="flex h-9 cursor-pointer items-center justify-center rounded-md bg-brand-450 px-2 shadow-md"
                 @click="deleteAssessment"
             >
                 <CheckIcon class="w-5 text-white" />

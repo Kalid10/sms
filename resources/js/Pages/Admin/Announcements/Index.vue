@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col bg-gray-50 px-1 py-2 lg:py-5 lg:px-10"
+        class="flex min-h-screen w-full flex-col bg-brand-50 px-1 py-2 lg:py-5 lg:px-10"
     >
         <div
             class="flex w-full flex-col items-center space-y-2 px-0 py-3 lg:px-5"
@@ -25,7 +25,7 @@
                         @keyup="search"
                     />
                     <div
-                        class="flex w-full cursor-pointer items-center justify-center space-x-2 rounded-2xl bg-zinc-800 px-4 py-1 text-xs text-white lg:w-fit"
+                        class="flex w-full cursor-pointer items-center justify-center space-x-2 rounded-2xl bg-brand-450 px-4 py-1 text-xs text-white lg:w-fit"
                         @click="showAddAnnouncement = true"
                     >
                         <SquaresPlusIcon class="w-4 text-white" />

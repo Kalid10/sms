@@ -6,7 +6,7 @@
             class="!sticky top-0 z-40 flex w-full flex-col items-center justify-center space-y-5 bg-white"
         >
             <div
-                class="flex min-h-[4.5rem] w-full items-center justify-center space-x-2 bg-zinc-200"
+                class="flex min-h-[4.5rem] w-full items-center justify-center space-x-2 bg-brand-150"
             >
                 <ChatBubbleBottomCenterIcon class="w-5" />
                 <h1 class="text-1xl text-center font-medium">
@@ -19,7 +19,7 @@
                     v-model="searchKey"
                     :placeholder="$t('rigelChat.searchTeacher')"
                     class="!w-9/12"
-                    class-style="!w-full  rounded-2xl bg-zinc-50/80 border-none placeholder:text-xs focus:bg-white text  focus:ring-1 focus:ring-zinc-400"
+                    class-style="!w-full  rounded-2xl bg-brand-50/80 border-none placeholder:text-xs focus:bg-white text  focus:ring-1 focus:ring-zinc-400"
                     @click.
                 />
 

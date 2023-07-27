@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col justify-between divide-x divide-gray-200 bg-gray-50 px-3 lg:flex-row lg:space-x-6 lg:px-0"
+        class="flex min-h-screen w-full flex-col justify-between divide-x divide-gray-200 bg-brand-50 px-3 lg:flex-row lg:space-x-6 lg:px-0"
     >
         <!--        Left Side-->
         <div class="flex w-full flex-col space-y-5 py-5 pl-6 pr-5 lg:w-8/12">
@@ -16,7 +16,7 @@
             <div class="flex">
                 <SecondaryButton
                     :title="$t('teacherStudents.filterStudents')"
-                    class="!rounded-2xl bg-zinc-800 text-white"
+                    class="!rounded-2xl bg-brand-450 text-white"
                     @click="showFilter = true"
                 />
             </div>
@@ -29,7 +29,7 @@
         </div>
 
         <div
-            class="flex w-full flex-col space-y-10 bg-gray-50 py-5 lg:w-4/12 lg:pl-5"
+            class="flex w-full flex-col space-y-10 bg-brand-50 py-5 lg:w-4/12 lg:pl-5"
         >
             <div
                 class="flex w-full flex-col justify-evenly space-y-3 lg:flex-row lg:space-y-0"
@@ -38,7 +38,9 @@
                     class="flex w-full flex-col justify-center space-y-4 rounded-lg bg-positive-100 py-5 text-center text-5xl font-bold text-white shadow-sm lg:w-5/12"
                 >
                     <div>99%</div>
-                    <span class="text-xs font-light">{{ $t('teacherStudents.classAttendance')}}(attendance) </span>
+                    <span class="text-xs font-light"
+                        >{{ $t("teacherStudents.classAttendance") }}(attendance)
+                    </span>
                 </div>
                 <div
                     :class="{
@@ -50,12 +52,14 @@
                             batchSubjectGrade?.conduct === 'D',
                         'bg-negative-100 text-white':
                             batchSubjectGrade?.conduct === 'F',
-                        'bg-zinc-700 text-white': !batchSubjectGrade?.conduct,
+                        'bg-brand-400 text-white': !batchSubjectGrade?.conduct,
                     }"
                     class="flex w-full flex-col justify-center space-y-4 rounded-lg py-5 text-center text-5xl font-bold shadow-sm lg:w-5/12"
                 >
                     <div>{{ batchSubjectGrade?.conduct ?? "-" }}</div>
-                    <span class="text-xs font-light">{{ $t('teacherStudents.classConduct')}}</span>
+                    <span class="text-xs font-light">{{
+                        $t("teacherStudents.classConduct")
+                    }}</span>
                 </div>
             </div>
             <div class="w-11/12 rounded-lg bg-white py-2 shadow-sm">

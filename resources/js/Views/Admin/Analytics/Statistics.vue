@@ -4,11 +4,11 @@
             v-if="cards[currentIndex]"
             :key="currentIndex"
             subtitle="subtitle"
-            :title=" cards[currentIndex].title "
-            class="relative min-w-full p-10 hover:bg-gray-100 md:col-span-1 md:row-span-1"
+            :title="cards[currentIndex].title"
+            class="relative min-w-full p-10 hover:bg-brand-100 md:col-span-1 md:row-span-1"
             icon
         >
-            <h3 class=" flex flex-col">
+            <h3 class="flex flex-col">
                 <slot>
                     <span class="text-2xl font-semibold">
                         {{ cards[currentIndex].content }}
@@ -17,24 +17,24 @@
                         :disabled="currentIndex === 0"
                         class="absolute bottom-0 left-0 mb-16 h-7 w-7 cursor-pointer rounded fill-black stroke-black text-white hover:bg-blue-500"
                         @click="previous"
-                    >{{ $t('common.previous') }}
+                        >{{ $t("common.previous") }}
                     </ChevronLeftIcon>
                     <ChevronRightIcon
                         :disabled="currentIndex === cards.length - 1"
                         class="absolute bottom-0 right-0 mb-16 h-7 w-7 cursor-pointer rounded fill-black stroke-black text-white hover:bg-blue-500"
                         @click="next"
-                    >{{ $t('common.next') }}
+                        >{{ $t("common.next") }}
                     </ChevronRightIcon>
 
-
                     <ArrowRightOnRectangleIcon
-                        class="absolute right-0 bottom-0 mr-10 mb-4 h-7 w-7 cursor-pointer rounded-lg hover:bg-gray-200"
-                        @click="usersLink">
+                        class="absolute right-0 bottom-0 mr-10 mb-4 h-7 w-7 cursor-pointer rounded-lg hover:bg-brand-150"
+                        @click="usersLink"
+                    >
                     </ArrowRightOnRectangleIcon>
                 </slot>
             </h3>
             <template #icon>
-                <component :is="cards[currentIndex].icon"/>
+                <component :is="cards[currentIndex].icon" />
             </template>
         </Card>
     </transition>
@@ -48,12 +48,13 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
     UserIcon,
-    UsersIcon
+    UsersIcon,
 } from "@heroicons/vue/24/outline";
-import {onMounted, onUnmounted, ref} from "vue";
-import {router} from "@inertiajs/vue3";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n();
+import { onMounted, onUnmounted, ref } from "vue";
+import { router } from "@inertiajs/vue3";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const props = defineProps({
     teachersCount: {
         type: Number,
@@ -74,39 +75,53 @@ const props = defineProps({
 });
 
 function usersLink() {
-    router.get('/admin/users')
+    router.get("/admin/users");
 }
 
 let intervalId = null;
 
-const currentIndex = ref(0)
+const currentIndex = ref(0);
 
 const cards = ref([
-    {title: t('common.teachers'), content: props.teachersCount, icon: UsersIcon},
-    {title: t('common.students'), content: props.studentsCount, icon: AcademicCapIcon},
-    {title: t('common.subjects'), content: props.subjectsCount, icon: BookOpenIcon},
-    {title: t('common.administrators'), content: props.adminsCount, icon: UserIcon},
-])
+    {
+        title: t("common.teachers"),
+        content: props.teachersCount,
+        icon: UsersIcon,
+    },
+    {
+        title: t("common.students"),
+        content: props.studentsCount,
+        icon: AcademicCapIcon,
+    },
+    {
+        title: t("common.subjects"),
+        content: props.subjectsCount,
+        icon: BookOpenIcon,
+    },
+    {
+        title: t("common.administrators"),
+        content: props.adminsCount,
+        icon: UserIcon,
+    },
+]);
 
 const next = () => {
-    currentIndex.value = (currentIndex.value + 1) % cards.value.length
-}
+    currentIndex.value = (currentIndex.value + 1) % cards.value.length;
+};
 
 const previous = () => {
     if (currentIndex.value > 0) {
-        currentIndex.value -= 1
+        currentIndex.value -= 1;
     }
-}
+};
 
 onMounted(() => {
     intervalId = setInterval(next, 5000);
 });
 
 onUnmounted(() => {
-    clearInterval(intervalId);  // Stop the interval when the component is unmounted
+    clearInterval(intervalId); // Stop the interval when the component is unmounted
 });
-
-
 </script>
 
 <style scoped>
