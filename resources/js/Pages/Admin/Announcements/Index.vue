@@ -27,7 +27,9 @@
                         @click="showAddAnnouncement = true"
                     >
                         <SquaresPlusIcon class="w-4 text-white" />
-                        <span> Publish Announcement </span>
+                        <span>
+                            {{ $t("announcementsIndex.publishAnnouncement") }}
+                        </span>
                     </div>
                 </div>
             </div>

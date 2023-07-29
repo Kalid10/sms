@@ -116,6 +116,7 @@ const en = {
         noAnnouncementsFound: "No Announcements Found!",
         goToAnnouncements: "Go To Announcements",
         viewAllAnnouncements: "View All Announcements",
+        publishAnnouncement:"Publish Announcement"
     },
     announcementsItem: {
         postTargets: "Post Targets",
@@ -191,16 +192,13 @@ const en = {
         previous: "Previous",
         count: "COUNT",
         totalPts: "TOTAL PTS",
-        assessmentCompleted:
-            "You have successfully completed this assessment, and as a result, any further modifications or creation of new assessments are no longer permitted.",
-        hintAssessmentAdministered:
-            "This assessment is administered on a quarterly basis, so please ensure that you are taking the appropriate actions accordingly.",
-        atTheConclusion:
-            "At the conclusion of the quarter or semester, all the",
-        willBeConverted: "will be converted to account for",
-        "ofTheFinalGrade.": "of the final grade.",
-        note: "Note: This does not include this assessment.",
-        updateAssessment: "UPDATE ASSESSMENT",
+        assessmentCompleted:"You have successfully completed this assessment, and as a result, any further modifications or creation of new assessments are no longer permitted.",
+        hintAssessmentAdministered:"This assessment is administered on a quarterly basis, so please ensure that you are taking the appropriate actions accordingly.",
+        atTheConclusion:"At the conclusion of the quarter or semester, all the",
+        willBeConverted:"will be converted to account for",
+        ofTheFinalGrade:"of the final grade.",
+        note:"Note: This does not include this assessment.",
+        updateAssessment:"UPDATE ASSESSMENT",
     },
     assessmentsFilter: {
         filters: "Filters",
@@ -382,6 +380,7 @@ const en = {
         ],
     },
     common: {
+        or: "or",
         for: "for",
         add: "Add",
         absentees: "Absentees",
@@ -559,12 +558,9 @@ const en = {
         Delegate: "Delegate",
     },
     deleteAssessment: {
-        buttonTitle: "DELETE ASSESSMENT",
         deleteAssessment: "DELETE ASSESSMENT",
-        deleteMessage:
-            "You are about to delete this assessment. This action is irreversible!",
-        pleaseTypeAssessment:
-            "Please type the assessment title correctly to confirm deletion",
+        deleteMessage:"You are about to delete this assessment. This action is irreversible!",
+        pleaseTypeAssessment:"Please type the assessment title correctly to confirm deletion",
     },
     detailsIndex: {
         selectAnyAssessment: "Select any assessment for a detailed view!",
@@ -573,21 +569,21 @@ const en = {
         cancel: "Cancel",
     },
     draft: {
+        currentlyFull:"Currently, this assessment is in <span class='-skew-x-3 bg-yellow-400 px-2 py-0.5 text-sm font-bold italic'>DRAFT</span>state! You can:",
+        settingAssessmentFull:"Setting an assessment as <span class='font-semibold uppercase'>' PUBLISHED '</span> or <span class='font-semibold uppercase'>' SCHEDULED '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
         currently: "Currently, this assessment is in",
-        draft: "DRAFT",
+        draft: "Draft",
         stateYouCan: "state! You can",
         settingAnAssessment: "Setting an assessment as",
-        published: "PUBLISHED",
+        published: "Published",
         or: "or",
-        scheduled: "SCHEDULED",
-        willTrigger:
-            "will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
+        scheduled: "Scheduled",
+        willTrigger: "will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
         publishAssessment: "Publish Assessment",
         scheduleAssessment: "Schedule Assessment",
-        finishUpdating: "FINISH UPDATING",
+        finishUpdating: "Finishing Updating",
         updateAssessment: "Update Assessment",
-        alertMessage:
-            "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?",
+        alertMessage: "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?",
     },
     feedbacks: {
         noFeedbacks: "No Feedbacks",
@@ -1154,6 +1150,7 @@ const en = {
         search: "search",
     },
     scheduled: {
+        currentlyFull:"Currently, this assessment is in <span class='mx-0.5 -skew-x-3 bg-indigo-400 px-2 py-0.5 text-sm font-bold italic text-white'>SCHEDULED</span>state! You can:",
         currentlyThisAssessment: "Currently, this assessment is in",
         scheduled: "SCHEDULED",
         stateYouCan: "state! You can",
@@ -1385,7 +1382,9 @@ const en = {
         note: "'s note",
         title: "Title",
         titlePlaceholder: "title",
-        by: "By",
+        snote:"{name}'s Note",
+        by:"By",
+        updateNote:"Update {name}'s note"
     },
     studentRank: {
         rank: "Rank",
@@ -1817,6 +1816,28 @@ const en = {
         searchAddAbsentee: "Search for a staff member to add as an absentee",
         searchStaffMember: "Search for a staff member by name",
     },
+    rigelChat:{
+        typeMessage:"Type a message...",
+        noMessages:"No previous messages found!",
+        welcome:"Welcome back to rigel chat.",
+        selectChat:"Please select chat to start messaging",
+        activeNow:"Active Now",
+        offline:"Offline",
+        noChatHistory:"There's no chat history at the moment. Your conversations will appear here as soon as you begin chatting.",
+        noRecordFound:"No Record Found",
+        myMessage:"My Messages",
+        searchTeacher:"Search Teacher, Admin...",
+        peopleYouWant:"People You May Want to Connect With"
+    },
+    addAnnouncement:{
+        addAnnouncement:"Add Announcement",
+        title:"Title",
+        body:"Body",
+        description:"the body or description",
+        selectTargetGroup:"Select target group :",
+        expireDate:"Expire date",
+        expiresOn:"Expires On"
+    }
 };
 
 export default en;
