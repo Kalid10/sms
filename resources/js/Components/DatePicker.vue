@@ -1,6 +1,6 @@
 <template>
     <label class="relative flex flex-col gap-1">
-        <span v-if="label && labelLocation === 'top'" class="text-gray-50">
+        <span v-if="label && labelLocation === 'top'" class="">
             <span class="pl-0.5 text-sm font-semibold text-brand-text-300">{{
                 label
             }}</span>
@@ -9,7 +9,7 @@
 
         <span
             v-if="visible && labelLocation === 'inside'"
-            class="bg-red-500 text-[0.7rem] text-brand-text-300"
+            class="text-[0.7rem] text-brand-text-300"
         >
             {{ label }}
         </span>
@@ -48,7 +48,7 @@
             v-if="viewPanel || visible"
             ref="panelViewer"
             :class="{
-                'absolute bottom-0 right-0 z-50 -mb-2 translate-y-full bg-red-500 drop-shadow-md':
+                'absolute bottom-0 right-0 z-50 -mb-2 translate-y-full drop-shadow-md':
                     !visible,
             }"
             class="min-w-[282.98px] rounded-md border bg-white"
@@ -583,7 +583,6 @@ function isYearSelected(year) {
 function selectYear(year) {
     selectedYear.value = year;
     activePanel.value = "month";
-    // alert(panel.value)
 }
 </script>
 
