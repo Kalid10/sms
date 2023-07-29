@@ -96,9 +96,6 @@
                                 "assessmentTypeDetailInfo.hintAssessmentAdministered"
                             )
                         }}
-                        This assessment is administered on a quarterly basis, so
-                        please ensure that you are taking the appropriate
-                        actions accordingly.
                     </div>
                 </div>
             </div>

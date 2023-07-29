@@ -10,7 +10,7 @@
     >
         <TrashIcon class="w-5 text-white" />
         <SecondaryButton
-            :title="$t('deleteAssessment.buttonTitle')"
+            :title="$t('deleteAssessment.deleteAssessment')"
             class="text-white"
         />
     </div>
@@ -73,7 +73,9 @@ import TextInput from "@/Components/TextInput.vue";
 import Loading from "@/Components/Loading.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const props = defineProps({
     assessment: {
         type: Object,
@@ -89,8 +91,9 @@ const isLoading = ref(false);
 
 function deleteAssessment() {
     if (deleteConfirmationText.value !== props.assessment.title) {
-        return (deleteConfirmationError.value =
-            "Please type the assessment title correctly to confirm deletion");
+        return (deleteConfirmationError.value = t(
+            "deleteAssessment.pleaseTypeAssessment"
+        ));
     }
 
     isLoading.value = true;
