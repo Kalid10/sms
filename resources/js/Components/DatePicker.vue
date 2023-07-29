@@ -1,15 +1,15 @@
 <template>
     <label class="relative flex flex-col gap-1">
-        <span v-if="label && labelLocation === 'top'" class="">
+        <span v-if="label && labelLocation === 'top'" class="text-gray-50">
             <span class="pl-0.5 text-sm font-semibold text-brand-text-300">{{
                 label
             }}</span>
-            <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
+            <span v-if="required" class="pl-0.5 text-xs">*</span>
         </span>
 
         <span
             v-if="visible && labelLocation === 'inside'"
-            class="text-[0.7rem] text-brand-text-300"
+            class="bg-red-500 text-[0.7rem] text-brand-text-300"
         >
             {{ label }}
         </span>
@@ -17,7 +17,7 @@
         <span
             v-if="!visible"
             class="relative flex w-full items-center justify-between rounded-md border border-gray-200 bg-white py-2 px-3 placeholder:text-sm"
-            :class="[labelLocation === 'inside' ? 'relative h-12' : 'h-10']"
+            :class="[labelLocation === 'inside' ? 'relative h-12 ' : 'h-10']"
             @click.prevent="viewPanel = !viewPanel"
         >
             <input
@@ -48,7 +48,7 @@
             v-if="viewPanel || visible"
             ref="panelViewer"
             :class="{
-                'absolute bottom-0 right-0 z-50 -mb-2 translate-y-full drop-shadow-md':
+                'absolute bottom-0 right-0 z-50 -mb-2 translate-y-full bg-red-500 drop-shadow-md':
                     !visible,
             }"
             class="min-w-[282.98px] rounded-md border bg-white"
@@ -62,17 +62,20 @@
                         @click="previous"
                     />
                     <span
-                        class="flex min-w-fit select-none gap-1 font-light text-brand-text-100"
+                        class="flex min-w-fit select-none gap-1 font-light text-brand-text-300"
                     >
                         <button
-                            v-if="panel === 'date'"
+                            v-if="activePanel === 'date'"
                             type="button"
                             @click="changePanel('month')"
                         >
                             {{ months[selectedMonth] }}
                         </button>
                         <button
-                            v-if="panel === 'month' || panel === 'date'"
+                            v-if="
+                                activePanel === 'month' ||
+                                activePanel === 'date'
+                            "
                             type="button"
                             @click="changePanel('year')"
                         >
@@ -89,7 +92,7 @@
                 </span>
 
                 <span
-                    v-if="panel === 'date'"
+                    v-if="activePanel === 'date'"
                     ref="daysPanel"
                     class="grid grid-cols-7 p-2"
                 >
@@ -149,7 +152,7 @@
                 </span>
 
                 <span
-                    v-else-if="panel === 'month'"
+                    v-else-if="activePanel === 'month'"
                     ref="monthsPanel"
                     class="grid grid-cols-3 p-2"
                 >
@@ -191,7 +194,7 @@
                 </span>
 
                 <span
-                    v-if="panel === 'date'"
+                    v-if="activePanel === 'date'"
                     class="grid place-items-center p-2"
                 >
                     <button
@@ -233,7 +236,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import {
     CalendarIcon,
@@ -314,6 +317,11 @@ onClickOutside(panelViewer, () => {
 });
 
 const panel = ref("date");
+
+const activePanel = ref();
+watchEffect(() => {
+    activePanel.value = panel.value;
+});
 
 function changePanel(to) {
     panel.value = to;
@@ -565,7 +573,7 @@ function isMonthSelected(month_index) {
 
 function selectMonth(month_index) {
     selectedMonth.value = month_index;
-    panel.value = "date";
+    activePanel.value = "date";
 }
 
 function isYearSelected(year) {
@@ -574,7 +582,8 @@ function isYearSelected(year) {
 
 function selectYear(year) {
     selectedYear.value = year;
-    panel.value = "month";
+    activePanel.value = "month";
+    // alert(panel.value)
 }
 </script>
 
