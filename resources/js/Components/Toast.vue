@@ -10,7 +10,7 @@
             >
                 <DocumentDuplicateIcon class="w-3" />
             </div>
-            <div class="text-xs font-normal">Copied!</div>
+            <div class="text-xs font-normal">{{ value }}</div>
         </div>
     </transition>
 </template>
@@ -30,6 +30,10 @@ const props = defineProps({
     event: {
         type: Object,
         default: null,
+    },
+    value: {
+        type: String,
+        default: "Copied!",
     },
 });
 
