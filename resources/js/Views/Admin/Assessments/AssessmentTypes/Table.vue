@@ -135,10 +135,11 @@
                     </div>
 
                     <PrimaryButton
-                        class="w-3/12 !rounded-3xl p-2"
+                        class="flex w-4/12 items-center justify-center space-x-1.5 !rounded-3xl bg-brand-450 p-2"
                         @click="openAddModal"
                     >
-                        {{ $t("assessmentIndex.addType") }}
+                        <SquaresPlusIcon class="w-3.5 text-white" />
+                        <span>{{ $t("assessmentIndex.addType") }}</span>
                     </PrimaryButton>
                 </div>
             </template>
@@ -172,10 +173,7 @@
 
             <template #updated_at-column="{ data }">
                 <div class="flex w-full justify-start">
-                    <span class="text-xs text-brand-text-300"
-                        >{{ $t("assessmentIndex.lastUpdated") }}
-                        {{ data }}</span
-                    >
+                    <span class="text-xs text-gray-500"> {{ data }}</span>
                 </div>
             </template>
 
@@ -206,6 +204,7 @@ import { router, useForm, usePage } from "@inertiajs/vue3";
 import {
     PencilSquareIcon,
     ReceiptPercentIcon,
+    SquaresPlusIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";

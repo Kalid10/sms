@@ -12,13 +12,15 @@
         >
             {{ schoolSchedule.type }}
         </div>
-        <div class="flex w-8/12 flex-col justify-center space-y-4">
+        <div class="group flex w-8/12 flex-col justify-center space-y-4">
             <div class="text-sm font-medium">
                 {{ schoolSchedule.title }}
                 {{ schoolSchedule.type }}
             </div>
             <div class="flex items-center space-x-2">
-                <CalendarDaysIcon class="w-4 text-brand-text-300" />
+                <CalendarDaysIcon
+                    class="w-4 text-zinc-800 group-hover:text-zinc-100"
+                />
                 <span class="text-xs font-light">{{
                     moment(schoolSchedule.start_date).format(
                         "dddd MMM DD YYYY"
@@ -38,7 +40,7 @@
                 @click="toggleUpdateModal(schoolSchedule)"
             />
             <PencilSquareIcon
-                class="w-4 cursor-pointer text-brand-text-300 hover:scale-110 group-hover:text-brand-text-500"
+                class="w-4 cursor-pointer text-zinc-800 hover:scale-110 group-hover:text-brand-text-500"
                 @click="edit(schoolSchedule)"
             />
         </div>

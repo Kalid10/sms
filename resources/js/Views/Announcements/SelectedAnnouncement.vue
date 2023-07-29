@@ -10,11 +10,11 @@
             {{ selectedAnnouncement?.title }}</span
         >
 
-        <span class="text-sm leading-7 text-brand-text-300"
+        <span class="text-sm font-light leading-7 text-black"
             >{{ selectedAnnouncement?.body }}
         </span>
         <span
-            class="flex w-full cursor-pointer space-x-2 text-sm font-medium text-violet-600 hover:font-semibold hover:underline hover:underline-offset-2"
+            class="flex w-full cursor-pointer space-x-2 text-sm font-medium text-brand-text-150 hover:font-semibold hover:underline hover:underline-offset-2"
             @click="$emit('continue-reading', selectedAnnouncement)"
         >
             {{ $t("selectedAnnouncement.continueReading") }}

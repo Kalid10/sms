@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="questions?.data?.length"
-        class="flex h-screen w-11/12 flex-col space-y-4 bg-brand-50/60 p-4"
+        class="flex h-screen w-11/12 flex-col space-y-4 p-4"
     >
         <div class="flex w-full items-center justify-between py-3">
             <Title :title="$t('teacherQuestions.myQuestionBank')" />
