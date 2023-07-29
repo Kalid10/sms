@@ -46,7 +46,7 @@
                         {{ $t("login.welcomeBack") }}
                     </h3>
 
-                    <h3 class="text-brand-text-200">
+                    <h3 class="text-gray-600">
                         {{ $t("login.messageOne") }}
                     </h3>
                 </div>
@@ -73,7 +73,7 @@
                     </div>
 
                     <button
-                        class="h-10 w-full rounded-md border-brand-50 bg-brand-500 text-center font-semibold text-white"
+                        class="h-10 w-full rounded-md border-brand-50 bg-brand-450 text-center font-semibold text-white"
                         type="submit"
                     >
                         {{ $t("login.logIn") }}
@@ -83,7 +83,7 @@
         </div>
 
         <div
-            class="col-span-1 flex h-full w-full flex-col justify-center gap-4 bg-brand-500 p-6 lg:items-start lg:p-16"
+            class="col-span-1 flex h-full w-full flex-col justify-center gap-4 bg-brand-450 p-6 lg:items-start lg:p-16"
         >
             <div class="hidden items-center gap-3 lg:flex">
                 <svg

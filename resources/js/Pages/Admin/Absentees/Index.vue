@@ -1,5 +1,8 @@
 <template>
-    <div class="w-full py-5 px-3 lg:w-10/12 lg:px-0">
+    <div
+        class="w-full py-5 px-3 lg:px-0"
+        :class="isSidebarOpenOnXlDevice ? 'lg:w-11/12' : 'lg:w-10/12'"
+    >
         <Title class="pb-8" :title="$t('common.absentees')" />
 
         <TabElement v-model:active="activeTab" :tabs="tabs">
@@ -19,7 +22,7 @@ import StudentsAbsenteesTable from "@/Views/Admin/Absentees/Students/StudentsAbs
 import TabElement from "@/Components/TabElement.vue";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { toUnderscore } from "@/utils";
+import { isSidebarOpenOnXlDevice, toUnderscore } from "@/utils";
 
 const { t } = useI18n();
 const staffTab = toUnderscore(t("common.staff"));

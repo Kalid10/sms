@@ -1,7 +1,7 @@
 <template>
     <label class="relative flex flex-col gap-1">
         <span v-if="label && labelLocation === 'top'" class="">
-            <span class="pl-0.5 text-sm font-semibold text-brand-text-300">{{
+            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{
                 label
             }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
@@ -9,7 +9,7 @@
 
         <span
             v-if="visible && labelLocation === 'inside'"
-            class="text-[0.7rem] text-brand-text-300"
+            class="text-[0.7rem] text-gray-500"
         >
             {{ label }}
         </span>
@@ -29,13 +29,11 @@
             <span class="flex flex-col">
                 <span
                     v-if="labelLocation === 'inside'"
-                    class="text-[0.7rem] text-brand-text-300"
+                    class="text-[0.7rem] text-gray-500"
                     >{{ label }}</span
                 >
                 <span
-                    :class="[
-                        !!selectedDate ? 'text-black' : 'text-brand-text-300',
-                    ]"
+                    :class="[!!selectedDate ? 'text-black' : 'text-gray-500']"
                     class="truncate whitespace-nowrap text-sm"
                 >
                     {{ selectedDate ?? placeholder }}
@@ -62,7 +60,7 @@
                         @click="previous"
                     />
                     <span
-                        class="flex min-w-fit select-none gap-1 font-light text-brand-text-100"
+                        class="flex min-w-fit select-none gap-1 font-light text-brand-text-500"
                     >
                         <button
                             v-if="panel === 'date'"
@@ -117,8 +115,8 @@
                             isDateSelected(i).value
                                 ? range
                                     ? isDateSelected(i).range === 'start'
-                                        ? 'rounded-tl-md bg-black text-white'
-                                        : 'rounded-br-md bg-black text-white'
+                                        ? 'rounded-tl-md bg-brand-450 text-white'
+                                        : 'rounded-br-md bg-brand-450 text-white'
                                     : 'rounded-md bg-black text-white'
                                 : 'hover:rounded-md hover:bg-black/10',
                             isBetweenRange(i) ? 'bg-black/10' : '',

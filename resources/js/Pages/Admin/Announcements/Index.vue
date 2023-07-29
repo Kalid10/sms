@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="flex min-h-screen w-full flex-col bg-brand-50 px-1 py-2 lg:py-5 lg:px-10"
-    >
+    <div class="flex min-h-screen w-full flex-col px-1 py-2 lg:py-5 lg:px-10">
         <div
             class="flex w-full flex-col items-center space-y-2 px-0 py-3 lg:px-5"
         >
@@ -20,7 +18,7 @@
                         :placeholder="
                             $t('announcementsIndex.searchAnnouncements')
                         "
-                        class="w-full !rounded-xl lg:w-6/12"
+                        class="w-full !rounded-xl lg:w-6/12 xl:w-8/12"
                         class-style="focus:ring-1 focus:ring-zinc-700 focus:border-none focus:outline-none rounded-2xl"
                         @keyup="search"
                     />

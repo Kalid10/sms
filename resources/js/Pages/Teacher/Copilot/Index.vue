@@ -1,5 +1,5 @@
 <template>
-    <div class="flex min-h-screen w-full flex-col space-y-4 bg-brand-50 p-5">
+    <div class="flex min-h-screen w-full flex-col space-y-4 p-5">
         <div class="flex w-full space-x-5">
             <Title
                 class="w-4/12 pl-8"
@@ -42,7 +42,7 @@ import { ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
 import { useI18n } from "vue-i18n";
 import { toUnderscore } from "@/utils";
-import {usePage} from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 
 const { t } = useI18n();
 const chatTab = toUnderscore(t("common.chat"));
@@ -51,7 +51,6 @@ const tabs = [chatTab, questionsTab];
 
 const activeTabFromQuery = computed(() => usePage().props.active_tab);
 const activeTab = ref(activeTabFromQuery.value ?? chatTab);
-
 
 const openAILimitReached = ref(false);
 const openAIDailyUsage = ref();
