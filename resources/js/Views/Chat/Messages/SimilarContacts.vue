@@ -3,7 +3,9 @@
         <div class="flex w-full justify-evenly bg-purple-500 p-3 text-white">
             <div class="flex grow justify-center text-center text-xl italic">
                 <ChatBubbleOvalLeftEllipsisIcon class="w-5 text-white" />
-                <span class="pl-1"> People You May Want to Connect With </span>
+                <span class="pl-1">
+                    {{ $t("rigelChat.peopleYouWant") }}
+                </span>
             </div>
             <XMarkIcon
                 class="w-4 cursor-pointer text-purple-200 hover:scale-125 hover:text-white"
@@ -42,7 +44,7 @@
                 </h1>
 
                 <SecondaryButton
-                    title="Chat"
+                    :title="$t('common.chat')"
                     class="! w-7/12 rounded-xl bg-violet-500 !py-1 text-xs text-white group-hover:bg-violet-100 group-hover:text-black"
                     @click="$emit('loadChat', chat)"
                 />

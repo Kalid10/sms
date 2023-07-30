@@ -1,13 +1,13 @@
 <template>
     <FormElement
-        title="Add Announcement"
+        :title="$t('addAnnouncement.addAnnouncement')"
         @submit="addAnnouncement"
         @cancel="form.reset()"
     >
         <TextInput
             v-model="form.title"
-            label="Title"
-            placeholder="Title"
+            :label="$t('addAnnouncement.title')"
+            :placeholder="$t('addAnnouncement.title')"
             class="w-full"
             :error="form.errors.title"
             required
@@ -15,8 +15,8 @@
 
         <TextArea
             v-model="form.body"
-            label="Body"
-            placeholder="the body or description"
+            :label="$t('addAnnouncement.body')"
+            :placeholder="$t('addAnnouncement.description')"
             class="w-full"
             :error="form.errors.body"
         />
@@ -25,7 +25,7 @@
             <label
                 for="target-group"
                 class="block text-sm font-medium text-brand-text-400"
-                >Select target group :</label
+                >{{ $t("addAnnouncement.selectTargetGroup") }}</label
             >
             <div
                 class="mt-1 flex w-full justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -53,8 +53,8 @@
 
         <DatePicker
             v-model="form.expires_on"
-            label="Expire date"
-            placeholder="Expires On"
+            :label="$t('addAnnouncement.expireDate')"
+            :placeholder="$t('addAnnouncement.expiresOn')"
             class="w-full"
         />
     </FormElement>
