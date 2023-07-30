@@ -30,6 +30,7 @@ const pinia = createPinia();
 function getLayout(name, page) {
     switch (true) {
         case name.startsWith("Admin/GettingStarted/"):
+
         case name.startsWith("Auth/"):
             return GettingStartedLayout;
 
@@ -38,7 +39,6 @@ function getLayout(name, page) {
 
         case name.startsWith("Teacher/"):
             return TeacherLayout;
-
         default:
             return page.default.layout || Layout;
     }

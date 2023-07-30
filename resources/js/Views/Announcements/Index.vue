@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="computedAnnouncements.length > 0"
         :class="
             classStyle
                 ? classStyle
@@ -9,19 +10,20 @@
         <div v-if="showHeader" class="w-full p-3">
             <div class="flex flex-wrap items-center justify-between gap-2">
                 <div
-                    class="text-xl font-medium lg:text-2xl"
+                    class="text-xl font-medium text-black lg:text-2xl"
                     :class="view === 'admin' ? 'w-7/12' : 'w-5/12'"
                 >
                     {{ title }}
                 </div>
                 <SquaresPlusIcon
                     v-if="isAdmin() && view === 'admin'"
-                    class="w-5 cursor-pointer text-brand-text-400 hover:scale-105"
+                    class="w-5 cursor-pointer text-brand-450 hover:scale-105"
                 />
             </div>
         </div>
 
         <div>
+            <div class="flex flex-col space-y-2">
             <EmptyView
                 v-if="!computedAnnouncements"
                 :title="$t('announcementsIndex.noAnnouncementsFound')"
@@ -68,7 +70,6 @@ import { router, usePage } from "@inertiajs/vue3";
 import Item from "@/Views/Announcements/Item.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 import Modal from "@/Components/Modal.vue";
-import EmptyView from "@/Views/EmptyView.vue";
 import { debounce } from "lodash";
 import Pagination from "@/Components/Pagination.vue";
 import { isAdmin } from "@/utils";

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class BatchSchedule extends Model
 {
@@ -31,6 +32,20 @@ class BatchSchedule extends Model
     public function sessions(): HasMany
     {
         return $this->hasMany(BatchSession::class);
+    }
+
+    public function nextSession(): HasOne
+    {
+        return $this->hasOne(BatchSession::class)
+            ->where('date', '>=', now()->toDateString())
+            ->orderBy('date');
+    }
+
+    public function lastSession(): HasOne
+    {
+        return $this->hasOne(BatchSession::class)
+            ->where('date', '<=', now()->toDateString())
+            ->orderBy('date', 'desc');
     }
 
     public function batch(): BelongsTo

@@ -8,9 +8,7 @@
             :class="isSidebarOpenOnXlDevice ? 'w-full' : ' w-full lg:w-7/12 '"
         >
             <div class="flex w-full justify-between">
-                <div
-                    class="text-xl font-semibold text-brand-text-100 lg:text-4xl"
-                >
+                <div class="text-xl font-semibold text-black lg:text-4xl">
                     {{ $t("teacherAssessmentsIndex.assessments") }}
                 </div>
                 <div

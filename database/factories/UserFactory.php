@@ -18,10 +18,13 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->name();
+
         return [
-            'name' => fake()->name(),
+            'name' => $name,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'profile_image' => 'https://avatars.dicebear.com/api/open-peeps/'.Str::camel($name).'.svg',
             'gender' => fake()->randomElement(['male', 'female']),
             'date_of_birth' => fake()->dateTimeBetween('-20 years', '-5 years')->format('Y-m-d'),
             'type' => User::TYPE_ADMIN,

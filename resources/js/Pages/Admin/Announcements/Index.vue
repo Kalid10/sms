@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="flex min-h-screen w-full flex-col bg-brand-50 px-1 py-2 lg:py-5 lg:px-10"
-    >
+    <div class="flex min-h-screen w-full flex-col px-1 py-2 lg:py-5 lg:px-10">
         <div
             class="flex w-full flex-col items-center space-y-2 px-0 py-3 lg:px-5"
         >
@@ -20,7 +18,7 @@
                         :placeholder="
                             $t('announcementsIndex.searchAnnouncements')
                         "
-                        class="w-full !rounded-xl lg:w-6/12"
+                        class="w-full !rounded-xl lg:w-6/12 xl:w-8/12"
                         class-style="focus:ring-1 focus:ring-zinc-700 focus:border-none focus:outline-none rounded-2xl"
                         @keyup="search"
                     />
@@ -40,20 +38,35 @@
                 class="flex w-full justify-between divide-gray-100 lg:space-x-4 lg:pr-5"
             >
                 <div
-                    class="hidden h-full w-6/12 flex-col justify-evenly space-y-6 p-3 pr-6 lg:block"
+                    class="hidden p-3 lg:flex"
+                    :class="
+                        announcements?.data.length
+                            ? 'h-full flex-col w-6/12 min-h-[44rem] pr-6 justify-evenly space-y-6 '
+                            : 'h-[22rem] flex-row w-full justify-between'
+                    "
                 >
                     <SelectedAnnouncementView
-                        class="h-2/5"
+                        class=""
+                        :class="
+                            announcements?.data.length
+                                ? 'w-full h-2/5 !shadow-md'
+                                : 'w-5/12'
+                        "
                         :selected-announcement="selectedAnnouncement"
                         @continue-reading="setContinueReading"
                     />
                     <SelectedAnnouncementView
-                        class="h-2/5"
+                        :class="
+                            announcements?.data.length
+                                ? 'w-full h-2/5'
+                                : 'w-5/12'
+                        "
                         :selected-announcement="selectedAnnouncement2"
                         @continue-reading="setContinueReading"
                     />
                 </div>
                 <div
+                    v-if="announcements?.data?.length"
                     class="flex w-full flex-col rounded-lg bg-white p-3 px-4 lg:w-6/12"
                 >
                     <Announcements

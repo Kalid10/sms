@@ -62,7 +62,7 @@
                         @click="previous"
                     />
                     <span
-                        class="flex min-w-fit select-none gap-1 font-light text-brand-text-100"
+                        class="flex min-w-fit select-none gap-1 font-light text-brand-text-500"
                     >
                         <button
                             v-if="panel === 'date'"
@@ -117,8 +117,8 @@
                             isDateSelected(i).value
                                 ? range
                                     ? isDateSelected(i).range === 'start'
-                                        ? 'rounded-tl-md bg-black text-white'
-                                        : 'rounded-br-md bg-black text-white'
+                                        ? 'rounded-tl-md bg-brand-450 text-white'
+                                        : 'rounded-br-md bg-brand-450 text-white'
                                     : 'rounded-md bg-black text-white'
                                 : 'hover:rounded-md hover:bg-black/10',
                             isBetweenRange(i) ? 'bg-black/10' : '',

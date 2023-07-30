@@ -17,11 +17,14 @@ class Resource extends JsonResource
         $student = $this->resource;
         $activeBatch = $student->activeBatch();
         $section = $student->currentBatch ? $student->currentBatch->first()->section : null;
-        $homeRoomTeacher = $student->currentBatch ? $student->currentBatch->first()->homeRoomTeacher->teacher->user->name : null;
+        $homeRoomTeacher = $student->currentBatch ? $student->currentBatch->first()->homeRoomTeacher?->teacher : null;
 
         return [
+            'id' => $this->user->id,
+            'student_id' => $this->id,
             'name' => $this->user->name,
             'username' => $this->user->username,
+            'profile_image' => $this->user->profile_image,
             'email' => $this->user->email,
             'gender' => $this->user->gender,
             'date_of_birth' => $this->user->date_of_birth,
@@ -31,10 +34,10 @@ class Resource extends JsonResource
             'house_number' => $this->user->address?->house_number,
             'level' => $activeBatch ? $activeBatch->level->name : null,
             'section' => $section,
-            'student_id' => $this->id,
             'user_id' => $this->user_id,
             'guardian_id' => $this->guardian_id,
-            'home_room_teacher' => $homeRoomTeacher,
+            'home_room_teacher' => $homeRoomTeacher?->user?->name,
+            'home_room_teacher_id' => $homeRoomTeacher?->id,
         ];
     }
 }

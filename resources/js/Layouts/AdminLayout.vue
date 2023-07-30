@@ -2,7 +2,9 @@
     <div id="top-view"></div>
 
     <div class="relative flex h-screen w-full flex-col">
-        <div class="hide-scrollbar w-full grow overflow-y-auto bg-brand-50 p-0">
+        <div
+            class="hide-scrollbar w-full grow overflow-y-auto bg-brand-50/30 p-0"
+        >
             <div class="flex w-full">
                 <SideBar
                     v-model:open="openSideBar"
@@ -28,7 +30,7 @@
 <script setup>
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
-import { computed, ref } from "vue";
+import { computed, provide, ref } from "vue";
 import {
     ChatBubbleBottomCenterIcon,
     Cog6ToothIcon,
@@ -144,6 +146,16 @@ const footerItems = [
         method: "POST",
     },
 ];
+
+const notificationData = ref(null);
+
+const showNotification = (data) => {
+    notificationData.value = data;
+};
+
+// TODO: Migrate the two providers
+provide("showNotification", showNotification);
+provide("notificationData", notificationData);
 </script>
 
 <style scoped></style>

@@ -41,7 +41,9 @@ function unshift(array, value) {
 
 const { deviceSize } = useDeviceSize();
 const isSidebarOpenOnXlDevice = computed(() => {
-    return deviceSize.value === "lg" || deviceSize.value === "xl"
+    return deviceSize.value === "lg" ||
+        deviceSize.value === "xl" ||
+        deviceSize.value === "2xl"
         ? useSidebarStore().isOpen
         : false;
 });

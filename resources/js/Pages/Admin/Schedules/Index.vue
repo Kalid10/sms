@@ -1,12 +1,8 @@
 <template>
-    <div
-        class="flex min-h-screen w-full flex-col items-center space-y-5 bg-brand-50 py-5"
-    >
+    <div class="flex min-h-screen w-full flex-col items-center space-y-5 py-5">
         <Title class="w-11/12" :title="$t('schedulesIndex.schoolSchedules')" />
         <div class="flex w-11/12 flex-col justify-between lg:flex-row">
-            <div
-                class="flex w-full justify-between bg-brand-50 lg:w-6/12 lg:space-x-10"
-            >
+            <div class="flex w-full justify-between lg:w-6/12 lg:space-x-10">
                 <div
                     class="h-fit w-full rounded-lg bg-white px-5 py-3 shadow-sm"
                 >

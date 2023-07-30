@@ -15,67 +15,68 @@ class BatchSubjectSeeder extends SubjectSeeder
     public function run(): void
     {
         $subjects = Subject::all();
+        $weeklyFrequency = 4;
 
         $allSubjects = $this->filterSubjectsByTag('All Levels', $subjects);
-        $this->filterBatchesByLevelNames($this->allLevelNames())->each(function ($batch) use ($allSubjects) {
+        $this->filterBatchesByLevelNames($this->allLevelNames())->each(function ($batch) use ($weeklyFrequency, $allSubjects) {
             $batch->base_subjects()->attach($allSubjects, [
-                'weekly_frequency' => 4,
+                'weekly_frequency' => $weeklyFrequency,
             ]);
         });
 
         $kindergartenSubjects = $this->filterSubjectsByTag('Kindergarten', $subjects);
-        $this->filterBatchesByLevelNames(['Pre-KG', 'KG-1', 'KG-2'])->each(function ($batch) use ($kindergartenSubjects) {
+        $this->filterBatchesByLevelNames(['Pre-KG', 'KG-1', 'KG-2'])->each(function ($batch) use ($weeklyFrequency, $kindergartenSubjects) {
             $batch->base_subjects()->attach($kindergartenSubjects, [
-                'weekly_frequency' => 4,
+                'weekly_frequency' => $weeklyFrequency,
             ]);
         });
 
         $elementarySubjects = $this->filterSubjectsByTag('Elementary', $subjects);
-        $this->filterBatchesByLevelNames(['1', '2', '3', '4', '5', '6', '7', '8'])->each(function ($batch) use ($elementarySubjects) {
+        $this->filterBatchesByLevelNames(['1', '2', '3', '4', '5', '6', '7', '8'])->each(function ($batch) use ($weeklyFrequency, $elementarySubjects) {
             $batch->base_subjects()->attach($elementarySubjects, [
-                'weekly_frequency' => 4,
+                'weekly_frequency' => $weeklyFrequency,
             ]);
         });
 
         $highSchoolSubjects = $this->filterSubjectsByTag('High School', $subjects);
-        $this->filterBatchesByLevelNames(['9', '10', '11', '12'])->each(function ($batch) use ($highSchoolSubjects) {
+        $this->filterBatchesByLevelNames(['9', '10', '11', '12'])->each(function ($batch) use ($weeklyFrequency, $highSchoolSubjects) {
             $batch->base_subjects()->attach($highSchoolSubjects, [
-                'weekly_frequency' => 4,
+                'weekly_frequency' => $weeklyFrequency,
             ]);
         });
 
         $middleSubjects = $this->filterSubjectsByTag('Middle', $subjects);
-        $this->filterBatchesByLevelNames(['7', '8'])->each(function ($batch) use ($middleSubjects) {
+        $this->filterBatchesByLevelNames(['7', '8'])->each(function ($batch) use ($weeklyFrequency, $middleSubjects) {
             $batch->base_subjects()->attach($middleSubjects, [
-                'weekly_frequency' => 4,
+                'weekly_frequency' => $weeklyFrequency,
             ]);
         });
 
         $lowerHighSchoolSocialSubjects = $this->filterSubjectsByTag('Social', $subjects);
-        $this->filterBatchesByLevelNames(['9', '10'])->each(function ($batch) use ($lowerHighSchoolSocialSubjects) {
+        $this->filterBatchesByLevelNames(['9', '10'])->each(function ($batch) use ($weeklyFrequency, $lowerHighSchoolSocialSubjects) {
             $batch->base_subjects()->attach($lowerHighSchoolSocialSubjects, [
-                'weekly_frequency' => 4,
+                'weekly_frequency' => $weeklyFrequency,
             ]);
         });
 
         $lowerHighSchoolNaturalSubjects = $this->filterSubjectsByTag('Natural', $subjects);
-        $this->filterBatchesByLevelNames(['9', '10'])->each(function ($batch) use ($lowerHighSchoolNaturalSubjects) {
+        $this->filterBatchesByLevelNames(['9', '10'])->each(function ($batch) use ($weeklyFrequency, $lowerHighSchoolNaturalSubjects) {
             $batch->base_subjects()->attach($lowerHighSchoolNaturalSubjects, [
-                'weekly_frequency' => 4,
+                'weekly_frequency' => $weeklyFrequency,
             ]);
         });
 
         $preparatorySocialSubjects = $this->filterSubjectsByTag(['Preparatory', 'Social'], $subjects);
-        $this->filterBatchesByLevelNames(['11', '12'], ['A', 'B'])->each(function ($batch) use ($preparatorySocialSubjects) {
+        $this->filterBatchesByLevelNames(['11', '12'], ['A', 'B'])->each(function ($batch) use ($weeklyFrequency, $preparatorySocialSubjects) {
             $batch->base_subjects()->attach($preparatorySocialSubjects, [
-                'weekly_frequency' => 4,
+                'weekly_frequency' => $weeklyFrequency,
             ]);
         });
 
         $preparatoryNaturalSubjects = $this->filterSubjectsByTag(['Preparatory', 'Natural'], $subjects);
-        $this->filterBatchesByLevelNames(['11', '12'], ['C', 'D'])->each(function ($batch) use ($preparatoryNaturalSubjects) {
+        $this->filterBatchesByLevelNames(['11', '12'], ['C', 'D'])->each(function ($batch) use ($weeklyFrequency, $preparatoryNaturalSubjects) {
             $batch->base_subjects()->attach($preparatoryNaturalSubjects, [
-                'weekly_frequency' => 4,
+                'weekly_frequency' => $weeklyFrequency,
             ]);
         });
     }
