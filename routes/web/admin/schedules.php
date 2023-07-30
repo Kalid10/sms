@@ -11,7 +11,8 @@ Route::controller(SchoolScheduleController::class)->prefix('school-schedules/')-
     Route::post('update', 'update')->name('update');
 });
 
-Route::controller(BatchScheduleController::class)->prefix('batch-schedules/')->middleware(['checkUserRole:manage-batch-schedules'])->name('school-schedule.')->group(function () {
+Route::controller(BatchScheduleController::class)->prefix('batch-schedules/')->middleware(['checkUserRole:manage-batch-schedules'])->name('batch-schedule.')->group(function () {
     Route::post('create', 'create')->name('create');
     Route::get('check', 'checkSchedule')->name('checkSchedule');
+    Route::post('swap', 'swapSchedules')->name('swapSchedules');
 });

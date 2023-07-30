@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,7 +39,7 @@ class Assessment extends Model
         'status',
     ];
 
-    protected $appends = ['assessment_period_time'];
+    protected $appends = ['long_title', 'assessment_period_time'];
 
     public function assessmentType(): BelongsTo
     {
@@ -119,6 +120,43 @@ class Assessment extends Model
     public function getAssessmentPeriodTimeAttribute()
     {
         return $this->getAssessmentPeriodTime();
+    }
+
+    public function getLongTitleAttribute(): string
+    {
+        return $this->longTitle();
+    }
+
+    public function isToday(): bool
+    {
+        return $this->due_date->isToday();
+    }
+
+    public function isThisWeek(): bool
+    {
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+
+        return $this->due_date->between($startOfWeek, $endOfWeek);
+    }
+
+    /**
+     * Mutate title attribute
+     */
+    protected function longTitle(): string
+    {
+        $prefix = $this->load('batchSubject.subject', 'batchSubject.batch.level')->batchSubject->subject->full_name.' ';
+
+        $suffix = match (true) {
+            $this->isToday() => ' Today'.
+                $this->asssessment_period_time ?
+                    ' at '.Carbon::parse($this->assessment_period_time)->format('H:i A') :
+                    ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
+            $this->isThisWeek() => ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
+            default => ' on '.$this->due_date->format('F jS'),
+        };
+
+        return $prefix.$this->title.$suffix;
     }
 
     protected $casts = [

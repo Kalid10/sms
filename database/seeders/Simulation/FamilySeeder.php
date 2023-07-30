@@ -7,6 +7,7 @@ use App\Models\Guardian;
 use App\Models\Student;
 use App\Models\User;
 use Database\Seeders\SimulationSeeder;
+use Illuminate\Support\Str;
 
 class FamilySeeder extends SimulationSeeder
 {
@@ -47,6 +48,7 @@ class FamilySeeder extends SimulationSeeder
                         'name' => $fullName,
                         'email' => Ethiopian::email($fullName),
                         'username' => Ethiopian::username($fullName),
+                        'profile_image' => 'https://avatars.dicebear.com/api/open-peeps/'.Str::camel($fullName).'.svg',
                         'phone_number' => Ethiopian::phoneNumber(),
                         'gender' => $gender,
                         'date_of_birth' => fake()->date('Y-m-d', '-'.(($i % 15) + rand(-2, 6) + 24).' years'),
@@ -63,6 +65,7 @@ class FamilySeeder extends SimulationSeeder
                 'user_id' => User::create([
                     'name' => $fullName,
                     'username' => 'GYA/'.fake()->unique()->numberBetween(10000, 99999),
+                    'profile_image' => 'https://avatars.dicebear.com/api/open-peeps/'.Str::camel($fullName).'.svg',
                     'phone_number' => rand(1, 5) % 2 === 0 ? Ethiopian::phoneNumber() : null,
                     'gender' => $gender,
                     'date_of_birth' => fake()->dateTimeBetween('-'.(($i % 15) + 4).' years', '-'.(($i % 15) + 3).' years')->format('Y-m-d'),
