@@ -90,9 +90,16 @@ const emit = defineEmits(["toggleConversation"]);
 const messageStore = useMessageStore();
 
 const favorites = computed(() => messageStore.favorites);
+const contacts = computed(() => messageStore.contacts);
 const searchKey = ref();
 const showLoading = ref(false);
 const showSimilarUsers = ref(false);
+
+watch([contacts], () => {
+    if (contacts.value.length < 1) {
+        loadSimilarContacts();
+    }
+});
 
 async function searchContacts(query) {
     showLoading.value = true;

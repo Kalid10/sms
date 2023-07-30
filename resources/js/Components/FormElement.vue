@@ -22,14 +22,19 @@
         </div>
 
         <div
-            class="flex min-h-10 w-full items-center justify-end gap-2 bg-neutral-100 py-2 px-4"
+            class="flex min-h-10 w-full items-center justify-end gap-2 bg-brand-50/50 py-2 px-4"
         >
             <slot name="form-actions">
                 <SecondaryButton
                     :title="modal ? $t('common.close') : $t('common.clear')"
+                    class="!bg-red-600 text-white"
                     @click="cancel"
                 />
-                <PrimaryButton :title="$t('common.submit')" @click="submit" />
+                <PrimaryButton
+                    :title="$t('common.submit')"
+                    class="!bg-brand-450"
+                    @click="submit"
+                />
             </slot>
         </div>
     </form>

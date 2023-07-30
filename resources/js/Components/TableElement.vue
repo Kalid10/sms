@@ -9,7 +9,7 @@
             >
                 <div class="flex flex-col justify-center p-4 sm:grow">
                     <h3 class="font-semibold capitalize">{{ title }}</h3>
-                    <h5 v-if="subtitle" class="text-sm text-brand-text-300">
+                    <h5 v-if="subtitle" class="text-sm text-gray-400">
                         {{ subtitle }}
                     </h5>
                 </div>

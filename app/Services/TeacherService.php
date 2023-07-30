@@ -168,7 +168,6 @@ class TeacherService
             'batch.level:id,name,level_category_id',
         ])->where('teacher_id', $teacherId)
             ->whereHas('batch', fn ($query) => $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id))
-            ->distinct()
             ->get(['id', 'subject_id', 'batch_id']);
 
         $quarterFilter = $request->input('quarter_id');

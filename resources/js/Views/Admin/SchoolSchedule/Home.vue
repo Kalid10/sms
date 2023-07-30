@@ -38,7 +38,7 @@
 
                         <!--                        Todo: Open the clicked schedule on schedules page-->
                         <EyeIcon
-                            class="w-3 cursor-pointer text-brand-text-250 hover:scale-105 hover:text-brand-text-450"
+                            class="w-3 cursor-pointer text-zinc-700 hover:scale-105 hover:text-zinc-800"
                             @click="router.get('/admin/schedules')"
                         />
                     </div>

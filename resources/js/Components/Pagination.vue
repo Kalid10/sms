@@ -10,9 +10,9 @@
                     v-if="link.url !== null"
                     :href="link.url"
                     :preserve-state="preserveState"
-                    class="flex h-6 w-6 cursor-pointer flex-wrap items-center justify-center rounded-full text-center text-xs font-light hover:bg-brand-450 hover:font-semibold hover:text-white"
+                    class="flex h-6 w-6 cursor-pointer flex-wrap items-center justify-center rounded-full text-center text-xs font-light hover:bg-brand-400 hover:font-semibold hover:text-white"
                     :class="{
-                        'bg-black font-semibold text-white': link.active,
+                        'bg-brand-400 font-semibold text-white': link.active,
                     }"
                 >
                     <ChevronLeftIcon

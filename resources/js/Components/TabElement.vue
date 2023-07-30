@@ -10,7 +10,7 @@
                 <button
                     :class="[
                         active === tab
-                            ? 'text-brand-text-400'
+                            ? 'text-brand-text-500'
                             : inActiveTabText,
                     ]"
                     class="w-full whitespace-nowrap text-sm font-semibold capitalize transition-colors duration-300"

@@ -26,7 +26,7 @@
                 />
                 <div class="flex justify-end">
                     <PrimaryButton
-                        class="!rounded-2xl"
+                        class="!rounded-2xl bg-brand-450"
                         @click="showModal = true"
                     >
                         <span class="flex space-x-1">

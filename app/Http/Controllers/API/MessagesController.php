@@ -230,6 +230,7 @@ class MessagesController extends Controller
             })
             ->where('users.id', '!=', Auth::user()->id)
             ->paginate($request->per_page ?? $this->perPage);
+
         foreach ($users as $user) {
             $latest_message = DB::table('ch_messages')
                 ->where('ch_messages.from_id', Auth::user()->id)
@@ -427,22 +428,23 @@ class MessagesController extends Controller
 
     public function getSimilarUsers(): Collection
     {
-        $loggedUserType = Auth::user()->type;
+        $loggedInUser = Auth::user();
 
         $similarUserTypes = [];
 
         // Check if logged user is admin
-        if ($loggedUserType == User::TYPE_ADMIN) {
-            $admins = User::where('type', User::TYPE_ADMIN)->get()->take(10);
+        if ($loggedInUser->type == User::TYPE_ADMIN) {
+            $admins = User::where('type', User::TYPE_ADMIN)->whereNot('id', $loggedInUser->id)->get()->take(10);
             $similarUserTypes = $admins;
         }
 
-        if ($loggedUserType == User::TYPE_TEACHER) {
+        if ($loggedInUser->type == User::TYPE_TEACHER) {
             // Get the logged in teacher grade
             $levelId = Auth::user()->teacher->load('batchSubjects.batch')->batchSubjects->pluck('batch')->first()->level_id;
 
             // Get all teachers that are in the same level
             $similarUserTypes = User::where('type', User::TYPE_TEACHER)
+                ->whereNot('id', $loggedInUser->id)
                 ->whereHas('teacher.batchSubjects.batch', function ($query) use ($levelId) {
                     $query->where('level_id', $levelId);
                 })->with('teacher.batchSubjects.subject')->get();

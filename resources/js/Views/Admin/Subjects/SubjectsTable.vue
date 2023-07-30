@@ -15,9 +15,14 @@
                             class="w-full lg:max-w-lg"
                             :placeholder="$t('subjectsTable.queryPlaceholder')"
                         />
-                        <PrimaryButton @click="$emit('new')">
-                            <span class="flex gap-2">
-                                <PlusIcon
+                        <PrimaryButton
+                            class="bg-brand-450"
+                            @click="$emit('new')"
+                        >
+                            <span
+                                class="flex items-center justify-center gap-2"
+                            >
+                                <SquaresPlusIcon
                                     class="h-4 w-4 stroke-white stroke-2"
                                 />
                                 <span>
@@ -40,10 +45,7 @@
                         <p class="mb-0.5 text-sm font-semibold">
                             {{ $t("subjectsTable.noDataFound") }}
                         </p>
-                        <p
-                            v-if="query === null"
-                            class="text-sm text-brand-text-300"
-                        >
+                        <p v-if="query === null" class="text-sm text-gray-600">
                             {{ $t("subjectsTable.noSubjectEnrolled") }}
                         </p>
                         <p
@@ -70,7 +72,7 @@
                     </Link>
                 </template>
                 <template #short_name-column="{ data }">
-                    <span class="text-xs text-brand-text-300">{{ data }}</span>
+                    <span class="text-xs text-gray-600">{{ data }}</span>
                 </template>
                 <template #tags-column="{ data }">
                     <div class="flex w-full items-center justify-center gap-2">
@@ -97,7 +99,7 @@
                     </div>
                 </template>
                 <template #updated_at-column="{ data }">
-                    <span class="text-xs text-brand-text-300">
+                    <span class="text-xs text-gray-600">
                         {{ moment(data).fromNow() }}
                     </span>
                 </template>
@@ -203,7 +205,7 @@ import {
     ArrowPathIcon,
     ExclamationTriangleIcon,
     PencilIcon,
-    PlusIcon,
+    SquaresPlusIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline/index.js";
 import { Link, router, usePage } from "@inertiajs/vue3";

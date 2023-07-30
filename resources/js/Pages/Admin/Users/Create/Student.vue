@@ -8,13 +8,14 @@
                 <Heading
                     :value="$t('createStudent.headingTwo')"
                     size="sm"
-                    class="text-xs !font-light text-brand-text-300"
+                    class="text-xs !font-light text-zinc-700"
                 />
             </div>
             <div class="col-span-7 col-start-5">
                 <div class="w-full max-w-4xl rounded-lg bg-white">
                     <GuardianFormElement
                         :title="$t('createStudent.guardianFormElementTitle')"
+                        @cancel="form.reset()"
                         @submit="submit"
                     >
                         <div class="flex gap-3">
@@ -132,7 +133,7 @@
                 <Heading
                     :value="$t('createStudent.headingFour')"
                     size="sm"
-                    class="text-xs !font-light text-brand-text-300"
+                    class="text-xs !font-light text-zinc-700"
                 />
             </div>
             <div class="col-span-7 col-start-5">
@@ -145,7 +146,10 @@
                     />
 
                     <div class="absolute right-0 mt-4">
-                        <GuardianPrimaryButton title="Submit" />
+                        <GuardianPrimaryButton
+                            title="Submit"
+                            class="bg-brand-450"
+                        />
                     </div>
                 </div>
             </div>

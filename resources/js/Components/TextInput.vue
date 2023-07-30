@@ -1,7 +1,7 @@
 <template>
     <label class="flex flex-col gap-1">
         <span v-if="label">
-            <span class="pl-0.5 text-xs font-semibold text-brand-text-300">{{
+            <span class="pl-0.5 text-xs font-semibold text-black">{{
                 label
             }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
@@ -12,7 +12,7 @@
             :required="required"
             :type="type"
             :value="modelValue"
-            class="h-9 w-full outline-none placeholder:text-xs placeholder:text-brand-text-250"
+            class="h-9 w-full outline-none placeholder:text-xs placeholder:text-gray-400"
             :class="
                 disabled
                     ? 'blur-0 cursor-not-allowed rounded-2xl'

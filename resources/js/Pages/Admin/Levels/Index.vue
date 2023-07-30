@@ -55,7 +55,7 @@
 
             <template #updated_at-column="{ data }">
                 <div class="flex w-full justify-end">
-                    <span class="text-xs text-brand-text-300">{{ data }}</span>
+                    <span class="text-xs text-gray-600">{{ data }}</span>
                 </div>
             </template>
         </TableElement>
