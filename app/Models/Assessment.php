@@ -145,7 +145,7 @@ class Assessment extends Model
      */
     protected function longTitle(): string
     {
-        $prefix = $this->load('batchSubject.subject')->batchSubject->subject->full_name.' ';
+        $prefix = $this->load('batchSubject.subject', 'batchSubject.batch.level')->batchSubject->subject->full_name.' ';
 
         $suffix = match (true) {
             $this->isToday() => ' Today'.
