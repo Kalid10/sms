@@ -1,22 +1,18 @@
 <template>
     <div
         ref="parentDiv"
-        class="max-h-screen bg-brand-450 text-white"
+        class="max-h-screen bg-brand-550 text-white"
         :class="[
-            isOpen
-                ? 'min-w-[16rem] lg:w-80 lg:min-w-0 2xl:w-96'
-                : 'min-w-8 lg:w-16',
+            isOpen ? 'min-w-[12rem] lg:w-60 lg:min-w-0' : 'min-w-8 lg:w-16',
             'transition-all duration-300 ease-in-out ',
         ]"
         @click="toggleSidebar"
-        @mouseover="handleMouseover"
-        @mouseleave="handleMouseleave"
     >
         <div
             class="flex min-h-screen w-full flex-col items-center justify-between pt-1 pb-4 text-white lg:pt-5"
         >
             <div class="flex w-full flex-col items-center justify-center">
-                <Header :header="header"></Header>
+                <Header :header="header" />
                 <Items :items="sideBarItems" />
             </div>
 
