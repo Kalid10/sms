@@ -10,15 +10,24 @@ use App\Models\SchoolYear;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Services\ImageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Activitylog\Models\Activity;
 
 class UserController extends Controller
 {
+    protected ImageService $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+
     public function index(Request $request): Response
     {
         // Get search key
@@ -119,5 +128,29 @@ class UserController extends Controller
     public function teacher(): Response
     {
         return Inertia::render('Admin/Users/Create/Teacher');
+    }
+
+    public function uploadImage(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Get file from request
+        $file = $request->file('image');
+
+        // Resize the image before uploading to Spaces
+        $img = $this->imageService->resizeImage($file->getRealPath(), 300, 200);
+
+        // Generate a new filename for the resized image
+        $filename = 'resized_'.time().'.'.$file->getClientOriginalExtension();
+
+        // Encode image to string and prepare for upload
+        $imageString = $img->encode();
+
+        // Use Storage to put the file on Spaces
+        Storage::disk('spaces')->put($filename, (string) $imageString, 'public/resized_images');
+
+        return redirect()->back()->with('success', 'Image uploaded successfully.');
     }
 }
