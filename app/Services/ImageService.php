@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class ImageService
 {
-    public function resizeImage($filePath, $width, $height): \Intervention\Image\Image
+    public static function resize($filePath, $width, $height): \Intervention\Image\Image
     {
         // Create an instance from the file located at $filePath
         $img = Image::make($filePath);
@@ -17,10 +18,12 @@ class ImageService
             $constraint->aspectRatio();
         });
 
-        // You may save the resized image back to disk if needed
-        // Make sure the destination directory exists
-        $img->save(public_path('resized_images/'.basename($filePath)));
-
         return $img;
+    }
+
+    public static function upload($image, $name): void
+    {
+        // Use Storage to put the file on Spaces
+        Storage::disk('spaces')->put('rigel/profile-images/'.$name, $image->encode());
     }
 }

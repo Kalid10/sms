@@ -11,9 +11,11 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Services\ImageService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,13 +23,6 @@ use Spatie\Activitylog\Models\Activity;
 
 class UserController extends Controller
 {
-    protected ImageService $imageService;
-
-    public function __construct(ImageService $imageService)
-    {
-        $this->imageService = $imageService;
-    }
-
     public function index(Request $request): Response
     {
         // Get search key
@@ -132,6 +127,8 @@ class UserController extends Controller
 
     public function uploadImage(Request $request): RedirectResponse
     {
+        $user = auth()->user();
+
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -140,16 +137,30 @@ class UserController extends Controller
         $file = $request->file('image');
 
         // Resize the image before uploading to Spaces
-        $img = $this->imageService->resizeImage($file->getRealPath(), 300, 200);
+        $img = ImageService::resize($file->getRealPath(), 300, 200);
 
         // Generate a new filename for the resized image
-        $filename = 'resized_'.time().'.'.$file->getClientOriginalExtension();
+        $filename = $user->name.'.'.$file->getClientOriginalExtension();
 
-        // Encode image to string and prepare for upload
-        $imageString = $img->encode();
+        Log::info($user->profile_image);
 
-        // Use Storage to put the file on Spaces
-        Storage::disk('spaces')->put($filename, (string) $imageString, 'public/resized_images');
+        // If the user already has an image, delete it from Spaces
+        if ($user->profile_image) {
+
+            $imageName = substr($user->profile_image, strrpos($user->profile_image, '/') + 1);
+
+            Log::info($imageName);
+            // Delete old image
+            if (! Storage::disk('spaces')->delete($imageName)) {
+                throw new Exception("Error deleting file: {$imageName}");
+            }
+        }
+
+        // Upload the resized image to Spaces
+        ImageService::upload($img, $filename);
+
+        $user->profile_image = Storage::disk('spaces')->url('rigel/profile-images/'.$filename);
+        $user->save();
 
         return redirect()->back()->with('success', 'Image uploaded successfully.');
     }

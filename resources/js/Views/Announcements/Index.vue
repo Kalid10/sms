@@ -24,43 +24,44 @@
 
         <div>
             <div class="flex flex-col space-y-2">
-            <EmptyView
-                v-if="!computedAnnouncements"
-                :title="$t('announcementsIndex.noAnnouncementsFound')"
-                :link-title="$t('announcementsIndex.goToAnnouncements')"
-                :link-url="url"
-                class="flex w-full justify-center py-2"
-            />
-            <div v-else class="flex flex-col space-y-2">
-                <div class="flex flex-col divide-y divide-gray-50">
-                    <Item
-                        v-for="(item, index) in computedAnnouncements"
-                        :key="index"
-                        :announcement="item"
-                        :class="index % 2 === 0 ? 'bg-brand-50/50' : ''"
-                        @click="handleClick(item)"
+                <EmptyView
+                    v-if="!computedAnnouncements"
+                    :title="$t('announcementsIndex.noAnnouncementsFound')"
+                    :link-title="$t('announcementsIndex.goToAnnouncements')"
+                    :link-url="url"
+                    class="flex w-full justify-center py-2"
+                />
+                <div v-else class="flex flex-col space-y-2">
+                    <div class="flex flex-col divide-y divide-gray-50">
+                        <Item
+                            v-for="(item, index) in computedAnnouncements"
+                            :key="index"
+                            :announcement="item"
+                            :class="index % 2 === 0 ? 'bg-brand-50/50' : ''"
+                            @click="handleClick(item)"
+                        />
+                    </div>
+                    <Pagination
+                        v-if="announcements?.links"
+                        :links="announcements.links"
+                        position="center"
+                        class="pt-3"
+                    />
+                    <LinkCell
+                        v-else-if="!(view === 'teacher' && isAdmin())"
+                        class="flex w-full justify-center py-2"
+                        :href="url"
+                        :value="$t('announcementsIndex.viewAllAnnouncements')"
                     />
                 </div>
-                <Pagination
-                    v-if="announcements?.links"
-                    :links="announcements.links"
-                    position="center"
-                    class="pt-3"
-                />
-                <LinkCell
-                    v-else-if="!(view === 'teacher' && isAdmin())"
-                    class="flex w-full justify-center py-2"
-                    :href="url"
-                    :value="$t('announcementsIndex.viewAllAnnouncements')"
-                />
             </div>
-        </div>
 
-        <Modal v-model:view="showAnnouncement">
-            <ShowAnnouncementView
-                :selected-announcement="selectedAnnouncement"
-            />
-        </Modal>
+            <Modal v-model:view="showAnnouncement">
+                <ShowAnnouncementView
+                    :selected-announcement="selectedAnnouncement"
+                />
+            </Modal>
+        </div>
     </div>
 </template>
 <script setup>
@@ -75,6 +76,7 @@ import Pagination from "@/Components/Pagination.vue";
 import { isAdmin } from "@/utils";
 import { SquaresPlusIcon } from "@heroicons/vue/20/solid";
 import ShowAnnouncementView from "@/Views/Announcements/ShowAnnouncement.vue";
+import EmptyView from "@/Views/EmptyView.vue";
 
 const { t } = useI18n();
 

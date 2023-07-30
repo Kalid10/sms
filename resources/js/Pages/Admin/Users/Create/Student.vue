@@ -217,16 +217,17 @@
                             title="Go back"
                             @click="manual"
                         />
-                    <GuardianFileInput
-                        max-file-size="10000000"
-                        @file-uploaded="handleFileUploaded"
-                    />
-
-                    <div class="absolute right-0 mt-4">
-                        <GuardianPrimaryButton
-                            title="Submit"
-                            class="bg-brand-450"
+                        <GuardianFileInput
+                            max-file-size="10000000"
+                            @file-uploaded="handleFileUploaded"
                         />
+
+                        <div class="absolute right-0 mt-4">
+                            <PrimaryButton
+                                title="Submit"
+                                class="bg-brand-450"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
