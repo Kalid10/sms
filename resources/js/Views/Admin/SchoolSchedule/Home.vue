@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="schoolSchedule.length"
         class="flex w-full flex-col items-center justify-between space-y-4 rounded-lg bg-white px-5 py-3 shadow-sm lg:flex-row lg:space-x-10"
     >
         <Loading v-if="showLoading" is-full-screen />
@@ -64,6 +65,7 @@
             />
         </div>
     </div>
+    <EmptyView v-else class="lg:py-12" title="No School Schedules Found!" />
 </template>
 <script setup>
 import { computed, ref, watch } from "vue";
@@ -75,6 +77,7 @@ import DatePicker from "@/Components/DatePicker.vue";
 import LinkCell from "@/Components/LinkCell.vue";
 import { debounce } from "lodash";
 import Loading from "@/Components/Loading.vue";
+import EmptyView from "@/Views/EmptyView.vue";
 
 const schoolSchedule = computed(() => usePage().props.school_schedule);
 const startDate = ref(new Date());
