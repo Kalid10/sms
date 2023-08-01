@@ -29,6 +29,7 @@
         >
             <div class="flex w-full flex-col space-y-8 lg:w-8/12">
                 <WelcomeHeader v-if="isTeacher()" />
+
                 <TabElement v-model:active="activeTab" :tabs="tabs">
                     <template #[announcementsTab]>
                         <Announcements
@@ -47,9 +48,11 @@
                         />
                     </template>
                 </TabElement>
+
                 <div class="flex w-full items-center justify-between space-x-6">
                     <div class="w-7/12"></div>
                 </div>
+
                 <Flags :title="$t('teacherIndex.recentFlags')" view="teacher" />
             </div>
             <div
@@ -59,6 +62,7 @@
                     class="!w-11/12"
                     @view="activeTab = toDaysScheduleTab"
                 />
+
                 <Summary class="!w-11/12" />
 
                 <AttendanceCard class="!w-11/12" />
