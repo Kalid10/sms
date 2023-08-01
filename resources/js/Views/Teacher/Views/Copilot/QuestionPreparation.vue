@@ -115,6 +115,7 @@
                 />
 
                 <SecondaryButton
+                    :is-disabled="isSubmitDisabled"
                     :title="$t('common.submit')"
                     class="w-10/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
                     @click="submit"
