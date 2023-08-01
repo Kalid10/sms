@@ -1,7 +1,7 @@
 <template>
     <label class="relative flex flex-col gap-1">
         <span v-if="label && labelLocation === 'top'" class="">
-            <span class="pl-0.5 text-sm font-semibold text-gray-500">{{
+            <span class="pl-0.5 text-sm font-semibold text-brand-text-200">{{
                 label
             }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
@@ -9,7 +9,7 @@
 
         <span
             v-if="visible && labelLocation === 'inside'"
-            class="text-[0.7rem] text-gray-500"
+            class="text-[0.7rem] text-brand-text-300"
         >
             {{ label }}
         </span>
@@ -29,11 +29,13 @@
             <span class="flex flex-col">
                 <span
                     v-if="labelLocation === 'inside'"
-                    class="text-[0.7rem] text-gray-500"
+                    class="text-[0.7rem] text-brand-text-300"
                     >{{ label }}</span
                 >
                 <span
-                    :class="[!!selectedDate ? 'text-black' : 'text-gray-500']"
+                    :class="[
+                        !!selectedDate ? 'text-black' : 'text-brand-text-300',
+                    ]"
                     class="truncate whitespace-nowrap text-sm"
                 >
                     {{ selectedDate ?? placeholder }}

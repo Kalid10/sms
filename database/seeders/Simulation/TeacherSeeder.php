@@ -25,6 +25,7 @@ use Database\Seeders\Simulation\TeacherSeeder\SocialStudiesTeacherSeeder;
 use Database\Seeders\Simulation\TeacherSeeder\TDTeacherSeeder;
 use Database\Seeders\SimulationSeeder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class TeacherSeeder extends SimulationSeeder
 {
@@ -36,6 +37,13 @@ class TeacherSeeder extends SimulationSeeder
     public function run(): void
     {
         self::$batchSubjects = $this->batchSubjects();
+
+        //        // When you want to seed Teachers without Batch Subject assigned
+        //        for ($i = 0; $i < 80; $i++) {
+        //            $this->createTeacher();
+        //        }
+
+        // When you want to seed a teacher with Batch Subject assigned
         $this->call([
             AmharicTeacherSeeder::class,
             BiologyTeacherSeeder::class,
@@ -76,6 +84,7 @@ class TeacherSeeder extends SimulationSeeder
                 'name' => $fullName,
                 'email' => Ethiopian::email($fullName),
                 'username' => Ethiopian::username($fullName),
+                'profile_image' => 'https://avatars.dicebear.com/api/open-peeps/'.Str::camel($fullName).'.svg',
                 'phone_number' => Ethiopian::phoneNumber(),
                 'gender' => $gender,
                 'date_of_birth' => fake()->date('Y-m-d', '-'.(rand(-2, 6) + 24).' years'),

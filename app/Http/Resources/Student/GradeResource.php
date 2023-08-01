@@ -17,14 +17,18 @@ class GradeResource extends JsonResource
         return [
             'student_id' => $this->id,
             'student_name' => $this->user->name,
-            'grade' => $this->studentGrades->map(function ($grade) {
+            'grades' => $this->grades->map(function ($grade) {
                 return [
+                    'rank' => $grade->rank,
                     'score' => $grade->score,
+                    'conduct' => $grade->conduct,
+                    'attendance' => $grade->attendance,
                     'gradable_id' => $grade->gradable->id,
                     'gradable_type' => $grade->gradable_type,
                     'gradable_name' => $grade->gradable->name,
                     'grade_scale_id' => $grade->gradeScale->id,
                     'grade_scale_state' => $grade->gradeScale->state,
+                    'grade_scale_label' => $grade->gradeScale->label,
                     'grade_scale_description' => $grade->gradeScale->description,
                 ];
             }),

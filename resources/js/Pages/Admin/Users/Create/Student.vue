@@ -140,16 +140,94 @@
                 <div
                     class="relative w-full max-w-4xl flex-col rounded-lg bg-white"
                 >
-                    <GuardianFileInput
-                        max-file-size="10000000"
-                        @file-uploaded="handleFileUploaded"
-                    />
+                    <div v-if="showManual">
+                        <h1 class="mb-4 text-center text-lg font-bold">
+                            Bulk Registration Process
+                        </h1>
 
-                    <div class="absolute right-0 mt-4">
-                        <GuardianPrimaryButton
-                            title="Submit"
-                            class="bg-brand-450"
+                        <div
+                            class="mb-4 rounded-lg border border-brand-550 p-4"
+                        >
+                            <h2 class="text-md mb-2 font-semibold">
+                                Step 1: Prepare Your File
+                            </h2>
+                            <p class="mb-2 text-sm">
+                                Prepare a CSV file with the following columns:
+                                Name, Email, Username, Grade Level. Ensure all
+                                data is accurate and correctly spelled.
+                            </p>
+                            <p class="mb-2 text-sm">
+                                Know the directory where you have saved your CSV
+                                file on your computer. You'll need to navigate
+                                to this location during the upload process.
+                            </p>
+                        </div>
+                        <div
+                            class="mb-4 rounded-lg border border-brand-550 p-4"
+                        >
+                            <h2 class="text-md mb-2 font-semibold">
+                                Step 2: Go to Registration and Upload the File
+                            </h2>
+                            <p class="mb-2 text-sm">
+                                After preparing your CSV file, click on the<span
+                                    class="font-semibold"
+                                >
+                                    Go to registration
+                                </span>
+                                button. It is located at the bottom right of
+                                this section.
+                            </p>
+                            <p class="mb-2 text-sm">
+                                On the registration section, click "Upload File"
+                                to open a dialogue box. Navigate to the
+                                directory of your CSV file, select it, and click
+                                "Select".
+                            </p>
+                        </div>
+
+                        <div
+                            class="mb-4 rounded-lg border border-brand-550 p-4"
+                        >
+                            <h2 class="text-md mb-2 font-semibold">
+                                Step 3: Submit the File
+                            </h2>
+                            <p class="mb-2 text-sm">
+                                After your file is selected, it should appear in
+                                the "Upload File" section. Verify that the
+                                correct file is selected, then click the
+                                "Upload" button to begin the bulk registration
+                                process.
+                            </p>
+                        </div>
+
+                        <div class="flex justify-end" @click="upload">
+                            <PrimaryButton title="Go to registration" />
+                        </div>
+                    </div>
+                    <div v-if="showUpload">
+                        <GuardianFileInput
+                            max-file-size="10000000"
+                            @file-uploaded="handleFileUploaded"
                         />
+                    </div>
+
+                    <div class="absolute left-0 mt-4">
+                        <PrimaryButton
+                            v-if="showUpload"
+                            title="Go back"
+                            @click="manual"
+                        />
+                        <GuardianFileInput
+                            max-file-size="10000000"
+                            @file-uploaded="handleFileUploaded"
+                        />
+
+                        <div class="absolute right-0 mt-4">
+                            <PrimaryButton
+                                title="Submit"
+                                class="bg-brand-450"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,15 +240,29 @@ import GuardianFormElement from "@/Components/FormElement.vue";
 import GuardianTextInput from "@/Components/TextInput.vue";
 import GuardianFileInput from "@/Components/FileInput.vue";
 import Heading from "@/Components/Heading.vue";
-import { useForm } from "@inertiajs/vue3";
-import GuardianPrimaryButton from "@/Components/PrimaryButton.vue";
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianDatePicker from "@/Components/DatePicker.vue";
 import GuardianSelectInput from "@/Components/SelectInput.vue";
 import { value } from "lodash/seq";
 import { useI18n } from "vue-i18n";
+import { computed, ref } from "vue";
 
 const { t } = useI18n();
 defineEmits(["file-uploaded"]);
+
+const showManual = ref(true);
+const showUpload = ref(false);
+
+function upload() {
+    showUpload.value = true;
+    showManual.value = false;
+}
+
+function manual() {
+    showUpload.value = false;
+    showManual.value = true;
+}
 
 const genderOptions = [
     { value: "male", label: t("common.male") },
@@ -178,27 +270,21 @@ const genderOptions = [
 ];
 
 const handleFileUploaded = (file) => {
-    // Todo: Remove this console.log when notification is implemented
-    console.log("File uploaded:", file);
+    router.post("/register-bulk", {
+        user_file: file,
+        user_type: "student",
+    });
 };
+const levels = computed(() => usePage().props.levels);
 
-const levelOptions = [
-    { value: "KG-1", label: "KG 1" },
-    { value: "KG-2", label: "KG 2" },
-    { value: "KG-3", label: "KG 3" },
-    { value: "1", label: "Grade 1" },
-    { value: "2", label: "Grade 2" },
-    { value: "3", label: "Grade 3" },
-    { value: "4", label: "Grade 4" },
-    { value: "5", label: "Grade 5" },
-    { value: "6", label: "Grade 6" },
-    { value: "7", label: "Grade 7" },
-    { value: "8", label: "Grade 8" },
-    { value: "9", label: "Grade 9" },
-    { value: "10", label: "Grade 10" },
-    { value: "11", label: "Grade 11" },
-    { value: "12", label: "Grade 12" },
-];
+const levelOptions = computed(() => {
+    return levels.value.map((level) => {
+        return {
+            value: level.id,
+            label: `Grade ${level.name}`,
+        };
+    });
+});
 
 const relationOptions = [
     { value: "father", label: t("createStudent.father") },

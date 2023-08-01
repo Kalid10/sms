@@ -17,6 +17,8 @@ class Teacher extends Model
         'user_id',
     ];
 
+    protected $appends = ['active_weekly_sessions'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -27,6 +29,12 @@ class Teacher extends Model
         return $this->hasMany(BatchSubject::class);
     }
 
+    public function activeBatchSubjects(): HasMany
+    {
+        return $this->hasMany(BatchSubject::class)
+            ->whereIn('batch_id', Batch::active()->pluck('id'));
+    }
+
     public function batchSchedules(): HasManyThrough
     {
         return $this->hasManyThrough(
@@ -35,6 +43,11 @@ class Teacher extends Model
             'teacher_id', // Foreign key on BatchSubject table
             'batch_subject_id' // Foreign key on BatchSchedule table
         );
+    }
+
+    public function activeWeeklySessions(): int
+    {
+        return $this->load('activeBatchSubjects')->activeBatchSubjects->sum('weekly_frequency');
     }
 
     public function batchSessions(): HasMany
@@ -104,5 +117,10 @@ class Teacher extends Model
         $sessionCount = $this->batchSessions()->count();
 
         return $sessionCount ? round(($absenteeCount / $sessionCount) * 100, 2) : 0;
+    }
+
+    public function getActiveWeeklySessionsAttribute(): int
+    {
+        return $this->activeWeeklySessions();
     }
 }

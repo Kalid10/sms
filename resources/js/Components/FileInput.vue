@@ -93,7 +93,7 @@ const handleFileUpload = (event) => {
     }
 };
 
-defineEmits(["file-uploaded"]);
+const emit = defineEmits(["file-uploaded"]);
 
 const handleUpload = () => {
     emit("file-uploaded", form.file);

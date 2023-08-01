@@ -68,6 +68,28 @@ class BatchSubject extends Model
         );
     }
 
+    public function nextSession(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            BatchSession::class,
+            BatchSchedule::class,
+            'batch_subject_id', // Foreign key on BatchSchedule table
+            'batch_schedule_id'
+        )->where('date', '>=', now()->toDateString())
+            ->orderBy('date');
+    }
+
+    public function lastSession(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            BatchSession::class,
+            BatchSchedule::class,
+            'batch_subject_id', // Foreign key on BatchSchedule table
+            'batch_schedule_id'
+        )->where('date', '<=', now()->toDateString())
+            ->orderBy('date', 'desc');
+    }
+
     public function level(): HasOneThrough
     {
         return $this->hasOneThrough(

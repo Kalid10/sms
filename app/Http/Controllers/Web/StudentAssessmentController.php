@@ -6,10 +6,9 @@ use App\Http\Requests\StudentAssessments\InsertStudentsAssessmentRequest;
 use App\Jobs\InsertStudentsAssessmentsJob;
 use App\Models\Assessment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 
-class StudentAssessmentController extends Model
+class StudentAssessmentController extends Controller
 {
     use HasFactory;
 

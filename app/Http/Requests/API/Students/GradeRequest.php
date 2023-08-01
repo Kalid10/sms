@@ -15,6 +15,7 @@ class GradeRequest extends Request
     {
         return [
             'gradable_type' => 'nullable|in:App\Models\Quarter,App\Models\Semester,App\Models\SchoolYear',
+            'active' => 'nullable|boolean',
         ];
     }
 }
