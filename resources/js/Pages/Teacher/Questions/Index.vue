@@ -122,17 +122,8 @@
             </div>
         </div>
     </div>
-    <div
-        v-else
-        class="flex h-screen w-full flex-col items-center justify-center space-y-3"
-    >
-        <EmptyView :title="$t('teacherQuestions.noQuestionsGenerated')" />
-        <SecondaryButton
-            :title="$t('teacherQuestions.generateQuestions')"
-            class="w-2/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
-            @click="routeToQuestionGenerator"
-        />
-    </div>
+
+    <EmptyQuestionView v-else @route="routeToQuestionGenerator" />
 
     <DialogBox v-model:open="showDeleteDialogBox" @confirm="deleteQuestion" />
 
@@ -173,7 +164,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
-import EmptyView from "@/Views/EmptyView.vue";
+import EmptyQuestionView from "@/Pages/Teacher/Questions/EmptyView.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import TableElement from "@/Components/TableElement.vue";
