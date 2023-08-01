@@ -44,7 +44,7 @@ class CopilotController extends Controller
         return Inertia::render('Teacher/Copilot/Index', [
             'assessment_types' => $assessmentTypes,
             'lesson_plans_data' => $lessonPlansData,
-            'active_tab' => $request->input('active_tab'),
+            'active_tab' => strtolower($request->input('active_tab') ?? 'chat'),
             'batch_subjects' => $teacherSubjects,
         ]);
     }
