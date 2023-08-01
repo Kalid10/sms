@@ -12,8 +12,9 @@
                 item.active
                     ? 'rounded-lg bg-brand-500 font-medium'
                     : 'font-normal',
-                'transition-all duration-300 ease-in-out ',
+                'transition-all duration-100 ease-in-out',
             ]"
+            :title="!isOpen ? item.name : ''"
         >
             <div
                 class="flex h-full w-full cursor-pointer items-center justify-center hover:bg-brand-500 hover:transition-all hover:duration-300 hover:ease-out"

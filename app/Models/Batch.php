@@ -89,7 +89,7 @@ class Batch extends Model
             ->withTimestamps();
     }
 
-    public function inProgressSession(): BatchSession|null
+    public function inProgressSession(): ?BatchSession
     {
         return $this->sessions->where('status', BatchSession::STATUS_IN_PROGRESS)->first()?->load('absentees.user');
     }

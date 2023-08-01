@@ -10,9 +10,12 @@ use App\Models\SchoolYear;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Services\ImageService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Activitylog\Models\Activity;
@@ -119,5 +122,42 @@ class UserController extends Controller
     public function teacher(): Response
     {
         return Inertia::render('Admin/Users/Create/Teacher');
+    }
+
+    public function uploadImage(Request $request): RedirectResponse
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Get file from request
+        $file = $request->file('image');
+
+        // Resize the image before uploading to Spaces
+        $img = ImageService::resize($file->getRealPath(), 300, 200);
+
+        // Generate a new filename for the resized image
+        $filename = $user->name.'.'.$file->getClientOriginalExtension();
+
+        // If the user already has an image, delete it from Spaces
+        if ($user->profile_image) {
+
+            $imageName = substr($user->profile_image, strrpos($user->profile_image, '/') + 1);
+
+            // Delete old image
+            if (! Storage::disk('spaces')->delete($imageName)) {
+                throw new Exception("Error deleting file: {$imageName}");
+            }
+        }
+
+        // Upload the resized image to Spaces
+        ImageService::upload($img, $filename);
+
+        $user->profile_image = Storage::disk('spaces')->url('rigel/profile-images/'.$filename);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Image uploaded successfully.');
     }
 }

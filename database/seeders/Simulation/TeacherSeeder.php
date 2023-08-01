@@ -38,10 +38,10 @@ class TeacherSeeder extends SimulationSeeder
     {
         self::$batchSubjects = $this->batchSubjects();
 
-//        // When you want to seed Teachers without Batch Subject assigned
-//        for ($i = 0; $i < 80; $i++) {
-//            $this->createTeacher();
-//        }
+        //        // When you want to seed Teachers without Batch Subject assigned
+        //        for ($i = 0; $i < 80; $i++) {
+        //            $this->createTeacher();
+        //        }
 
         // When you want to seed a teacher with Batch Subject assigned
         $this->call([

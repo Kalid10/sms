@@ -4,11 +4,7 @@
     >
         <Item
             :title="$t('batchPerformanceIndex.classAverage')"
-            :value="
-                grade?.score
-                    ? grade?.score?.toFixed(2) + '/' + grade?.total_score
-                    : '-'
-            "
+            :value="grade?.score ? grade?.score?.toFixed(2) : '-'"
             value-style="text-negative-100"
             :icon="ArrowSmallDownIcon"
         />
