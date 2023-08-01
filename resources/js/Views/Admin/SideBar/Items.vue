@@ -36,7 +36,7 @@
                         class="!bg-purple-500 !text-white"
                         :event="toastEvent"
                         :value="toastValue"
-                        :class-style="'ml-12'"
+                        :class-style="'ml-40'"
                         :show-icon="false"
                     />
                     <div

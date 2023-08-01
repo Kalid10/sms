@@ -13,7 +13,7 @@
         >
             <div class="flex w-full flex-col items-center justify-center">
                 <Header :header="header" />
-                <Items :items="sideBarItems" />
+                <Items :items="sideBarItems" @click.stop />
             </div>
 
             <div class="flex h-fit w-full flex-col justify-between">
@@ -63,7 +63,8 @@ const sidebarStore = useSidebarStore();
 const isOpen = computed(() => sidebarStore.isOpen);
 
 function toggleSidebar() {
-    if (window.innerWidth <= 768) {
+    // check and close sidebar if it is open
+    if (isOpen.value) {
         sidebarStore.close();
     } else {
         sidebarStore.open();
