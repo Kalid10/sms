@@ -32,7 +32,7 @@ class LevelCategory extends Model
             ->get();
     }
 
-    public function activeSchoolPeriods(): null|Collection
+    public function activeSchoolPeriods(): ?Collection
     {
         $schoolYear = SchoolYear::getActiveSchoolYear();
         if (! $schoolYear) {
