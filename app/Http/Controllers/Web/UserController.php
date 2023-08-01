@@ -15,7 +15,6 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -142,14 +141,11 @@ class UserController extends Controller
         // Generate a new filename for the resized image
         $filename = $user->name.'.'.$file->getClientOriginalExtension();
 
-        Log::info($user->profile_image);
-
         // If the user already has an image, delete it from Spaces
         if ($user->profile_image) {
 
             $imageName = substr($user->profile_image, strrpos($user->profile_image, '/') + 1);
 
-            Log::info($imageName);
             // Delete old image
             if (! Storage::disk('spaces')->delete($imageName)) {
                 throw new Exception("Error deleting file: {$imageName}");
