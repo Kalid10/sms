@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\AbsenteeHelper;
 use App\Helpers\BatchSessionHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -61,6 +62,11 @@ class Batch extends Model
             ->withTimestamps();
     }
 
+    public function assessments(): HasManyThrough
+    {
+        return $this->hasManyThrough(Assessment::class, BatchSubject::class);
+    }
+
     public function subjects(): HasMany
     {
         return $this->hasMany(BatchSubject::class);
@@ -76,6 +82,13 @@ class Batch extends Model
         return $this->hasManyThrough(BatchSession::class, BatchSchedule::class);
     }
 
+    public function teachers(): BelongsToMany
+    {
+        return $this->belongsToMany(Teacher::class, 'batch_subjects')
+            ->withPivot('subject_id', 'weekly_frequency')
+            ->withTimestamps();
+    }
+
     public function inProgressSession(): BatchSession|null
     {
         return $this->sessions->where('status', BatchSession::STATUS_IN_PROGRESS)->first()?->load('absentees.user');
@@ -84,6 +97,8 @@ class Batch extends Model
     public function getSessions(string $span = 'now'): BatchSession|Collection|null
     {
         BatchSessionHelper::sync($this->load('sessions.schoolPeriod'));
+
+        AbsenteeHelper::setAbsenteesFromPreviousSession();
 
         return match ($span) {
             'now' => $this->inProgressSession(),
@@ -129,6 +144,25 @@ class Batch extends Model
     public function grades(): HasMany
     {
         return $this->hasMany(BatchGrade::class);
+    }
+
+    public function totalScheduleSlots(): int
+    {
+        return SchoolPeriod::where([
+            'school_year_id' => SchoolYear::getActiveSchoolYear()->id,
+            'level_category_id' => $this->load('level.levelCategory')->level->levelCategory->id,
+            'is_custom' => 0,
+        ])->count() * 5;
+    }
+
+    public function occupiedScheduleSlots(): int
+    {
+        return $this->loadCount('schedule')->schedule_count;
+    }
+
+    public function availableScheduleSlots(): int
+    {
+        return $this->totalScheduleSlots() - $this->occupiedScheduleSlots();
     }
 
     protected $casts = [

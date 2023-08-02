@@ -18,8 +18,9 @@ class SubjectResource extends JsonResource
             'student_id' => $this->id,
             'name' => $this->user->name,
             'username' => $this->user->username,
-            'subjects' => $this->batches->flatMap(function ($batch) {
-                return $batch->batch->subjects->map(function ($subject) {
+            'profile_image' => $this->user->profile_image,
+            'subjects' => $this->currentBatch->flatMap(function ($batch) {
+                return $batch->subjects->map(function ($subject) {
                     return [
                         'subject_id' => $subject->subject->id,
                         'subject_full_name' => $subject->subject->full_name,
@@ -27,10 +28,10 @@ class SubjectResource extends JsonResource
                         'subject_category' => $subject->subject->category,
                         'subject_tags' => $subject->subject->tags,
                         'teacher' => [
-                            'id' => $subject->teacher->id,
-                            'name' => $subject->teacher->user->name,
-                            'email' => $subject->teacher->user->email,
-                            'gender' => $subject->teacher->user->gender,
+                            'id' => $subject->teacher?->id,
+                            'name' => $subject->teacher?->user?->name,
+                            'email' => $subject->teacher?->user?->email,
+                            'gender' => $subject->teacher?->user?->gender,
 
                         ],
                     ];

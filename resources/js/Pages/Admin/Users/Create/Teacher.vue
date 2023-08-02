@@ -5,7 +5,7 @@
             <Heading
                 :value="$t('createTeacher.headerTwo')"
                 size="sm"
-                class="text-xs !font-light text-brand-text-300"
+                class="text-xs !font-light text-zinc-700"
             />
         </div>
         <div class="col-span-8">
@@ -13,6 +13,7 @@
                 <TeacherFormElement
                     :title="$t('createTeacher.registerTeacher')"
                     @submit="submit"
+                    @cancel="form.reset()"
                 >
                     <TeacherTextInput
                         v-model="form.name"

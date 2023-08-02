@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Http\Requests\BatchSchedule\SwapScheduleRequest;
 use App\Jobs\GenerateBatchSchedulesJob;
 use App\Models\BatchSchedule;
 use App\Models\BatchSubject;
@@ -60,6 +61,23 @@ class BatchScheduleController extends Controller
         $this->logOverScheduledSubjects($overScheduledSubjects);
         $this->logTeacherConflicts($teacherConflicts);
         $this->checkScheduleData();
+    }
+
+    public function swapSchedules(SwapScheduleRequest $request): RedirectResponse
+    {
+        $scheduleA = BatchSchedule::find($request->input('schedule_a'))->load('batchSubject');
+        $scheduleB = BatchSchedule::find($request->input('schedule_b'))->load('batchSubject');
+        $scheduleBBatchSubjectId = $scheduleB->batchSubject->id;
+        $scheduleABatchSubjectId = $scheduleA->batchSubject->id;
+
+        // Swap batch subjects
+        $scheduleA->batch_subject_id = $scheduleBBatchSubjectId;
+        $scheduleB->batch_subject_id = $scheduleABatchSubjectId;
+
+        $scheduleA->save();
+        $scheduleB->save();
+
+        return redirect()->back()->with('success', 'Schedules swapped successfully.');
     }
 
     private function checkScheduleData()

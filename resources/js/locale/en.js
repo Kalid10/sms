@@ -511,7 +511,7 @@ const en = {
         registerTeacher: "Register Teacher",
         namePlaceholder: "Full name of new teacher",
         usernameLabel: "User Name",
-        usernamePlaceholder: "username",
+        usernamePlaceholder: "Username",
         phoneNumberLabel: "Phone number",
         phoneNUmberPlaceholder: "Phone number",
         genderLabel: "Gender",
@@ -1690,9 +1690,9 @@ const en = {
         difficultyLevel: "Difficulty Level",
     },
     adminUserIndex: {
-        signUpAdministrators: "Sign up administrators with ease",
-        registerStudents: "Register Students With there Guardians",
-        registerTeachers: "Register Teachers",
+        signUpAdministrators: "Register administrators with ease",
+        registerStudents: "Register students with there guardians",
+        registerTeachers: "Register teachers",
     },
     adminIndex: {
         recentFlags: "Recent Flags",
@@ -1802,7 +1802,7 @@ const en = {
     },
 
     adminSummary: {
-        chatValue: "5 Unread Messages",
+        chatValue: "Chat with teachers and admins",
         studentValue: "Register, Review, explore and More",
         teacherValue: "Register, evaluate, explore and more",
         adminValue: "Register, Review, explore and More",

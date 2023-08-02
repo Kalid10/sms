@@ -14,22 +14,31 @@ class Resource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if ($this->isAssessment()) {
+            return [
+                'student_id' => $this->student->id,
+                'student_name' => $this->student->user->name,
+                'title' => $this->assessment->title,
+                'long_title' => $this->assessment->long_title,
+                'description' => $this->assessment->description,
+                'date_on' => $this->assessment->due_date,
+                'type' => $this->assessment->assessmentType->name,
+            ];
+        }
+
         return [
-            'name' => $this->name ?? null,
+            'student_id' => null,
+            'student_name' => null,
             'title' => $this->title,
-            'description' => $this->body ?? $this->description,
-            'date_on' => $this->start_date ?? $this->due_date,
-            'assessment_period_name' => $this->assessment_period_time->name ?? null,
-            'assessment_period_start_time' => $this->assessment_period_time->start_time ?? null,
-            'assessment_period_duration' => $this->assessment_period_time->duration ?? null,
-            'schedule_type' => $this->type ?? null,
-            'event_type' => $this->getEventType(),
-            'tags' => $this->tags ?? null,
+            'long_title' => null,
+            'description' => $this->body,
+            'date_on' => $this->start_date,
+            'type' => 'Calendar Event',
         ];
     }
 
-    private function getEventType(): string
+    private function isAssessment(): bool
     {
-        return $this->type === null ? 'assessment' : 'school_schedule';
+        return (bool) $this->assessment;
     }
 }

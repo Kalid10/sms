@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\Students\AssessmentRequest;
+use App\Http\Requests\API\Students\BatchSubjectRequest;
 use App\Http\Requests\API\Students\GradeRequest;
 use App\Http\Requests\API\Students\Request;
 use App\Http\Requests\API\Students\UpdateRequest;
 use App\Http\Resources\Student\AssessmentCollection;
+use App\Http\Resources\Student\AssessmentGradeCollection;
+use App\Http\Resources\Student\AssessmentGradeResource;
 use App\Http\Resources\Student\AssessmentResource;
+use App\Http\Resources\Student\BatchSubjectResource;
 use App\Http\Resources\Student\Collection;
 use App\Http\Resources\Student\GradeCollection;
 use App\Http\Resources\Student\GradeResource;
@@ -21,8 +25,11 @@ use App\Http\Resources\Student\SessionResource;
 use App\Http\Resources\Student\SubjectCollection;
 use App\Http\Resources\Student\SubjectResource;
 use App\Models\Address;
+use App\Models\BatchSubject;
+use App\Models\Quarter;
+use App\Models\SchoolYear;
+use App\Models\Semester;
 use App\Models\Student;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -101,21 +108,74 @@ class StudentController extends Controller
                 ));
     }
 
-    public function assessments(AssessmentRequest $request, ?Student $student): AssessmentResource|AssessmentCollection
+    public function batchAssessments(AssessmentRequest $request, ?Student $student): AssessmentResource|AssessmentCollection
     {
         return $student->exists ?
-            new AssessmentResource($student->load(
+            new AssessmentResource($student->load([
                 'user',
+                'currentBatch.subjects.assessments' => function ($query) {
+                    $query->orderBy('due_date', 'desc');
+                },
                 'currentBatch.subjects.assessments.assessmentType',
-                'currentBatch.subjects.assessments.batchSubject.subject')) :
+                'currentBatch.subjects.assessments.batchSubject.subject'])) :
             new AssessmentCollection(Auth::user()
-                ->load(
+                ->load([
                     'guardian.children.user',
+                    'currentBatch.subjects.assessments' => function ($query) {
+                        $query->orderBy('due_date', 'desc');
+                    },
                     'guardian.children.currentBatch.subjects.assessments.assessmentType',
                     'guardian.children.currentBatch.subjects.assessments.batchSubject.subject',
-                )
+                ])
                 ->guardian->children
             );
+    }
+
+    public function assessments(Request $request, ?Student $student): AssessmentGradeResource|AssessmentGradeCollection
+    {
+        if ($student->exists) {
+            $student = $student->load([
+                'user',
+                'assessments' => function ($query) use ($request) {
+                    $query->with([
+                        'assessment.batchSubject.batch.schoolYear',
+                        'assessment.batchSubject.teacher.user',
+                    ]);
+                    $query->join('assessments', 'assessments.id', '=', 'student_assessments.assessment_id')
+                        ->select('student_assessments.*', 'student_assessments.id AS student_assessments_id')
+                        ->when($request->filled('batch_subject_id'), function ($query) use ($request) {
+                            $query->where('batch_subject_id', $request->input('batch_subject_id'));
+                        })
+                        ->orderBy('due_date', 'desc');
+                    $query->when($request->filled('student_assessment_id'), function ($query) use ($request) {
+                        $query->where('student_assessments.id', $request->input('student_assessment_id'));
+                    });
+                },
+            ]);
+
+            return new AssessmentGradeResource($student);
+        }
+
+        $students = Auth::user()->load('guardian.children')->guardian->children->load([
+            'user',
+            'assessments' => function ($query) use ($request) {
+                $query->with([
+                    'assessment.batchSubject.batch.schoolYear',
+                    'assessment.batchSubject.teacher.user',
+                ]);
+                $query->join('assessments', 'assessments.id', '=', 'student_assessments.assessment_id')
+                    ->select('student_assessments.*', 'student_assessments.id AS student_assessments_id')
+                    ->when($request->filled('batch_subject_id'), function ($query) use ($request) {
+                        $query->where('batch_subject_id', $request->input('batch_subject_id'));
+                    })
+                    ->orderBy('due_date', 'desc');
+                $query->when($request->filled('student_assessment_id'), function ($query) use ($request) {
+                    $query->where('student_assessments.id', $request->input('student_assessment_id'));
+                });
+            },
+        ]);
+
+        return new AssessmentGradeCollection($students);
     }
 
     public function subjects(Request $request, ?Student $student): SubjectResource|SubjectCollection
@@ -123,14 +183,31 @@ class StudentController extends Controller
         return $student->exists ?
             new SubjectResource($student->load(
                 'user',
-                'batches.batch.subjects.subject',
-                'batches.batch.subjects.teacher.user'
+                'currentBatch.subjects.subject',
+                'currentBatch.subjects.teacher.user'
             )) :
             new SubjectCollection(Auth::user()->load(
                 'guardian.children.user',
-                'guardian.children.batches.batch.subjects.subject',
-                'guardian.children.batches.batch.subjects.teacher.user'
+                'guardian.children.currentBatch.subjects.subject',
+                'guardian.children.currentBatch.subjects.teacher.user'
             )->guardian->children);
+    }
+
+    public function batchSubjectGrades(BatchSubjectRequest $request, Student $student, BatchSubject $batchSubject): BatchSubjectResource
+    {
+        return $student->exists ?
+            new BatchSubjectResource($student->load([
+                'assessments' => function ($query) use ($batchSubject) {
+                    $query->join('assessments', 'assessments.id', '=', 'student_assessments.assessment_id')
+                        ->select('student_assessments.*', 'student_assessments.id AS student_assessments_id')
+                        ->where('batch_subject_id', $batchSubject->id)
+                        ->orderBy('due_date', 'desc');
+                    $query->take(3);
+                },
+            ])) :
+            new BatchSubjectResource(Auth::user()->load('guardian.children')->guardian->children->load([
+
+            ]));
     }
 
     public function sessions(Request $request, ?Student $student): SessionResource|SessionCollection
@@ -163,25 +240,51 @@ class StudentController extends Controller
         return $student->exists ?
             new GradeResource($student->load([
                 'user:id,name',
-                'studentGrades' => function ($query) use ($request) {
+                'grades' => function ($query) use ($request) {
                     $query->when($request->input('gradable_type'), function ($query) use ($request) {
                         $query->where('gradable_type', $request->input('gradable_type'));
+
+                        // If "active" filter is set, filter by the active gradable
+                        $query->when($request->input('active'), function ($query) use ($request) {
+                            $gradable_id = match ($request->input('gradable_type')) {
+                                'App\Models\Quarter' => Quarter::getActiveQuarter()->id,
+                                'App\Models\Semester' => Semester::getActiveSemester()->id,
+                                'App\Models\SchoolYear' => SchoolYear::getActiveSchoolYear()->id,
+                            };
+                            $query->where('gradable_id', $gradable_id);
+                        });
+                    }, function ($query) use ($request) {
+                        // If "active" filter is set, filter by the active gradable
+                        $query->when($request->input('active'), function ($query) {
+                            $query->where([
+                                'gradable_type' => 'App\Models\SchoolYear',
+                                'gradable_id' => SchoolYear::getActiveSchoolYear()->id,
+                            ])
+                                ->orWhere([
+                                    'gradable_type' => 'App\Models\Semester',
+                                    'gradable_id' => Semester::getActiveSemester()->id,
+                                ])
+                                ->orWhere([
+                                    'gradable_type' => 'App\Models\Quarter',
+                                    'gradable_id' => Quarter::getActiveQuarter()->id,
+                                ]);
+                        });
                     });
                 },
-                'studentGrades.gradable:id,name',
-                'studentGrades.gradeScale:id,state,description',
+                'grades.gradable:id,name',
+                'grades.gradeScale:id,label,state,description',
             ])) :
             new GradeCollection(Auth::user()
                 ->load('guardian.children')->guardian->children
                 ->load([
                     'user:id,name',
-                    'studentGrades' => function ($query) use ($request) {
+                    'grades' => function ($query) use ($request) {
                         $query->when($request->input('gradable_type'), function ($query) use ($request) {
                             $query->where('gradable_type', $request->input('gradable_type'));
                         });
                     },
-                    'studentGrades.gradable:id,name',
-                    'studentGrades.gradeScale:id,state,description',
+                    'grades.gradable:id,name',
+                    'grades.gradeScale:id,label,state,description',
                 ]));
     }
 }

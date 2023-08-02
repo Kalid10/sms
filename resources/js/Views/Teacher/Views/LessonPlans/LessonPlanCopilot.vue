@@ -45,21 +45,20 @@
             :lesson-plan-id="lessonPlanId"
         />
 
-        <div
+        <Chat
             v-if="showChatSection && !generateNoteSuggestions"
-            class="flex w-full flex-col items-center justify-center space-y-5 pt-5"
-        >
-            <div class="w-fit px-3 py-1">
-                {{ $t("lessonPlanCopilot.needAssistanceWith") }}
-            </div>
-            <Chat :show-getting-started="false" />
-        </div>
+            class="!w-full"
+            :show-getting-started="false"
+        />
 
         <div
             v-if="
                 !showChatSection &&
                 !showQuestionSection &&
-                !generateNoteSuggestions
+                !generateNoteSuggestions &&
+                !showLoading &&
+                !isNoteUpdating &&
+                !noteSuggestions
             "
             class="flex h-full w-full items-center justify-center px-5 text-center"
         >
@@ -90,7 +89,15 @@
                 <div class="flex w-full justify-end px-2 pt-2">
                     <ClipboardDocumentIcon
                         class="w-4 cursor-pointer text-brand-text-250 hover:text-black"
-                        @click="copyToClipboard(noteSuggestions)"
+                        @click="
+                            copyToClipboardAndShowToast(noteSuggestions, $event)
+                        "
+                    />
+                    <Toast
+                        :show-toast="showCopyToast"
+                        class="!bg-purple-500 !text-white"
+                        :event="toastEvent"
+                        @copied="showCopyToast = false"
                     />
                 </div>
             </div>
@@ -109,7 +116,13 @@
                     {{ item }}
                     <ClipboardDocumentIcon
                         class="w-4 text-brand-text-250 group-hover:text-black"
-                        @click="copyToClipboard(item)"
+                        @click="copyToClipboardAndShowToast(item, $event)"
+                    />
+                    <Toast
+                        :show-toast="showCopyToast"
+                        class="!bg-purple-500 !text-white"
+                        :event="toastEvent"
+                        @copied="showCopyToast = false"
                     />
                 </div>
             </div>
@@ -170,7 +183,8 @@ import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
 import { copyToClipboard } from "@/utils";
 import QuestionPreparation from "@/Views/Teacher/Views/LessonPlans/QuestionPreparation.vue";
-import Chat from "@/Views/Teacher/Views/Copilot/Chat.vue";
+import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
+import Toast from "@/Components/Toast.vue";
 
 const emit = defineEmits(["selectedText", "finish", "close"]);
 const props = defineProps({
@@ -277,5 +291,13 @@ onClickOutside(selectedTextPopUp, () => {
     showPopup.value = !showPopup.value;
     if (!showPopup.value) selectedText.value;
 });
+
+const showCopyToast = ref(false);
+const toastEvent = ref(null);
+const copyToClipboardAndShowToast = (value, event) => {
+    copyToClipboard(value);
+    showCopyToast.value = true;
+    toastEvent.value = event;
+};
 </script>
 <style scoped></style>

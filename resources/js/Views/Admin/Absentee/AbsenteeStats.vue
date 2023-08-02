@@ -1,9 +1,9 @@
 <template>
     <div
-        class="flex flex-col space-y-3 divide-y divide-gray-600 rounded-lg bg-brand-450 p-3 text-white shadow-sm"
+        class="flex flex-col space-y-3 divide-y divide-gray-600 rounded-lg bg-zinc-800 p-3 text-white shadow-sm"
     >
         <div class="flex items-center space-x-2.5 pl-3">
-            <UserMinusIcon class="w-6" />
+            <UserMinusIcon class="w-5" />
             <div class="grow text-sm font-medium">
                 {{ $t("absenteeStats.todayAbsentees") }}
             </div>

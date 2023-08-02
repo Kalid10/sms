@@ -34,7 +34,7 @@ import {onClickOutside} from "@vueuse/core";
 const props = defineProps({
     view: {
         type: Boolean,
-        required: true
+        default: false
     },
     closeOnOutsideClick: {
         type: Boolean,

@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="questions?.data?.length"
-        class="flex h-screen w-11/12 flex-col space-y-4 bg-brand-50/60 p-4"
+        class="flex h-screen w-11/12 flex-col space-y-4 p-4"
     >
         <div class="flex w-full items-center justify-between py-3">
             <Title :title="$t('teacherQuestions.myQuestionBank')" />
@@ -130,6 +130,7 @@
         <SecondaryButton
             :title="$t('teacherQuestions.generateQuestions')"
             class="w-2/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
+            @click="routeToQuestionGenerator"
         />
     </div>
 
@@ -284,6 +285,19 @@ const updateQuestion = () => {
 const setSelectedQuestion = (id) => {
     selectedQuestion.value = questions.value.data.find(
         (item) => item.id === id
+    );
+};
+
+const questionsTab = t("common.questions");
+const routeToQuestionGenerator = () => {
+    router.get(
+        "/teacher/copilot",
+        {
+            active_tab: questionsTab,
+        },
+        {
+            preserveState: true,
+        }
     );
 };
 </script>

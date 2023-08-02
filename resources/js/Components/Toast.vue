@@ -2,14 +2,15 @@
     <transition name="fade">
         <div
             v-if="show"
-            class="flex w-24 items-center gap-1 rounded-lg bg-brand-150 px-2 text-brand-text-300 shadow transition-all duration-300 ease-out"
+            class="fixed flex w-24 items-center rounded-lg bg-brand-150 px-2 text-brand-text-300 shadow transition-all duration-300 ease-out"
+            :style="{ top: y - 50 + 'px', left: x - 50 + 'px' }"
         >
             <div
                 class="inline-flex h-8 w-5 shrink-0 items-center justify-center rounded-lg"
             >
-                <DocumentDuplicateIcon class="w-5" />
+                <DocumentDuplicateIcon class="w-3" />
             </div>
-            <div class="text-sm font-normal">Copied!</div>
+            <div class="text-xs font-normal">{{ value }}</div>
         </div>
     </transition>
 </template>
@@ -26,13 +27,27 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    event: {
+        type: Object,
+        default: null,
+    },
+    value: {
+        type: String,
+        default: "Copied!",
+    },
 });
 
+const x = ref(0);
+const y = ref(0);
 watch(
     () => props.showToast,
     () => {
         if (props.showToast) {
             show.value = true;
+            if (props.event) {
+                x.value = props.event.clientX;
+                y.value = props.event.clientY;
+            }
             setTimeout(() => (show.value = false), 3000);
             emit("copied");
         }

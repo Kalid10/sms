@@ -11,7 +11,7 @@
                 v-for="(item, index) in activityLogs.data"
                 :key="index"
                 class="w-full p-2 py-3 text-xs font-medium capitalize"
-                :class="index % 2 === 0 ? 'bg-brand-50' : 'bg-white'"
+                :class="index % 2 === 0 ? 'bg-brand-50/50' : 'bg-white'"
             >
                 {{ item.properties.attributes.name }}
                 {{ item.event }}

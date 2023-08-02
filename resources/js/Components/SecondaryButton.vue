@@ -2,6 +2,7 @@
     <button
         :type="type"
         class="rounded-md py-1.5 px-4 text-sm text-black"
+        :class="isDisabled ? 'opacity-70' : 'opacity-100'"
         :disabled="isDisabled"
         @click="click"
     >

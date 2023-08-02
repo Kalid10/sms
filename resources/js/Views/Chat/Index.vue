@@ -1,5 +1,5 @@
 <template>
-    <div className="flex max-h-screen min-h-screen w-full justify-between">
+    <div class="flex max-h-screen min-h-screen w-full justify-between">
         <Messages @toggle-conversation="toggleConversation" />
 
         <!-- conversation -->
@@ -38,7 +38,6 @@ onUnmounted(() => {
     messageStore.setActiveStatus(false);
 });
 
-// Watch for active chat changes
 watch(
     () => messageStore.activeChat,
     async (chat) => {
