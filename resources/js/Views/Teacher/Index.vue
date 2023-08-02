@@ -61,7 +61,10 @@
                 />
                 <Summary class="!w-11/12" />
 
-                <AttendanceCard class="!w-11/12" />
+                <AttendanceCard
+                    :percentage="100 - parseFloat(teacherAbsenteePercentage)"
+                    class="!w-11/12"
+                />
             </div>
         </div>
     </div>
@@ -89,6 +92,10 @@ const filters = computed(() => usePage().props.filters);
 const nextClass = usePage().props.teacher.next_batch_session;
 const nextClassSection = ref(null);
 const teacherSchedule = computed(() => usePage().props.teacher_schedule);
+const teacherAbsenteePercentage = computed(
+    () => usePage().props.teacher_absentee_percentage
+);
+
 const scrollToNextClass = () => {
     nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
 };
