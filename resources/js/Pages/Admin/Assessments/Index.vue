@@ -31,7 +31,10 @@
                             :key="index"
                             class="w-full"
                         >
-                            <AssessmentItem :assessment="item" />
+                            <AssessmentItem
+                                :assessment="item"
+                                @click="loadDetail(item.id)"
+                            />
                         </div>
 
                         <EmptyView
@@ -55,17 +58,29 @@
             </div>
         </div>
     </div>
+
+    <Modal v-model="showModal">
+        <Details />
+    </Modal>
 </template>
 <script setup>
 import Title from "@/Views/Teacher/Views/Title.vue";
 import Pagination from "@/Components/Pagination.vue";
-import { computed } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { computed, ref } from "vue";
+import { router, usePage } from "@inertiajs/vue3";
 import AssessmentItem from "@/Views/Admin/Assessments/AssessmentItem.vue";
 import Filter from "@/Views/Admin/Assessments/Filter.vue";
 import AssessmentTypes from "@/Views/Admin/Assessments/AssessmentTypes/Table.vue";
 import EmptyView from "@/Views/EmptyView.vue";
+import Modal from "@/Components/Modal.vue";
+import Details from "@/Pages/Admin/Assessments/Details.vue";
+
+const showModal = ref(false);
 
 const assessments = computed(() => usePage().props.assessments);
+
+const loadDetail = (assessment) => {
+    router.get("/admin/assessments/" + assessment);
+};
 </script>
 <style scoped></style>
