@@ -32,6 +32,7 @@
                         <StudentsTable
                             :title="tableTitle"
                             :table-model-value="batchSubject.id"
+                            :show-filter="false"
                             @search="updateBatchInfo"
                             @click="fetchStudent"
                         />
@@ -43,7 +44,7 @@
                             class-style="bg-orange-100 text-black"
                             icon-style="bg-orange-500/20 text-white"
                             :title="$t('common.assessments')"
-                            value="10 /10 Completed"
+                            value="Add, view and update assessments"
                             :icon="ClipboardIcon"
                             :url="
                                 isTeacher()
@@ -56,7 +57,7 @@
                             class-style="bg-fuchsia-100 text-black"
                             icon-style="bg-fuchsia-500/20 text-white"
                             :title="$t('common.lessonPlan')"
-                            value="10 /10 Completed"
+                            value="Add, view and update lesson plans"
                             :icon="CalendarIcon"
                             :url="
                                 isTeacher()
@@ -69,7 +70,7 @@
                             class-style="bg-brand-100 text-black"
                             icon-style="bg-brand-300/20 text-white"
                             :title="$t('common.students')"
-                            value="75 Total Students"
+                            value="View your students"
                             :icon="UsersIcon"
                             :url="
                                 isTeacher()
@@ -82,7 +83,7 @@
                             class-style="bg-red-50 text-black"
                             icon-style="bg-red-500/20 text-white"
                             :title="$t('common.announcements')"
-                            value="10 Announcements Today"
+                            value="View announcements"
                             :icon="ChatBubbleBottomCenterIcon"
                             :url="
                                 isTeacher()
