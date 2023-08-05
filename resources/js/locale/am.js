@@ -116,8 +116,7 @@ const am = {
         noAnnouncementsFound: "መግለጫዎች አልተገኙም!",
         goToAnnouncements: "መግለጫዎች ላይ ሂድ",
         viewAllAnnouncements: "ሁሉንም መግለጫዎች ይመልከቱ",
-        publishAnnouncement:"ማስታወቂያ ያትሙ"
-
+        publishAnnouncement: "ማስታወቂያ ያትሙ",
     },
     announcementsItem: {
         postTargets: "የመልዕክት ዒላማዎች",
@@ -191,8 +190,11 @@ const am = {
         previous: "ቀዳሚ",
         count: "መቁጠር",
         totalPts: "ጠቅላላ ነጥብ",
-        assessmentCompleted:"ይህንን ግምገማ በተሳካ ሁኔታ አጠናቅቀዋል፣ እና በዚህ ምክንያት፣ ማንኛውም ተጨማሪ ማሻሻያ ወይም አዳዲስ ግምገማዎች መፍጠር አይፈቀድም።",
-        hintAssessmentAdministered:"ይህ ግምገማ የሚካሄደው በየሩብ ዓመቱ ነው፣ ስለዚህ እባክዎ ተገቢውን እርምጃ እየወሰዱ መሆኑን ያረጋግጡ።",
+        assessmentCompleted:
+            "ይህንን ግምገማ በተሳካ ሁኔታ አጠናቅቀዋል፣ እና በዚህ ምክንያት፣ ማንኛውም ተጨማሪ ማሻሻያ ወይም አዳዲስ ግምገማዎች መፍጠር አይፈቀድም።",
+        assessmentCompletedAdmin: "ይህ ግምገማ በተሳካ ሁኔታ ተጠናቅቀዋል",
+        hintAssessmentAdministered:
+            "ይህ ግምገማ የሚካሄደው በየሩብ ዓመቱ ነው፣ ስለዚህ እባክዎ ተገቢውን እርምጃ እየወሰዱ መሆኑን ያረጋግጡ።",
         atTheConclusion: "በሩብ ወይም በሴሚስተር ማጠቃለያ ላይ, ሁሉም",
         willBeConverted: "ወደ መለያ ይቀየራል።",
         ofTheFinalGrade: "የመጨረሻው ክፍል",
@@ -557,8 +559,10 @@ const am = {
         cancel: "ሰርዝ",
     },
     draft: {
-        currentlyFull:"በአሁኑ ጊዜ ይህ ግምገማ በ<span class='-skew-x-3 bg-yellow-400 px-2 py-0.5 text-sm font-bold italic'>ረቂቅ</span>ላይ ነው!",
-        settingAssessmentFull: "የግምገማ ክፍልን እንደ <span class='font-semibold uppercase'>' PUBLISHED '</span> ወይም <span class='font-semibold uppercase'>' SCHEDULED '</span> ማድረግ ለአሳዳጊዎች እና ለመምህራን  ወያውኑ ያሳውቃል። ለተጨማሪ ግንዛቤ የግምገማ ክፍሉ ዝርዝር መረጃ መድረሻ ሊደረግ ይችላል።",
+        currentlyFull:
+            "በአሁኑ ጊዜ ይህ ግምገማ በ<span class='-skew-x-3 bg-yellow-400 px-2 py-0.5 text-sm font-bold italic'>ረቂቅ</span>ላይ ነው!",
+        settingAssessmentFull:
+            "የግምገማ ክፍልን እንደ <span class='font-semibold uppercase'>' PUBLISHED '</span> ወይም <span class='font-semibold uppercase'>' SCHEDULED '</span> ማድረግ ለአሳዳጊዎች እና ለመምህራን  ወያውኑ ያሳውቃል። ለተጨማሪ ግንዛቤ የግምገማ ክፍሉ ዝርዝር መረጃ መድረሻ ሊደረግ ይችላል።",
         currently: "በአሁኑ ጊዜ ይህ ግምገማ በሂደት ላይ ነው።",
         draft: "ረቂቅ",
         stateYouCan: "ሁኔታ! ትችላለህ",
@@ -566,12 +570,14 @@ const am = {
         published: "ታትሟል",
         or: "ወይም",
         scheduled: "መርሐግብር ተይዞለታል",
-        willTrigger: "ለአሳዳጊዎች እና ለርዕሰ መምህራን ወዲያውኑ ማሳወቂያዎችን ያስነሳል። ለበለጠ ግንዛቤ ስለ ግምገማው ዝርዝር መረጃ ማግኘት ይቻላል።",
+        willTrigger:
+            "ለአሳዳጊዎች እና ለርዕሰ መምህራን ወዲያውኑ ማሳወቂያዎችን ያስነሳል። ለበለጠ ግንዛቤ ስለ ግምገማው ዝርዝር መረጃ ማግኘት ይቻላል።",
         publishAssessment: "ግምገማን ያትሙ",
         scheduleAssessment: "የጊዜ ሰሌዳ ግምገማ",
         finishUpdating: "ማዘመንን ጨርስ",
         updateAssessment: "ግምገማን አዘምን",
-        alertMessage: "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?",
+        alertMessage:
+            "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?",
     },
     feedbacks: {
         noFeedbacks: "ምንም አስተያየቶች የሉም",
@@ -1107,12 +1113,14 @@ const am = {
         search: "ፍለጋ",
     },
     scheduled: {
-        currentlyFull:"በአሁኑ ጊዜ ይህ ግምገማ በ<span class='mx-0.5 -skew-x-3 bg-indigo-400 px-2 py-0.5 text-sm font-bold italic text-white'>መርሐግብር</span>ላይ ነው!",
+        currentlyFull:
+            "በአሁኑ ጊዜ ይህ ግምገማ በ<span class='mx-0.5 -skew-x-3 bg-indigo-400 px-2 py-0.5 text-sm font-bold italic text-white'>መርሐግብር</span>ላይ ነው!",
         currentlyThisAssessment: "በአሁኑ ጊዜ ይህ ግምገማ በሂደት ላይ ",
         scheduled: "መርሐግብር ተይዞለታል",
         stateYouCan: "ሁኔታ! ትችላለህ",
         publishAssessment: "ግምገማን አትም",
-        alertMessage:"ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?",
+        alertMessage:
+            "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?",
     },
     schedulesIndex: {
         schoolSchedules: "የትምህርት ቤት መርሃ ግብሮች",
@@ -1334,9 +1342,9 @@ const am = {
         note: "ማስታወሻ",
         title: "ርዕስ",
         titlePlaceholder: "ርዕስ",
-        snote:"የ{name} ማስታወሻ",
-        by:"በ",
-        updateNote:"የ{name} ማስታወሻ አሻሽል"
+        snote: "የ{name} ማስታወሻ",
+        by: "በ",
+        updateNote: "የ{name} ማስታወሻ አሻሽል",
     },
     studentRank: {
         rank: "ደረጃ",
@@ -1762,28 +1770,28 @@ const am = {
         searchAddAbsentee: "ሰራተኛን በመለያ ይፈልጉ አን ቀሪ ላይ ይጨምሩ",
         searchStaffMember: "በስም የሰራተኛ መለያ ይፈልጉ",
     },
-    rigelChat:{
-        typeMessage:"መልዕክት ይጻፉ...",
-        noMessages:"ምንም መልዕክቶች አልተገኙም።",
+    rigelChat: {
+        typeMessage: "መልዕክት ይጻፉ...",
+        noMessages: "ምንም መልዕክቶች አልተገኙም።",
         welcome: "እንኳን ደህና መጡ ወደ ሪግል ቻት።",
         selectChat: "መልእክት ለመላክ ቻት ይምረጡ።",
-        activeNow:"አሁን ንቁ የሆኑ",
-        offline:"ንቁ ያይደሉ(Offline)",
-        noChatHistory:"በአሁኑ ጊዜ የውይይት ታሪክ የለም። መነጋገር እንደጀመርክ ንግግሮችህ እዚህ ይታያሉ።",
-        noRecordFound:"ምንም መዝገብ አልተገኘም።",
-        myMessage:"መልዕክቶቼ",
-        searchTeacher:"መምህር፣ አስተዳዳሪ ፈልግ...",
-        peopleYouWant: "ሊገናኙዋቸው ከሚፈልጓቸው ሰዎች መካከል"
+        activeNow: "አሁን ንቁ የሆኑ",
+        offline: "ንቁ ያይደሉ(Offline)",
+        noChatHistory: "በአሁኑ ጊዜ የውይይት ታሪክ የለም። መነጋገር እንደጀመርክ ንግግሮችህ እዚህ ይታያሉ።",
+        noRecordFound: "ምንም መዝገብ አልተገኘም።",
+        myMessage: "መልዕክቶቼ",
+        searchTeacher: "መምህር፣ አስተዳዳሪ ፈልግ...",
+        peopleYouWant: "ሊገናኙዋቸው ከሚፈልጓቸው ሰዎች መካከል",
     },
-    addAnnouncement:{
-        addAnnouncement:"ማስታወቂያ ጨምር",
-        title:"ርዕስ",
-        body:"ዝርዝር",
-        description:"ዝርዝር መግለጫ",
-        selectTargetGroup:"የታለመ ቡድን ይምረጡ",
-        expireDate:"የሚያበቃበት ቀን",
-        expiresOn:"ጊዜው ሚያበቃው"
-    }
+    addAnnouncement: {
+        addAnnouncement: "ማስታወቂያ ጨምር",
+        title: "ርዕስ",
+        body: "ዝርዝር",
+        description: "ዝርዝር መግለጫ",
+        selectTargetGroup: "የታለመ ቡድን ይምረጡ",
+        expireDate: "የሚያበቃበት ቀን",
+        expiresOn: "ጊዜው ሚያበቃው",
+    },
 };
 
 export default am;

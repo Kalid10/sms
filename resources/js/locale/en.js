@@ -194,6 +194,8 @@ const en = {
         totalPts: "TOTAL PTS",
         assessmentCompleted:
             "You have successfully completed this assessment, and as a result, any further modifications or creation of new assessments are no longer permitted.",
+        assessmentCompletedAdmin:
+            "This assessment is complete and that no further changes can be made.",
         hintAssessmentAdministered:
             "This assessment is administered on a quarterly basis, so please ensure that you are taking the appropriate actions accordingly.",
         atTheConclusion:

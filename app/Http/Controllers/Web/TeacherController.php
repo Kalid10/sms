@@ -157,7 +157,11 @@ class TeacherController extends Controller
             default => throw new Exception('Type unknown!'),
         };
 
-        $teacherAbsentee = $this->teacherService->getTeacherAbsentee($id, $schoolYearId);
+        $teacherAbsenteeCount = $this->teacherService->getTeacherAbsenteeCount($id, $schoolYearId);
+
+        $teacherSessionsCount = $this->teacherService->getTeacherSessionsCount($id, $schoolYearId);
+
+        $teacherAbsenteePercentage = $teacherSessionsCount ? round(($teacherAbsenteeCount / $teacherSessionsCount) * 100, 2) : 0;
 
         return Inertia::render($page, [
             'teacher' => $teacher,
@@ -175,7 +179,7 @@ class TeacherController extends Controller
                 'batch_subject_id' => $batchSubject->id,
                 'search' => $request->input('search'),
             ],
-            'teacher_absentee' => $teacherAbsentee,
+            'teacher_absentee_percentage' => $teacherAbsenteePercentage,
         ]);
     }
 

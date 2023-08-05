@@ -24,7 +24,7 @@
         <div class="flex flex-col">
             <label
                 for="target-group"
-                class="block text-sm font-medium text-brand-text-400"
+                class="block text-sm font-medium text-black"
                 >{{ $t("addAnnouncement.selectTargetGroup") }}</label
             >
             <div

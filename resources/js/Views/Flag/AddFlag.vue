@@ -5,9 +5,11 @@
         </div>
 
         <div class="flex flex-col">
-            <label for="target-group" class="block text-sm font-medium">{{
-                $t("addFlag.selectFlagType")
-            }}</label>
+            <label
+                for="target-group"
+                class="block text-sm font-medium text-black"
+                >{{ $t("addFlag.selectFlagType") }}</label
+            >
             <div
                 class="mt-1 flex w-full justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             >
