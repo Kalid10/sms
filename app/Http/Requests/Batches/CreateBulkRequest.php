@@ -60,7 +60,7 @@ class CreateBulkRequest extends FormRequest
                     $noOfSections = $batch['no_of_sections'];
 
                     if (Batch::where('level_id', $levelId)
-                            ->where('school_year_id', $schoolYear->id)->count() === $noOfSections) {
+                        ->where('school_year_id', $schoolYear->id)->count() === $noOfSections) {
                         $validator->errors()->add('batches', 'Batch already exists');
                     }
                 }

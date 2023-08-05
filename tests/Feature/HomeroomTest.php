@@ -62,7 +62,7 @@ it('returns all homeroom teachers with pagination when no ids are provided', fun
     $response->assertStatus(200)
         ->assertInertia(fn (AssertableInertia $page) => $page
             ->component('Welcome')
-//            ->has('homerooms.data', 1)
+            //            ->has('homerooms.data', 1)
         );
 });
 
