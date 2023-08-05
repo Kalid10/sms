@@ -37,7 +37,9 @@
                 <div
                     class="flex w-full flex-col justify-center space-y-4 rounded-lg bg-positive-100 py-5 text-center text-5xl font-bold text-white shadow-sm lg:w-5/12"
                 >
-                    <div>99%</div>
+                    <div>
+                        {{ 100 - parseFloat(batch_absentees_percentage) }}%
+                    </div>
                     <span class="text-xs font-light"
                         >{{ $t("teacherStudents.classAttendance") }}(attendance)
                     </span>
@@ -109,6 +111,9 @@ const batchSubjects = usePage().props.batch_subjects;
 const totalBatchesCount = ref(usePage().props.total_batches_count);
 const topStudents = computed(() => usePage().props.top_students);
 const bottomStudents = computed(() => usePage().props.bottom_students);
+const batch_absentees_percentage = computed(
+    () => usePage().props.batch_absentees_percentage
+);
 
 const batchSubject = computed(() => {
     return usePage().props.batch_subject;
