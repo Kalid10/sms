@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen w-full flex-col space-y-2 bg-brand-50">
+    <div class="flex h-screen w-full flex-col space-y-2">
         <div
             v-if="!selectedHomeroom"
             class="flex h-96 flex-col items-center justify-center space-y-5"

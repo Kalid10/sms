@@ -63,10 +63,10 @@
                 class="flex flex-row items-center space-x-2"
             >
                 <button
-                    class="w-full rounded-lg bg-black px-4 py-2 text-white"
+                    class="w-full rounded-lg bg-brand-450 px-4 py-2 text-white"
                     @click="applyFilters"
                 >
-                     {{ $t('common.apply') }}
+                    {{ $t("common.apply") }}
                 </button>
             </div>
         </div>

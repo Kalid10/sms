@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col space-y-3 bg-brand-50"
+        class="flex min-h-screen w-full flex-col space-y-3"
         :class="isTeacher() ? '2xl:pl-4 2xl:pr-2 p-1' : ''"
     >
         <!--                 Next Class Header On Mobile Devices-->
@@ -53,7 +53,11 @@
                     <div class="w-7/12"></div>
                 </div>
 
-                <Flags :title="$t('teacherIndex.recentFlags')" view="teacher" />
+                <Flags
+                    :title="$t('teacherIndex.recentFlags')"
+                    view="teacher"
+                    :show-edit-and-delete="false"
+                />
             </div>
             <div
                 class="flex h-full w-full flex-col items-center space-y-8 lg:w-3/12"

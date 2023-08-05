@@ -5,11 +5,9 @@
         </div>
 
         <div class="flex flex-col">
-            <label
-                for="target-group"
-                class="block text-sm font-medium text-brand-text-400"
-                >{{ $t("addFlag.selectFlagType") }}</label
-            >
+            <label for="target-group" class="block text-sm font-medium">{{
+                $t("addFlag.selectFlagType")
+            }}</label>
             <div
                 class="mt-1 flex w-full justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             >
@@ -17,13 +15,19 @@
                     v-for="type in flagTypeOptions"
                     :key="type"
                     :class="{
-                        'bg-brand-450 text-white':
+                        'bg-brand-400 text-white':
                             form.flag_type.includes(type),
                     }"
-                    class="flex cursor-pointer flex-row justify-between rounded bg-brand-100 p-2 px-8 text-black"
+                    class="flex cursor-pointer flex-row justify-between space-x-2 rounded-2xl bg-brand-100 p-2 px-8 text-black"
                     @click="toggleSelection(type)"
                 >
-                    {{ type }}
+                    <CheckCircleIcon
+                        v-if="form.flag_type.includes(type)"
+                        class="w-4"
+                    />
+                    <span>
+                        {{ type }}
+                    </span>
                 </div>
             </div>
             <div v-if="form.errors.flag_type" class="text-xs text-negative-50">
@@ -72,6 +76,7 @@ import moment from "moment/moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import TextArea from "@/Components/TextArea.vue";
+import { CheckCircleIcon } from "@heroicons/vue/20/solid";
 
 const emit = defineEmits(["done"]);
 const props = defineProps({

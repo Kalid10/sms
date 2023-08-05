@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full items-center justify-between space-x-4 rounded-lg bg-brand-500 from-neutral-700 to-zinc-800 py-6 pl-4 text-brand-text-500 shadow-sm"
+        class="flex w-full items-center justify-between space-x-4 rounded-lg bg-brand-450 from-neutral-700 to-zinc-800 py-6 pl-4 text-brand-text-500 shadow-sm"
     >
         <img
             v-if="image"
