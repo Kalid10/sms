@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="announcements?.data?.length"
+        v-if="announcements?.data?.length || selectedAnnouncement"
         class="flex min-h-screen w-full flex-col px-1 py-2 lg:py-5 lg:px-10"
     >
         <div
@@ -62,6 +62,7 @@
                         @continue-reading="setContinueReading"
                     />
                     <SelectedAnnouncementView
+                        v-if="selectedAnnouncement2"
                         :class="
                             announcements?.data.length
                                 ? 'w-full h-2/5'
