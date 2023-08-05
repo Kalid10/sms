@@ -3,10 +3,7 @@
         class="flex h-full w-full flex-col justify-center rounded-lg bg-white shadow-sm"
         :class="classStyle ? classStyle : ' p-5 space-y-3 bg-white'"
     >
-        <div
-            v-if="schedule?.length"
-            class="text-xl font-medium text-brand-text-450"
-        >
+        <div v-if="schedule?.length" class="text-xl font-medium text-black">
             {{ moment().format("dddd") }}{{ $t("currentDaySchedule.schedule") }}
         </div>
         <div
@@ -28,14 +25,14 @@
                             : 'text-black w-full'
                     "
                 >
-                    <div class="text-brand-500">
+                    <div class="text-black">
                         {{ item.batch_subject.subject.short_name }}
                         <span v-if="item?.batch" class="text-xs"
                             >({{ item.batch.level.name }}
                             {{ item.batch.section }})</span
                         >
                     </div>
-                    <div class="text-[0.65rem] uppercase text-brand-400">
+                    <div class="text-[0.65rem] uppercase text-gray-500">
                         {{ numberWithOrdinal(Number(item.school_period.name)) }}
                         {{ $t("currentDaySchedule.period") }}
                     </div>

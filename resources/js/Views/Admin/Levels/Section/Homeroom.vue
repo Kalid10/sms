@@ -12,7 +12,7 @@
                 {{ batch.home_room_teacher.teacher.user.name }}
             </div>
             <div class="text-sm font-light">
-                {{ $t('sectionHomeroom.homeroomTeacher')}}
+                {{ $t("sectionHomeroom.homeroomTeacher") }}
             </div>
         </div>
         <div v-else class="h-full">
@@ -28,7 +28,6 @@
 
 <script setup>
 import EmptyView from "@/Views/EmptyView.vue";
-import TextInput from "@/Components/TextInput.vue";
 
 const props = defineProps({
     batch: {

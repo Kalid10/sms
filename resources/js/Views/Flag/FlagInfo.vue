@@ -1,14 +1,13 @@
 <template>
     <div class="flex w-full flex-col space-y-5 rounded-lg bg-white p-5">
         <div
-            class="w-fit bg-red-400 px-3 text-center text-2xl font-semibold uppercase text-white"
+            class="flex w-full items-center justify-center space-x-2 px-3 text-center text-2xl font-semibold uppercase text-gray-800"
         >
-            <FlagIcon class="w-5 text-white" />
-            {{ $t("flagInfo.understandingStudentFlags") }}
+            <FlagIcon class="w-5 text-gray-800" />
+            <span>{{ $t("flagInfo.understandingStudentFlags") }}</span>
         </div>
-
         <div
-            class="flex flex-col space-y-4 px-4 py-3 text-sm text-brand-text-400"
+            class="flex flex-col space-y-4 px-4 py-3 text-sm font-medium text-gray-500"
         >
             <p>
                 {{ $t("flagInfo.descriptionOne") }}

@@ -11,7 +11,7 @@
         >
             <div
                 ref="chatContainer"
-                class="scrollbar-hide flex w-full grow flex-col space-y-4 overflow-y-auto rounded-lg bg-brand-50 p-4 shadow"
+                class="scrollbar-hide flex w-full grow flex-col space-y-4 overflow-y-auto rounded-lg bg-brand-50/50 p-4 shadow-sm"
             >
                 <div
                     v-for="(message, index) in messages"
@@ -93,13 +93,13 @@
                 "
             />
             <div
-                class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-brand-50/70 p-4 shadow-sm"
+                class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-brand-50/50 p-4 shadow-sm"
             >
                 <textarea
                     ref="inputRef"
                     v-model="inputMessage"
                     :disabled="openAILimitReached"
-                    class="scrollbar-hide w-full rounded-2xl border-none bg-brand-50 ring-2 ring-purple-600 placeholder:text-xs focus:ring-2 focus:ring-purple-500"
+                    class="scrollbar-hide w-full rounded-2xl border-none bg-brand-50/50 ring-2 ring-purple-600 placeholder:text-xs focus:ring-2 focus:ring-purple-500"
                     :placeholder="$t('chat.typeYourMessageHere')"
                     :style="{ maxHeight: `${maxRows * lineHeight}px` }"
                     @input="autoResize"

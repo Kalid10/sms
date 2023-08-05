@@ -63,6 +63,14 @@
             </Modal>
         </div>
     </div>
+    <div v-else class="py-8">
+        <EmptyView
+            :title="$t('announcementsIndex.noAnnouncementsFound')"
+            :link-title="$t('announcementsIndex.goToAnnouncements')"
+            :link-url="url"
+            class="flex w-full justify-center py-2"
+        />
+    </div>
 </template>
 <script setup>
 import { useI18n } from "vue-i18n";

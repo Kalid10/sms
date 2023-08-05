@@ -127,7 +127,8 @@
 
         <div class="grid-rows-12 mt-10 mb-4 grid sm:grid-cols-12 md:w-full">
             <div
-                class="col-span-4 col-start-1 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full"
+                class="col-start-1 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full"
+                :class="showManual ? 'col-span-7' : 'col-span-4'"
             >
                 <Heading :value="$t('createStudent.headingThree')" />
                 <Heading
@@ -135,99 +136,39 @@
                     size="sm"
                     class="text-xs !font-light text-zinc-700"
                 />
+                <div
+                    v-if="!showManual"
+                    class="flex w-6/12 items-center justify-center py-4"
+                >
+                    <QuestionMarkCircleIcon
+                        class="h-8 cursor-pointer text-zinc-700 hover:scale-125"
+                        @click="showManual = !showManual"
+                    />
+                </div>
+                <div class="flex w-11/12 flex-col space-y-2">
+                    <div v-if="showManual" class="py-4">
+                        <StudentSample />
+                    </div>
+                </div>
             </div>
-            <div class="col-span-7 col-start-5">
+            <div
+                class="flex items-center justify-center"
+                :class="
+                    showManual
+                        ? 'col-span-4 col-start-8'
+                        : 'col-span-7 col-start-5'
+                "
+            >
                 <div
                     class="relative w-full max-w-4xl flex-col rounded-lg bg-white"
                 >
-                    <div v-if="showManual">
-                        <h1 class="mb-4 text-center text-lg font-bold">
-                            Bulk Registration Process
-                        </h1>
+                    <GuardianFileInput
+                        max-file-size="10000000"
+                        @file-uploaded="handleFileUploaded"
+                    />
 
-                        <div
-                            class="mb-4 rounded-lg border border-brand-550 p-4"
-                        >
-                            <h2 class="text-md mb-2 font-semibold">
-                                Step 1: Prepare Your File
-                            </h2>
-                            <p class="mb-2 text-sm">
-                                Prepare a CSV file with the following columns:
-                                Name, Email, Username, Grade Level. Ensure all
-                                data is accurate and correctly spelled.
-                            </p>
-                            <p class="mb-2 text-sm">
-                                Know the directory where you have saved your CSV
-                                file on your computer. You'll need to navigate
-                                to this location during the upload process.
-                            </p>
-                        </div>
-                        <div
-                            class="mb-4 rounded-lg border border-brand-550 p-4"
-                        >
-                            <h2 class="text-md mb-2 font-semibold">
-                                Step 2: Go to Registration and Upload the File
-                            </h2>
-                            <p class="mb-2 text-sm">
-                                After preparing your CSV file, click on the<span
-                                    class="font-semibold"
-                                >
-                                    Go to registration
-                                </span>
-                                button. It is located at the bottom right of
-                                this section.
-                            </p>
-                            <p class="mb-2 text-sm">
-                                On the registration section, click "Upload File"
-                                to open a dialogue box. Navigate to the
-                                directory of your CSV file, select it, and click
-                                "Select".
-                            </p>
-                        </div>
-
-                        <div
-                            class="mb-4 rounded-lg border border-brand-550 p-4"
-                        >
-                            <h2 class="text-md mb-2 font-semibold">
-                                Step 3: Submit the File
-                            </h2>
-                            <p class="mb-2 text-sm">
-                                After your file is selected, it should appear in
-                                the "Upload File" section. Verify that the
-                                correct file is selected, then click the
-                                "Upload" button to begin the bulk registration
-                                process.
-                            </p>
-                        </div>
-
-                        <div class="flex justify-end" @click="upload">
-                            <PrimaryButton title="Go to registration" />
-                        </div>
-                    </div>
-                    <div v-if="showUpload">
-                        <GuardianFileInput
-                            max-file-size="10000000"
-                            @file-uploaded="handleFileUploaded"
-                        />
-                    </div>
-
-                    <div class="absolute left-0 mt-4">
-                        <PrimaryButton
-                            v-if="showUpload"
-                            title="Go back"
-                            @click="manual"
-                        />
-                        <GuardianFileInput
-                            max-file-size="10000000"
-                            @file-uploaded="handleFileUploaded"
-                        />
-
-                        <div class="absolute right-0 mt-4">
-                            <PrimaryButton
-                                title="Submit"
-                                class="bg-brand-450"
-                            />
-                        </div>
+                    <div class="absolute right-0 mt-4">
+                        <PrimaryButton title="Submit" class="bg-brand-450" />
                     </div>
                 </div>
             </div>
@@ -244,6 +185,8 @@ import { router, useForm, usePage } from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianDatePicker from "@/Components/DatePicker.vue";
 import GuardianSelectInput from "@/Components/SelectInput.vue";
+import StudentSample from "@/Views/Admin/Users/Samples/Student.vue";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/20/solid";
 import { value } from "lodash/seq";
 import { useI18n } from "vue-i18n";
 import { computed, ref } from "vue";
@@ -251,18 +194,7 @@ import { computed, ref } from "vue";
 const { t } = useI18n();
 defineEmits(["file-uploaded"]);
 
-const showManual = ref(true);
-const showUpload = ref(false);
-
-function upload() {
-    showUpload.value = true;
-    showManual.value = false;
-}
-
-function manual() {
-    showUpload.value = false;
-    showManual.value = true;
-}
+const showManual = ref(false);
 
 const genderOptions = [
     { value: "male", label: t("common.male") },
