@@ -1,13 +1,6 @@
 <template>
-    <div
-        class="flex h-screen w-full items-center justify-evenly space-y-5 font-semibold"
-    >
-        <div class="flex w-3/12 justify-center">
-            <question-mark-circle-icon class="h-60 text-brand-400" />
-        </div>
-        <div
-            class="flex h-5/6 w-6/12 flex-col items-center justify-evenly px-2 text-gray-700"
-        >
+    <EmptyView :is-full-screen="true">
+        <template #default>
             <Title
                 title="Welcome to Rigel Question Generator"
                 :is-date-open="false"
@@ -51,14 +44,13 @@
                 class="w-6/12 !rounded-2xl bg-brand-400 py-2 font-medium uppercase text-white"
                 @click="$emit('route')"
             />
-        </div>
-        <!--        <EmptyView :title="$t('teacherQuestions.noQuestionsGenerated')" />-->
-    </div>
+        </template>
+    </EmptyView>
 </template>
 <script setup>
 import Title from "@/Views/Teacher/Views/Title.vue";
-import { QuestionMarkCircleIcon } from "@heroicons/vue/20/solid/index.js";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import EmptyView from "@/Views/EmptyView.vue";
 
 defineEmits(["route"]);
 </script>
