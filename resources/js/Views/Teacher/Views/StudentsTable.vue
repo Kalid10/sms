@@ -15,7 +15,7 @@
                     <TextInput
                         v-model="searchText"
                         :placeholder="$t('studentsTable.search')"
-                        class="w-5/12"
+                        class="w-6/12"
                     />
                     <div v-if="!homeroomTeacher && isAdmin()">
                         <SecondaryButton
@@ -34,6 +34,11 @@
                             {{ homeroomTeacher.user.name }}
                         </div>
                     </div>
+                    <AdjustmentsHorizontalIcon
+                        v-if="showFilter"
+                        class="w-4 cursor-pointer text-brand-400 hover:scale-125 hover:text-brand-450"
+                        @click="$emit('filter')"
+                    />
                 </div>
             </template>
             <template #name-column="{ data }">
@@ -68,13 +73,17 @@ import Modal from "@/Components/Modal.vue";
 import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 import { isAdmin } from "@/utils";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-
+import { AdjustmentsHorizontalIcon } from "@heroicons/vue/20/solid";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const emit = defineEmits(["click", "search"]);
+const emit = defineEmits(["click", "search", "filter"]);
 const props = defineProps({
     showHomeroomDetail: {
+        type: Boolean,
+        default: true,
+    },
+    showFilter: {
         type: Boolean,
         default: true,
     },

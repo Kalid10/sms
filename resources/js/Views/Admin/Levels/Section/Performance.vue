@@ -1,6 +1,6 @@
 <template>
     <div class="flex w-full flex-col space-y-6 rounded-lg">
-        <BatchPerformance :grade="batch?.grade"/>
+        <BatchPerformance :grade="batch?.grade" />
         <div
             class="flex w-full items-center justify-between divide-x divide-gray-100"
         >
@@ -33,7 +33,6 @@ import {
 } from "@heroicons/vue/24/outline";
 import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
-import EmptyView from "@/Views/EmptyView.vue";
 
 defineProps({
     batch: {

@@ -40,7 +40,7 @@
                 position="center"
             />
         </div>
-        <div v-else class="py-5">
+        <div v-else class="flex h-full items-center justify-center">
             <EmptyView :title="$t('absenteeRecords.noAbsentee')" />
         </div>
     </div>

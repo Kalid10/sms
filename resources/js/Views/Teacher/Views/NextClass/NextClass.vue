@@ -43,7 +43,7 @@
             <span class="text-center text-sm font-medium" :class="fontSize"
                 >{{ nextClass.batch_subject.subject.full_name }}
                 <span class="font-semibold">{{
-                    nextClass.school_period.name
+                    addSuffix(nextClass.school_period.name)
                 }}</span>
                 {{ $t("common.period") }}
                 <br />
@@ -104,7 +104,7 @@
 import moment from "moment/moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { usePage } from "@inertiajs/vue3";
-import { isSidebarOpenOnXlDevice } from "@/utils";
+import { addSuffix, isSidebarOpenOnXlDevice } from "@/utils";
 import { computed } from "vue";
 
 defineEmits(["view"]);

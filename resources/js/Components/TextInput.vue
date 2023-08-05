@@ -18,7 +18,7 @@
                     ? 'blur-0 cursor-not-allowed rounded-2xl'
                     : classStyle
                     ? classStyle
-                    : 'border border-gray-200 text-sm focus:ring-1 focus:ring-zinc-700 focus:border-none focus:outline-none rounded-md '
+                    : 'border border-brand-150 text-sm focus:ring-1 focus:ring-brand-400 focus:border-none focus:outline-none rounded-md '
             "
             @input="$emit('update:modelValue', $event.target.value)"
             @focusin="toggleSubtext ? (showSubText = true) : null"

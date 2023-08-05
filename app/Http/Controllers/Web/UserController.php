@@ -143,7 +143,6 @@ class UserController extends Controller
 
         // If the user already has an image, delete it from Spaces
         if ($user->profile_image) {
-
             $imageName = substr($user->profile_image, strrpos($user->profile_image, '/') + 1);
 
             // Delete old image

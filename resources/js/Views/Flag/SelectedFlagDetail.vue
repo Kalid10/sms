@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="p-3 text-sm text-brand-text-300">
+        <div class="p-3 text-sm">
             {{ selectedFlagItem.description }}
         </div>
         <div

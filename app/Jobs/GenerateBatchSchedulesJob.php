@@ -30,7 +30,7 @@ class GenerateBatchSchedulesJob implements ShouldQueue
     public function handle()
     {
         // Adds 1GB of memory to the PHP process
-//        ini_set('memory_limit', '1024M');
+        //        ini_set('memory_limit', '1024M');
 
         $this->createSchedule();
     }

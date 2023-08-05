@@ -89,7 +89,7 @@ class BatchController extends Controller
                 $noOfSections = $batch['no_of_sections'];
 
                 if (Batch::where('level_id', $levelId)
-                        ->where('school_year_id', $schoolYearId)->count() === $noOfSections) {
+                    ->where('school_year_id', $schoolYearId)->count() === $noOfSections) {
                     continue;
                 }
 

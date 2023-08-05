@@ -2,7 +2,7 @@
     <Card
         :class="
             !!session['lesson_plan_id']
-                ? '!bg-brand-50/60 border-gray-400 !shadow-sm '
+                ? '!bg-brand-50 border-gray-400 !shadow-sm '
                 : '!bg-transparent !border-gray-300  !border-dashed border-2 !shadow-none'
         "
         class="!w-full cursor-pointer"
@@ -12,12 +12,12 @@
                 v-if="!!session['lesson_plan_id']"
                 class="flex flex-col gap-0.5"
             >
-                <h3 class="text-light text-xs">
+                <h3 class="text-light text-xs text-gray-600">
                     {{ `Lesson Plan #${Math.floor(Math.random() * 100)}` }}
                 </h3>
 
                 <h3
-                    class="cursor-pointer text-sm font-medium underline-offset-2 hover:underline"
+                    class="cursor-pointer text-sm font-medium text-black underline-offset-2 hover:underline"
                 >
                     {{ session["lesson_plan"]["topic"] }}
                 </h3>
@@ -27,12 +27,12 @@
                 <div
                     class="flex w-full flex-col items-center justify-center gap-1"
                 >
-                    <PlusCircleIcon class="h-6 w-6 text-brand-text-300" />
+                    <PlusCircleIcon class="h-6 w-6 text-black" />
                     <h3 class="text-xs font-semibold text-black">
                         {{ $t("lessonPlanCard.addLessonPlan") }}
                     </h3>
                     <h3
-                        class="max-w-[18rem] text-center text-xs font-medium text-brand-text-200"
+                        class="max-w-[18rem] text-center text-xs font-medium text-gray-600"
                     >
                         {{ $t("lessonPlanCard.lessonPlanHas") }}
                     </h3>
@@ -44,7 +44,7 @@
                     class="flex origin-bottom-left scale-[.8] items-center gap-2"
                 >
                     <span
-                        class="bg-white py-0.5 text-xs font-semibold uppercase text-brand-text-300"
+                        class="py-0.5 text-xs font-semibold uppercase text-gray-600"
                     >
                         {{
                             session["batch_schedule"]["day_of_week"]
