@@ -51,9 +51,7 @@
                         <div
                             class="flex w-full origin-left items-center justify-between pr-8"
                         >
-                            <h3
-                                class="text-xs font-semibold text-brand-text-300"
-                            >
+                            <h3 class="text-xs font-semibold text-gray-700">
                                 {{
                                     moment(selectedBatchSession.date).fromNow()
                                 }}
@@ -64,9 +62,7 @@
                                     <CalendarIcon
                                         class="h-4 w-4 stroke-gray-500 stroke-2"
                                     />
-                                    <h3
-                                        class="text-xs font-medium text-brand-text-300"
-                                    >
+                                    <h3 class="text-xs font-medium">
                                         {{
                                             moment(
                                                 selectedBatchSession.date
@@ -79,9 +75,7 @@
                                     <ClockIcon
                                         class="h-4 w-4 stroke-gray-500 stroke-2"
                                     />
-                                    <h3
-                                        class="text-xs font-medium text-brand-text-300"
-                                    >
+                                    <h3 class="text-xs font-medium">
                                         {{
                                             moment(
                                                 selectedBatchSession[
@@ -169,7 +163,7 @@
                                             )
                                         }}
                                     </h3>
-                                    <h3 class="text-sm text-brand-text-300">
+                                    <h3 class="text-sm text-gray-600">
                                         {{
                                             $t(
                                                 "lessonPlanFormModal.addTheTopic"
@@ -294,7 +288,7 @@
 
                         <div
                             v-if="!showAISection"
-                            class="scrollbar-hide flex h-screen w-4/12 flex-col items-center space-y-4 overflow-y-scroll rounded-tl-md border-l border-t border-zinc-300 bg-brand-100 p-4"
+                            class="scrollbar-hide flex h-screen w-4/12 flex-col items-center space-y-4 overflow-y-scroll rounded-tl-md border-l border-t border-zinc-300 p-4"
                         >
                             <div class="flex w-11/12 flex-col">
                                 <h3 class="text-sm font-semibold">
@@ -304,7 +298,7 @@
                                         )
                                     }}
                                 </h3>
-                                <h3 class="text-sm text-brand-text-300">
+                                <h3 class="text-sm text-gray-600">
                                     {{
                                         $t(
                                             "lessonPlanFormModal.otherLessonPlans"
@@ -334,7 +328,7 @@
                                             class="flex w-full flex-col items-center justify-center gap-1"
                                         >
                                             <ExclamationTriangleIcon
-                                                class="h-6 w-6 text-brand-text-300"
+                                                class="h-6 w-6 text-red-600"
                                             />
                                             <h3
                                                 class="text-sm font-medium text-black"
@@ -346,11 +340,11 @@
                                                 }}
                                             </h3>
                                             <h3
-                                                class="max-w-[18rem] text-center text-xs text-brand-text-300"
+                                                class="max-w-[18rem] text-center text-xs text-gray-600"
                                             >
                                                 {{
                                                     $t(
-                                                        "lessonPlanFormModal.lessonPlansNotAdded"
+                                                        "lessonPlanFormModal.noPreviousLessonPlansDescription"
                                                     )
                                                 }}
                                             </h3>
@@ -364,7 +358,7 @@
                                             prevBatchSession, pBS
                                         ) in previousBatchSessionsWithLessonPlans"
                                         :key="pBS"
-                                        class="scrollbar-hide flex h-fit flex-col items-center justify-center space-y-2 overflow-hidden overflow-y-scroll rounded-lg bg-white p-2 shadow-sm"
+                                        class="scrollbar-hide flex h-fit flex-col items-center justify-center space-y-2 overflow-hidden overflow-y-scroll rounded-lg bg-brand-50 p-2 shadow-sm"
                                     >
                                         <h3
                                             class="text-center text-sm font-medium"
@@ -407,7 +401,7 @@
                                                         }}
                                                     </span>
                                                     <h3
-                                                        class="font-semibold text-brand-text-300"
+                                                        class="font-semibold text-gray-600"
                                                     >
                                                         {{
                                                             moment(

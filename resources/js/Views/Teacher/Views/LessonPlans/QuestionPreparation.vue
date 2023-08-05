@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-fit w-full flex-col items-center space-y-6 rounded-lg bg-brand-100 px-5 pt-3 pb-5 shadow-sm"
+        class="flex h-fit w-full flex-col items-center space-y-6 rounded-lg border border-gray-400 bg-brand-50/50 px-5 pt-3 pb-5 shadow-sm"
     >
         <div class="text-xl font-light">
             {{
@@ -32,7 +32,7 @@
                 <label for="large-range" class="block text-sm font-medium">{{
                     $t("lessonPlanQuestionPreparation.setDifficultyLevel")
                 }}</label>
-                <p class="mb-2 py-1 text-xs font-light text-brand-text-350">
+                <p class="mb-2 py-1 text-xs font-light text-gray-600">
                     {{ $t("lessonPlanQuestionPreparation.useThisSlider") }}
                 </p>
             </div>

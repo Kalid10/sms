@@ -12,7 +12,7 @@
                 <div class="mb-1 text-2xl font-bold">
                     {{ $t("lessonPlanCopilot.rigelCopilot") }}
                 </div>
-                <div class="w-full text-sm text-brand-text-400">
+                <div class="w-full text-sm text-gray-600">
                     {{ $t("lessonPlanCopilot.intro") }}
                 </div>
             </div>
@@ -26,14 +26,20 @@
         <div class="flex w-full space-x-4">
             <div
                 class="mt-3 w-fit cursor-pointer rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:scale-105 hover:font-medium"
-                @click="showQuestionSection = true"
+                @click="
+                    showQuestionSection = true;
+                    showChatSection = false;
+                "
             >
                 {{ $t("lessonPlanCopilot.generateQuestions") }}
             </div>
 
             <div
                 class="mt-3 w-fit cursor-pointer rounded-2xl bg-yellow-400 px-3 py-1.5 text-xs hover:scale-105 hover:font-medium"
-                @click="showChatSection = true"
+                @click="
+                    showChatSection = true;
+                    showQuestionSection = false;
+                "
             >
                 {{ $t("lessonPlanCopilot.orDoYouWant") }}
             </div>
