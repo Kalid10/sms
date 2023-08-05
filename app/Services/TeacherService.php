@@ -9,6 +9,7 @@ use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Semester;
+use App\Models\StaffAbsentee;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -236,14 +237,23 @@ class TeacherService
         ];
     }
 
-    public static function getTeacherAbsentee(int $id, int $schoolYearId): array
+    public static function getTeacherAbsenteeCount(int $id, int $schoolYearId): int
     {
         $teacher = Teacher::findOrFail($id);
 
-        $absentee = $teacher->staffAbsenteePercentage($schoolYearId);
+        return StaffAbsentee::with('user.teacher')->get()->filter(function ($absentee) use ($teacher) {
+            return $absentee->user->teacher->id === $teacher->id;
+        })->count();
 
-        return [
-            'absentee' => $absentee,
-        ];
+    }
+
+    public static function getTeacherSessionsCount(int $id, int $schoolYearId): int
+    {
+        $teacher = Teacher::findOrFail($id);
+
+        return BatchSession::where('teacher_id', $teacher->id)
+            ->whereHas('batchSchedule.batch', function ($query) use ($schoolYearId) {
+                $query->where('school_year_id', $schoolYearId);
+            })->count();
     }
 }

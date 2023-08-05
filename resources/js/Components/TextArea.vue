@@ -5,7 +5,7 @@
                 :class="
                     labelStyle
                         ? labelStyle
-                        : 'pl-0.5 text-sm font-semibold text-brand-text-300'
+                        : 'pl-0.5 text-sm font-semibold text-black'
                 "
                 >{{ label }}</span
             >
@@ -68,3 +68,4 @@ const props = defineProps({
 
 defineEmits(["update:modelValue"]);
 </script>
+<style></style>

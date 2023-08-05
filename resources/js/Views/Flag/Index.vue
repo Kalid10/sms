@@ -99,7 +99,7 @@
                 </span>
                 <div v-if="item?.flagged_by?.id === auth.id">
                     <PencilIcon
-                        class="my-1 ml-3 w-4 cursor-pointer text-brand-text-400 hover:text-black group-hover:fill-white"
+                        class="my-1 ml-3 w-4 cursor-pointer text-brand-text-50 hover:text-black group-hover:fill-white"
                         @click="handleUpdateFlag($event, item)"
                     />
                 </div>
