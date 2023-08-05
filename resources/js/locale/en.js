@@ -464,6 +464,7 @@ const en = {
         absentee: "Absentee",
         staff: "Staff",
         apply: "Apply",
+        by: "By",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
@@ -502,8 +503,8 @@ const en = {
         guardianEmailLabel: "Guardian's email",
         guardianGenderLabel: "Guardian's gender",
         guardianGenderPlaceholder: "Select Guardian's Gender",
-        headingThree: "Register student and parents in bulk",
-        headingFour: "only upload an excel or csv file.",
+        headingThree: "Student and Guardians Bulk Registration",
+        headingFour: "Excel or CSV file are the only accepted file formats.",
         father: "Father",
         mother: "Mother",
         other: "Other",
@@ -816,6 +817,7 @@ const en = {
         previousLessonPlans: "Previous Lesson Plans",
         otherLessonPlans: "Other lesson plans for class sessions before",
         noPreviousLessonPlans: "No Previous Lesson Plans",
+        noPreviousLessonPlansDescription: "No previous lesson plans found.",
         noPreviousLessonPlansMessage:
             "Previous lesson plans have not been added for this session. Make sure you have populated your lesson plans to view them here.",
         period: "Period",
@@ -1789,7 +1791,7 @@ const en = {
         previousLessonPlans: "Previous Lesson Plans",
         otherLessonPlans: "Other lesson plans for class sessions before",
         noPreviousLessonPlans: " No Previous Lesson Plans",
-        "lessonPlansNotAdded ":
+        noPreviousLessonPlansDescription:
             "Previous lesson plans have not been added for this session. Make sure you have populated your lesson plans to view them here.",
     },
 
