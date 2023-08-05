@@ -3,9 +3,14 @@
         <div
             v-if="show"
             class="fixed flex w-fit items-center rounded-lg bg-brand-150 px-2 text-brand-text-300 shadow transition-all duration-300 ease-out"
-            :style="{ top: y - 50 + 'px', left: x - 50 + 'px' }"
+            :class="!showIcon ? 'px-2 py-1' : ''"
+            :style="{
+                top: sideBarStyle ? `${y - 30}px` : `${y - 30}px`,
+                left: sideBarStyle ? `${x}px` : `${x - 50}px`,
+            }"
         >
             <div
+                v-show="showIcon"
                 class="inline-flex h-8 w-5 shrink-0 items-center justify-center rounded-lg"
             >
                 <DocumentDuplicateIcon class="w-3" />
@@ -34,6 +39,14 @@ const props = defineProps({
     value: {
         type: String,
         default: "Copied!",
+    },
+    showIcon: {
+        type: Boolean,
+        default: true,
+    },
+    sideBarStyle: {
+        type: Boolean,
+        default: true,
     },
 });
 
