@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Events\StudentImportEvent;
+use App\Events\UserImportEvent;
 use App\Helpers\StudentHelper;
 use App\Models\Level;
 use App\Models\User;
@@ -165,15 +165,15 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
         // Notify the user about the import status
         return [
             BeforeImport::class => function (BeforeImport $event) {
-                Event::dispatch(new StudentImportEvent('info', 'Starting student data import in the background. You will be notified once the process is complete and the system records are updated.'));
+                Event::dispatch(new UserImportEvent('info', 'Starting student data import in the background. You will be notified once the process is complete and the system records are updated.'));
             },
             ImportFailed::class => function (ImportFailed $event) {
                 // Get validation exception
                 $validationException = $event->getException();
-                Event::dispatch(new StudentImportEvent('error', $validationException->getMessage()));
+                Event::dispatch(new UserImportEvent('error', $validationException->getMessage()));
             },
             AfterImport::class => function (AfterImport $event) {
-                Event::dispatch(new StudentImportEvent('success', 'Student import completed successfully.'));
+                Event::dispatch(new UserImportEvent('success', 'Student import completed successfully.'));
             },
         ];
     }

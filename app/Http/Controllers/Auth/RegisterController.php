@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\StudentHelper;
 use App\Http\Controllers\Web\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Imports\AdminsRegistrationImport;
 use App\Imports\StudentsRegistrationImport;
 use App\Imports\TeachersRegistrationImport;
 use App\Mail\AdminRegistered;
@@ -63,12 +64,22 @@ class RegisterController extends Controller
             if ($request->get('user_type') === User::TYPE_TEACHER) {
                 $expectedHeaders = [
                     'name',
-                    'gender',
                     'email',
                     'phone_number',
                     'gender',
                 ];
                 $importClass = new TeachersRegistrationImport();
+            }
+
+            if ($request->get('user_type') === USER::TYPE_ADMIN) {
+                $expectedHeaders = [
+                    'name',
+                    'email',
+                    'phone_number',
+                    'gender',
+                    'position',
+                ];
+                $importClass = new AdminsRegistrationImport();
             }
 
             // Validate the headers

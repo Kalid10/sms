@@ -6,7 +6,7 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class StudentImportEvent implements ShouldBroadcast
+class UserImportEvent implements ShouldBroadcast
 {
     public string $message;
 
