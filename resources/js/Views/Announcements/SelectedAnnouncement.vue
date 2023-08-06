@@ -6,11 +6,11 @@
             {{ moment().format("ddd MMM DD, YYYY") }}
         </span>
 
-        <span class="w-full text-2xl font-semibold">
+        <span class="w-full text-center text-2xl font-semibold">
             {{ selectedAnnouncement?.title }}</span
         >
 
-        <span class="text-sm font-light leading-7 text-black"
+        <span class="w-full text-sm font-light leading-7 text-black"
             >{{ selectedAnnouncement?.body }}
         </span>
         <span
