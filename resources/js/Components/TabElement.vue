@@ -7,7 +7,7 @@
             <li
                 v-for="(tab, t) in tabs"
                 :key="t"
-                :class="[active === tab ? 'bg-brand-300' : '']"
+                :class="[active === tab ? 'bg-brand-400' : '']"
                 class="mx-2 rounded-full px-4 py-2 transition-colors duration-300"
             >
                 <button
