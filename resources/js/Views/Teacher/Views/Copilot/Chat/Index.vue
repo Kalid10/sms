@@ -73,25 +73,30 @@
                 </div>
             </div>
 
-            <SecondaryButton
+            <PrimaryButton
                 v-if="messages.length > 0 && !isLoading && !openAILimitReached"
-                :title="
-                    isChatUpdating
-                        ? 'Stop Generating'
-                        : 'Regenerate Last Response'
-                "
-                class="w-fit !rounded-2xl !text-xs font-semibold"
+                class="flex w-fit items-center justify-center space-x-1 !rounded-2xl !text-xs font-semibold"
                 :class="
                     isChatUpdating
                         ? 'bg-red-600 text-white'
-                        : 'bg-violet-100 text-brand-text-400'
+                        : 'bg-emerald-400 text-black'
                 "
                 @click="
                     regenerateResponseAndStopStreaming(
                         isChatUpdating ? 'stop' : 'regenerate'
                     )
                 "
-            />
+            >
+                <StopIcon v-if="isChatUpdating" class="w-4 text-white" />
+                <ArrowPathIcon v-else class="w-4 rotate-90 text-black" />
+                <span :class="isChatUpdating ? 'text-white' : 'text-black'">
+                    {{
+                        isChatUpdating
+                            ? "Stop Generating"
+                            : "Regenerate Last Response"
+                    }}
+                </span>
+            </PrimaryButton>
             <div
                 class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-brand-50/50 p-4 shadow-sm"
             >
@@ -125,16 +130,18 @@
 </template>
 <script setup>
 import {
+    ArrowPathIcon,
     ClipboardDocumentIcon,
     PaperAirplaneIcon,
+    StopIcon,
 } from "@heroicons/vue/20/solid";
 import { nextTick, onMounted, ref, watchEffect } from "vue";
 import { copyToClipboard } from "@/utils";
 import Loading from "@/Components/Loading.vue";
 import { usePage } from "@inertiajs/vue3";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import GettingStarted from "@/Views/Teacher/Views/Copilot/Chat/GettingStarted.vue";
 import Toast from "@/Components/Toast.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const emit = defineEmits(["limit-reached"]);
 defineProps({
