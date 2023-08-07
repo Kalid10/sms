@@ -21,19 +21,19 @@ use Maatwebsite\Excel\Events\AfterImport;
 use Maatwebsite\Excel\Events\BeforeImport;
 use Maatwebsite\Excel\Events\ImportFailed;
 
-class TeachersRegistrationImport implements ToModel, WithBatchInserts, WithHeadingRow, WithValidation, WithChunkReading, ShouldQueue, WithEvents
+class AdminsRegistrationImport implements ToModel, WithBatchInserts, WithHeadingRow, WithValidation, WithChunkReading, ShouldQueue, WithEvents
 {
     use Importable;
 
     public function model(array $row)
     {
-        // Start db transaction
+        // Start DB transaction
         DB::beginTransaction();
 
-        // Insert student user
-        $teacherUserId = DB::table('users')->insertGetId([
+        // Insert admin user
+        $adminUserId = DB::table('users')->insertGetId([
             'name' => $row['name'],
-            'type' => User::TYPE_TEACHER,
+            'type' => User::TYPE_ADMIN,
             'email' => $row['email'] ?? null,
             'phone_number' => $row['phone_number'] ?? null,
             'password' => Hash::make('secret'),
@@ -42,14 +42,15 @@ class TeachersRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
             'updated_at' => Carbon::now(),
         ]);
 
-        // Insert teacher
-        DB::table('teachers')->insert([
-            'user_id' => $teacherUserId,
+        // Insert admin
+        DB::table('admins')->insert([
+            'user_id' => $adminUserId,
+            'position' => $row['position'],
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
-        // Commit, everything is good
+        // Commit
         DB::commit();
     }
 
@@ -60,6 +61,7 @@ class TeachersRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
             'email' => 'required_without_all:phone_number,username|required_if:type,admin|email|unique:users',
             'phone_number' => 'required_without_all:email,username|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users',
             'gender' => ['required', Rule::in(['male', 'female', 'Male', 'Female'])],
+            'position' => 'required|string|max:255',
         ];
     }
 
@@ -75,10 +77,9 @@ class TeachersRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
 
     public function registerEvents(): array
     {
-        // Notify the user about the import status
         return [
             BeforeImport::class => function (BeforeImport $event) {
-                Event::dispatch(new UserImportEvent('info', 'Starting teacher data import in the background. You will be notified once the process is complete and the system records are updated.'));
+                Event::dispatch(new UserImportEvent('info', 'Starting admin data import in the background. You will be notified once the process is complete and the system records are updated.'));
             },
             ImportFailed::class => function (ImportFailed $event) {
                 // Get validation exception
@@ -86,7 +87,7 @@ class TeachersRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
                 Event::dispatch(new UserImportEvent('error', $validationException->getMessage()));
             },
             AfterImport::class => function (AfterImport $event) {
-                Event::dispatch(new UserImportEvent('success', 'Teacher import completed successfully.'));
+                Event::dispatch(new UserImportEvent('success', 'Admin import completed successfully.'));
             },
         ];
     }
