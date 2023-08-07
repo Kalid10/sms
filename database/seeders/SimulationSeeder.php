@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Jobs\GenerateBatchSchedulesJob;
 use App\Models\Role;
 use App\Models\User;
-use Database\Seeders\Simulation\AssessmentSeeder;
-use Database\Seeders\Simulation\AssessmentTypeSeeder;
 use Database\Seeders\Simulation\BatchSeeder;
 use Database\Seeders\Simulation\BatchSubjectSeeder;
 use Database\Seeders\Simulation\FamilySeeder;
@@ -47,6 +45,8 @@ class SimulationSeeder extends Seeder
             AssessmentSeeder::class,
             LessonPlanSeeder::class,
             GradeScaleSeeder::class,
+            AnnouncementSeeder::class,
+            SchoolScheduleSeeder::class,
         ]);
 
         GenerateBatchSchedulesJob::dispatchSync();
