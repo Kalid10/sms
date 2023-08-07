@@ -5,8 +5,8 @@
             class="fixed flex w-fit items-center rounded-lg bg-brand-150 px-2 text-brand-text-300 shadow transition-all duration-300 ease-out"
             :class="!showIcon ? 'px-2 py-1' : ''"
             :style="{
-                top: sideBarStyle ? `${y - 30}px` : `${y - 30}px`,
-                left: sideBarStyle ? `${x}px` : `${x - 50}px`,
+                top: sideBarStyle ? `${y - 5}px` : `${y - 30}px`,
+                left: sideBarStyle ? `${x + 15}px` : `${x - 50}px`,
             }"
         >
             <div
