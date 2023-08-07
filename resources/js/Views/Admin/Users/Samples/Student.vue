@@ -1,5 +1,7 @@
 <template>
-    <div class="mb-2 text-sm">
+    <div
+        class="scrollbar-hide mb-2 flex w-full flex-col space-y-3 overflow-y-scroll rounded-lg bg-white p-4 text-center text-sm"
+    >
         Prepare a CSV file with the following columns, ensure all data is
         accurate and correctly spelled. <br />
         <span class="font-medium italic"
@@ -7,7 +9,7 @@
             file</span
         >
 
-        <div class="mt-4 flex flex-col">
+        <div class="mt-2 flex w-full flex-col">
             <div class="scrollbar-hide -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
                     class="flex min-w-full flex-col space-y-5 py-2 align-middle sm:px-6 lg:px-8"
@@ -72,7 +74,7 @@
                         </table>
                     </div>
                     <div
-                        class="scrollbar-hide overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
+                        class="scrollbar-hide w-full overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
                     >
                         <div class="p-2 font-semibold">Guardian Data</div>
                         <table class="min-w-full divide-y divide-gray-200">

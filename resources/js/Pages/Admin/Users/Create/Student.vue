@@ -127,8 +127,7 @@
 
         <div class="grid-rows-12 mt-10 mb-4 grid sm:grid-cols-12 md:w-full">
             <div
-                class="col-start-1 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full"
-                :class="showManual ? 'col-span-7' : 'col-span-4'"
+                class="col-span-2 mb-6 flex shrink-0 flex-col md:mb-0 md:w-full"
             >
                 <Heading :value="$t('createStudent.headingThree')" />
                 <Heading
@@ -141,24 +140,12 @@
                     class="flex w-6/12 items-center justify-center py-4"
                 >
                     <QuestionMarkCircleIcon
-                        class="h-8 cursor-pointer text-zinc-700 hover:scale-125"
+                        class="h-10 cursor-pointer text-zinc-700 hover:scale-125"
                         @click="showManual = !showManual"
                     />
                 </div>
-                <div class="flex w-11/12 flex-col space-y-2">
-                    <div v-if="showManual" class="py-4">
-                        <StudentSample />
-                    </div>
-                </div>
             </div>
-            <div
-                class="flex items-center justify-center"
-                :class="
-                    showManual
-                        ? 'col-span-4 col-start-8'
-                        : 'col-span-7 col-start-5'
-                "
-            >
+            <div class="col-span-10 flex items-center justify-center">
                 <div
                     class="relative w-full max-w-4xl flex-col rounded-lg bg-white"
                 >
@@ -174,6 +161,10 @@
             </div>
         </div>
     </div>
+
+    <Modal v-model:view="showManual" class-style="max-w-5xl">
+        <StudentSample />
+    </Modal>
 </template>
 
 <script setup>
@@ -190,6 +181,7 @@ import { QuestionMarkCircleIcon } from "@heroicons/vue/20/solid";
 import { value } from "lodash/seq";
 import { useI18n } from "vue-i18n";
 import { computed, ref } from "vue";
+import Modal from "@/Components/Modal.vue";
 
 const { t } = useI18n();
 defineEmits(["file-uploaded"]);

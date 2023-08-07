@@ -1,5 +1,7 @@
 <template>
-    <div class="mb-2 text-sm">
+    <div
+        class="scrollbar-hide mb-2 flex w-full flex-col space-y-3 overflow-y-scroll rounded-lg bg-white p-4 text-center text-sm"
+    >
         Prepare a CSV file with the following columns, ensure all data is
         accurate and correctly spelled. <br />
 
