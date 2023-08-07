@@ -14,7 +14,7 @@
             <div
                 class="flex h-8 w-11/12 items-center justify-center rounded-2xl bg-emerald-400 text-white lg:w-6/12"
             >
-                <DocumentCheckIcon class="w-4 text-brand-text-400" />
+                <DocumentCheckIcon class="w-4 text-white" />
                 <SecondaryButton
                     :title="$t('draft.publishAssessment')"
                     class="w-fit font-semibold"
@@ -28,7 +28,7 @@
             <div
                 class="flex h-8 w-11/12 items-center justify-center rounded-2xl bg-cyan-400 lg:w-6/12"
             >
-                <CalendarDaysIcon class="w-4 text-brand-text-400" />
+                <CalendarDaysIcon class="w-4 text-white" />
                 <SecondaryButton
                     :title="$t('draft.scheduleAssessment')"
                     class="w-fit font-semibold"
@@ -47,7 +47,7 @@
                     v-if="dueDate && status === 'scheduled'"
                     class="flex h-8 w-10/12 items-center justify-center rounded-2xl bg-brand-450 shadow-md lg:w-8/12"
                 >
-                    <CheckCircleIcon class="w-4 text-brand-text-100" />
+                    <CheckCircleIcon class="w-4 text-white" />
                     <SecondaryButton
                         :title="$t('draft.finishUpdating')"
                         class="font-semibold uppercase text-white"
