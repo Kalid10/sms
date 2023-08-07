@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Teacher;
 
+use App\Models\Absentee;
 use App\Models\Batch;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
@@ -55,6 +56,12 @@ class Students extends Controller
             default => throw new Exception('Type unknown!'),
         };
 
+        $batchAbsenteesCount = Absentee::whereHas('batchSession.batchSchedule', function ($query) use ($batchSubject) {
+            $query->where('batch_subject_id', $batchSubject->id);
+        })->count();
+
+        $batchAbsenteesPercentage = $batchAbsenteesCount > 0 ? round(($batchAbsenteesCount / $batchStudents->count()) * 100, 2) : 0;
+
         return Inertia::render($page, [
             'students' => $batchStudents,
             'batch_subject' => $batchSubject,
@@ -74,6 +81,7 @@ class Students extends Controller
                 'school_years' => $schoolYears,
                 'school_year_id' => $request->input('school_year_id') ?? SchoolYear::getActiveSchoolYear()->id,
             ],
+            'batch_absentees_percentage' => $batchAbsenteesPercentage,
         ]);
     }
 }
