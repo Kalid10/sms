@@ -5,7 +5,12 @@
     >
         <div class="h-full w-fit lg:w-3/12">
             <img
-                :src="`https://xsgames.co/randomusers/avatar.php?g=${header.user.gender}`"
+                :src="
+                    auth?.user?.profile_image ??
+                    'https://avatars.dicebear.com/api/open-peeps/' +
+                        auth.user.name +
+                        '.svg'
+                "
                 alt="avatar"
                 class="mx-auto w-16 rounded-full object-cover md:w-24"
             />
@@ -34,6 +39,7 @@
 import Heading from "@/Components/Heading.vue";
 import { useSidebarStore } from "@/Store/sidebar";
 import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
     header: {
@@ -43,5 +49,6 @@ const props = defineProps({
 });
 
 const isOpen = computed(() => useSidebarStore().isOpen);
+const auth = computed(() => usePage().props.auth);
 </script>
 <style scoped></style>
