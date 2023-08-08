@@ -18,16 +18,17 @@
             <div
                 v-for="(item, index) in students"
                 :key="index"
-                class="flex h-fit w-full cursor-pointer items-center justify-center space-x-2 rounded-lg py-1.5 hover:bg-brand-400 hover:text-white"
+                class="flex h-fit w-full cursor-pointer items-center justify-center space-x-2 py-1.5 hover:bg-brand-400 hover:text-white"
                 :class="index % 2 === 0 ? 'bg-brand-50/70' : 'bg-white'"
             >
                 <Item
                     :progress-type="progressType"
-                    :name="item.student.user.name"
+                    :student="item.student"
                     :rank="numberWithOrdinal(item.rank)"
                     :attendance="item.attendance_percentage"
                     :progress="80"
                     :grade="item?.score?.toFixed(1)"
+                    :total-score="item?.total_score"
                     @click="
                         () =>
                             router.visit(

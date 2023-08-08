@@ -1,5 +1,15 @@
 <template>
     <div class="flex w-full flex-col items-center space-y-2 pb-6">
+        <Toast
+            v-if="!isOpen"
+            :show-toast="showToast"
+            :class="toastStyle"
+            :event="toastEvent"
+            :value="toastValue"
+            :class-style="'ml-40'"
+            :show-icon="false"
+            :side-bar-style="true"
+        />
         <div v-if="errors.assessment" class="w-11/12 py-3">
             <Error :error="errors.assessment" />
         </div>
@@ -14,7 +24,7 @@
                 'focus-effect bg-black text-white':
                     focusedInputIndex === index &&
                     selectedCommentInput === null,
-                'bg-brand-100 hover:bg-brand-50':
+                'bg-brand-50 hover:bg-brand-100':
                     index % 2 === 0 && !isInputFocused && item.status === null,
 
                 'bg-brand-400 text-white hover:bg-brand-400':
@@ -91,34 +101,58 @@
                         :class="
                             points[index].status === 'valid_reassessment'
                                 ? 'text-black'
-                                : 'text-brand-text-200 hover:text-purple-500'
+                                : 'text-gray-400 hover:text-purple-500'
                         "
                         @click="handleStatusClick(index, 'valid_reassessment')"
+                        @mouseenter="
+                            handleMouseEnter(
+                                $event,
+                                'Valid Absentee',
+                                '!bg-purple-500 !text-white'
+                            )
+                        "
+                        @mouseleave="handleMouseLeave()"
                     />
                     <ArchiveBoxXMarkIcon
                         class="w-5 hover:scale-125"
                         :class="
                             points[index].status === 'disqualified'
                                 ? 'text-black'
-                                : 'text-brand-text-200 hover:text-orange-500'
+                                : 'text-gray-400 hover:text-orange-500'
                         "
                         @click="handleStatusClick(index, 'disqualified')"
+                        @mouseenter="
+                            handleMouseEnter(
+                                $event,
+                                'Disqualify',
+                                '!bg-orange-500 !text-white'
+                            )
+                        "
+                        @mouseleave="handleMouseLeave()"
                     />
                     <BookmarkSlashIcon
                         class="w-5 hover:scale-125"
                         :class="
                             points[index].status === 'misconduct'
                                 ? 'text-black'
-                                : 'text-brand-text-200 hover:text-red-600'
+                                : 'text-gray-400 hover:text-red-600'
                         "
                         @click="handleStatusClick(index, 'misconduct')"
+                        @mouseenter="
+                            handleMouseEnter(
+                                $event,
+                                'MisConduct',
+                                '!bg-red-600 !text-white'
+                            )
+                        "
+                        @mouseleave="handleMouseLeave()"
                     />
                     <ChatBubbleBottomCenterIcon
                         class="w-5 hover:scale-125"
                         :class="
                             points[index].comment
                                 ? 'text-black'
-                                : 'text-brand-text-200 hover:text-black'
+                                : 'text-gray-400 hover:text-black'
                         "
                         @click="
                             selectedCommentInput === index
@@ -126,6 +160,14 @@
                                 : (selectedCommentInput = index);
                             $emit('updatePoints', points);
                         "
+                        @mouseenter="
+                            handleMouseEnter(
+                                $event,
+                                'Comment',
+                                '!bg-gray-700 !text-white'
+                            )
+                        "
+                        @mouseleave="handleMouseLeave()"
                     />
                     <XMarkIcon
                         v-if="points[index].status"
@@ -172,6 +214,8 @@ import {
 import TextArea from "@/Components/TextArea.vue";
 import Error from "@/Components/Error.vue";
 import { isTeacher } from "@/utils";
+import Toast from "@/Components/Toast.vue";
+import { useSidebarStore } from "@/Store/sidebar";
 
 const assessment = usePage().props.assessment;
 const focusedInputIndex = ref(null);
@@ -251,6 +295,26 @@ const handleStatusClick = (index, status) => {
         emit("updatePoints", points);
         points[index].point = 0;
     }
+};
+
+// Toast logic
+const isOpen = computed(() => useSidebarStore().isOpen);
+const showToast = ref(false);
+const toastEvent = ref(null);
+const toastStyle = ref(null);
+const toastValue = ref(null);
+const handleMouseEnter = (event, value, style) => {
+    toastEvent.value = event;
+    toastValue.value = value;
+    showToast.value = true;
+    toastStyle.value = style;
+};
+
+const handleMouseLeave = () => {
+    showToast.value = false;
+    toastEvent.value = null;
+    toastValue.value = null;
+    toastStyle.value = null;
 };
 </script>
 <style scoped>

@@ -120,7 +120,8 @@ function loadDetail(assessment) {
 const assessmentDetailsRef = ref(null);
 
 const scrollToAssessmentDetails = () => {
-    assessmentDetailsRef.value.$el.scrollIntoView({ behavior: "smooth" });
+    if (assessmentDetailsRef.value)
+        assessmentDetailsRef.value.$el.scrollIntoView({ behavior: "smooth" });
     // TODO:: This is sticking to the top of the screen, fix it
 };
 </script>

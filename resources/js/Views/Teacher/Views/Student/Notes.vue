@@ -25,7 +25,7 @@
             <div
                 v-for="(item, index) in notes.data"
                 :key="index"
-                class="flex w-full cursor-pointer justify-center space-x-3 rounded-lg p-2.5 hover:bg-brand-400 hover:text-brand-text-50"
+                class="flex w-full cursor-pointer justify-center space-x-3 rounded-lg p-2.5 hover:bg-brand-400 hover:text-brand-text-500"
                 :class="index % 2 === 1 ? 'bg-brand-50' : ''"
                 @click="handleClicked(item)"
             >

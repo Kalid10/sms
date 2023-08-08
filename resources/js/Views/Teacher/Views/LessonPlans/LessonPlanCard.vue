@@ -51,7 +51,7 @@
                                 .substring(0, 3)
                                 .toUpperCase()
                         }}
-                        {{ moment(session["date"]).format("MMMM Do") }}
+                        {{ moment(session["date"]).format("MMM Do") }}
                     </span>
                 </div>
 

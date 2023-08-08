@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-screen max-h-full w-full flex-col space-y-5 overflow-auto border-l border-zinc-500 bg-white py-5 px-3 text-white"
+        class="flex h-screen max-h-full w-full flex-col space-y-5 overflow-auto bg-white py-5 px-3 text-white"
     >
         <div class="flex w-full justify-evenly">
             <Header

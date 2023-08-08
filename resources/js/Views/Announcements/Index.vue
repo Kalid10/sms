@@ -63,7 +63,7 @@
             </Modal>
         </div>
     </div>
-    <div v-else class="py-8">
+    <div v-else class="h-full rounded-lg bg-white py-10 shadow-sm">
         <EmptyView
             :title="$t('announcementsIndex.noAnnouncementsFound')"
             :link-title="$t('announcementsIndex.goToAnnouncements')"

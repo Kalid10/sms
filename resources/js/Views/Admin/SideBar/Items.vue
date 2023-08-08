@@ -18,7 +18,7 @@
             @mouseleave="handleMouseLeave()"
         >
             <div
-                class="flex h-full w-full cursor-pointer items-center justify-center hover:bg-brand-500 hover:transition-all hover:duration-300 hover:ease-out"
+                class="flex h-full w-full cursor-pointer items-center justify-center hover:bg-brand-500 hover:transition-all hover:ease-out"
             >
                 <div
                     class="flex h-20 w-11/12 items-center text-center hover:cursor-pointer"
@@ -38,6 +38,7 @@
                         :value="toastValue"
                         :class-style="'ml-40'"
                         :show-icon="false"
+                        :side-bar-style="true"
                     />
                     <div
                         class="flex w-8/12 items-center justify-center whitespace-nowrap text-xs lg:text-sm 2xl:text-sm"

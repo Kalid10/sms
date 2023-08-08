@@ -1,7 +1,7 @@
 <template>
     <div
         ref="parentDiv"
-        class="max-h-screen bg-brand-550 text-white"
+        class="z-50 max-h-screen bg-brand-550 text-white"
         :class="[
             isOpen ? 'min-w-[12rem] lg:w-60 lg:min-w-0' : 'min-w-8 lg:w-16',
             'transition-all duration-300 ease-in-out ',
