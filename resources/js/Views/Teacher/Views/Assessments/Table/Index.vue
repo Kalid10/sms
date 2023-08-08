@@ -29,7 +29,7 @@
                     <div
                         class="w-fit rounded-xl py-1 px-2 text-center text-[0.55rem] font-semibold lg:px-2"
                         :class="{
-                            'bg-brand-450 text-white': data === 'Draft',
+                            'bg-zinc-500 text-white': data === 'Draft',
                             'bg-emerald-400': data === 'Published',
                             'bg-indigo-400 text-white': data === 'Marking',
                             'bg-yellow-400': data === 'Completed',

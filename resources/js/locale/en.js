@@ -578,7 +578,7 @@ const en = {
     },
     draft: {
         currentlyFull:
-            "Currently, this assessment is in <span class='-skew-x-3 bg-yellow-400 px-2 py-0.5 text-sm font-bold italic'>DRAFT</span>state! You can:",
+            "Currently, this assessment is in <span class='-skew-x-3 bg-zinc-500 text-white px-2 py-0.5 text-sm font-bold italic'>DRAFT </span> state! You can:",
         settingAssessmentFull:
             "Setting an assessment as <span class='font-semibold uppercase'>' PUBLISHED '</span> or <span class='font-semibold uppercase'>' SCHEDULED '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
         currently: "Currently, this assessment is in",
@@ -1164,7 +1164,7 @@ const en = {
     },
     scheduled: {
         currentlyFull:
-            "Currently, this assessment is in <span class='mx-0.5 -skew-x-3 bg-indigo-400 px-2 py-0.5 text-sm font-bold italic text-white'>SCHEDULED</span>state! You can:",
+            "Currently, this assessment is in <span class='mx-0.5 -skew-x-3 bg-cyan-400 px-2 py-0.5 text-sm font-bold italic text-black'>SCHEDULED</span>state! You can:",
         currentlyThisAssessment: "Currently, this assessment is in",
         scheduled: "SCHEDULED",
         stateYouCan: "state! You can",
