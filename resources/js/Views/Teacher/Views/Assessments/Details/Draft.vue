@@ -101,14 +101,20 @@ const title = computed(
 const showDialog = ref(false);
 
 function updateAssessment() {
-    router.post("/teacher/assessments/update", {
-        title: props.assessment.title,
-        description: props.assessment.description,
-        maximum_point: props.assessment.maximum_point,
-        assessment_id: props.assessment.id,
-        status: status.value,
-        due_date: dueDate.value,
-    });
+    router.post(
+        "/teacher/assessments/update",
+        {
+            title: props.assessment.title,
+            description: props.assessment.description,
+            maximum_point: props.assessment.maximum_point,
+            assessment_id: props.assessment.id,
+            status: status.value,
+            due_date: dueDate.value,
+        },
+        {
+            preserveState: true,
+        }
+    );
 }
 </script>
 <style scoped></style>
