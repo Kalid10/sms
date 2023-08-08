@@ -1,19 +1,19 @@
 <template>
     <div class="flex items-center justify-between space-x-2">
         <SelectInput
-            v-model="selectedSchoolYear"
+            v-model="computedSchoolYearId"
             class="h-fit w-1/3 rounded-2xl !text-sm"
             :options="schoolYearOptions"
             placeholder="school year"
         />
         <SelectInput
-            v-model="selectedSemester"
+            v-model="computedSemesterId"
             class="h-fit w-1/3 rounded-2xl !text-sm"
             :options="semesterOptions"
             placeholder="Semester"
         />
         <SelectInput
-            v-model="selectedQuarter"
+            v-model="computedQuarterId"
             class="h-fit w-1/3 rounded-2xl !text-sm"
             :options="quarterOptions"
             placeholder="quarter"
@@ -25,16 +25,15 @@
             v-if="selectedSchoolYear"
             class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
         >
-            <span class="text-xs">School Year:</span>
             <span class="text-xs font-semibold">
-                {{ selectedSchoolYear }}
+                {{ selectedSchoolYear.name }}
             </span>
             <span
                 class="cursor-pointer text-xs font-semibold"
                 @click="
-                    selectedSchoolYear = null;
-                    selectedSemester = null;
-                    selectedQuarter = null;
+                    selectedSchoolYear = { id: null };
+                    selectedSemester = { id: null };
+                    selectedQuarter = { id: null };
                 "
             >
                 <XMarkIcon class="h-3 w-3 fill-red-500" />
@@ -44,15 +43,14 @@
             v-if="selectedSemester"
             class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
         >
-            <span class="text-xs">Semester:</span>
             <span class="text-xs font-semibold">
-                {{ selectedSemester }}
+                {{ selectedSemester.name }}
             </span>
             <span
                 class="cursor-pointer text-xs font-semibold"
                 @click="
-                    selectedSemester = null;
-                    selectedQuarter = null;
+                    selectedSemester = { id: null };
+                    selectedQuarter = { id: null };
                 "
             >
                 <XMarkIcon class="h-3 w-3 fill-red-500" />
@@ -62,13 +60,12 @@
             v-if="selectedQuarter"
             class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
         >
-            <span class="text-xs">Quarter:</span>
             <span class="text-xs font-semibold">
-                {{ selectedQuarter }}
+                {{ selectedQuarter.name }}
             </span>
             <span
                 class="cursor-pointer text-xs font-semibold"
-                @click="selectedQuarter = null"
+                @click="selectedQuarter = { id: null }"
             >
                 <XMarkIcon class="h-3 w-3 fill-red-500" />
             </span>
@@ -85,11 +82,14 @@ const schoolYears = computed(() => usePage().props.filters.school_years);
 const semesters = computed(() => usePage().props.filters.semesters);
 const quarters = computed(() => usePage().props.filters.quarters);
 
-const selectedSchoolYear = ref(usePage().props.filters.school_year_id);
+const batchSubject = usePage().props.batch_subject;
+const batchSubjectId = batchSubject ? batchSubject.id : null;
 
-const selectedSemester = ref(usePage().props.filters.semester_id);
+const selectedSchoolYear = ref(usePage().props.filters.school_year);
 
-const selectedQuarter = ref(usePage().props.filters.quarter_id);
+const selectedSemester = ref(usePage().props.filters.semester);
+
+const selectedQuarter = ref(usePage().props.filters.quarter);
 
 const schoolYearOptions = computed(() => {
     return schoolYears.value?.map((item) => {
@@ -102,10 +102,10 @@ const schoolYearOptions = computed(() => {
 
 // Semesters options based on selected school year
 const semesterOptions = computed(() => {
-    if (selectedSchoolYear.value === null) return [];
+    if (selectedSchoolYear.value.id === null) return [];
     return semesters.value
         ?.filter((item) => {
-            return item.school_year_id === selectedSchoolYear.value;
+            return item.school_year_id === selectedSchoolYear.value.id;
         })
         .map((item) => {
             return {
@@ -120,7 +120,7 @@ const quarterOptions = computed(() => {
     if (selectedSemester.value === null) return [];
     return quarters.value
         ?.filter((item) => {
-            return item.semester_id === selectedSemester.value;
+            return item.semester_id === selectedSemester.value.id;
         })
         .map((item) => {
             return {
@@ -130,16 +130,87 @@ const quarterOptions = computed(() => {
         });
 });
 
-watch([selectedSchoolYear, selectedSemester, selectedQuarter], () => {
-    applyFilters();
+const computedSchoolYearId = computed({
+    get: () =>
+        selectedSchoolYear.value && selectedSchoolYear.value
+            ? selectedSchoolYear.value.id
+            : null,
+    set: (newValue) => {
+        if (selectedSchoolYear.value) {
+            selectedSchoolYear.value.id = newValue;
+        }
+    },
 });
 
+const computedSemesterId = computed({
+    get: () =>
+        selectedSemester.value && selectedSemester.value
+            ? selectedSemester.value.id
+            : null,
+    set: (newValue) => {
+        if (selectedSemester.value) {
+            selectedSemester.value.id = newValue;
+        }
+    },
+});
+
+const computedQuarterId = computed({
+    get: () =>
+        selectedQuarter.value && selectedQuarter.value
+            ? selectedQuarter.value.id
+            : null,
+    set: (newValue) => {
+        if (selectedQuarter.value) {
+            selectedQuarter.value.id = newValue;
+        }
+    },
+});
+
+watch(
+    [selectedSchoolYear, selectedSemester, selectedQuarter],
+    () => {
+        applyFilters();
+    },
+    {
+        deep: true,
+    }
+);
+
 function applyFilters() {
+    if (selectedSchoolYear.value) {
+        const schoolYearOption = schoolYearOptions.value.find(
+            (item) => item.value === selectedSchoolYear.value.id
+        );
+        if (schoolYearOption) {
+            selectedSchoolYear.value.name = schoolYearOption.label;
+        }
+    }
+
+    if (selectedSemester.value) {
+        const semesterOption = semesterOptions.value.find(
+            (item) => item.value === selectedSemester.value.id
+        );
+        if (semesterOption) {
+            selectedSemester.value.name = semesterOption.label;
+        }
+    }
+
+    if (selectedQuarter.value) {
+        const quarterOption = quarterOptions.value.find(
+            (item) => item.value === selectedQuarter.value.id
+        );
+        if (quarterOption) {
+            selectedQuarter.value.name = quarterOption.label;
+        }
+    }
+
     const params = {
-        batch_subject_id: usePage().props.batch_subject.id,
-        school_year_id: selectedSchoolYear.value,
-        semester_id: selectedQuarter.value,
-        quarter_id: selectedQuarter.value,
+        batch_subject_id: batchSubjectId,
+        school_year_id: selectedSchoolYear.value
+            ? selectedSchoolYear.value.id
+            : null,
+        semester_id: selectedSemester.value ? selectedSemester.value.id : null,
+        quarter_id: selectedQuarter.value ? selectedQuarter.value.id : null,
     };
 
     router.get(

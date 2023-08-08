@@ -60,7 +60,7 @@ class QuestionsService
                 return event(new QuestionGeneratorEvent('success', 'Questions generated successfully!'));
             }
         } catch (Exception $e) {
-            return event(new QuestionGeneratorEvent('error', 'Question Generation failed! Invalid input!'));
+            return event(new QuestionGeneratorEvent('error', 'Question Generation failed!'));
         }
     }
 
