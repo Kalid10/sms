@@ -9,7 +9,7 @@
             </div>
         </template>
         <template #subtitle>
-            <span v-if="batchSessions.length > 1" class="text-gray-600">
+            <span v-if="batchSessions.length > 1" class="text-gray-800">
                 {{ $t("lessonPlanWeekCardNew.classSessionsWeekStarting") }}
                 <span class="inline-block font-semibold">
                     {{
