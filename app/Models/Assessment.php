@@ -145,13 +145,13 @@ class Assessment extends Model
      */
     protected function longTitle(): string
     {
-        $prefix = $this->load('batchSubject.subject', 'batchSubject.batch.level')->batchSubject->subject->full_name.' ';
+        $prefix = $this->load('batchSubject.subject', 'batchSubject.batch.level', 'batchSubject.teacher.user')->batchSubject->subject->full_name.' ';
 
         $suffix = match (true) {
             $this->isToday() => ' Today'.
-                $this->asssessment_period_time ?
-                    ' at '.Carbon::parse($this->assessment_period_time)->format('H:i A') :
-                    ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
+            $this->asssessment_period_time ?
+                ' at '.Carbon::parse($this->assessment_period_time)->format('H:i A') :
+                ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
             $this->isThisWeek() => ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
             default => ' on '.$this->due_date->format('F jS'),
         };
