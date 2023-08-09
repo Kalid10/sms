@@ -37,10 +37,16 @@
                         'bg-brand-450 text-white':
                             form.target_group.includes(target),
                     }"
-                    class="flex cursor-pointer flex-row justify-between rounded bg-brand-100 p-2 px-8 text-black"
+                    class="flex cursor-pointer flex-row justify-between space-x-2 rounded-2xl bg-brand-100 p-2 px-8 text-black"
                     @click="toggleSelection(target)"
                 >
-                    {{ target }}
+                    <CheckCircleIcon
+                        v-if="form.target_group.includes(target)"
+                        class="w-4"
+                    />
+                    <span>
+                        {{ target }}
+                    </span>
                 </div>
             </div>
             <div
@@ -67,6 +73,7 @@ import TextArea from "@/Components/TextArea.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { CheckCircleIcon } from "@heroicons/vue/20/solid";
 
 const emit = defineEmits(["success"]);
 const targetGroupOptions = ["all", "teachers", "guardians", "admins"];

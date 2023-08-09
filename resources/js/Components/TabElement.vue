@@ -1,6 +1,9 @@
 <template>
-    <div class="flex w-full flex-col gap-3" :class="backgroundColor">
-        <ul class="flex w-full items-center gap-4 overflow-auto">
+    <div class="flex w-full flex-col gap-3">
+        <ul
+            class="flex w-full items-center gap-4 overflow-auto py-2"
+            :class="backgroundColor"
+        >
             <li
                 v-for="(tab, t) in tabs"
                 :key="t"

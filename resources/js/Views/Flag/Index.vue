@@ -55,7 +55,7 @@
             >
                 <span
                     class="w-3/12 cursor-pointer text-center hover:scale-110 hover:underline hover:underline-offset-2"
-                    @click.stop="routeToStudent(item.flaggable_id)"
+                    @click.stop="isAdmin() ?? routeToStudent(item.flaggable_id)"
                 >
                     {{ item.flaggable.user.name }}
                 </span>
@@ -99,7 +99,11 @@
                     </span>
                 </span>
                 <div
-                    v-if="item?.flagged_by?.id === auth.id && showEditAndDelete"
+                    v-if="
+                        (item?.flagged_by?.id === auth.id ||
+                            !item?.flagged_by?.id) &&
+                        showEditAndDelete
+                    "
                 >
                     <PencilIcon
                         class="my-1 ml-3 w-4 cursor-pointer text-brand-text-50 hover:text-black group-hover:fill-white"
@@ -107,7 +111,11 @@
                     />
                 </div>
                 <div
-                    v-if="item?.flagged_by?.id === auth.id && showEditAndDelete"
+                    v-if="
+                        (item?.flagged_by?.id === auth.id ||
+                            !item?.flagged_by?.id) &&
+                        showEditAndDelete
+                    "
                     class="py-1 pl-3 hover:scale-110 hover:stroke-red-50 hover:px-1"
                 >
                     <TrashIcon

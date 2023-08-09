@@ -1,7 +1,7 @@
 <template>
     <GeneralInfo
-        teacher-name="Bereket Gobeze"
-        :count="assessment.total_students"
+        :teacher-name="assessment.batch_subject.teacher.user.name"
+        :total-students="assessment?.students.length"
         :status="capitalize(assessment.status)"
     />
 

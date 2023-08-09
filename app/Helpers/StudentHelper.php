@@ -88,7 +88,7 @@ class StudentHelper
         if ($flag) {
             // Update the flag
             $flag->update([
-                'type' => $type,
+                'type' => (array) $type,
                 'description' => $description,
                 'flagged_by' => $flagged_by,
                 'expires_at' => date('Y-m-d H:i:s', strtotime($expires_at)),
