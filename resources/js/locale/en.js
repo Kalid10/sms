@@ -1687,7 +1687,7 @@ const en = {
     },
 
     teacherQuestions: {
-        myQuestionBank: "My Question Bank (Beta)",
+        myQuestionBank: "My Question Bank (Beta Version)",
         questionGeneratorDescription:
             "Welcome to our innovative AI Question Generator. This is currently a beta version, and we're actively working to refine and improve it. Please note that while our AI strives to produce high-quality, relevant questions, there may be occasional inaccuracies or unexpected results. We appreciate your understanding and patience during this testing phase. Your feedback is invaluable in helping us make this tool the best it can be.",
         questionsFor: "Questions For",
@@ -1695,7 +1695,7 @@ const en = {
         recentQuestions: "Recent Questions",
         noQuestionsGenerated: "No Questions Generated Yet",
         generateQuestions: "Generate Questions",
-        updateQuestion: "Update Question",
+        updateQuestionAndAnswer: "Update Question And Answer",
         addQuestion: "Add Question",
         addAnswer: "Add answer",
         update: "Update",
