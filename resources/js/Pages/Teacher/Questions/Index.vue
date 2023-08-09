@@ -169,7 +169,7 @@ const formattedQuestionData = computed(() => {
             type: question.assessment_type.name,
             subject: question.batch_subject.subject.full_name,
             no_of_questions: question.no_of_questions,
-            difficulty_level: question.difficulty_level,
+            generated_at: moment(question.created_at).format("MMM Do YYYY"),
         };
     });
 });
@@ -192,8 +192,8 @@ const config = [
         key: "no_of_questions",
     },
     {
-        name: t("teacherQuestions.difficultyLevel"),
-        key: "difficulty_level",
+        name: t("teacherQuestions.generatedAt"),
+        key: "generated_at",
     },
 ];
 
