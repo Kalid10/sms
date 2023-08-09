@@ -8,6 +8,7 @@ use App\Models\BatchSubject;
 use App\Models\LessonPlan;
 use App\Models\Question;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class QuestionsService
@@ -60,7 +61,9 @@ class QuestionsService
                 return event(new QuestionGeneratorEvent('success', 'Questions generated successfully!'));
             }
         } catch (Exception $e) {
-            return event(new QuestionGeneratorEvent('error', 'Question Generation failed! Invalid input!'));
+            Log::info($e->getMessage());
+
+            return event(new QuestionGeneratorEvent('error', 'Question Generation failed!'));
         }
     }
 
@@ -91,29 +94,36 @@ class QuestionsService
 
     private function passThePromptToTheCompletionMethod($openAIService, string $prompt): array
     {
-        $questionResponses = $openAIService->createCompletion($prompt);
+        $responses = $openAIService->createCompletion($prompt);
+        $groupedResponses = [];
+        $currentEntry = '';
 
-        // Parsing the response to extract the question details
-        $questions = [];
-        foreach ($questionResponses as $response) {
-            // Checking the presence of all required fields in each question
-            if (str_contains($response, 'Question:') && str_contains($response, 'Answer:') && str_contains($response, 'Question Type:') && str_contains($response, 'Difficulty Level:')) {
-                $questionDetails = [
-                    'question' => trim(str_replace('Question:', '', $response)),
-                    'answer' => trim(str_replace('Answer:', '', $response)),
-                    'question_type' => trim(str_replace('Question Type:', '', $response)),
-                    'difficulty' => trim(str_replace('Difficulty Level:', '', $response)),
-                ];
-                $questions[] = $questionDetails;
+        foreach ($responses as $response) {
+            // If the response is not empty, append it to the current entry
+            if (! empty(trim($response))) {
+                $currentEntry .= $response.' ';
+            } // If the response is empty and there's a current entry, add it to the grouped responses and reset the current entry
+            elseif (! empty(trim($currentEntry))) {
+                $groupedResponses[] = trim($currentEntry);
+                $currentEntry = '';
             }
         }
 
-        return $questions;
+        // Add the last entry if it exists
+        if (! empty(trim($currentEntry))) {
+            $groupedResponses[] = trim($currentEntry);
+        }
+
+        return $groupedResponses;
     }
 
-    private function saveQuestion($questions, $requestData, $assessmentType, $userId): void
+    private function saveQuestion($questions, $requestData, $assessmentType, $userId): array|Question
     {
-        Question::create([
+        if (! count($questions)) {
+            return event(new QuestionGeneratorEvent('error', 'Question Generation failed!'));
+        }
+
+        return Question::create([
             'user_id' => $userId,
             'batch_subject_id' => $requestData['batch_subject_id'],
             'questions' => $questions,
