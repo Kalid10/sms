@@ -1700,8 +1700,9 @@ const en = {
         addAnswer: "Add answer",
         update: "Update",
         assessmentType: "Assessment Type",
-        noOfQuestions: "No Of Questions",
+        noOfQuestions: "No Of Que.",
         difficultyLevel: "Difficulty Level",
+        generatedAt: "Generated At",
     },
     adminUserIndex: {
         signUpAdministrators: "Register administrators with ease",
@@ -1737,8 +1738,9 @@ const en = {
     },
     chat: {
         typeYourMessageHere: "Type your message here...",
-        gettingStarted: "Getting Started with the AI Chat",
-        hello: "Hello, {name}! We want to make sure you get the most out of our AI chat feature, Rigel Copilot. Here are some tips to guide you:",
+        gettingStarted: "Rigel AI Chat Tips",
+        helloWeWant:
+            "Hello, {name}! We want to make sure you get the most out of our AI chat feature, Rigel Copilot. Here are some tips to guide you:",
         askSpecificQuestions: "Ask Specific Questions",
         theAiChat:
             "The AI chat is more effective when you ask specific questions...",
