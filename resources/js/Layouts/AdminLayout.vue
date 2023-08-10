@@ -12,6 +12,7 @@
                     :header="auth"
                     :main-items="sidebarItems || []"
                     :footer-items="footerItems"
+                    @show-logout-confirmation="showLogoutConfirmation"
                 />
                 <div
                     :class="
@@ -25,6 +26,26 @@
         </div>
         <Notification />
     </div>
+
+    <DialogBox
+        :open="isLogoutDialogOpen"
+        @abort="isLogoutDialogOpen = false"
+        @confirm="handleLogoutConfirm"
+    >
+        <template #icon>
+            <ArrowLeftOnRectangleIcon />
+        </template>
+
+        <template #title>
+            {{ t("adminLayout.logout") }}
+        </template>
+        <template #description>
+            {{ t("common.logoutConfirmation") }}
+        </template>
+        <template #action>
+            {{ t("adminLayout.logout") }}
+        </template>
+    </DialogBox>
 </template>
 
 <script setup>
@@ -36,7 +57,7 @@ import {
     Cog6ToothIcon,
     UserIcon,
 } from "@heroicons/vue/20/solid/index.js";
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import {
     AcademicCapIcon,
     BookOpenIcon,
@@ -50,6 +71,7 @@ import {
 } from "@heroicons/vue/24/solid";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/vue/20/solid/index";
 import { useI18n } from "vue-i18n";
+import DialogBox from "@/Components/DialogBox.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -61,6 +83,21 @@ const props = defineProps({
 
 const openSideBar = ref(true);
 const directory = computed(() => usePage().url.split("/")[2]);
+
+const isLogoutDialogOpen = ref(false);
+
+const showLogoutConfirmation = () => {
+    isLogoutDialogOpen.value = true;
+};
+
+const handleLogoutConfirm = () => {
+    logout();
+    isLogoutDialogOpen.value = false;
+};
+
+const logout = () => {
+    router.post("/logout");
+};
 
 // Populate sidebar items
 const sidebarItems = computed(() => [
@@ -142,8 +179,7 @@ const footerItems = [
     {
         icon: ArrowLeftOnRectangleIcon,
         name: t("adminLayout.logout"),
-        route: "/logout",
-        method: "POST",
+        action: "showLogoutConfirmation",
     },
 ];
 

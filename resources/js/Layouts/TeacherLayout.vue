@@ -57,6 +57,25 @@
             <div></div>
         </div>
     </div>
+    <DialogBox
+        :open="isLogoutDialogOpen"
+        @abort="isLogoutDialogOpen = false"
+        @confirm="handleLogoutConfirm"
+    >
+        <template #icon>
+            <ArrowLeftOnRectangleIcon />
+        </template>
+
+        <template #title>
+            {{ t("teacherLayout.logout") }}
+        </template>
+        <template #description>
+            {{ t("common.logoutConfirmation") }}
+        </template>
+        <template #action>
+            {{ t("teacherLayout.logout") }}
+        </template>
+    </DialogBox>
 </template>
 
 <script setup>
@@ -85,6 +104,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { useUIStore } from "@/Store/ui";
 
 import { useI18n } from "vue-i18n";
+import DialogBox from "@/Components/DialogBox.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -106,6 +126,21 @@ provide("notificationData", notificationData);
 const isOpen = computed(() => useSidebarStore().isOpen);
 
 const directory = computed(() => usePage().url.split("/")[2]);
+
+const isLogoutDialogOpen = ref(false);
+
+const showLogoutConfirmation = () => {
+    isLogoutDialogOpen.value = true;
+};
+
+const handleLogoutConfirm = () => {
+    logout();
+    isLogoutDialogOpen.value = false;
+};
+
+const logout = () => {
+    router.post("/logout");
+};
 
 // Populate sidebar items
 const sidebarItems = computed(() => [
@@ -189,8 +224,7 @@ const footerItems = [
     {
         icon: ArrowLeftOnRectangleIcon,
         name: t("teacherLayout.logout"),
-        route: "/logout",
-        method: "POST",
+        action: "showLogoutConfirmation",
     },
 ];
 

@@ -452,6 +452,7 @@ const am = {
         absentee: "ቀሪ",
         staff: "ሰራተኞች(staff)",
         apply: "ተግባራዊ አድርግ",
+        logoutConfirmation: "እርግጠኛ ነዎት?",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",

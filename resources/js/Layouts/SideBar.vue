@@ -17,7 +17,12 @@
             </div>
 
             <div class="flex h-fit w-full flex-col justify-between">
-                <Footer :items="footerItems" />
+                <Footer
+                    :items="footerItems"
+                    @show-logout-confirmation="
+                        $emit('show-logout-confirmation')
+                    "
+                />
             </div>
         </div>
     </div>
@@ -46,7 +51,7 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits(["update:open"]);
+const emits = defineEmits(["update:open", "show-logout-confirmation"]);
 
 const sideBarItems = computed(() => props.mainItems);
 
