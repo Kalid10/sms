@@ -28,6 +28,11 @@ class BatchSubjectResource extends JsonResource
                 'name' => $this->subject->full_name,
                 'short_name' => $this->subject->short_name,
             ],
+            'teacher' => [
+                'teacher_id' => $this->teacher->id,
+                'name' => $this->teacher->user->name,
+                'profile_image' => $this->teacher->user->profile_image,
+            ],
             'schedules' => $this->schedule->map(function ($schedule) {
                 return [
                     'schedule_id' => $schedule->id,

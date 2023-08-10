@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\Students;
 
+use App\Rules\UniqueForUser;
 use Illuminate\Contracts\Validation\Rule;
 
 class UpdateRequest extends Request
@@ -15,10 +16,16 @@ class UpdateRequest extends Request
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users|email',
+            'email' => [
+                'required', 'email', 'max:255',
+                new UniqueForUser($this->route('student')->user_id),
+            ],
             'date_of_birth' => 'required|date',
-            'phone_number' => 'required|string|max:255|unique:users,phone_number',
-            'gender' => 'required|string|max:255',
+            'phone_number' => [
+                'required', 'string', 'max:255',
+                new UniqueForUser($this->route('student')->user_id),
+            ],
+            'gender' => 'string|max:255',
             'sub_city' => 'string|max:255',
             'woreda' => 'string|max:255',
             'house_number' => 'string|max:255',

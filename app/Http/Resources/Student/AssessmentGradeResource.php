@@ -33,7 +33,10 @@ class AssessmentGradeResource extends JsonResource
                     'grade_status' => $assessment->status,
                     'status' => $assessment->assessment->status,
                     'due_date' => $assessment->assessment->due_date,
-                    'assessment_type' => $assessment->assessment->assessmentType->name,
+                    'assessment_type' => [
+                        'id' => $assessment->assessment->assessmentType->id,
+                        'name' => $assessment->assessment->assessmentType->name,
+                    ],
                     'subject_full_name' => $assessment->assessment->batchSubject->subject->full_name,
                     'subject_short_name' => $assessment->assessment->batchSubject->subject->short_name,
                     'teacher_id' => $assessment->assessment->batchSubject->teacher?->id,
