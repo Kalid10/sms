@@ -303,7 +303,6 @@ class StudentController extends Controller
             })
             ->when($request->has('batch_subject_id'), function ($query) use ($request) {
                 $query->whereIn('batch_subject_id', $request->input('batch_subject_id'), 'AND');
-                Log::info($query->toSql());
             })
             ->when($request->has('query'), function ($query) use ($request) {
                 $query->where(function ($query) use ($request) {
