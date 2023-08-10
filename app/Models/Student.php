@@ -82,6 +82,11 @@ class Student extends Model
         return round($studentAttendance, 1) ?? 0;
     }
 
+    public function batchSubjects(): HasMany
+    {
+        return $this->activeBatch()->subjects();
+    }
+
     public function batchSessions(): HasManyThrough
     {
         return $this->activeBatch()->sessions();

@@ -22,6 +22,7 @@ class SubjectResource extends JsonResource
             'subjects' => $this->currentBatch->flatMap(function ($batch) {
                 return $batch->subjects->map(function ($subject) {
                     return [
+                        'batch_subject_id' => $subject->id,
                         'subject_id' => $subject->subject->id,
                         'subject_full_name' => $subject->subject->full_name,
                         'subject_short_name' => $subject->subject->short_name,

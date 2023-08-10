@@ -11,6 +11,8 @@ use App\Http\Resources\Student\AssessmentCollection;
 use App\Http\Resources\Student\AssessmentGradeCollection;
 use App\Http\Resources\Student\AssessmentGradeResource;
 use App\Http\Resources\Student\AssessmentResource;
+use App\Http\Resources\Student\AssessmentTypeCollection;
+use App\Http\Resources\Student\AssessmentTypeResource;
 use App\Http\Resources\Student\BatchSubjectResource;
 use App\Http\Resources\Student\Collection;
 use App\Http\Resources\Student\GradeCollection;
@@ -32,6 +34,7 @@ use App\Models\Semester;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller
 {
@@ -136,20 +139,8 @@ class StudentController extends Controller
         if ($student->exists) {
             $student = $student->load([
                 'user',
-                'assessments' => function ($query) use ($request) {
-                    $query->with([
-                        'assessment.batchSubject.batch.schoolYear',
-                        'assessment.batchSubject.teacher.user',
-                    ]);
-                    $query->join('assessments', 'assessments.id', '=', 'student_assessments.assessment_id')
-                        ->select('student_assessments.*', 'student_assessments.id AS student_assessments_id')
-                        ->when($request->filled('batch_subject_id'), function ($query) use ($request) {
-                            $query->where('batch_subject_id', $request->input('batch_subject_id'));
-                        })
-                        ->orderBy('due_date', 'desc');
-                    $query->when($request->filled('student_assessment_id'), function ($query) use ($request) {
-                        $query->where('student_assessments.id', $request->input('student_assessment_id'));
-                    });
+                'assessments' => function ($query) use ($request, $student) {
+                    $this->filterAssessments($query, $request, $student);
                 },
             ]);
 
@@ -159,23 +150,28 @@ class StudentController extends Controller
         $students = Auth::user()->load('guardian.children')->guardian->children->load([
             'user',
             'assessments' => function ($query) use ($request) {
-                $query->with([
-                    'assessment.batchSubject.batch.schoolYear',
-                    'assessment.batchSubject.teacher.user',
-                ]);
-                $query->join('assessments', 'assessments.id', '=', 'student_assessments.assessment_id')
-                    ->select('student_assessments.*', 'student_assessments.id AS student_assessments_id')
-                    ->when($request->filled('batch_subject_id'), function ($query) use ($request) {
-                        $query->where('batch_subject_id', $request->input('batch_subject_id'));
-                    })
-                    ->orderBy('due_date', 'desc');
-                $query->when($request->filled('student_assessment_id'), function ($query) use ($request) {
-                    $query->where('student_assessments.id', $request->input('student_assessment_id'));
-                });
+                $this->filterAssessments($query, $request);
             },
         ]);
 
         return new AssessmentGradeCollection($students);
+    }
+
+    public function assessmentTypes(Request $request, ?Student $student): AssessmentTypeResource|AssessmentTypeCollection
+    {
+        return $student->exists ?
+            new AssessmentTypeResource($student->load([
+                'currentBatch.level.levelCategory.assessmentTypes',
+            ])
+                ->currentBatch->first()->level
+                ->levelCategory->assessmentTypes) :
+            new AssessmentTypeCollection(Auth::user()->load([
+                'guardian.children.currentBatch.level.levelCategory.assessmentTypes',
+            ])
+                ->guardian->children->pluck('currentBatch')
+                ->flatten()->pluck('level')->pluck('levelCategory')
+                ->pluck('assessmentTypes')->flatten()
+            );
     }
 
     public function subjects(Request $request, ?Student $student): SubjectResource|SubjectCollection
@@ -286,5 +282,35 @@ class StudentController extends Controller
                     'grades.gradable:id,name',
                     'grades.gradeScale:id,label,state,description',
                 ]));
+    }
+
+    private function filterAssessments($query, $request, $student = null): void
+    {
+        $query->with([
+            'assessment.batchSubject.batch.schoolYear',
+            'assessment.batchSubject.teacher.user',
+        ]);
+        $query->join('assessments', 'assessments.id', '=', 'student_assessments.assessment_id')
+            ->select('student_assessments.*', 'student_assessments.id AS student_assessments_id')
+            ->when($request->has('student_id'), function ($query) use ($request) {
+                $query->whereIn('student_id', $request->input('student_id'), 'AND');
+            })
+            ->when($request->has('status'), function ($query) use ($request) {
+                $query->whereIn('assessments.status', $request->input('status'), 'AND');
+            })
+            ->when($request->has('assessment_type_id'), function ($query) use ($request) {
+                $query->whereIn('assessment_type_id', $request->input('assessment_type_id'), 'AND');
+            })
+            ->when($request->has('batch_subject_id'), function ($query) use ($request) {
+                $query->whereIn('batch_subject_id', $request->input('batch_subject_id'), 'AND');
+            })
+            ->when($request->has('query'), function ($query) use ($request) {
+                $query->where(function ($query) use ($request) {
+                    $query->where('assessments.title', 'LIKE', '%'.$request->input('query').'%');
+                    $query->orWhere('assessments.description', 'LIKE', '%'.$request->input('query').'%');
+                    $query->orWhereRelation('assessment.batchSubject.subject', 'full_name', 'LIKE', '%'.$request->input('query').'%');
+                });
+            })
+            ->orderBy('due_date', 'desc');
     }
 }
