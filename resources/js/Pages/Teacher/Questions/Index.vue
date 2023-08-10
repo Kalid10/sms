@@ -72,10 +72,20 @@
                 </div>
             </div>
             <div
-                class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white px-4 py-6 shadow-sm"
+                class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white p-4 shadow-sm"
             >
-                <div class="text-3xl font-semibold">
-                    {{ $t("teacherQuestions.recentQuestions") }}
+                <div class="flex w-full justify-between">
+                    <div class="grow text-center text-3xl font-semibold">
+                        {{ $t("teacherQuestions.recentQuestions") }}
+                    </div>
+
+                    <div
+                        class="flex h-fit cursor-pointer items-center justify-center space-x-1.5 rounded-2xl bg-brand-350 px-2 py-1.5 text-xs text-white shadow-sm hover:scale-105 hover:bg-brand-400"
+                        @click="routeToQuestionGenerator"
+                    >
+                        <SquaresPlusIcon class="w-3.5" />
+                        <span>Generate</span>
+                    </div>
                 </div>
                 <TableElement
                     :filterable="false"
@@ -146,7 +156,12 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
-import { EyeIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/20/solid";
+import {
+    EyeIcon,
+    PencilSquareIcon,
+    SquaresPlusIcon,
+    TrashIcon,
+} from "@heroicons/vue/20/solid";
 import Modal from "@/Components/Modal.vue";
 import TextArea from "@/Components/TextArea.vue";
 import DialogBox from "@/Components/DialogBox.vue";

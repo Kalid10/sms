@@ -230,6 +230,7 @@ Echo.private("question-generator").listen(".question-generator", (e) => {
             position: "top-center",
         });
         uiStore.setQuestionGenerationStatus("error");
+        uiStore.setQuestionGenerationMessage(e.message);
     }
 });
 
