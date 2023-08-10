@@ -26,6 +26,7 @@ class Resource extends JsonResource
             'username' => $this->user->username,
             'profile_image' => $this->user->profile_image,
             'email' => $this->user->email,
+            'phone_number' => $this->user->phone_number,
             'gender' => $this->user->gender,
             'date_of_birth' => $this->user->date_of_birth,
             'city' => $this->user->address?->city,

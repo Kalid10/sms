@@ -34,7 +34,6 @@ use App\Models\Semester;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller
 {
@@ -65,7 +64,7 @@ class StudentController extends Controller
             if ($user->address) {
                 $user->address->update($addressData);
             } else {
-                $address = new Address($addressData + ['city' => 'Addis Ababa', 'country' => 'Ethiopia']);
+                $address = Address::create($addressData + ['city' => 'Addis Ababa', 'country' => 'Ethiopia']);
 
                 $user->address()->associate($address);
                 $user->save();
