@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Loading v-if="isLoading" :is-full-screen="true" />
         <FormElement
             :title="$t('assessmentForm.formElementTitle')"
             class="my-2"
@@ -97,6 +98,7 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
 import { InformationCircleIcon } from "@heroicons/vue/24/outline";
 import { useI18n } from "vue-i18n";
+import Loading from "@/Components/Loading.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -160,7 +162,7 @@ const selectedBatchAssessmentTypes = computed(() => {
 });
 
 const batchSubjectOptions = computed(() => {
-    return teacher.batch_subjects.map((batchSubject) => {
+    return teacher?.batch_subjects.map((batchSubject) => {
         return {
             value: batchSubject.id,
             label:
@@ -187,14 +189,21 @@ const statusOptions = [
     },
 ];
 
+const isLoading = ref(false);
+
 function handleSubmit() {
     const url = form.assessment_id
         ? "/teacher/assessments/update/"
         : "/teacher/assessments/create";
+
+    isLoading.value = true;
     form.post(url, {
         preserveState: true,
         onSuccess: () => {
             emit("success");
+        },
+        onFinish: () => {
+            isLoading.value = false;
         },
     });
 }

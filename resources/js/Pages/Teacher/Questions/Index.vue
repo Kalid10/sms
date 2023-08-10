@@ -5,11 +5,6 @@
     >
         <div class="flex w-full items-center justify-between py-3">
             <Title :title="$t('teacherQuestions.myQuestionBank')" />
-            <p
-                class="w-8/12 rounded-lg bg-gradient-to-tr from-violet-500 to-purple-500 p-4 text-center text-xs text-white"
-            >
-                {{ $t("teacherQuestions.questionGeneratorDescription") }}
-            </p>
         </div>
 
         <div class="flex w-full justify-between">
@@ -22,7 +17,6 @@
                         class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
                     >
                         <span>
-                            {{ $t("teacherQuestions.questionsFor") }}
                             {{
                                 selectedQuestion.batch_subject.subject
                                     .full_name +
@@ -31,7 +25,6 @@
                             }}
                         </span>
                         <span class="text-start text-xs font-light">
-                            @
                             {{
                                 moment(selectedQuestion.updated_at).format(
                                     "ddd MMMM DD YYYY"
@@ -39,9 +32,6 @@
                             }}</span
                         >
                     </div>
-                    <PrinterIcon
-                        class="w-5 cursor-pointer text-brand-text-350 hover:scale-125 hover:text-black"
-                    />
                 </div>
                 <div
                     v-for="(item, index) in selectedQuestion?.questions"
@@ -51,15 +41,9 @@
                 >
                     <div class="flex w-full flex-col space-y-3 text-sm">
                         <span>
-                            {{ item.question }}
+                            {{ item }}
                         </span>
 
-                        <span
-                            class="rounded-lg border border-black p-4 text-xs shadow-sm group-hover:border-gray-50"
-                        >
-                            {{ $t("teacherQuestions.answer") }}
-                            {{ item.answer }}</span
-                        >
                         <span
                             class="flex w-full justify-end space-x-6 pt-2 text-xs"
                         >
@@ -90,7 +74,7 @@
                 <TableElement
                     :filterable="false"
                     :selectable="false"
-                    header-style="bg-brand-450 text-white "
+                    header-style="!bg-brand-450 text-white "
                     class="cursor-pointer !rounded-none !shadow-none"
                     :data="formattedQuestionData"
                     :columns="config"
@@ -99,7 +83,7 @@
                 >
                     <template #row-actions="{ row }">
                         <EyeIcon
-                            class="w-4 cursor-pointer text-brand-text-450 hover:scale-125"
+                            class="w-4 cursor-pointer text-brand-450 hover:scale-125"
                             @click="setSelectedQuestion(row.id)"
                         />
                         <TrashIcon
@@ -132,26 +116,13 @@
             class="flex flex-col items-center space-y-5 rounded-lg bg-white p-4 shadow-sm"
         >
             <div class="text-xl font-semibold">
-                {{ $t("teacherQuestions.updateQuestion") }}
+                {{ $t("teacherQuestions.updateQuestionAndAnswer") }}
             </div>
             <TextArea
                 v-model="updateForm.question"
                 :placeholder="$t('teacherQuestions.addQuestion')"
                 :label="$t('common.question')"
                 class="w-full"
-            />
-            <TextArea
-                v-model="updateForm.answer"
-                class="w-full"
-                :placeholder="$t('teacherQuestions.addAnswer')"
-                :label="$t('teacherQuestions.answer')"
-            />
-
-            <TextArea
-                v-model="updateForm.answer"
-                class="w-full"
-                :placeholder="$t('teacherQuestions.addAnswer')"
-                :label="$t('teacherQuestions.answer')"
             />
             <SecondaryButton
                 :title="$t('teacherQuestions.update')"
@@ -169,12 +140,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
-import {
-    EyeIcon,
-    PencilSquareIcon,
-    PrinterIcon,
-    TrashIcon,
-} from "@heroicons/vue/20/solid";
+import { EyeIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/20/solid";
 import Modal from "@/Components/Modal.vue";
 import TextArea from "@/Components/TextArea.vue";
 import DialogBox from "@/Components/DialogBox.vue";
@@ -203,7 +169,7 @@ const formattedQuestionData = computed(() => {
             type: question.assessment_type.name,
             subject: question.batch_subject.subject.full_name,
             no_of_questions: question.no_of_questions,
-            difficulty_level: question.difficulty_level,
+            generated_at: moment(question.created_at).format("MMM Do YYYY"),
         };
     });
 });
@@ -226,8 +192,8 @@ const config = [
         key: "no_of_questions",
     },
     {
-        name: t("teacherQuestions.difficultyLevel"),
-        key: "difficulty_level",
+        name: t("teacherQuestions.generatedAt"),
+        key: "generated_at",
     },
 ];
 
@@ -239,8 +205,7 @@ const updateForm = useForm({
 });
 
 function updateQuestionForm(item, index) {
-    updateForm.question = item.question;
-    updateForm.answer = item.answer;
+    updateForm.question = item;
     updateForm.index = index;
     updateForm.question_id = selectedQuestion.value.id;
     showUpdateModal.value = true;
@@ -268,7 +233,7 @@ const updateQuestion = () => {
     updateForm.post("/teacher/questions", {
         preserveState: true,
         onSuccess: () => {
-            showUpdateModal.value = true;
+            showUpdateModal.value = false;
         },
     });
 };

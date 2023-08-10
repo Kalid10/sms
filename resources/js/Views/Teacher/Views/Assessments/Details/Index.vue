@@ -53,7 +53,7 @@
         v-else
         class="flex h-2/3 w-full items-center justify-center px-5 text-center text-4xl font-bold italic"
     >
-        {{ $t('detailsIndex.selectAnyAssessment') }}
+        {{ $t("detailsIndex.selectAnyAssessment") }}
     </div>
 </template>
 <script setup>
@@ -81,9 +81,10 @@ const showUpdateForm = ref(false);
 const title = computed(
     () =>
         props.assessment.title +
-        " " +
+        " (" +
         props.assessment.batch_subject.batch.level.name +
-        props.assessment.batch_subject.batch.section
+        props.assessment.batch_subject.batch.section +
+        ")"
 );
 </script>
 <style scoped></style>

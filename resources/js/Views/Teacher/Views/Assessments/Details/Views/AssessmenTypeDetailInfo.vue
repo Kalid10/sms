@@ -13,7 +13,19 @@
                     "
                 >
                     <span
-                        class="-skew-x-3 bg-brand-450 px-2.5 py-0.5 italic text-white"
+                        class="-skew-x-3 px-2.5 py-0.5 italic"
+                        :class="{
+                            'bg-yellow-400 text-black':
+                                assessment.status === 'completed',
+                            'bg-zinc-500 text-white':
+                                assessment.status === 'draft',
+                            'bg-emerald-400 text-black':
+                                assessment.status === 'published',
+                            'bg-cyan-400 text-black':
+                                assessment.status === 'scheduled',
+                            'bg-indigo-400 text-white':
+                                assessment.status === 'marking',
+                        }"
                     >
                         {{ assessment.assessment_type.name }} (
 
@@ -99,7 +111,7 @@
                             )
                         }}
                     </div>
-                    <div v-else>
+                    <div v-else-if="assessment.status !== 'completed'">
                         {{
                             $t(
                                 "assessmentTypeDetailInfo.hintAssessmentAdministered"
@@ -129,7 +141,17 @@
             </div>
             <div
                 v-if="assessment.status !== 'completed' && isTeacher()"
-                class="my-1 flex w-11/12 cursor-pointer justify-center rounded-2xl bg-brand-450 py-1.5 text-center text-[0.6rem] font-semibold text-white lg:w-1/2 2xl:w-5/12 2xl:text-xs"
+                class="my-1 flex w-11/12 cursor-pointer justify-center rounded-2xl bg-brand-450 py-1.5 text-center text-[0.6rem] font-semibold lg:w-1/2 2xl:w-5/12 2xl:text-xs"
+                :class="{
+                    'bg-yellow-400 text-black':
+                        assessment.status === 'completed',
+                    'bg-zinc-500 text-white': assessment.status === 'draft',
+                    'bg-emerald-400 text-black':
+                        assessment.status === 'published',
+                    'bg-cyan-400 text-black': assessment.status === 'scheduled',
+
+                    'bg-indigo-400 text-white': assessment.status === 'marking',
+                }"
                 @click="$emit('update')"
             >
                 {{ $t("assessmentTypeDetailInfo.updateAssessment") }}
