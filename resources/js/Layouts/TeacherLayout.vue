@@ -21,7 +21,8 @@
                 </div>
             </div>
         </div>
-        <Notification />
+
+        <Notification class="!my-3" />
 
         <div
             v-if="isQuestionGenerationLoading || questionGenerationStatus"
@@ -29,7 +30,7 @@
         >
             <div
                 v-if="isQuestionGenerationLoading"
-                class="flex items-center justify-center space-x-2 rounded-full bg-violet-600 px-3 py-2 text-xs"
+                class="my-2 flex w-fit items-center justify-center space-x-2 rounded-full bg-violet-600 px-3 py-2 text-xs"
             >
                 <Loading size="small" type="spinner" />
                 <div
