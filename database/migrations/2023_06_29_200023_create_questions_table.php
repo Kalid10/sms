@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('category')->default('open_ai');
             $table->integer('no_of_questions');
             $table->integer('difficulty_level');
+            $table->string('input')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

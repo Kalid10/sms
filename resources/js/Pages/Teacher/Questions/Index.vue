@@ -12,32 +12,38 @@
                 v-if="selectedQuestion"
                 class="w-5/12 rounded-lg bg-white p-3 shadow-sm"
             >
-                <div class="flex justify-between px-2">
-                    <div
-                        class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
+                <div
+                    class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
+                >
+                    <span>
+                        {{
+                            selectedQuestion.batch_subject.subject.full_name +
+                            " " +
+                            selectedQuestion.assessment_type.name
+                        }}
+                    </span>
+
+                    <span class="text-xs font-light">
+                        {{
+                            moment(selectedQuestion.updated_at).format(
+                                "ddd MMMM DD YYYY"
+                            )
+                        }}</span
                     >
-                        <span>
-                            {{
-                                selectedQuestion.batch_subject.subject
-                                    .full_name +
-                                " " +
-                                selectedQuestion.assessment_type.name
-                            }}
-                        </span>
-                        <span class="text-start text-xs font-light">
-                            {{
-                                moment(selectedQuestion.updated_at).format(
-                                    "ddd MMMM DD YYYY"
-                                )
-                            }}</span
-                        >
-                    </div>
                 </div>
+
+                <div
+                    class="mt-4 w-full rounded-lg border border-gray-400 py-3 px-2 text-start text-sm font-normal"
+                >
+                    <span class="font-semibold">Input:</span>
+                    {{ selectedQuestion.input }}
+                </div>
+
                 <div
                     v-for="(item, index) in selectedQuestion?.questions"
                     :key="index"
                     class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-4 font-medium shadow-sm hover:bg-brand-350 hover:text-white"
-                    :class="index % 2 === 1 ? 'bg-brand-50' : 'bg-brand-50/50'"
+                    :class="index % 2 === 1 ? 'bg-brand-50/50' : 'bg-white'"
                 >
                     <div class="flex w-full flex-col space-y-3 text-sm">
                         <span>

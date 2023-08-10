@@ -131,6 +131,7 @@ class QuestionsService
             'assessment_type_id' => $assessmentType->id,
             'no_of_questions' => $requestData['number_of_questions'],
             'difficulty_level' => $requestData['difficulty_level'],
+            'input' => $requestData['manual_question'],
         ]);
     }
 }
