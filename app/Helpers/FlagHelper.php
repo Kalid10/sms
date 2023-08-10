@@ -39,7 +39,7 @@ class FlagHelper
             if ($studentSubjectGrade->gradeScale->label === 'F' || $studentSubjectGrade->gradeScale->label === 'D') {
                 StudentHelper::flagStudent(
                     $studentSubjectGrade->student_id,
-                    'Academic',
+                    'academic',
                     'This student is in danger of failing, requiring immediate attention and focused support.
                 It is crucial that we provide intensive interventions and closely monitor their progress to ensure their academic success.',
                     null,
@@ -62,7 +62,7 @@ class FlagHelper
             if ($studentGrade->gradeScale->label === 'F' || $studentGrade->gradeScale->label === 'D') {
                 StudentHelper::flagStudent(
                     $studentGrade->student_id,
-                    'Academic',
+                    'academic',
                     'This student is in danger of failing, requiring immediate attention and focused support.
                 It is crucial that we provide intensive interventions and closely monitor their progress to ensure their academic success.',
                     null,

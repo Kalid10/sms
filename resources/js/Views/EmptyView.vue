@@ -1,5 +1,17 @@
 <template>
+    <div v-if="isFullScreen" class="flex h-screen w-full justify-evenly">
+        <div class="flex w-4/12 items-center justify-center">
+            <QuestionMarkCircleIcon class="w-72 text-brand-450" />
+        </div>
+
+        <div
+            class="flex w-5/12 flex-col items-center justify-center space-y-10"
+        >
+            <slot />
+        </div>
+    </div>
     <div
+        v-else
         class="flex h-fit flex-col items-center justify-center space-y-4 text-center font-medium"
     >
         <div v-if="showStatusCode" class="text-xl font-light">404</div>
@@ -13,16 +25,19 @@
             :href="linkUrl"
             :value="linkTitle"
         />
+
+        <slot />
     </div>
 </template>
 <script setup>
 import LinkCell from "@/Components/LinkCell.vue";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/20/solid";
 
 defineProps({
     title: {
         type: String,
-        required: true,
+        default: null,
     },
     subTitle: {
         type: String,
@@ -37,6 +52,10 @@ defineProps({
         default: null,
     },
     showStatusCode: {
+        type: Boolean,
+        default: false,
+    },
+    isFullScreen: {
         type: Boolean,
         default: false,
     },

@@ -1,21 +1,25 @@
 <template>
     <div class="flex flex-col">
         <div v-if="isAssessmentFound" class="flex w-full justify-between pr-2">
-            <div class="text-xl font-medium">{{ $t('studentAssessments.recentAssessments')}}</div>
+            <div class="text-xl font-medium">
+                {{ $t("studentAssessments.recentAssessments") }}
+            </div>
 
             <div
                 class="flex w-1/2 flex-col justify-end space-y-3 rounded-lg bg-white p-4 text-center"
             ></div>
         </div>
-        <div class="flex flex-col space-y-2">
-            <div class="flex flex-row items-center justify-end space-x-2">
-                <SelectInput
-                    v-model="selectedAssessmentType"
-                    :options="assessmentTypeOptions"
-                    placeholder="Filter by Assessment Type"
-                    class="w-1/2 justify-end"
-                />
-            </div>
+
+        <div
+            v-if="assessments?.data?.length"
+            class="flex flex-row items-center justify-end space-x-2"
+        >
+            <SelectInput
+                v-model="selectedAssessmentType"
+                :options="assessmentTypeOptions"
+                placeholder="Filter by Assessment Type"
+                class="w-1/2 justify-end"
+            />
         </div>
 
         <Item
@@ -28,11 +32,11 @@
             v-else
             class="flex h-32 flex-col items-center justify-center space-y-4 lg:h-44"
         >
-            <EmptyView :title="$t('studentAssessments.noAssessmentsFound')"/>
+            <EmptyView :title="$t('studentAssessments.noAssessmentsFound')" />
         </div>
     </div>
 
-    <div class="my-2 flex justify-center">
+    <div v-if="assessments?.data?.length" class="my-2 flex justify-center">
         <LinkCell
             class="flex w-fit items-center justify-end"
             href="/teacher/assessments"

@@ -31,7 +31,7 @@ it('creates a new school year with semesters', function () {
 
     // Check if the school year and semesters were created in the database
     $schoolYear = SchoolYear::first();
-//    expect($schoolYear->start_date)->toBe($startDate);
+    //    expect($schoolYear->start_date)->toBe($startDate);
     expect($schoolYear->end_date)->toBe(null);
     expect($schoolYear->name)->toBe($requestData['name']);
 

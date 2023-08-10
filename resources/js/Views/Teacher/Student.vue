@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col items-start justify-between bg-brand-50 lg:flex-row lg:pl-4 2xl:pr-5 2xl:pl-2"
+        class="flex min-h-screen w-full flex-col items-start justify-between lg:flex-row lg:pl-4 2xl:pr-5 2xl:pl-2"
     >
         <!--        Left side-->
         <div

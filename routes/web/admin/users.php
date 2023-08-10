@@ -8,6 +8,7 @@ Route::controller(UserController::class)->prefix('admin/user/register/')->middle
     Route::get('student', 'student');
     Route::get('admin', 'admin');
     Route::get('teacher', 'teacher');
+    Route::post('upload', 'uploadImage')->name('upload');
 });
 
 Route::controller(RegisterController::class)->prefix('register/')->middleware('auth')->name('register.')->group(function () {
@@ -16,3 +17,5 @@ Route::controller(RegisterController::class)->prefix('register/')->middleware('a
     Route::post('guardian', 'register')->name('guardian');
     Route::post('teacher', 'register')->name('teacher');
 });
+
+//Route::post('/upload', [UserController::class, 'uploadImage'])->name('upload');

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\AbsenteeHelper;
 use App\Helpers\BatchSessionHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -88,7 +89,7 @@ class Batch extends Model
             ->withTimestamps();
     }
 
-    public function inProgressSession(): BatchSession|null
+    public function inProgressSession(): ?BatchSession
     {
         return $this->sessions->where('status', BatchSession::STATUS_IN_PROGRESS)->first()?->load('absentees.user');
     }
@@ -96,6 +97,8 @@ class Batch extends Model
     public function getSessions(string $span = 'now'): BatchSession|Collection|null
     {
         BatchSessionHelper::sync($this->load('sessions.schoolPeriod'));
+
+        AbsenteeHelper::setAbsenteesFromPreviousSession();
 
         return match ($span) {
             'now' => $this->inProgressSession(),

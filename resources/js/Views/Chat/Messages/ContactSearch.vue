@@ -2,7 +2,7 @@
     <div class="flex h-full w-full flex-col items-center overflow-y-auto py-10">
         <Loading v-if="isLoading" color="secondary" class="absolute" />
         <div v-if="searchRecords?.data?.length < 1">
-            <EmptyView title="No Record Found" />
+            <EmptyView :title="$t('rigelChat.noRecordFound')" />
         </div>
 
         <div
@@ -38,7 +38,7 @@
                     </span>
                     <div class="flex w-full space-x-1 text-xs">
                         <span class="font-light capitalize">
-                            {{ chat.type }} for
+                            {{ chat.type }} {{ $t("common.for") }}
                         </span>
                         <span v-if="chat.type === 'guardian'">
                             <span

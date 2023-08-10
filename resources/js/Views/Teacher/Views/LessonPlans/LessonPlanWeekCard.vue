@@ -4,12 +4,12 @@
         class="!bg-white!p-3 h-full !max-w-[26rem] !rounded-b-none !border-b-0 !border-gray-200 !font-light text-brand-500 !shadow-sm drop-shadow-sm"
     >
         <template #title>
-            <div class="pb-1 text-sm font-medium">
+            <div class="pb-1 text-sm font-medium text-black">
                 {{ $t("lessonPlanWeekCardNew.week") }} {{ index }}
             </div>
         </template>
         <template #subtitle>
-            <span v-if="batchSessions.length > 1" class="text-brand-500">
+            <span v-if="batchSessions.length > 1" class="text-gray-800">
                 {{ $t("lessonPlanWeekCardNew.classSessionsWeekStarting") }}
                 <span class="inline-block font-semibold">
                     {{
@@ -34,7 +34,7 @@
         >
             <div
                 v-if="batchSessions.length < 1"
-                class="flex h-full flex-col items-center"
+                class="flex h-full flex-col items-center text-gray-700"
             >
                 <EmptyView
                     class="mt-20"

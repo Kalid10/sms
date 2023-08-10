@@ -88,39 +88,13 @@ class Teacher extends Model
         return $this->hasMany(BatchSession::class, 'teacher_id', 'id')->with('lessonPlan')->whereHas('lessonPlan');
     }
 
-    public function staffAbsenteeRecords(int $schoolYearId = null, int $batchSubjectId = null)
-    {
-        $schoolYearId = $schoolYearId ?? SchoolYear::getActiveSchoolYear()->id;
-
-        return StaffAbsentee::where('user_id', $this->user_id)
-            ->whereHas('batchSession.batchSchedule', function ($query) use ($schoolYearId) {
-                $batches = $this->batches ? $this->batches->pluck('batch_id') : null;
-
-                if ($batches) {
-                    $query->whereIn('batch_id', $batches);
-                }
-
-                $query->whereHas('batch', function ($query) use ($schoolYearId) {
-                    $query->where('school_year_id', $schoolYearId);
-                });
-            })->when($batchSubjectId, function ($query) use ($batchSubjectId) {
-                $query->whereHas('batchSession.batchSchedule', function ($query) use ($batchSubjectId) {
-                    $query->where('batch_subject_id', $batchSubjectId);
-                });
-            });
-    }
-
-    public function staffAbsenteePercentage(): float|int
-    {
-        $absenteeRecords = $this->staffAbsenteeRecords();
-        $absenteeCount = $absenteeRecords ? $absenteeRecords->count() : 0;
-        $sessionCount = $this->batchSessions()->count();
-
-        return $sessionCount ? round(($absenteeCount / $sessionCount) * 100, 2) : 0;
-    }
-
     public function getActiveWeeklySessionsAttribute(): int
     {
         return $this->activeWeeklySessions();
+    }
+
+    public function staffAbsentee(): HasMany
+    {
+        return $this->hasMany(StaffAbsentee::class);
     }
 }

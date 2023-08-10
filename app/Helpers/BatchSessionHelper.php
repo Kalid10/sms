@@ -124,7 +124,7 @@ class BatchSessionHelper
      *
      * Find the BatchSession that overlaps with the current time
      */
-    public static function findBatchSessionInRange(Batch $batch): BatchSession|null
+    public static function findBatchSessionInRange(Batch $batch): ?BatchSession
     {
         $now = Carbon::now();
         $today = $now->today();
@@ -134,10 +134,10 @@ class BatchSessionHelper
             ->where('date', $today)
             ->filter(function ($session) use ($now) {
                 return (Carbon::createFromDate($session->schoolPeriod->start_time)
-                            ->format('His') < $now->format('His')) &&
+                    ->format('His') < $now->format('His')) &&
                     (Carbon::createFromDate($session->schoolPeriod->start_time)
-                            ->addMinutes($session->schoolPeriod->duration)
-                            ->format('His') > $now->format('His'));
+                        ->addMinutes($session->schoolPeriod->duration)
+                        ->format('His') > $now->format('His'));
             })
             ->first();
     }
@@ -147,7 +147,7 @@ class BatchSessionHelper
      *
      * Find the next upcoming BatchSession
      */
-    public static function findUpcomingBatchSession(Batch $batch): BatchSession|null
+    public static function findUpcomingBatchSession(Batch $batch): ?BatchSession
     {
         $now = Carbon::now();
         $today = $now->today();

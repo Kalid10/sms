@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col space-y-8 bg-brand-50 py-2 lg:p-5 lg:px-1 2xl:px-10"
+        class="flex min-h-screen w-full flex-col space-y-8 py-2 lg:p-5 lg:px-1 2xl:px-10"
     >
         <div class="flex h-fit w-full flex-col justify-between lg:flex-row">
             <div class="flex w-full flex-col space-y-8 lg:w-7/12">
@@ -9,8 +9,9 @@
                 <TabElement v-model:active="activeTab" :tabs="tabs">
                     <template #[announcementsTab]>
                         <Announcements
+                            :show-header="false"
                             url="/admin/announcements"
-                            class-style="h-fit w-full space-y-2 rounded-lg bg-white py-2 px-2 shadow-sm"
+                            class-style="h-fit w-full space-y-2 rounded-lg bg-white p-3 shadow-sm"
                         />
                     </template>
 

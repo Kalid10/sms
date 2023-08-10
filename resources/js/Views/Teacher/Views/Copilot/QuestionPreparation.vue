@@ -91,8 +91,21 @@
                     />
                 </div>
 
+                <div
+                    v-if="
+                        subjectOptions?.length > 0 &&
+                        form.question_source === 'custom'
+                    "
+                    class="w-full"
+                >
+                    <SelectInput
+                        v-model="selectedSubject"
+                        :options="subjectOptions"
+                    />
+                </div>
+
                 <TextArea
-                    v-if="form.question_source === 'custom'"
+                    v-if="selectedSubject && form.question_source === 'custom'"
                     v-model="form.manual_question"
                     class="w-full"
                     :label="$t('common.question')"
@@ -100,7 +113,9 @@
                     rows="10"
                     :error="form.errors.manual_question"
                 />
+
                 <SecondaryButton
+                    :is-disabled="isSubmitDisabled"
                     :title="$t('common.submit')"
                     class="w-10/12 !rounded-2xl bg-purple-600 py-2 font-medium uppercase text-white"
                     @click="submit"
@@ -114,7 +129,7 @@
 </template>
 <script setup>
 import SelectInput from "@/Components/SelectInput.vue";
-import { computed, onMounted } from "vue";
+import { computed, inject, onMounted, ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import QuestionSource from "@/Views/Teacher/Views/Copilot/QuestionSource.vue";
@@ -123,12 +138,28 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextArea from "@/Components/TextArea.vue";
 import { useUIStore } from "@/Store/ui";
 
+const showNotification = inject("showNotification");
 const assessmentTypes = computed(() => usePage().props.assessment_types);
 const questions = computed(() => usePage().props.questions);
+const batchSubjects = computed(() => usePage().props.batch_subjects);
 
 const emit = defineEmits(["limit-reached"]);
 onMounted(() => {
     loadLessonPlans();
+});
+
+const selectedSubject = ref();
+const subjectOptions = computed(() => {
+    return batchSubjects?.value?.map((item) => {
+        return {
+            label:
+                item.batch.level.name +
+                item.batch.section +
+                " - " +
+                item.subject.full_name,
+            value: item.id,
+        };
+    });
 });
 
 const filteredAssessmentType = computed(() => {
@@ -146,7 +177,7 @@ const form = useForm({
     question_source: null,
     lesson_plan_ids: [],
     manual_question: "",
-    batch_subject_id: 1263,
+    batch_subject_id: selectedSubject,
     difficulty_level: 5,
 });
 
@@ -182,7 +213,30 @@ Echo.private("question-generator").listen(".question-generator", (e) => {
 
     if (e.type === "success") uiStore.setQuestionGenerationStatus("success");
 
-    if (e.type === "error") uiStore.setQuestionGenerationStatus("error");
+    if (e.type === "error") {
+        showNotification({
+            type: "error",
+            message: e.message,
+            position: "top-center",
+        });
+        uiStore.setQuestionGenerationStatus("error");
+    }
+});
+
+const isSubmitDisabled = computed(() => {
+    if (!form.question_source) return true;
+
+    if (
+        form.question_source === "custom" &&
+        (!form.manual_question || form.manual_question.trim() === "")
+    ) {
+        return true;
+    }
+
+    return (
+        form.question_source === "lesson-plans" &&
+        (!form.lesson_plan_ids || form.lesson_plan_ids.length < 1)
+    );
 });
 </script>
 

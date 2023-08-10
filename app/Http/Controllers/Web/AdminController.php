@@ -231,4 +231,13 @@ class AdminController extends Controller
             ],
         ]);
     }
+
+    public function assessment(Assessment $assessment): Response
+    {
+        $assessment->load('batchSubject.level', 'assessmentType', 'quarter', 'batchSubject.subject');
+
+        return Inertia::render('Admin/Assessments/Details', [
+            'assessment' => $assessment,
+        ]);
+    }
 }

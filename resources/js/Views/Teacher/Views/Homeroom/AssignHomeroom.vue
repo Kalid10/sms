@@ -24,30 +24,30 @@
                 </div>
             </div>
 
-            <div class="relative flex w-full flex-col justify-center space-y-4">
+            <div
+                class="scrollbar-hide relative flex max-h-[500px] w-full flex-col justify-center space-y-4 overflow-y-scroll"
+            >
+                <TextInput
+                    v-model="searchKey"
+                    type="text"
+                    placeholder="Search for a grade"
+                    class-style="focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-zinc-100 focus:border-2 rounded-lg border-gray-400 "
+                />
                 <div
-                    class="scrollbar-hide max-h-[500px] min-h-10 w-full overflow-y-scroll rounded-md bg-white drop-shadow"
+                    v-for="(batch, index) in batchOptions"
+                    v-show="searchKey.length"
+                    :key="batch"
+                    class="cursor-pointer"
+                    :class="
+                        index % 2 === 0
+                            ? 'bg-brand-50/50 px-10 hover:bg-brand-200'
+                            : 'bg-white px-10 hover:bg-brand-100'
+                    "
+                    @click="selectBatch(batch)"
                 >
-                    <TextInput
-                        v-model="searchKey"
-                        placeholder="Search for grade level"
-                        subtext="Search for a grade"
-                    />
-                    <div
-                        v-for="(batch, index) in batchOptions"
-                        v-show="searchKey.length > 0"
-                        :key="batch"
-                        class="cursor-pointer py-2"
-                        :class="
-                            index % 2 === 0
-                                ? 'bg-brand-100 px-10 hover:bg-brand-200'
-                                : 'bg-white px-10 hover:bg-brand-200'
-                        "
-                        @click="selectBatch(batch)"
-                    >
-                        <p class="px-3 py-2">{{ batch.label }}</p>
-                    </div>
+                    <p class="px-3 py-2">{{ batch.label }}</p>
                 </div>
+
                 <div
                     v-if="selectedBatch && selectedBatch.value"
                     class="flex w-full flex-col items-center justify-center gap-5 py-3"

@@ -1,27 +1,21 @@
 <template>
     <div class="flex w-full flex-col items-center justify-center space-y-5">
         <div class="w-full text-center font-semibold text-black">
-            Currently, this assessment is in
-            <span
-                class="mx-0.5 -skew-x-3 bg-indigo-400 px-2 py-0.5 text-sm font-bold italic text-white"
-                >SCHEDULED
-            </span>
-            state! You can:
+            <span v-html:="$t('scheduled.currentlyFull')"></span>
         </div>
         <SecondaryButton
-            title="PUBLISH ASSESSMENT"
-            class="w-44 rounded-xl bg-emerald-400 font-semibold lg:w-56"
+            :title="$t('scheduled.publishAssessment')"
+            class="w-44 rounded-xl bg-emerald-400 font-semibold uppercase lg:w-56"
             @click="showDialog = true"
         />
         <DialogBox
             v-model:open="showDialog"
             type="update"
-            title="Publish Assessment"
+            :title="$t('scheduled.publishAssessment')"
             @confirm="updateAssessment"
         >
             <template #description>
-                Performing this action will result significant change across the
-                entire subject, Are you sure you want to proceed?
+                {{ $t("scheduled.alertMessage") }}
             </template>
         </DialogBox>
     </div>

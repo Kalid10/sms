@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-screen w-full flex-col space-y-3 bg-brand-50"
+        class="flex min-h-screen w-full flex-col space-y-3"
         :class="isTeacher() ? '2xl:pl-4 2xl:pr-2 p-1' : ''"
     >
         <!--                 Next Class Header On Mobile Devices-->
@@ -29,6 +29,7 @@
         >
             <div class="flex w-full flex-col space-y-8 lg:w-8/12">
                 <WelcomeHeader v-if="isTeacher()" />
+
                 <TabElement v-model:active="activeTab" :tabs="tabs">
                     <template #[announcementsTab]>
                         <Announcements
@@ -47,10 +48,16 @@
                         />
                     </template>
                 </TabElement>
+
                 <div class="flex w-full items-center justify-between space-x-6">
                     <div class="w-7/12"></div>
                 </div>
-                <Flags :title="$t('teacherIndex.recentFlags')" view="teacher" />
+
+                <Flags
+                    :title="$t('teacherIndex.recentFlags')"
+                    view="teacher"
+                    :show-edit-and-delete="false"
+                />
             </div>
             <div
                 class="flex h-full w-full flex-col items-center space-y-8 lg:w-3/12"
@@ -59,9 +66,13 @@
                     class="!w-11/12"
                     @view="activeTab = toDaysScheduleTab"
                 />
+
                 <Summary class="!w-11/12" />
 
-                <AttendanceCard class="!w-11/12" />
+                <AttendanceCard
+                    :percentage="100 - parseFloat(teacherAbsenteePercentage)"
+                    class="!w-11/12"
+                />
             </div>
         </div>
     </div>
@@ -89,6 +100,10 @@ const filters = computed(() => usePage().props.filters);
 const nextClass = usePage().props.teacher.next_batch_session;
 const nextClassSection = ref(null);
 const teacherSchedule = computed(() => usePage().props.teacher_schedule);
+const teacherAbsenteePercentage = computed(
+    () => usePage().props.teacher_absentee_percentage
+);
+
 const scrollToNextClass = () => {
     nextClassSection.value.$el.scrollIntoView({ behavior: "smooth" });
 };

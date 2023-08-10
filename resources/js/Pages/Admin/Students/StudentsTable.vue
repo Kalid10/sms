@@ -32,40 +32,40 @@
                     :placeholder="$t('adminStudentsTable.searchForStudent')"
                 />
                 <div
-                    class="mt-3 flex w-full flex-col justify-between divide-y divide-gray-200 rounded-lg border bg-brand-50 p-3 lg:flex-row lg:divide-x"
+                    class="mt-3 flex w-full flex-col justify-between rounded-lg border bg-brand-400 p-3 lg:flex-row lg:divide-x"
                 >
                     <div class="w-full text-center lg:w-4/12">
-                        <div class="text-xl font-semibold text-brand-text-50">
+                        <div class="text-xl font-semibold text-brand-text-500">
                             {{ studentsCount }}
                         </div>
                         <div
-                            class="text-[0.65rem] font-medium text-brand-text-300"
+                            class="text-[0.65rem] font-medium text-brand-text-400"
                         >
                             {{ $t("adminStudentsTable.totalStudents") }}
                         </div>
                     </div>
                     <div class="w-full text-center lg:w-4/12">
                         <div
-                            class="cursor-pointer text-xl font-semibold text-brand-text-50"
+                            class="cursor-pointer text-xl font-semibold text-brand-text-500"
                             @click="showAbsentees = true"
                         >
                             {{ todayAbsentees.length }}
                         </div>
                         <div
-                            class="text-[0.65rem] font-medium text-brand-text-300"
+                            class="text-[0.65rem] font-medium text-brand-text-400"
                         >
                             {{ $t("adminStudentsTable.absenteesToday") }}
                         </div>
                     </div>
                     <div class="w-full text-center lg:w-4/12">
                         <div
-                            class="cursor-pointer text-xl font-semibold text-brand-text-50"
+                            class="cursor-pointer text-xl font-semibold text-brand-text-500"
                             @click="showLatestPeriodAbsentees = true"
                         >
                             {{ latestPeriodAbsentees.length }}
                         </div>
                         <div
-                            class="text-[0.65rem] font-medium text-brand-text-300"
+                            class="text-[0.65rem] font-medium text-brand-text-400"
                         >
                             {{ $t("adminStudentsTable.latestPeriodAbsentees") }}
                         </div>

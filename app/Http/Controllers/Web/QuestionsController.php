@@ -22,7 +22,7 @@ class QuestionsController extends Controller
         $userId = $request->user_id ?? auth()->user()->id;
         $questions = Question::where('user_id', $userId)->with('user', 'batchSubject.subject', 'assessmentType')->paginate(7);
 
-        return Inertia::render('Teacher/Questions', [
+        return Inertia::render('Teacher/Questions/Index', [
             'questions' => $questions,
         ]);
     }

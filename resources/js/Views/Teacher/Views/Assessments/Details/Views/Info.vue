@@ -1,7 +1,7 @@
 <template>
     <div class="flex w-full justify-between">
         <div class="flex h-20 w-6/12 flex-col items-center justify-evenly">
-            <div class="text-4xl font-bold">11</div>
+            <div class="text-4xl font-bold">{{ totalStudents }}</div>
             <div
                 class="cursor-pointer text-xs font-light underline-offset-2 hover:font-medium hover:underline"
             >
@@ -45,7 +45,7 @@ import {
 } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
-    count: {
+    totalStudents: {
         type: String,
         required: true,
     },

@@ -18,7 +18,7 @@
                         {{ title }}
                     </slot>
                 </h3>
-                <h3 class="text-sm text-brand-text-300">
+                <h3 class="text-xs text-gray-500">
                     <slot name="subtitle">
                         {{ subtitle }}
                     </slot>

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-screen max-h-full w-full flex-col space-y-5 overflow-auto border-l border-zinc-500 bg-white py-5 px-3 text-white"
+        class="flex h-screen max-h-full w-full flex-col space-y-5 overflow-auto bg-white py-5 px-3 text-white"
     >
         <div class="flex w-full justify-evenly">
             <Header
@@ -12,16 +12,10 @@
                 @change="handleMonthChange"
             >
                 <template #default>
-                    <div
-                        class="mx-4 flex w-3/12 cursor-pointer justify-center !rounded-2xl bg-brand-150 px-2 font-semibold"
+                    <AdjustmentsHorizontalIcon
+                        class="w-5 text-white"
                         @click="showFilter = true"
-                    >
-                        <AdjustmentsHorizontalIcon class="w-4 text-black" />
-                        <SecondaryButton
-                            :title="$t('lessonPlansIndex.filterLessonPlans')"
-                            class="w-fit p-0"
-                        />
-                    </div>
+                    />
                 </template>
             </Header>
         </div>
@@ -36,7 +30,7 @@
                                 subject.batch.level.name &&
                             lessonPlanSubject.batch.section ===
                                 subject.batch.section
-                                ? ' text-brand-text-450 bg-brand-500  rounded-2xl'
+                                ? ' text-white bg-brand-400 rounded-2xl'
                                 : 'text-brand-text-50'
                         "
                         class="relative grid min-w-[4rem] cursor-pointer place-items-center py-2 px-5 text-center text-sm font-medium"
@@ -82,7 +76,6 @@ import { isAdmin, parseLevel } from "@/utils.js";
 import LessonPlanFormModal from "@/Views/Teacher/Views/LessonPlans/LessonPlanFormModal.vue";
 import LessonPlanMonthViewer from "@/Views/Teacher/Views/LessonPlans/LessonPlanMonthViewer.vue";
 import Header from "@/Views/Teacher/Views/Header.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Filters from "@/Views/Filters.vue";
 import Modal from "@/Components/Modal.vue";
 import { AdjustmentsHorizontalIcon } from "@heroicons/vue/20/solid";

@@ -42,10 +42,10 @@ class BatchSeeder extends Seeder
 
         return Student::with('user', 'batches.batch', 'batches.batch.schoolYear', 'batches.batch.level')->get()->filter(function ($student) use ($studentsBirthYear) {
             return Carbon::createFromDate($student->user->date_of_birth->year)
-                    ->between(
-                        Carbon::createFromDate($studentsBirthYear - 1),
-                        Carbon::createFromDate($studentsBirthYear + 1)
-                    ) &&
+                ->between(
+                    Carbon::createFromDate($studentsBirthYear - 1),
+                    Carbon::createFromDate($studentsBirthYear + 1)
+                ) &&
                 $student->batches->count() === 0;
         });
     }

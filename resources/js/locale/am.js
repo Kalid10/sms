@@ -116,6 +116,7 @@ const am = {
         noAnnouncementsFound: "መግለጫዎች አልተገኙም!",
         goToAnnouncements: "መግለጫዎች ላይ ሂድ",
         viewAllAnnouncements: "ሁሉንም መግለጫዎች ይመልከቱ",
+        publishAnnouncement: "ማስታወቂያ ያትሙ",
     },
     announcementsItem: {
         postTargets: "የመልዕክት ዒላማዎች",
@@ -191,11 +192,12 @@ const am = {
         totalPts: "ጠቅላላ ነጥብ",
         assessmentCompleted:
             "ይህንን ግምገማ በተሳካ ሁኔታ አጠናቅቀዋል፣ እና በዚህ ምክንያት፣ ማንኛውም ተጨማሪ ማሻሻያ ወይም አዳዲስ ግምገማዎች መፍጠር አይፈቀድም።",
+        assessmentCompletedAdmin: "ይህ ግምገማ በተሳካ ሁኔታ ተጠናቅቀዋል",
         hintAssessmentAdministered:
             "ይህ ግምገማ የሚካሄደው በየሩብ ዓመቱ ነው፣ ስለዚህ እባክዎ ተገቢውን እርምጃ እየወሰዱ መሆኑን ያረጋግጡ።",
         atTheConclusion: "በሩብ ወይም በሴሚስተር ማጠቃለያ ላይ, ሁሉም",
         willBeConverted: "ወደ መለያ ይቀየራል።",
-        "ofTheFinalGrade.": "የመጨረሻው ክፍል",
+        ofTheFinalGrade: "የመጨረሻው ክፍል",
         note: "ማስታወሻ፡ ይህ ግምገማን አያካችም።",
         updateAssessment: "ግምገማን አዘምን",
     },
@@ -207,7 +209,7 @@ const am = {
         searchAssessment: "መገምገሚያ ይፈልጉ",
     },
     assignHomeroom: {
-        assignHomeroom: "ስም ጠሪ(Homeroom) መመደብ",
+        assignHomeroom: "ሆም ሩም(Homeroom) መመደብ",
         teacher: "መምህር:",
         currentlyAssigned: "አሁን ባለው ደረጃ ተመድቧል:",
         searchAndSelect: "መመድብ ለሚፈልጉት ደረጃ ፈልግና ምረጥ",
@@ -369,6 +371,7 @@ const am = {
         ],
     },
     common: {
+        or: "ወይም",
         for: "ለ",
         add: "አክል",
         absentees: "ያልተገኙ(ቀሪ)",
@@ -545,7 +548,6 @@ const am = {
         Delegate: "አስተላልፍ",
     },
     deleteAssessment: {
-        buttonTitle: "ግምገማ አጥፋ",
         deleteAssessment: "ግምገማ አጥፋ",
         deleteMessage: "ይህን ግምገማ ሊሰርዙ ነው። ይህ እርምጃ የማይቀለበስ ነው!",
         pleaseTypeAssessment: "መሰረዙን ለማረጋገጥ እባክዎ የግምገማውን ርዕስ በትክክል ይተይቡ",
@@ -557,6 +559,10 @@ const am = {
         cancel: "ሰርዝ",
     },
     draft: {
+        currentlyFull:
+            "በአሁኑ ጊዜ ይህ ግምገማ በ<span class='-skew-x-3 bg-yellow-400 px-2 py-0.5 text-sm font-bold italic'>ረቂቅ</span>ላይ ነው!",
+        settingAssessmentFull:
+            "የግምገማ ክፍልን እንደ <span class='font-semibold uppercase'>' PUBLISHED '</span> ወይም <span class='font-semibold uppercase'>' SCHEDULED '</span> ማድረግ ለአሳዳጊዎች እና ለመምህራን  ወያውኑ ያሳውቃል። ለተጨማሪ ግንዛቤ የግምገማ ክፍሉ ዝርዝር መረጃ መድረሻ ሊደረግ ይችላል።",
         currently: "በአሁኑ ጊዜ ይህ ግምገማ በሂደት ላይ ነው።",
         draft: "ረቂቅ",
         stateYouCan: "ሁኔታ! ትችላለህ",
@@ -731,9 +737,9 @@ const am = {
         noHomeroomClass: "ገና ምንም ሆም ሩሞ አልተያያዘም!",
     },
     homeRooms: {
-        noHomeroomClasses: "ስም ጠሪ የሆኑበት ክፍል የለም",
-        assignHomeroom: "ስም ጠሪ ሰይም",
-        homeroomClasses: "ስም ጠሪ የሆኑበት ክፍሎች",
+        noHomeroomClasses: "ሆም ሩም የሆኑበት ክፍል የለም",
+        assignHomeroom: "ሆም ሩም ሰይም",
+        homeroomClasses: "ሆም ሩም የሆኑበት ክፍሎች",
         classAttendance: "የክፍል መገኘት",
         classConduct: "የክፍል ምግባር",
         topStudents: "ከፍተኛ ተማሪዎች",
@@ -891,7 +897,7 @@ const am = {
         quarterRank: "ሩብ ደረጃ",
     },
     marking: {
-        continueMarking: "ምልክት ማድረግዎን ይቀጥሉ",
+        continueMarking: "ማረሞን ይቀጥሉ",
     },
     nextClass: {
         nextUp: "ቀጣዩ ክፍል የእርሶ ነውz",
@@ -947,7 +953,7 @@ const am = {
         submit: "አስገባ",
     },
     published: {
-        startMarking: "ምልክት ማድረግ ጀምር",
+        startMarking: "ማረሞን ይጀምሩ",
     },
     questionPreparation: {
         welcome: "አንኩዋን ወደ AI-Powered የጥያቄ ዝግጅት መድረክ በደህና መጡ",
@@ -1107,6 +1113,8 @@ const am = {
         search: "ፍለጋ",
     },
     scheduled: {
+        currentlyFull:
+            "በአሁኑ ጊዜ ይህ ግምገማ በ<span class='mx-0.5 -skew-x-3 bg-indigo-400 px-2 py-0.5 text-sm font-bold italic text-white'>መርሐግብር</span>ላይ ነው!",
         currentlyThisAssessment: "በአሁኑ ጊዜ ይህ ግምገማ በሂደት ላይ ",
         scheduled: "መርሐግብር ተይዞለታል",
         stateYouCan: "ሁኔታ! ትችላለህ",
@@ -1236,7 +1244,7 @@ const am = {
     sectionHomeroom: {
         homeroomTeacher: "የክፍል መምህር",
         noHomeroomTeacherAssigned: "የክፍል መምህር አልተመደበም",
-        assignHomeroom: "ስም ጠሪ ይሰይሙ",
+        assignHomeroom: "ሆም ሩም ይሰይሙ",
     },
     sectionPerformance: {
         topStudents: "ምርጥ ተማሪዎች",
@@ -1334,7 +1342,9 @@ const am = {
         note: "ማስታወሻ",
         title: "ርዕስ",
         titlePlaceholder: "ርዕስ",
+        snote: "የ{name} ማስታወሻ",
         by: "በ",
+        updateNote: "የ{name} ማስታወሻ አሻሽል",
     },
     studentRank: {
         rank: "ደረጃ",
@@ -1746,7 +1756,7 @@ const am = {
             "ለተፈጠሩት ጥያቄዎች የችግር ደረጃን ለማዘጋጀት ይህንን ተንሸራታች ይጠቀሙ። ተንሸራታቹን ወደ ግራ ማንቀሳቀስ ጥያቄዎችን ቀላል ያደርገዋል, ወደ ቀኝ ማንቀሳቀስ ደግሞ የበለጠ ፈታኝ ያደርጋቸዋል.",
     },
     adminSummary: {
-        chatValue: "5 ያልተነበቡ መልእክቶች",
+        chatValue: "ከአስተማሪዎች እና ከአድሚኖች ጋር ይነጋገሩ",
         studentValue: "መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ",
         teacherValue: "መዝገብ፣ ማረጋገጥ፣ መርምር እና ተጨማሪ",
         adminValue: "መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ።",
@@ -1759,6 +1769,28 @@ const am = {
         enterReason: "ምክንያት ያስገቡ",
         searchAddAbsentee: "ሰራተኛን በመለያ ይፈልጉ አን ቀሪ ላይ ይጨምሩ",
         searchStaffMember: "በስም የሰራተኛ መለያ ይፈልጉ",
+    },
+    rigelChat: {
+        typeMessage: "መልዕክት ይጻፉ...",
+        noMessages: "ምንም መልዕክቶች አልተገኙም።",
+        welcome: "እንኳን ደህና መጡ ወደ ሪግል ቻት።",
+        selectChat: "መልእክት ለመላክ ቻት ይምረጡ።",
+        activeNow: "አሁን ንቁ የሆኑ",
+        offline: "ንቁ ያይደሉ(Offline)",
+        noChatHistory: "በአሁኑ ጊዜ የውይይት ታሪክ የለም። መነጋገር እንደጀመርክ ንግግሮችህ እዚህ ይታያሉ።",
+        noRecordFound: "ምንም መዝገብ አልተገኘም።",
+        myMessage: "መልዕክቶቼ",
+        searchTeacher: "መምህር፣ አስተዳዳሪ ፈልግ...",
+        peopleYouWant: "ሊገናኙዋቸው ከሚፈልጓቸው ሰዎች መካከል",
+    },
+    addAnnouncement: {
+        addAnnouncement: "ማስታወቂያ ጨምር",
+        title: "ርዕስ",
+        body: "ዝርዝር",
+        description: "ዝርዝር መግለጫ",
+        selectTargetGroup: "የታለመ ቡድን ይምረጡ",
+        expireDate: "የሚያበቃበት ቀን",
+        expiresOn: "ጊዜው ሚያበቃው",
     },
 };
 

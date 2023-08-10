@@ -1,13 +1,13 @@
 <template>
     <GeneralInfo
-        teacher-name="Bereket Gobeze"
-        :count="assessment.total_students"
+        :teacher-name="assessment.batch_subject.teacher.user.name"
+        :total-students="assessment?.students.length"
         :status="capitalize(assessment.status)"
     />
 
     <div class="flex w-full items-center justify-center">
         <SecondaryButton
-            title="START MARKING"
+            :title="$t('published.startMarking')"
             class="w-44 rounded-xl bg-emerald-400 font-semibold"
             @click="startMarking"
         />

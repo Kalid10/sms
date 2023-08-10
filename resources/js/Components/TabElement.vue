@@ -1,6 +1,9 @@
 <template>
-    <div class="flex w-full flex-col gap-3" :class="backgroundColor">
-        <ul class="flex w-full items-center gap-4 overflow-auto">
+    <div class="flex w-full flex-col gap-3">
+        <ul
+            class="flex w-full items-center gap-4 overflow-auto py-2"
+            :class="backgroundColor"
+        >
             <li
                 v-for="(tab, t) in tabs"
                 :key="t"
@@ -10,7 +13,7 @@
                 <button
                     :class="[
                         active === tab
-                            ? 'text-brand-text-400'
+                            ? 'text-brand-text-500'
                             : inActiveTabText,
                     ]"
                     class="w-full whitespace-nowrap text-sm font-semibold capitalize transition-colors duration-300"

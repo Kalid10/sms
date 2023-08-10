@@ -46,7 +46,7 @@ class SchoolPeriod extends Model
         return $this->getSchoolPeriodsBySchoolYearId($schoolYear->id);
     }
 
-    public function activePeriods(bool $custom = false): null|Collection
+    public function activePeriods(bool $custom = false): ?Collection
     {
         $activeSchoolYear = SchoolYear::getActiveSchoolYear();
 

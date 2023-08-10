@@ -11,24 +11,18 @@
             :tabs="tabs"
         >
             <template #[homeTab]>
-                <Home
-                    v-if="activeTab === homeTab && !showLoading"
-                    class="bg-white py-3"
-                />
+                <Home v-if="activeTab === homeTab && !showLoading" />
             </template>
 
             <template #[classesTab]>
                 <Batches
                     v-if="activeTab === classesTab && !showLoading"
-                    class="bg-white p-4"
+                    class="p-4"
                 />
             </template>
 
             <template #[studentsTab]>
-                <Students
-                    v-if="activeTab === studentsTab && !showLoading"
-                    class="bg-white"
-                />
+                <Students v-if="activeTab === studentsTab && !showLoading" />
             </template>
 
             <template #[lessonPlans]>
@@ -38,22 +32,17 @@
             <template #[assessmentsTab]>
                 <Assessments
                     v-if="activeTab === assessmentsTab && !showLoading"
-                    class="bg-white"
                     :teacher-id="teacher.id"
                 />
             </template>
 
             <template #[homeroomTab]>
-                <Homeroom
-                    v-if="activeTab === homeroomTab && !showLoading"
-                    class="bg-white"
-                />
+                <Homeroom v-if="activeTab === homeroomTab && !showLoading" />
             </template>
 
             <template #[announcementsTab]>
                 <Announcement
                     v-if="activeTab === announcementsTab && !showLoading"
-                    class="bg-white"
                 />
             </template>
         </TabElement>

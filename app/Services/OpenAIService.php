@@ -61,7 +61,7 @@ class OpenAIService
         $maxTokens = min(200, $remainingUsage);
 
         $stream = OpenAI::chat()->createStreamed([
-            'model' => 'gpt-4',
+            'model' => 'gpt-3.5-turbo',
             'messages' => $messages,
             'max_tokens' => $maxTokens,
         ]);

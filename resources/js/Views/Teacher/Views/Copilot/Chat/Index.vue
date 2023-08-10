@@ -11,7 +11,7 @@
         >
             <div
                 ref="chatContainer"
-                class="scrollbar-hide flex w-full grow flex-col space-y-4 overflow-y-auto rounded-lg bg-brand-50 p-4 shadow"
+                class="scrollbar-hide flex w-full grow flex-col space-y-4 overflow-y-auto rounded-lg bg-brand-50/50 p-4 shadow-sm"
             >
                 <div
                     v-for="(message, index) in messages"
@@ -25,7 +25,7 @@
                 >
                     <div
                         v-if="message.content"
-                        class="flex w-fit max-w-3xl space-x-2 p-1"
+                        class="flex w-fit max-w-3xl flex-col space-y-2 p-1"
                     >
                         <div
                             :class="
@@ -45,16 +45,26 @@
                                 >|</span
                             >
                         </div>
-                    </div>
-
-                    <div
-                        v-if="message.role === 'assistant'"
-                        class="hidden px-1 group-hover:flex"
-                    >
-                        <ClipboardDocumentIcon
-                            class="w-3 cursor-pointer text-brand-text-400"
-                            @click="copyToClipboard(message.content)"
-                        />
+                        <div
+                            v-if="message.role === 'assistant'"
+                            class="hidden px-1 group-hover:flex"
+                        >
+                            <ClipboardDocumentIcon
+                                class="w-3 cursor-pointer text-brand-text-400"
+                                @click="
+                                    copyToClipboardAndShowToast(
+                                        message.content,
+                                        $event
+                                    )
+                                "
+                            />
+                            <Toast
+                                :show-toast="showCopyToast"
+                                class="!bg-purple-200 !text-black"
+                                :event="toastEvent"
+                                @copied="showCopyToast = false"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -63,37 +73,44 @@
                 </div>
             </div>
 
-            <SecondaryButton
+            <PrimaryButton
                 v-if="messages.length > 0 && !isLoading && !openAILimitReached"
-                :title="
-                    isChatUpdating
-                        ? 'Stop Generating'
-                        : 'Regenerate Last Response'
-                "
-                class="w-fit !rounded-2xl !text-xs font-semibold"
+                class="flex w-fit items-center justify-center space-x-1 !rounded-2xl !text-xs font-semibold"
                 :class="
                     isChatUpdating
                         ? 'bg-red-600 text-white'
-                        : 'bg-violet-100 text-brand-text-400'
+                        : 'bg-emerald-400 text-black'
                 "
                 @click="
                     regenerateResponseAndStopStreaming(
                         isChatUpdating ? 'stop' : 'regenerate'
                     )
                 "
-            />
-            <div
-                class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-brand-50/70 p-4 shadow-sm"
             >
-                <TextInput
+                <StopIcon v-if="isChatUpdating" class="w-4 text-white" />
+                <ArrowPathIcon v-else class="w-4 rotate-90 text-black" />
+                <span :class="isChatUpdating ? 'text-white' : 'text-black'">
+                    {{
+                        isChatUpdating
+                            ? "Stop Generating"
+                            : "Regenerate Last Response"
+                    }}
+                </span>
+            </PrimaryButton>
+            <div
+                class="mt-4 flex w-full items-center justify-center space-x-4 rounded-lg bg-brand-50/50 p-4 shadow-sm"
+            >
+                <textarea
+                    ref="inputRef"
                     v-model="inputMessage"
                     :disabled="openAILimitReached"
-                    type="text"
-                    class="w-full"
-                    class-style="rounded-2xl ring-purple-600 ring-2 bg-brand-50 border-none bg-white placeholder:text-xs focus:ring-2 ring-black focus:ring-purple-500"
+                    class="scrollbar-hide w-full rounded-2xl border-none bg-brand-50/50 ring-2 ring-purple-600 placeholder:text-xs focus:ring-2 focus:ring-purple-500"
                     :placeholder="$t('chat.typeYourMessageHere')"
-                    @keyup.enter="sendMessage"
+                    :style="{ maxHeight: `${maxRows * lineHeight}px` }"
+                    @input="autoResize"
+                    @keydown.enter.prevent="sendMessage"
                 />
+
                 <button
                     :disabled="openAILimitReached"
                     :class="
@@ -108,87 +125,23 @@
                 </button>
             </div>
         </div>
-        <div
-            v-if="showGettingStarted"
-            class="mt-5 hidden h-fit w-4/12 flex-col space-y-6 rounded-lg border border-black p-5 text-center text-sm lg:block"
-        >
-            <h2 class="text-2xl font-bold">{{ $t("chat.gettingStarted") }}</h2>
-            <p>
-                {{
-                    $t("chat.helloWeWant", {
-                        name: usePage().props.auth.user.name,
-                    })
-                }}
-            </p>
-
-            <p>
-                <!--                Hello, {{ usePage().props.auth.user.name }}! We want to make-->
-                <!--                sure you get the most out of our AI chat feature, Rigel Copilot.-->
-                <!--                Here are some tips to guide you:-->
-            </p>
-
-            <div>
-                <h3 class="text-xl font-semibold">
-                    {{ $t("chat.askSpecificQuestions") }}
-                </h3>
-                <p class="font-light">
-                    {{ $t("chat.theAiChat") }}
-                </p>
-            </div>
-
-            <div>
-                <h3 class="text-xl font-semibold">
-                    {{ $t("chat.experimentWithDifferent") }}
-                </h3>
-                <p class="font-light">
-                    {{ $t("chat.feelFree") }}
-                </p>
-            </div>
-
-            <div>
-                <h3 class="text-xl font-semibold">
-                    {{ $t("chat.useItAsResource") }}
-                </h3>
-                <p class="font-normal">
-                    {{ $t("chat.needHelpFinding") }}
-                </p>
-            </div>
-
-            <div>
-                <h3 class="text-xl font-semibold">
-                    {{ $t("chat.seekClarification") }}
-                </h3>
-                <p class="font-light">
-                    {{ $t("chat.ifYourAreDealing") }}
-                </p>
-            </div>
-
-            <div>
-                <h3 class="text-xl font-semibold">
-                    {{ $t("chat.exploreCreativeIdeas") }}
-                </h3>
-                <p class="font-light">
-                    {{ $t("chat.theAIChat") }}
-                </p>
-            </div>
-
-            <p class="py-4 italic">
-                {{ $t("chat.RememberWhile") }}
-            </p>
-        </div>
+        <GettingStarted :show-getting-started="showGettingStarted" />
     </div>
 </template>
 <script setup>
 import {
+    ArrowPathIcon,
     ClipboardDocumentIcon,
     PaperAirplaneIcon,
+    StopIcon,
 } from "@heroicons/vue/20/solid";
 import { nextTick, onMounted, ref, watchEffect } from "vue";
 import { copyToClipboard } from "@/utils";
 import Loading from "@/Components/Loading.vue";
-import TextInput from "@/Components/TextInput.vue";
 import { usePage } from "@inertiajs/vue3";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import GettingStarted from "@/Views/Teacher/Views/Copilot/Chat/GettingStarted.vue";
+import Toast from "@/Components/Toast.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const emit = defineEmits(["limit-reached"]);
 defineProps({
@@ -199,15 +152,19 @@ defineProps({
 });
 const isLoading = ref(false);
 const messages = ref([]);
-const inputMessage = ref("Who is usain bolt?");
+const inputMessage = ref("");
 const isChatUpdating = ref(false);
 const chatContainer = ref(null);
 const openAIDailyUsage = ref();
 const openAILimitReached = ref(false);
+const toastEvent = ref();
 let eventSource;
 
 onMounted(() => {
     openAIDailyUsage.value = usePage().props.auth.user.openai_daily_usage;
+    nextTick(() => {
+        autoResize();
+    });
 });
 
 const sendMessage = () => {
@@ -298,7 +255,7 @@ const startStreaming = () => {
         fetch(eventSource.url)
             .then((response) => {
                 if (!response.ok) {
-                    return response.json().then((data) => {
+                    return response.json().then(() => {
                         openAILimitReached.value = true;
                         emit("limit-reached", openAIDailyUsage.value);
                     });
@@ -313,10 +270,7 @@ const startStreaming = () => {
     eventSource.addEventListener(
         "error",
         (event) => {
-            console.log("skdfh " + event.status);
-
-            // TODO: Replace this with your preferred error handling method
-            console.error("Error occurred: ", event);
+            // TODO: Add error handling method
             isLoading.value = false;
             isChatUpdating.value = false;
         },
@@ -349,6 +303,38 @@ const regenerateResponseAndStopStreaming = (param) => {
     } else if (param === "stop") {
         stopStreaming();
     }
+};
+
+// Input resizing section
+const maxRows = 10;
+const lineHeight = 40;
+const inputRef = ref(null);
+
+const autoResize = () => {
+    if (inputRef.value) {
+        // Reset the text-area's height to a smaller value
+        inputRef.value.style.height = "1px";
+        // Set textarea height according to scrollHeight, but limit it to maxRows
+        let newHeight = Math.min(
+            inputRef.value.scrollHeight,
+            lineHeight * maxRows
+        );
+        // If there's only one line or no content, set the height to one line height
+        if (inputRef.value.value.split(/\r\n|\r|\n/).length <= 1) {
+            newHeight = lineHeight;
+        }
+        inputRef.value.style.height = `${newHeight}px`;
+    }
+};
+watchEffect(() => {
+    autoResize();
+});
+
+const showCopyToast = ref(false);
+const copyToClipboardAndShowToast = (value, event) => {
+    copyToClipboard(value);
+    showCopyToast.value = true;
+    toastEvent.value = event;
 };
 </script>
 <style scoped></style>

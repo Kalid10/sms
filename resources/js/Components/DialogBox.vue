@@ -26,7 +26,7 @@
                             {{ title || types[type].title }}
                         </slot>
                     </h3>
-                    <h3 class="text-sm text-brand-text-300">
+                    <h3 class="text-sm text-gray-600">
                         <slot name="description">
                             {{ description || types[type].description }}
                         </slot>
@@ -45,7 +45,7 @@
                 <TertiaryButton v-if="abortAction" @click="abort">
                     {{ $t("dialogBox.cancel") }}
                 </TertiaryButton>
-                <PrimaryButton class="action-button" @click="confirm">
+                <PrimaryButton class="bg-brand-450" @click="confirm">
                     <slot name="action">
                         {{ types[type].actionTitle || types[type].title }}
                     </slot>

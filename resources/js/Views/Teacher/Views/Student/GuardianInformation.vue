@@ -13,30 +13,30 @@
             class="flex w-11/12 flex-col items-center space-y-2 pt-3 text-center text-xs 2xl:text-xs"
         >
             <div class="flex h-8 w-full items-center justify-center space-x-2">
-                <div class="font-semibold text-brand-text-50">
+                <div class="font-semibold">
                     {{ $t("guardianInformation.name") }}
                 </div>
-                <div class="text-brand-text-100">{{ guardian.user.name }}</div>
+                <div>{{ guardian.user.name }}</div>
             </div>
             <div class="flex h-8 w-full items-center justify-center space-x-2">
-                <div class="font-semibold text-brand-text-50">
+                <div class="font-semibold">
                     {{ $t("guardianInformation.relation") }}
                 </div>
-                <div class="text-brand-text-100">{{ guardianRelation }}</div>
+                <div>{{ guardianRelation }}</div>
             </div>
             <div class="flex h-8 w-full items-center justify-center space-x-2">
-                <div class="font-semibold text-brand-text-50">
+                <div class="font-semibold">
                     {{ $t("guardianInformation.phoneNumber") }}
                 </div>
-                <div class="text-brand-text-100">
+                <div>
                     {{ guardian.user.phone_number }}
                 </div>
             </div>
             <div class="flex h-8 w-full items-center justify-center space-x-2">
-                <div class="font-semibold text-brand-text-50">
+                <div class="font-semibold">
                     {{ $t("guardianInformation.email") }}
                 </div>
-                <div class="text-brand-text-100">{{ guardian.user.email }}</div>
+                <div>{{ guardian.user.email }}</div>
             </div>
         </div>
 

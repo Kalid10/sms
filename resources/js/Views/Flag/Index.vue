@@ -5,6 +5,7 @@
         <!--        Header-->
         <div class="flex h-fit w-full items-center justify-between px-2">
             <InformationCircleIcon
+                v-if="flags?.data?.length"
                 class="w-4 cursor-pointer text-brand-text-350 hover:scale-125 hover:text-black"
                 @click="showInfoModal = true"
             />
@@ -45,7 +46,7 @@
             <div
                 v-for="(item, index) in flags.data"
                 :key="index"
-                class="group flex w-full cursor-pointer items-center justify-evenly space-x-2 py-3 text-xs hover:rounded-lg hover:bg-brand-450 hover:text-white"
+                class="group flex w-full cursor-pointer items-center justify-evenly space-x-2 py-3 text-xs hover:rounded-lg hover:bg-brand-50"
                 :class="index % 2 === 1 ? 'bg-brand-50' : ''"
                 @click="
                     showDetailModal = true;
@@ -54,7 +55,7 @@
             >
                 <span
                     class="w-3/12 cursor-pointer text-center hover:scale-110 hover:underline hover:underline-offset-2"
-                    @click.stop="routeToStudent(item.flaggable_id)"
+                    @click.stop="isAdmin() ?? routeToStudent(item.flaggable_id)"
                 >
                     {{ item.flaggable.user.name }}
                 </span>
@@ -97,14 +98,24 @@
                         {{ type.substring(0, 3) }}
                     </span>
                 </span>
-                <div v-if="item?.flagged_by?.id === auth.id">
+                <div
+                    v-if="
+                        (item?.flagged_by?.id === auth.id ||
+                            !item?.flagged_by?.id) &&
+                        showEditAndDelete
+                    "
+                >
                     <PencilIcon
-                        class="my-1 ml-3 w-4 cursor-pointer text-brand-text-400 hover:text-black group-hover:fill-white"
+                        class="my-1 ml-3 w-4 cursor-pointer text-brand-text-50 hover:text-black group-hover:fill-white"
                         @click="handleUpdateFlag($event, item)"
                     />
                 </div>
                 <div
-                    v-if="item?.flagged_by?.id === auth.id"
+                    v-if="
+                        (item?.flagged_by?.id === auth.id ||
+                            !item?.flagged_by?.id) &&
+                        showEditAndDelete
+                    "
                     class="py-1 pl-3 hover:scale-110 hover:stroke-red-50 hover:px-1"
                 >
                     <TrashIcon
@@ -127,7 +138,7 @@
             <Pagination :links="flags.links" class="pt-3" position="center" />
         </div>
         <div v-else class="flex h-48 w-full items-center justify-center">
-            <EmptyView :title="$t('flagIndex.noFlagsFound')" />
+            <EmptyView :title="$t('flagIndex.noFlagsFound')"></EmptyView>
         </div>
     </div>
 
@@ -197,6 +208,10 @@ const props = defineProps({
     showAddFlagModal: {
         type: Boolean,
         default: false,
+    },
+    showEditAndDelete: {
+        type: Boolean,
+        default: true,
     },
 });
 const showInfoModal = ref(false);

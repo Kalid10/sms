@@ -25,7 +25,7 @@
             <div
                 v-for="(item, index) in notes.data"
                 :key="index"
-                class="flex w-full cursor-pointer justify-center space-x-3 rounded-lg p-2.5 hover:bg-brand-400 hover:text-brand-text-50"
+                class="flex w-full cursor-pointer justify-center space-x-3 rounded-lg p-2.5 hover:bg-brand-400 hover:text-brand-text-500"
                 :class="index % 2 === 1 ? 'bg-brand-50' : ''"
                 @click="handleClicked(item)"
             >
@@ -89,7 +89,9 @@
         <Modal v-model:view="selectedNote">
             <FormElement
                 v-if="selectedNote.author.id === user.id"
-                :title="`Update ` + student.user.name + `'s note`"
+                :title="
+                    $t('studentNotes.updateNote', { name: student.user.name })
+                "
                 @submit="update"
             >
                 <TextInput
@@ -110,7 +112,7 @@
                 class="flex flex-col space-y-2 rounded-lg bg-white p-5"
             >
                 <div class="text-center text-xl font-semibold">
-                    {{ student.user.name }}'s Note
+                    {{ $t("studentNotes.snote", { name: student.user.name }) }}
                 </div>
                 <div class="flex flex-col gap-5 space-y-4 rounded-t-lg p-2">
                     <div class="flex items-center font-medium">
@@ -128,7 +130,8 @@
                             {{ moment(selectedNote.created_at).fromNow() }}
                         </div>
                         <div class="font-medium">
-                            By {{ selectedNote.author.name }}
+                            {{ $t("studentNotes.by") }}
+                            {{ selectedNote.author.name }}
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\AssessmentType;
+use App\Models\BatchSubject;
 use App\Models\SchoolYear;
 use App\Services\OpenAIService;
 use App\Services\TeacherService;
@@ -19,6 +20,7 @@ class CopilotController extends Controller
         $request->validate([
             'batch_subject_id' => 'nullable|exists:batch_subjects,id',
             'month' => 'nullable|date_format:"Y-m"',
+            'active_tab' => 'nullable',
         ]);
 
         $teacherId = auth()->user()->teacher->id;
@@ -31,9 +33,19 @@ class CopilotController extends Controller
                 'level_category_id', 1,
             ]])->get(['name', 'id']);
 
+        $teacherSubjects = BatchSubject::with([
+            'subject:id,full_name',
+            'batch:id,section,level_id',
+            'batch.level:id,name,level_category_id',
+        ])->where('teacher_id', $teacherId)
+            ->whereHas('batch', fn ($query) => $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id))
+            ->get(['id', 'subject_id', 'batch_id']);
+
         return Inertia::render('Teacher/Copilot/Index', [
             'assessment_types' => $assessmentTypes,
             'lesson_plans_data' => $lessonPlansData,
+            'active_tab' => strtolower($request->input('active_tab') ?? 'chat'),
+            'batch_subjects' => $teacherSubjects,
         ]);
     }
 

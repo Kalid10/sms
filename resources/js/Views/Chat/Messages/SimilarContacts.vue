@@ -1,12 +1,16 @@
 <template>
-    <div class="flex w-full flex-col justify-center space-y-5 bg-white pb-3">
-        <div class="flex w-full justify-evenly bg-purple-500 p-3 text-white">
+    <div
+        class="flex w-11/12 flex-col justify-center space-y-5 rounded-lg border border-zinc-300 bg-white pb-3"
+    >
+        <div class="flex w-full justify-evenly p-3">
             <div class="flex grow justify-center text-center text-xl italic">
                 <ChatBubbleOvalLeftEllipsisIcon class="w-5 text-white" />
-                <span class="pl-1"> People You May Want to Connect With </span>
+                <span class="pl-1">
+                    {{ $t("rigelChat.peopleYouWant") }}
+                </span>
             </div>
             <XMarkIcon
-                class="w-4 cursor-pointer text-purple-200 hover:scale-125 hover:text-white"
+                class="w-4 cursor-pointer text-zinc-700 hover:scale-125 hover:text-black"
                 @click="$emit('close')"
             />
         </div>
@@ -42,7 +46,7 @@
                 </h1>
 
                 <SecondaryButton
-                    title="Chat"
+                    :title="$t('common.chat')"
                     class="! w-7/12 rounded-xl bg-violet-500 !py-1 text-xs text-white group-hover:bg-violet-100 group-hover:text-black"
                     @click="$emit('loadChat', chat)"
                 />
@@ -56,12 +60,10 @@ import { computed } from "vue";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/vue/24/outline";
 import { usePage } from "@inertiajs/vue3";
-import useMessageStore from "@/Store/chat";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const emit = defineEmits(["loadChat", "close"]);
 
-const messageStore = useMessageStore();
 const similarUsers = computed(() => usePage().props.similar_users);
 </script>
 <style scoped></style>

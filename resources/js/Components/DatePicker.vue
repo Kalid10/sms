@@ -1,7 +1,7 @@
 <template>
     <label class="relative flex flex-col gap-1">
         <span v-if="label && labelLocation === 'top'" class="">
-            <span class="pl-0.5 text-sm font-semibold text-brand-text-300">{{
+            <span class="pl-0.5 text-sm font-semibold text-black">{{
                 label
             }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
@@ -29,13 +29,11 @@
             <span class="flex flex-col">
                 <span
                     v-if="labelLocation === 'inside'"
-                    class="text-[0.7rem] text-brand-text-300"
+                    class="text-[0.7rem] text-black"
                     >{{ label }}</span
                 >
                 <span
-                    :class="[
-                        !!selectedDate ? 'text-black' : 'text-brand-text-300',
-                    ]"
+                    :class="[!!selectedDate ? 'text-black' : 'text-gray-600']"
                     class="truncate whitespace-nowrap text-sm"
                 >
                     {{ selectedDate ?? placeholder }}
@@ -62,17 +60,20 @@
                         @click="previous"
                     />
                     <span
-                        class="flex min-w-fit select-none gap-1 font-light text-brand-text-100"
+                        class="flex min-w-fit select-none gap-1 font-light text-brand-text-500"
                     >
                         <button
-                            v-if="panel === 'date'"
+                            v-if="activePanel === 'date'"
                             type="button"
                             @click="changePanel('month')"
                         >
                             {{ months[selectedMonth] }}
                         </button>
                         <button
-                            v-if="panel === 'month' || panel === 'date'"
+                            v-if="
+                                activePanel === 'month' ||
+                                activePanel === 'date'
+                            "
                             type="button"
                             @click="changePanel('year')"
                         >
@@ -89,7 +90,7 @@
                 </span>
 
                 <span
-                    v-if="panel === 'date'"
+                    v-if="activePanel === 'date'"
                     ref="daysPanel"
                     class="grid grid-cols-7 p-2"
                 >
@@ -117,8 +118,8 @@
                             isDateSelected(i).value
                                 ? range
                                     ? isDateSelected(i).range === 'start'
-                                        ? 'rounded-tl-md bg-black text-white'
-                                        : 'rounded-br-md bg-black text-white'
+                                        ? 'rounded-tl-md bg-brand-450 text-white'
+                                        : 'rounded-br-md bg-brand-450 text-white'
                                     : 'rounded-md bg-black text-white'
                                 : 'hover:rounded-md hover:bg-black/10',
                             isBetweenRange(i) ? 'bg-black/10' : '',
@@ -149,7 +150,7 @@
                 </span>
 
                 <span
-                    v-else-if="panel === 'month'"
+                    v-else-if="activePanel === 'month'"
                     ref="monthsPanel"
                     class="grid grid-cols-3 p-2"
                 >
@@ -191,7 +192,7 @@
                 </span>
 
                 <span
-                    v-if="panel === 'date'"
+                    v-if="activePanel === 'date'"
                     class="grid place-items-center p-2"
                 >
                     <button
@@ -233,7 +234,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import {
     CalendarIcon,
@@ -314,6 +315,11 @@ onClickOutside(panelViewer, () => {
 });
 
 const panel = ref("date");
+
+const activePanel = ref();
+watchEffect(() => {
+    activePanel.value = panel.value;
+});
 
 function changePanel(to) {
     panel.value = to;
@@ -565,7 +571,7 @@ function isMonthSelected(month_index) {
 
 function selectMonth(month_index) {
     selectedMonth.value = month_index;
-    panel.value = "date";
+    activePanel.value = "date";
 }
 
 function isYearSelected(year) {
@@ -574,7 +580,7 @@ function isYearSelected(year) {
 
 function selectYear(year) {
     selectedYear.value = year;
-    panel.value = "month";
+    activePanel.value = "month";
 }
 </script>
 

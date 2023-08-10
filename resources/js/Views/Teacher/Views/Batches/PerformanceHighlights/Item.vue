@@ -3,7 +3,12 @@
         <!--                 Image-->
         <div class="h-12 w-2/12">
             <img
-                :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
+                :src="
+                    student?.user?.profile_image ??
+                    'https://avatars.dicebear.com/api/open-peeps/' +
+                        student.user.name +
+                        '.svg'
+                "
                 alt="avatar"
                 class="mx-auto h-11 w-11 rounded-full object-contain"
             />
@@ -12,14 +17,14 @@
         <!--                Name and Progress section-->
         <div class="flex h-11 w-9/12 flex-col justify-evenly text-start">
             <div class="grow text-sm">
-                {{ name }}
+                {{ student.user.name }}
             </div>
 
             <div class="flex items-center space-x-3">
                 <div
                     class="flex items-center justify-center text-center text-xs font-light"
                 >
-                    {{ grade }} / 50
+                    {{ grade }} / {{ totalScore }}
                 </div>
             </div>
         </div>
@@ -36,7 +41,7 @@
 </template>
 <script setup>
 defineProps({
-    name: {
+    student: {
         type: String,
         required: true,
     },
@@ -58,6 +63,10 @@ defineProps({
     },
     progressType: {
         type: String,
+        required: true,
+    },
+    totalScore: {
+        type: Number,
         required: true,
     },
 });

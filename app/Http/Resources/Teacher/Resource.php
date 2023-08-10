@@ -14,7 +14,7 @@ class Resource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-//        return parent::toArray($request);
+        //        return parent::toArray($request);
         return [
             'teacher_id' => $this->id,
             'name' => $this->user->name,

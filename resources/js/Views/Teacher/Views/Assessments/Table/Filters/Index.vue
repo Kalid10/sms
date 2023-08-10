@@ -15,7 +15,7 @@
                     v-model="search"
                     :placeholder="$t('filtersIndex.searchAssessmentTitle')"
                     class="md:w-6/12"
-                    class-style="h-8 bg-white border-gray-300 text-black placeholder:text-brand-text-300 placeholder:text-xs focus:border-none focus:ring-violet-500"
+                    class-style="h-8 bg-white border-gray-300 text-black placeholder:text-brand-text-300 placeholder:text-xs focus:border-none rounded-2xl focus:ring-violet-500"
                 />
                 <SelectInput
                     v-model="selectedBatchSubjectId"

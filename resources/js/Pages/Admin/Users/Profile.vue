@@ -154,6 +154,8 @@
                 <h3 class="py-1 font-light text-brand-text-300">
                     {{ $t("userProfile.description") }}
                 </h3>
+
+                <ImageUpload />
             </div>
 
             <div class="h-3/6 min-w-full"></div>
@@ -167,6 +169,7 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 import UserSelectInput from "@/Components/SelectInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import ImageUpload from "@/Components/ImageUpload.vue";
 
 const genderOptions = [
     { value: "male", label: "Male" },

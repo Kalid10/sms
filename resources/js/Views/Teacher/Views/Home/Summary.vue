@@ -1,10 +1,11 @@
 <template>
+    <!--    TODO: Add value to locale -->
     <div class="flex w-5/12 flex-col items-center space-y-5">
         <SummaryItem
             class-style="bg-sky-100 text-black"
             icon-style="bg-sky-500/20 text-white"
             :title="$t('common.chat')"
-            value="5 Unread Messages"
+            :value="$t('adminSummary.chatValue')"
             :icon="PaperAirplaneIcon"
             url="/teacher/chat"
         />
@@ -12,7 +13,7 @@
             class-style="bg-orange-100 text-black"
             icon-style="bg-orange-500/20 text-white"
             :title="$t('common.assessments')"
-            value="10 /10 Completed"
+            value="Add, view and update assessments"
             :icon="ClipboardIcon"
             :url="
                 isTeacher()
@@ -24,7 +25,7 @@
             class-style="bg-brand-100 text-black"
             icon-style="bg-brand-300/20 text-white"
             :title="$t('common.students')"
-            value="75 Total Students"
+            value="View your students"
             :icon="UsersIcon"
             :url="
                 isTeacher()
@@ -36,7 +37,7 @@
             class-style="bg-green-100 text-black"
             icon-style="bg-green-500/20 text-white"
             :title="$t('common.lessonPlans')"
-            value="10 /10 Completed"
+            value="Add, view and update lesson plans"
             :icon="CalendarIcon"
             :url="
                 isTeacher()
@@ -48,7 +49,7 @@
             class-style="bg-fuchsia-100 text-black"
             icon-style="bg-fuchsia-500/20 text-white"
             :title="$t('common.homeroomClasses')"
-            value="10 /10 Completed"
+            value="Oversee your homeroom classes"
             :icon="CalendarIcon"
             :url="
                 isTeacher()

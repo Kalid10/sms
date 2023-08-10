@@ -8,9 +8,7 @@
             :class="isSidebarOpenOnXlDevice ? 'w-full' : ' w-full lg:w-7/12 '"
         >
             <div class="flex w-full justify-between">
-                <div
-                    class="text-xl font-semibold text-brand-text-100 lg:text-4xl"
-                >
+                <div class="text-xl font-semibold text-black lg:text-4xl">
                     {{ $t("teacherAssessmentsIndex.assessments") }}
                 </div>
                 <div
@@ -122,7 +120,8 @@ function loadDetail(assessment) {
 const assessmentDetailsRef = ref(null);
 
 const scrollToAssessmentDetails = () => {
-    assessmentDetailsRef.value.$el.scrollIntoView({ behavior: "smooth" });
+    if (assessmentDetailsRef.value)
+        assessmentDetailsRef.value.$el.scrollIntoView({ behavior: "smooth" });
     // TODO:: This is sticking to the top of the screen, fix it
 };
 </script>

@@ -87,8 +87,17 @@
                     v-else
                     class="flex w-8/12 flex-col items-center justify-center space-y-1 text-center text-xs font-semibold"
                 >
-                    <div v-if="assessment.status === 'completed'">
+                    <div
+                        v-if="assessment.status === 'completed' && isTeacher()"
+                    >
                         {{ $t("assessmentTypeDetailInfo.assessmentCompleted") }}
+                    </div>
+                    <div v-if="assessment.status === 'completed' && isAdmin()">
+                        {{
+                            $t(
+                                "assessmentTypeDetailInfo.assessmentCompletedAdmin"
+                            )
+                        }}
                     </div>
                     <div v-else>
                         {{
@@ -96,9 +105,6 @@
                                 "assessmentTypeDetailInfo.hintAssessmentAdministered"
                             )
                         }}
-                        This assessment is administered on a quarterly basis, so
-                        please ensure that you are taking the appropriate
-                        actions accordingly.
                     </div>
                 </div>
             </div>
@@ -140,7 +146,7 @@
 <script setup>
 import LinkCell from "@/Components/LinkCell.vue";
 import { computed } from "vue";
-import { isTeacher } from "@/utils";
+import { isAdmin, isTeacher } from "@/utils";
 
 defineEmits("update");
 

@@ -24,6 +24,7 @@ Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->grou
         Route::get('schedules', 'schedule')->name('schedule');
         Route::get('announcements', 'announcements')->name('announcements');
         Route::get('assessments', 'assessments')->name('assessments');
+        Route::get('assessments/{assessment}', 'assessment')->name('assessment');
     });
 
     Route::controller(StudentController::class)->prefix('students/')->middleware(['checkUserRole:manage-students'])->name('students.')->group(function () {
