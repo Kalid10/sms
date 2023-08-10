@@ -65,7 +65,7 @@ class StudentController extends Controller
             if ($user->address) {
                 $user->address->update($addressData);
             } else {
-                $address = new Address($addressData + ['city' => 'Addis Ababa', 'country' => 'Ethiopia']);
+                $address = Address::create($addressData + ['city' => 'Addis Ababa', 'country' => 'Ethiopia']);
 
                 $user->address()->associate($address);
                 $user->save();
