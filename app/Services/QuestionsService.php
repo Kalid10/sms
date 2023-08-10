@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class QuestionsService
 {
-    public function generateQuestions(array $requestData, OpenAIService $openAIService, $userId): ?array
+    public function generateQuestions(array $requestData, OpenAIService $openAIService, $userId): array
     {
         try {
             Validator::make($requestData, [
@@ -35,7 +35,7 @@ class QuestionsService
             $bannedSubjects = explode(',', env('BANNED_SUBJECTS'));
 
             if (in_array(strtolower($batchSubject->batch->level->name), $bannedLevels)) {
-                return event(new QuestionGeneratorEvent('error', 'Questions cannot be generated for this class, ci '));
+                return event(new QuestionGeneratorEvent('error', 'Questions cannot be generated for this class'));
             }
 
             if (in_array(strtolower($batchSubject->subject->name), $bannedSubjects)) {
@@ -46,6 +46,11 @@ class QuestionsService
         These questions should cover a range of difficulty levels from 1 (very easy) to 10 (very hard), with an average difficulty of {$requestData['difficulty_level']}.
         For each question, provide the question itself and the answer, and exclude multiple-choice question types.
         Also specify the difficulty level for each question on a scale from 1 to 10.\n";
+
+            // Check if user has reached the daily limit
+            if ($this->checkDailyLimit($userId)) {
+                return event(new QuestionGeneratorEvent('error', 'You have reached your daily question generation limit!'));
+            }
 
             if ($requestData['question_source'] === 'lesson-plans') {
                 $questions = $this->generateQuestionFromLessonPlan($requestData, $openAIService, $prompt);
@@ -133,5 +138,21 @@ class QuestionsService
             'difficulty_level' => $requestData['difficulty_level'],
             'input' => $requestData['manual_question'],
         ]);
+    }
+
+    private function checkDailyLimit($userId): bool
+    {
+        $todaysGeneratedQuestions = Question::whereDate('created_at', now())->where('user_id', $userId)->get();
+
+        if ($todaysGeneratedQuestions->count()) {
+            $todaysGeneratedQuestionsCount = $todaysGeneratedQuestions->sum('no_of_questions');
+
+            // If the daily limit is reached, return true
+            if ((int) $todaysGeneratedQuestionsCount >= (int) env('DAILY_OPEN_AI_QUESTION_LIMIT')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
