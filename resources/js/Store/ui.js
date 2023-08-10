@@ -4,6 +4,7 @@ export const useUIStore = defineStore("ui", {
     state: () => ({
         isQuestionGenerationLoading: false,
         questionGenerationStatus: null,
+        questionGenerationMessage: null,
     }),
     actions: {
         setQuestionGenerationLoading(value) {
@@ -11,6 +12,9 @@ export const useUIStore = defineStore("ui", {
         },
         setQuestionGenerationStatus(value) {
             this.questionGenerationStatus = value;
+        },
+        setQuestionGenerationMessage(value) {
+            this.questionGenerationMessage = value;
         },
     },
 });

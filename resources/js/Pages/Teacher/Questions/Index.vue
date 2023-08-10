@@ -12,32 +12,38 @@
                 v-if="selectedQuestion"
                 class="w-5/12 rounded-lg bg-white p-3 shadow-sm"
             >
-                <div class="flex justify-between px-2">
-                    <div
-                        class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
+                <div
+                    class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
+                >
+                    <span>
+                        {{
+                            selectedQuestion.batch_subject.subject.full_name +
+                            " " +
+                            selectedQuestion.assessment_type.name
+                        }}
+                    </span>
+
+                    <span class="text-xs font-light">
+                        {{
+                            moment(selectedQuestion.updated_at).format(
+                                "ddd MMMM DD YYYY"
+                            )
+                        }}</span
                     >
-                        <span>
-                            {{
-                                selectedQuestion.batch_subject.subject
-                                    .full_name +
-                                " " +
-                                selectedQuestion.assessment_type.name
-                            }}
-                        </span>
-                        <span class="text-start text-xs font-light">
-                            {{
-                                moment(selectedQuestion.updated_at).format(
-                                    "ddd MMMM DD YYYY"
-                                )
-                            }}</span
-                        >
-                    </div>
                 </div>
+
+                <div
+                    class="mt-4 w-full rounded-lg border border-gray-400 py-3 px-2 text-start text-sm font-normal"
+                >
+                    <span class="font-semibold">Input:</span>
+                    {{ selectedQuestion.input }}
+                </div>
+
                 <div
                     v-for="(item, index) in selectedQuestion?.questions"
                     :key="index"
                     class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-4 font-medium shadow-sm hover:bg-brand-350 hover:text-white"
-                    :class="index % 2 === 1 ? 'bg-brand-50' : 'bg-brand-50/50'"
+                    :class="index % 2 === 1 ? 'bg-brand-50/50' : 'bg-white'"
                 >
                     <div class="flex w-full flex-col space-y-3 text-sm">
                         <span>
@@ -66,10 +72,20 @@
                 </div>
             </div>
             <div
-                class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white px-4 py-6 shadow-sm"
+                class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white p-4 shadow-sm"
             >
-                <div class="text-3xl font-semibold">
-                    {{ $t("teacherQuestions.recentQuestions") }}
+                <div class="flex w-full justify-between">
+                    <div class="grow text-center text-3xl font-semibold">
+                        {{ $t("teacherQuestions.recentQuestions") }}
+                    </div>
+
+                    <div
+                        class="flex h-fit cursor-pointer items-center justify-center space-x-1.5 rounded-2xl bg-brand-350 px-2 py-1.5 text-xs text-white shadow-sm hover:scale-105 hover:bg-brand-400"
+                        @click="routeToQuestionGenerator"
+                    >
+                        <SquaresPlusIcon class="w-3.5" />
+                        <span>Generate</span>
+                    </div>
                 </div>
                 <TableElement
                     :filterable="false"
@@ -140,7 +156,12 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
-import { EyeIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/20/solid";
+import {
+    EyeIcon,
+    PencilSquareIcon,
+    SquaresPlusIcon,
+    TrashIcon,
+} from "@heroicons/vue/20/solid";
 import Modal from "@/Components/Modal.vue";
 import TextArea from "@/Components/TextArea.vue";
 import DialogBox from "@/Components/DialogBox.vue";

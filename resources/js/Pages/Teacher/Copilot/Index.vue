@@ -1,5 +1,5 @@
 <template>
-    <div class="flex min-h-screen w-full flex-col space-y-4 p-5">
+    <div class="flex min-h-screen w-full flex-col space-y-4 px-5">
         <div class="flex w-full space-x-5">
             <Title
                 class="w-4/12 pl-8"
@@ -18,10 +18,10 @@
                 </span>
             </div>
         </div>
-        <div class="fle x h-full w-full justify-center px-4">
+        <div class="flex h-5/6 w-full justify-center px-4">
             <TabElement v-model:active="activeTab" class="h-full" :tabs="tabs">
                 <template #[chatTab]>
-                    <div class="h-screen">
+                    <div class="h-full py-5">
                         <Chat @limit-reached="setLimitInfo" />
                     </div>
                 </template>

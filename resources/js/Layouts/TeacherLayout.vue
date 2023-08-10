@@ -21,7 +21,8 @@
                 </div>
             </div>
         </div>
-        <Notification />
+
+        <Notification class="!my-3" />
 
         <div
             v-if="isQuestionGenerationLoading || questionGenerationStatus"
@@ -29,7 +30,7 @@
         >
             <div
                 v-if="isQuestionGenerationLoading"
-                class="flex items-center justify-center space-x-2 rounded-full bg-violet-600 px-3 py-2 text-xs"
+                class="my-2 flex w-fit items-center justify-center space-x-2 rounded-full bg-violet-600 px-3 py-2 text-xs"
             >
                 <Loading size="small" type="spinner" />
                 <div
@@ -54,7 +55,14 @@
                     "
                 />
             </div>
-            <div></div>
+            <div
+                v-if="questionGenerationStatus === 'error'"
+                class="flex items-center justify-center space-x-2 rounded-lg bg-red-600 py-2 px-4 text-sm"
+                @click="routeToQuestionsPage()"
+            >
+                <XCircleIcon class="w-6 text-white" />
+                <span>{{ questionGenerationMessage }}</span>
+            </div>
         </div>
     </div>
 </template>
@@ -77,6 +85,7 @@ import {
     SparklesIcon,
     UserIcon,
     UsersIcon,
+    XCircleIcon,
 } from "@heroicons/vue/20/solid/index.js";
 import { router, usePage } from "@inertiajs/vue3";
 import { useSidebarStore } from "@/Store/sidebar";
@@ -200,6 +209,9 @@ const isQuestionGenerationLoading = computed(
 );
 const questionGenerationStatus = computed(
     () => uiStore.questionGenerationStatus
+);
+const questionGenerationMessage = computed(
+    () => uiStore.questionGenerationMessage
 );
 const routeToQuestionsPage = () => {
     router.get("/teacher/questions", {}, { preserveState: true });

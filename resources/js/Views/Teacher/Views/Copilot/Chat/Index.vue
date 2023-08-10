@@ -1,10 +1,10 @@
 <template>
     <div
-        class="flex h-screen w-full flex-col py-10 lg:flex-row lg:space-x-8"
+        class="flex h-full w-full flex-col lg:flex-row lg:space-x-8"
         :class="showGettingStarted ? 'justify-between' : 'justify-center'"
     >
         <div
-            class="flex h-5/6 max-h-screen flex-col items-center space-y-2 rounded-lg border border-black bg-white p-4"
+            class="flex h-full max-h-screen flex-col items-center space-y-2 rounded-lg border border-black bg-white p-4"
             :class="
                 showGettingStarted ? 'w-full lg:w-8/12' : 'w-full lg:w-11/12'
             "
