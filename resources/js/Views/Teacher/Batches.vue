@@ -41,6 +41,15 @@
                         class="flex h-full w-full flex-col justify-center space-y-8 lg:w-5/12"
                     >
                         <SummaryItem
+                            class-style="bg-sky-100 text-black"
+                            icon-style="bg-sky-500/20 text-white"
+                            :title="$t('common.aiChat')"
+                            :value="$t('common.aiChatDescription')"
+                            :icon="PaperAirplaneIcon"
+                            url="/teacher/copilot"
+                        />
+
+                        <SummaryItem
                             class-style="bg-orange-100 text-black"
                             icon-style="bg-orange-500/20 text-white"
                             :title="$t('common.assessments')"
@@ -140,6 +149,7 @@ import {
     CalendarIcon,
     ChatBubbleBottomCenterIcon,
     ClipboardIcon,
+    PaperAirplaneIcon,
     UsersIcon,
 } from "@heroicons/vue/24/solid";
 import {
