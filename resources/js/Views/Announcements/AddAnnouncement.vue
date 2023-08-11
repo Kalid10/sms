@@ -16,7 +16,7 @@
         <TextArea
             v-model="form.body"
             :label="$t('addAnnouncement.body')"
-            :placeholder="$t('addAnnouncement.description')"
+            :placeholder="$t('addAnnouncement.body')"
             class="w-full"
             :error="form.errors.body"
         />

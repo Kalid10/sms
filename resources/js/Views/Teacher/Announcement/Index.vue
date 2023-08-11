@@ -1,10 +1,10 @@
 <template>
     <div
-        v-if="announcements?.data?.length || selectedAnnouncement"
+        v-if="announcements?.data?.length || selectedAnnouncement || searchKey"
         class="flex min-h-screen w-full flex-col px-1 py-2 lg:py-5 lg:px-10"
     >
         <div
-            class="flex w-full flex-col items-center space-y-2 px-0 py-3 lg:px-5"
+            class="flex h-full w-full flex-col items-center space-y-2 px-0 py-3 lg:px-5"
         >
             <div
                 class="flex w-full flex-col items-center justify-between px-5 lg:flex-row"
@@ -14,8 +14,8 @@
                     :title="$t('announcementsIndex.announcementsTitle')"
                 />
                 <div
-                    class="flex w-full flex-col space-y-3 pr-3 lg:w-6/12 lg:flex-row lg:space-y-0"
-                    :class="isAdmin() ? 'justify-between' : 'justify-end'"
+                    v-if="isAdmin()"
+                    class="flex w-full flex-col justify-between space-y-3 pr-3 lg:w-6/12 lg:flex-row lg:space-y-0"
                 >
                     <TextInput
                         v-model="searchKey"
@@ -25,10 +25,8 @@
                         class="w-full !rounded-xl"
                         :class="isAdmin() ? 'lg:w-6/12 xl:w-8/12' : 'lg:w-9/12'"
                         class-style="focus:ring-1 focus:ring-zinc-700 focus:border-none focus:outline-none rounded-2xl"
-                        @keyup="search"
                     />
                     <div
-                        v-if="isAdmin()"
                         class="flex w-full cursor-pointer items-center justify-center space-x-2 rounded-2xl bg-brand-450 px-4 py-1 text-xs text-white lg:w-fit"
                         @click="showAddAnnouncement = true"
                     >
@@ -41,6 +39,7 @@
             </div>
 
             <div
+                v-if="announcements?.data?.length || selectedAnnouncement"
                 class="flex w-full justify-between divide-gray-100 lg:space-x-4 lg:pr-5"
             >
                 <div
@@ -52,6 +51,7 @@
                     "
                 >
                     <SelectedAnnouncementView
+                        v-if="selectedAnnouncement"
                         class=""
                         :class="
                             announcements?.data.length
@@ -83,9 +83,20 @@
                     />
                 </div>
             </div>
+            <div
+                v-else
+                class="flex h-3/5 w-full flex-col items-center justify-center text-3xl font-semibold text-gray-700"
+            >
+                <div>
+                    Could not find any announcement related to
+                    <span class="font-normal italic">
+                        ' {{ searchKey }} '
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
-    <EmptyView v-else :is-full-screen="true">
+    <EmptyView v-else-if="!searchKey && !isLoading" :is-full-screen="true">
         <template #default>
             <p class="text-center text-xl font-semibold">
                 Currently, there are no new announcements. We encourage you to
@@ -112,6 +123,8 @@
     <Modal v-model:view="viewAnnouncement">
         <ShowAnnouncementView :selected-announcement="continueReading" />
     </Modal>
+
+    <Loading v-if="isLoading" :is-full-screen="true" />
 </template>
 <script setup>
 import Announcements from "@/Views/Announcements/Index.vue";
@@ -127,6 +140,7 @@ import AddAnnouncement from "@/Views/Announcements/AddAnnouncement.vue";
 import ShowAnnouncementView from "@/Views/Announcements/ShowAnnouncement.vue";
 import { isAdmin } from "@/utils";
 import EmptyView from "@/Views/EmptyView.vue";
+import Loading from "@/Components/Loading.vue";
 
 const props = defineProps({
     url: {
@@ -138,6 +152,7 @@ const props = defineProps({
 const showAddAnnouncement = ref(false);
 const viewAnnouncement = ref(false);
 const continueReading = ref();
+const isLoading = ref(false);
 
 const announcements = computed(() => usePage().props.announcements);
 const schoolYears = computed(() => usePage().props.school_years);
@@ -154,12 +169,26 @@ watch(announcements, () => {
     announcements.value?.data.splice(0, 2);
 });
 
-const searchKey = ref(usePage().props.searchKey);
+const searchKey = ref(usePage().props.filters?.searchKey);
+const isSearchCleared = ref(false);
+
+watch(searchKey, () => {
+    isLoading.value = true;
+    search();
+});
+
 const search = debounce(() => {
     router.get(
         props.url,
         { search: searchKey.value },
-        { preserveState: true, replace: true }
+        {
+            preserveState: true,
+            replace: true,
+            onFinish: () => {
+                isLoading.value = false;
+                isSearchCleared.value = false;
+            },
+        }
     );
 }, 300);
 
