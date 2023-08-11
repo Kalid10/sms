@@ -67,6 +67,25 @@
             </div>
         </div>
     </div>
+    <DialogBox
+        :open="isLogoutDialogOpen"
+        @abort="isLogoutDialogOpen = false"
+        @confirm="handleLogoutConfirm"
+    >
+        <template #icon>
+            <ArrowLeftOnRectangleIcon />
+        </template>
+
+        <template #title>
+            {{ t("teacherLayout.logout") }}
+        </template>
+        <template #description>
+            {{ t("common.logoutConfirmation") }}
+        </template>
+        <template #action>
+            {{ t("teacherLayout.logout") }}
+        </template>
+    </DialogBox>
 </template>
 
 <script setup>
@@ -96,6 +115,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { useUIStore } from "@/Store/ui";
 
 import { useI18n } from "vue-i18n";
+import DialogBox from "@/Components/DialogBox.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -118,76 +138,96 @@ const isOpen = computed(() => useSidebarStore().isOpen);
 
 const directory = computed(() => usePage().url.split("/")[2]);
 
-console.log("directory", directory.value);
-// Populate sidebar items
+const isLogoutDialogOpen = ref(false);
+
+const showLogoutConfirmation = () => {
+    isLogoutDialogOpen.value = true;
+};
+
+const handleLogoutConfirm = () => {
+    logout();
+    isLogoutDialogOpen.value = false;
+};
+
+const logout = () => {
+    router.post("/logout");
+};
+
+const isRouteActive = (routePattern) => {
+    const currentURL = usePage().url.split("?")[0]; // Strip query parameters
+    return routePattern.test(currentURL);
+};
+
 const sidebarItems = computed(() => [
     {
         name: t("teacherLayout.home"),
         icon: HomeIcon,
         route: "/teacher",
-        active: directory.value === undefined,
+        active: isRouteActive(/^\/teacher\/?$/),
     },
     {
         name: t("common.chat"),
         icon: ChatBubbleBottomCenterIcon,
         route: "/teacher/chat",
-        active: directory.value === "chat",
+        active: isRouteActive(/^\/teacher\/chat\/?$/),
     },
     {
         name: t("teacherLayout.myClasses"),
         icon: PuzzlePieceIcon,
         route: "/teacher/class",
-        active: directory.value === "class",
+        active: isRouteActive(/^\/teacher\/class\/?$/),
     },
     {
         name: t("teacherLayout.myStudents"),
         icon: UsersIcon,
         route: "/teacher/students",
-        active: directory.value === "students",
+        active:
+            isRouteActive(/^\/teacher\/students\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/students\/?$/),
     },
     {
         name: t("teacherLayout.lessonPlan"),
         icon: CalendarIcon,
         route: "/teacher/lesson-plan",
-        active: directory.value === "lesson-plan",
+        active: isRouteActive(/^\/teacher\/lesson-plan\/?$/),
     },
     {
         name: t("teacherLayout.questionBank"),
         icon: QuestionMarkCircleIcon,
         route: "/teacher/questions",
-        active: directory.value === "questions",
+        active: isRouteActive(/^\/teacher\/questions\/?$/),
     },
     {
         name: t("teacherLayout.assessments"),
         icon: NewspaperIcon,
         route: "/teacher/assessments",
-        active: directory.value === "assessments",
+        active: isRouteActive(/^\/teacher\/assessments\/?$/),
     },
     {
         name: t("common.copilot"),
         icon: SparklesIcon,
         route: "/teacher/copilot",
-        active: directory.value === "copilot",
+        active: isRouteActive(/^\/teacher\/copilot\/?$/),
     },
     {
         name: t("teacherLayout.homeRooms"),
         icon: UserIcon,
         route: "/teacher/homeroom",
-        active: directory.value === "homeroom",
+        active: isRouteActive(/^\/teacher\/homeroom\/?$/),
     },
 
     {
         name: t("teacherLayout.announcements"),
         icon: MegaphoneIcon,
         route: "/teacher/announcements",
-        active: directory.value === "announcements",
+        active: isRouteActive(/^\/teacher\/announcements\/?$/),
     },
 
     {
         name: t("teacherLayout.schedule"),
         icon: CalendarDaysIcon,
         route: "/teacher/school-schedule",
-        active: directory.value === "school-schedule",
+        active: isRouteActive(/^\/teacher\/school-schedule\/?$/),
     },
     {
         name: t("teacherLayout.settings"),
@@ -201,8 +241,7 @@ const footerItems = [
     {
         icon: ArrowLeftOnRectangleIcon,
         name: t("teacherLayout.logout"),
-        route: "/logout",
-        method: "POST",
+        action: "showLogoutConfirmation",
     },
 ];
 

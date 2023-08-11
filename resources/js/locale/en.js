@@ -469,6 +469,7 @@ const en = {
         staff: "Staff",
         apply: "Apply",
         by: "By",
+        logoutConfirmation: "Are you sure you want to logout?",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",

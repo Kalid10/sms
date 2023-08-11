@@ -46,7 +46,7 @@ it('creates assessment if all data are valid', function () {
     $assessmentType = AssessmentType::first()->id;
 
     $requestData = [
-        'batch_subject_id' => $batchSubject->id,
+        'batch_subject_ids' => [$batchSubject->id],
         'assessment_type_id' => $assessmentType,
         'due_date' => Carbon::now()->addDays(3)->format('Y-m-d'),
         'title' => 'Test Assessment',
@@ -64,6 +64,7 @@ it('creates assessment if all data are valid', function () {
         'description' => 'Test Assessment Description',
         'maximum_point' => 100,
         'quarter_id' => $quarter->id,
+        'batch_subject_id' => $batchSubject->id,
     ]);
 
     $response->assertSessionHas('success', 'Assessment created.');

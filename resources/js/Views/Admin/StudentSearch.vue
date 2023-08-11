@@ -41,7 +41,7 @@
                 v-else-if="query.length > 0 && showStudents"
                 class="mt-1 flex flex-col items-center justify-center rounded-lg border border-zinc-100 bg-white py-8 shadow-sm"
             >
-                <p v-if="!!query" class="text-sm text-brand-text-450">
+                <p v-if="!!query" class="text-sm text-black">
                     No students found with the name "{{ query }}"
                 </p>
             </div>

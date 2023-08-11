@@ -36,12 +36,29 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(["show-logout-confirmation"]);
+
 const isOpen = computed(() => useSidebarStore().isOpen);
 
 function handleClick(item) {
-    if (!item.method) return router.get(item.route);
+    if (item.action) {
+        if (item.action === "showLogoutConfirmation") {
+            emit("show-logout-confirmation");
+            return;
+        }
+        // Handle other actions here if needed
+        return;
+    }
 
-    if (item.method === "POST") return router.post(item.route);
+    if (!item.route) return;
+
+    if (!item.method || item.method === "GET") {
+        return router.visit(item.route);
+    }
+
+    if (item.method === "POST") {
+        return router.visit(item.route, { method: "post" });
+    }
 }
 </script>
 <style scoped></style>
