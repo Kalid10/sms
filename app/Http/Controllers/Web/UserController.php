@@ -70,7 +70,13 @@ class UserController extends Controller
 
     public function profile(): Response
     {
-        return Inertia::render('Admin/Users/Profile');
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Profile',
+            User::TYPE_ADMIN => 'Admin/Profile',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page);
     }
 
     public function update(UpdateRequest $request): RedirectResponse

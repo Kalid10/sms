@@ -130,15 +130,15 @@ const sidebarItems = computed(() => [
         route: "/admin/absentees",
         active: directory.value === "absentees",
     },
-]);
-
-const footerItems = [
     {
         name: t("adminLayout.settings"),
         icon: Cog6ToothIcon,
-        route: "/user/profile",
-        // active: directory.value === 'settings'
+        route: "/admin/user/profile",
+        active: directory.value === "user",
     },
+]);
+
+const footerItems = [
     {
         icon: ArrowLeftOnRectangleIcon,
         name: t("adminLayout.logout"),

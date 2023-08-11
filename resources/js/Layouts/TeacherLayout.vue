@@ -186,15 +186,15 @@ const sidebarItems = computed(() => [
         route: "/teacher/school-schedule",
         active: directory.value === "school-schedule",
     },
-]);
-
-const footerItems = [
     {
         name: t("teacherLayout.settings"),
         icon: Cog6ToothIcon,
-        route: "/user/profile",
-        active: directory.value === "settings",
+        route: "/teacher/user/profile",
+        active: directory.value === "user",
     },
+]);
+
+const footerItems = [
     {
         icon: ArrowLeftOnRectangleIcon,
         name: t("teacherLayout.logout"),
