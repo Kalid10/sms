@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class StudentSubjectGrade extends Model
 {
@@ -24,6 +25,11 @@ class StudentSubjectGrade extends Model
     public function batchSubject(): BelongsTo
     {
         return $this->belongsTo(BatchSubject::class);
+    }
+
+    public function gradable(): MorphTo
+    {
+        return $this->morphTo();
     }
 
     public function gradeScale(): BelongsTo

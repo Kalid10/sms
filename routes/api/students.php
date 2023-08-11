@@ -8,6 +8,7 @@ Route::controller(StudentController::class)->prefix('children/')->middleware('au
     Route::get('subjects/{student?}', 'subjects')->name('subjects');
     Route::get('schedules/{student?}', 'schedules')->name('schedules');
     Route::get('assessments/{student?}', 'assessments')->name('assessments');
+    Route::get('assessment-types/{student?}', 'assessmentTypes')->name('assessmentTypes');
     Route::get('sessions/{student?}', 'sessions')->name('sessions');
     Route::get('grades/{student?}', 'grades')->name('grades');
     Route::get('{student}/class/{batchSubject}', 'batchSubject')->name('classes');

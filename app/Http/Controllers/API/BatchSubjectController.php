@@ -16,6 +16,7 @@ class BatchSubjectController extends Controller
             'nextSession.batchSchedule.schoolPeriod',
             'lastSession.batchSchedule.schoolPeriod',
             'schedule.schoolPeriod',
+            'teacher.user',
         ]);
 
         return new BatchSubjectResource($batchSubject);

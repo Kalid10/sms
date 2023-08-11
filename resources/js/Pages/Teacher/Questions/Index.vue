@@ -5,11 +5,6 @@
     >
         <div class="flex w-full items-center justify-between py-3">
             <Title :title="$t('teacherQuestions.myQuestionBank')" />
-            <p
-                class="w-8/12 rounded-lg bg-gradient-to-tr from-violet-500 to-purple-500 p-4 text-center text-xs text-white"
-            >
-                {{ $t("teacherQuestions.questionGeneratorDescription") }}
-            </p>
         </div>
 
         <div class="flex w-full justify-between">
@@ -17,49 +12,44 @@
                 v-if="selectedQuestion"
                 class="w-5/12 rounded-lg bg-white p-3 shadow-sm"
             >
-                <div class="flex justify-between px-2">
-                    <div
-                        class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
+                <div
+                    class="flex flex-col space-y-0.5 text-center text-xl font-semibold"
+                >
+                    <span>
+                        {{
+                            selectedQuestion.batch_subject.subject.full_name +
+                            " " +
+                            selectedQuestion.assessment_type.name
+                        }}
+                    </span>
+
+                    <span class="text-xs font-light">
+                        {{
+                            moment(selectedQuestion.updated_at).format(
+                                "ddd MMMM DD YYYY"
+                            )
+                        }}</span
                     >
-                        <span>
-                            {{ $t("teacherQuestions.questionsFor") }}
-                            {{
-                                selectedQuestion.batch_subject.subject
-                                    .full_name +
-                                " " +
-                                selectedQuestion.assessment_type.name
-                            }}
-                        </span>
-                        <span class="text-start text-xs font-light">
-                            @
-                            {{
-                                moment(selectedQuestion.updated_at).format(
-                                    "ddd MMMM DD YYYY"
-                                )
-                            }}</span
-                        >
-                    </div>
-                    <PrinterIcon
-                        class="w-5 cursor-pointer text-brand-text-350 hover:scale-125 hover:text-black"
-                    />
                 </div>
+
+                <div
+                    class="mt-4 w-full rounded-lg border border-gray-400 py-3 px-2 text-start text-sm font-normal"
+                >
+                    <span class="font-semibold">Input:</span>
+                    {{ selectedQuestion.input }}
+                </div>
+
                 <div
                     v-for="(item, index) in selectedQuestion?.questions"
                     :key="index"
                     class="group my-3 flex cursor-pointer flex-col space-y-4 rounded-lg p-4 font-medium shadow-sm hover:bg-brand-350 hover:text-white"
-                    :class="index % 2 === 1 ? 'bg-brand-50' : 'bg-brand-50/50'"
+                    :class="index % 2 === 1 ? 'bg-brand-50/50' : 'bg-white'"
                 >
                     <div class="flex w-full flex-col space-y-3 text-sm">
                         <span>
-                            {{ item.question }}
+                            {{ item }}
                         </span>
 
-                        <span
-                            class="rounded-lg border border-black p-4 text-xs shadow-sm group-hover:border-gray-50"
-                        >
-                            {{ $t("teacherQuestions.answer") }}
-                            {{ item.answer }}</span
-                        >
                         <span
                             class="flex w-full justify-end space-x-6 pt-2 text-xs"
                         >
@@ -82,15 +72,25 @@
                 </div>
             </div>
             <div
-                class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white px-4 py-6 shadow-sm"
+                class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white p-4 shadow-sm"
             >
-                <div class="text-3xl font-semibold">
-                    {{ $t("teacherQuestions.recentQuestions") }}
+                <div class="flex w-full justify-between">
+                    <div class="grow text-center text-3xl font-semibold">
+                        {{ $t("teacherQuestions.recentQuestions") }}
+                    </div>
+
+                    <div
+                        class="flex h-fit cursor-pointer items-center justify-center space-x-1.5 rounded-2xl bg-brand-350 px-2 py-1.5 text-xs text-white shadow-sm hover:scale-105 hover:bg-brand-400"
+                        @click="routeToQuestionGenerator"
+                    >
+                        <SquaresPlusIcon class="w-3.5" />
+                        <span>Generate</span>
+                    </div>
                 </div>
                 <TableElement
                     :filterable="false"
                     :selectable="false"
-                    header-style="bg-brand-450 text-white "
+                    header-style="!bg-brand-450 text-white "
                     class="cursor-pointer !rounded-none !shadow-none"
                     :data="formattedQuestionData"
                     :columns="config"
@@ -99,7 +99,7 @@
                 >
                     <template #row-actions="{ row }">
                         <EyeIcon
-                            class="w-4 cursor-pointer text-brand-text-450 hover:scale-125"
+                            class="w-4 cursor-pointer text-brand-450 hover:scale-125"
                             @click="setSelectedQuestion(row.id)"
                         />
                         <TrashIcon
@@ -132,26 +132,13 @@
             class="flex flex-col items-center space-y-5 rounded-lg bg-white p-4 shadow-sm"
         >
             <div class="text-xl font-semibold">
-                {{ $t("teacherQuestions.updateQuestion") }}
+                {{ $t("teacherQuestions.updateQuestionAndAnswer") }}
             </div>
             <TextArea
                 v-model="updateForm.question"
                 :placeholder="$t('teacherQuestions.addQuestion')"
                 :label="$t('common.question')"
                 class="w-full"
-            />
-            <TextArea
-                v-model="updateForm.answer"
-                class="w-full"
-                :placeholder="$t('teacherQuestions.addAnswer')"
-                :label="$t('teacherQuestions.answer')"
-            />
-
-            <TextArea
-                v-model="updateForm.answer"
-                class="w-full"
-                :placeholder="$t('teacherQuestions.addAnswer')"
-                :label="$t('teacherQuestions.answer')"
             />
             <SecondaryButton
                 :title="$t('teacherQuestions.update')"
@@ -172,7 +159,7 @@ import Pagination from "@/Components/Pagination.vue";
 import {
     EyeIcon,
     PencilSquareIcon,
-    PrinterIcon,
+    SquaresPlusIcon,
     TrashIcon,
 } from "@heroicons/vue/20/solid";
 import Modal from "@/Components/Modal.vue";
@@ -203,7 +190,7 @@ const formattedQuestionData = computed(() => {
             type: question.assessment_type.name,
             subject: question.batch_subject.subject.full_name,
             no_of_questions: question.no_of_questions,
-            difficulty_level: question.difficulty_level,
+            generated_at: moment(question.created_at).format("MMM Do YYYY"),
         };
     });
 });
@@ -226,8 +213,8 @@ const config = [
         key: "no_of_questions",
     },
     {
-        name: t("teacherQuestions.difficultyLevel"),
-        key: "difficulty_level",
+        name: t("teacherQuestions.generatedAt"),
+        key: "generated_at",
     },
 ];
 
@@ -239,8 +226,7 @@ const updateForm = useForm({
 });
 
 function updateQuestionForm(item, index) {
-    updateForm.question = item.question;
-    updateForm.answer = item.answer;
+    updateForm.question = item;
     updateForm.index = index;
     updateForm.question_id = selectedQuestion.value.id;
     showUpdateModal.value = true;
@@ -268,7 +254,7 @@ const updateQuestion = () => {
     updateForm.post("/teacher/questions", {
         preserveState: true,
         onSuccess: () => {
-            showUpdateModal.value = true;
+            showUpdateModal.value = false;
         },
     });
 };

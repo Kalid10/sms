@@ -53,11 +53,7 @@ class QuestionsController extends Controller
         $questions = $question->questions;
 
         if (isset($questions[$request->index])) {
-            $questions[$request->index]['question'] = $request->question;
-            $questions[$request->index]['answer'] = $request->answer;
-            $questions[$request->index]['difficulty'] = $request->answer;
-            $questions[$request->index]['question_type'] = $request->question_type;
-
+            $questions[$request->index] = $request->question;
             $question->update(['questions' => $questions]);
 
             return redirect()->back()->with('success', 'Question updated successfully.');

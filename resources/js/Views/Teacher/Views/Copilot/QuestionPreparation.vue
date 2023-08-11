@@ -1,17 +1,24 @@
 <template>
     <div
-        class="flex min-h-full w-full flex-col items-center space-y-8 rounded-lg lg:p-4 lg:py-8"
+        class="flex min-h-full w-full flex-col items-center space-y-8 rounded-lg"
     >
-        <div
-            class="flex w-full flex-col items-center rounded-lg p-4 text-center lg:absolute lg:top-6 lg:right-0 lg:w-8/12"
-        >
-            <div class="text-4xl font-medium">
-                {{ $t("questionPreparation.welcome") }}
+        <Modal v-model:view="showInfoModal">
+            <div
+                class="flex w-full flex-col items-center space-y-4 rounded-lg bg-white p-6 text-center"
+            >
+                <div class="text-2xl font-semibold">
+                    {{ $t("questionPreparation.welcome") }}
+                </div>
+                <div class="fo w-10/12 py-1 text-sm font-medium text-gray-600">
+                    {{ $t("questionPreparation.description") }}
+                </div>
             </div>
-            <div class="w-10/12 py-1 text-sm font-light">
-                {{ $t("questionPreparation.description") }}
-            </div>
-        </div>
+        </Modal>
+
+        <InformationCircleIcon
+            class="absolute top-6 right-6 w-5 cursor-pointer text-black hover:scale-125 hover:text-brand-450"
+            @click="showInfoModal = true"
+        />
 
         <div
             class="flex w-full flex-col justify-between lg:flex-row lg:space-x-5"
@@ -121,7 +128,7 @@
                     @click="submit"
                 />
             </div>
-            <div class="flex w-full items-center lg:w-6/12">
+            <div class="flex h-fit w-full lg:w-6/12">
                 <LessonPlans @select="updateLessonPlanIds" />
             </div>
         </div>
@@ -137,11 +144,14 @@ import LessonPlans from "@/Views/Teacher/Views/Copilot/LessonPlans.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextArea from "@/Components/TextArea.vue";
 import { useUIStore } from "@/Store/ui";
+import Modal from "@/Components/Modal.vue";
+import { InformationCircleIcon } from "@heroicons/vue/24/outline";
 
 const showNotification = inject("showNotification");
 const assessmentTypes = computed(() => usePage().props.assessment_types);
 const questions = computed(() => usePage().props.questions);
 const batchSubjects = computed(() => usePage().props.batch_subjects);
+const showInfoModal = ref(false);
 
 const emit = defineEmits(["limit-reached"]);
 onMounted(() => {
@@ -220,6 +230,7 @@ Echo.private("question-generator").listen(".question-generator", (e) => {
             position: "top-center",
         });
         uiStore.setQuestionGenerationStatus("error");
+        uiStore.setQuestionGenerationMessage(e.message);
     }
 });
 

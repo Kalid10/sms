@@ -1644,6 +1644,7 @@ const am = {
         assessmentType: "የመግምግም አይነት",
         noOfQuestions: "የጥያቄዎች ቁጥር",
         difficultyLevel: "የክብደት ደረጃ",
+        generatedAt: "የወጣበት ቀን",
     },
 
     adminUserIndex: {
