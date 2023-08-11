@@ -131,8 +131,12 @@ class UserController extends Controller
     }
 
     public function uploadImage(Request $request): RedirectResponse
+    // Get the logged in user
     {
         $user = auth()->user();
+        // This refresh code is used to unload all relations of the user,
+        // but the main use of this code is to refresh the user model
+        $user->refresh();
 
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -160,8 +164,9 @@ class UserController extends Controller
         // Upload the resized image to Spaces
         ImageService::upload($img, $filename);
 
-        $user->profile_image = Storage::disk('spaces')->url('rigel/profile-images/'.$filename);
-        $user->save();
+        $user->update([
+            'profile_image' => Storage::disk('spaces')->url('rigel/profile-images/'.$filename),
+        ]);
 
         return redirect()->back()->with('success', 'Image uploaded successfully.');
     }
