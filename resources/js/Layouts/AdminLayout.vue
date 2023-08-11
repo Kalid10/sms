@@ -95,6 +95,11 @@ const handleLogoutConfirm = () => {
     isLogoutDialogOpen.value = false;
 };
 
+const isRouteActive = (routePattern) => {
+    const currentURL = usePage().url.split("?")[0]; // Strip query parameters
+    return routePattern.test(currentURL);
+};
+
 const logout = () => {
     router.post("/logout");
 };
@@ -105,49 +110,79 @@ const sidebarItems = computed(() => [
         name: t("adminLayout.home"),
         icon: HomeIcon,
         route: "/admin",
-        active: directory.value === undefined,
+        active: isRouteActive(/^\/admin\/\?$/) || isRouteActive(/^\/admin\/?$/),
     },
     {
         name: t("common.chat"),
         icon: ChatBubbleBottomCenterIcon,
         route: "/admin/chat",
-        active: directory.value === "chat",
+        active:
+            isRouteActive(/^\/admin\/chat\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/chat\/?$/),
     },
     {
         name: t("common.teachers"),
         icon: UserIcon,
         route: "/admin/teachers",
-        active: directory.value === "teachers",
+        active:
+            isRouteActive(/^\/admin\/teachers\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/class\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/students\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/lesson-plan\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/assessments\/?$/) ||
+            isRouteActive(/^\/teacher\/assessments\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/homeroom\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/announcements\/?$/),
     },
     {
         name: t("common.students"),
         icon: UsersIcon,
         route: "/admin/students",
-        active: directory.value === "students",
+        active:
+            isRouteActive(/^\/admin\/students\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/students\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/students\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/students\/?$/) ||
+            isRouteActive(/^\/students\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/students\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/students\/?$/) ||
+            isRouteActive(/^\/admin\/batches\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/batches\/?$/),
     },
     {
         name: t("common.grades"),
         icon: AcademicCapIcon,
         route: "/admin/levels",
-        active: directory.value === "levels",
+        active:
+            isRouteActive(/^\/admin\/levels\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/levels\/?$/),
     },
     {
         name: t("common.subjects"),
         icon: BookOpenIcon,
         route: "/admin/subjects",
-        active: directory.value === "subjects",
+        active:
+            isRouteActive(/^\/admin\/subjects\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/subjects\/?$/) ||
+            isRouteActive(/^\/batches\/subjects\/\d+\/\d+\/?$/) ||
+            isRouteActive(/^\/batches\/subjects\/?$/),
     },
     {
         name: t("common.announcements"),
         icon: MegaphoneIcon,
         route: "/admin/announcements",
-        active: directory.value === "announcements",
+        active:
+            isRouteActive(/^\/admin\/announcements\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/announcements\/?$/),
     },
     {
         name: t("common.schedule"),
         icon: CalendarDaysIcon,
         route: "/admin/schedules",
-        active: directory.value === "schedules",
+        active:
+            isRouteActive(/^\/admin\/schedules\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/schedules\/?$/),
     },
     {
         name: t("common.assessments"),
@@ -159,13 +194,23 @@ const sidebarItems = computed(() => [
         name: t("common.users"),
         icon: UserGroupIcon,
         route: "/admin/users",
-        active: directory.value === "users",
+        active:
+            isRouteActive(/^\/admin\/users\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/users\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/admin\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/admin\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/teacher\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/teacher\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/student\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/student\/?$/),
     },
     {
         name: t("common.absentees"),
         icon: FingerPrintIcon,
         route: "/admin/absentees",
-        active: directory.value === "absentees",
+        active:
+            isRouteActive(/^\/admin\/absentees\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/absentees\/?$/),
     },
 ]);
 
