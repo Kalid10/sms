@@ -4,11 +4,12 @@
         <SummaryItem
             class-style="bg-sky-100 text-black"
             icon-style="bg-sky-500/20 text-white"
-            :title="$t('common.chat')"
-            :value="$t('adminSummary.chatValue')"
+            :title="$t('common.aiChat')"
+            :value="$t('common.aiChatDescription')"
             :icon="PaperAirplaneIcon"
-            url="/teacher/chat"
+            url="/teacher/copilot"
         />
+        <!--        Todo: Translate the value's-->
         <SummaryItem
             class-style="bg-orange-100 text-black"
             icon-style="bg-orange-500/20 text-white"

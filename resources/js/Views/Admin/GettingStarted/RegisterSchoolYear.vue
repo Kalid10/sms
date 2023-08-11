@@ -216,13 +216,8 @@ const totalQuarters = computed(() => {
 function handleSubmit() {
     formData.post("/school-year/create", {
         onSuccess: () => {
-            console.log("Success");
             // router.get("/getting-started/register-batches");
             emits("success");
-        },
-        onError: (error) => {
-            console.log("Error");
-            console.log(error);
         },
     });
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen w-full items-center justify-evenly bg-brand-100">
+    <div class="flex h-screen w-full items-center justify-evenly">
         <div
             class="flex w-full flex-col items-center justify-between rounded-lg bg-white px-12 py-3 lg:h-5/6 lg:w-7/12"
         >
@@ -21,7 +21,7 @@
                     <Heading
                         :value="$t('userProfile.headingTwo')"
                         size="sm"
-                        class="text-xs !font-light text-brand-text-300"
+                        class="text-xs !font-light text-gray-600"
                     />
                 </div>
                 <div class="flex w-full justify-center">
@@ -77,6 +77,7 @@
                         </div>
                         <div class="flex justify-end py-3">
                             <PrimaryButton
+                                class="bg-brand-450"
                                 :title="$t('userProfile.updateProfile')"
                                 @click="submitProfileForm"
                             />
@@ -95,7 +96,7 @@
                     <Heading
                         :value="$t('userProfile.stayAheadOf')"
                         size="sm"
-                        class="text-xs !font-light text-brand-text-300"
+                        class="text-xs !font-light text-gray-600"
                     />
                 </div>
                 <div class="flex w-full justify-center">
@@ -123,13 +124,16 @@
                         <UserTextInput
                             v-model="passwordForm.password_confirmation"
                             :label="$t('userProfile.passwordConfirmationLabel')"
-                            :placeholder="$t('userProfile.passwordPlaceholder')"
+                            :placeholder="
+                                $t('userProfile.passwordConfirmationLabel')
+                            "
                             type="password"
                             :error="passwordForm.errors.password_confirmation"
                             required
                         />
                         <div class="flex justify-end py-3">
                             <PrimaryButton
+                                class="bg-brand-450"
                                 :title="$t('userProfile.updatePassword')"
                                 @click="submitPasswordForm"
                             />
@@ -142,20 +146,29 @@
         <div
             class="hidden h-full w-4/12 flex-col items-center justify-center space-y-2 pt-24 text-center lg:block"
         >
-            <div>
-                <h1
-                    class="w-full text-3xl font-extrabold leading-none lg:text-6xl"
-                >
-                    <span class="w-full"
-                        >{{ $t("userProfile.hello") }} 👋🏼 {{ user.name }}</span
-                    >
-                </h1>
+            <div class="flex flex-col">
+                <img
+                    :src="
+                        imagePreview ??
+                        user?.profile_image ??
+                        'https://avatars.dicebear.com/api/open-peeps/' +
+                            user.name +
+                            '.svg'
+                    "
+                    alt="avatar"
+                    class="mx-auto w-16 rounded-full object-cover md:h-40 md:w-40"
+                />
 
-                <h3 class="py-1 font-light text-brand-text-300">
-                    {{ $t("userProfile.description") }}
-                </h3>
-
-                <ImageUpload />
+                <ImageUpload
+                    :show-image-preview="false"
+                    finish-button-text="Upload Profile Picture"
+                    :upload-url="
+                        isTeacher()
+                            ? '/teacher/user/upload'
+                            : '/admin/user/register/upload'
+                    "
+                    @image-uploaded="setupImage"
+                />
             </div>
 
             <div class="h-3/6 min-w-full"></div>
@@ -166,10 +179,11 @@
 import UserTextInput from "@/Components/TextInput.vue";
 import Heading from "@/Components/Heading.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import UserSelectInput from "@/Components/SelectInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import ImageUpload from "@/Components/ImageUpload.vue";
+import { isTeacher } from "@/utils";
 
 const genderOptions = [
     { value: "male", label: "Male" },
@@ -210,4 +224,10 @@ const submitPasswordForm = () => {
         },
     });
 };
+
+const imagePreview = ref(null);
+
+function setupImage(value) {
+    imagePreview.value = value;
+}
 </script>

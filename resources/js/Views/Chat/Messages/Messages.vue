@@ -19,18 +19,19 @@
                     v-model="searchKey"
                     :placeholder="$t('rigelChat.searchTeacher')"
                     class="!w-9/12"
-                    class-style="!w-full  rounded-2xl bg-brand-50/80 border-none placeholder:text-xs focus:bg-white text  focus:ring-1 focus:ring-zinc-400"
+                    class-style="!w-full rounded-2xl bg-brand-50/80 border-none placeholder:text-xs focus:bg-white text  focus:ring-1 focus:ring-zinc-400"
                     @click.
                 />
 
-                <div
-                    class="group flex w-fit cursor-pointer items-center space-x-1 rounded-lg bg-violet-600 px-2 py-1.5 text-center text-xs shadow-sm"
-                    @click="loadSimilarContacts"
-                >
-                    <ChatBubbleOvalLeftEllipsisIcon
-                        class="w-4 cursor-pointer text-white hover:scale-125"
-                    />
-                </div>
+                <!--                TODO: The sidebar item is moving to home menu when calling the getContacts endpoint-->
+                <!--                <div-->
+                <!--                    class="group flex w-fit cursor-pointer items-center space-x-1 rounded-lg bg-violet-600 px-2 py-1.5 text-center text-xs shadow-sm"-->
+                <!--                    @click="loadSimilarContacts"-->
+                <!--                >-->
+                <!--                    <ChatBubbleOvalLeftEllipsisIcon-->
+                <!--                        class="w-4 cursor-pointer text-white hover:scale-125"-->
+                <!--                    />-->
+                <!--                </div>-->
             </div>
 
             <!--        Favorites-->
@@ -74,10 +75,7 @@
 </template>
 <script setup>
 import { computed, ref, watch } from "vue";
-import {
-    ChatBubbleBottomCenterIcon,
-    ChatBubbleOvalLeftEllipsisIcon,
-} from "@heroicons/vue/24/outline";
+import { ChatBubbleBottomCenterIcon } from "@heroicons/vue/24/outline";
 import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
 import ContactSearch from "@/Views/Chat/Messages/ContactSearch.vue";

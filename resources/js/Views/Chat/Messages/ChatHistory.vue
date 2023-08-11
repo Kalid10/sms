@@ -41,7 +41,7 @@
                             {{ chat.name }}
                         </h1>
                         <h1
-                            class="block w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-brand-text-250"
+                            class="block w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-gray-600"
                         >
                             {{ chat?.latest_message?.body }}
                         </h1>
@@ -55,7 +55,7 @@
                         :class="
                             isInFavorites(chat.id).value
                                 ? 'text-yellow-400'
-                                : 'text-brand-text-250'
+                                : 'text-gray-400'
                         "
                         @click="messageStore.toggleFavorite(chat.id)"
                     />
