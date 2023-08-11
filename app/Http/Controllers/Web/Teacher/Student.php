@@ -15,7 +15,6 @@ use App\Models\User;
 use App\Services\StudentService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -38,8 +37,6 @@ class Student extends Controller
         $student = $this->loadStudentData($student, $batchSubjectId, $currentBatch);
         $batchSubjects = $this->getBatchSubjects($currentBatch, $student, $batchSubjectId);
         $assessmentTypes = $this->getAssessmentTypes($student, $request);
-
-        Log::info($batchSubjectId);
 
         $quarters = Quarter::with('semester.schoolYear')->get();
         $semesters = Semester::with('schoolYear')->get();
