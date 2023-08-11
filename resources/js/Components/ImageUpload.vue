@@ -1,5 +1,8 @@
 <template>
-    <form class="flex flex-col items-center space-y-6" @submit.prevent="submit">
+    <form
+        class="flex flex-col items-center space-y-6 py-10"
+        @submit.prevent="submit"
+    >
         <img
             v-if="imagePreview && showImagePreview"
             :src="imagePreview"

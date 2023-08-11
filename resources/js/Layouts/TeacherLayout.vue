@@ -1,8 +1,10 @@
 <template>
     <div id="top-view"></div>
 
-    <div class="relative flex max-h-screen w-full flex-col">
-        <div class="hide-scrollbar w-full grow overflow-y-auto bg-white p-0">
+    <div class="flex max-h-screen w-full flex-col p-0">
+        <div
+            class="hide-scrollbar min-h-screen grow overflow-y-auto bg-white p-0"
+        >
             <div class="flex w-full">
                 <SideBar
                     v-model:open="isOpen"
@@ -116,6 +118,7 @@ const isOpen = computed(() => useSidebarStore().isOpen);
 
 const directory = computed(() => usePage().url.split("/")[2]);
 
+console.log("directory", directory.value);
 // Populate sidebar items
 const sidebarItems = computed(() => [
     {

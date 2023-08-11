@@ -146,7 +146,7 @@
         <div
             class="hidden h-full w-4/12 flex-col items-center justify-center space-y-2 pt-24 text-center lg:block"
         >
-            <div class="flex flex-col space-y-10">
+            <div class="flex flex-col">
                 <img
                     :src="
                         imagePreview ??
@@ -160,7 +160,6 @@
                 />
 
                 <ImageUpload
-                    class="mt-10"
                     :show-image-preview="false"
                     finish-button-text="Upload Profile Picture"
                     :upload-url="
