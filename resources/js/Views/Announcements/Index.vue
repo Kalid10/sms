@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="computedAnnouncements.length > 0"
+        v-if="computedAnnouncements"
         :class="
             classStyle
                 ? classStyle

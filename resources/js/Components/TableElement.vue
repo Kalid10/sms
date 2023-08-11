@@ -164,7 +164,7 @@
                 class="grid h-48 w-full place-items-center border-t"
             >
                 <slot name="empty-data">
-                    <p class="text-sm font-semibold text-brand-text-300">
+                    <p class="text-sm font-semibold text-black">
                         No data found
                     </p>
                 </slot>

@@ -29,7 +29,8 @@ class CreateAssessmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'batch_subject_id' => 'required|exists:batch_subjects,id',
+            'batch_subject_ids' => 'required|array',
+            'batch_subject_ids.*' => 'required|integer|exists:batch_subjects,id',
             'assessment_type_id' => 'required|exists:assessment_types,id',
             'due_date' => 'required|date',
             'title' => 'required|string',
@@ -43,8 +44,8 @@ class CreateAssessmentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'batch_subject_id.required' => 'Batch subject is required.',
-            'batch_subject_id.exists' => 'Batch subject does not exist.',
+            'batch_subject_ids.required' => 'Batch subject is required.',
+            'batch_subject_ids.exists' => 'Batch subject does not exist.',
             'assessment_type_id.required' => 'Assessment type is required.',
             'assessment_type_id.exists' => 'Assessment type does not exist.',
             'due_date.required' => 'Due date is required.',
@@ -55,35 +56,41 @@ class CreateAssessmentRequest extends FormRequest
     protected function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            // Check if batch subject is active
-            $batchSubject = BatchSubject::find($this->batch_subject_id);
-            if (! $batchSubject->isActive()) {
-                return $validator->errors()->add('batch_subject_id', 'Batch subject is not active.');
-            }
 
-            // Check if teacher teaches the subject
-            if (! auth()->user()->teacher->batchSubjects->contains($batchSubject)) {
-                return $validator->errors()->add('batch_subject_id', 'You do not teach this subject.');
-            }
+            // Check if batch subject is active and if teacher teaches the subject and if assessment type is active for multiple batch subject ids
+            foreach ($this->batch_subject_ids as $batchSubjectId) {
+                $batchSubject = BatchSubject::find($batchSubjectId);
+                if (! $batchSubject->isActive()) {
+                    return $validator->errors()->add('batch_subject_id', 'Batch subject is not active.');
+                }
 
-            // Check if assessment type is active
-            $assessmentType = AssessmentType::find($this->assessment_type_id);
-            if ($assessmentType->school_year_id !== SchoolYear::getActiveSchoolYear()->id) {
-                return $validator->errors()->add('assessment_type_id', 'Invalid assessment type.');
-            }
+                // Check if teacher teaches the subject
+                if (! auth()->user()->teacher->batchSubjects->contains($batchSubject)) {
+                    return $validator->errors()->add('batch_subject_id', 'You do not teach this subject.');
+                }
 
-            // If assessment type is not customizable, check if it has reached its maximum count for this quarter
-            if (! $assessmentType->customizable) {
-                $assessments = Assessment::where([
-                    ['assessment_type_id', $this->assessment_type_id],
-                    ['batch_subject_id', $this->batch_subject_id],
-                    ['quarter_id', Quarter::getActiveQuarter()->id],
-                ]);
-
-                if ($assessments->count() >= $assessmentType->max_assessments) {
-                    return $validator->errors()->add('assessment_type_id', $assessmentType->name.' has reached its maximum count for this quarter.');
+                // Check if assessment type is active
+                $assessmentType = AssessmentType::find($this->assessment_type_id);
+                if ($assessmentType->school_year_id !== SchoolYear::getActiveSchoolYear()->id) {
+                    return $validator->errors()->add('assessment_type_id', 'Invalid assessment type.');
                 }
             }
+            // If assessment type is not customizable, check if it has reached its maximum count for this quarter
+            $assessmentType = AssessmentType::find($this->assessment_type_id);
+            if (! $assessmentType->customizable) {
+                foreach ($this->batch_subject_ids as $batchSubjectId) {
+                    $assessments = Assessment::where([
+                        ['assessment_type_id', $this->assessment_type_id],
+                        ['batch_subject_id', $batchSubjectId],
+                        ['quarter_id', Quarter::getActiveQuarter()->id],
+                    ]);
+
+                    if ($assessments->count() >= $assessmentType->max_assessments) {
+                        return $validator->errors()->add('assessment_type_id', $assessmentType->name.' has reached its maximum count for this quarter.');
+                    }
+                }
+            }
+
         });
     }
 }
