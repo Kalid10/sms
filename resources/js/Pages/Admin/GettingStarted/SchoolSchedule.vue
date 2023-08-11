@@ -47,9 +47,9 @@
                 </div>
 
                 <div class="flex flex-col gap-3">
-                    <Heading class="text-center" size="sm">{{
-                        $t("gettingStartedSchoolSchedule.nextSteps")
-                    }}</Heading>
+                    <Heading class="text-center" size="sm"
+                        >{{ $t("gettingStartedSchoolSchedule.nextSteps") }}
+                    </Heading>
 
                     <div class="flex w-full flex-col gap-2 md:flex-row">
                         <Card
@@ -263,12 +263,12 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-3">
-                    <TertiaryButton @click="clear">{{
-                        $t("gettingStartedSchoolSchedule.clear")
-                    }}</TertiaryButton>
-                    <PrimaryButton @click="submit">{{
-                        $t("gettingStartedSchoolSchedule.createEvent")
-                    }}</PrimaryButton>
+                    <TertiaryButton @click="clear"
+                        >{{ $t("gettingStartedSchoolSchedule.clear") }}
+                    </TertiaryButton>
+                    <PrimaryButton @click="submit"
+                        >{{ $t("gettingStartedSchoolSchedule.createEvent") }}
+                    </PrimaryButton>
                 </div>
             </div>
 
@@ -404,7 +404,6 @@ const formData = ref({
 const tags = ref("");
 
 watch(tags, (value) => {
-    console.log(value.split(","));
     formData.value.tags = value.split(",");
 });
 
@@ -424,10 +423,6 @@ function submit() {
             onSuccess: () => {
                 isNewEventModalOpened.value = false;
                 clear();
-                console.log("scuccess");
-            },
-            onError: () => {
-                console.log("error");
             },
         }
     );

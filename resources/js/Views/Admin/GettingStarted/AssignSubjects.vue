@@ -918,11 +918,9 @@ function saveBatches() {
         },
         {
             onSuccess() {
-                console.log("Success");
                 showSectionsFor.value = null;
             },
             onError() {
-                console.log("Error");
                 showSectionsFor.value = null;
             },
         }
@@ -961,8 +959,6 @@ onMounted(() => {
                     });
                 });
             });
-
-            console.log(batchToSubjects.value[0]);
         },
     });
 });

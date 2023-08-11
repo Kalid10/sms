@@ -324,11 +324,7 @@ function submitSubjects() {
         },
         {
             onSuccess: () => {
-                console.log("Success");
                 emits("success");
-            },
-            onError: () => {
-                console.log("Error");
             },
         }
     );
@@ -349,7 +345,6 @@ const computedShortName = computed(() =>
 const formShortName = ref(null);
 
 watch(tags, (value) => {
-    console.log(value.split(","));
     newSubject.value.tags = value.split(",");
 });
 

@@ -248,8 +248,6 @@ function updateSection() {
             registerBatchesForm.data.batches[
                 levelToUpdateSection.value
             ].no_of_sections;
-    } else {
-        console.log("Index is out of bounds or array is undefined");
     }
     updateLevelSection.value = false;
 }
@@ -262,12 +260,7 @@ function submitBatches() {
         },
         {
             onSuccess: () => {
-                console.log("Success");
                 emits("success");
-            },
-            onError: (error) => {
-                console.log("Error");
-                console.log(error);
             },
         }
     );
