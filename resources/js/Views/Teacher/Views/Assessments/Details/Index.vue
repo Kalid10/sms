@@ -45,6 +45,7 @@
                 <UpdateAssessmentForm
                     v-if="assessment.status !== 'completed'"
                     :assessment="assessment"
+                    @success="reloadAndCloseModal"
                 />
             </Modal>
         </div>
@@ -86,5 +87,10 @@ const title = computed(
         props.assessment.batch_subject.batch.section +
         ")"
 );
+
+const reloadAndCloseModal = () => {
+    location.reload();
+    showUpdateForm.value = false;
+};
 </script>
 <style scoped></style>

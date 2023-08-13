@@ -58,9 +58,9 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const emit = defineEmits(["click", "create"]);
-const assessments = ref(usePage().props.assessments);
+const assessments = computed(() => usePage().props.assessments);
 const filteredAssessments = computed(() => {
-    return assessments.value.data.map((assessment) => {
+    return assessments.value?.data.map((assessment) => {
         return {
             assessment: assessment,
             max_points: assessment.maximum_point,

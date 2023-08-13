@@ -102,7 +102,7 @@ const schoolYearOptions = computed(() => {
 
 // Semesters options based on selected school year
 const semesterOptions = computed(() => {
-    if (selectedSchoolYear.value.id === null) return [];
+    if (selectedSchoolYear.value === null) return [];
     return semesters.value
         ?.filter((item) => {
             return item.school_year_id === selectedSchoolYear.value.id;
