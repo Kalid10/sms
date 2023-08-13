@@ -39,6 +39,7 @@ class User extends Authenticatable
         'date_of_birth',
         'fcm_tokens',
         'openai_daily_usage',
+        'profile_image',
     ];
 
     protected $hidden = [

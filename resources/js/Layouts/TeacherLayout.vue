@@ -1,8 +1,10 @@
 <template>
     <div id="top-view"></div>
 
-    <div class="relative flex max-h-screen w-full flex-col">
-        <div class="hide-scrollbar w-full grow overflow-y-auto bg-white p-0">
+    <div class="flex max-h-screen w-full flex-col p-0">
+        <div
+            class="hide-scrollbar min-h-screen grow overflow-y-auto bg-white p-0"
+        >
             <div class="flex w-full">
                 <SideBar
                     v-model:open="isOpen"
@@ -249,15 +251,15 @@ const sidebarItems = computed(() => [
             isRouteActive(/^\/teacher\/school-schedule\/\d+\/?$/) ||
             isRouteActive(/^\/teacher\/school-schedule\/?$/),
     },
-]);
-
-const footerItems = [
     {
         name: t("teacherLayout.settings"),
         icon: Cog6ToothIcon,
-        route: "/user/profile",
-        active: directory.value === "settings",
+        route: "/teacher/user/profile",
+        active: directory.value === "user",
     },
+]);
+
+const footerItems = [
     {
         icon: ArrowLeftOnRectangleIcon,
         name: t("teacherLayout.logout"),

@@ -177,10 +177,6 @@ function handleConfirm() {
         {
             onSuccess: () => {
                 showDialog.value = false;
-                console.log("Success");
-            },
-            onError: (error) => {
-                console.log("Error");
             },
         }
     );

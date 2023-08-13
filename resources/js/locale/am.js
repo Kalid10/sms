@@ -438,6 +438,8 @@ const am = {
         clear: "ባዶ አርግ",
         submit: "አስገባ",
         chat: "ቻት",
+        aiChat: "ሪግል ኮፓይለት(Copilot)",
+        aiChatDescription: "ማስተማርን በሪግል AI ያቅሉ",
         copilot: "ኮፓይለት(Copilot)",
         previous: "ቀደም",
         next: "ቀጣይ",
