@@ -143,6 +143,9 @@
             class="hidden h-full w-4/12 flex-col items-center justify-center space-y-2 pt-24 text-center lg:block"
         >
             <div>
+                <ChangeLanguage />
+            </div>
+            <div>
                 <h1
                     class="w-full text-3xl font-extrabold leading-none lg:text-6xl"
                 >
@@ -170,6 +173,7 @@ import { computed } from "vue";
 import UserSelectInput from "@/Components/SelectInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import ImageUpload from "@/Components/ImageUpload.vue";
+import ChangeLanguage from "@/Components/ChangeLanguage.vue";
 
 const genderOptions = [
     { value: "male", label: "Male" },

@@ -1603,6 +1603,7 @@ const en = {
         female: "Female",
         updateProfile: "Update Profile",
         updatePassword: "Update Password",
+        changeLanguage: "Change Language",
     },
 
     userStatistics: {

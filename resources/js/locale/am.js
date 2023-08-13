@@ -1544,6 +1544,7 @@ const am = {
         female: "ሴት",
         updateProfile: "ፕሮፋይል አዘምን",
         updatePassword: "የይለፍ ቃል አዘምን",
+        changeLanguage: "ቋንቋ ቀይር",
     },
 
     userStatistics: {
