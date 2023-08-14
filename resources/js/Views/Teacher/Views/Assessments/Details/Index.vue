@@ -45,7 +45,7 @@
                 <UpdateAssessmentForm
                     v-if="assessment.status !== 'completed'"
                     :assessment="assessment"
-                    @success="reloadAndCloseModal"
+                    @success="getAssessments"
                 />
             </Modal>
         </div>
@@ -70,6 +70,7 @@ import Completed from "@/Views/Teacher/Views/Assessments/Details/Completed.vue";
 import Marking from "@/Views/Teacher/Views/Assessments/Details/Marking.vue";
 import Scheduled from "@/Views/Teacher/Views/Assessments/Details/Scheduled.vue";
 import { isTeacher } from "@/utils";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     assessment: {
@@ -88,9 +89,21 @@ const title = computed(
         ")"
 );
 
-const reloadAndCloseModal = () => {
-    location.reload();
-    showUpdateForm.value = false;
-};
+function getAssessments() {
+    router.get(
+        "/teacher/assessments",
+        {
+            teacher_id: props.teacherId ?? null,
+        },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            only: ["assessments", "filters", "teacher"],
+            onFinish: () => {
+                showUpdateForm.value = false;
+            },
+        }
+    );
+}
 </script>
 <style scoped></style>
