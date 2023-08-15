@@ -120,7 +120,7 @@ const en = {
     },
     announcementsItem: {
         postTargets: "Post Targets",
-        andExpires: "and expires",
+        andExpires: "Expires",
         posted: "Posted",
         byAuthor: "by Author",
     },

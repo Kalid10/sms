@@ -9,7 +9,7 @@
         </div>
 
         <div>
-            <div class="py-2 text-sm font-medium">
+            <div v-if="isAdmin()" class="py-2 text-sm font-medium">
                 <span
                     v-for="(target, index) in selectedAnnouncement.target_group"
                     :key="index"
@@ -41,6 +41,7 @@
 </template>
 <script setup>
 import moment from "moment";
+import { isAdmin } from "@/utils";
 
 defineProps({
     selectedAnnouncement: {

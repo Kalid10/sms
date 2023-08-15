@@ -190,20 +190,19 @@
                                         <SparklesIcon
                                             class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
                                             @click="
-                                                generateNoteSuggestions = true;
-                                                showAISection = true;
+                                                handleGenerateNoteSuggestions()
                                             "
                                         />
                                     </div>
                                 </div>
                                 <div
-                                    class="flex w-full justify-between space-x-4"
+                                    class="flex w-full justify-between space-x-4 pr-4"
                                 >
                                     <TextArea
                                         v-model="form.description"
                                         rows="30"
                                         leading="leading-loose"
-                                        class="w-full"
+                                        class="w-full pr-4"
                                         :label="$t('common.description')"
                                         :placeholder="
                                             $t(
@@ -211,15 +210,6 @@
                                             )
                                         "
                                     />
-                                    <div class="mt-8 flex h-8 items-center">
-                                        <SparklesIcon
-                                            class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
-                                            @click="
-                                                generateQuestionSuggestions = true;
-                                                showAISection = true;
-                                            "
-                                        />
-                                    </div>
                                 </div>
                                 <div class="flex w-full justify-end px-7">
                                     <SecondaryButton
@@ -242,8 +232,7 @@
                                                 <SparklesIcon
                                                     class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
                                                     @click="
-                                                        generateNoteSuggestions = true;
-                                                        showAISection = true;
+                                                        handleGenerateNoteSuggestions()
                                                     "
                                                 />
                                             </div>
@@ -603,6 +592,14 @@ watch(selectedBatchSession, () => {
 const updateSelectedText = (text) => {
     form.description += " " + text;
 };
+
+function handleGenerateNoteSuggestions() {
+    // check if form.topic has value
+    if (!form.topic) return;
+
+    generateNoteSuggestions.value = true;
+    showAISection.value = true;
+}
 </script>
 
 <style scoped></style>

@@ -59,7 +59,6 @@
                 "
             ></div>
         </Link>
-        <ChangeLanguage />
     </div>
 </template>
 <script setup>
@@ -67,7 +66,6 @@ import { Link } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 import { useSidebarStore } from "@/Store/sidebar";
 import Toast from "@/Components/Toast.vue";
-import ChangeLanguage from "@/Components/ChangeLanguage.vue";
 
 const props = defineProps({
     items: {

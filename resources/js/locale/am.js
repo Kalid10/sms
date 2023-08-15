@@ -120,7 +120,7 @@ const am = {
     },
     announcementsItem: {
         postTargets: "የመልዕክት ዒላማዎች",
-        andExpires: "እና ያበቃል",
+        andExpires: "ያበቃል",
         posted: "ተለቀቀ",
         byAuthor: "በአዘጋጁ",
     },
