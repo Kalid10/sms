@@ -146,18 +146,14 @@
         <div
             class="hidden h-full w-4/12 flex-col items-center justify-center space-y-2 pt-24 text-center lg:block"
         >
-            <div class="flex flex-col">
-                <img
-                    :src="
-                        imagePreview ??
-                        user?.profile_image ??
-                        'https://avatars.dicebear.com/api/open-peeps/' +
-                            user.name +
-                            '.svg'
-                    "
-                    alt="avatar"
-                    class="mx-auto w-16 rounded-full object-cover md:h-40 md:w-40"
-                />
+            <div>
+                <h1
+                    class="w-full text-3xl font-extrabold leading-none lg:text-6xl"
+                >
+                    <span class="w-full"
+                        >{{ $t("userProfile.hello") }} 👋🏼 {{ user.name }}</span
+                    >
+                </h1>
 
                 <ImageUpload
                     :show-image-preview="false"

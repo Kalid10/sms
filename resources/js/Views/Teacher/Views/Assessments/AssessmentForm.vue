@@ -39,10 +39,7 @@
                     @click="dropdownVisible = !dropdownVisible"
                 >
                     <div>
-                        <span
-                            v-if="!form.batch_subject_ids.length"
-                            class="text-xs"
-                        >
+                        <span v-if="!form.batch_subject_ids" class="text-xs">
                             Select Class(es)
                         </span>
 

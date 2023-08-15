@@ -470,6 +470,10 @@ const en = {
         apply: "Apply",
         by: "By",
         logoutConfirmation: "Are you sure you want to logout?",
+        english: "English",
+        en: "EN",
+        amharic: "Amharic",
+        am: "AM",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
@@ -1019,6 +1023,7 @@ const en = {
             "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we'll load your plans, and you can choose one for us to craft tailored questions.",
         question: "Question",
         enterQuestion: "Enter Question",
+        dailyAIUsageProgress: "Daily AI Usage Progress",
     },
     readMoreLess: {
         readMore: "Read more...",
@@ -1605,6 +1610,7 @@ const en = {
         female: "Female",
         updateProfile: "Update Profile",
         updatePassword: "Update Password",
+        changeLanguage: "Change Language",
     },
 
     userStatistics: {
