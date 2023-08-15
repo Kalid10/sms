@@ -17,6 +17,9 @@
             </div>
 
             <div class="flex h-fit w-full flex-col justify-between">
+                <div class="flex w-full justify-center py-2">
+                    <ChangeLanguage @click.stop />
+                </div>
                 <Footer
                     :items="footerItems"
                     @show-logout-confirmation="
@@ -35,6 +38,7 @@ import Items from "@/Views/Admin/SideBar/Items.vue";
 import Footer from "@/Views/Admin/SideBar/Footer.vue";
 import { useSidebarStore } from "@/Store/sidebar";
 import { onClickOutside } from "@vueuse/core";
+import ChangeLanguage from "@/Components/ChangeLanguage.vue";
 
 const props = defineProps({
     header: {
