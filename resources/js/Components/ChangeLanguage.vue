@@ -1,33 +1,42 @@
 <template>
     <div
-        class="scrollbar-hide mt-1 flex w-full items-center justify-evenly overflow-y-scroll lg:mt-7 2xl:mt-10"
-        :class="isOpen ? 'lg:space-y-1 space-y-3' : 'space-y-3'"
+        class="scrollbar-hide flex items-center justify-evenly overflow-y-scroll py-1"
+        :class="isOpen ? 'lg:space-y-1 space-y-3 w-11/12' : 'space-y-3 w-full'"
     >
-        <div v-if="isOpen" class="items-start">
-            <ArrowsRightLeftIcon class="h-5 w-5" />
+        <div v-if="isOpen" class="flex justify-center">
+            <ArrowsRightLeftIcon :class="isOpen ? 'h-4' : 'h-5'" />
         </div>
 
-        <select
-            v-model="locale"
-            class="cursor-pointer appearance-none rounded-lg border-brand-550 bg-brand-550 text-brand-50"
-            :class="isOpen ? 'w-fit' : 'w-full px-4'"
-            @change="changeLanguage($event)"
+        <div
+            class="flex items-center justify-end"
+            :class="isOpen ? 'w-8/12' : 'w-full'"
         >
-            <option value="en">
-                <span v-if="isOpen">
-                    {{ $t("common.english") }}
-                </span>
-                <span v-else>
-                    {{ $t("common.en") }}
-                </span>
-            </option>
-            <option value="am">
-                <span v-if="isOpen">
-                    {{ $t("common.amharic") }}
-                </span>
-                <span v-else>{{ $t("common.am") }}</span>
-            </option>
-        </select>
+            <select
+                v-model="locale"
+            class="cursor-pointer appearance-none rounded-lg border-none bg-brand-550 py-2 text-center text-xs text-brand-50 lg:text-sm"
+                :class="
+                    isOpen
+                        ? 'w-10/12 focus:outline-none focus:ring-1 focus:ring-brand-200'
+                        : 'w-full px-4  hide-arrow focus:ring-0'
+                "
+                @change="changeLanguage($event)"
+            >
+                <option value="en">
+                    <span v-if="isOpen">
+                        {{ $t("common.english") }}
+                    </span>
+                    <span v-else>
+                        {{ $t("common.en") }}
+                    </span>
+                </option>
+                <option value="am">
+                    <span v-if="isOpen">
+                        {{ $t("common.amharic") }}
+                    </span>
+                    <span v-else>{{ $t("common.am") }}</span>
+                </option>
+            </select>
+        </div>
     </div>
 </template>
 
@@ -47,4 +56,11 @@ const changeLanguage = (event) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.hide-arrow {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+}
+</style>

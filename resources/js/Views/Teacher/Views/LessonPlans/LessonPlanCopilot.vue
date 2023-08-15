@@ -7,6 +7,7 @@
             color="info"
             class="absolute z-50 flex h-full w-4/12 items-center justify-center"
         />
+
         <div class="flex justify-between">
             <div>
                 <div class="mb-1 text-2xl font-bold">
@@ -23,53 +24,46 @@
             />
         </div>
 
-        <div class="flex w-full space-x-4">
-            <div
-                class="mt-3 w-fit cursor-pointer rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:scale-105 hover:font-medium"
-                @click="
-                    showQuestionSection = true;
-                    showChatSection = false;
-                "
-            >
-                {{ $t("lessonPlanCopilot.generateQuestions") }}
-            </div>
-
-            <div
-                class="mt-3 w-fit cursor-pointer rounded-2xl bg-yellow-400 px-3 py-1.5 text-xs hover:scale-105 hover:font-medium"
-                @click="
-                    showChatSection = true;
-                    showQuestionSection = false;
-                "
-            >
-                {{ $t("lessonPlanCopilot.orDoYouWant") }}
-            </div>
-        </div>
-
-        <QuestionPreparation
-            v-if="showQuestionSection"
-            :batch-subject-id="batchSubjectId"
-            :lesson-plan-id="lessonPlanId"
-        />
-
-        <Chat
-            v-if="showChatSection && !generateNoteSuggestions"
-            class="!w-full"
-            :show-getting-started="false"
-        />
-
         <div
             v-if="
-                !showChatSection &&
-                !showQuestionSection &&
                 !generateNoteSuggestions &&
+                !noteSuggestions &&
                 !showLoading &&
-                !isNoteUpdating &&
-                !noteSuggestions
+                !openAILimitReached
             "
-            class="flex h-full w-full items-center justify-center px-5 text-center"
+            class="min-h-screen"
         >
-            <div class="space-x- flex w-9/12 font-light leading-7">
-                {{ $t("lessonPlanCopilot.needHandWith") }}
+            <TabElement
+                v-model:active="activeTab"
+                class="min-h-screen"
+                :tabs="tabs"
+            >
+                <template #[chatTab]>
+                    <Chat
+                        class="!h-[40rem] !w-full"
+                        :show-getting-started="false"
+                        @limit-reached="setLimitInfo"
+                    />
+                </template>
+
+                <template #[questionsTab]>
+                    <QuestionPreparation
+                        :batch-subject-id="batchSubjectId"
+                        :lesson-plan-id="lessonPlanId"
+                        @limit-reached="setLimitInfo"
+                    />
+                </template>
+            </TabElement>
+        </div>
+
+        <div
+            v-if="openAILimitReached"
+            class="flex h-5/6 w-full flex-col items-center justify-center space-y-2 px-3"
+        >
+            <ExclamationTriangleIcon class="w-7 text-red-600" />
+            <div class="text-center text-2xl font-semibold">
+                You have reached you AI daily limit. Please get in touch with
+                the administrator to increase limit.
             </div>
         </div>
 
@@ -180,17 +174,20 @@
 <script setup>
 import {
     ClipboardDocumentIcon,
+    ExclamationTriangleIcon,
     MagnifyingGlassIcon,
     XMarkIcon,
 } from "@heroicons/vue/20/solid";
 import Loading from "@/Components/Loading.vue";
-import { computed, ref, watch } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
-import { copyToClipboard } from "@/utils";
+import { copyToClipboard, toUnderscore } from "@/utils";
 import QuestionPreparation from "@/Views/Teacher/Views/LessonPlans/QuestionPreparation.vue";
 import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
 import Toast from "@/Components/Toast.vue";
+import TabElement from "@/Components/TabElement.vue";
+import { useI18n } from "vue-i18n";
 
 const emit = defineEmits(["selectedText", "finish", "close"]);
 const props = defineProps({
@@ -216,22 +213,40 @@ const props = defineProps({
     },
 });
 
-const showQuestionSection = ref(false);
-const showChatSection = ref(false);
 const showLoading = ref(false);
 const noteSuggestions = ref("");
 const isNoteUpdating = ref(false);
 const questionSuggestions = computed(() => usePage().props.questions);
+const showNotification = inject("showNotification");
 
 const updateNoteSuggestion = () => {
+    if (showLoading.value) {
+        return;
+    }
     showLoading.value = true;
+
+    // Remove previous suggestions
     if (noteSuggestions.value) {
         noteSuggestions.value = "";
     }
     if (props.generateNoteSuggestions) {
         let es = new EventSource(
-            "/teacher/lesson-plan/ai/note?prompt=" + props.topic
+            "/teacher/lesson-plan/ai/note?prompt=" +
+                props.topic +
+                "&batch_subject_id=" +
+                props.batchSubjectId
         );
+
+        es.addEventListener("limit_reached", (event) => {
+            showLoading.value = false;
+            showNotification({
+                type: "error",
+                message: "You Have Reached Your Daily AI Limit", // "Limit reached"
+                position: "top-center",
+            });
+            es.close();
+        });
+
         es.addEventListener(
             "update",
             (event) => {
@@ -247,10 +262,16 @@ const updateNoteSuggestion = () => {
             },
             false
         );
+
         es.addEventListener(
             "error",
             (event) => {
-                // TODO: Handle error
+                showLoading.value = false;
+                showNotification({
+                    type: "error",
+                    message: "Something went wrong.Please try again!",
+                    position: "top-center",
+                });
             },
             false
         );
@@ -304,6 +325,22 @@ const copyToClipboardAndShowToast = (value, event) => {
     copyToClipboard(value);
     showCopyToast.value = true;
     toastEvent.value = event;
+};
+
+const { t } = useI18n();
+const chatTab = toUnderscore(t("common.chat"));
+const questionsTab = toUnderscore(t("common.questions"));
+const tabs = [chatTab, questionsTab];
+
+const activeTabFromQuery = computed(() => usePage().props.active_tab);
+const activeTab = ref(activeTabFromQuery.value ?? chatTab);
+
+const openAILimitReached = ref(false);
+const openAIDailyUsage = ref();
+
+const setLimitInfo = (usage) => {
+    openAILimitReached.value = true;
+    openAIDailyUsage.value = usage;
 };
 </script>
 <style scoped></style>

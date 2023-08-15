@@ -6,7 +6,7 @@
             {{ moment().format("ddd MMM DD, YYYY") }}
         </span>
 
-        <span class="w-full text-center text-2xl font-semibold">
+        <span class="w-full text-2xl font-semibold">
             {{ selectedAnnouncement?.title }}</span
         >
 
@@ -23,7 +23,12 @@
         <div class="flex w-full items-center space-x-2 text-sm font-medium">
             <div>
                 <img
-                    :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
+                    :src="
+                        auth?.user?.profile_image ??
+                        'https://avatars.dicebear.com/api/open-peeps/' +
+                            auth.user.name +
+                            '.svg'
+                    "
                     alt="avatar"
                     class="mx-auto h-6 w-6 rounded-full object-contain"
                 />
@@ -39,6 +44,8 @@
 <script setup>
 import moment from "moment";
 import { ArrowSmallRightIcon } from "@heroicons/vue/20/solid";
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
 
 defineEmits(["continue-reading"]);
 defineProps({
@@ -47,5 +54,7 @@ defineProps({
         required: true,
     },
 });
+
+const auth = computed(() => usePage().props.auth);
 </script>
 <style scoped></style>

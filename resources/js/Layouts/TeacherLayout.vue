@@ -12,6 +12,7 @@
                     :header="auth"
                     :main-items="sidebarItems || []"
                     :footer-items="footerItems"
+                    @show-logout-confirmation="showLogoutConfirmation"
                 />
                 <div
                     :class="

@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="showGettingStarted"
-        class="mt-5 hidden h-fit w-4/12 flex-col space-y-6 rounded-lg border border-black p-5 text-center text-sm lg:block"
+        class="mt-5 hidden h-fit w-4/12 flex-col space-y-6 rounded-lg border-4 border-white p-5 text-center text-sm lg:block"
     >
         <div>
             <h2 class="text-2xl font-bold">{{ $t("chat.gettingStarted") }}</h2>
@@ -58,7 +58,7 @@
             </p>
         </div>
 
-        <p class="py-4 italic">
+        <p class="py-4 italic text-brand-400">
             {{ $t("chat.RememberWhile") }}
         </p>
     </div>
