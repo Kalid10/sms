@@ -1,8 +1,8 @@
 <template>
     <div
-        class="flex w-11/12 flex-col justify-center space-y-5 rounded-lg border border-zinc-300 bg-white pb-3"
+        class="flex w-11/12 flex-col justify-center space-y-5 rounded-lg bg-brand-50 pb-3 shadow"
     >
-        <div class="flex w-full justify-evenly p-3">
+        <div class="flex w-full justify-evenly p-3 text-brand-500">
             <div class="flex grow justify-center text-center text-xl italic">
                 <ChatBubbleOvalLeftEllipsisIcon class="w-5 text-white" />
                 <span class="pl-1">
@@ -10,7 +10,7 @@
                 </span>
             </div>
             <XMarkIcon
-                class="w-4 cursor-pointer text-zinc-700 hover:scale-125 hover:text-black"
+                class="hover:text-brand-800 w-4 cursor-pointer text-brand-500 hover:scale-125"
                 @click="$emit('close')"
             />
         </div>
@@ -21,10 +21,9 @@
             <div
                 v-for="(chat, index) in similarUsers"
                 :key="index"
-                class="group my-3 flex h-36 w-5/12 cursor-pointer flex-col items-center justify-evenly space-y-2 rounded-lg bg-violet-50/40 p-2 shadow-sm hover:bg-purple-500 hover:text-white"
+                class="bg-brand-800 group my-3 flex h-36 w-5/12 cursor-pointer flex-col items-center justify-evenly space-y-2 rounded-lg p-2 shadow hover:bg-brand-350 hover:text-white"
                 @click="$emit('loadChat', chat)"
             >
-                <!-- profile pic -->
                 <div class="relative">
                     <img
                         :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
@@ -47,7 +46,7 @@
 
                 <SecondaryButton
                     :title="$t('common.chat')"
-                    class="! w-7/12 rounded-xl bg-violet-500 !py-1 text-xs text-white group-hover:bg-violet-100 group-hover:text-black"
+                    class="! w-7/12 rounded-xl bg-brand-500 !py-1 text-xs text-white group-hover:bg-violet-100 group-hover:text-black"
                     @click="$emit('loadChat', chat)"
                 />
             </div>
