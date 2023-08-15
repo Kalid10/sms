@@ -143,7 +143,7 @@ const sidebarItems = computed(() => [
             isRouteActive(/^\/admin\/students\/\d+\/?$/) ||
             isRouteActive(/^\/admin\/students\/?$/) ||
             isRouteActive(/^\/admin\/teachers\/students\/\d+\/?$/) ||
-            isRouteActive(/^\/admin\/teachers\/students\/?$/) ||
+            // isRouteActive(/^\/admin\/teachers\/students\/?$/) ||
             isRouteActive(/^\/students\/\d+\/?$/) ||
             isRouteActive(/^\/teacher\/students\/\d+\/?$/) ||
             isRouteActive(/^\/teacher\/students\/?$/) ||

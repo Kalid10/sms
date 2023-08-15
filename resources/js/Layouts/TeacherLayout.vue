@@ -164,19 +164,25 @@ const sidebarItems = computed(() => [
         name: t("teacherLayout.home"),
         icon: HomeIcon,
         route: "/teacher",
-        active: isRouteActive(/^\/teacher\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/?$/),
     },
     {
         name: t("common.chat"),
         icon: ChatBubbleBottomCenterIcon,
         route: "/teacher/chat",
-        active: isRouteActive(/^\/teacher\/chat\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/chat\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/chat\/?$/),
     },
     {
         name: t("teacherLayout.myClasses"),
         icon: PuzzlePieceIcon,
         route: "/teacher/class",
-        active: isRouteActive(/^\/teacher\/class\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/class\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/class\/?$/),
     },
     {
         name: t("teacherLayout.myStudents"),
@@ -190,45 +196,61 @@ const sidebarItems = computed(() => [
         name: t("teacherLayout.lessonPlan"),
         icon: CalendarIcon,
         route: "/teacher/lesson-plan",
-        active: isRouteActive(/^\/teacher\/lesson-plan\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/lesson-plan\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/lesson-plan\/?$/),
     },
     {
         name: t("teacherLayout.questionBank"),
         icon: QuestionMarkCircleIcon,
         route: "/teacher/questions",
-        active: isRouteActive(/^\/teacher\/questions\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/questions\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/questions\/?$/),
     },
     {
         name: t("teacherLayout.assessments"),
         icon: NewspaperIcon,
         route: "/teacher/assessments",
-        active: isRouteActive(/^\/teacher\/assessments\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/assessments\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/assessments\/?$/) ||
+            isRouteActive(/^\/teacher\/assessments\/mark\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/assessments\/mark\/\d+\/?$/),
     },
     {
         name: t("common.copilot"),
         icon: SparklesIcon,
         route: "/teacher/copilot",
-        active: isRouteActive(/^\/teacher\/copilot\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/copilot\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/copilot\/?$/),
     },
     {
         name: t("teacherLayout.homeRooms"),
         icon: UserIcon,
         route: "/teacher/homeroom",
-        active: isRouteActive(/^\/teacher\/homeroom\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/homeroom\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/homeroom\/?$/),
     },
 
     {
         name: t("teacherLayout.announcements"),
         icon: MegaphoneIcon,
         route: "/teacher/announcements",
-        active: isRouteActive(/^\/teacher\/announcements\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/announcements\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/announcements\/?$/),
     },
 
     {
         name: t("teacherLayout.schedule"),
         icon: CalendarDaysIcon,
         route: "/teacher/school-schedule",
-        active: isRouteActive(/^\/teacher\/school-schedule\/?$/),
+        active:
+            isRouteActive(/^\/teacher\/school-schedule\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/school-schedule\/?$/),
     },
     {
         name: t("teacherLayout.settings"),
