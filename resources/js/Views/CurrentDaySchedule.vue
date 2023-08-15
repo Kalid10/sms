@@ -4,7 +4,8 @@
         :class="classStyle ? classStyle : ' p-5 space-y-3 bg-white'"
     >
         <div v-if="schedule?.length" class="text-xl font-medium text-black">
-            {{ moment().format("dddd") }}{{ $t("currentDaySchedule.schedule") }}
+            {{ moment().format("dddd") }}
+            {{ $t("currentDaySchedule.schedule") }}
         </div>
         <div
             v-if="schedule?.length"
