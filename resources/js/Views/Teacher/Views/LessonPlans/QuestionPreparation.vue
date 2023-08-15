@@ -81,9 +81,9 @@ const props = defineProps({
     },
 });
 
-const showLoading = ref(false);
-const questionEventStatus = ref(null);
+const emit = defineEmits(["limit-reached"]);
 
+const showLoading = ref(false);
 const generatedQuestionsRef = ref(null);
 const questions = computed(() => usePage().props.questions);
 const assessmentTypes = computed(() => usePage().props.assessment_types);
@@ -111,6 +111,10 @@ const submit = () => {
     uiStore.setQuestionGenerationLoading(true);
     questionForm.post("/teacher/questions/create", {
         preserveState: true,
+        onError: (error) => {
+            uiStore.setQuestionGenerationLoading(false);
+            emit("limit-reached");
+        },
     });
 };
 
