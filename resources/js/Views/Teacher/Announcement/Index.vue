@@ -55,7 +55,7 @@
                         class=""
                         :class="
                             announcements?.data.length
-                                ? 'w-full h-2/5 !shadow-md'
+                                ? 'w-full h-[18rem] !shadow-md'
                                 : 'w-5/12'
                         "
                         :selected-announcement="selectedAnnouncement"
@@ -65,7 +65,7 @@
                         v-if="selectedAnnouncement2"
                         :class="
                             announcements?.data.length
-                                ? 'w-full h-2/5'
+                                ? 'w-full h-[18rem]'
                                 : 'w-5/12'
                         "
                         :selected-announcement="selectedAnnouncement2"
