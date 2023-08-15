@@ -89,11 +89,11 @@ class LessonPlanController extends Controller
     {
         $prompt = $request->input('prompt');
         $batchSubject = BatchSubject::find($request->input('batch_subject_id'));
-        $grade = 8;
-        $subject = 'Biology';
-        $explanationPrompt = "The lesson plan title is '{$prompt}' for a '{$grade}' level class in the subject of '{$subject}'. Provide a brief 2-5 paragraph explanation of '{$prompt}'.";
+        $grade = $batchSubject->load('batch.level')->batch->level->name;
+        $subject = $batchSubject->load('subject')->subject->full_name;
 
-        //        $explanationPrompt = "I want you to act as a lesson plan advisor.The subject is '{$subject}' for grade '{$grade}' provide a brief 2-5 paragraphs explaining this lesson plan title: '{$prompt}";
+        $explanationPrompt = "For grade '{$grade} {$subject}' students, explain '{$prompt}', in 3-5 paragraphs, focus on key concepts and objectives, ensuring alignment with the grade-level standards";
+
         return $openAIService->createCompletionStream($explanationPrompt);
     }
 }
