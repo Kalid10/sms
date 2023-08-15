@@ -12,11 +12,12 @@
             :class="isOpen ? 'w-8/12' : 'w-full'"
         >
             <select
+                v-model="locale"
                 class="cursor-pointer appearance-none rounded-lg border-none bg-brand-550 py-2 text-center text-xs text-brand-50 lg:text-sm"
                 :class="
                     isOpen
                         ? 'w-10/12 focus:outline-none focus:ring-1 focus:ring-brand-200'
-                        : 'w-full px-4  hide-arrow focus:ring-0'
+                        : 'w-full px-4 hide-arrow !bg-brand-550 focus:ring-0'
                 "
                 @change="changeLanguage($event)"
             >
@@ -49,7 +50,9 @@ const { locale } = useI18n();
 const isOpen = computed(() => useSidebarStore().isOpen);
 
 const changeLanguage = (event) => {
-    locale.value = event.target.value;
+    const selectedLanguage = event.target.value;
+    locale.value = selectedLanguage;
+    localStorage.setItem("selectedLanguage", selectedLanguage);
 };
 </script>
 
