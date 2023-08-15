@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Models\AssessmentType;
 use App\Models\BatchSubject;
 use App\Models\SchoolYear;
+use App\Models\Teacher;
 use App\Services\OpenAIService;
 use App\Services\TeacherService;
 use Illuminate\Http\JsonResponse;
@@ -41,11 +42,19 @@ class CopilotController extends Controller
             ->whereHas('batch', fn ($query) => $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id))
             ->get(['id', 'subject_id', 'batch_id']);
 
+        // Get teachers opeanai daily usage
+        $openAIDailyUsage = Teacher::where('id', $teacherId)->with('user')->first()->user->openai_daily_usage;
+
+        // Get the DAILY_OPEN_AI_USER_USAGE_LIMIT from env file
+        $openAIDailyUsageLimit = env('DAILY_OPEN_AI_USER_USAGE_LIMIT');
+
         return Inertia::render('Teacher/Copilot/Index', [
             'assessment_types' => $assessmentTypes,
             'lesson_plans_data' => $lessonPlansData,
             'active_tab' => strtolower($request->input('active_tab') ?? 'chat'),
             'batch_subjects' => $teacherSubjects,
+            'openai_daily_usage' => $openAIDailyUsage,
+            'openai_daily_usage_limit' => $openAIDailyUsageLimit,
         ]);
     }
 

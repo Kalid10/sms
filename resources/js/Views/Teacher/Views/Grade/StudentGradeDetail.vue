@@ -95,7 +95,7 @@ const selectedBatchSubjectDetail = computed(() => {
 });
 
 const studentGrades = computed(() => {
-    return studentDetails.value.map((item) => {
+    return studentDetails.value?.map((item) => {
         return {
             subject: {
                 name: item.batch_subject.subject.full_name,

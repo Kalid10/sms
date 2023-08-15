@@ -455,6 +455,10 @@ const am = {
         staff: "ሰራተኞች(staff)",
         apply: "ተግባራዊ አድርግ",
         logoutConfirmation: "እርግጠኛ ነዎት?",
+        english: "እንግሊዝኛ",
+        en: "እንግ",
+        amharic: "አማርኛ",
+        am: "አማ",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
@@ -976,6 +980,7 @@ const am = {
         lessonPlanDescription:
             "ካሉዎት እቅዶች ጥያቄዎችን በራስ-ሰር ለማመንጨት 'የትምህርት እቅዶች'ን ይምረጡ። ከመረጥን በኋላ ዕቅዶችዎን እንጭነዋለን፣ እና ለእኛ የተበጁ ጥያቄዎችን ለመስራት አንዱን መምረጥ ይችላሉ።",
         enterQuestion: "ጥያቄ አስገባ",
+        dailyAIUsageProgress: "ዕለታዊ AI አጠቃቀም እድገት",
     },
     readMoreLess: {
         readMore: "ተጨማሪ ያንብቡ...",
@@ -1546,6 +1551,7 @@ const am = {
         female: "ሴት",
         updateProfile: "ፕሮፋይል አዘምን",
         updatePassword: "የይለፍ ቃል አዘምን",
+        changeLanguage: "ቋንቋ ቀይር",
     },
 
     userStatistics: {
