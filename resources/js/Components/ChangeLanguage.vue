@@ -8,6 +8,7 @@
         </div>
 
         <select
+            v-model="locale"
             class="cursor-pointer appearance-none rounded-lg border-brand-550 bg-brand-550 text-brand-50"
             :class="isOpen ? 'w-fit' : 'w-full px-4'"
             @change="changeLanguage($event)"
@@ -40,7 +41,9 @@ const { locale } = useI18n();
 const isOpen = computed(() => useSidebarStore().isOpen);
 
 const changeLanguage = (event) => {
-    locale.value = event.target.value;
+    const selectedLanguage = event.target.value;
+    locale.value = selectedLanguage;
+    localStorage.setItem("selectedLanguage", selectedLanguage);
 };
 </script>
 

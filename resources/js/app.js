@@ -62,7 +62,7 @@ createInertiaApp({
 
         const i18n = createI18n({
             legacy: false,
-            locale: "en",
+            locale: localStorage.getItem("selectedLanguage") || "en",
             globalInjection: true,
             messages: {
                 en,
