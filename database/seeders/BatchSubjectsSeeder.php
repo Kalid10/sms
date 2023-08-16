@@ -56,5 +56,10 @@ class BatchSubjectsSeeder extends Seeder
                 }
             }
         }
+
+        if (BatchSubject::count() > 0) {
+            $schoolYear->is_ready = true;
+            $schoolYear->save();
+        }
     }
 }

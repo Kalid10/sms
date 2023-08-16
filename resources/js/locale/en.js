@@ -533,6 +533,7 @@ const en = {
         father: "Father",
         mother: "Mother",
         other: "Other",
+        linkToAnExistingParent: "Link to an existing parent",
     },
     createTeacher: {
         headerOne: "Register new teacher",
@@ -1113,7 +1114,7 @@ const en = {
         resultingInTotalOf: "resulting in a total of",
         createAndProceed: "Create and Proceed",
         summaryText:
-            "<p class='text-xs'> The upcoming academic year <span class='font-bold text-brand-text-400'>{academicYear}</span>, will consist of <span class='font-bold text-brand-text-400'>{semesters} semesters,</span > each divided into <span class='font-bold text-brand-text-400'>{quartersPerSemester} quarters, </span> resulting in a total of <span class='font-bold text-brand-text-400' >{totalQuarters} quarters.</span > </p>",
+            "<p class='text-xs'> The upcoming academic year <span class='font-bold text-brand-text-600'>{academicYear}</span>, will consist of <span class='font-bold text-brand-text-600'>{semesters} semesters,</span > each divided into <span class='font-bold text-brand-text-600'>{quartersPerSemester} quarters, </span> resulting in a total of <span class='font-bold text-brand-text-600' >{totalQuarters} quarters.</span > </p>",
     },
     registerSubjectForm: {
         formElementTitle: "New Subject",
@@ -1243,6 +1244,7 @@ const en = {
             'Click on the "Finish" button on the bottom of the screen to finish setting up your schedule.',
         addNewPeriod: "Add new Period",
         days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        finish: "Finish",
     },
     schoolPeriodModal: {
         almostThere: "Almost there!",

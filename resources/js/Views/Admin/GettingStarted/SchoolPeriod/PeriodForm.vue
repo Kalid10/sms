@@ -5,7 +5,7 @@
                 {{ $t("periodForm.classSchedule") }}
             </h2>
 
-            <p class="text-xs font-light text-brand-text-300">
+            <p class="text-brand-text-600 text-xs font-light">
                 {{ $t("periodForm.description") }}
             </p>
         </div>
@@ -47,7 +47,7 @@
                 <!--            Level Category Section-->
                 <div class="my-2">
                     <label
-                        class="pl-0.5 text-xs font-semibold text-brand-text-300"
+                        class="text-brand-text-600 pl-0.5 text-xs font-semibold"
                     >
                         {{ $t("periodForm.selectLevelCategories") }}
                     </label>
@@ -72,10 +72,10 @@
                         </div>
                     </div>
                     <InformationCircleIcon
-                        class="inline-block w-4 text-brand-text-300"
+                        class="text-brand-text-600 inline-block w-4"
                     />
 
-                    <span class="text-xs text-brand-text-300">
+                    <span class="text-brand-text-600 text-xs">
                         {{ $t("periodForm.note") }}
                     </span>
                 </div>
@@ -84,7 +84,7 @@
                 <div>
                     <div class="flex items-center space-x-2">
                         <span
-                            class="mb-1 grow pl-0.5 text-xs font-semibold text-brand-text-300"
+                            class="text-brand-text-600 mb-1 grow pl-0.5 text-xs font-semibold"
                             >{{ $t("periodForm.customPeriod") }}</span
                         >
                         <div
@@ -154,7 +154,7 @@
                             class="inline-block w-3 stroke-2"
                         />
 
-                        <span class="text-[0.65rem] text-brand-text-300">
+                        <span class="text-brand-text-600 text-[0.65rem]">
                             {{ $t("periodForm.hintAddCustomPeriods") }}
                         </span>
                     </div>

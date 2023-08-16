@@ -5,7 +5,7 @@
         <h3 class="font-semibold">{{ $t("batchScheduler.header") }}</h3>
 
         <p
-            class="flex max-w-lg flex-col gap-3 p-8 text-center text-sm text-brand-text-300"
+            class="text-brand-text-600 flex max-w-lg flex-col gap-3 p-8 text-center text-sm"
         >
             <span>
                 {{ $t("batchScheduler.generateScheduleMessage") }}
@@ -29,8 +29,8 @@
         </p>
 
         <PrimaryButton @click="generateSchedule">
-            {{ $t("batchScheduler.runTheScheduler") }}</PrimaryButton
-        >
+            {{ $t("batchScheduler.runTheScheduler") }}
+        </PrimaryButton>
     </div>
 </template>
 

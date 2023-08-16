@@ -4,7 +4,7 @@
         class="flex h-10 items-center gap-2"
     >
         <span class="">
-            <span class="pl-0.5 text-sm font-semibold text-brand-text-300">{{
+            <span class="text-brand-text-600 pl-0.5 text-sm font-semibold">{{
                 label
             }}</span>
         </span>

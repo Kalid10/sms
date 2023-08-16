@@ -21,7 +21,7 @@
             >
                 <span
                     v-if="i !== 0"
-                    class="-rotate-90 text-sm font-semibold text-brand-text-300"
+                    class="text-brand-text-600 -rotate-90 text-sm font-semibold"
                 >
                     {{ time }}
                 </span>
@@ -36,7 +36,7 @@
                     'Friday',
                 ]"
                 :key="d"
-                class="grid h-10 place-items-center text-sm font-semibold text-brand-text-300"
+                class="text-brand-text-600 grid h-10 place-items-center text-sm font-semibold"
             >
                 {{ day }}
             </div>

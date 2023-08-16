@@ -241,7 +241,9 @@ const sidebarItems = computed(() => [
         name: t("adminLayout.settings"),
         icon: Cog6ToothIcon,
         route: "/admin/user/profile",
-        active: isRouteActive(/^\/admin\/user\/profile\/?$/),
+        active:
+            isRouteActive(/^\/admin\/user\/profile\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/user\/profile\/?$/),
     },
 ]);
 
