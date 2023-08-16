@@ -42,7 +42,7 @@
         </div>
         <div
             v-else
-            class="flex h-44 items-center justify-center py-5 text-center text-2xl font-bold uppercase text-brand-text-350"
+            class="flex h-44 items-center justify-center py-5 text-center text-2xl font-bold uppercase"
         >
             <EmptyView
                 :title="
