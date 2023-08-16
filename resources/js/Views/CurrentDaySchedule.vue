@@ -45,7 +45,10 @@
             class="flex h-44 items-center justify-center py-5 text-center text-2xl font-bold uppercase text-brand-text-350"
         >
             <EmptyView
-                :title="'No Schedule found for ' + moment().format('dddd')"
+                :title="
+                    $t('currentDaySchedule.noScheduleFound') +
+                    moment().format('dddd')
+                "
             />
         </div>
     </div>

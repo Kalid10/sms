@@ -2,41 +2,25 @@
     <EmptyView :is-full-screen="true">
         <template #default>
             <Title
-                title="Welcome to Rigel Question Generator"
+                :title="$t('questionEmptyView.welcometext')"
                 :is-date-open="false"
                 class="text-black"
             />
 
             <p>
-                A feature specifically designed to simplify and enhance your
-                question creation process. Here, we've streamlined the task of
-                crafting effective, relevant, and challenging educational
-                questions to an art of few clicks.
+                {{ $t("questionEmptyView.hintOne") }}
             </p>
 
             <p>
-                Whether you're preparing classwork, homework, or even tests, our
-                Question Generator has got you covered. Generate questions
-                directly from your lesson plans, ensuring that your assessments
-                are perfectly aligned with your lessons, while also reducing
-                preparation time significantly. This feature serves as your
-                ultimate educational companion, freeing up your time to focus on
-                what matters the most: teaching and inspiring your students.
+                {{ $t("questionEmptyView.hintTwo") }}
             </p>
 
             <p>
-                But we didn't stop there. For those seeking a more personalized
-                touch, you can also manually input your questions. This gives
-                you the opportunity to customize every aspect of your
-                question-creation process, thereby creating a unique and
-                engaging learning experience for each student.
+                {{ $t("questionEmptyView.hintThree") }}
             </p>
 
             <p>
-                Our Question Generator is more than just a tool. It's a stepping
-                stone to enhancing the learning journey of your students. So why
-                wait? Step into a world of seamless question creation today, and
-                elevate your teaching experience to greater heights.
+                {{ $t("questionEmptyView.hintFour") }}
             </p>
 
             <SecondaryButton

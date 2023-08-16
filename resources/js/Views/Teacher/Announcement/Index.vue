@@ -99,8 +99,7 @@
     <EmptyView v-else-if="!searchKey && !isLoading" :is-full-screen="true">
         <template #default>
             <p class="text-center text-xl font-semibold">
-                Currently, there are no new announcements. We encourage you to
-                revisit this space frequently for updates.
+                {{ $t("announcementsIndex.noNewAnnouncement") }}
             </p>
 
             <div

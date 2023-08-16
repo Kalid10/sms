@@ -3,7 +3,7 @@
         class="flex w-full flex-col items-center space-y-2 rounded-lg bg-white p-5"
     >
         <div class="w-fit px-2 text-center text-2xl capitalize">
-            Your Lesson Plans
+            {{ $t("lessonPlans.yourLessonPlans") }}
         </div>
         <div
             class="flex w-full flex-col space-y-2 p-2 text-black lg:flex-row lg:space-y-0 lg:space-x-5"
