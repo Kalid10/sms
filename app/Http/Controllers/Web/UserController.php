@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\Admin;
+use App\Models\Guardian;
 use App\Models\Level;
 use App\Models\SchoolYear;
 use App\Models\Student;
@@ -111,12 +112,25 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Password updated Successfully');
     }
 
-    public function student(): Response
+    public function student(Request $request): Response
     {
         $levels = Level::all();
 
+        $searchKey = $request->input('search');
+
         return Inertia::render('Admin/Users/Create/Student', [
             'levels' => $levels,
+            'guardians' => Inertia::lazy(fn () => Guardian::with([
+                'user:id,name',
+            ])->select('id', 'user_id')
+                ->when($searchKey, function ($query) use ($searchKey) {
+                    return $query->whereHas('user', function ($query) use ($searchKey) {
+                        return $query->where('name', 'like', "%{$searchKey}%");
+                    });
+                })
+                ->orderBy('user_id', 'asc')->get()
+                ->take(5)
+            ),
         ]);
     }
 

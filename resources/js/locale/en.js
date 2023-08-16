@@ -517,6 +517,7 @@ const en = {
         father: "Father",
         mother: "Mother",
         other: "Other",
+        linkToAnExistingParent: "Link to an existing parent",
     },
     createTeacher: {
         headerOne: "Register new teacher",

@@ -502,6 +502,7 @@ const am = {
         father: "አባት",
         mother: "እናት",
         other: "ሌላ",
+        linkToAnExistingParent: "ከዚህ በፊት የተመዘገቡ ወላጆችን ሰይም",
     },
     createTeacher: {
         headerOne: "አዲስ መምህር ይመዝገቡ",
