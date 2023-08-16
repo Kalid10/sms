@@ -123,7 +123,7 @@
                             </h3>
                         </div>
                         <div
-                            v-if="!showAISection"
+                            v-if="!showAISection && isTeacher()"
                             class="mt-3 flex w-fit cursor-pointer space-x-1 rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:font-medium"
                             @click="showAISection = true"
                         >
@@ -185,6 +185,7 @@
                                             )
                                         "
                                         class="w-full"
+                                        :disabled="isAdmin()"
                                     />
                                     <div class="flex h-8 items-center">
                                         <SparklesIcon
@@ -204,6 +205,7 @@
                                         leading="leading-loose"
                                         class="w-full pr-4"
                                         :label="$t('common.description')"
+                                        :disabled="isAdmin()"
                                         :placeholder="
                                             $t(
                                                 'lessonPlanFormModal.addLessonPlanDescription'
@@ -456,7 +458,7 @@
 
 <script setup>
 import moment from "moment";
-import { isTeacher, parseLevel } from "@/utils.js";
+import { isAdmin, isTeacher, parseLevel } from "@/utils.js";
 import {
     CalendarIcon,
     ClockIcon,

@@ -81,11 +81,11 @@ const targetGroupOptions = ["all", "teachers", "guardians", "admins"];
 const showAddAnnouncement = ref(false);
 
 function toggleSelection(target) {
-    const index = this.form.target_group.indexOf(target);
+    const index = form.target_group.indexOf(target);
     if (index < 0) {
-        this.form.target_group.push(target);
+        form.target_group.push(target);
     } else {
-        this.form.target_group.splice(index, 1);
+        form.target_group.splice(index, 1);
     }
 }
 
