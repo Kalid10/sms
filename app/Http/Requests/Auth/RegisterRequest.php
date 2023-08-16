@@ -31,6 +31,7 @@ class RegisterRequest extends FormRequest
             'gender' => 'required|string|max:255',
             'date_of_birth' => 'required_if:type,student|date',
             'position' => 'required_if:type,admin',
+            'level_id' => 'required_if:type,student|exists:levels,id',
             'existing_guardian_id' => 'nullable|exists:guardians,id',
         ];
 
@@ -41,7 +42,6 @@ class RegisterRequest extends FormRequest
                 'guardian_name' => 'nullable',
                 'guardian_email' => 'nullable|email|unique:users,email',
                 'guardian_phone_number' => 'nullable|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users,phone_number',
-                'level_id' => 'nullable|exists:levels,id',
                 'guardian_gender' => 'nullable|string|max:255',
             ];
         } else {
@@ -51,7 +51,6 @@ class RegisterRequest extends FormRequest
                 'guardian_name' => 'required_if:type,student',
                 'guardian_email' => 'email|unique:users,email',
                 'guardian_phone_number' => 'required_if:type,student|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users,phone_number',
-                'level_id' => 'required_if:type,student|exists:levels,id',
                 'guardian_gender' => 'required_if:type,student|string|max:255',
             ];
         }
