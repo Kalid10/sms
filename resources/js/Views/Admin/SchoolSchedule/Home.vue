@@ -8,7 +8,7 @@
             class="flex h-full w-full flex-col items-center justify-evenly space-y-2 lg:w-8/12"
         >
             <div class="w-full px-3 text-2xl font-medium">
-                School Schedules
+                {{ $t("common.schoolSchedules") }}
                 <span class="text-sm font-normal"
                     >( {{ moment(startDate).format("ddd MMM DD YYYY") }} -
                     {{ moment(endDate).format("ddd MMM DD YYYY") }})</span

@@ -14,7 +14,7 @@
                 class="block w-96 cursor-pointer rounded-lg border-2 border-brand-500 bg-gray-500 py-1 text-center text-sm font-medium text-white hover:scale-105 focus:outline-none"
                 for="fileInput"
             >
-                Choose Image To Upload
+                {{ $t("imageUpload.chooseImage") }}
             </label>
             <input
                 id="fileInput"
@@ -42,7 +42,9 @@ import { inject, ref } from "vue";
 import { router } from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Loading from "@/Components/Loading.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const props = defineProps({
     showImagePreview: {
         type: Boolean,
@@ -73,7 +75,7 @@ function handleImageUpload(event) {
     if (image.value.size > sizeLimit) {
         showNotification({
             type: "error",
-            message: "Image size must be less than 3MB",
+            message: t("imageUpload.imageSizeLimit"),
             position: "top-center",
         });
         return;

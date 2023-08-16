@@ -65,7 +65,6 @@
                             {{ $t("questionPreparation.hintForDifficulty") }}
                         </p>
                     </div>
-
                     <input
                         id="large-range"
                         v-model="form.difficulty_level"

@@ -161,7 +161,7 @@
 
                 <ImageUpload
                     :show-image-preview="false"
-                    finish-button-text="Upload Profile Picture"
+                    :finish-button-text="$t('userProfile.uploadProfilePicture')"
                     :upload-url="
                         isTeacher()
                             ? '/teacher/user/upload'
