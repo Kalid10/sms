@@ -11,7 +11,7 @@
         >
 
         <span class="w-full text-sm font-light leading-7 text-black"
-            >{{ selectedAnnouncement?.body }}
+            >{{ truncatedText }}
         </span>
         <span
             class="flex w-full cursor-pointer space-x-2 text-sm font-medium text-brand-text-150 hover:font-semibold hover:underline hover:underline-offset-2"
@@ -35,8 +35,12 @@
             </div>
 
             <div>
-                {{ selectedAnnouncement?.author.user.name }} ,
-                {{ selectedAnnouncement?.author?.user?.admin?.position }}
+                {{ selectedAnnouncement?.author.user.name }}
+                <span
+                    v-if="selectedAnnouncement?.author?.user?.admin?.position"
+                >
+                    , {{ selectedAnnouncement?.author?.user?.admin?.position }}
+                </span>
             </div>
         </div>
     </div>
@@ -48,7 +52,7 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
 defineEmits(["continue-reading"]);
-defineProps({
+const props = defineProps({
     selectedAnnouncement: {
         type: Object,
         required: true,
@@ -56,5 +60,12 @@ defineProps({
 });
 
 const auth = computed(() => usePage().props.auth);
+
+const truncatedText = computed(() => {
+    const maxLength = 420; // You can set your desired length
+    return props.selectedAnnouncement?.body.length > maxLength
+        ? props.selectedAnnouncement?.body.substring(0, maxLength) + "..."
+        : text;
+});
 </script>
 <style scoped></style>
