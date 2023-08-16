@@ -117,6 +117,9 @@ const am = {
         goToAnnouncements: "መግለጫዎች ላይ ሂድ",
         viewAllAnnouncements: "ሁሉንም መግለጫዎች ይመልከቱ",
         publishAnnouncement: "ማስታወቂያ ያትሙ",
+        couldNotFound:"{searchKey} ጋር የተያያዘ ምንም አይነት ማስታወቂያ ማግኘት አልተቻለም",
+        noNewAnnouncement:"በአሁኑ ጊዜ ምንም አዲስ ማስታወቂያዎች የሉም። አዲስ ማስታወቂያዎችን ለማግኘት ይህንን ቦታ በተደጋጋሚ እንዲጎበኙ እናበረታታዎታለን።"
+
     },
     announcementsItem: {
         postTargets: "የመልዕክት ዒላማዎች",
@@ -209,7 +212,7 @@ const am = {
         searchAssessment: "መገምገሚያ ይፈልጉ",
     },
     assignHomeroom: {
-        assignHomeroom: "ሆም ሩም(Homeroom) መመደብ",
+        assignHomeroom: "ርእሰ መምህር(Homeroom) መመደብ",
         teacher: "መምህር:",
         currentlyAssigned: "አሁን ባለው ደረጃ ተመድቧል:",
         searchAndSelect: "መመድብ ለሚፈልጉት ደረጃ ፈልግና ምረጥ",
@@ -370,7 +373,13 @@ const am = {
             "ዲሴምበር",
         ],
     },
-    common: {
+    common: {           
+        overseeHomeroomClasses:"ርእሰ መምህር የሆኑበትን ክፍሎችን ይቆጣጠሩ",
+        addViewUpdateLessonPlans:"የትምህርት ዕቅዶችን ያክሉ፣ ይመልከቱ እና ያዘምኑ",     
+        viewStudents:"ተማሪዎችዎን ይመልከቱ",
+        addViewUpdateAssessments:"ግምገማዎችን ያክሉ፣ ይመልከቱ እና ያዘምኑ",
+        schoolSchedules:"የትምህርት ቤት መርሃ ግብሮች",
+        viewAnnouncements:"ማስታወቂያዎችን ይመልከቱ",
         or: "ወይም",
         for: "ለ",
         add: "አክል",
@@ -379,7 +388,7 @@ const am = {
         password: "የይለፍ ቃል",
         home: "መነሻ",
         classes: "ክፍሎች",
-        homeroomClasses: "ሆም ሩም ክፍሎች",
+        homeroomClasses: "ርእሰ መምህር ክፍሎች",
         flags: "ማስጠንቀቂያዎች",
         sections: "ክፍሎች",
         section: "ክፍል",
@@ -420,7 +429,7 @@ const am = {
         and: "እና",
         period: "ክፍለ ጊዜ",
         attendance: "መገኘት",
-        homeroom: "ሆም ሩም",
+        homeroom: "ርእሰ መምህር",
         viewAll: "ሁሉንም ይመልከቱ",
         teachers: "መምህራን",
         teacher: "መምህር",
@@ -438,9 +447,9 @@ const am = {
         clear: "ባዶ አርግ",
         submit: "አስገባ",
         chat: "ቻት",
-        aiChat: "ሪግል ኮፓይለት(Copilot)",
+        aiChat: "ሪግል ኮፓይለት",
         aiChatDescription: "ማስተማርን በሪግል AI ያቅሉ",
-        copilot: "ኮፓይለት(Copilot)",
+        copilot: "ኮፓይለት",
         previous: "ቀደም",
         next: "ቀጣይ",
         administrators: "አስተዳዳሪዎች",
@@ -463,6 +472,14 @@ const am = {
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
         chat: "ቻት(Chat)",
+        dailyLimit:"ዕለታዊ ገደብዎን ደርሰዋል። ገደብ ለመጨመር እባክዎ ከአስተዳዳሪው ጋር ይገናኙ።"
+    },
+    questionEmptyView:{
+        welcometext:"ወደ ሪገል ጥያቅቄ መፍጠሪያ እንኳን በደህና መጡ",
+        hintOne:"የጥያቄ መፍጠሪያ ሂደትዎን ለማቃለል እና ለማሻሻል በተለይ የተነደፈ ባህሪ። እዚህ፣ ውጤታማ፣ ተዛማጅነት ያላቸው እና ፈታኝ ትምህርታዊ ጥያቄዎችን የመፍጠር ስራን በጥቂት ጠቅታዎች ጥበብ ላይ አስተካክለነዋል።",
+        hintTwo:"የክፍል ስራ፣ የቤት ስራን ወይም ፈተናዎችን እያዘጋጀህ ቢሆንም የኛ ጥያቄ ጀነሬተር ሽፋን ሰጥቶሃል። ከትምህርት ዕቅዶችዎ በቀጥታ ጥያቄዎችን ይፍጠሩ፣ ግምገማዎችዎ ከትምህርቶችዎ ​​ጋር በትክክል የተጣጣሙ መሆናቸውን በማረጋገጥ፣ እንዲሁም የዝግጅት ጊዜን በእጅጉ ይቀንሳል። ይህ ባህሪ በጣም አስፈላጊ በሆኑት ነገሮች ላይ ለማተኮር ጊዜዎን ነፃ በማድረግ ተማሪዎችዎን በማስተማር እና በማነሳሳት እንደ የመጨረሻ የትምህርት ጓደኛዎ ሆኖ ያገለግላል።",
+        hintThree:"እኛ ግን በዚህ ብቻ አላቆምንም። ይበልጥ ግላዊ የሆነ ንክኪ ለሚፈልጉ፣ እንዲሁም የእርስዎን ጥያቄዎች እራስዎ ማስገባት ይችላሉ። ይህ የእርስዎን የጥያቄ-መፍጠር ሂደት እያንዳንዱን ገጽታ ለማበጀት እድል ይሰጥዎታል፣ በዚህም ለእያንዳንዱ ተማሪ ልዩ እና አሳታፊ የትምህርት ተሞክሮ ይፈጥራል።",
+        hintFour:"የኛ ጥያቄ ጀነሬተር ከመሳሪያ በላይ ነው። የተማሪዎቻችሁን የመማር ጉዞ ለማሳደግ መወጣጫ ድንጋይ ነው። ታዲያ ለምን ጠብቅ? ዛሬ እንከን የለሽ የጥያቄ ፈጠራ ዓለም ውስጥ ይግቡ እና የማስተማር ልምድዎን ወደ ከፍተኛ ከፍታ ያሳድጉ።"
     },
     createAdmin: {
         headingOne: "ሲስተም አስተዳዳሪ ይመዝገቡ",
@@ -502,6 +519,7 @@ const am = {
         father: "አባት",
         mother: "እናት",
         other: "ሌላ",
+        linkToAnExistingParent: "ከዚህ በፊት የተመዘገቡ ወላጆችን ሰይም",
     },
     createTeacher: {
         headerOne: "አዲስ መምህር ይመዝገቡ",
@@ -528,7 +546,7 @@ const am = {
     currentDaySchedule: {
         schedule: "መርሐ-ግብር",
         period: "ጊዜ",
-        noScheduleFound: "መርሐ-ግብር አልተገኘም!",
+        noScheduleFound: "መርሐ-ግብር አልተገኘም! ለ",
     },
     datePicker: {
         selectYear: "አመት ይምረጡ",
@@ -691,7 +709,7 @@ const am = {
         eventTitleLabel: "የክስተት ስም",
         eventDescription: "የክስተት መግለጫ",
         eventBodyPlaceHolder: "ክስተትዎ ስለ ምንድን ነው? መግለጫዎን እዚህ ይፃፉ።",
-        allDayLabel: "ሁሉም ቀን",
+        allDayLabel: "ሙሉ ቀን",
         dayOfEvent: "የክስተት ቀን",
         eventStartAndEndDays: "ክስተቱ የሚጀምር እና የሚያበቃበት ቀናት",
         pickTypeOfEventPlaceHolder: "የክስተት አይነት ይምረጡ",
@@ -744,9 +762,9 @@ const am = {
         noHomeroomClass: "ገና ምንም ሆም ሩሞ አልተያያዘም!",
     },
     homeRooms: {
-        noHomeroomClasses: "ሆም ሩም የሆኑበት ክፍል የለም",
-        assignHomeroom: "ሆም ሩም ሰይም",
-        homeroomClasses: "ሆም ሩም የሆኑበት ክፍሎች",
+        noHomeroomClasses: "ርእሰ መምህር የሆኑበት ክፍል የለም",
+        assignHomeroom: "ርእሰ መምህር ሰይም",
+        homeroomClasses: "ርእሰ መምህር የሆኑበት ክፍሎች",
         classAttendance: "የክፍል መገኘት",
         classConduct: "የክፍል ምግባር",
         topStudents: "ከፍተኛ ተማሪዎች",
@@ -814,6 +832,8 @@ const am = {
     lessonPlans: {
         viewAllLessonPlans: "ሁሉንም የትምህርት ዕቅዶች ይመልከቱ",
         noLessonPlan: "የትምህርት ዕቅድ አልተገኘም!",
+        yourLessonPlans:"የእርስዎ የትምህርት እቅዶች"
+
     },
     lessonPlansIndex: {
         myLessonPlans: "የትምህርት እቅዴ",
@@ -966,7 +986,7 @@ const am = {
         welcome: "አንኩዋን ወደ AI-Powered የጥያቄ ዝግጅት መድረክ በደህና መጡ",
         description:
             "ከትምህርት ዕቅዶችዎ ብጁ ግምገማዎችን የሚፈጥር፣የተሳለጠ የማስተማር ልምድን የሚያመቻች የእኛን AI-የተጎለበተ መድረክ ተቀበሉ። ብዙ በሚያስተምሩበት እና ትንሽ በሚዘጋጁበት ሂደት ውስጥ እራስዎን ያስገቡ ፣ ይህም የትምህርትን የወደፊት ሁኔታ እንደገና ለመቅረጽ ይረዱ።",
-        questionGeneration: " ትርጉሙ? Question Generation Customization",
+        questionGeneration: "ጥያቄ ማውጫ",
         selectQuestionType: "የጥያቄ ዓይነትን ይምረጡ",
         numberOfQuestions: "የጥያቄዎች ብዛት?",
         howManyQuestions: "ስንት ጥያቄዎች?",
@@ -1047,7 +1067,7 @@ const am = {
         resultingInTotalOf: "አጠቃላይ ውጤት ያስገኛል",
         createAndProceed: "ይፍጠሩ እና ይቀጥሉ",
         summaryText:
-            "<p class='text-xs'> መጪው የትምህርት ዘመን <span class='font-bold text-brand-text-400'>{academicYear}</span>፣ <span class='ን ይይዛል። font-bold text-brand-text-400'>{semesters} ሴሚስተር፣</span> እያንዳንዳቸው በ<span class='font-bold text-brand-text-400'>{quartersPerSemester}</span> ሩብ ተከፍለዋል፣  በአጠቃላይ  <span class='font-bold text-brand-text-400' >{totalQuarters} ሩብ አመት አለ።</span > </p>",
+            "<p class='text-xs'> መጪው የትምህርት ዘመን <span class='font-bold text-brand-text-600'>{academicYear}</span>፣ <span class='ን ይይዛል። font-bold text-brand-text-600'>{semesters} ሴሚስተር፣</span> እያንዳንዳቸው በ<span class='font-bold text-brand-text-600'>{quartersPerSemester}</span> ሩብ ተከፍለዋል፣  በአጠቃላይ  <span class='font-bold text-brand-text-600' >{totalQuarters} ሩብ አመት አለ።</span > </p>",
     },
     registerSubjectForm: {
         formElementTitle: "አዲስ የትምህርት አይነት",
@@ -1164,7 +1184,7 @@ const am = {
         breakTime: '"እረፍት ሰዓት"',
         lunchBreak: '"የምሳ ሰዓት"',
         recess: '"እረፍት"',
-        homeroom: '"ሆም ሩም"',
+        homeroom: '"ርእሰ መምህር"',
         customPeriodLabel: "የልዩ ክፍል ስም",
         customPeriodPlaceHolder: "እረፍት ሰዓት",
         durationMin: "የቆይታ ጊዜ (ደቂቃ)",
@@ -1252,7 +1272,7 @@ const am = {
     sectionHomeroom: {
         homeroomTeacher: "የክፍል መምህር",
         noHomeroomTeacherAssigned: "የክፍል መምህር አልተመደበም",
-        assignHomeroom: "ሆም ሩም ይሰይሙ",
+        assignHomeroom: "ርእሰ መምህር ይሰይሙ",
     },
     sectionPerformance: {
         topStudents: "ምርጥ ተማሪዎች",
@@ -1385,8 +1405,8 @@ const am = {
     },
     studentsTable: {
         search: "ፈልግ",
-        assignHomeroom: "ሆም ሩም ሰይም",
-        homeroomTeacher: "ሆም ሩም መምህር",
+        assignHomeroom: "ርእሰ መምህር ሰይም",
+        homeroomTeacher: "ርእሰ መምህር መምህር",
         name: "ስም",
         attendance: "መገኘት%",
         grade: "ደረጃ",
@@ -1492,7 +1512,7 @@ const am = {
     teacherIndex: {
         yourNexClass:
             "ቀጣዩ ክፍልህ <span class='font-semibold'>{fullName}</span> ከክፍል <span class='font-semibold'>{levelName} {section}</span> ጋር በወቅት <span class='font-semibold'>{schoolPeriodName}</span><span class='font-semibold'>በግምት{time}</span>",
-        homeroomClasses: "ሆም ሩም ክፍሎች",
+        homeroomClasses: "ርእሰ መምህር ክፍሎች",
         upcomingSchedules: "የሚመጡ መርሃግብሮች",
         schoolSchedules: "የትምህርት ቤት መርሐግብሮች",
         toDaysSchedule: "የዛሬ መርሐግብር",
@@ -1504,7 +1524,7 @@ const am = {
         myStudents: "ተማሪዎቼ",
         lessonPlan: "የትምህርት ዕቅድ",
         assessments: "ግምገማዎች",
-        homeRooms: "ሆም ሩምስ",
+        homeRooms: "ርእሰ መምህርስ",
         announcements: "ማስታወቂያዎች",
         schedule: "ሰዓት ሰሌዳ",
         feedbacks: "ግብረ መልስ",
@@ -1552,6 +1572,8 @@ const am = {
         updateProfile: "ፕሮፋይል አዘምን",
         updatePassword: "የይለፍ ቃል አዘምን",
         changeLanguage: "ቋንቋ ቀይር",
+        uploadProfilePicture:"የፕሮፋይል ምስል ይቀይሩ"
+
     },
 
     userStatistics: {
@@ -1802,6 +1824,10 @@ const am = {
         expireDate: "የሚያበቃበት ቀን",
         expiresOn: "ጊዜው ሚያበቃው",
     },
+    imageUpload: {
+        imageSizeLimit: "የምስሉ መጠን ከ3MB ያነሰ መሆን አለበት",
+        chooseImage: "ምስል ለመጫን ይምረጡ"
+      }
 };
 
 export default am;

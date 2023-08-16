@@ -8,7 +8,7 @@
         >
             <div class="flex w-full items-center justify-between">
                 <div
-                    class="flex grow items-center justify-center gap-1 text-xs font-semibold text-brand-text-300"
+                    class="text-brand-text-600 flex grow items-center justify-center gap-1 text-xs font-semibold"
                 >
                     {{ $t("schoolPeriodFormWrapper.step") }}
 
@@ -46,7 +46,7 @@
                         </h3>
                         <h3
                             v-if="formStep === 1"
-                            class="text-right text-sm text-brand-text-300"
+                            class="text-brand-text-600 text-right text-sm"
                         >
                             {{
                                 $t(
@@ -106,7 +106,7 @@
                         </h3>
                         <h3
                             v-if="formStep === 2"
-                            class="text-sm text-brand-text-300"
+                            class="text-brand-text-600 text-sm"
                         >
                             {{
                                 $t(
@@ -131,7 +131,7 @@
                                 ? 'bg-black text-white'
                                 : 'bg-white text-black'
                         "
-                        class="grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold text-brand-text-300"
+                        class="text-brand-text-600 grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold"
                         @click="setDuration(minute)"
                     >
                         {{ minute }}
@@ -139,7 +139,7 @@
 
                     <button
                         type="button"
-                        class="grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold text-brand-text-300"
+                        class="text-brand-text-600 grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold"
                         @click="openOtherDurationForm"
                     >
                         <span class="mb-0.5 text-xl">+</span>
@@ -187,7 +187,7 @@
 
                 <div
                     v-if="formStep === 2"
-                    class="-mb-2 flex w-full gap-1.5 text-xs text-brand-text-300"
+                    class="text-brand-text-600 -mb-2 flex w-full gap-1.5 text-xs"
                 >
                     <InformationCircleIcon
                         class="inline-block h-4 w-4 stroke-2"
@@ -219,7 +219,7 @@
                         </h3>
                         <h3
                             v-if="formStep === 3"
-                            class="text-right text-sm text-brand-text-300"
+                            class="text-brand-text-600 text-right text-sm"
                         >
                             {{ $t("schoolPeriodFormWrapper.howManyPeriods") }}
                         </h3>
@@ -240,7 +240,7 @@
                                 ? 'bg-black text-white'
                                 : 'bg-white text-black'
                         "
-                        class="grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold text-brand-text-300"
+                        class="text-brand-text-600 grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold"
                         @click="setPeriod(session)"
                     >
                         {{ session }}
@@ -248,7 +248,7 @@
 
                     <button
                         type="button"
-                        class="grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold text-brand-text-300"
+                        class="text-brand-text-600 grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold"
                         @click="isOtherPeriod = true"
                     >
                         <span class="mb-0.5 text-xl">+</span>
@@ -292,7 +292,7 @@
 
                 <div
                     v-if="formStep === 3"
-                    class="-mb-2 flex w-full gap-1.5 text-xs text-brand-text-300"
+                    class="text-brand-text-600 -mb-2 flex w-full gap-1.5 text-xs"
                 >
                     <InformationCircleIcon
                         class="inline-block h-4 w-4 stroke-2"
@@ -326,7 +326,7 @@
                         </h3>
                         <h3
                             v-if="formStep === 4"
-                            class="text-right text-sm text-brand-text-300"
+                            class="text-brand-text-600 text-right text-sm"
                         >
                             {{ $t("schoolPeriodFormWrapper.addCustomPeriods") }}
                             <span class="inline-block">{{
@@ -386,7 +386,7 @@
                                 class="flex w-full items-center justify-start gap-3 py-1"
                             >
                                 <span
-                                    class="min-w-[80.64px] pl-0.5 text-xs font-semibold text-brand-text-300"
+                                    class="text-brand-text-600 min-w-[80.64px] pl-0.5 text-xs font-semibold"
                                     >{{
                                         $t(
                                             "schoolPeriodFormWrapper.durationMin"
@@ -404,7 +404,7 @@
                                         'border-2 !border-black bg-black text-white':
                                             customPeriod.duration === minute,
                                     }"
-                                    class="grid h-8 w-8 place-items-center rounded-full border border-gray-500 text-xs font-semibold text-brand-text-300"
+                                    class="text-brand-text-600 grid h-8 w-8 place-items-center rounded-full border border-gray-500 text-xs font-semibold"
                                     @click="setCustomPeriodDuration(c, minute)"
                                 >
                                     {{ minute }}
@@ -415,7 +415,7 @@
                                 class="flex w-full items-start justify-start gap-3 py-1"
                             >
                                 <span
-                                    class="flex h-8 min-w-[85.5px] items-center pl-0.5 text-xs font-semibold text-brand-text-300"
+                                    class="text-brand-text-600 flex h-8 min-w-[85.5px] items-center pl-0.5 text-xs font-semibold"
                                 >
                                     {{
                                         $t(
@@ -436,7 +436,7 @@
                                                 customPeriod.before_period ===
                                                 period,
                                         }"
-                                        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-500 text-xs font-semibold text-brand-text-300"
+                                        class="text-brand-text-600 flex h-8 w-8 items-center justify-center rounded-full border border-gray-500 text-xs font-semibold"
                                         @click="
                                             setCustomPeriodBefore(c, period)
                                         "
@@ -456,7 +456,7 @@
                                 class="flex w-full items-center justify-start gap-3 py-1"
                             >
                                 <span
-                                    class="min-w-[85.5px] pl-0.5 text-xs font-semibold text-brand-text-300"
+                                    class="text-brand-text-600 min-w-[85.5px] pl-0.5 text-xs font-semibold"
                                 >
                                     {{ $t("schoolPeriodFormWrapper.day") }}
                                 </span>
@@ -475,7 +475,7 @@
                                             customPeriod.days.includes(day),
                                     }"
                                     type="button"
-                                    class="grid h-8 w-8 place-items-center rounded-full border border-gray-500 text-xs font-semibold text-brand-text-300"
+                                    class="text-brand-text-600 grid h-8 w-8 place-items-center rounded-full border border-gray-500 text-xs font-semibold"
                                     @click="updateCustomPeriodDays(c, day)"
                                 >
                                     <span class="capitalize">
@@ -489,7 +489,7 @@
 
                 <div
                     v-if="formStep === 4"
-                    class="-mb-2 flex w-full gap-1.5 text-xs text-brand-text-300"
+                    class="text-brand-text-600 -mb-2 flex w-full gap-1.5 text-xs"
                 >
                     <InformationCircleIcon
                         class="inline-block h-4 w-4 stroke-2"
@@ -503,7 +503,7 @@
                 >
                     <button
                         type="button"
-                        class="flex w-fit items-center gap-2 rounded-md border bg-brand-100 px-4 py-2 text-xs font-semibold text-brand-text-300"
+                        class="text-brand-text-600 flex w-fit items-center gap-2 rounded-md border bg-brand-100 px-4 py-2 text-xs font-semibold"
                         @click="addCustomPeriod"
                     >
                         <PlusCircleIcon class="h-4 w-4 stroke-2" />

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckSchoolYearStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia;
@@ -11,6 +12,9 @@ it('renders the admin index page', function () {
     $admin = User::factory()->create([
         'type' => 'admin',
     ]);
+
+    // Disable the CheckSchoolYearStatus middleware
+    $this->withoutMiddleware(CheckSchoolYearStatus::class);
 
     // When the user visits the admin page
     $response = $this->actingAs($admin)->get('/admin');
@@ -36,6 +40,9 @@ it('renders the admin schedule page', function () {
         'type' => 'admin',
     ]);
 
+    // Disable the CheckSchoolYearStatus middleware
+    $this->withoutMiddleware(CheckSchoolYearStatus::class);
+
     // When the user visits the admin page
     $response = $this->actingAs($admin)->get('/admin/schedules');
 
@@ -54,6 +61,8 @@ it('renders the levels page', function () {
     $admin = User::factory()->create([
         'type' => 'admin',
     ]);
+    // Disable the CheckSchoolYearStatus middleware
+    $this->withoutMiddleware(CheckSchoolYearStatus::class);
 
     $admin->roles()->attach(['manage-levels']);
 

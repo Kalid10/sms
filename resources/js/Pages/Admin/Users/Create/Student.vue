@@ -52,62 +52,81 @@
                             :label="$t('createStudent.studentDateOfBirth')"
                             class="w-full cursor-pointer"
                         />
-                        <GuardianSelectInput
-                            v-model="form.guardian_relation"
-                            class="w-full cursor-pointer"
-                            :options="relationOptions"
-                            :label="$t('createStudent.guardianRelationLabel')"
-                            :placeholder="
-                                $t('createStudent.guardianRelationPlaceholder')
-                            "
-                            required
-                        />
                     </div>
 
-                    <div class="flex gap-3">
-                        <GuardianTextInput
-                            v-model="form.guardian_name"
-                            class="w-full"
-                            :label="$t('createStudent.guardianName')"
-                            :placeholder="$t('common.name')"
-                            :error="form.errors.guardian_name"
-                            required
-                        />
-                        <GuardianTextInput
-                            v-model="form.guardian_phone_number"
-                            class="w-full"
-                            :label="
-                                $t('createStudent.guardianPhoneNumberLabel')
-                            "
-                            :placeholder="
-                                $t(
-                                    'createStudent.guardianPhoneNumberPlaceholder'
-                                )
-                            "
-                            type="number"
-                            :error="form.errors.guardian_phone_number"
-                            required
+                    <Toggle
+                        v-model="linkToExistingGuardian"
+                        label-location="top"
+                        :label="$t('createStudent.linkToAnExistingParent')"
+                        class="my-2 mb-5 min-w-fit"
+                    />
+                    <div v-if="linkToExistingGuardian" class="">
+                        <GuardianSearch
+                            @select-guardian="handleSelectedGuardian"
                         />
                     </div>
-                    <div class="flex gap-3">
-                        <GuardianTextInput
-                            v-model="form.guardian_email"
-                            type="email"
-                            class="w-full"
-                            :label="$t('createStudent.guardianEmailLabel')"
-                            :placeholder="$t('common.email')"
-                            :error="form.errors.guardian_email"
-                        />
-                        <GuardianSelectInput
-                            v-model="form.guardian_gender"
-                            class="w-full cursor-pointer"
-                            :options="genderOptions"
-                            :label="$t('createStudent.guardianGenderLabel')"
-                            :placeholder="
-                                $t('createStudent.guardianGenderPlaceholder')
-                            "
-                            required
-                        />
+                    <div v-if="!linkToExistingGuardian">
+                        <div class="flex gap-3">
+                            <GuardianSelectInput
+                                v-model="form.guardian_relation"
+                                class="w-full cursor-pointer"
+                                :options="relationOptions"
+                                :label="
+                                    $t('createStudent.guardianRelationLabel')
+                                "
+                                :placeholder="
+                                    $t(
+                                        'createStudent.guardianRelationPlaceholder'
+                                    )
+                                "
+                                required
+                            />
+                            <GuardianTextInput
+                                v-model="form.guardian_name"
+                                class="w-full"
+                                :label="$t('createStudent.guardianName')"
+                                :placeholder="$t('common.name')"
+                                :error="form.errors.guardian_name"
+                                required
+                            />
+                            <GuardianTextInput
+                                v-model="form.guardian_phone_number"
+                                class="w-full"
+                                :label="
+                                    $t('createStudent.guardianPhoneNumberLabel')
+                                "
+                                :placeholder="
+                                    $t(
+                                        'createStudent.guardianPhoneNumberPlaceholder'
+                                    )
+                                "
+                                type="number"
+                                :error="form.errors.guardian_phone_number"
+                                required
+                            />
+                        </div>
+                        <div class="flex gap-3">
+                            <GuardianTextInput
+                                v-model="form.guardian_email"
+                                type="email"
+                                class="w-full"
+                                :label="$t('createStudent.guardianEmailLabel')"
+                                :placeholder="$t('common.email')"
+                                :error="form.errors.guardian_email"
+                            />
+                            <GuardianSelectInput
+                                v-model="form.guardian_gender"
+                                class="w-full cursor-pointer"
+                                :options="genderOptions"
+                                :label="$t('createStudent.guardianGenderLabel')"
+                                :placeholder="
+                                    $t(
+                                        'createStudent.guardianGenderPlaceholder'
+                                    )
+                                "
+                                required
+                            />
+                        </div>
                     </div>
                 </GuardianFormElement>
             </div>
@@ -168,11 +187,18 @@ import { value } from "lodash/seq";
 import { useI18n } from "vue-i18n";
 import { computed, ref } from "vue";
 import Modal from "@/Components/Modal.vue";
+import Toggle from "@/Components/Toggle.vue";
+import GuardianSearch from "@/Views/Admin/Users/GuardianSearch.vue";
 
 const { t } = useI18n();
 defineEmits(["file-uploaded"]);
 
 const showManual = ref(false);
+const linkToExistingGuardian = ref(false);
+
+const handleSelectedGuardian = (guardian) => {
+    form.existing_guardian_id = guardian.id;
+};
 
 const genderOptions = [
     { value: "male", label: t("common.male") },
@@ -202,6 +228,15 @@ const relationOptions = [
     { value: "other", label: t("createStudent.other") },
 ];
 
+const guardianOptions = computed(() => {
+    return usePage().props.guardians.map((guardian) => {
+        return {
+            value: guardian.id,
+            label: guardian.name,
+        };
+    });
+});
+
 const form = useForm({
     name: "",
     gender: "",
@@ -213,6 +248,7 @@ const form = useForm({
     guardian_gender: "",
     level_id: "",
     guardian_relation: "",
+    existing_guardian_id: "",
 });
 
 const bulkForm = useForm({

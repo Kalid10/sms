@@ -1,8 +1,7 @@
 <template>
     <div class="flex items-center gap-5">
         <h1 class="m-2 font-semibold text-brand-text-450">
-            Hello there, With a single click, you can instantly send crucial
-            message;
+            {{ $t("sms.hint") }}
         </h1>
         <div class="my-5 flex flex-col gap-5">
             <p
@@ -10,14 +9,14 @@
                 @click="parentsLink"
             >
                 <ChatBubbleBottomCenterTextIcon class="h-5 w-5" />
-                Parents phone information
+                {{ $t("sms.parentsPhoneInformation") }}
             </p>
             <p
                 class="flex cursor-pointer items-center gap-2 text-blue-700"
                 @click="teachersLink"
             >
                 <ChatBubbleBottomCenterTextIcon class="h-5 w-5" />
-                Teachers phone information
+                {{ $t("sms.teachersPhoneInformation") }}
             </p>
         </div>
     </div>

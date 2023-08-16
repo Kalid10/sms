@@ -36,7 +36,7 @@
             </Heading>
 
             <div class="mt-8 flex">
-                <h3 class="max-w-md text-center text-sm text-brand-text-300">
+                <h3 class="text-brand-text-600 max-w-md text-center text-sm">
                     <span v-html="$t('registerSchoolYear.welcomeText')" />
                 </h3>
             </div>
@@ -81,7 +81,7 @@
                         class="w-72"
                     />
 
-                    <div class="p-2 text-xs text-brand-text-250">
+                    <div class="p-2 text-xs text-gray-600">
                         <span>
                             {{ $t("registerSchoolYear.ifThereIs") }}
                         </span>
@@ -94,7 +94,7 @@
                     </div>
 
                     <div
-                        class="mt-5 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center text-brand-text-300"
+                        class="text-brand-text-600 mt-5 w-72 rounded-lg border border-dashed border-gray-300 p-2 text-center"
                     >
                         <span
                             v-html="

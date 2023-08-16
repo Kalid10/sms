@@ -12,8 +12,7 @@
                 >
                     <ExclamationCircleIcon class="w-5 text-white" />
                     <span>
-                        You've hit your daily limit. Please get in touch with
-                        the administrator to increase limit.
+                        {{ $t("copilotIndex.dailyLimit") }}
                     </span>
                 </span>
             </div>

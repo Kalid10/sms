@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamp('start_date');
             $table->timestamp('end_date')->nullable();
             $table->string('name')->unique();
+            $table->boolean('is_ready')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

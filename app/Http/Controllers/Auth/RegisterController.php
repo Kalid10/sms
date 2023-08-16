@@ -101,6 +101,9 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request): Response|RedirectResponse
     {
+
+        $existingGuardianId = $request->get('existing_guardian_id');
+
         // Check role
         $this->checkRole($request->get('type'));
 
@@ -111,7 +114,7 @@ class RegisterController extends Controller
             // Create user and related records based on the user type
             $user = match ($request->get('type')) {
                 User::TYPE_TEACHER => $this->createTeacher($request),
-                User::TYPE_STUDENT => $this->createStudent($request),
+                User::TYPE_STUDENT => $this->createStudent($request, $existingGuardianId),
                 User::TYPE_ADMIN => $this->createAdmin($request),
                 default => throw new Exception('Type unknown!'),
             };
@@ -142,12 +145,19 @@ class RegisterController extends Controller
         return $user;
     }
 
-    private function createStudent(RegisterRequest $request)
+    private function createStudent(RegisterRequest $request, $existingGuardianId = null)
     {
-        // Create guardian
-        $guardianUser = $this->createGuardian($request);
-
-        $guardian = Guardian::create(['user_id' => $guardianUser->id]);
+        // If an existing guardian ID is provided, use it, otherwise create a new guardian
+        if ($existingGuardianId) {
+            $guardian = Guardian::find($existingGuardianId);
+            if (! $guardian) {
+                throw new Exception('Guardian not found!');
+            }
+        } else {
+            // Create guardian
+            $guardianUser = $this->createGuardian($request);
+            $guardian = Guardian::create(['user_id' => $guardianUser->id]);
+        }
 
         // Create student
         $studentUser = $this->createUser($request, User::TYPE_STUDENT);

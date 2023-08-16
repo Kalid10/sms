@@ -18,7 +18,7 @@ use App\Http\Controllers\Web\TeacherController;
 use App\Http\Controllers\Web\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin/')->middleware('checkUserType:admin')->name('admin.')->group(function () {
+Route::prefix('admin/')->middleware(['checkUserType:admin', 'checkSchoolYearStatus'])->name('admin.')->group(function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get('', 'show')->name('show');
         Route::get('schedules', 'schedule')->name('schedule');
