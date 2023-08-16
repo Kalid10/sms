@@ -15,7 +15,7 @@
                 <span class="flex grow flex-col justify-center px-3">
                     <span
                         v-if="labelLocation === 'inside'"
-                        class="text-[0.7rem] text-brand-text-300"
+                        class="text-brand-text-600 text-[0.7rem]"
                         >{{ label }}</span
                     >
                     <span

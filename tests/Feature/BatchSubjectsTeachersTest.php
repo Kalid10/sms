@@ -5,6 +5,7 @@ use App\Http\Requests\Batches\AssignSubjectsRequest;
 use App\Http\Requests\Batches\AssignSubjectTeacherRequest;
 use App\Models\Batch;
 use App\Models\BatchSubject;
+use App\Models\SchoolYear;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
@@ -40,6 +41,11 @@ it('can assign subjects to batches', function () {
                 'subject_ids' => $subjects->pluck('id')->toArray(),
             ],
         ],
+    ]);
+
+    // Create active school year with end date null
+    SchoolYear::factory()->create([
+        'end_date' => null,
     ]);
 
     // Call the assign method on the controller

@@ -4,7 +4,7 @@
     >
         <div class="flex flex-col">
             <Heading>{{ $t("registerBatches.registerGrades") }}</Heading>
-            <h3 class="text-sm text-brand-text-300">
+            <h3 class="text-brand-text-600 text-sm">
                 {{ $t("registerBatches.hintOne") }}
 
                 <span class="inline-block">
@@ -15,7 +15,7 @@
 
         <div class="relative flex gap-5">
             <span
-                class="col-span1 text-sm text-brand-text-300 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="col-span1 text-brand-text-600 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
                 <span class="font-semibold text-black">{{
                     selectedGradeCount
@@ -24,17 +24,17 @@
             </span>
 
             <span
-                class="col-span1 text-sm text-brand-text-300 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="col-span1 text-brand-text-600 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
                 <span class="font-semibold text-black">{{ batchesCount }}</span>
                 {{ $t("registerBatches.sectionsSelected") }}
             </span>
 
-            <PrimaryButton
-                class="absolute right-0"
-                :title="$t('registerBatches.buttonTitle')"
-                @click="isNewLevelFormOpened = true"
-            />
+            <!--            <PrimaryButton-->
+            <!--                class="absolute right-0"-->
+            <!--                :title="$t('registerBatches.buttonTitle')"-->
+            <!--                @click="isNewLevelFormOpened = true"-->
+            <!--            />-->
         </div>
 
         <div
@@ -47,7 +47,7 @@
                     class="z-10 h-3.5 w-3.5 rounded-full"
                     :class="colors[lc]"
                 />
-                <Heading size="sm" class="font-normal text-brand-text-300">
+                <Heading size="sm" class="text-brand-text-600 font-normal">
                     {{
                         updatedLevels.filter(
                             (level) => level.level_category_id === levelCategory

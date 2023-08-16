@@ -14,7 +14,7 @@
                         }}
                     </Heading>
                     <Heading
-                        class="text-center !font-normal text-brand-text-300"
+                        class="text-brand-text-600 text-center !font-normal"
                         size="sm"
                         >{{ $t("gettingStartedSchoolSchedule.almostDone") }}
                     </Heading>
@@ -22,7 +22,7 @@
 
                 <div class="flex flex-col gap-3">
                     <p
-                        class="max-w-2xl text-center text-sm text-brand-text-300"
+                        class="text-brand-text-600 max-w-2xl text-center text-sm"
                     >
                         {{
                             $t(
@@ -32,13 +32,13 @@
                     </p>
 
                     <p
-                        class="max-w-2xl text-center text-sm text-brand-text-300"
+                        class="text-brand-text-600 max-w-2xl text-center text-sm"
                     >
                         {{ $t("gettingStartedSchoolSchedule.firstStepHint") }}
                     </p>
 
                     <p
-                        class="max-w-2xl text-center text-sm text-brand-text-300"
+                        class="text-brand-text-600 max-w-2xl text-center text-sm"
                     >
                         {{
                             $t("gettingStartedSchoolSchedule.doNotWorryMessage")
@@ -173,7 +173,7 @@
                 <h3 class="font-semibold">
                     {{ $t("gettingStartedSchoolSchedule.addNewEvent") }}
                 </h3>
-                <h3 class="text-sm leading-none text-brand-text-300">
+                <h3 class="text-brand-text-600 text-sm leading-none">
                     {{ $t("gettingStartedSchoolSchedule.addEvent") }}
                 </h3>
             </div>
@@ -191,7 +191,7 @@
                 <label class="flex flex-col gap-1">
                     <span class="">
                         <span
-                            class="pl-0.5 text-sm font-semibold text-brand-text-300"
+                            class="text-brand-text-600 pl-0.5 text-sm font-semibold"
                             >{{
                                 $t(
                                     "gettingStartedSchoolSchedule.eventDescription"
@@ -209,7 +209,7 @@
                                 'gettingStartedSchoolSchedule.eventBodyPlaceHolder'
                             )
                         "
-                        class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-brand-text-300"
+                        class="placeholder:text-brand-text-600 w-full rounded-md border border-gray-200 text-sm placeholder:text-sm"
                     ></textarea>
                 </label>
 
@@ -312,7 +312,7 @@
             <label class="flex flex-col gap-1">
                 <span class="">
                     <span
-                        class="pl-0.5 text-sm font-semibold text-brand-text-300"
+                        class="text-brand-text-600 pl-0.5 text-sm font-semibold"
                         >{{
                             $t("gettingStartedSchoolSchedule.eventDescription")
                         }}
@@ -326,7 +326,7 @@
                     :placeholder="
                         $t('gettingStartedSchoolSchedule.eventBodyPlaceHolder')
                     "
-                    class="w-full rounded-md border border-gray-200 text-sm placeholder:text-sm placeholder:text-brand-text-300"
+                    class="placeholder:text-brand-text-600 w-full rounded-md border border-gray-200 text-sm placeholder:text-sm"
                 ></textarea>
             </label>
 
@@ -461,7 +461,7 @@ function viewCalendar() {
 }
 
 function goToDashboard() {
-    router.get("/");
+    router.get("/admin");
 }
 
 function addNewEvent(date) {
