@@ -87,6 +87,19 @@
             {{ t("teacherLayout.logout") }}
         </template>
     </DialogBox>
+
+    <Loading v-if="isLoading" :is-full-screen="true" type="bounce">
+        <template #description>
+            <div
+                class="flex flex-col items-center justify-center space-y-2 rounded-lg bg-brand-350 p-5 text-brand-150 shadow-md"
+            >
+                <FaceFrownIcon class="w-6 animate-bounce" />
+                <div class="text-sm font-medium capitalize">
+                    Logging you out. See you Soon!
+                </div>
+            </div>
+        </template>
+    </Loading>
 </template>
 
 <script setup>
@@ -117,6 +130,7 @@ import { useUIStore } from "@/Store/ui";
 
 import { useI18n } from "vue-i18n";
 import DialogBox from "@/Components/DialogBox.vue";
+import { FaceFrownIcon } from "@heroicons/vue/24/solid";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -136,7 +150,7 @@ provide("showNotification", showNotification);
 provide("notificationData", notificationData);
 
 const isOpen = computed(() => useSidebarStore().isOpen);
-
+const isLoading = ref(false);
 const directory = computed(() => usePage().url.split("/")[2]);
 
 const isLogoutDialogOpen = ref(false);
@@ -146,12 +160,21 @@ const showLogoutConfirmation = () => {
 };
 
 const handleLogoutConfirm = () => {
+    isLoading.value = true;
     logout();
     isLogoutDialogOpen.value = false;
 };
 
 const logout = () => {
-    router.post("/logout");
+    router.post(
+        "/logout",
+        {},
+        {
+            onFinish: () => {
+                isLoading.value = false;
+            },
+        }
+    );
 };
 
 const isRouteActive = (routePattern) => {
