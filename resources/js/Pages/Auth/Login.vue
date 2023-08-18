@@ -138,6 +138,19 @@
             </h3>
         </div>
     </div>
+
+    <Loading v-if="isLoading" :is-full-screen="true" type="bounce">
+        <template #description>
+            <div
+                class="flex flex-col items-center justify-center space-y-2 rounded-lg bg-brand-350 p-5 text-brand-150 shadow-md"
+            >
+                <FaceSmileIcon class="w-6 animate-bounce" />
+                <div class="text-sm font-medium">
+                    Please hold on while we log you in ...
+                </div>
+            </div>
+        </template>
+    </Loading>
 </template>
 
 <script setup>
@@ -145,21 +158,27 @@ import { useForm } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { FaceSmileIcon } from "@heroicons/vue/24/solid";
+import Loading from "@/Components/Loading.vue";
 
 const { t } = useI18n();
+const isLoading = ref(false);
 
 const form = useForm({
     emailOrPhone: "",
     password: "",
 });
 
-// Submit form
 const submit = () => {
+    isLoading.value = true;
     form.post("/login", {
         onError: (errors) => {
             if (errors.emailOrPhone) {
                 form.password = "";
             }
+        },
+        onFinish: () => {
+            isLoading.value = false;
         },
     });
 };

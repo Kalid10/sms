@@ -13,7 +13,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
-                basic: ["Inter"],
+                basic: ["Inter", "Noto Sans Ethiopic"],
             },
             colors: {
                 positive: {

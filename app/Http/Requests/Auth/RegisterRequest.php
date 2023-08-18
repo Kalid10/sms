@@ -22,21 +22,39 @@ class RegisterRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        // Common rules for both new and existing parents
+        $rules = [
             'name' => 'required|string|max:255',
             'type' => 'required|string|in:admin,student,teacher',
             'email' => 'required_if:type,admin|email|unique:users',
             'phone_number' => 'required_if:type,guardian,admin|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users',
             'gender' => 'required|string|max:255',
             'date_of_birth' => 'required_if:type,student|date',
-            //            'username' => 'required_without_all:email,phone_number|exclude_unless:type,student|string|min:6|unique:users',
             'position' => 'required_if:type,admin',
-            'guardian_relation' => 'string|max:255',
-            'guardian_name' => 'required_if:type,student',
-            'guardian_email' => 'email|unique:users,email',
-            'guardian_phone_number' => 'required_if:type,student|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users,phone_number',
             'level_id' => 'required_if:type,student|exists:levels,id',
-            'guardian_gender' => 'required_if:type,student|string|max:255',
+            'existing_guardian_id' => 'nullable|exists:guardians,id',
         ];
+
+        if ($this->input('existing_guardian_id')) {
+            // Optional fields for existing parents
+            $rules += [
+                'guardian_relation' => 'nullable|string|max:255',
+                'guardian_name' => 'nullable',
+                'guardian_email' => 'nullable|email|unique:users,email',
+                'guardian_phone_number' => 'nullable|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users,phone_number',
+                'guardian_gender' => 'nullable|string|max:255',
+            ];
+        } else {
+            // Required fields for new parents
+            $rules += [
+                'guardian_relation' => 'string|max:255',
+                'guardian_name' => 'required_if:type,student',
+                'guardian_email' => 'email|unique:users,email',
+                'guardian_phone_number' => 'required_if:type,student|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users,phone_number',
+                'guardian_gender' => 'required_if:type,student|string|max:255',
+            ];
+        }
+
+        return $rules;
     }
 }

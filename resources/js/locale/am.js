@@ -519,6 +519,7 @@ const am = {
         father: "አባት",
         mother: "እናት",
         other: "ሌላ",
+        linkToAnExistingParent: "ከዚህ በፊት የተመዘገቡ ወላጆችን ሰይም",
     },
     createTeacher: {
         headerOne: "አዲስ መምህር ይመዝገቡ",
@@ -708,7 +709,7 @@ const am = {
         eventTitleLabel: "የክስተት ስም",
         eventDescription: "የክስተት መግለጫ",
         eventBodyPlaceHolder: "ክስተትዎ ስለ ምንድን ነው? መግለጫዎን እዚህ ይፃፉ።",
-        allDayLabel: "ሁሉም ቀን",
+        allDayLabel: "ሙሉ ቀን",
         dayOfEvent: "የክስተት ቀን",
         eventStartAndEndDays: "ክስተቱ የሚጀምር እና የሚያበቃበት ቀናት",
         pickTypeOfEventPlaceHolder: "የክስተት አይነት ይምረጡ",
@@ -1066,7 +1067,7 @@ const am = {
         resultingInTotalOf: "አጠቃላይ ውጤት ያስገኛል",
         createAndProceed: "ይፍጠሩ እና ይቀጥሉ",
         summaryText:
-            "<p class='text-xs'> መጪው የትምህርት ዘመን <span class='font-bold text-brand-text-400'>{academicYear}</span>፣ <span class='ን ይይዛል። font-bold text-brand-text-400'>{semesters} ሴሚስተር፣</span> እያንዳንዳቸው በ<span class='font-bold text-brand-text-400'>{quartersPerSemester}</span> ሩብ ተከፍለዋል፣  በአጠቃላይ  <span class='font-bold text-brand-text-400' >{totalQuarters} ሩብ አመት አለ።</span > </p>",
+            "<p class='text-xs'> መጪው የትምህርት ዘመን <span class='font-bold text-brand-text-600'>{academicYear}</span>፣ <span class='ን ይይዛል። font-bold text-brand-text-600'>{semesters} ሴሚስተር፣</span> እያንዳንዳቸው በ<span class='font-bold text-brand-text-600'>{quartersPerSemester}</span> ሩብ ተከፍለዋል፣  በአጠቃላይ  <span class='font-bold text-brand-text-600' >{totalQuarters} ሩብ አመት አለ።</span > </p>",
     },
     registerSubjectForm: {
         formElementTitle: "አዲስ የትምህርት አይነት",

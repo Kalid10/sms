@@ -9,7 +9,7 @@
                 <Heading>
                     {{ $t("assignSubjects.assignSubjects") }}
                 </Heading>
-                <h3 class="text-sm text-brand-text-300">
+                <h3 class="text-brand-text-600 text-sm">
                     {{ $t("assignSubjects.assignClassHint") }}
                 </h3>
             </div>
@@ -64,7 +64,7 @@
                                                     selectedSubject?.id ===
                                                     subject.id
                                                         ? 'text-white'
-                                                        : 'text-brand-text-300',
+                                                        : 'text-brand-text-600',
                                                 ]"
                                                 class="whitespace-nowrap text-sm uppercase"
                                             >
@@ -91,7 +91,7 @@
                                                 selectedSubject?.id ===
                                                 subject.id
                                                     ? 'text-white'
-                                                    : 'text-brand-text-300',
+                                                    : 'text-brand-text-600',
                                             ]"
                                             class="cursor-pointer whitespace-nowrap rounded-xl py-0.5 pr-1.5 text-xs font-semibold leading-none"
                                         >
@@ -108,9 +108,9 @@
                                         :class="[
                                             selectedSubject?.id === subject.id
                                                 ? 'text-white'
-                                                : 'text-brand-text-300',
+                                                : 'text-brand-text-600',
                                         ]"
-                                        class="text-sm text-brand-text-300"
+                                        class="text-brand-text-600 text-sm"
                                     >
                                         {{ $t("assignSubjects.levels") }}
                                     </span>
@@ -122,9 +122,9 @@
                                         :class="[
                                             selectedSubject?.id === subject.id
                                                 ? 'text-white'
-                                                : 'text-brand-text-300',
+                                                : 'text-brand-text-600',
                                         ]"
-                                        class="text-sm text-brand-text-300"
+                                        class="text-brand-text-600 text-sm"
                                     >
                                         {{ $t("assignSubjects.classes") }}
                                     </span>
@@ -143,7 +143,7 @@
                         >{{ selectedSubject.full_name }}
                         {{ $t("assignSubjects.classes") }}
                     </Heading>
-                    <h3 class="text-sm text-brand-text-300">
+                    <h3 class="text-brand-text-600 text-sm">
                         {{ $t("assignSubjects.selectClasses") }}
                         <span class="font-semibold"
                             >&nbsp;{{ selectedSubject.full_name }}</span
@@ -160,7 +160,7 @@
                             <h3 class="font-semibold">
                                 {{ $t("assignSubjects.selectSubject") }}
                             </h3>
-                            <h3 class="text-center text-sm text-brand-text-300">
+                            <h3 class="text-brand-text-600 text-center text-sm">
                                 {{ $t("assignSubjects.chooseSubject") }}
                                 <span>
                                     <!--                                    on the left-->
@@ -176,26 +176,26 @@
                         </div>
 
                         <div class="flex flex-col items-center gap-2">
-                            <h3 class="text-sm text-brand-text-300">
+                            <h3 class="text-brand-text-600 text-sm">
                                 {{ $t("assignSubjects.pickOne") }}
 
                                 <!--                                ...or pick one of these subjects to start-->
                             </h3>
                             <div class="flex gap-2">
                                 <button
-                                    class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-brand-text-300"
+                                    class="text-brand-text-600 rounded-md border border-gray-500 p-2 text-sm font-semibold"
                                     @click="selectSubjectByName('English')"
                                 >
                                     {{ $t("assignSubjects.english") }}
                                 </button>
                                 <button
-                                    class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-brand-text-300"
+                                    class="text-brand-text-600 rounded-md border border-gray-500 p-2 text-sm font-semibold"
                                     @click="selectSubjectByName('Mathematics')"
                                 >
                                     {{ $t("assignSubjects.mathematics") }}
                                 </button>
                                 <button
-                                    class="rounded-md border border-gray-500 p-2 text-sm font-semibold text-brand-text-300"
+                                    class="text-brand-text-600 rounded-md border border-gray-500 p-2 text-sm font-semibold"
                                     @click="selectSubjectByName('አማርኛ')"
                                 >
                                     {{ $t("assignSubjects.amharic") }}
@@ -212,7 +212,7 @@
                             <span class="text-sm font-semibold">{{
                                 selectedCount(selectedSubject).levels
                             }}</span>
-                            <span class="text-sm text-brand-text-300">
+                            <span class="text-brand-text-600 text-sm">
                                 {{ $t("assignSubjects.selectedLevels") }}
                             </span>
                         </div>
@@ -221,7 +221,7 @@
                             <span class="text-sm font-semibold">{{
                                 selectedCount(selectedSubject).batches
                             }}</span>
-                            <span class="text-sm text-brand-text-300">
+                            <span class="text-brand-text-600 text-sm">
                                 / {{ batchToSelectedSubject.length }}
                                 {{ $t("assignSubjects.classesSelected") }}
                             </span>
@@ -299,7 +299,7 @@
                                         :class="
                                             isGroupSelected('All')
                                                 ? 'text-negative-50'
-                                                : 'text-brand-text-300'
+                                                : 'text-brand-text-600'
                                         "
                                         class="text-sm font-semibold"
                                     >
@@ -546,7 +546,7 @@
                                                             class="h-3 w-3 stroke-2"
                                                         />
                                                         <span
-                                                            class="text-xs font-semibold text-brand-text-300"
+                                                            class="text-brand-text-600 text-xs font-semibold"
                                                         >
                                                             {{
                                                                 $t(
@@ -615,9 +615,9 @@
                                 v-if="!!selectedSubject"
                                 class="flex items-center justify-between gap-3"
                             >
-                                <TertiaryButton @click="saveBatches">
+                                <PrimaryButton @click="saveBatches">
                                     {{ $t("assignSubjects.save") }}
-                                </TertiaryButton>
+                                </PrimaryButton>
                                 <PrimaryButton @click="submitForm">
                                     {{ $t("assignSubjects.finish") }}
                                 </PrimaryButton>
@@ -648,7 +648,6 @@ import Checkbox from "@/Components/Checkbox.vue";
 import Heading from "@/Components/Heading.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TertiaryButton from "@/Components/TertiaryButton.vue";
 
 const emits = defineEmits(["success"]);
 
