@@ -1,6 +1,6 @@
 <template>
     <div
-        class="scrollbar-hide flex h-full w-full flex-col space-y-5 overflow-y-auto border-r border-zinc-100 px-5 py-2"
+        class="scrollbar-hide flex h-full w-full flex-col space-y-5 overflow-y-auto border-r border-zinc-100 p-2"
     >
         <Loading
             v-if="showLoading"
@@ -8,8 +8,8 @@
             class="absolute z-50 flex h-full w-4/12 items-center justify-center"
         />
 
-        <div class="flex justify-between">
-            <div>
+        <div class="flex justify-evenly">
+            <div class="w-7/12">
                 <div class="mb-1 text-2xl font-bold">
                     {{ $t("lessonPlanCopilot.rigelCopilot") }}
                 </div>
@@ -18,21 +18,14 @@
                 </div>
             </div>
 
-            <XMarkIcon
-                class="w-5 cursor-pointer text-black hover:scale-125 hover:text-red-600"
-                @click="emit('close')"
+            <AIUsageProgress
+                class="w-4/12 rounded-lg bg-brand-150 px-5 py-3 shadow-sm"
+                :update-usage="updateAIUsage"
+                page="/teacher/lesson-plan"
             />
         </div>
 
-        <div
-            v-if="
-                !generateNoteSuggestions &&
-                !noteSuggestions &&
-                !showLoading &&
-                !openAILimitReached
-            "
-            class="min-h-screen"
-        >
+        <div v-if="!openAILimitReached" class="min-h-screen">
             <TabElement
                 v-model:active="activeTab"
                 class="min-h-screen"
@@ -42,7 +35,9 @@
                     <Chat
                         class="!h-[40rem] !w-full"
                         :show-getting-started="false"
+                        page="/teacher/lesson-plan"
                         @limit-reached="setLimitInfo"
+                        @update-ai-usage="setAIUsageUpdateValue"
                     />
                 </template>
 
@@ -53,53 +48,70 @@
                         @limit-reached="setLimitInfo"
                     />
                 </template>
+                <template #[notesTab]>
+                    <div
+                        v-if="noteSuggestions"
+                        ref="selectedTextPopUp"
+                        class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 text-sm text-black shadow-sm"
+                    >
+                        <div class="text-center text-xl font-semibold">
+                            {{ $t("lessonPlanCopilot.lessonPlanExplained") }}
+                        </div>
+                        <div
+                            class="px-4"
+                            @mouseup="
+                                showPopup = true;
+                                selectedText = getSelectedText();
+                                setPosition($event);
+                            "
+                        >
+                            {{ noteSuggestions }}
+                            <span v-if="isNoteUpdating" class="animate-blink"
+                                >|</span
+                            >
+
+                            <div class="flex w-full justify-end px-2 pt-2">
+                                <ClipboardDocumentIcon
+                                    class="w-4 cursor-pointer text-brand-text-250 hover:text-black"
+                                    @click="
+                                        copyToClipboardAndShowToast(
+                                            noteSuggestions,
+                                            $event
+                                        )
+                                    "
+                                />
+                                <Toast
+                                    :show-toast="showCopyToast"
+                                    class="!bg-purple-500 !text-white"
+                                    :event="toastEvent"
+                                    @copied="showCopyToast = false"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        v-else
+                        class="flex h-96 w-full flex-col items-center justify-center space-y-2 px-3"
+                    >
+                        <ExclamationTriangleIcon class="w-7 text-red-600" />
+                        <div class="text-center text-2xl font-semibold">
+                            No AI notes have been created for this lesson plan
+                            yet. To generate notes, click the AI icon next to
+                            the title input on the right side.
+                        </div>
+                    </div>
+                </template>
             </TabElement>
         </div>
 
         <div
-            v-if="openAILimitReached"
+            v-else
             class="flex h-5/6 w-full flex-col items-center justify-center space-y-2 px-3"
         >
             <ExclamationTriangleIcon class="w-7 text-red-600" />
             <div class="text-center text-2xl font-semibold">
                 You have reached you AI daily limit. Please get in touch with
                 the administrator to increase limit.
-            </div>
-        </div>
-
-        <div
-            v-if="noteSuggestions"
-            ref="selectedTextPopUp"
-            class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 text-sm text-black shadow-sm"
-        >
-            <div class="text-center text-xl font-semibold">
-                {{ $t("lessonPlanCopilot.lessonPlanExplained") }}
-            </div>
-            <div
-                class="px-4"
-                @mouseup="
-                    showPopup = true;
-                    selectedText = getSelectedText();
-                    setPosition($event);
-                "
-            >
-                {{ noteSuggestions }}
-                <span v-if="isNoteUpdating" class="animate-blink">|</span>
-
-                <div class="flex w-full justify-end px-2 pt-2">
-                    <ClipboardDocumentIcon
-                        class="w-4 cursor-pointer text-brand-text-250 hover:text-black"
-                        @click="
-                            copyToClipboardAndShowToast(noteSuggestions, $event)
-                        "
-                    />
-                    <Toast
-                        :show-toast="showCopyToast"
-                        class="!bg-purple-500 !text-white"
-                        :event="toastEvent"
-                        @copied="showCopyToast = false"
-                    />
-                </div>
             </div>
         </div>
 
@@ -176,7 +188,6 @@ import {
     ClipboardDocumentIcon,
     ExclamationTriangleIcon,
     MagnifyingGlassIcon,
-    XMarkIcon,
 } from "@heroicons/vue/20/solid";
 import Loading from "@/Components/Loading.vue";
 import { computed, inject, ref, watch } from "vue";
@@ -188,6 +199,7 @@ import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
 import Toast from "@/Components/Toast.vue";
 import TabElement from "@/Components/TabElement.vue";
 import { useI18n } from "vue-i18n";
+import AIUsageProgress from "@/Views/Teacher/AIUsageProgress.vue";
 
 const emit = defineEmits(["selectedText", "finish", "close"]);
 const props = defineProps({
@@ -218,82 +230,7 @@ const noteSuggestions = ref("");
 const isNoteUpdating = ref(false);
 const questionSuggestions = computed(() => usePage().props.questions);
 const showNotification = inject("showNotification");
-
-const updateNoteSuggestion = () => {
-    if (showLoading.value) {
-        return;
-    }
-    showLoading.value = true;
-
-    // Remove previous suggestions
-    if (noteSuggestions.value) {
-        noteSuggestions.value = "";
-    }
-    if (props.generateNoteSuggestions) {
-        let es = new EventSource(
-            "/teacher/lesson-plan/ai/note?prompt=" +
-                props.topic +
-                "&batch_subject_id=" +
-                props.batchSubjectId
-        );
-
-        es.addEventListener("limit_reached", (event) => {
-            showLoading.value = false;
-            showNotification({
-                type: "error",
-                message: "You Have Reached Your Daily AI Limit", // "Limit reached"
-                position: "top-center",
-            });
-            es.close();
-        });
-
-        es.addEventListener(
-            "update",
-            (event) => {
-                if (event.data) {
-                    isNoteUpdating.value = true;
-                    showLoading.value = false;
-                    if (event.data === "<END_STREAMING_SSE>") {
-                        showLoading.value = false;
-                        isNoteUpdating.value = false;
-                        es.close();
-                    } else noteSuggestions.value += event.data;
-                }
-            },
-            false
-        );
-
-        es.addEventListener(
-            "error",
-            (event) => {
-                showLoading.value = false;
-                showNotification({
-                    type: "error",
-                    message: "Something went wrong.Please try again!",
-                    position: "top-center",
-                });
-            },
-            false
-        );
-    }
-    if (props.generateQuestionSuggestions) {
-        router.visit("/teacher/lesson-plan?prompt=" + props.topic, {
-            only: ["questions"],
-            preserveState: true,
-            onFinish: () => {
-                showLoading.value = false;
-            },
-        });
-    }
-    emit("finish");
-};
-watch(
-    () => [props.generateQuestionSuggestions, props.generateNoteSuggestions],
-    () => {
-        if (props.generateNoteSuggestions || props.generateQuestionSuggestions)
-            updateNoteSuggestion();
-    }
-);
+const updateAIUsage = ref(false);
 
 const showPopup = ref(false);
 const selectedText = ref("");
@@ -330,7 +267,8 @@ const copyToClipboardAndShowToast = (value, event) => {
 const { t } = useI18n();
 const chatTab = toUnderscore(t("common.chat"));
 const questionsTab = toUnderscore(t("common.questions"));
-const tabs = [chatTab, questionsTab];
+const notesTab = toUnderscore(t("common.aiNotes"));
+const tabs = [chatTab, questionsTab, notesTab];
 
 const activeTabFromQuery = computed(() => usePage().props.active_tab);
 const activeTab = ref(activeTabFromQuery.value ?? chatTab);
@@ -341,6 +279,97 @@ const openAIDailyUsage = ref();
 const setLimitInfo = (usage) => {
     openAILimitReached.value = true;
     openAIDailyUsage.value = usage;
+};
+
+const updateNoteSuggestion = () => {
+    if (showLoading.value) {
+        return;
+    }
+    showLoading.value = true;
+    updateAIUsage.value = false;
+
+    // Remove previous suggestions
+    if (noteSuggestions.value) {
+        noteSuggestions.value = "";
+    }
+
+    if (props.generateNoteSuggestions) {
+        activeTab.value = notesTab;
+
+        let es = new EventSource(
+            "/teacher/lesson-plan/ai/note?prompt=" +
+                props.topic +
+                "&batch_subject_id=" +
+                props.batchSubjectId
+        );
+
+        es.addEventListener("limit_reached", (event) => {
+            showLoading.value = false;
+            showNotification({
+                type: "error",
+                message: "You Have Reached Your Daily AI Limit", // "Limit reached"
+                position: "top-center",
+            });
+            es.close();
+
+            updateAIUsage.value = true;
+            openAILimitReached.value = true;
+        });
+
+        es.addEventListener(
+            "update",
+            (event) => {
+                if (event.data) {
+                    isNoteUpdating.value = true;
+                    showLoading.value = false;
+                    if (event.data === "<END_STREAMING_SSE>") {
+                        showLoading.value = false;
+                        isNoteUpdating.value = false;
+                        es.close();
+                    } else noteSuggestions.value += event.data;
+                }
+                updateAIUsage.value = true;
+            },
+            false
+        );
+
+        es.addEventListener(
+            "error",
+            (event) => {
+                showLoading.value = false;
+                showNotification({
+                    type: "error",
+                    message: "Something went wrong.Please try again!",
+                    position: "top-center",
+                });
+                updateAIUsage.value = true;
+            },
+            false
+        );
+    }
+    if (props.generateQuestionSuggestions) {
+        router.visit("/teacher/lesson-plan?prompt=" + props.topic, {
+            only: ["questions"],
+            preserveState: true,
+            onFinish: () => {
+                showLoading.value = false;
+                updateAIUsage.value = true;
+            },
+        });
+    }
+    emit("finish");
+};
+
+watch(
+    () => [props.generateQuestionSuggestions, props.generateNoteSuggestions],
+    () => {
+        if (props.generateNoteSuggestions || props.generateQuestionSuggestions)
+            updateNoteSuggestion();
+    }
+);
+
+const setAIUsageUpdateValue = (value) => {
+    updateAIUsage.value = value;
 };
 </script>
 <style scoped></style>

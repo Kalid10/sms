@@ -117,8 +117,9 @@ const en = {
         goToAnnouncements: "Go To Announcements",
         viewAllAnnouncements: "View All Announcements",
         publishAnnouncement: "Publish Announcement",
-        couldNotFound:"Could not find any announcement related to {searchKey}",
-        noNewAnnouncement:"Currently, there are no new announcements. We encourage you to revisit this space frequently for updates."
+        couldNotFound: "Could not find any announcement related to {searchKey}",
+        noNewAnnouncement:
+            "Currently, there are no new announcements. We encourage you to revisit this space frequently for updates.",
     },
     announcementsItem: {
         postTargets: "Post Targets",
@@ -387,12 +388,12 @@ const en = {
         ],
     },
     common: {
-        overseeHomeroomClasses:"Oversee your homeroom classes",
-        addViewUpdateLessonPlans:"Add, view and update lesson plans",
-        viewStudents:"View your students",
-        addViewUpdateAssessments:"Add, view and update assessments",
-        schoolSchedules:"School Schedules",
-        viewAnnouncements:"View announcements",
+        overseeHomeroomClasses: "Oversee your homeroom classes",
+        addViewUpdateLessonPlans: "Add, view and update lesson plans",
+        viewStudents: "View your students",
+        addViewUpdateAssessments: "Add, view and update assessments",
+        schoolSchedules: "School Schedules",
+        viewAnnouncements: "View announcements",
         or: "or",
         for: "for",
         add: "Add",
@@ -482,18 +483,24 @@ const en = {
         en: "EN",
         amharic: "Amharic",
         am: "AM",
+        aiNotes: "AINotes",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
         chat: "Chat",
-        dailyLimit:"You've hit your daily limit. Please get in touch with the administrator to increase limit."
+        dailyLimit:
+            "You've hit your daily limit. Please get in touch with the administrator to increase limit.",
     },
-    questionEmptyView:{
-        welcometext:"Welcome to Rigel Question Generator",
-        hintOne:"A feature specifically designed to simplify and enhance your question creation process. Here, we've streamlined the task of crafting effective, relevant, and challenging educational questions to an art of few clicks.",
-        hintTwo:"Whether you're preparing classwork, homework, or even tests, our Question Generator has got you covered. Generate questions directly from your lesson plans, ensuring that your assessments are perfectly aligned with your lessons, while also reducing preparation time significantly. This feature serves as your ultimate educational companion, freeing up your time to focus on what matters the most: teaching and inspiring your students.",
-        hintThree:"But we didn't stop there. For those seeking a more personalized touch, you can also manually input your questions. This gives you the opportunity to customize every aspect of your question-creation process, thereby creating a unique and engaging learning experience for each student.",
-        hintFour:"Our Question Generator is more than just a tool. It's a stepping stone to enhancing the learning journey of your students. So why wait? Step into a world of seamless question creation today, and elevate your teaching experience to greater heights."
+    questionEmptyView: {
+        welcometext: "Welcome to Rigel Question Generator",
+        hintOne:
+            "A feature specifically designed to simplify and enhance your question creation process. Here, we've streamlined the task of crafting effective, relevant, and challenging educational questions to an art of few clicks.",
+        hintTwo:
+            "Whether you're preparing classwork, homework, or even tests, our Question Generator has got you covered. Generate questions directly from your lesson plans, ensuring that your assessments are perfectly aligned with your lessons, while also reducing preparation time significantly. This feature serves as your ultimate educational companion, freeing up your time to focus on what matters the most: teaching and inspiring your students.",
+        hintThree:
+            "But we didn't stop there. For those seeking a more personalized touch, you can also manually input your questions. This gives you the opportunity to customize every aspect of your question-creation process, thereby creating a unique and engaging learning experience for each student.",
+        hintFour:
+            "Our Question Generator is more than just a tool. It's a stepping stone to enhancing the learning journey of your students. So why wait? Step into a world of seamless question creation today, and elevate your teaching experience to greater heights.",
     },
     createAdmin: {
         headingOne: "Register an Admin",
@@ -861,7 +868,7 @@ const en = {
     lessonPlans: {
         viewAllLessonPlans: "View All Lesson Plans",
         noLessonPlan: "No Lesson Plan Found!",
-        yourLessonPlans:"Your Lesson Plans"
+        yourLessonPlans: "Your Lesson Plans",
     },
     lessonPlansIndex: {
         myLessonPlans: "My Lesson Plans",
@@ -1038,10 +1045,10 @@ const en = {
             "Opt for manual input if you prefer to generate questions based on your unique inputs and parameters. This option allows for greater control and specificity.",
         lessonPlans: "Lesson Plans",
         lessonPlanDescription:
-            "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we'll load your plans, and you can choose one for us to craft tailored questions.",
+            "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we will load your plans, and you can choose one for us to craft tailored questions.",
         question: "Question",
         enterQuestion: "Enter Question",
-        dailyAIUsageProgress: "Daily AI Usage Progress",
+        dailyAIUsageProgress: "Daily AI Usage ",
     },
     readMoreLess: {
         readMore: "Read more...",
@@ -1630,7 +1637,7 @@ const en = {
         updateProfile: "Update Profile",
         updatePassword: "Update Password",
         changeLanguage: "Change Language",
-        uploadProfilePicture:"Upload Profile Picture"
+        uploadProfilePicture: "Upload Profile Picture",
     },
 
     userStatistics: {
@@ -1884,10 +1891,10 @@ const en = {
         expireDate: "Expire date",
         expiresOn: "Expires On",
     },
-    imageUpload:{
-        imageSizeLimit:"Image size must be less than 3MB",
-     chooseImage:"Choose Image To Upload"
-    }
+    imageUpload: {
+        imageSizeLimit: "Image size must be less than 3MB",
+        chooseImage: "Choose Image To Upload",
+    },
 };
 
 export default en;

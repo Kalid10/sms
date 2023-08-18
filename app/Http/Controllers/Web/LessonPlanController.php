@@ -54,6 +54,8 @@ class LessonPlanController extends Controller
 
         return Inertia::render($page, array_merge($lessonPlanData, [
             'assessment_types' => $assessmentTypes,
+            'openai_daily_usage' => auth()->user()->openai_daily_usage,
+            'openai_daily_usage_limit' => env('DAILY_OPEN_AI_USER_USAGE_LIMIT'),
         ]));
     }
 
