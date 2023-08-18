@@ -3,7 +3,7 @@
         :selectable="false"
         :data="filteredStaffAbsentees"
         :columns="config"
-        class="!rounded-lg shadow-sm lg:p-5"
+        class="min-h-screen !rounded-lg shadow-sm lg:p-5"
     >
         <template #filter>
             <div class="flex flex-col justify-between gap-2 lg:flex-row">
@@ -22,7 +22,7 @@
 
                 <DatePicker
                     v-model="selectedDate"
-                    class="h-fit w-full rounded-2xl !text-sm lg:w-2/12"
+                    class="h-full w-full rounded-2xl !text-sm lg:w-2/12"
                 />
                 <div class="flex justify-end">
                     <PrimaryButton

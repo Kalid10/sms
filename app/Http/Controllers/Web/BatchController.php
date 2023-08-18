@@ -8,6 +8,7 @@ use App\Models\Absentee;
 use App\Models\Assessment;
 use App\Models\Batch;
 use App\Models\BatchSchedule;
+use App\Models\BatchSession;
 use App\Models\Flag;
 use App\Models\Level;
 use App\Models\Quarter;
@@ -222,6 +223,15 @@ class BatchController extends Controller
 
         $schoolPeriods = SchoolPeriod::where('level_category_id', $batch->level->levelCategory->id)->get();
 
+        // Next class session of a batch
+        $nextClassSession = BatchSession::whereHas('batchSchedule', function ($query) use ($batch) {
+            $query->where('batch_id', $batch->id);
+        })->whereDate('date', '>', Carbon::now())
+            ->with('schoolPeriod', 'teacher.user')
+            ->first();
+
+        Log::info($nextClassSession);
+
         return Inertia::render('Admin/Batches/Index', [
             'batch' => $batch,
             'active_session' => $batch->activeSession,
@@ -235,6 +245,7 @@ class BatchController extends Controller
             'periods' => Level::find($batch->level->id)->levelCategory->schoolPeriods,
             'absentees' => $absentees,
             'school_periods' => $schoolPeriods,
+            'next_class_session' => $nextClassSession,
         ]);
     }
 }

@@ -15,15 +15,16 @@
                     <div
                         class="flex w-full items-center justify-between space-x-5 pb-4"
                     >
-                        <!--    TODO: Implement Search-->
                         <TextInput
+                            v-model="searchKey"
                             :placeholder="$t('levelIndex.searchGrades')"
                             class="w-6/12"
                         />
                         <SecondaryButton
                             :title="$t('levelIndex.goToLevelCategories')"
                             value=" Go To Level Categories"
-                            class="!rounded-2xl bg-brand-400 text-white"
+                            class="!rounded-lg bg-brand-550 text-white"
+                            @click="levelCategoriesUrl()"
                         />
                     </div>
                 </div>
@@ -64,14 +65,15 @@
 
 <script setup>
 import TableElement from "@/Components/TableElement.vue";
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link, router, usePage } from "@inertiajs/vue3";
 import { parseLevel } from "@/utils.js";
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import moment from "moment/moment";
 import TextInput from "@/Components/TextInput.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { useI18n } from "vue-i18n";
+import { debounce } from "lodash";
 
 const { t } = useI18n();
 const levels = computed(() => {
@@ -113,6 +115,27 @@ const categoryColors = {
     ElementarySchool: "bg-orange-500",
     HighSchool: "bg-green-500",
 };
+
+const searchKey = ref("");
+
+const search = debounce(() => {
+    router.get(
+        "/admin/levels",
+        { search: searchKey.value },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
+}, 300);
+
+watch([searchKey], () => {
+    search();
+});
+
+function levelCategoriesUrl() {
+    router.get("/levels/level-categories");
+}
 </script>
 
 <style scoped></style>
