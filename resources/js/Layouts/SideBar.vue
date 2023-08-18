@@ -1,7 +1,7 @@
 <template>
     <div
         ref="parentDiv"
-        class="z-50 max-h-screen bg-brand-550 text-white"
+        class="z-50 max-h-screen overflow-auto bg-brand-550 text-white"
         :class="[
             isOpen ? 'min-w-[12rem] lg:w-60 lg:min-w-0' : 'min-w-8 lg:w-16',
             'transition-all duration-300 ease-in-out ',
@@ -98,3 +98,16 @@ onClickOutside(parentDiv, () => {
     sidebarStore.close();
 });
 </script>
+
+<style scoped>
+/* Customize scrollbar styles */
+::-webkit-scrollbar {
+    width: 1px;
+    height: 3px;
+    background: white;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #a0aec0;
+}
+</style>
