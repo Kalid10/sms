@@ -35,7 +35,7 @@
 import Title from "@/Views/Teacher/Views/Title.vue";
 import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
 import TabElement from "@/Components/TabElement.vue";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparation.vue";
 import { ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
@@ -48,8 +48,22 @@ const chatTab = toUnderscore(t("common.chat"));
 const questionsTab = toUnderscore(t("common.questions"));
 const tabs = [chatTab, questionsTab];
 
+const getActiveTabValue = (value) => {
+    if (value === "chat") {
+        return chatTab;
+    } else if (value === "questions") {
+        return questionsTab;
+    }
+};
+
 const activeTabFromQuery = computed(() => usePage().props.active_tab);
-const activeTab = ref(activeTabFromQuery.value ?? chatTab);
+
+const activeTab = ref(getActiveTabValue(activeTabFromQuery.value));
+
+// Watch for changes to activeTabFromQuery and update activeTab accordingly
+watch(activeTabFromQuery, (newValue) => {
+    activeTab.value = getActiveTabValue(newValue);
+});
 
 const openAILimitReached = ref(false);
 const openAIDailyUsage = ref();
