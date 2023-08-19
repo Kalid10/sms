@@ -65,11 +65,7 @@
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
 import { computed, provide, ref } from "vue";
-import {
-    ChatBubbleBottomCenterIcon,
-    Cog6ToothIcon,
-    UserIcon,
-} from "@heroicons/vue/20/solid/index.js";
+import { Cog6ToothIcon, UserIcon } from "@heroicons/vue/20/solid/index.js";
 import { router, usePage } from "@inertiajs/vue3";
 import {
     AcademicCapIcon,
@@ -136,14 +132,6 @@ const sidebarItems = computed(() => [
         icon: HomeIcon,
         route: "/admin",
         active: isRouteActive(/^\/admin\/\?$/) || isRouteActive(/^\/admin\/?$/),
-    },
-    {
-        name: t("common.chat"),
-        icon: ChatBubbleBottomCenterIcon,
-        route: "/admin/chat",
-        active:
-            isRouteActive(/^\/admin\/chat\/\d+\/?$/) ||
-            isRouteActive(/^\/admin\/chat\/?$/),
     },
     {
         name: t("common.teachers"),

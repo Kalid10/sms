@@ -111,7 +111,6 @@ import {
     ArrowLeftOnRectangleIcon,
     CalendarDaysIcon,
     CalendarIcon,
-    ChatBubbleBottomCenterIcon,
     Cog6ToothIcon,
     MegaphoneIcon,
     NewspaperIcon,
@@ -190,14 +189,6 @@ const sidebarItems = computed(() => [
         active:
             isRouteActive(/^\/teacher\/\d+\/?$/) ||
             isRouteActive(/^\/teacher\/?$/),
-    },
-    {
-        name: t("common.chat"),
-        icon: ChatBubbleBottomCenterIcon,
-        route: "/teacher/chat",
-        active:
-            isRouteActive(/^\/teacher\/chat\/\d+\/?$/) ||
-            isRouteActive(/^\/teacher\/chat\/?$/),
     },
     {
         name: t("teacherLayout.myClasses"),
