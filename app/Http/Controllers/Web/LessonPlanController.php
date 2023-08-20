@@ -106,6 +106,7 @@ class LessonPlanController extends Controller
             'content' => 'required|string',
             'title' => 'required|string',
             'lesson_plan_id' => 'nullable|exists:lesson_plans,id',
+            'batch_session_id' => 'nullable|exists:batch_sessions,id',
         ]);
 
         AINote::create([
@@ -114,6 +115,7 @@ class LessonPlanController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'lesson_plan_id' => $request->input('lesson_plan_id'),
+            'batch_session_id' => $request->input('batch_session_id'),
         ]);
 
         return redirect()->back()->with('success', 'Note saved successfully');

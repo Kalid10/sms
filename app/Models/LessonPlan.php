@@ -29,5 +29,10 @@ class LessonPlan extends Model
         return $this->hasMany(BatchSession::class);
     }
 
+    public function aiNotes(): HasMany
+    {
+        return $this->hasMany(AINote::class, 'lesson_plan_id', 'id');
+    }
+
     protected $casts = ['batch_session_ids' => 'array'];
 }

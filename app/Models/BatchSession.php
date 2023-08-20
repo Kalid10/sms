@@ -72,6 +72,11 @@ class BatchSession extends Model
         return $this->belongsTo(LessonPlan::class);
     }
 
+    public function aiNotes(): HasMany
+    {
+        return $this->hasMany(AINote::class);
+    }
+
     protected $casts = [
         'date' => 'date',
     ];

@@ -24,4 +24,9 @@ class AINote extends Model
     {
         return $this->belongsTo(LessonPlan::class);
     }
+
+    public function batchSession(): BelongsTo
+    {
+        return $this->belongsTo(BatchSession::class);
+    }
 }
