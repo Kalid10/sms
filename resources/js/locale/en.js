@@ -1644,11 +1644,13 @@ const en = {
         adminsTitle: "Admins",
         adminStatSubtitle: "Admins registered in the system",
         studentsStatTitle: "Students",
-        studentsStatSubtitle: "Students registered into the school (all-time)",
+        studentsStatSubtitle: "Students registered into the school",
         teacherStatTitle: "Teachers",
-        teacherStatSubtitle: "Teachers registered into the school (all-time)",
+        teacherStatSubtitle: "Teachers registered into the school",
         newUsersStatTitle: "New Users",
         newUserStatSubtitle: "New Users (last 30 days)",
+        guardianStatTitle: "Guardians",
+        guardianStatSubtitle: "Guardians registered into the school",
     },
 
     usersAbsentee: {

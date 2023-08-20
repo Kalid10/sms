@@ -1583,11 +1583,13 @@ const am = {
         adminsTitle: "አስተዳዳሪዎች",
         adminStatSubtitle: "በስርዓቱ ውስጥ የተመዘገቡ አስተዳዳሪዎች",
         studentsStatTitle: "ተማሪዎች",
-        studentsStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ ተማሪዎች (ሁሉም ጊዜ)",
+        studentsStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ ተማሪዎች",
         teacherStatTitle: "አስተማሪዎች",
-        teacherStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ አስተማሪዎች (ሁሉም ጊዜ)",
+        teacherStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ አስተማሪዎች",
         newUsersStatTitle: "አዳዲስ ተጠቃሚዎች",
         newUserStatSubtitle: "አዳዲስ ተጠቃሚዎች (በመጨረሻው 30 ቀናት)",
+        guardianStatTitle: "ወላጆች",
+        guardianStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ ወላጆች",
     },
 
     usersAbsentee: {

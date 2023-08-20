@@ -44,7 +44,7 @@ class BatchSession extends Model
         );
     }
 
-    // get batchSubject through batchSchedule using hasOneThrough relationship
+    // Get batchSubject through batchSchedule using hasOneThrough relationship
     public function batchSubject(): HasOneThrough
     {
         return $this->hasOneThrough(

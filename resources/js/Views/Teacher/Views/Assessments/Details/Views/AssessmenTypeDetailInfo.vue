@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-fit w-full flex-col space-y-6">
         <div
-            class="flex w-full flex-col items-center justify-center space-y-2 rounded-md border-2 border-black p-3"
+            class="flex w-full flex-col items-center justify-center space-y-2 rounded-md border-2 p-3"
         >
             <div class="flex w-full items-center justify-between">
                 <div

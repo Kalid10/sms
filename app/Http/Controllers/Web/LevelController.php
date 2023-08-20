@@ -35,14 +35,19 @@ class LevelController extends Controller
         return redirect()->back()->with('success', 'Level created successfully');
     }
 
-    public function list(): Response
+    public function list(Request $request): Response
     {
+        // Get search key
+        $searchKey = $request->input('search');
+
         $levels = Level::with([
             'levelCategory',
             'batches' => function ($query) {
                 $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
             },
-        ])->get();
+        ])->when($searchKey, function ($query, $searchKey) {
+            $query->where('name', 'LIKE', "%{$searchKey}%");
+        })->get();
 
         return Inertia::render('Admin/Levels/Index', [
             'levels' => $levels,

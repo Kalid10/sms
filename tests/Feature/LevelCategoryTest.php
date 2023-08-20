@@ -37,7 +37,7 @@ it('can create a new level category', function () {
 
 it('can list all level categories', function () {
     // Get the level categories index page
-    $response = $this->get(route('level-categories.index'));
+    $response = $this->get(route('levels.level-categories.index'));
 
     // Check no of level categories in the database
     expect(LevelCategory::count())->toBeGreaterThan(3);
