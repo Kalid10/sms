@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\LessonPlans\UpdateOrCreateRequest;
+use App\Models\AINote;
 use App\Models\AssessmentType;
 use App\Models\BatchSession;
 use App\Models\BatchSubject;
@@ -87,7 +88,7 @@ class LessonPlanController extends Controller
         return redirect()->back()->with('success', 'Lesson plan deleted successfully');
     }
 
-    public function noteSuggestions(Request $request, OpenAIService $openAIService): StreamedResponse
+    public function generateNoteSuggestions(Request $request, OpenAIService $openAIService): StreamedResponse
     {
         $prompt = $request->input('prompt');
         $batchSubject = BatchSubject::find($request->input('batch_subject_id'));
@@ -97,5 +98,24 @@ class LessonPlanController extends Controller
         $explanationPrompt = "For grade '{$grade} {$subject}' students, explain '{$prompt}', in 3-5 paragraphs, focus on key concepts and objectives, ensuring alignment with the grade-level standards";
 
         return $openAIService->createCompletionStream($explanationPrompt);
+    }
+
+    public function saveNoteSuggestion(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'content' => 'required|string',
+            'title' => 'required|string',
+            'lesson_plan_id' => 'nullable|exists:lesson_plans,id',
+        ]);
+
+        AINote::create([
+            'model' => 'gpt-4',
+            'user_id' => auth()->user()->id,
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'lesson_plan_id' => $request->input('lesson_plan_id'),
+        ]);
+
+        return redirect()->back()->with('success', 'Note saved successfully');
     }
 }

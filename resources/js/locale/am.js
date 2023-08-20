@@ -468,7 +468,7 @@ const am = {
         en: "እንግ",
         amharic: "አማርኛ",
         am: "አማ",
-        aiNotes: "AI-ማስታዎች",
+        notes: "ማስታዎች",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",

@@ -25,7 +25,7 @@
             />
         </div>
 
-        <div v-if="!openAILimitReached" class="min-h-screen">
+        <div v-if="!openAILimitReached" class="min-h-screen px-5">
             <TabElement
                 v-model:active="activeTab"
                 class="min-h-screen"
@@ -105,7 +105,7 @@
         </div>
 
         <div
-            v-else
+            v-else-if="!showLoading"
             class="flex h-5/6 w-full flex-col items-center justify-center space-y-2 px-3"
         >
             <ExclamationTriangleIcon class="w-7 text-red-600" />
@@ -267,7 +267,7 @@ const copyToClipboardAndShowToast = (value, event) => {
 const { t } = useI18n();
 const chatTab = toUnderscore(t("common.chat"));
 const questionsTab = toUnderscore(t("common.questions"));
-const notesTab = toUnderscore(t("common.aiNotes"));
+const notesTab = toUnderscore(t("common.notes"));
 const tabs = [chatTab, questionsTab, notesTab];
 
 const activeTabFromQuery = computed(() => usePage().props.active_tab);
@@ -297,7 +297,7 @@ const updateNoteSuggestion = () => {
         activeTab.value = notesTab;
 
         let es = new EventSource(
-            "/teacher/lesson-plan/ai/note?prompt=" +
+            "/teacher/lesson-plan/ai/generate-note?prompt=" +
                 props.topic +
                 "&batch_subject_id=" +
                 props.batchSubjectId
@@ -326,6 +326,7 @@ const updateNoteSuggestion = () => {
                         showLoading.value = false;
                         isNoteUpdating.value = false;
                         es.close();
+                        saveNoteSuggestion();
                     } else noteSuggestions.value += event.data;
                 }
                 updateAIUsage.value = true;
@@ -370,6 +371,20 @@ watch(
 
 const setAIUsageUpdateValue = (value) => {
     updateAIUsage.value = value;
+};
+
+const saveNoteSuggestion = () => {
+    router.post(
+        "/teacher/lesson-plan/ai/save-note",
+        {
+            content: noteSuggestions.value,
+            title: props.topic,
+            lesson_plan_id: props.lessonPlanId,
+        },
+        {
+            preserveState: true,
+        }
+    );
 };
 </script>
 <style scoped></style>

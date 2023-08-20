@@ -483,7 +483,7 @@ const en = {
         en: "EN",
         amharic: "Amharic",
         am: "AM",
-        aiNotes: "AINotes",
+        notes: "Notes",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
