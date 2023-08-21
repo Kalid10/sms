@@ -2,11 +2,11 @@
     <!-- Add/Update Modal -->
     <Modal v-model:view="isModalOpen">
         <FormElement :title="modalTitle" @submit="submitForm">
-            <div class="flex gap-3">
+            <div class="flex w-full gap-3">
                 <TextInput
                     v-model="form.name"
                     :error="form.errors.name"
-                    class="w-full"
+                    class="w-8/12"
                     :label="$t('common.name')"
                     :placeholder="$t('assessmentIndex.name')"
                     required
@@ -17,6 +17,9 @@
                     type="number"
                     :label="$t('assessmentIndex.percentage')"
                     :placeholder="$t('assessmentIndex.percentage')"
+                    :min="0"
+                    :max="100"
+                    class="w-4/12"
                     required
                 />
             </div>
@@ -193,7 +196,7 @@
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
 import Toggle from "@/Components/Toggle.vue";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import {
     PencilSquareIcon,
@@ -326,6 +329,14 @@ const form = useForm({
     min_assessments: "",
     max_assessments: "",
 });
+
+watch(
+    () => form.percentage,
+    (value) => {
+        if (value < 0) form.percentage = "0";
+        if (value > 100) form.percentage = "100";
+    }
+);
 
 function submit() {
     if (form.customizable === false) {
