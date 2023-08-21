@@ -95,8 +95,11 @@
                                 />
                             </div>
                         </div>
-                        <div class="flex w-full px-4 text-sm font-medium">
-                            s{{ noteSuggestion.date }}
+                        <div
+                            v-if="!isNoteUpdating"
+                            class="flex w-full px-4 text-sm font-medium"
+                        >
+                            {{ noteSuggestion.date }}
                         </div>
                     </div>
 
