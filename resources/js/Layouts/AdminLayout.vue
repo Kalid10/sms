@@ -181,7 +181,9 @@ const sidebarItems = computed(() => [
         route: "/admin/levels",
         active:
             isRouteActive(/^\/admin\/levels\/\d+\/?$/) ||
-            isRouteActive(/^\/admin\/levels\/?$/),
+            isRouteActive(/^\/admin\/levels\/?$/) ||
+            isRouteActive(/^\/levels\/level-categories\/\d+\/?$/) ||
+            isRouteActive(/^\/levels\/level-categories\/?$/),
     },
     {
         name: t("common.subjects"),
