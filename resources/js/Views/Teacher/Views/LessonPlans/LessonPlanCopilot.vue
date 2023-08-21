@@ -2,12 +2,16 @@
     <div
         class="scrollbar-hide flex h-full w-full flex-col space-y-5 overflow-y-auto border-r border-zinc-100 p-2"
     >
-        <Loading
-            v-if="showLoading"
-            color="info"
-            class="absolute z-50 flex h-full w-4/12 items-center justify-center"
-        />
-
+        <Loading v-if="showLoading" :is-full-screen="true" type="bounce">
+            <template #description>
+                <div
+                    class="flex flex-col items-center justify-center space-y-2 rounded-lg bg-brand-350 p-5 text-brand-150 shadow-md"
+                >
+                    <SparklesIcon class="w-6 animate-bounce" />
+                    <div class="text-sm font-medium">Generating AI Note!</div>
+                </div>
+            </template>
+        </Loading>
         <div class="flex justify-evenly">
             <div class="w-7/12">
                 <div class="mb-1 text-2xl font-bold">
@@ -50,12 +54,15 @@
                 </template>
                 <template #[notesTab]>
                     <div
-                        v-if="noteSuggestions"
+                        v-if="noteSuggestion.content"
                         ref="selectedTextPopUp"
-                        class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 text-sm text-black shadow-sm"
+                        class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 py-6 text-sm text-black shadow-sm"
                     >
                         <div class="text-center text-xl font-semibold">
-                            {{ $t("lessonPlanCopilot.lessonPlanExplained") }}
+                            {{
+                                noteSuggestion.title ??
+                                $t("lessonPlanCopilot.lessonPlanExplained")
+                            }}
                         </div>
                         <div
                             class="px-4"
@@ -65,7 +72,7 @@
                                 setPosition($event);
                             "
                         >
-                            {{ noteSuggestions }}
+                            {{ noteSuggestion.content }}
                             <span v-if="isNoteUpdating" class="animate-blink"
                                 >|</span
                             >
@@ -75,7 +82,7 @@
                                     class="w-4 cursor-pointer text-brand-text-250 hover:text-black"
                                     @click="
                                         copyToClipboardAndShowToast(
-                                            noteSuggestions,
+                                            noteSuggestion.content,
                                             $event
                                         )
                                     "
@@ -88,9 +95,13 @@
                                 />
                             </div>
                         </div>
+                        <div class="flex w-full px-4 text-sm font-medium">
+                            s{{ noteSuggestion.date }}
+                        </div>
                     </div>
+
                     <div
-                        v-else
+                        v-else-if="!showLoading"
                         class="flex h-96 w-full flex-col items-center justify-center space-y-2 px-3"
                     >
                         <ExclamationTriangleIcon class="w-7 text-red-600" />
@@ -100,12 +111,47 @@
                             the title input on the right side.
                         </div>
                     </div>
+
+                    <div
+                        v-if="previousNoteSuggestions.length > 1"
+                        class="mt-4 py-4"
+                    >
+                        <div class="flex w-full justify-evenly">
+                            <div
+                                class="flex w-5/12 items-center justify-center"
+                            >
+                                <PrimaryButton
+                                    :disabled="selectedNoteIndex === 0"
+                                    class="flex items-center justify-center space-x-1 !rounded-full text-sm"
+                                    @click="selectedNoteIndex--"
+                                >
+                                    <ChevronLeftIcon class="w-4" />
+                                    <div>Previous</div>
+                                </PrimaryButton>
+                            </div>
+                            <div
+                                class="flex w-5/12 items-center justify-center"
+                            >
+                                <PrimaryButton
+                                    :disabled="
+                                        selectedNoteIndex ===
+                                        previousNoteSuggestions.length - 1
+                                    "
+                                    class="flex items-center justify-center space-x-1 !rounded-full text-sm"
+                                    @click="selectedNoteIndex++"
+                                >
+                                    <div>Next</div>
+                                    <ChevronRightIcon class="w-4" />
+                                </PrimaryButton>
+                            </div>
+                        </div>
+                    </div>
                 </template>
             </TabElement>
         </div>
 
         <div
-            v-else-if="!showLoading"
+            v-else
             class="flex h-5/6 w-full flex-col items-center justify-center space-y-2 px-3"
         >
             <ExclamationTriangleIcon class="w-7 text-red-600" />
@@ -190,7 +236,7 @@ import {
     MagnifyingGlassIcon,
 } from "@heroicons/vue/20/solid";
 import Loading from "@/Components/Loading.vue";
-import { computed, inject, ref, watch } from "vue";
+import { computed, inject, onMounted, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
 import { copyToClipboard, toUnderscore } from "@/utils";
@@ -200,6 +246,13 @@ import Toast from "@/Components/Toast.vue";
 import TabElement from "@/Components/TabElement.vue";
 import { useI18n } from "vue-i18n";
 import AIUsageProgress from "@/Views/Teacher/AIUsageProgress.vue";
+import {
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    SparklesIcon,
+} from "@heroicons/vue/24/solid";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import moment from "moment";
 
 const emit = defineEmits(["selectedText", "finish", "close"]);
 const props = defineProps({
@@ -223,14 +276,23 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    batchSession: {
+        type: Number,
+        required: true,
+    },
 });
 
 const showLoading = ref(false);
-const noteSuggestions = ref("");
+const noteSuggestion = ref({
+    title: "",
+    content: "",
+    date: moment().format("dddd, MMMM DD, YYYY"),
+});
 const isNoteUpdating = ref(false);
 const questionSuggestions = computed(() => usePage().props.questions);
 const showNotification = inject("showNotification");
 const updateAIUsage = ref(false);
+const previousNoteSuggestions = computed(() => props.batchSession.ai_notes);
 
 const showPopup = ref(false);
 const selectedText = ref("");
@@ -271,7 +333,7 @@ const notesTab = toUnderscore(t("common.notes"));
 const tabs = [chatTab, questionsTab, notesTab];
 
 const activeTabFromQuery = computed(() => usePage().props.active_tab);
-const activeTab = ref(activeTabFromQuery.value ?? chatTab);
+const activeTab = ref(activeTabFromQuery.value ?? notesTab);
 
 const openAILimitReached = ref(false);
 const openAIDailyUsage = ref();
@@ -289,13 +351,15 @@ const updateNoteSuggestion = () => {
     updateAIUsage.value = false;
 
     // Remove previous suggestions
-    if (noteSuggestions.value) {
-        noteSuggestions.value = "";
+    if (noteSuggestion.value.content) {
+        noteSuggestion.value.content = "";
+        noteSuggestion.value.title = "";
     }
 
     if (props.generateNoteSuggestions) {
         activeTab.value = notesTab;
 
+        noteSuggestion.value.title = props.topic;
         let es = new EventSource(
             "/teacher/lesson-plan/ai/generate-note?prompt=" +
                 props.topic +
@@ -327,7 +391,7 @@ const updateNoteSuggestion = () => {
                         isNoteUpdating.value = false;
                         es.close();
                         saveNoteSuggestion();
-                    } else noteSuggestions.value += event.data;
+                    } else noteSuggestion.value.content += event.data;
                 }
                 updateAIUsage.value = true;
             },
@@ -377,14 +441,43 @@ const saveNoteSuggestion = () => {
     router.post(
         "/teacher/lesson-plan/ai/save-note",
         {
-            content: noteSuggestions.value,
+            content: noteSuggestion.value.content,
             title: props.topic,
             lesson_plan_id: props.lessonPlanId,
+            batch_session_id: props.batchSession?.id,
         },
         {
             preserveState: true,
         }
     );
+};
+
+const selectedNoteIndex = ref(0);
+onMounted(() => {
+    if (previousNoteSuggestions.value.length) {
+        setNoteSuggestion(
+            previousNoteSuggestions.value[selectedNoteIndex.value].content,
+            previousNoteSuggestions.value[selectedNoteIndex.value].title
+        );
+    }
+});
+
+watch(selectedNoteIndex, (newValue) => {
+    if (
+        previousNoteSuggestions.value.length &&
+        selectedNoteIndex.value < previousNoteSuggestions.value.length &&
+        selectedNoteIndex.value >= 0
+    ) {
+        setNoteSuggestion(
+            previousNoteSuggestions.value[selectedNoteIndex.value].content,
+            previousNoteSuggestions.value[selectedNoteIndex.value].title
+        );
+    }
+});
+
+const setNoteSuggestion = (content, title) => {
+    noteSuggestion.value.content = content;
+    noteSuggestion.value.title = title;
 };
 </script>
 <style scoped></style>

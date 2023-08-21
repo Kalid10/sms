@@ -93,9 +93,7 @@ const selectedSubject = computed(
 );
 
 const schoolYears = computed(() => usePage().props.school_years);
-
 const semesters = computed(() => usePage().props.semesters);
-
 const quarters = computed(() => usePage().props.quarters);
 
 function applyFilters(params) {

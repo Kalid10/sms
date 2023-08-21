@@ -205,17 +205,8 @@
                                         class="flex w-full items-end justify-between lg:items-center"
                                     >
                                         <div
-                                            class="flex w-10/12 items-center justify-center space-x-4 text-center font-semibold"
+                                            class="flex w-10/12 items-center justify-center space-x-4 text-center text-xl font-semibold"
                                         >
-                                            <div class="flex h-8 items-center">
-                                                <SparklesIcon
-                                                    class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
-                                                    @click="
-                                                        handleGenerateNoteSuggestions()
-                                                    "
-                                                />
-                                            </div>
-
                                             <div class="">
                                                 {{
                                                     selectedBatchSession[
@@ -445,6 +436,7 @@
                         :batch-subject-id="
                             batchSession?.batch_schedule.batch_subject_id
                         "
+                        :batch-session="selectedBatchSession"
                         @selected-text="updateSelectedText"
                         @finish="
                             generateQuestionSuggestions = false;
