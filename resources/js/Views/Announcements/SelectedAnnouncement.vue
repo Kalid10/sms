@@ -65,7 +65,7 @@ const truncatedText = computed(() => {
     const maxLength = 420; // You can set your desired length
     return props.selectedAnnouncement?.body.length > maxLength
         ? props.selectedAnnouncement?.body.substring(0, maxLength) + "..."
-        : text;
+        : props.selectedAnnouncement?.body;
 });
 </script>
 <style scoped></style>
