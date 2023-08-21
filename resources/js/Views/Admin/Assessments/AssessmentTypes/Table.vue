@@ -11,20 +11,14 @@
                     :placeholder="$t('assessmentIndex.name')"
                     required
                 />
-                <div class="relative flex">
-                    <TextInput
-                        v-model="form.percentage"
-                        :error="form.errors.percentage"
-                        type="number"
-                        class="w-full"
-                        :label="$t('assessmentIndex.percentage')"
-                        :placeholder="$t('assessmentIndex.percentage')"
-                        required
-                    />
-                    <ReceiptPercentIcon
-                        class="absolute bottom-0 right-0 mx-8 my-2 h-6 w-6"
-                    />
-                </div>
+                <TextInput
+                    v-model="form.percentage"
+                    :error="form.errors.percentage"
+                    type="number"
+                    :label="$t('assessmentIndex.percentage')"
+                    :placeholder="$t('assessmentIndex.percentage')"
+                    required
+                />
             </div>
 
             <div v-if="isUpdate" class="w-full">
@@ -203,7 +197,6 @@ import { computed, ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import {
     PencilSquareIcon,
-    ReceiptPercentIcon,
     SquaresPlusIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline";
