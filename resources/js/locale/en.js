@@ -483,6 +483,7 @@ const en = {
         en: "EN",
         amharic: "Amharic",
         am: "AM",
+        notes: "Notes",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
@@ -1044,10 +1045,10 @@ const en = {
             "Opt for manual input if you prefer to generate questions based on your unique inputs and parameters. This option allows for greater control and specificity.",
         lessonPlans: "Lesson Plans",
         lessonPlanDescription:
-            "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we'll load your plans, and you can choose one for us to craft tailored questions.",
+            "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we will load your plans, and you can choose one for us to craft tailored questions.",
         question: "Question",
         enterQuestion: "Enter Question",
-        dailyAIUsageProgress: "Daily AI Usage Progress",
+        dailyAIUsageProgress: "Daily AI Usage ",
     },
     readMoreLess: {
         readMore: "Read more...",

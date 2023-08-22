@@ -6,7 +6,7 @@
             :class="!showIcon ? 'px-2 py-1' : ''"
             :style="{
                 top: sideBarStyle ? `${y - 5}px` : `${y - 30}px`,
-                left: sideBarStyle ? `${x + 15}px` : `${x - 50}px`,
+                left: sideBarStyle ? `${x + 15}px` : '0px',
             }"
         >
             <div

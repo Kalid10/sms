@@ -14,30 +14,6 @@
                 :class="isTeacher() ? 'col-span-11' : 'col-span-4'"
             >
                 <div
-                    v-if="isTeacher()"
-                    class="h-5/6 w-6/12 overflow-y-auto"
-                    :class="showAISection ? 'flex ' : 'hidden'"
-                >
-                    <LessonPlanCopilot
-                        :topic="form.topic"
-                        :generate-note-suggestions="generateNoteSuggestions"
-                        :description="form.description"
-                        :generate-question-suggestions="
-                            generateQuestionSuggestions
-                        "
-                        :lesson-plan-id="batchSession?.lesson_plan?.id"
-                        :batch-subject-id="
-                            batchSession?.batch_schedule.batch_subject_id
-                        "
-                        @selected-text="updateSelectedText"
-                        @finish="
-                            generateQuestionSuggestions = false;
-                            generateNoteSuggestions = false;
-                        "
-                        @close="showAISection = false"
-                    />
-                </div>
-                <div
                     class="flex h-full flex-col gap-4"
                     :class="
                         isTeacher()
@@ -47,7 +23,7 @@
                             : 'w-full px-5'
                     "
                 >
-                    <div class="flex w-full flex-col">
+                    <div class="flex w-full flex-col pl-5">
                         <div
                             class="flex w-full origin-left items-center justify-between pr-8"
                         >
@@ -122,6 +98,7 @@
                                 }}
                             </h3>
                         </div>
+
                         <div
                             v-if="!showAISection && isTeacher()"
                             class="mt-3 flex w-fit cursor-pointer space-x-1 rounded-2xl bg-purple-600 px-3 py-1.5 text-xs text-white hover:font-medium"
@@ -134,7 +111,7 @@
                         </div>
                     </div>
 
-                    <div class="flex w-full grow items-center justify-between">
+                    <div class="flex w-full grow items-center justify-center">
                         <div
                             class="flex h-full flex-col pt-4"
                             :class="
@@ -228,17 +205,8 @@
                                         class="flex w-full items-end justify-between lg:items-center"
                                     >
                                         <div
-                                            class="flex w-10/12 items-center justify-center space-x-4 text-center font-semibold"
+                                            class="flex w-10/12 items-center justify-center space-x-4 text-center text-xl font-semibold"
                                         >
-                                            <div class="flex h-8 items-center">
-                                                <SparklesIcon
-                                                    class="w-4 cursor-pointer text-purple-500 hover:scale-105 hover:text-fuchsia-500"
-                                                    @click="
-                                                        handleGenerateNoteSuggestions()
-                                                    "
-                                                />
-                                            </div>
-
                                             <div class="">
                                                 {{
                                                     selectedBatchSession[
@@ -451,6 +419,32 @@
                         </div>
                     </div>
                 </div>
+
+                <div
+                    v-if="isTeacher()"
+                    class="h-5/6 w-6/12 overflow-y-auto border-l border-brand-100"
+                    :class="showAISection ? 'flex ' : 'hidden'"
+                >
+                    <LessonPlanCopilot
+                        :topic="form.topic"
+                        :generate-note-suggestions="generateNoteSuggestions"
+                        :description="form.description"
+                        :generate-question-suggestions="
+                            generateQuestionSuggestions
+                        "
+                        :lesson-plan-id="batchSession?.lesson_plan?.id"
+                        :batch-subject-id="
+                            batchSession?.batch_schedule.batch_subject_id
+                        "
+                        :batch-session="selectedBatchSession"
+                        @selected-text="updateSelectedText"
+                        @finish="
+                            generateQuestionSuggestions = false;
+                            generateNoteSuggestions = false;
+                        "
+                        @close="showAISection = false"
+                    />
+                </div>
             </div>
         </div>
     </Modal>
@@ -488,7 +482,7 @@ const props = defineProps({
 
 const emits = defineEmits(["update:view"]);
 
-const showAISection = ref(false);
+const showAISection = ref(true);
 
 const batch = computed(() => usePage().props.batch);
 const selectedBatchSession = computed(() => props.batchSession);
