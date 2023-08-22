@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -34,6 +35,11 @@ class SchoolYear extends Model
     public function semesters(): HasMany
     {
         return $this->hasMany(Semester::class);
+    }
+
+    public function quarters(): HasManyThrough
+    {
+        return $this->hasManyThrough(Quarter::class, Semester::class);
     }
 
     public function schoolPeriods(): HasMany
