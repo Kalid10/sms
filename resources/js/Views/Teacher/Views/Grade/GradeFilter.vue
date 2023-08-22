@@ -21,54 +21,53 @@
     </div>
 
     <div class="flex items-center space-x-2">
-        <div
-            v-if="selectedSchoolYear"
-            class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
-        >
-            <span class="text-xs font-semibold">
-                {{ selectedSchoolYear.name }}
-            </span>
-            <span
-                class="cursor-pointer text-xs font-semibold"
-                @click="
-                    selectedSchoolYear = { id: null };
-                    selectedSemester = { id: null };
-                    selectedQuarter = { id: null };
-                "
+        <div v-if="showShortedSchoolYear">
+            <div
+                v-if="selectedSchoolYear"
+                class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
             >
-                <XMarkIcon class="h-3 w-3 fill-red-500" />
-            </span>
+                <span class="text-xs font-semibold">
+                    {{ selectedSchoolYear.name }}
+                </span>
+                <span
+                    class="cursor-pointer text-xs font-semibold"
+                    @click="showShortedSchoolYearHandler"
+                >
+                    <XMarkIcon class="h-3 w-3 fill-white" />
+                </span>
+            </div>
         </div>
-        <div
-            v-if="selectedSemester"
-            class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
-        >
-            <span class="text-xs font-semibold">
-                {{ selectedSemester.name }}
-            </span>
-            <span
-                class="cursor-pointer text-xs font-semibold"
-                @click="
-                    selectedSemester = { id: null };
-                    selectedQuarter = { id: null };
-                "
+        <div v-if="showShortedSemester">
+            <div
+                v-if="selectedSemester"
+                class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
             >
-                <XMarkIcon class="h-3 w-3 fill-red-500" />
-            </span>
+                <span class="text-xs font-semibold">
+                    {{ selectedSemester.name }}
+                </span>
+                <span
+                    class="cursor-pointer text-xs font-semibold"
+                    @click="showShortedSemesterHandler"
+                >
+                    <XMarkIcon class="h-3 w-3 fill-white" />
+                </span>
+            </div>
         </div>
-        <div
-            v-if="selectedQuarter"
-            class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
-        >
-            <span class="text-xs font-semibold">
-                {{ selectedQuarter.name }}
-            </span>
-            <span
-                class="cursor-pointer text-xs font-semibold"
-                @click="selectedQuarter = { id: null }"
+        <div v-if="showShortedQuarter">
+            <div
+                v-if="selectedQuarter"
+                class="flex items-center space-x-2 rounded-lg bg-brand-400 p-2 text-white"
             >
-                <XMarkIcon class="h-3 w-3 fill-red-500" />
-            </span>
+                <span class="text-xs font-semibold">
+                    {{ selectedQuarter.name }}
+                </span>
+                <span
+                    class="cursor-pointer text-xs font-semibold"
+                    @click="showShortedQuarterHandler"
+                >
+                    <XMarkIcon class="h-3 w-3 fill-white" />
+                </span>
+            </div>
         </div>
     </div>
 </template>
@@ -77,6 +76,28 @@ import { XMarkIcon } from "@heroicons/vue/20/solid";
 import SelectInput from "@/Components/SelectInput.vue";
 import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
+
+const showShortedSchoolYear = ref(true);
+const showShortedSemester = ref(true);
+const showShortedQuarter = ref(true);
+
+function showShortedSchoolYearHandler() {
+    selectedSchoolYear.value = { id: null };
+    selectedSemester.value = { id: null };
+    selectedQuarter.value = { id: null };
+    showShortedSchoolYear.value = !showShortedSchoolYear.value;
+}
+
+function showShortedSemesterHandler() {
+    selectedSemester.value = { id: null };
+    selectedQuarter.value = { id: null };
+    showShortedSemester.value = !showShortedSemester.value;
+}
+
+function showShortedQuarterHandler() {
+    selectedQuarter.value = { id: null };
+    showShortedQuarter.value = !showShortedQuarter.value;
+}
 
 const schoolYears = computed(() => usePage().props.filters.school_years);
 const semesters = computed(() => usePage().props.filters.semesters);
@@ -164,6 +185,21 @@ const computedQuarterId = computed({
             selectedQuarter.value.id = newValue;
         }
     },
+});
+
+watch(computedSchoolYearId, (newValue) => {
+    // Set showShortedSchoolYear to true if a school year is selected, else false
+    showShortedSchoolYear.value = newValue !== null;
+});
+
+watch(computedSemesterId, (newValue) => {
+    // Set showShortedSemester to true if a semester is selected, else false
+    showShortedSemester.value = newValue !== null;
+});
+
+watch(computedQuarterId, (newValue) => {
+    // Set showShortedQuarter to true if a quarter is selected, else false
+    showShortedQuarter.value = newValue !== null;
 });
 
 watch(
