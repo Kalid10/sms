@@ -1741,7 +1741,7 @@ const en = {
         noOfQuestions: "No Of Que.",
         difficultyLevel: "Difficulty Level",
         generatedAt: "Generated At",
-        questionsGenerated: "Questions Generated",
+        todaysGeneratedQuestions: "Today's Generated Questions",
     },
     adminUserIndex: {
         signUpAdministrators: "Register administrators with ease",

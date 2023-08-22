@@ -10,7 +10,7 @@
 
             <div class="flex w-full justify-end space-x-2">
                 <span class="font-weight-light text-center text-sm">
-                    {{ $t("teacherQuestions.questionsGenerated") }}:
+                    {{ $t("teacherQuestions.todaysGeneratedQuestions") }}:
                 </span>
                 <span class="text-center text-sm font-semibold">
                     {{ totalNumberOfQuestions }} / {{ openaiQuestionLimit }}
