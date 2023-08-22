@@ -29,7 +29,8 @@
                             {{ $t("studentsTable.homeroomTeacher") }}
                         </div>
                         <div
-                            class="cursor-pointer text-xs font-semibold underline-offset-2 hover:underline"
+                            class="cursor-pointer text-xs font-semibold underline-offset-2"
+                            :class="isAdmin() ? 'hover:underline' : ''"
                         >
                             {{ homeroomTeacher.user.name }}
                         </div>

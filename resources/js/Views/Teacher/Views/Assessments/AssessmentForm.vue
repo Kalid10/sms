@@ -32,19 +32,73 @@
                 :placeholder="$t('assessmentForm.dueDatePlaceholder')"
                 :error="form.errors.due_date"
             />
+
+            <div class="dropdown-container relative flex flex-col">
+                <div
+                    class="mt-1 flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    @click="dropdownVisible = !dropdownVisible"
+                >
+                    <div>
+                        <span v-if="!form.batch_subject_ids" class="text-xs">
+                            Select Class(es)
+                        </span>
+
+                        <span v-else class="text-sm">
+                            Selected Class(es):
+
+                            <span>
+                                {{
+                                    batchSubjectOptions
+                                        .filter((option) =>
+                                            form.batch_subject_ids.includes(
+                                                option.value
+                                            )
+                                        )
+                                        .map((option) => option.label)
+                                        .join(", ")
+                                }}
+                            </span>
+                        </span>
+                    </div>
+
+                    <ChevronDownIcon class="h-4 w-4" />
+                </div>
+                <div
+                    v-if="dropdownVisible"
+                    class="absolute z-10 mt-10 w-full rounded-md border border-gray-300 bg-white shadow-lg"
+                >
+                    <div
+                        v-for="batch in batchSubjectOptions"
+                        :key="batch"
+                        class="cursor-pointer p-2 hover:bg-gray-200"
+                        @click="toggleSelection(batch.value)"
+                    >
+                        <input
+                            type="checkbox"
+                            :checked="
+                                form.batch_subject_ids.includes(batch.value)
+                            "
+                            class="mr-2"
+                        />
+                        {{ batch.label }}
+                    </div>
+                </div>
+                <div
+                    v-if="form.errors && form.errors.batch_subject_id"
+                    class="mt-2 text-xs text-negative-50"
+                >
+                    * {{ form.errors.batch_subject_id }}
+                </div>
+            </div>
+
             <SelectInput
-                v-model="form.batch_subject_id"
-                :options="batchSubjectOptions"
-                :error="form.errors.batch_subject_id"
-                :placeholder="$t('assessmentForm.batchSubjectIdPlaceholder')"
-            />
-            <SelectInput
-                v-if="form.batch_subject_id"
+                v-if="form.batch_subject_ids"
                 v-model="form.assessment_type_id"
                 :options="selectedBatchAssessmentTypes"
                 :error="form.errors.assessment_type_id"
                 :placeholder="$t('assessmentForm.assessmentTypeId')"
             />
+
             <SelectInput
                 v-model="form.status"
                 :options="statusOptions"
@@ -95,8 +149,11 @@ import FormElement from "@/Components/FormElement.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
-import { computed, ref, watch } from "vue";
-import { InformationCircleIcon } from "@heroicons/vue/24/outline";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import {
+    ChevronDownIcon,
+    InformationCircleIcon,
+} from "@heroicons/vue/24/outline";
 import { useI18n } from "vue-i18n";
 import Loading from "@/Components/Loading.vue";
 
@@ -110,7 +167,7 @@ const props = defineProps({
 
 let form = useForm({
     assessment_type_id: "",
-    batch_subject_id: "",
+    batch_subject_ids: [],
     due_date: new Date(),
     title: "",
     description: "",
@@ -140,15 +197,36 @@ const emit = defineEmits(["success"]);
 const teacher = usePage().props.teacher;
 const assessmentTypes = usePage().props.assessment_type;
 
+let dropdownVisible = ref(false);
+
+onMounted(() => {
+    document.addEventListener("click", outsideClickListener);
+});
+
+onUnmounted(() => {
+    document.removeEventListener("click", outsideClickListener);
+});
+
+const outsideClickListener = (event) => {
+    if (!event.target.closest(".dropdown-container")) {
+        dropdownVisible.value = false;
+    }
+};
+
 const selectedBatchAssessmentTypes = computed(() => {
-    if (form.batch_subject_id) {
+    if (!form.batch_subject_ids) return []; // Return empty if no batch subject is selected.
+
+    let types = [];
+
+    form.batch_subject_ids.forEach((id) => {
         const batch_subject = teacher.batch_subjects.find(
-            (batch_subject) => batch_subject.id === form.batch_subject_id
+            (batch_subject) => batch_subject.id === id
         );
+
         if (batch_subject) {
             const level_category_id =
                 batch_subject.batch.level.level_category.id;
-            return assessmentTypes
+            const batchTypes = assessmentTypes
                 .filter((type) => type.level_category_id === level_category_id)
                 .map((type) => {
                     return {
@@ -156,9 +234,15 @@ const selectedBatchAssessmentTypes = computed(() => {
                         value: type.id,
                     };
                 });
+
+            types = [...types, ...batchTypes];
         }
-    }
-    return [];
+    });
+
+    // Remove duplicates if any batch subject has common assessment types
+    return [...new Set(types.map((type) => JSON.stringify(type)))].map((type) =>
+        JSON.parse(type)
+    );
 });
 
 const batchSubjectOptions = computed(() => {
@@ -207,4 +291,13 @@ function handleSubmit() {
         },
     });
 }
+
+const toggleSelection = (value) => {
+    const index = form.batch_subject_ids.indexOf(value);
+    if (index < 0) {
+        form.batch_subject_ids.push(value);
+    } else {
+        form.batch_subject_ids.splice(index, 1);
+    }
+};
 </script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\LessonPlans\UpdateOrCreateRequest;
+use App\Models\AINote;
 use App\Models\AssessmentType;
 use App\Models\BatchSession;
 use App\Models\BatchSubject;
@@ -54,6 +55,8 @@ class LessonPlanController extends Controller
 
         return Inertia::render($page, array_merge($lessonPlanData, [
             'assessment_types' => $assessmentTypes,
+            'openai_daily_usage' => auth()->user()->openai_daily_usage,
+            'openai_daily_usage_limit' => env('DAILY_OPEN_AI_USER_USAGE_LIMIT'),
         ]));
     }
 
@@ -85,15 +88,36 @@ class LessonPlanController extends Controller
         return redirect()->back()->with('success', 'Lesson plan deleted successfully');
     }
 
-    public function noteSuggestions(Request $request, OpenAIService $openAIService): StreamedResponse
+    public function generateNoteSuggestions(Request $request, OpenAIService $openAIService): StreamedResponse
     {
         $prompt = $request->input('prompt');
         $batchSubject = BatchSubject::find($request->input('batch_subject_id'));
-        $grade = 8;
-        $subject = 'Biology';
-        $explanationPrompt = "The lesson plan title is '{$prompt}' for a '{$grade}' level class in the subject of '{$subject}'. Provide a brief 2-5 paragraph explanation of '{$prompt}'.";
+        $grade = $batchSubject->load('batch.level')->batch->level->name;
+        $subject = $batchSubject->load('subject')->subject->full_name;
 
-        //        $explanationPrompt = "I want you to act as a lesson plan advisor.The subject is '{$subject}' for grade '{$grade}' provide a brief 2-5 paragraphs explaining this lesson plan title: '{$prompt}";
+        $explanationPrompt = "For grade '{$grade} {$subject}' students, explain '{$prompt}', in 3-5 paragraphs, focus on key concepts and objectives, ensuring alignment with the grade-level standards";
+
         return $openAIService->createCompletionStream($explanationPrompt);
+    }
+
+    public function saveNoteSuggestion(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'content' => 'required|string',
+            'title' => 'required|string',
+            'lesson_plan_id' => 'nullable|exists:lesson_plans,id',
+            'batch_session_id' => 'nullable|exists:batch_sessions,id',
+        ]);
+
+        AINote::create([
+            'model' => 'gpt-4',
+            'user_id' => auth()->user()->id,
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'lesson_plan_id' => $request->input('lesson_plan_id'),
+            'batch_session_id' => $request->input('batch_session_id'),
+        ]);
+
+        return redirect()->back()->with('success', 'Note saved successfully');
     }
 }

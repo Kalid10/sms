@@ -19,6 +19,7 @@ class SchoolYearSeeder extends Seeder
             $schoolYear = SchoolYear::create([
                 'start_date' => $this->start_date($year),
                 'end_date' => $year === 2022 ? null : $this->end_date($year),
+                'is_ready' => $year === 2022 ? 1 : 0,
                 'name' => $this->name($year),
             ]);
 

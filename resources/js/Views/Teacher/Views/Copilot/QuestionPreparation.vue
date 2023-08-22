@@ -60,7 +60,6 @@
                             {{ $t("questionPreparation.hintForDifficulty") }}
                         </p>
                     </div>
-
                     <input
                         id="large-range"
                         v-model="form.difficulty_level"
@@ -182,7 +181,7 @@ const filteredAssessmentType = computed(() => {
 });
 
 const form = useForm({
-    assessment_type_id: assessmentTypes.value[0].id,
+    assessment_type_id: assessmentTypes?.value[0]?.id,
     number_of_questions: 3,
     question_source: null,
     lesson_plan_ids: [],

@@ -62,7 +62,7 @@ createInertiaApp({
 
         const i18n = createI18n({
             legacy: false,
-            locale: "en",
+            locale: localStorage.getItem("selectedLanguage") || "en",
             globalInjection: true,
             messages: {
                 en,
@@ -75,6 +75,6 @@ createInertiaApp({
         return app;
     },
     progress: {
-        color: "#4B5563",
+        color: "#a78bfa",
     },
 });

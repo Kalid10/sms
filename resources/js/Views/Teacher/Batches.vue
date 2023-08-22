@@ -41,10 +41,19 @@
                         class="flex h-full w-full flex-col justify-center space-y-8 lg:w-5/12"
                     >
                         <SummaryItem
+                            class-style="bg-sky-100 text-black"
+                            icon-style="bg-sky-500/20 text-white"
+                            :title="$t('common.aiChat')"
+                            :value="$t('common.aiChatDescription')"
+                            :icon="PaperAirplaneIcon"
+                            url="/teacher/copilot"
+                        />
+
+                        <SummaryItem
                             class-style="bg-orange-100 text-black"
                             icon-style="bg-orange-500/20 text-white"
                             :title="$t('common.assessments')"
-                            value="Add, view and update assessments"
+                            :value="$t('common.addViewUpdateAssessments')"
                             :icon="ClipboardIcon"
                             :url="
                                 isTeacher()
@@ -57,7 +66,7 @@
                             class-style="bg-fuchsia-100 text-black"
                             icon-style="bg-fuchsia-500/20 text-white"
                             :title="$t('common.lessonPlan')"
-                            value="Add, view and update lesson plans"
+                            :value="$t('common.addViewUpdateLessonPlans')"
                             :icon="CalendarIcon"
                             :url="
                                 isTeacher()
@@ -70,7 +79,7 @@
                             class-style="bg-brand-100 text-black"
                             icon-style="bg-brand-300/20 text-white"
                             :title="$t('common.students')"
-                            value="View your students"
+                            :value="$t('common.viewStudents')"
                             :icon="UsersIcon"
                             :url="
                                 isTeacher()
@@ -83,7 +92,7 @@
                             class-style="bg-red-50 text-black"
                             icon-style="bg-red-500/20 text-white"
                             :title="$t('common.announcements')"
-                            value="View announcements"
+                            :value="$t('common.viewAnnouncements')"
                             :icon="ChatBubbleBottomCenterIcon"
                             :url="
                                 isTeacher()
@@ -140,6 +149,7 @@ import {
     CalendarIcon,
     ChatBubbleBottomCenterIcon,
     ClipboardIcon,
+    PaperAirplaneIcon,
     UsersIcon,
 } from "@heroicons/vue/24/solid";
 import {

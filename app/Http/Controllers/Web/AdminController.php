@@ -147,6 +147,7 @@ class AdminController extends Controller
 
         $schoolYearId = $request->input('school_year_id');
         $expiresOn = $request->input('expires_on');
+
         $announcements = Announcement::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
             ->when($searchKey, function ($query) use ($searchKey) {
                 return $query->where('title', 'like', "%{$searchKey}%");
@@ -167,6 +168,7 @@ class AdminController extends Controller
                 'school_year_id' => $schoolYearId ?? SchoolYear::getActiveSchoolYear()->id,
                 'expires_on' => $expiresOn,
                 'school_years' => $schoolYears,
+                'searchKey' => $searchKey,
             ],
         ]);
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-1">
         <span v-if="!!label">
-            <span class="pl-0.5 text-sm font-semibold text-brand-text-300">{{
+            <span class="text-brand-text-600 pl-0.5 text-sm font-semibold">{{
                 label
             }}</span>
             <span v-if="required" class="pl-0.5 text-xs text-red-600">*</span>
@@ -37,7 +37,7 @@
                     >
                     <span
                         :class="{ '': modelValue === option.value }"
-                        class="text-sm text-brand-text-300"
+                        class="text-brand-text-600 text-sm"
                         >{{ option.description }}</span
                     >
                 </span>

@@ -161,8 +161,8 @@
                         class="grid place-items-center rounded-md p-2.5 text-sm focus:outline-none"
                         :class="
                             isMonthSelected(m)
-                                ? 'bg-black text-white'
-                                : 'hover:bg-black/10'
+                                ? 'bg-brand-400 text-white'
+                                : 'hover:bg-brand-450/10'
                         "
                         @click="selectMonth(m)"
                     >
@@ -182,8 +182,8 @@
                         class="grid place-items-center rounded-md p-2.5 text-sm focus:outline-none"
                         :class="
                             isYearSelected(year)
-                                ? 'bg-black text-white'
-                                : 'hover:bg-black/10'
+                                ? 'bg-brand-400 text-white'
+                                : 'hover:bg-brand-450/10'
                         "
                         @click="selectYear(year)"
                     >

@@ -20,6 +20,8 @@
                     ? classStyle
                     : 'border border-brand-150 text-sm focus:ring-1 focus:ring-brand-400 focus:border-none focus:outline-none rounded-md '
             "
+            :min="min"
+            :max="max"
             @input="$emit('update:modelValue', $event.target.value)"
             @focusin="toggleSubtext ? (showSubText = true) : null"
             @focusout="toggleSubtext ? (showSubText = false) : null"
@@ -83,6 +85,14 @@ const props = defineProps({
     },
     classStyle: {
         type: String,
+        default: null,
+    },
+    min: {
+        type: [Number, String],
+        default: null,
+    },
+    max: {
+        type: [Number, String],
         default: null,
     },
 });

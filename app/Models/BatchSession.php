@@ -44,7 +44,7 @@ class BatchSession extends Model
         );
     }
 
-    // get batchSubject through batchSchedule using hasOneThrough relationship
+    // Get batchSubject through batchSchedule using hasOneThrough relationship
     public function batchSubject(): HasOneThrough
     {
         return $this->hasOneThrough(
@@ -70,6 +70,11 @@ class BatchSession extends Model
     public function lessonPlan(): BelongsTo
     {
         return $this->belongsTo(LessonPlan::class);
+    }
+
+    public function aiNotes(): HasMany
+    {
+        return $this->hasMany(AINote::class);
     }
 
     protected $casts = [

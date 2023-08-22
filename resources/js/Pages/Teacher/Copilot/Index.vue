@@ -1,5 +1,5 @@
 <template>
-    <div class="flex min-h-screen w-full flex-col space-y-4 px-5">
+    <div class="flex min-h-screen w-full flex-col space-y-4 p-5">
         <div class="flex w-full space-x-5">
             <Title
                 class="w-4/12 pl-8"
@@ -12,13 +12,12 @@
                 >
                     <ExclamationCircleIcon class="w-5 text-white" />
                     <span>
-                        You've hit your daily limit. Please get in touch with
-                        the administrator to increase limit.
+                        {{ $t("copilotIndex.dailyLimit") }}
                     </span>
                 </span>
             </div>
         </div>
-        <div class="flex h-5/6 w-full justify-center px-4">
+        <div class="flex h-fit w-full justify-center px-4">
             <TabElement v-model:active="activeTab" class="h-full" :tabs="tabs">
                 <template #[chatTab]>
                     <div class="h-full py-5">
@@ -26,7 +25,7 @@
                     </div>
                 </template>
                 <template #[questionsTab]>
-                    <QuestionPreparation />
+                    <QuestionPreparation @limit-reached="setLimitInfo" />
                 </template>
             </TabElement>
         </div>
@@ -36,7 +35,7 @@
 import Title from "@/Views/Teacher/Views/Title.vue";
 import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
 import TabElement from "@/Components/TabElement.vue";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparation.vue";
 import { ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
@@ -49,8 +48,22 @@ const chatTab = toUnderscore(t("common.chat"));
 const questionsTab = toUnderscore(t("common.questions"));
 const tabs = [chatTab, questionsTab];
 
+const getActiveTabValue = (value) => {
+    if (value === "chat") {
+        return chatTab;
+    } else if (value === "questions") {
+        return questionsTab;
+    }
+};
+
 const activeTabFromQuery = computed(() => usePage().props.active_tab);
-const activeTab = ref(activeTabFromQuery.value ?? chatTab);
+
+const activeTab = ref(getActiveTabValue(activeTabFromQuery.value));
+
+// Watch for changes to activeTabFromQuery and update activeTab accordingly
+watch(activeTabFromQuery, (newValue) => {
+    activeTab.value = getActiveTabValue(newValue);
+});
 
 const openAILimitReached = ref(false);
 const openAIDailyUsage = ref();

@@ -147,7 +147,7 @@
         <template #[gradesTab]>
             <div class="my-2 flex flex-row">
                 <label
-                    class="mx-2 flex w-32 items-center text-sm text-brand-text-450"
+                    class="text-brand-text-600 mx-2 flex w-32 items-center text-sm"
                     >{{ $t("subjectsTable.selectGrade") }}</label
                 >
                 <SelectInput

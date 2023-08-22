@@ -4,7 +4,8 @@
         :class="classStyle ? classStyle : ' p-5 space-y-3 bg-white'"
     >
         <div v-if="schedule?.length" class="text-xl font-medium text-black">
-            {{ moment().format("dddd") }}{{ $t("currentDaySchedule.schedule") }}
+            {{ moment().format("dddd") }}
+            {{ $t("currentDaySchedule.schedule") }}
         </div>
         <div
             v-if="schedule?.length"
@@ -41,10 +42,13 @@
         </div>
         <div
             v-else
-            class="flex h-44 items-center justify-center py-5 text-center text-2xl font-bold uppercase text-brand-text-350"
+            class="flex h-44 items-center justify-center py-5 text-center text-2xl font-bold uppercase"
         >
             <EmptyView
-                :title="'No Schedule found for ' + moment().format('dddd')"
+                :title="
+                    $t('currentDaySchedule.noScheduleFound') +
+                    moment().format('dddd')
+                "
             />
         </div>
     </div>

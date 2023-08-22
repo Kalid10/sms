@@ -12,12 +12,14 @@
                 </h3>
             </div>
 
-            <SelectInput
-                v-model="selectedBatch"
-                :placeholder="$t('single.selectSection')"
-                class="w-5/12"
-                :options="batchOptions"
-            />
+            <div v-if="isSectionsTab" class="w-full">
+                <SelectInput
+                    v-model="selectedBatch"
+                    :placeholder="$t('single.selectSection')"
+                    class="w-5/12"
+                    :options="batchOptions"
+                />
+            </div>
         </div>
 
         <TabElement v-model:active="activeTab" :tabs="tabs">
@@ -74,4 +76,6 @@ const selectedBatch = ref(batchOptions.value[0].value);
 watch(selectedBatch, (value) => {
     activeBatch.value = batches.value.find((batch) => batch.id === value);
 });
+
+const isSectionsTab = computed(() => activeTab.value === sectionsTab);
 </script>

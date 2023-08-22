@@ -15,19 +15,19 @@
 
                 <div class="flex flex-col gap-3">
                     <p
-                        class="max-w-2xl text-center text-sm text-brand-text-300"
+                        class="text-brand-text-600 max-w-2xl text-center text-sm"
                     >
                         {{ $t("schoolPeriodFormWrapper.descriptionOne") }}
                     </p>
 
                     <p
-                        class="max-w-2xl text-center text-sm text-brand-text-300"
+                        class="text-brand-text-600 max-w-2xl text-center text-sm"
                     >
                         {{ $t("schoolPeriodFormWrapper.descriptionTwo") }}
                     </p>
 
                     <p
-                        class="max-w-2xl text-center text-sm text-brand-text-300"
+                        class="text-brand-text-600 max-w-2xl text-center text-sm"
                     >
                         {{ $t("schoolPeriodFormWrapper.descriptionThree") }}
                     </p>

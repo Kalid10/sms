@@ -16,7 +16,7 @@
         <TextArea
             v-model="form.body"
             :label="$t('addAnnouncement.body')"
-            :placeholder="$t('addAnnouncement.description')"
+            :placeholder="$t('addAnnouncement.body')"
             class="w-full"
             :error="form.errors.body"
         />
@@ -81,11 +81,35 @@ const targetGroupOptions = ["all", "teachers", "guardians", "admins"];
 const showAddAnnouncement = ref(false);
 
 function toggleSelection(target) {
-    const index = this.form.target_group.indexOf(target);
-    if (index < 0) {
-        this.form.target_group.push(target);
+    if (target === "all") {
+        if (form.target_group.includes("all")) {
+            // If "all" is already selected, deselect everything
+            form.target_group = [];
+        } else {
+            // If "all" is not selected, select everything (excluding "all" itself)
+            form.target_group = targetGroupOptions.filter(
+                (option) => option !== "all"
+            );
+            form.target_group.push("all"); // Optionally, you can include "all" in the selected group
+        }
     } else {
-        this.form.target_group.splice(index, 1);
+        const index = form.target_group.indexOf(target);
+        if (index < 0) {
+            form.target_group.push(target);
+        } else {
+            form.target_group.splice(index, 1);
+        }
+
+        // Check if "all" is in the target group and remove it if individual selection is made
+        if (form.target_group.includes("all")) {
+            const allIndex = form.target_group.indexOf("all");
+            form.target_group.splice(allIndex, 1);
+        }
+
+        // If all individual groups are selected, include "all" in the selection (Optional)
+        if (form.target_group.length === targetGroupOptions.length - 1) {
+            form.target_group.push("all");
+        }
     }
 }
 

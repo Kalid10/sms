@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="computedAnnouncements.length > 0"
+        v-if="computedAnnouncements"
         :class="
             classStyle
                 ? classStyle
@@ -25,7 +25,7 @@
         <div>
             <div class="flex flex-col space-y-2">
                 <EmptyView
-                    v-if="!computedAnnouncements"
+                    v-if="!computedAnnouncements.length"
                     :title="$t('announcementsIndex.noAnnouncementsFound')"
                     :link-title="$t('announcementsIndex.goToAnnouncements')"
                     :link-url="url"

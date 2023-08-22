@@ -11,7 +11,7 @@
         <div class="flex flex-col gap-3 p-4">
             <div class="flex flex-col">
                 <h3>{{ title }}</h3>
-                <h5 class="text-sm text-brand-text-300">
+                <h5 class="text-brand-text-600 text-sm">
                     {{ subtitle }}
                 </h5>
             </div>

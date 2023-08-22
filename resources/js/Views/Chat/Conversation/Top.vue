@@ -33,7 +33,9 @@
                     >
                         {{ $t("rigelChat.activeNow") }}
                     </h1>
-                    <h1 v-else class="text-xs text-brand-text-400">{{ $t("rigelChat.offline") }}</h1>
+                    <h1 v-else class="text-xs text-gray-500">
+                        {{ $t("rigelChat.offline") }}
+                    </h1>
                 </div>
             </div>
 

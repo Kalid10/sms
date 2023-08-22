@@ -12,13 +12,17 @@
             >
                 <div>
                     <div>
-                        {{ $t("announcementsItem.postTargets") }}
-                        <span
-                            v-for="(target, index) in announcement.target_group"
-                            :key="index"
-                            class="p-1 text-[0.6rem] font-medium uppercase"
-                        >
-                            {{ target }}
+                        <span v-if="isAdmin()">
+                            {{ $t("announcementsItem.postTargets") }}
+                            <span
+                                v-for="(
+                                    target, index
+                                ) in announcement.target_group"
+                                :key="index"
+                                class="p-1 text-[0.6rem] font-medium uppercase"
+                            >
+                                {{ target }}
+                            </span>
                         </span>
                         {{ $t("announcementsItem.andExpires") }}
                         <span>
@@ -40,6 +44,7 @@
 </template>
 <script setup>
 import moment from "moment";
+import { isAdmin } from "@/utils";
 
 defineProps({
     announcement: {

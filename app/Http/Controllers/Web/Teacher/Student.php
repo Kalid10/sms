@@ -70,9 +70,9 @@ class Student extends Controller
                 'quarters' => $quarters,
                 'semesters' => $semesters,
                 'school_years' => $schoolYears,
-                'school_year_id' => $request->query('school_year_id') ?? SchoolYear::getActiveSchoolYear()->id,
-                'semester_id' => $request->query('semester_id') ?? Semester::getActiveSemester()->id,
-                'quarter_id' => $request->query('quarter_id') ?? Quarter::getActiveQuarter()->id,
+                'school_year' => $request->query('school_year_id') ?? SchoolYear::getActiveSchoolYear(),
+                'semester' => $request->query('semester_id') ?? Semester::getActiveSemester(),
+                'quarter' => $request->query('quarter_id') ?? Quarter::getActiveQuarter(),
             ],
         ]);
     }

@@ -4,7 +4,7 @@
         :class="showGettingStarted ? 'justify-between' : 'justify-center'"
     >
         <div
-            class="flex h-full max-h-screen flex-col items-center space-y-2 rounded-lg border border-black bg-white p-4"
+            class="flex h-full max-h-screen flex-col items-center space-y-2 rounded-lg bg-white p-3 shadow"
             :class="
                 showGettingStarted ? 'w-full lg:w-8/12' : 'w-full lg:w-11/12'
             "
@@ -125,7 +125,14 @@
                 </button>
             </div>
         </div>
-        <GettingStarted :show-getting-started="showGettingStarted" />
+        <div v-if="showGettingStarted" class="w-4/12">
+            <AIUsageProgress
+                class="rounded-lg bg-brand-150 px-5 py-3 shadow-sm"
+                :update-usage="updateAIUsage"
+                :page="page"
+            />
+            <GettingStarted :show-getting-started="showGettingStarted" />
+        </div>
     </div>
 </template>
 <script setup>
@@ -135,19 +142,24 @@ import {
     PaperAirplaneIcon,
     StopIcon,
 } from "@heroicons/vue/20/solid";
-import { nextTick, onMounted, ref, watchEffect } from "vue";
+import { nextTick, onMounted, ref, watch, watchEffect } from "vue";
 import { copyToClipboard } from "@/utils";
 import Loading from "@/Components/Loading.vue";
 import { usePage } from "@inertiajs/vue3";
 import GettingStarted from "@/Views/Teacher/Views/Copilot/Chat/GettingStarted.vue";
 import Toast from "@/Components/Toast.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import AIUsageProgress from "@/Views/Teacher/AIUsageProgress.vue";
 
-const emit = defineEmits(["limit-reached"]);
+const emit = defineEmits(["limit-reached", "update-ai-usage"]);
 defineProps({
     showGettingStarted: {
         type: Boolean,
         default: true,
+    },
+    page: {
+        type: String,
+        default: "/teacher/copilot",
     },
 });
 const isLoading = ref(false);
@@ -157,6 +169,7 @@ const isChatUpdating = ref(false);
 const chatContainer = ref(null);
 const openAIDailyUsage = ref();
 const openAILimitReached = ref(false);
+const updateAIUsage = ref(false);
 const toastEvent = ref();
 let eventSource;
 
@@ -192,6 +205,8 @@ watchEffect(() => {
 
 const startStreaming = () => {
     isLoading.value = true;
+    updateAIUsage.value = false;
+
     // Close any existing event source
     if (eventSource) {
         eventSource.close();
@@ -212,6 +227,7 @@ const startStreaming = () => {
                 isLoading.value = false;
                 isChatUpdating.value = false;
                 eventSource.close();
+                updateAIUsage.value = true;
             } else {
                 isLoading.value = false;
                 isChatUpdating.value = false;
@@ -236,6 +252,7 @@ const startStreaming = () => {
         (event) => {
             // update usage
             openAIDailyUsage.value = event.data;
+            updateAIUsage.value = true;
         },
         false
     );
@@ -264,6 +281,8 @@ const startStreaming = () => {
             .catch((error) => {
                 console.error("Error:", error);
             });
+
+        updateAIUsage.value = true;
     };
 
     // Handle Error
@@ -273,6 +292,7 @@ const startStreaming = () => {
             // TODO: Add error handling method
             isLoading.value = false;
             isChatUpdating.value = false;
+            updateAIUsage.value = true;
         },
         false
     );
@@ -283,6 +303,7 @@ const stopStreaming = () => {
         eventSource.close();
         isChatUpdating.value = false;
         isLoading.value = false;
+        updateAIUsage.value = true;
     }
 };
 
@@ -336,5 +357,9 @@ const copyToClipboardAndShowToast = (value, event) => {
     showCopyToast.value = true;
     toastEvent.value = event;
 };
+
+watch(updateAIUsage, (value) => {
+    emit("update-ai-usage", updateAIUsage.value);
+});
 </script>
 <style scoped></style>

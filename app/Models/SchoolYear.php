@@ -18,6 +18,7 @@ class SchoolYear extends Model
         'start_date',
         'end_date',
         'name',
+        'is_ready',
     ];
 
     public function batches(): HasMany

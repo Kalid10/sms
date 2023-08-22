@@ -6,12 +6,14 @@
         <div
             class="flex w-full flex-col justify-between space-x-5 py-3 lg:flex-row"
         >
-            <div class="flex w-full rounded-lg border lg:w-7/12">
+            <div class="flex w-full rounded-lg border lg:w-8/12">
                 <Flags :title="$t('batchesIndex.flagList')" view="homeroom" />
             </div>
-            <div class="flex w-full justify-between lg:w-4/12">
+            <div
+                class="flex min-h-full w-full flex-col justify-between gap-2 lg:w-4/12"
+            >
                 <div
-                    class="flex min-h-full w-full flex-col items-center justify-center rounded-lg bg-gradient-to-bl from-violet-500 to-purple-500 py-2 text-center uppercase text-white shadow-sm"
+                    class="flex h-1/2 w-full flex-col items-center justify-center rounded-lg bg-gradient-to-bl from-violet-500 to-purple-500 py-2 text-center uppercase text-white shadow-sm"
                 >
                     <div
                         v-if="activeSession.length > 0"
@@ -38,6 +40,9 @@
                         </div>
                     </div>
                     <div v-else>{{ $t("batchesIndex.noActiveSession") }}</div>
+                </div>
+                <div class="flex h-1/2 rounded-lg">
+                    <NextClass />
                 </div>
             </div>
         </div>
@@ -66,6 +71,7 @@ import Assessments from "@/Views/Admin/Batches/Assessments.vue";
 import TabElement from "@/Components/TabElement.vue";
 import { toUnderscore } from "@/utils";
 import { useI18n } from "vue-i18n";
+import NextClass from "@/Views/Admin/Batches/NextClass.vue";
 
 const { t } = useI18n();
 

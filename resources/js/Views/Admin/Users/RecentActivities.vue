@@ -13,13 +13,22 @@
                 class="w-full p-2 py-3 text-xs font-medium capitalize"
                 :class="index % 2 === 0 ? 'bg-brand-50/50' : 'bg-white'"
             >
-                {{ item.properties.attributes.name }}
-                {{ item.event }}
-                by {{ item.causer ?? "System" }}
-                <span class="font-light italic">
-                    (
-                    {{ item.properties.attributes.email }} )
-                </span>
+                <div v-if="item.causer === null">
+                    {{ item.properties.attributes.name }}
+                    {{ item.event }}
+                    by {{ item.causer ?? "System" }}
+                    <span class="font-light italic">
+                        (
+                        {{ item.properties.attributes.email }} )
+                    </span>
+                </div>
+                <div v-else>
+                    {{ item.causer.name }} {{ item.event }} by
+                    {{ item.causer.name }}
+                    <span class="font-light italic">
+                        ( {{ item.causer.email }} )
+                    </span>
+                </div>
             </div>
         </div>
         <Pagination clas="pb-3" :links="activityLogs.links" position="center" />

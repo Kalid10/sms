@@ -3,7 +3,7 @@
         v-if="header && isOpen"
         class="flex w-full flex-col items-center justify-center space-x-4 space-y-2 py-2 px-1 lg:space-y-1"
     >
-        <div class="h-full w-fit lg:w-3/12">
+        <div class="h-full w-fit lg:w-full">
             <img
                 :src="
                     auth?.user?.profile_image ??
@@ -12,7 +12,7 @@
                         '.svg'
                 "
                 alt="avatar"
-                class="mx-auto w-16 rounded-full object-cover md:w-24"
+                class="mx-auto h-16 w-16 rounded-full border-2 border-brand-300 object-cover"
             />
         </div>
         <div

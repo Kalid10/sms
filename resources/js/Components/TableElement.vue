@@ -9,7 +9,7 @@
             >
                 <div class="flex flex-col justify-center p-4 sm:grow">
                     <h3 class="font-semibold capitalize">{{ title }}</h3>
-                    <h5 v-if="subtitle" class="text-sm text-gray-400">
+                    <h5 v-if="subtitle" class="text-sm text-gray-700">
                         {{ subtitle }}
                     </h5>
                 </div>
@@ -164,7 +164,7 @@
                 class="grid h-48 w-full place-items-center border-t"
             >
                 <slot name="empty-data">
-                    <p class="text-sm font-semibold text-brand-text-300">
+                    <p class="text-sm font-semibold text-black">
                         No data found
                     </p>
                 </slot>

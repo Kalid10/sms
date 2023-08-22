@@ -117,10 +117,13 @@ const en = {
         goToAnnouncements: "Go To Announcements",
         viewAllAnnouncements: "View All Announcements",
         publishAnnouncement: "Publish Announcement",
+        couldNotFound: "Could not find any announcement related to {searchKey}",
+        noNewAnnouncement:
+            "Currently, there are no new announcements. We encourage you to revisit this space frequently for updates.",
     },
     announcementsItem: {
         postTargets: "Post Targets",
-        andExpires: "and expires",
+        andExpires: "Expires",
         posted: "Posted",
         byAuthor: "by Author",
     },
@@ -385,6 +388,12 @@ const en = {
         ],
     },
     common: {
+        overseeHomeroomClasses: "Oversee your homeroom classes",
+        addViewUpdateLessonPlans: "Add, view and update lesson plans",
+        viewStudents: "View your students",
+        addViewUpdateAssessments: "Add, view and update assessments",
+        schoolSchedules: "School Schedules",
+        viewAnnouncements: "View announcements",
         or: "or",
         for: "for",
         add: "Add",
@@ -396,6 +405,8 @@ const en = {
         homeroomClasses: "Homeroom Classes",
         flags: "Flags",
         chat: "Chat",
+        aiChat: "Rigel Copilot",
+        aiChatDescription: "Experience the power of AI in education",
         sections: "Sections",
         section: "Section",
         question: "Question",
@@ -467,10 +478,29 @@ const en = {
         staff: "Staff",
         apply: "Apply",
         by: "By",
+        logoutConfirmation: "Are you sure you want to logout?",
+        english: "English",
+        en: "EN",
+        amharic: "Amharic",
+        am: "AM",
+        notes: "Notes",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
         chat: "Chat",
+        dailyLimit:
+            "You've hit your daily limit. Please get in touch with the administrator to increase limit.",
+    },
+    questionEmptyView: {
+        welcometext: "Welcome to Rigel Question Generator",
+        hintOne:
+            "A feature specifically designed to simplify and enhance your question creation process. Here, we've streamlined the task of crafting effective, relevant, and challenging educational questions to an art of few clicks.",
+        hintTwo:
+            "Whether you're preparing classwork, homework, or even tests, our Question Generator has got you covered. Generate questions directly from your lesson plans, ensuring that your assessments are perfectly aligned with your lessons, while also reducing preparation time significantly. This feature serves as your ultimate educational companion, freeing up your time to focus on what matters the most: teaching and inspiring your students.",
+        hintThree:
+            "But we didn't stop there. For those seeking a more personalized touch, you can also manually input your questions. This gives you the opportunity to customize every aspect of your question-creation process, thereby creating a unique and engaging learning experience for each student.",
+        hintFour:
+            "Our Question Generator is more than just a tool. It's a stepping stone to enhancing the learning journey of your students. So why wait? Step into a world of seamless question creation today, and elevate your teaching experience to greater heights.",
     },
     createAdmin: {
         headingOne: "Register an Admin",
@@ -510,6 +540,7 @@ const en = {
         father: "Father",
         mother: "Mother",
         other: "Other",
+        linkToAnExistingParent: "Link to an existing parent",
     },
     createTeacher: {
         headerOne: "Register new teacher",
@@ -537,7 +568,7 @@ const en = {
     currentDaySchedule: {
         schedule: "'s Schedule",
         period: "Period",
-        noScheduleFound: " No schedule found!",
+        noScheduleFound: "No schedule found for ",
     },
     datePicker: {
         selectYear: "Select Year",
@@ -837,6 +868,7 @@ const en = {
     lessonPlans: {
         viewAllLessonPlans: "View All Lesson Plans",
         noLessonPlan: "No Lesson Plan Found!",
+        yourLessonPlans: "Your Lesson Plans",
     },
     lessonPlansIndex: {
         myLessonPlans: "My Lesson Plans",
@@ -1013,9 +1045,10 @@ const en = {
             "Opt for manual input if you prefer to generate questions based on your unique inputs and parameters. This option allows for greater control and specificity.",
         lessonPlans: "Lesson Plans",
         lessonPlanDescription:
-            "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we'll load your plans, and you can choose one for us to craft tailored questions.",
+            "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we will load your plans, and you can choose one for us to craft tailored questions.",
         question: "Question",
         enterQuestion: "Enter Question",
+        dailyAIUsageProgress: "Daily AI Usage ",
     },
     readMoreLess: {
         readMore: "Read more...",
@@ -1088,7 +1121,7 @@ const en = {
         resultingInTotalOf: "resulting in a total of",
         createAndProceed: "Create and Proceed",
         summaryText:
-            "<p class='text-xs'> The upcoming academic year <span class='font-bold text-brand-text-400'>{academicYear}</span>, will consist of <span class='font-bold text-brand-text-400'>{semesters} semesters,</span > each divided into <span class='font-bold text-brand-text-400'>{quartersPerSemester} quarters, </span> resulting in a total of <span class='font-bold text-brand-text-400' >{totalQuarters} quarters.</span > </p>",
+            "<p class='text-xs'> The upcoming academic year <span class='font-bold text-brand-text-600'>{academicYear}</span>, will consist of <span class='font-bold text-brand-text-600'>{semesters} semesters,</span > each divided into <span class='font-bold text-brand-text-600'>{quartersPerSemester} quarters, </span> resulting in a total of <span class='font-bold text-brand-text-600' >{totalQuarters} quarters.</span > </p>",
     },
     registerSubjectForm: {
         formElementTitle: "New Subject",
@@ -1218,6 +1251,7 @@ const en = {
             'Click on the "Finish" button on the bottom of the screen to finish setting up your schedule.',
         addNewPeriod: "Add new Period",
         days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        finish: "Finish",
     },
     schoolPeriodModal: {
         almostThere: "Almost there!",
@@ -1595,24 +1629,28 @@ const en = {
         currentPasswordLabel: "Current Password",
         currentPasswordPlaceholder: "Enter your current password",
         passwordLabel: "New Password",
-        passwordPlaceholder: "enter your new password",
-        passwordConfirmationLabel: "Confirm Password",
+        passwordPlaceholder: "Enter your new password",
+        passwordConfirmationLabel: "Confirm Your Password",
         passwordConfirmationPlaceholder: "confirm your new password",
         male: "Male",
         female: "Female",
         updateProfile: "Update Profile",
         updatePassword: "Update Password",
+        changeLanguage: "Change Language",
+        uploadProfilePicture: "Upload Profile Picture",
     },
 
     userStatistics: {
         adminsTitle: "Admins",
         adminStatSubtitle: "Admins registered in the system",
         studentsStatTitle: "Students",
-        studentsStatSubtitle: "Students registered into the school (all-time)",
+        studentsStatSubtitle: "Students registered into the school",
         teacherStatTitle: "Teachers",
-        teacherStatSubtitle: "Teachers registered into the school (all-time)",
+        teacherStatSubtitle: "Teachers registered into the school",
         newUsersStatTitle: "New Users",
         newUserStatSubtitle: "New Users (last 30 days)",
+        guardianStatTitle: "Guardians",
+        guardianStatSubtitle: "Guardians registered into the school",
     },
 
     usersAbsentee: {
@@ -1703,6 +1741,7 @@ const en = {
         noOfQuestions: "No Of Que.",
         difficultyLevel: "Difficulty Level",
         generatedAt: "Generated At",
+        questionsGenerated: "Questions Generated",
     },
     adminUserIndex: {
         signUpAdministrators: "Register administrators with ease",
@@ -1854,6 +1893,10 @@ const en = {
         selectTargetGroup: "Select target group :",
         expireDate: "Expire date",
         expiresOn: "Expires On",
+    },
+    imageUpload: {
+        imageSizeLimit: "Image size must be less than 3MB",
+        chooseImage: "Choose Image To Upload",
     },
 };
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\Admin;
+use App\Models\Guardian;
 use App\Models\Level;
 use App\Models\SchoolYear;
 use App\Models\Student;
@@ -58,6 +59,9 @@ class UserController extends Controller
         // Get new users registered the last 30 days
         $newUsersCount = User::where('created_at', '>=', now()->subDays(30))->count();
 
+        // Get active school year guardians
+        $guardiansCount = Guardian::with('schoolYear', SchoolYear::getActiveSchoolYear())->count();
+
         return Inertia::render('Admin/Users/Index', [
             'users' => $users,
             'activity_log' => $activityLog,
@@ -65,12 +69,19 @@ class UserController extends Controller
             'teachers_count' => $teachersCount,
             'admins_count' => $adminsCount,
             'new_users_count' => $newUsersCount,
+            'guardians_count' => $guardiansCount,
         ]);
     }
 
     public function profile(): Response
     {
-        return Inertia::render('Admin/Users/Profile');
+        $page = match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Profile',
+            User::TYPE_ADMIN => 'Admin/Profile',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page);
     }
 
     public function update(UpdateRequest $request): RedirectResponse
@@ -105,12 +116,25 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Password updated Successfully');
     }
 
-    public function student(): Response
+    public function student(Request $request): Response
     {
         $levels = Level::all();
 
+        $searchKey = $request->input('search');
+
         return Inertia::render('Admin/Users/Create/Student', [
             'levels' => $levels,
+            'guardians' => Inertia::lazy(fn () => Guardian::with([
+                'user:id,name',
+            ])->select('id', 'user_id')
+                ->when($searchKey, function ($query) use ($searchKey) {
+                    return $query->whereHas('user', function ($query) use ($searchKey) {
+                        return $query->where('name', 'like', "%{$searchKey}%");
+                    });
+                })
+                ->orderBy('user_id', 'asc')->get()
+                ->take(5)
+            ),
         ]);
     }
 
@@ -125,8 +149,12 @@ class UserController extends Controller
     }
 
     public function uploadImage(Request $request): RedirectResponse
+    // Get the logged in user
     {
         $user = auth()->user();
+        // This refresh code is used to unload all relations of the user,
+        // but the main use of this code is to refresh the user model
+        $user->refresh();
 
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -154,8 +182,9 @@ class UserController extends Controller
         // Upload the resized image to Spaces
         ImageService::upload($img, $filename);
 
-        $user->profile_image = Storage::disk('spaces')->url('rigel/profile-images/'.$filename);
-        $user->save();
+        $user->update([
+            'profile_image' => Storage::disk('spaces')->url('rigel/profile-images/'.$filename),
+        ]);
 
         return redirect()->back()->with('success', 'Image uploaded successfully.');
     }

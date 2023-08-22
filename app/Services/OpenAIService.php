@@ -34,7 +34,16 @@ class OpenAIService
     public function createCompletionStream($prompt): StreamedResponse|JsonResponse
     {
         if (! $this->checkUsageLimit()) {
-            return response()->json(['error' => 'You have exceeded your daily usage limit.'], 429);
+            return response()->stream(function () {
+                echo "event: limit_reached\n";
+                echo "data: Limit reached\n\n";
+                ob_flush();
+                flush();
+            }, 200, [
+                'Cache-Control' => 'no-cache',
+                'X-Accel-Buffering' => 'no',
+                'Content-Type' => 'text/event-stream',
+            ]);
         }
 
         $remainingUsage = $this->getRemainingDailyUsage();
@@ -58,7 +67,7 @@ class OpenAIService
 
         $remainingUsage = $this->getRemainingDailyUsage();
 
-        $maxTokens = min(200, $remainingUsage);
+        $maxTokens = min(500, $remainingUsage);
 
         $stream = OpenAI::chat()->createStreamed([
             'model' => 'gpt-3.5-turbo',
@@ -116,7 +125,7 @@ class OpenAIService
 
     public function checkUsageLimit(): bool
     {
-        $dailyLimit = env('DAILY_OPEN_AI_USER_USAGE_LIMIT', 100);
+        $dailyLimit = env('DAILY_OPEN_AI_USER_USAGE_LIMIT', 1000);
 
         if ($this->user->openai_daily_usage >= $dailyLimit) {
             return false;
@@ -144,7 +153,7 @@ class OpenAIService
     public function getRemainingDailyUsage(): int
     {
         // Assuming you have a daily limit set somewhere.
-        $dailyLimit = env('DAILY_OPEN_AI_USER_USAGE_LIMIT', 100);
+        $dailyLimit = env('DAILY_OPEN_AI_USER_USAGE_LIMIT', 1000);
 
         // Calculate remaining usage
         return $dailyLimit - $this->user->openai_daily_usage;

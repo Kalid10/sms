@@ -23,7 +23,7 @@
                 <label
                     v-for="(day, d) in days"
                     :key="d"
-                    class="hidden place-items-center text-xs font-semibold text-brand-text-300 lg:grid"
+                    class="text-brand-text-600 hidden place-items-center text-xs font-semibold lg:grid"
                 >
                     {{ day }}
                 </label>
@@ -31,7 +31,7 @@
                 <label
                     v-for="(day, d) in shortDays"
                     :key="d"
-                    class="grid place-items-center text-xs font-semibold uppercase text-brand-text-300 lg:hidden"
+                    class="text-brand-text-600 grid place-items-center text-xs font-semibold uppercase lg:hidden"
                 >
                     {{ day }}
                 </label>
@@ -46,7 +46,7 @@
                     class="col-span-1 row-span-1 flex cursor-auto flex-col items-center border-b"
                 >
                     <div
-                        class="w-full p-2 text-left text-xs font-semibold text-brand-text-300"
+                        class="text-brand-text-600 w-full p-2 text-left text-xs font-semibold"
                     >
                         {{ numberOfPreviousDays - offsetDays + o }}
                     </div>
@@ -64,7 +64,7 @@
                     "
                 >
                     <div
-                        class="w-full p-2 text-left text-xs font-semibold text-brand-text-300"
+                        class="text-brand-text-600 w-full p-2 text-left text-xs font-semibold"
                     >
                         {{ day }}
                     </div>
@@ -98,7 +98,7 @@
                                     class="hidden overflow-hidden md:flex lg:min-w-fit"
                                 >
                                     <p
-                                        class="truncate whitespace-nowrap text-xs text-brand-text-300"
+                                        class="text-brand-text-600 truncate whitespace-nowrap text-xs"
                                     >
                                         All-Day
                                     </p>
@@ -135,7 +135,7 @@
                     class="col-span-1 row-span-1 flex cursor-auto flex-col items-center border-b"
                 >
                     <div
-                        class="w-full p-2 text-left text-xs font-semibold text-brand-text-300"
+                        class="text-brand-text-600 w-full p-2 text-left text-xs font-semibold"
                     >
                         {{ k }}
                     </div>

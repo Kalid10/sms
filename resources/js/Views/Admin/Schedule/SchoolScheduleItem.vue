@@ -184,8 +184,10 @@ function edit(schoolSchedule) {
     form.id = schoolSchedule.id;
     form.title = schoolSchedule.title;
     form.body = schoolSchedule.body;
+    form.tags = schoolSchedule.tags.join(",");
     form.type = schoolSchedule.type;
-    form.tags = schoolSchedule.tags;
+    form.start_date = moment(schoolSchedule.start_date).toDate();
+    form.end_date = moment(schoolSchedule.end_date).toDate();
 }
 
 const deleteSchedule = () => {

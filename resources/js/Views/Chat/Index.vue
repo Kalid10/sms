@@ -28,7 +28,7 @@ async function toggleConversation(chat) {
 }
 
 onMounted(() => {
-    messageStore.getContacts();
+    // messageStore.getContacts();
     messageStore.setActiveStatus(true);
     messageStore.getFavorites();
     messagePusherStore.authenticate();

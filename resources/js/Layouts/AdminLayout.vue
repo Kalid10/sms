@@ -12,6 +12,7 @@
                     :header="auth"
                     :main-items="sidebarItems || []"
                     :footer-items="footerItems"
+                    @show-logout-confirmation="showLogoutConfirmation"
                 />
                 <div
                     :class="
@@ -25,22 +26,52 @@
         </div>
         <Notification />
     </div>
+
+    <DialogBox
+        :open="isLogoutDialogOpen"
+        @abort="isLogoutDialogOpen = false"
+        @confirm="handleLogoutConfirm"
+    >
+        <template #icon>
+            <ArrowLeftOnRectangleIcon />
+        </template>
+
+        <template #title>
+            {{ t("adminLayout.logout") }}
+        </template>
+        <template #description>
+            {{ t("common.logoutConfirmation") }}
+        </template>
+        <template #action>
+            {{ t("adminLayout.logout") }}
+        </template>
+    </DialogBox>
+
+    <Loading v-if="isLoading" :is-full-screen="true" type="bounce">
+        <template #description>
+            <div
+                class="flex flex-col items-center justify-center space-y-2 rounded-lg bg-brand-350 p-5 text-brand-150 shadow-md"
+            >
+                <FaceFrownIcon class="w-6 animate-bounce" />
+                <div class="text-sm font-medium capitalize">
+                    Logging you out. See you Soon!
+                </div>
+            </div>
+        </template>
+    </Loading>
 </template>
 
 <script setup>
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
 import { computed, provide, ref } from "vue";
-import {
-    ChatBubbleBottomCenterIcon,
-    Cog6ToothIcon,
-    UserIcon,
-} from "@heroicons/vue/20/solid/index.js";
-import { usePage } from "@inertiajs/vue3";
+import { Cog6ToothIcon, UserIcon } from "@heroicons/vue/20/solid/index.js";
+import { router, usePage } from "@inertiajs/vue3";
 import {
     AcademicCapIcon,
     BookOpenIcon,
     CalendarDaysIcon,
+    FaceFrownIcon,
     FingerPrintIcon,
     HomeIcon,
     MegaphoneIcon,
@@ -50,6 +81,8 @@ import {
 } from "@heroicons/vue/24/solid";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/vue/20/solid/index";
 import { useI18n } from "vue-i18n";
+import DialogBox from "@/Components/DialogBox.vue";
+import Loading from "@/Components/Loading.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -62,55 +95,109 @@ const props = defineProps({
 const openSideBar = ref(true);
 const directory = computed(() => usePage().url.split("/")[2]);
 
+const isLoading = ref(false);
+const isLogoutDialogOpen = ref(false);
+
+const showLogoutConfirmation = () => {
+    isLogoutDialogOpen.value = true;
+};
+
+const handleLogoutConfirm = () => {
+    isLoading.value = true;
+    logout();
+    isLogoutDialogOpen.value = false;
+};
+
+const isRouteActive = (routePattern) => {
+    const currentURL = usePage().url.split("?")[0]; // Strip query parameters
+    return routePattern.test(currentURL);
+};
+
+const logout = () => {
+    router.post(
+        "/logout",
+        {},
+        {
+            onFinish: () => {
+                isLoading.value = false;
+            },
+        }
+    );
+};
+
 // Populate sidebar items
 const sidebarItems = computed(() => [
     {
         name: t("adminLayout.home"),
         icon: HomeIcon,
         route: "/admin",
-        active: directory.value === undefined,
-    },
-    {
-        name: t("common.chat"),
-        icon: ChatBubbleBottomCenterIcon,
-        route: "/admin/chat",
-        active: directory.value === "chat",
+        active: isRouteActive(/^\/admin\/\?$/) || isRouteActive(/^\/admin\/?$/),
     },
     {
         name: t("common.teachers"),
         icon: UserIcon,
         route: "/admin/teachers",
-        active: directory.value === "teachers",
+        active:
+            isRouteActive(/^\/admin\/teachers\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/class\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/students\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/lesson-plan\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/assessments\/?$/) ||
+            isRouteActive(/^\/teacher\/assessments\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/homeroom\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/announcements\/?$/),
     },
     {
         name: t("common.students"),
         icon: UsersIcon,
         route: "/admin/students",
-        active: directory.value === "students",
+        active:
+            isRouteActive(/^\/admin\/students\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/students\/?$/) ||
+            isRouteActive(/^\/admin\/teachers\/students\/\d+\/?$/) ||
+            // isRouteActive(/^\/admin\/teachers\/students\/?$/) ||
+            isRouteActive(/^\/students\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/students\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/students\/?$/) ||
+            isRouteActive(/^\/admin\/batches\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/batches\/?$/),
     },
     {
         name: t("common.grades"),
         icon: AcademicCapIcon,
         route: "/admin/levels",
-        active: directory.value === "levels",
+        active:
+            isRouteActive(/^\/admin\/levels\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/levels\/?$/) ||
+            isRouteActive(/^\/levels\/level-categories\/\d+\/?$/) ||
+            isRouteActive(/^\/levels\/level-categories\/?$/),
     },
     {
         name: t("common.subjects"),
         icon: BookOpenIcon,
         route: "/admin/subjects",
-        active: directory.value === "subjects",
+        active:
+            isRouteActive(/^\/admin\/subjects\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/subjects\/?$/) ||
+            isRouteActive(/^\/batches\/subjects\/\d+\/\d+\/?$/) ||
+            isRouteActive(/^\/batches\/subjects\/?$/),
     },
     {
         name: t("common.announcements"),
         icon: MegaphoneIcon,
         route: "/admin/announcements",
-        active: directory.value === "announcements",
+        active:
+            isRouteActive(/^\/admin\/announcements\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/announcements\/?$/),
     },
     {
         name: t("common.schedule"),
         icon: CalendarDaysIcon,
         route: "/admin/schedules",
-        active: directory.value === "schedules",
+        active:
+            isRouteActive(/^\/admin\/schedules\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/schedules\/?$/),
     },
     {
         name: t("common.assessments"),
@@ -122,28 +209,39 @@ const sidebarItems = computed(() => [
         name: t("common.users"),
         icon: UserGroupIcon,
         route: "/admin/users",
-        active: directory.value === "users",
+        active:
+            isRouteActive(/^\/admin\/users\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/users\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/admin\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/admin\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/teacher\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/teacher\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/student\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/user\/register\/student\/?$/),
     },
     {
         name: t("common.absentees"),
         icon: FingerPrintIcon,
         route: "/admin/absentees",
-        active: directory.value === "absentees",
+        active:
+            isRouteActive(/^\/admin\/absentees\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/absentees\/?$/),
+    },
+    {
+        name: t("adminLayout.settings"),
+        icon: Cog6ToothIcon,
+        route: "/admin/user/profile",
+        active:
+            isRouteActive(/^\/admin\/user\/profile\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/user\/profile\/?$/),
     },
 ]);
 
 const footerItems = [
     {
-        name: t("adminLayout.settings"),
-        icon: Cog6ToothIcon,
-        route: "/user/profile",
-        // active: directory.value === 'settings'
-    },
-    {
         icon: ArrowLeftOnRectangleIcon,
         name: t("adminLayout.logout"),
-        route: "/logout",
-        method: "POST",
+        action: "showLogoutConfirmation",
     },
 ];
 

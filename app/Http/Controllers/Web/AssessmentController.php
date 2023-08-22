@@ -32,10 +32,14 @@ class AssessmentController extends Controller
     {
         $request->validated();
 
-        Assessment::create(array_merge(
-            $request->validated(),
-            ['quarter_id' => Quarter::getActiveQuarter()->id]
-        ));
+        foreach ($request->input('batch_subject_ids') as $batchSubjectId) {
+            $batchSubject = BatchSubject::find($batchSubjectId);
+            $batchSubject->assessments()->create(array_merge(
+                $request->validated(),
+                ['quarter_id' => Quarter::getActiveQuarter()->id],
+                ['batch_subject_id' => $batchSubjectId]
+            ));
+        }
 
         return redirect()->back()->with('success', 'Assessment created.');
     }

@@ -6,7 +6,7 @@
             <Heading>
                 {{ $t("registerSubjects.registerSubjects") }}
             </Heading>
-            <h3 class="text-sm text-brand-text-300">
+            <h3 class="text-brand-text-600 text-sm">
                 {{ $t("registerSubjects.descriptionOne") }}
                 <span class="inline-block">
                     {{ $t("registerSubjects.descriptionTwo") }}
@@ -16,7 +16,7 @@
 
         <div class="flex flex-wrap gap-2 md:gap-5">
             <span
-                class="col-span-1 text-sm text-brand-text-300 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="text-brand-text-600 col-span-1 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
                 <span class="whitespace-nowrap font-semibold text-black">{{
                     updatedSubjects.length
@@ -24,7 +24,7 @@
                 {{ $t("registerSubjects.totalSubjects") }}
             </span>
             <span
-                class="col-span-1 text-sm text-brand-text-300 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="text-brand-text-600 col-span-1 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
                 <span class="whitespace-nowrap font-semibold text-black">{{
                     selectedSubjects.length
@@ -33,7 +33,7 @@
             </span>
             <span
                 v-if="newSubjects.length > 0"
-                class="col-span-1 text-sm text-brand-text-300 sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="text-brand-text-600 col-span-1 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
                 <span class="whitespace-nowrap font-semibold text-black">{{
                     newSubjects.length
@@ -54,7 +54,7 @@
                         class="z-10 h-3.5 w-3.5 rounded-full"
                         :class="colors[c]"
                     />
-                    <Heading size="sm" class="font-normal text-brand-text-300"
+                    <Heading size="sm" class="text-brand-text-600 font-normal"
                         >{{ category }}
                     </Heading>
                 </div>
@@ -91,7 +91,7 @@
                                             {{ subject.full_name }}
                                         </span>
                                         <span
-                                            class="text-sm uppercase text-brand-text-300"
+                                            class="text-brand-text-600 text-sm uppercase"
                                         >
                                             {{ subject.short_name }}
                                         </span>
@@ -140,7 +140,7 @@
             <div class="flex flex-col gap-2">
                 <div class="flex items-center gap-2">
                     <div class="z-10 h-3.5 w-3.5 rounded-full bg-brand-200" />
-                    <Heading size="sm" class="font-normal text-brand-text-300">
+                    <Heading size="sm" class="text-brand-text-600 font-normal">
                         {{ $t("registerSubjects.other") }}
                     </Heading>
                 </div>
@@ -156,7 +156,7 @@
                             class="h-5 w-5 stroke-gray-500 stroke-2"
                         />
                         <span
-                            class="text-sm font-semibold text-brand-text-300"
+                            class="text-brand-text-600 text-sm font-semibold"
                             >{{ $t("registerSubjects.createNewSubject") }}</span
                         >
                     </button>
@@ -180,7 +180,7 @@
                             </span>
                         </span>
                         <span
-                            class="text-sm font-semibold text-brand-text-300"
+                            class="text-brand-text-600 text-sm font-semibold"
                             >{{
                                 $t("registerSubjects.createNewCategory")
                             }}</span
@@ -324,11 +324,7 @@ function submitSubjects() {
         },
         {
             onSuccess: () => {
-                console.log("Success");
                 emits("success");
-            },
-            onError: () => {
-                console.log("Error");
             },
         }
     );
@@ -349,7 +345,6 @@ const computedShortName = computed(() =>
 const formShortName = ref(null);
 
 watch(tags, (value) => {
-    console.log(value.split(","));
     newSubject.value.tags = value.split(",");
 });
 

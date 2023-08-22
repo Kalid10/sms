@@ -1,7 +1,7 @@
 <template>
     <div
         ref="parentDiv"
-        class="z-50 max-h-screen bg-brand-550 text-white"
+        class="z-50 max-h-screen overflow-auto bg-brand-550 text-white"
         :class="[
             isOpen ? 'min-w-[12rem] lg:w-60 lg:min-w-0' : 'min-w-8 lg:w-16',
             'transition-all duration-300 ease-in-out ',
@@ -17,7 +17,15 @@
             </div>
 
             <div class="flex h-fit w-full flex-col justify-between">
-                <Footer :items="footerItems" />
+                <div class="flex w-full justify-center py-2">
+                    <ChangeLanguage @click.stop />
+                </div>
+                <Footer
+                    :items="footerItems"
+                    @show-logout-confirmation="
+                        $emit('show-logout-confirmation')
+                    "
+                />
             </div>
         </div>
     </div>
@@ -30,6 +38,7 @@ import Items from "@/Views/Admin/SideBar/Items.vue";
 import Footer from "@/Views/Admin/SideBar/Footer.vue";
 import { useSidebarStore } from "@/Store/sidebar";
 import { onClickOutside } from "@vueuse/core";
+import ChangeLanguage from "@/Components/ChangeLanguage.vue";
 
 const props = defineProps({
     header: {
@@ -46,7 +55,7 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits(["update:open"]);
+const emits = defineEmits(["update:open", "show-logout-confirmation"]);
 
 const sideBarItems = computed(() => props.mainItems);
 
@@ -89,3 +98,16 @@ onClickOutside(parentDiv, () => {
     sidebarStore.close();
 });
 </script>
+
+<style scoped>
+/* Customize scrollbar styles */
+::-webkit-scrollbar {
+    width: 1px;
+    height: 3px;
+    background: white;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #a0aec0;
+}
+</style>

@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\CheckSchoolYearStatus;
 use App\Http\Middleware\CheckUserRole;
 use App\Http\Middleware\CheckUserType;
 use App\Http\Middleware\EncryptCookies;
@@ -95,6 +96,7 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'checkUserType' => CheckUserType::class,
         'checkUserRole' => CheckUserRole::class,
+        'checkSchoolYearStatus' => CheckSchoolYearStatus::class,
     ];
 
     protected $middlewarePriority = [
