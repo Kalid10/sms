@@ -1680,7 +1680,7 @@ const am = {
         noOfQuestions: "የጥያቄዎች ቁጥር",
         difficultyLevel: "የክብደት ደረጃ",
         generatedAt: "የወጣበት ቀን",
-        questionsGenerated: "የተፈጠሩ ጥያቄዎች",
+        todaysGeneratedQuestions: "ዛሬ የተፈጠሩ ጥያቄዎች",
     },
 
     adminUserIndex: {
