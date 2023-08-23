@@ -484,6 +484,7 @@ const en = {
         amharic: "Amharic",
         am: "AM",
         notes: "Notes",
+        inventory: "Inventory",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",

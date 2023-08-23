@@ -469,6 +469,7 @@ const am = {
         amharic: "አማርኛ",
         am: "አማ",
         notes: "ማስታዎች",
+        inventory: "ኢንቬንቶሪ",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",

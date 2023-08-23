@@ -71,6 +71,7 @@ import {
     AcademicCapIcon,
     BookOpenIcon,
     CalendarDaysIcon,
+    CircleStackIcon,
     FaceFrownIcon,
     FingerPrintIcon,
     HomeIcon,
@@ -226,6 +227,14 @@ const sidebarItems = computed(() => [
         active:
             isRouteActive(/^\/admin\/absentees\/\d+\/?$/) ||
             isRouteActive(/^\/admin\/absentees\/?$/),
+    },
+    {
+        name: t("common.inventory"),
+        icon: CircleStackIcon,
+        route: "/admin/inventory",
+        active:
+            isRouteActive(/^\/admin\/inventory\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/inventory\/?$/),
     },
     {
         name: t("adminLayout.settings"),
