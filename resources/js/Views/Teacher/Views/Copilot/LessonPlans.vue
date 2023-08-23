@@ -21,10 +21,10 @@
                 <SelectInput v-model="selectedWeek" :options="weekOptions" />
             </div>
         </div>
-        <div v-if="lessonPlansData" class="flex flex-col space-y-1">
+        <div v-if="lessonPlansData" class="flex w-full flex-col space-y-1">
             <div
                 v-if="selectedWeekPlans.length"
-                class="flex flex-col space-y-1 py-2"
+                class="flex w-full flex-col space-y-1 py-2"
             >
                 <div
                     class="flex w-full flex-col space-x-1 lg:flex-row lg:flex-wrap lg:justify-between"
@@ -34,14 +34,14 @@
                         :key="index"
                         :class="[
                             'my-3 flex w-full cursor-pointer flex-col items-center justify-evenly space-y-3 rounded-lg p-2 px-3 text-center text-xs shadow-sm lg:w-5/12',
-                            isSelected(item.lesson_plan.id)
+                            isSelected(item?.lesson_plan?.id)
                                 ? 'border border-zinc-700 bg-gradient-to-bl from-violet-500 to-purple-500 text-white'
                                 : 'border border-zinc-700 bg-white from-violet-500 to-purple-500 hover:scale-105 hover:border-zinc-700 hover:bg-gradient-to-bl hover:text-white',
                         ]"
                         @click="handleClick(item)"
                     >
                         <span class="font-medium">
-                            {{ item.lesson_plan.topic }}
+                            {{ item.lesson_plan?.topic }}
                         </span>
 
                         <span class="flex w-full justify-between px-2">
@@ -145,7 +145,9 @@ const weekOptions = [
 ];
 
 const selectedWeekPlans = computed(() => {
-    return lessonPlansData.value?.batch_sessions?.[selectedWeek.value] || [];
+    let selectedWeekPlans =
+        lessonPlansData.value?.batch_sessions?.[selectedWeek.value] || [];
+    return selectedWeekPlans.filter((item) => item.lesson_plan_id);
 });
 
 watch(lessonPlansData, (value) => {
