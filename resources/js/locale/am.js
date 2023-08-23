@@ -1159,6 +1159,7 @@ const am = {
         from: "ከ",
         searchForSchedule: "ለመርሐግብር ፍለጋ",
         addEvent: "ክስተት ይጨምሩ",
+        noScheduleFound: "ምንም መርሐግብር አልተገኘም",
     },
     schoolPeriodForm: {
         weekdays: ["ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ", "እሑድ"],
