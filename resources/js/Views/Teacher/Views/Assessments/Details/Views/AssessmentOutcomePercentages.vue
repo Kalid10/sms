@@ -3,7 +3,7 @@
         <OutcomePercentageDisplay
             icon-class="icon-check text-green-500"
             :title="$t('assessmentOutcomePercentages.passedPercentTitle')"
-            :value="passedPercent"
+            :value="100 - passedPercent"
             :icon="ArrowSmallUpIcon"
             type="positive"
         />
@@ -12,7 +12,7 @@
         <OutcomePercentageDisplay
             icon-class="icon-close text-red-500"
             :title="$t('assessmentOutcomePercentages.failedPercentTitle')"
-            :value="100 - passedPercent"
+            :value="passedPercent"
             :icon="ArrowSmallDownIcon"
             type="negative"
         />
@@ -26,10 +26,6 @@ import { ArrowSmallDownIcon, ArrowSmallUpIcon } from "@heroicons/vue/24/solid";
 
 defineProps({
     passedPercent: {
-        type: Number,
-        required: true,
-    },
-    failedPercent: {
         type: Number,
         required: true,
     },

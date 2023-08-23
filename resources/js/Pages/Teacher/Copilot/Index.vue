@@ -35,7 +35,7 @@
 import Title from "@/Views/Teacher/Views/Title.vue";
 import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
 import TabElement from "@/Components/TabElement.vue";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import QuestionPreparation from "@/Views/Teacher/Views/Copilot/QuestionPreparation.vue";
 import { ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
@@ -60,9 +60,8 @@ const activeTabFromQuery = computed(() => usePage().props.active_tab);
 
 const activeTab = ref(getActiveTabValue(activeTabFromQuery.value));
 
-// Watch for changes to activeTabFromQuery and update activeTab accordingly
-watch(activeTabFromQuery, (newValue) => {
-    activeTab.value = getActiveTabValue(newValue);
+onMounted(() => {
+    activeTab.value = getActiveTabValue(activeTabFromQuery.value);
 });
 
 const openAILimitReached = ref(false);

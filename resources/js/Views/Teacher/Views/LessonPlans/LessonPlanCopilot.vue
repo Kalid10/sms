@@ -45,13 +45,6 @@
                     />
                 </template>
 
-                <template #[questionsTab]>
-                    <QuestionPreparation
-                        :batch-subject-id="batchSubjectId"
-                        :lesson-plan-id="lessonPlanId"
-                        @limit-reached="setLimitInfo"
-                    />
-                </template>
                 <template #[notesTab]>
                     <div
                         v-if="noteSuggestion.content"
@@ -243,7 +236,6 @@ import { computed, inject, onMounted, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
 import { copyToClipboard, toUnderscore } from "@/utils";
-import QuestionPreparation from "@/Views/Teacher/Views/LessonPlans/QuestionPreparation.vue";
 import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
 import Toast from "@/Components/Toast.vue";
 import TabElement from "@/Components/TabElement.vue";
@@ -331,9 +323,8 @@ const copyToClipboardAndShowToast = (value, event) => {
 
 const { t } = useI18n();
 const chatTab = toUnderscore(t("common.chat"));
-const questionsTab = toUnderscore(t("common.questions"));
 const notesTab = toUnderscore(t("common.notes"));
-const tabs = [chatTab, questionsTab, notesTab];
+const tabs = [chatTab, notesTab];
 
 const activeTabFromQuery = computed(() => usePage().props.active_tab);
 const activeTab = ref(activeTabFromQuery.value ?? notesTab);
