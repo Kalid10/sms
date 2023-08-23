@@ -22,7 +22,6 @@
         </div>
         <AssessmentOutcomePercentages
             :passed-percent="assessment.passing_percentage"
-            failed-percent="27"
         />
     </div>
 </template>

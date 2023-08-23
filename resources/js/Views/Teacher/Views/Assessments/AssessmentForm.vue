@@ -109,12 +109,9 @@
                 v-if="
                     form.status === 'published' || form.status === 'scheduled'
                 "
-                class="flex w-full bg-brand-50 px-4 py-2 text-center text-[0.65rem] font-light"
+                class="flex w-full rounded-sm bg-brand-50 px-4 py-2 text-center text-[0.65rem] font-light"
             >
-                <InformationCircleIcon class="mr-2 w-7 text-brand-text-450" />
-                <!--                "የማረጋገጫውን ሁኔታ ወደ <span class="font-semibold upper/case">'{published}'</span> ወይም <span class="font-semibold uppercase">'{scheduled}'</span> መቀየር ወዲያውኑ ለአሳዳጊዎች እና ለመምህራን ማሳወቂያዎችን ያስነሳል። ለተጨማሪ ግንዛቤ የማረጋገጫው ዝርዝር መረጃ ሊደረስበት ይችላል።"-->
-
-                <span v-html="$t('assessmentForm.message', [])"></span>
+                <InformationCircleIcon class="mr-2 w-7 text-gray-600" />
 
                 <div>
                     Setting an assessment as
