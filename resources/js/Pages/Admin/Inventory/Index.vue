@@ -12,11 +12,17 @@
                     @allocate="setupSelectedItem"
                     @fill="setupFill"
                 />
-                <PendingInventoryItems v-else />
+                <PendingInventoryItems v-else @add="showAddItemModal = true" />
                 <div
                     class="flex h-fit w-2/12 flex-col items-center justify-center space-y-4 rounded-xl bg-brand-400 p-4 text-white shadow-sm"
                 >
-                    <div class="text-8xl font-bold">4</div>
+                    <div class="text-8xl font-bold">
+                        {{
+                            !showInventoryItems
+                                ? inventoryItemCount
+                                : pendingCount
+                        }}
+                    </div>
                     <div class="font-light">
                         {{
                             showInventoryItems
@@ -58,7 +64,7 @@
 <script setup>
 import Title from "@/Views/Teacher/Views/Title.vue";
 import Modal from "@/Components/Modal.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import AddItem from "@/Views/Admin/Inventory/AddItem.vue";
 import AllocateItem from "@/Views/Admin/Inventory/AllocateItem.vue";
 import InventoryItems from "@/Views/Admin/Inventory/InventoryItems.vue";
@@ -66,6 +72,7 @@ import Logs from "@/Views/Admin/Inventory/Logs.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PendingInventoryItems from "@/Views/Admin/Inventory/PendingInventoryItems.vue";
 import FillItem from "@/Views/Admin/Inventory/FillItem.vue";
+import { usePage } from "@inertiajs/vue3";
 
 const showAddItemModal = ref(false);
 const showAllocateItemModal = ref(false);
@@ -73,6 +80,8 @@ const selectedItemId = ref(null);
 const showInventoryItems = ref(true);
 const showFillItemModal = ref(false);
 const selectedItem = ref();
+const pendingCount = computed(() => usePage().props.pending_count);
+const inventoryItemCount = computed(() => usePage().props.inventory_count);
 
 const setupSelectedItem = (item) => {
     selectedItemId.value = item;

@@ -33,6 +33,9 @@ class InventoryController extends Controller
                 ->with(['item', 'recipient', 'provider'])
                 ->paginate(5);
 
+            $pending_count = InventoryCheckInOut::where('status', InventoryCheckInOut::STATUS_PENDING)
+                ->where('recipient_user_id', auth()->user()->id)
+                ->count();
             $transactions = InventoryCheckInOut::where('recipient_user_id', auth()->user()->id)
                 ->orWhere('provider_user_id', auth()->user()->id)
                 ->whereNOTIn('status', [InventoryCheckInOut::STATUS_PENDING, InventoryCheckInOut::STATUS_FILLED])
@@ -48,6 +51,8 @@ class InventoryController extends Controller
 
             $transactions = InventoryCheckInOut::with(['item', 'recipient', 'provider'])->paginate(15);
             $inventoryItems = InventoryItem::paginate(10);
+            $pending_count = InventoryCheckInOut::where('status', InventoryCheckInOut::STATUS_PENDING)
+                ->count();
         }
 
         $page = match ($loggedInUserType) {
@@ -62,13 +67,15 @@ class InventoryController extends Controller
             'pending_inventory_check_outs' => $pending_inventory_check_outs,
             'transactions' => $transactions ?? null,
             'can_manage_inventory' => auth()->user()->hasRole('manage-inventory'),
+            'pending_count' => $pending_count ?? null,
+            'inventory_count' => InventoryItem::count(),
         ]);
     }
 
     public function create(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|unique:inventory_items,name',
             'description' => 'nullable|string',
             'visibility' => 'required|string|in:teachers,admins,all',
             'is_returnable' => 'required|boolean',
