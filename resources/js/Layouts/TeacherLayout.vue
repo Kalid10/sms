@@ -129,7 +129,7 @@ import { useUIStore } from "@/Store/ui";
 
 import { useI18n } from "vue-i18n";
 import DialogBox from "@/Components/DialogBox.vue";
-import { FaceFrownIcon } from "@heroicons/vue/24/solid";
+import { CircleStackIcon, FaceFrownIcon } from "@heroicons/vue/24/solid";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -265,6 +265,14 @@ const sidebarItems = computed(() => [
         active:
             isRouteActive(/^\/teacher\/school-schedule\/\d+\/?$/) ||
             isRouteActive(/^\/teacher\/school-schedule\/?$/),
+    },
+    {
+        name: t("common.inventory"),
+        icon: CircleStackIcon,
+        route: "/teacher/inventory",
+        active:
+            isRouteActive(/^\/teacher\/inventory\/\d+\/?$/) ||
+            isRouteActive(/^\/teacher\/inventory\/?$/),
     },
     {
         name: t("teacherLayout.settings"),

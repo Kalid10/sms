@@ -6,6 +6,7 @@ use App\Models\InventoryCheckInOut;
 use App\Models\InventoryItem;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,15 +18,31 @@ class InventoryController extends Controller
     {
         $inventoryItems = InventoryItem::paginate(10);
 
+        $loggedInUserType = auth()->user()->type;
+
         $searchQuery = $request->input('search_query');
 
-        $users = User::when($searchQuery, function ($query, $searchQuery) {
-            return $query->where('name', 'like', "%{$searchQuery}%");
-        })->get()->take(8); // Execute the query here
+        if ($loggedInUserType === User::TYPE_ADMIN) {
+            $users = User::when($searchQuery, function ($query, $searchQuery) {
+                return $query->whereNOTIn('type', [User::TYPE_STUDENT, User::TYPE_GUARDIAN])->where('name', 'like', "%{$searchQuery}%");
+            })->get()->take(8);
+        }
 
-        return Inertia::render('Admin/Inventory/Index', [
+        $pending_inventory_check_outs = InventoryCheckInOut::where('status', InventoryCheckInOut::STATUS_PENDING)
+            ->where('recipient_user_id', auth()->user()->id)
+            ->with(['item', 'recipient', 'provider'])
+            ->paginate(5);
+
+        $page = match ($loggedInUserType) {
+            User::TYPE_TEACHER => 'Teacher/Inventory/Index',
+            User::TYPE_ADMIN => 'Admin/Inventory/Index',
+            default => throw new Exception('Type unknown!'),
+        };
+
+        return Inertia::render($page, [
             'inventory_items' => $inventoryItems,
             'users' => Inertia::lazy(fn () => $users),
+            'pending_inventory_check_outs' => $pending_inventory_check_outs,
         ]);
     }
 
@@ -83,5 +100,26 @@ class InventoryController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'You have successfully allocated '.$request->quantity.' '.$inventoryItem->name.' to '.User::findOrFail($request->recipient_user_id)->name.'.');
+    }
+
+    public function updateInventory(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'inventory_item_id' => 'required|integer|exists:inventory_check_in_outs,id',
+            'status' => 'required|string|in:approved,declined',
+        ]);
+
+        $inventoryCheckInOut = InventoryCheckInOut::findOrFail($request->inventory_item_id);
+        $inventoryCheckInOut->status = $request->status;
+        $inventoryCheckInOut->save();
+
+        // Rolling back the quantity if the allocation is declined
+        if ($request->status === InventoryCheckInOut::STATUS_DECLINED) {
+            $inventoryItem = InventoryItem::findOrFail($inventoryCheckInOut->inventory_item_id);
+            $inventoryItem->quantity += $inventoryCheckInOut->quantity;
+            $inventoryItem->save();
+        }
+
+        return redirect()->back()->with('success', "Successfully {$request->status} the allocation.");
     }
 }

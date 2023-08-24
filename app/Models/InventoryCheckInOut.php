@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InventoryCheckInOut extends Model
@@ -21,4 +22,19 @@ class InventoryCheckInOut extends Model
     const STATUS_DECLINED = 'declined';
 
     protected $guarded = [];
+
+    public function recipient(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'recipient_user_id');
+    }
+
+    public function item(): BelongsTo
+    {
+        return $this->belongsTo(InventoryItem::class, 'inventory_item_id');
+    }
+
+    public function provider(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'provider_user_id');
+    }
 }
