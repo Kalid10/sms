@@ -12,7 +12,11 @@ class InventoryController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Admin/Inventory/Index');
+        $inventoryItems = InventoryItem::paginate(10);
+
+        return Inertia::render('Admin/Inventory/Index', [
+            'inventory_items' => $inventoryItems,
+        ]);
     }
 
     public function create(Request $request)
