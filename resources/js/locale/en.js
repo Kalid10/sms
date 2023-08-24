@@ -1210,6 +1210,7 @@ const en = {
         from: "From",
         searchForSchedule: "Search for schedule",
         addEvent: "Add Event",
+        noScheduleFound: "No schedule found",
     },
     schoolPeriodForm: {
         weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],

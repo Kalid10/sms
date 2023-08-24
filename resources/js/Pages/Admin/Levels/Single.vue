@@ -7,7 +7,7 @@
                 <div class="text-xl font-semibold lg:text-2xl">
                     {{ parseLevel(level.name) }}
                 </div>
-                <h3 class="text-sm text-brand-text-300">
+                <h3 class="text-sm text-black">
                     {{ schoolYear.name }}
                 </h3>
             </div>
