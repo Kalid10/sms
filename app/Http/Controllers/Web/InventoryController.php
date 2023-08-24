@@ -28,10 +28,20 @@ class InventoryController extends Controller
             })->get()->take(8);
         }
 
-        $pending_inventory_check_outs = InventoryCheckInOut::where('status', InventoryCheckInOut::STATUS_PENDING)
-            ->where('recipient_user_id', auth()->user()->id)
-            ->with(['item', 'recipient', 'provider'])
-            ->paginate(5);
+        if (! auth()->user()->hasRole('manage-inventory')) {
+            $pending_inventory_check_outs = InventoryCheckInOut::where('status', InventoryCheckInOut::STATUS_PENDING)
+                ->where('recipient_user_id', auth()->user()->id)
+                ->with(['item', 'recipient', 'provider'])
+                ->paginate(5);
+        } else {
+            $pending_inventory_check_outs = InventoryCheckInOut::where('status', InventoryCheckInOut::STATUS_PENDING)
+                ->with(['item', 'recipient', 'provider'])
+                ->paginate(5);
+
+            $completed_inventory_check_outs = InventoryCheckInOut::where('status', '!=', InventoryCheckInOut::STATUS_PENDING)
+                ->with(['item', 'recipient', 'provider'])
+                ->paginate(15);
+        }
 
         $page = match ($loggedInUserType) {
             User::TYPE_TEACHER => 'Teacher/Inventory/Index',
@@ -43,6 +53,7 @@ class InventoryController extends Controller
             'inventory_items' => $inventoryItems,
             'users' => Inertia::lazy(fn () => $users),
             'pending_inventory_check_outs' => $pending_inventory_check_outs,
+            'completed_inventory_check_outs' => $completed_inventory_check_outs ?? null,
         ]);
     }
 
