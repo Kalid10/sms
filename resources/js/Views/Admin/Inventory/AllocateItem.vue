@@ -24,15 +24,22 @@
             <div
                 v-for="(item, index) in filteredUsers"
                 :key="index"
-                class="flex cursor-pointer justify-evenly py-2 text-sm text-black hover:bg-brand-350 hover:text-white"
+                class="flex cursor-pointer justify-evenly py-3 text-sm text-black hover:bg-brand-350 hover:text-white"
                 :class="index % 2 === 0 ? 'bg-brand-50' : 'bg-white'"
                 @click="
                     allocateItemForm.recipient_user = item;
                     allocateItemForm.selectedItem = props.selectedItemId;
                 "
             >
-                <span class="font-medium capitalize">{{ item.name }}</span>
-                <span class="font-medium uppercase">{{ item.type }}</span>
+                <span class="w-5/12 text-center font-medium capitalize">{{
+                    item.name
+                }}</span>
+                <span class="w-4/12 text-center">
+                    {{ item.phone_number }}
+                </span>
+                <span class="w-3/12 text-center font-medium capitalize">{{
+                    item.type
+                }}</span>
             </div>
         </div>
 
@@ -105,6 +112,7 @@ const filteredUsers = computed(() => {
         name: user.name,
         type: user.type,
         id: user.id,
+        phone_number: user.phone_number,
     }));
 });
 
