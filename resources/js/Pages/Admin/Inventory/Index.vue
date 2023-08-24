@@ -30,9 +30,21 @@
             <template #is_returnable-column="{ data }">
                 {{ data ? "Yes" : "No" }}
             </template>
+
             <template #date-column="{ data }">
                 {{ moment(data).format("dddd MMM DD, YYYY") }}
             </template>
+
+            <template #id-column="{ data }">
+                <UserMinusIcon
+                    class="w-5 cursor-pointer hover:scale-125"
+                    @click="
+                        showAllocateItemModal = true;
+                        selectedItemId = data;
+                    "
+                />
+            </template>
+
             <template #footer>
                 <Pagination
                     :preserve-state="true"
@@ -43,42 +55,15 @@
         </TableElement>
 
         <Modal v-model:view="showAddItemModal">
-            <FormElement
-                title="Add Item"
-                @cancel="itemForm.reset()"
-                @submit="submit"
-            >
-                <TextInput
-                    v-model="itemForm.name"
-                    label="Name"
-                    placeholder="Name"
-                />
-                <TextArea
-                    v-model="itemForm.description"
-                    placeholder="Description"
-                    label="Item Description"
-                />
-                <TextInput
-                    v-model="itemForm.quantity"
-                    label="Quantity"
-                    type="number"
-                    placeholder="Quantity"
-                />
-                <div class="flex w-full justify-between">
-                    <SelectInput
-                        v-model="itemForm.visibility"
-                        :options="visibilityOptions"
-                        placeholder="Select Visibility"
-                        class="w-5/12"
-                    />
-                    <Toggle
-                        v-model="itemForm.is_returnable"
-                        label="Is the Item Returnable?"
-                    />
-                </div>
-            </FormElement>
+            <AddItem @close="showAddItemModal = false" />
         </Modal>
-        <Loading v-if="isLoading" :is-full-screen="true" type="bounce" />
+
+        <Modal v-model:view="showAllocateItemModal">
+            <AllocateItem
+                :selected-item-id="selectedItemId"
+                @close="showAllocateItemModal = false"
+            />
+        </Modal>
     </div>
 </template>
 <script setup>
@@ -86,35 +71,17 @@ import Title from "@/Views/Teacher/Views/Title.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Modal from "@/Components/Modal.vue";
 import { computed, ref } from "vue";
-import FormElement from "@/Components/FormElement.vue";
-import TextInput from "@/Components/TextInput.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
-import Toggle from "@/Components/Toggle.vue";
-import SelectInput from "@/Components/SelectInput.vue";
-import TextArea from "@/Components/TextArea.vue";
-import Loading from "@/Components/Loading.vue";
+import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 import moment from "moment/moment";
+import { UserMinusIcon } from "@heroicons/vue/24/outline";
+import AddItem from "@/Views/Admin/Inventory/AddItem.vue";
+import AllocateItem from "@/Views/Admin/Inventory/AllocateItem.vue";
+
+const showAddItemModal = ref(false);
 
 const inventoryItems = computed(() => usePage().props.inventory_items);
-const showAddItemModal = ref(false);
-const isLoading = ref(false);
-const visibilityOptions = [
-    {
-        label: "All",
-        value: "all",
-    },
-    {
-        label: "Teachers",
-        value: "teachers",
-    },
-    {
-        label: "Admins",
-        value: "admins",
-    },
-];
-
 const tableConfig = [
     {
         name: "Name",
@@ -140,24 +107,14 @@ const tableConfig = [
         key: "date",
         type: "custom",
     },
+    {
+        name: "",
+        key: "id",
+        type: "custom",
+    },
 ];
-const itemForm = useForm({
-    name: "",
-    description: "",
-    quantity: "",
-    is_returnable: false,
-    visibility: "",
-});
 
-const submit = () => {
-    isLoading.value = true;
-    itemForm.post("/admin/inventory/create", {
-        preserveState: true,
-        onFinish: () => {
-            isLoading.value = false;
-            showAddItemModal.value = false;
-        },
-    });
-};
+const showAllocateItemModal = ref(false);
+const selectedItemId = ref(null);
 </script>
 <style scoped></style>
