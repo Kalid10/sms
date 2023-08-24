@@ -6,6 +6,8 @@ use App\Http\Requests\API\Students\AssessmentRequest;
 use App\Http\Requests\API\Students\BatchSubjectRequest;
 use App\Http\Requests\API\Students\GradeRequest;
 use App\Http\Requests\API\Students\Request;
+use App\Http\Requests\API\Students\SubjectAssessmentsRequest;
+use App\Http\Requests\API\Students\TermRequest;
 use App\Http\Requests\API\Students\UpdateRequest;
 use App\Http\Resources\Student\AssessmentCollection;
 use App\Http\Resources\Student\AssessmentGradeCollection;
@@ -24,14 +26,17 @@ use App\Http\Resources\Student\ScheduleCollection;
 use App\Http\Resources\Student\ScheduleResource;
 use App\Http\Resources\Student\SessionCollection;
 use App\Http\Resources\Student\SessionResource;
+use App\Http\Resources\Student\StudentAssessmentsGradeCollection;
 use App\Http\Resources\Student\SubjectCollection;
 use App\Http\Resources\Student\SubjectResource;
+use App\Http\Resources\Term\TermCollection;
 use App\Models\Address;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Semester;
 use App\Models\Student;
+use App\Models\StudentAssessmentsGrade;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -230,11 +235,22 @@ class StudentController extends Controller
                 ));
     }
 
+    public function terms(TermRequest $request, Student $student): TermCollection
+    {
+        $terms = $student->load('grades.gradable')->grades->sortByDesc('gradable.start_date')->pluck('gradable');
+
+        return new TermCollection(match ($request->input('type')) {
+            'quarter' => $terms->filter(fn ($term) => $term instanceof Quarter)->flatten(),
+            'semester' => $terms->filter(fn ($term) => $term instanceof Semester)->flatten(),
+            'school_year' => $terms->filter(fn ($term) => $term instanceof SchoolYear)->flatten(),
+        });
+    }
+
     public function grades(GradeRequest $request, ?Student $student): GradeResource|GradeCollection
     {
         return $student->exists ?
             new GradeResource($student->load([
-                'user:id,name',
+                'user:id,name,profile_image',
                 'grades' => function ($query) use ($request) {
                     $query->when($request->input('gradable_type'), function ($query) use ($request) {
                         $query->where('gradable_type', $request->input('gradable_type'));
@@ -272,15 +288,28 @@ class StudentController extends Controller
             new GradeCollection(Auth::user()
                 ->load('guardian.children')->guardian->children
                 ->load([
-                    'user:id,name',
+                    'user:id,name,profile_image',
                     'grades' => function ($query) use ($request) {
                         $query->when($request->input('gradable_type'), function ($query) use ($request) {
                             $query->where('gradable_type', $request->input('gradable_type'));
                         });
                     },
-                    'grades.gradable:id,name',
+                    'grades.gradable',
                     'grades.gradeScale:id,label,state,description',
                 ]));
+    }
+
+    public function subjectAssessments(SubjectAssessmentsRequest $request, BatchSubject $batchSubject, Student $student): StudentAssessmentsGradeCollection
+    {
+        $gradable_type = $request->input('gradable_type');
+        $gradable_id = $request->input('gradable_id');
+
+        return new StudentAssessmentsGradeCollection(StudentAssessmentsGrade::where([
+            'student_id' => $student->id,
+            'batch_subject_id' => $batchSubject->id,
+            'gradable_type' => $gradable_type,
+            'gradable_id' => $gradable_id,
+        ])->with('assessmentType', 'gradeScale')->get());
     }
 
     private function filterAssessments($query, $request, $student = null): void
