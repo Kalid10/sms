@@ -7,10 +7,10 @@
         :data="mappedPendingItems"
         title="Inventory Items"
         header-style="!bg-brand-400 text-white"
-        class="!w-6/12 !rounded-lg p-4 shadow-sm"
+        class="!w-9/12 !rounded-lg p-4 shadow-sm"
     >
         <template #table-header>
-            <div class="w-full py-3 text-center text-2xl font-semibold">
+            <div class="w-full px-6 py-5 text-2xl font-semibold">
                 Pending CheckOuts
             </div>
         </template>
@@ -48,6 +48,7 @@ import moment from "moment";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const pendingItems = computed(
     () => usePage().props.pending_inventory_check_outs

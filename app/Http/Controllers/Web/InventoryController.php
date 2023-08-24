@@ -16,7 +16,6 @@ class InventoryController extends Controller
 {
     public function index(Request $request): Response
     {
-        $inventoryItems = InventoryItem::paginate(10);
 
         $loggedInUserType = auth()->user()->type;
 
@@ -33,12 +32,22 @@ class InventoryController extends Controller
                 ->where('recipient_user_id', auth()->user()->id)
                 ->with(['item', 'recipient', 'provider'])
                 ->paginate(5);
+
+            $transactions = InventoryCheckInOut::where('recipient_user_id', auth()->user()->id)
+                ->orWhere('provider_user_id', auth()->user()->id)
+                ->orWhere('status', '!=', 'pending')
+                ->with(['item', 'recipient', 'provider'])
+                ->paginate(15);
+
+            $inventoryItems = InventoryItem::whereIn('visibility', ['all', $loggedInUserType])->paginate(10);
+
         } else {
             $pending_inventory_check_outs = InventoryCheckInOut::where('status', InventoryCheckInOut::STATUS_PENDING)
                 ->with(['item', 'recipient', 'provider'])
                 ->paginate(5);
 
             $transactions = InventoryCheckInOut::with(['item', 'recipient', 'provider'])->paginate(15);
+            $inventoryItems = InventoryItem::paginate(10);
         }
 
         $page = match ($loggedInUserType) {
@@ -52,6 +61,7 @@ class InventoryController extends Controller
             'users' => Inertia::lazy(fn () => $users),
             'pending_inventory_check_outs' => $pending_inventory_check_outs,
             'transactions' => $transactions ?? null,
+            'can_manage_inventory' => auth()->user()->hasRole('manage-inventory'),
         ]);
     }
 

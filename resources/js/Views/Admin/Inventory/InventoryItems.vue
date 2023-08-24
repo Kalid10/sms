@@ -7,14 +7,21 @@
         :data="mappedInventoryItems"
         title="Inventory Items"
         header-style="!bg-brand-400 text-white"
-        class="!w-6/12 !rounded-lg p-4 shadow-sm"
+        class="h-full !w-9/12 !rounded-lg p-4 shadow-sm"
     >
         <template #table-header>
-            <div class="flex w-full justify-evenly py-3">
-                <div class="w-10/12 text-2xl font-semibold">
+            <div class="flex w-full justify-evenly py-5">
+                <div
+                    class="text-2xl font-semibold"
+                    :class="canManageInventory ? 'w-10/12' : 'w-full px-6'"
+                >
                     Inventory Items
                 </div>
-                <PrimaryButton class="h-fit w-fit" @click="emit('add')">
+                <PrimaryButton
+                    v-if="canManageInventory"
+                    class="h-fit w-fit"
+                    @click="emit('add')"
+                >
                     Add Item
                 </PrimaryButton>
             </div>
@@ -22,13 +29,13 @@
 
         <template #row-column="{ data }">
             <span
-                class="rounded-lg px-3 py-1 font-semibold text-white"
+                class="rounded-lg px-3 py-1 font-semibold"
                 :class="
                     data.quantity === 0
-                        ? 'bg-red-600'
+                        ? 'bg-red-600 text-white'
                         : data.quantity <= data.low_stock_threshold
-                        ? 'bg-orange-500'
-                        : 'bg-positive-50'
+                        ? 'bg-orange-500 text-white'
+                        : 'bg-emerald-400 text-black'
                 "
             >
                 {{ data.quantity }}
@@ -67,6 +74,7 @@ import { UserMinusIcon } from "@heroicons/vue/24/outline";
 
 const emit = defineEmits(["add", "allocate"]);
 
+const canManageInventory = computed(() => usePage().props.can_manage_inventory);
 const inventoryItems = computed(() => usePage().props.inventory_items);
 const mappedInventoryItems = computed(() =>
     usePage().props.inventory_items.data.map((item) => {
