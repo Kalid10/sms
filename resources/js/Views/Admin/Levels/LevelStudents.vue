@@ -198,13 +198,13 @@ const studentsConfig = [
     {
         name: "",
         key: "email",
-        class: "text-brand-text-300 text-xs w-full",
+        class: "text-gray-700 text-xs w-full",
         align: "left",
     },
     {
         name: "",
         key: "username",
-        class: "text-brand-text-300 text-xs font-semibold",
+        class: "text-gray-700 text-xs font-semibold",
     },
     {
         name: "",
@@ -220,7 +220,7 @@ const studentsConfig = [
     {
         name: t("common.lastUpdated"),
         key: "updated_at",
-        class: "text-brand-text-300 text-xs",
+        class: "text-gray-700 text-xs",
         align: "right",
     },
 ];
