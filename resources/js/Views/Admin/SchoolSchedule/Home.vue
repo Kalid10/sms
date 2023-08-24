@@ -1,10 +1,10 @@
 <template>
     <div
-        v-if="schoolSchedule.length"
         class="flex w-full flex-col items-center justify-between space-y-4 rounded-lg bg-white px-5 py-3 shadow-sm lg:flex-row lg:space-x-10"
     >
         <Loading v-if="showLoading" is-full-screen />
         <div
+            v-if="schoolSchedule.length"
             class="flex h-full w-full flex-col items-center justify-evenly space-y-2 lg:w-8/12"
         >
             <div class="w-full px-3 text-2xl font-medium">
@@ -54,6 +54,13 @@
 
             <LinkCell value="View All Schedules" href="/admin/schedules" />
         </div>
+
+        <EmptyView
+            v-else
+            class="flex h-full w-full flex-col items-center lg:w-8/12"
+            title="No School Schedules Found!"
+        />
+
         <div class="w-full lg:w-3/12">
             <DatePicker
                 v-model:start-date="startDate"
@@ -65,7 +72,6 @@
             />
         </div>
     </div>
-    <EmptyView v-else class="lg:py-12" title="No School Schedules Found!" />
 </template>
 <script setup>
 import { computed, ref, watch } from "vue";

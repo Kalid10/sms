@@ -60,8 +60,8 @@
     <DialogBox
         v-if="isDialogBoxOpen"
         open
-        @close="isDialogBoxOpen = false"
         @confirm="removeCategory"
+        @abort="isDialogBoxOpen = false"
     />
 </template>
 <script setup>

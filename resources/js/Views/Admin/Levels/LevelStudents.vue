@@ -19,7 +19,9 @@
             :data="students.data"
         >
             <template #date_of_birth-column="{ data }">
-                {{ Math.abs(moment(data).diff(new Date(), "years")) }}
+                <span class="text-xs">
+                    {{ Math.abs(moment(data).diff(new Date(), "years")) }}</span
+                >
             </template>
 
             <template #filter>
@@ -48,10 +50,7 @@
                         {{ $t("levelStudent.noDataFound") }}
                     </p>
                     <div v-if="searchKey.length">
-                        <p
-                            v-if="searchKey === null"
-                            class="text-sm text-brand-text-300"
-                        >
+                        <p v-if="searchKey === null" class="text-sm text-black">
                             {{ $t("levelStudent.noStudentEnrolled") }}
                         </p>
                         <p

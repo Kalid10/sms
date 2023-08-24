@@ -172,7 +172,9 @@ const sidebarItems = computed(() => [
             isRouteActive(/^\/admin\/levels\/\d+\/?$/) ||
             isRouteActive(/^\/admin\/levels\/?$/) ||
             isRouteActive(/^\/levels\/level-categories\/\d+\/?$/) ||
-            isRouteActive(/^\/levels\/level-categories\/?$/),
+            isRouteActive(/^\/levels\/level-categories\/?$/) ||
+            isRouteActive(/^\/levels\/assessments\/\d+\/?$/) ||
+            isRouteActive(/^\/levels\/ssessments\/?$/),
     },
     {
         name: t("common.subjects"),
@@ -204,7 +206,9 @@ const sidebarItems = computed(() => [
         name: t("common.assessments"),
         icon: NewspaperIcon,
         route: "/admin/assessments",
-        active: directory.value === "assessments",
+        active:
+            isRouteActive(/^\/admin\/assessments\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/assessments\/?$/),
     },
     {
         name: t("common.users"),
