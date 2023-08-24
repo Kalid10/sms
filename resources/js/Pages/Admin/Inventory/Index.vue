@@ -10,6 +10,7 @@
                     v-if="showInventoryItems"
                     @add="showAddItemModal = true"
                     @allocate="setupSelectedItem"
+                    @fill="setupFill"
                 />
                 <PendingInventoryItems v-else />
                 <div
@@ -48,6 +49,10 @@
                 @close="showAllocateItemModal = false"
             />
         </Modal>
+
+        <Modal v-model:view="showFillItemModal">
+            <FillItem :item="selectedItem" @close="showFillItemModal = false" />
+        </Modal>
     </div>
 </template>
 <script setup>
@@ -60,15 +65,23 @@ import InventoryItems from "@/Views/Admin/Inventory/InventoryItems.vue";
 import Logs from "@/Views/Admin/Inventory/Logs.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PendingInventoryItems from "@/Views/Admin/Inventory/PendingInventoryItems.vue";
+import FillItem from "@/Views/Admin/Inventory/FillItem.vue";
 
 const showAddItemModal = ref(false);
 const showAllocateItemModal = ref(false);
 const selectedItemId = ref(null);
 const showInventoryItems = ref(true);
+const showFillItemModal = ref(false);
+const selectedItem = ref();
 
-const setupSelectedItem = (value) => {
-    selectedItemId.value = value;
+const setupSelectedItem = (item) => {
+    selectedItemId.value = item;
     showAllocateItemModal.value = true;
+};
+
+const setupFill = (value) => {
+    selectedItem.value = value;
+    showFillItemModal.value = true;
 };
 </script>
 <style scoped></style>

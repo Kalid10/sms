@@ -35,7 +35,7 @@ class InventoryController extends Controller
 
             $transactions = InventoryCheckInOut::where('recipient_user_id', auth()->user()->id)
                 ->orWhere('provider_user_id', auth()->user()->id)
-                ->orWhere('status', '!=', 'pending')
+                ->whereNOTIn('status', [InventoryCheckInOut::STATUS_PENDING, InventoryCheckInOut::STATUS_FILLED])
                 ->with(['item', 'recipient', 'provider'])
                 ->paginate(15);
 
@@ -72,8 +72,8 @@ class InventoryController extends Controller
             'description' => 'nullable|string',
             'visibility' => 'required|string|in:teachers,admins,all',
             'is_returnable' => 'required|boolean',
-            'quantity' => 'required|integer',
-            'low_stock_threshold' => 'required|integer',
+            'quantity' => 'required|integer|min:1',
+            'low_stock_threshold' => 'required|integer|min:1',
         ]);
 
         if ($request->low_stock_threshold > $request->quantity) {
@@ -101,7 +101,7 @@ class InventoryController extends Controller
         $request->validate([
             'recipient_user_id' => 'required|integer|exists:users,id',
             'item_id' => 'required|integer|exists:inventory_items,id',
-            'quantity' => 'required|integer',
+            'quantity' => 'required|integer|min:1',
         ]);
 
         $inventoryItem = InventoryItem::findOrFail($request->item_id);
@@ -147,5 +147,31 @@ class InventoryController extends Controller
         }
 
         return redirect()->back()->with('success', "Successfully {$request->status} the allocation.");
+    }
+
+    public function fillItem(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'inventory_item_id' => 'required|integer|exists:inventory_items,id',
+            'quantity' => 'required|integer|min:1',
+            'low_stock_threshold' => 'required|integer|min:1',
+        ]);
+
+        InventoryCheckInOut::create([
+            'inventory_item_id' => $request->inventory_item_id,
+            'recipient_user_id' => auth()->user()->id,
+            'provider_user_id' => auth()->user()->id,
+            'quantity' => $request->quantity,
+            'check_in_date' => Carbon::now(),
+            'check_out_date' => Carbon::now(), // This is a hack to make the status 'filled
+            'status' => InventoryCheckInOut::STATUS_FILLED,
+        ]);
+
+        $inventoryItem = InventoryItem::findOrFail($request->inventory_item_id);
+        $inventoryItem->quantity += $request->quantity;
+        $inventoryItem->low_stock_threshold = $request->low_stock_threshold;
+        $inventoryItem->save();
+
+        return redirect()->back()->with('success', 'Successfully filled the item.');
     }
 }

@@ -20,6 +20,8 @@
                             ? 'bg-indigo-400 text-white'
                             : data === 'approved'
                             ? 'bg-emerald-400 text-black'
+                            : data === 'filled'
+                            ? 'bg-green-500 text-white'
                             : 'bg-red-600 text-white'
                     "
                 >

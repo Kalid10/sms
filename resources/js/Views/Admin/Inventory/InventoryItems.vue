@@ -52,6 +52,12 @@
                 @click="emit('allocate', data)"
             />
         </template>
+        <template #item-column="{ data }">
+            <PlusCircleIcon
+                class="hover:brand500 w-5 cursor-pointer text-brand-400 hover:scale-125"
+                @click="emit('fill', data)"
+            />
+        </template>
 
         <template #footer>
             <Pagination
@@ -71,20 +77,21 @@ import TableElement from "@/Components/TableElement.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { UserMinusIcon } from "@heroicons/vue/24/outline";
+import { PlusCircleIcon } from "@heroicons/vue/24/solid";
 
-const emit = defineEmits(["add", "allocate"]);
+const emit = defineEmits(["add", "allocate", "fill"]);
 
 const canManageInventory = computed(() => usePage().props.can_manage_inventory);
 const inventoryItems = computed(() => usePage().props.inventory_items);
 const mappedInventoryItems = computed(() =>
     usePage().props.inventory_items.data.map((item) => {
-        console.log(item);
         return {
             ...item,
             row: {
                 quantity: item.quantity,
                 low_stock_threshold: item.low_stock_threshold,
             },
+            item: item,
         };
     })
 );
@@ -118,6 +125,11 @@ const inventoryItemsTableConfig = [
     {
         name: "",
         key: "id",
+        type: "custom",
+    },
+    {
+        name: "",
+        key: "item",
         type: "custom",
     },
 ];

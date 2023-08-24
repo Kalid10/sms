@@ -21,6 +21,8 @@ class InventoryCheckInOut extends Model
 
     const STATUS_DECLINED = 'declined';
 
+    const STATUS_FILLED = 'filled';
+
     protected $guarded = [];
 
     public function recipient(): BelongsTo
