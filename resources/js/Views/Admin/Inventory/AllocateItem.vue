@@ -48,7 +48,7 @@
             label="Quantity"
             type="number"
             placeholder="Quantity"
-            :error="allocateItemForm.errors.quantity"
+            :error="usePage().props.errors.quantity"
         />
     </FormElement>
 

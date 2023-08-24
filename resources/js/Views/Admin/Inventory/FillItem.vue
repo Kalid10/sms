@@ -5,12 +5,14 @@
             label="Quantity"
             type="number"
             placeholder="Quantity"
+            :error="usePage().props.errors.quantity"
         />
         <TextInput
             v-model="itemForm.low_stock_threshold"
             label="Low Stock Alert Threshold"
             type="number"
             placeholder="Enter the quantity at which to alert"
+            :error="usePage().props.errors.low_stock_threshold"
         />
     </FormElement>
 
@@ -19,7 +21,7 @@
 <script setup>
 import FormElement from "@/Components/FormElement.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { router, useForm } from "@inertiajs/vue3";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import Loading from "@/Components/Loading.vue";
 import { ref } from "vue";
 
