@@ -10,7 +10,7 @@
 
             <div class="flex w-full justify-end space-x-2">
                 <span class="font-weight-light text-center text-sm">
-                    {{ $t("teacherQuestions.questionsGenerated") }}:
+                    {{ $t("teacherQuestions.todaysGeneratedQuestions") }}:
                 </span>
                 <span class="text-center text-sm font-semibold">
                     {{ totalNumberOfQuestions }} / {{ openaiQuestionLimit }}
@@ -178,6 +178,7 @@ import TextArea from "@/Components/TextArea.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
 
 const { t } = useI18n();
 const showUpdateModal = ref(false);
@@ -284,7 +285,7 @@ const setSelectedQuestion = (id) => {
     );
 };
 
-const questionsTab = t("common.questions");
+const questionsTab = toUnderscore(t("common.questions"));
 const routeToQuestionGenerator = () => {
     router.get(
         "/teacher/copilot",
