@@ -38,9 +38,7 @@ class InventoryController extends Controller
                 ->with(['item', 'recipient', 'provider'])
                 ->paginate(5);
 
-            $completed_inventory_check_outs = InventoryCheckInOut::where('status', '!=', InventoryCheckInOut::STATUS_PENDING)
-                ->with(['item', 'recipient', 'provider'])
-                ->paginate(15);
+            $transactions = InventoryCheckInOut::with(['item', 'recipient', 'provider'])->paginate(15);
         }
 
         $page = match ($loggedInUserType) {
@@ -53,7 +51,7 @@ class InventoryController extends Controller
             'inventory_items' => $inventoryItems,
             'users' => Inertia::lazy(fn () => $users),
             'pending_inventory_check_outs' => $pending_inventory_check_outs,
-            'completed_inventory_check_outs' => $completed_inventory_check_outs ?? null,
+            'transactions' => $transactions ?? null,
         ]);
     }
 
