@@ -54,7 +54,14 @@ class InventoryController extends Controller
             'visibility' => 'required|string|in:teachers,admins,all',
             'is_returnable' => 'required|boolean',
             'quantity' => 'required|integer',
+            'low_stock_threshold' => 'required|integer',
         ]);
+
+        if ($request->low_stock_threshold > $request->quantity) {
+            return redirect()->back()->withErrors([
+                'low_stock_threshold' => 'The low stock threshold cannot be greater than the quantity.',
+            ]);
+        }
 
         InventoryItem::create([
             'added_by_user_id' => auth()->user()->id,
@@ -64,7 +71,7 @@ class InventoryController extends Controller
             'is_returnable' => $request->is_returnable,
             'quantity' => $request->quantity,
             'date' => Carbon::now(),
-            'status' => 'available',
+            'low_stock_threshold' => $request->low_stock_threshold,
         ]);
 
         return redirect()->back()->with('success', 'You have successfully added '.$request->name.' to the inventory list.');

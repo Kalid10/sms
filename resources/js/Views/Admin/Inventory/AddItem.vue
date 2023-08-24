@@ -13,6 +13,13 @@
             type="number"
             placeholder="Quantity"
         />
+        <TextInput
+            v-model="itemForm.low_stock_threshold"
+            label="Low Stock Alert Threshold"
+            type="number"
+            placeholder="Enter the quantity at which to alert"
+        />
+
         <div class="flex w-full justify-between">
             <SelectInput
                 v-model="itemForm.visibility"
@@ -63,6 +70,7 @@ const itemForm = useForm({
     quantity: "",
     is_returnable: false,
     visibility: "",
+    low_stock_threshold: "",
 });
 
 const submit = () => {

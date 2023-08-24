@@ -5,11 +5,11 @@
         </div>
 
         <TableElement
-            v-if="!!inventoryItems?.data"
+            v-if="!!mappedInventoryItems"
             :columns="tableConfig"
             :selectable="false"
             :filterable="false"
-            :data="inventoryItems?.data"
+            :data="mappedInventoryItems"
             title="Inventory Items"
             header-style="!bg-brand-400 text-white"
             class="!rounded-lg p-4 shadow-sm"
@@ -27,8 +27,20 @@
                     </PrimaryButton>
                 </div>
             </template>
-            <template #is_returnable-column="{ data }">
-                {{ data ? "Yes" : "No" }}
+
+            <template #row-column="{ data }">
+                <span
+                    class="rounded-lg px-3 py-1 font-semibold text-white"
+                    :class="
+                        data.quantity === 0
+                            ? 'bg-red-600'
+                            : data.quantity <= data.low_stock_threshold
+                            ? 'bg-orange-500'
+                            : 'bg-positive-50'
+                    "
+                >
+                    {{ data.quantity }}
+                </span>
             </template>
 
             <template #date-column="{ data }">
@@ -80,8 +92,19 @@ import AddItem from "@/Views/Admin/Inventory/AddItem.vue";
 import AllocateItem from "@/Views/Admin/Inventory/AllocateItem.vue";
 
 const showAddItemModal = ref(false);
-
 const inventoryItems = computed(() => usePage().props.inventory_items);
+const mappedInventoryItems = computed(() =>
+    usePage().props.inventory_items.data.map((item) => {
+        console.log(item);
+        return {
+            ...item,
+            row: {
+                quantity: item.quantity,
+                low_stock_threshold: item.low_stock_threshold,
+            },
+        };
+    })
+);
 const tableConfig = [
     {
         name: "Name",
@@ -90,17 +113,19 @@ const tableConfig = [
     },
     {
         name: "Quantity",
-        key: "quantity",
+        key: "row",
+        type: "custom",
+    },
+
+    {
+        name: "Low Stock Alert Threshold",
+        key: "low_stock_threshold",
+        class: "uppercase",
     },
     {
         name: "Is Returnable?",
         key: "is_returnable",
-        type: "custom",
-    },
-    {
-        name: "Status",
-        key: "status",
-        class: "uppercase",
+        type: Boolean,
     },
     {
         name: "Added At",

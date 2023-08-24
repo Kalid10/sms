@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->boolean('is_returnable');
             $table->date('date');
-            $table->string('status');
+            $table->integer('low_stock_threshold');
             $table->string('visibility');
             $table->unsignedBigInteger('added_by_user_id');
             $table->foreign('added_by_user_id')->references('id')->on('users')->onDelete('cascade');
