@@ -10,7 +10,7 @@
                     @click="
                         showSearchResult = true;
                         selectedStaff = null;
-                        titleText = 'Add Absentee';
+                        titleText = $t('absenteeAddModal.addAbsentee');
                     "
                 />
                 <Title :title="titleText" class="w-11/12" />
@@ -61,9 +61,9 @@
                                 "
                                 class="max-h-fit w-full text-start"
                                 :subtext="
-                                    'You are about to add ' +
-                                    selectedStaff.label +
-                                    ' as an absentee'
+                                    $t('absenteeAddModal.youAreAbout', {
+                                        selectedStaffLabel: selectedStaff.label,
+                                    })
                                 "
                                 :error="form.errors.reason"
                             />
@@ -71,8 +71,8 @@
 
                         <div class="mt-5 flex items-center justify-center">
                             <PrimaryButton
-                                title="Submit"
-                                class="!rounded-2xl"
+                                :title="$t('common.submit')"
+                                class="!rounded-2xl bg-brand-500"
                                 @click="addAbsentee"
                             />
                         </div>
