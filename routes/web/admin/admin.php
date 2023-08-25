@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\AbsenteesController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\AssessmentController;
 use App\Http\Controllers\Web\BatchController;
+use App\Http\Controllers\Web\BatchScheduleController;
 use App\Http\Controllers\Web\LessonPlanController;
 use App\Http\Controllers\Web\LevelController;
 use App\Http\Controllers\Web\SchoolScheduleController;
@@ -69,5 +70,9 @@ Route::prefix('admin/')->middleware(['checkUserType:admin', 'checkSchoolYearStat
             Route::get('', 'index')->name('index');
             Route::get('{id}', 'show')->name('show');
         });
+    });
+
+    Route::controller(BatchScheduleController::class)->prefix('batch-schedules')->name('batch-schedules.')->group(function () {
+        Route::get('', 'index')->name('index');
     });
 });
