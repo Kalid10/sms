@@ -117,8 +117,9 @@ const en = {
         goToAnnouncements: "Go To Announcements",
         viewAllAnnouncements: "View All Announcements",
         publishAnnouncement: "Publish Announcement",
-        couldNotFound:"Could not find any announcement related to {searchKey}",
-        noNewAnnouncement:"Currently, there are no new announcements. We encourage you to revisit this space frequently for updates."
+        couldNotFound: "Could not find any announcement related to <span class='font-normal italic'>'{searchKey}'</span>",
+        noNewAnnouncement:
+            "Currently, there are no new announcements. We encourage you to revisit this space frequently for updates.",
     },
     announcementsItem: {
         postTargets: "Post Targets",
@@ -152,7 +153,7 @@ const en = {
         or: "or",
         scheduled: "Scheduled",
         message:
-            "Setting an assessment as <span class='font-semibold uppercase'>' {published} '</span> or <span class='font-semibold uppercase' >' {scheduled} '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
+            "Setting an assessment as <span class='font-semibold uppercase'>' Published '</span> or <span class='font-semibold uppercase' >' Scheduled '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
         title: "Submit Assessment",
         alertMessage:
             "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?",
@@ -181,6 +182,7 @@ const en = {
         gradeCategory: "Grade Category",
         updatedAt: "Updated at",
         recentAssessments: "Recent Assessments",
+        noAssessmentsFound:"No assessments found"
     },
 
     assessmentOutcomePercentages: {
@@ -387,12 +389,12 @@ const en = {
         ],
     },
     common: {
-        overseeHomeroomClasses:"Oversee your homeroom classes",
-        addViewUpdateLessonPlans:"Add, view and update lesson plans",
-        viewStudents:"View your students",
-        addViewUpdateAssessments:"Add, view and update assessments",
-        schoolSchedules:"School Schedules",
-        viewAnnouncements:"View announcements",
+        overseeHomeroomClasses: "Oversee your homeroom classes",
+        addViewUpdateLessonPlans: "Add, view and update lesson plans",
+        viewStudents: "View your students",
+        addViewUpdateAssessments: "Add, view and update assessments",
+        schoolSchedules: "School Schedules",
+        viewAnnouncements: "View announcements",
         or: "or",
         for: "for",
         add: "Add",
@@ -486,14 +488,19 @@ const en = {
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
         chat: "Chat",
-        dailyLimit:"You've hit your daily limit. Please get in touch with the administrator to increase limit."
+        dailyLimit:
+            "You've hit your daily limit. Please get in touch with the administrator to increase limit.",
     },
-    questionEmptyView:{
-        welcometext:"Welcome to Rigel Question Generator",
-        hintOne:"A feature specifically designed to simplify and enhance your question creation process. Here, we've streamlined the task of crafting effective, relevant, and challenging educational questions to an art of few clicks.",
-        hintTwo:"Whether you're preparing classwork, homework, or even tests, our Question Generator has got you covered. Generate questions directly from your lesson plans, ensuring that your assessments are perfectly aligned with your lessons, while also reducing preparation time significantly. This feature serves as your ultimate educational companion, freeing up your time to focus on what matters the most: teaching and inspiring your students.",
-        hintThree:"But we didn't stop there. For those seeking a more personalized touch, you can also manually input your questions. This gives you the opportunity to customize every aspect of your question-creation process, thereby creating a unique and engaging learning experience for each student.",
-        hintFour:"Our Question Generator is more than just a tool. It's a stepping stone to enhancing the learning journey of your students. So why wait? Step into a world of seamless question creation today, and elevate your teaching experience to greater heights."
+    questionEmptyView: {
+        welcometext: "Welcome to Rigel Question Generator",
+        hintOne:
+            "A feature specifically designed to simplify and enhance your question creation process. Here, we've streamlined the task of crafting effective, relevant, and challenging educational questions to an art of few clicks.",
+        hintTwo:
+            "Whether you're preparing classwork, homework, or even tests, our Question Generator has got you covered. Generate questions directly from your lesson plans, ensuring that your assessments are perfectly aligned with your lessons, while also reducing preparation time significantly. This feature serves as your ultimate educational companion, freeing up your time to focus on what matters the most: teaching and inspiring your students.",
+        hintThree:
+            "But we didn't stop there. For those seeking a more personalized touch, you can also manually input your questions. This gives you the opportunity to customize every aspect of your question-creation process, thereby creating a unique and engaging learning experience for each student.",
+        hintFour:
+            "Our Question Generator is more than just a tool. It's a stepping stone to enhancing the learning journey of your students. So why wait? Step into a world of seamless question creation today, and elevate your teaching experience to greater heights.",
     },
     createAdmin: {
         headingOne: "Register an Admin",
@@ -861,7 +868,7 @@ const en = {
     lessonPlans: {
         viewAllLessonPlans: "View All Lesson Plans",
         noLessonPlan: "No Lesson Plan Found!",
-        yourLessonPlans:"Your Lesson Plans"
+        yourLessonPlans: "Your Lesson Plans",
     },
     lessonPlansIndex: {
         myLessonPlans: "My Lesson Plans",
@@ -1285,7 +1292,7 @@ const en = {
         noneDescription: "There will be class all day.",
     },
     schoolScheduleItem: {
-        "updateSchoolSchedule ": "Update school schedule",
+        updateSchoolSchedule: "Update school schedule",
         update: "update",
         titleLabel: "Name",
         titlePlaceholder: "name",
@@ -1390,6 +1397,7 @@ const en = {
         message: "message",
     },
     staffAbsenteesTable: {
+        noAbsentStaff:"No absent staff",
         searchStaff: "Search for an absent staff by name",
         newAbsentee: "New Absentee",
         userType: "User Type",
@@ -1630,7 +1638,7 @@ const en = {
         updateProfile: "Update Profile",
         updatePassword: "Update Password",
         changeLanguage: "Change Language",
-        uploadProfilePicture:"Upload Profile Picture"
+        uploadProfilePicture: "Upload Profile Picture",
     },
 
     userStatistics: {
@@ -1854,9 +1862,9 @@ const en = {
     },
 
     absenteeAddModal: {
+        youAreAbout:"You are about to add {selectedStaffLabel} as an absentee",
+        addAbsentee:"Add Absentee",
         addStaffAbsentee: "Add Staff Absentee",
-        yourAreAbout:
-            "Your are about to add <span class='px-2 font-bold'> { type } { label } </span> as an absentee:",
         enterReason: "Enter reason",
         searchAddAbsentee: "Search for a staff member to add as an absentee",
         searchStaffMember: "Search for a staff member by name",
@@ -1884,10 +1892,10 @@ const en = {
         expireDate: "Expire date",
         expiresOn: "Expires On",
     },
-    imageUpload:{
-        imageSizeLimit:"Image size must be less than 3MB",
-     chooseImage:"Choose Image To Upload"
-    }
+    imageUpload: {
+        imageSizeLimit: "Image size must be less than 3MB",
+        chooseImage: "Choose Image To Upload",
+    },
 };
 
 export default en;

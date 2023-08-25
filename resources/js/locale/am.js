@@ -117,9 +117,9 @@ const am = {
         goToAnnouncements: "መግለጫዎች ላይ ሂድ",
         viewAllAnnouncements: "ሁሉንም መግለጫዎች ይመልከቱ",
         publishAnnouncement: "ማስታወቂያ ያትሙ",
-        couldNotFound:"{searchKey} ጋር የተያያዘ ምንም አይነት ማስታወቂያ ማግኘት አልተቻለም",
-        noNewAnnouncement:"በአሁኑ ጊዜ ምንም አዲስ ማስታወቂያዎች የሉም። አዲስ ማስታወቂያዎችን ለማግኘት ይህንን ቦታ በተደጋጋሚ እንዲጎበኙ እናበረታታዎታለን።"
-
+        couldNotFound: "<span class='font-normal italic'>'{searchKey}'</span> ጋር የተያያዘ ምንም አይነት ማስታወቂያ ማግኘት አልተቻለም።",
+        noNewAnnouncement:
+            "በአሁኑ ጊዜ ምንም አዲስ ማስታወቂያዎች የሉም። አዲስ ማስታወቂያዎችን ለማግኘት ይህንን ቦታ በተደጋጋሚ እንዲጎበኙ እናበረታታዎታለን።",
     },
     announcementsItem: {
         postTargets: "የመልዕክት ዒላማዎች",
@@ -151,7 +151,7 @@ const am = {
         or: "ወይም",
         scheduled: "ተመድቧል",
         message:
-            "ለአሳዳጊዎች እና ለርዕሰ መምህራን ወዲያውኑ ማሳወቂያዎችን ያስነሳል። ለበለጠ ግንዛቤ ስለ ግምገማው ዝርዝር መረጃ ማግኘት ይቻላል።",
+            "የማረጋገጫውን ሁኔታ ወደ <span class='font-semibold uppercase'>'መለጠፍ'</span> ወይም <span class='font-semibold uppercase'>'መርሃግብር'</span> መቀየር ወዲያውኑ ለአሳዳጊዎች እና ለመምህራን ማሳወቂያዎችን ይልካል። ለተጨማሪ ግንዛቤ የማረጋገጫው ዝርዝር መረጃ ማየት ይቻላል።",
         title: "ግምገማ አስገባ",
         alertMessage:
             "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?",
@@ -181,6 +181,8 @@ const am = {
         gradeCategory: "ደረጃ ምድብ",
         updatedAt: "የተሻሻለበት ጊዜ",
         recentAssessments: "የቅርብ ጊዜ ግምገማዎች",
+        noAssessmentsFound:"ምንም ግምገማዎች አልተገኙም።"
+
     },
     assessmentOutcomePercentages: {
         passedPercentTitle: "አልፏል",
@@ -306,8 +308,8 @@ const am = {
         name: "ስም",
         email: "ኢሜል",
         gender: "ፆታ",
-        female: "ሴት",
-        male: "ወንድ",
+        female: "Female",
+        male: "Male",
     },
     batches: {
         myClasses: "ክፍሎቼ",
@@ -373,13 +375,13 @@ const am = {
             "ዲሴምበር",
         ],
     },
-    common: {           
-        overseeHomeroomClasses:"ርእሰ መምህር የሆኑበትን ክፍሎችን ይቆጣጠሩ",
-        addViewUpdateLessonPlans:"የትምህርት ዕቅዶችን ያክሉ፣ ይመልከቱ እና ያዘምኑ",     
-        viewStudents:"ተማሪዎችዎን ይመልከቱ",
-        addViewUpdateAssessments:"ግምገማዎችን ያክሉ፣ ይመልከቱ እና ያዘምኑ",
-        schoolSchedules:"የትምህርት ቤት መርሃ ግብሮች",
-        viewAnnouncements:"ማስታወቂያዎችን ይመልከቱ",
+    common: {
+        overseeHomeroomClasses: "ርእሰ መምህር የሆኑበትን ክፍሎችን ይቆጣጠሩ",
+        addViewUpdateLessonPlans: "የትምህርት ዕቅዶችን ያክሉ፣ ይመልከቱ እና ያዘምኑ",
+        viewStudents: "ተማሪዎችዎን ይመልከቱ",
+        addViewUpdateAssessments: "ግምገማዎችን ያክሉ፣ ይመልከቱ እና ያዘምኑ",
+        schoolSchedules: "የትምህርት ቤት መርሃ ግብሮች",
+        viewAnnouncements: "ማስታወቂያዎችን ይመልከቱ",
         or: "ወይም",
         for: "ለ",
         add: "አክል",
@@ -441,8 +443,8 @@ const am = {
         name: "ስም",
         email: "ኢሜይል",
         gender: "ፆታ",
-        male: "ወንድ",
-        female: "ሴት",
+        male: "Male",
+        female: "Female",
         close: "ዝጋ",
         clear: "ባዶ አርግ",
         submit: "አስገባ",
@@ -472,14 +474,18 @@ const am = {
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
         chat: "ቻት(Chat)",
-        dailyLimit:"ዕለታዊ ገደብዎን ደርሰዋል። ገደብ ለመጨመር እባክዎ ከአስተዳዳሪው ጋር ይገናኙ።"
+        dailyLimit: "ዕለታዊ ገደብዎን ደርሰዋል። ገደብ ለመጨመር እባክዎ ከአስተዳዳሪው ጋር ይገናኙ።",
     },
-    questionEmptyView:{
-        welcometext:"ወደ ሪገል ጥያቅቄ መፍጠሪያ እንኳን በደህና መጡ",
-        hintOne:"የጥያቄ መፍጠሪያ ሂደትዎን ለማቃለል እና ለማሻሻል በተለይ የተነደፈ ባህሪ። እዚህ፣ ውጤታማ፣ ተዛማጅነት ያላቸው እና ፈታኝ ትምህርታዊ ጥያቄዎችን የመፍጠር ስራን በጥቂት ጠቅታዎች ጥበብ ላይ አስተካክለነዋል።",
-        hintTwo:"የክፍል ስራ፣ የቤት ስራን ወይም ፈተናዎችን እያዘጋጀህ ቢሆንም የኛ ጥያቄ ጀነሬተር ሽፋን ሰጥቶሃል። ከትምህርት ዕቅዶችዎ በቀጥታ ጥያቄዎችን ይፍጠሩ፣ ግምገማዎችዎ ከትምህርቶችዎ ​​ጋር በትክክል የተጣጣሙ መሆናቸውን በማረጋገጥ፣ እንዲሁም የዝግጅት ጊዜን በእጅጉ ይቀንሳል። ይህ ባህሪ በጣም አስፈላጊ በሆኑት ነገሮች ላይ ለማተኮር ጊዜዎን ነፃ በማድረግ ተማሪዎችዎን በማስተማር እና በማነሳሳት እንደ የመጨረሻ የትምህርት ጓደኛዎ ሆኖ ያገለግላል።",
-        hintThree:"እኛ ግን በዚህ ብቻ አላቆምንም። ይበልጥ ግላዊ የሆነ ንክኪ ለሚፈልጉ፣ እንዲሁም የእርስዎን ጥያቄዎች እራስዎ ማስገባት ይችላሉ። ይህ የእርስዎን የጥያቄ-መፍጠር ሂደት እያንዳንዱን ገጽታ ለማበጀት እድል ይሰጥዎታል፣ በዚህም ለእያንዳንዱ ተማሪ ልዩ እና አሳታፊ የትምህርት ተሞክሮ ይፈጥራል።",
-        hintFour:"የኛ ጥያቄ ጀነሬተር ከመሳሪያ በላይ ነው። የተማሪዎቻችሁን የመማር ጉዞ ለማሳደግ መወጣጫ ድንጋይ ነው። ታዲያ ለምን ጠብቅ? ዛሬ እንከን የለሽ የጥያቄ ፈጠራ ዓለም ውስጥ ይግቡ እና የማስተማር ልምድዎን ወደ ከፍተኛ ከፍታ ያሳድጉ።"
+    questionEmptyView: {
+        welcometext: "ወደ ሪገል ጥያቅቄ መፍጠሪያ እንኳን በደህና መጡ",
+        hintOne:
+            "የጥያቄ መፍጠሪያ ሂደትዎን ለማቃለል እና ለማሻሻል በተለይ የተነደፈ ባህሪ። እዚህ፣ ውጤታማ፣ ተዛማጅነት ያላቸው እና ፈታኝ ትምህርታዊ ጥያቄዎችን የመፍጠር ስራን በጥቂት ጠቅታዎች ጥበብ ላይ አስተካክለነዋል።",
+        hintTwo:
+            "የክፍል ስራ፣ የቤት ስራን ወይም ፈተናዎችን እያዘጋጀህ ቢሆንም የኛ ጥያቄ ጀነሬተር ሽፋን ሰጥቶሃል። ከትምህርት ዕቅዶችዎ በቀጥታ ጥያቄዎችን ይፍጠሩ፣ ግምገማዎችዎ ከትምህርቶችዎ ​​ጋር በትክክል የተጣጣሙ መሆናቸውን በማረጋገጥ፣ እንዲሁም የዝግጅት ጊዜን በእጅጉ ይቀንሳል። ይህ ባህሪ በጣም አስፈላጊ በሆኑት ነገሮች ላይ ለማተኮር ጊዜዎን ነፃ በማድረግ ተማሪዎችዎን በማስተማር እና በማነሳሳት እንደ የመጨረሻ የትምህርት ጓደኛዎ ሆኖ ያገለግላል።",
+        hintThree:
+            "እኛ ግን በዚህ ብቻ አላቆምንም። ይበልጥ ግላዊ የሆነ ንክኪ ለሚፈልጉ፣ እንዲሁም የእርስዎን ጥያቄዎች እራስዎ ማስገባት ይችላሉ። ይህ የእርስዎን የጥያቄ-መፍጠር ሂደት እያንዳንዱን ገጽታ ለማበጀት እድል ይሰጥዎታል፣ በዚህም ለእያንዳንዱ ተማሪ ልዩ እና አሳታፊ የትምህርት ተሞክሮ ይፈጥራል።",
+        hintFour:
+            "የኛ ጥያቄ ጀነሬተር ከመሳሪያ በላይ ነው። የተማሪዎቻችሁን የመማር ጉዞ ለማሳደግ መወጣጫ ድንጋይ ነው። ታዲያ ለምን ጠብቅ? ዛሬ እንከን የለሽ የጥያቄ ፈጠራ ዓለም ውስጥ ይግቡ እና የማስተማር ልምድዎን ወደ ከፍተኛ ከፍታ ያሳድጉ።",
     },
     createAdmin: {
         headingOne: "ሲስተም አስተዳዳሪ ይመዝገቡ",
@@ -492,8 +498,8 @@ const am = {
         position: "ቦታ",
         genderLabel: "ፆታ",
         genderPlaceholder: "ፆታ ምረጥ",
-        male: "ወንድ",
-        female: "ሴት",
+        male: "Male",
+        female: "Female",
     },
     createStudent: {
         headingOne: "አዲስ ተማሪ እና አሳዳጊ ይመዝገቡ",
@@ -832,8 +838,7 @@ const am = {
     lessonPlans: {
         viewAllLessonPlans: "ሁሉንም የትምህርት ዕቅዶች ይመልከቱ",
         noLessonPlan: "የትምህርት ዕቅድ አልተገኘም!",
-        yourLessonPlans:"የእርስዎ የትምህርት እቅዶች"
-
+        yourLessonPlans: "የእርስዎ የትምህርት እቅዶች",
     },
     lessonPlansIndex: {
         myLessonPlans: "የትምህርት እቅዴ",
@@ -1071,7 +1076,7 @@ const am = {
     },
     registerSubjectForm: {
         formElementTitle: "አዲስ የትምህርት አይነት",
-        formElementSubtitle: "አዲስ የትምህርት አይነት ይፍጠሩ እና ለምድብ ያዛመኑት",
+        formElementSubtitle: "አዲስ የትምህርት አይነት ይፍጠሩ እና ለምድብ ያዛምዱት",
         fullNamePlaceholder: "የአዲሱ የትምህርት አይነት ስም",
         fullNameLabel: "የትምህርት አይነት ስም",
         shortNamePlaceholder: "ለትምህርት አይነት አጭር ስም",
@@ -1338,6 +1343,7 @@ const am = {
         message: "መልእክት",
     },
     staffAbsenteesTable: {
+        noAbsentStaff:"ምንም ቀሪ ሰራተኛ የለም።",
         searchStaff: "የቀረ ሰራተኛ በስም ይፈልጉ",
         newAbsentee: "አዲስ ቀሪ",
         userType: "የተጠቃሚዎች አይነት",
@@ -1567,13 +1573,12 @@ const am = {
         passwordPlaceholder: "አዲስ ይለፍ ቃልዎን ያስገቡ",
         passwordConfirmationLabel: "የአዲስ ይለፍ ቃል ማረጋገጫ",
         passwordConfirmationPlaceholder: "አዲስ ይለፍ ቃልዎን ያረጋግጡ",
-        male: "ወንድ",
-        female: "ሴት",
+        male: "Male",
+        female: "Female",
         updateProfile: "ፕሮፋይል አዘምን",
         updatePassword: "የይለፍ ቃል አዘምን",
         changeLanguage: "ቋንቋ ቀይር",
-        uploadProfilePicture:"የፕሮፋይል ምስል ይቀይሩ"
-
+        uploadProfilePicture: "የፕሮፋይል ምስል ይቀይሩ",
     },
 
     userStatistics: {
@@ -1795,9 +1800,9 @@ const am = {
     },
 
     absenteeAddModal: {
+        youAreAbout:"{selectedStaffLabel}ን እንደ ቀሪ ሊጨምሩ ነው።",
+        addAbsentee:"ቀሪ ጨምር",
         addStaffAbsentee: "የሰራተኛ መቅረትን ይጨምሩ",
-        yourAreAbout:
-            "<span class='px-2 font-bold'> { type } { label}</span>ን እንደ ቀሪ ሊያክሉ ነው::",
         enterReason: "ምክንያት ያስገቡ",
         searchAddAbsentee: "ሰራተኛን በመለያ ይፈልጉ አን ቀሪ ላይ ይጨምሩ",
         searchStaffMember: "በስም የሰራተኛ መለያ ይፈልጉ",
@@ -1826,8 +1831,8 @@ const am = {
     },
     imageUpload: {
         imageSizeLimit: "የምስሉ መጠን ከ3MB ያነሰ መሆን አለበት",
-        chooseImage: "ምስል ለመጫን ይምረጡ"
-      }
+        chooseImage: "ምስል ለመጫን ይምረጡ",
+    },
 };
 
 export default am;

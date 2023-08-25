@@ -42,7 +42,7 @@
             </div>
         </template>
         <template #empty-data>
-            <EmptyView title="No absent staff" />
+            <EmptyView :title="$t('staffAbsenteesTable.noAbsentStaff')" />
         </template>
     </TableElement>
 

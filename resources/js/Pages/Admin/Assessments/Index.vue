@@ -2,7 +2,6 @@
     <div class="flex min-h-screen w-full justify-center">
         <div class="flex w-full flex-col space-y-6 lg:w-11/12">
             <Title class="w-5/12" :title="$t('common.assessments')" />
-
             <div
                 class="flex h-full w-full flex-col lg:flex-row lg:justify-between lg:space-x-5"
             >
@@ -39,7 +38,7 @@
 
                         <EmptyView
                             v-if="assessments?.data.length === 0"
-                            title="No assessments found"
+                            :title="$t('assessmentIndex.noAssessmentsFound')"
                         />
                     </div>
 

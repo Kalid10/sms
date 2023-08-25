@@ -56,7 +56,6 @@
                     </div>
                 </div>
             </div>
-
             <Modal v-model:view="showGrade">
                 <StudentGradeDetail
                     :student-name="student"
