@@ -18,6 +18,9 @@ class BiologyTeacherSeeder extends TeacherSeeder
             $this->create('Biology', $level);
         }
 
-        $this->create(subject: 'Biology', level: ['11', '12'], section: ['C', 'D']);
+        $this->create(subject: 'Biology', level: ['11'], section: ['D']);
+        $this->create(subject: 'Biology', level: ['11'], section: ['C']);
+        $this->create(subject: 'Biology', level: ['12'], section: ['D']);
+        $this->create(subject: 'Biology', level: ['12'], section: ['C']);
     }
 }

@@ -11,7 +11,8 @@ class BusinessTeacherSeeder extends TeacherSeeder
      */
     public function run(): void
     {
-        $this->create('Business Studies', level: ['9', '10']);
+        $this->create('Business Studies', level: ['9']);
+        $this->create('Business Studies', level: ['10']);
         $this->create('Business Studies', level: ['11', '12'], section: ['A', 'B']);
     }
 }

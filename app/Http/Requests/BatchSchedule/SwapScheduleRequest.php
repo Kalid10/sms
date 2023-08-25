@@ -64,13 +64,13 @@ class SwapScheduleRequest extends FormRequest
                     $teacherScheduleTime = Carbon::createFromDate($teacherSchedule->schoolPeriod->start_time);
 
                     if ($toScheduleTime->diffInMinutes($teacherScheduleTime) < $batchSchedule->schoolPeriod->duration) {
-                        $overlappingBatchSubject = $teacherSubjectSchedule->load('batch.level', 'subject');
+                        $overlappingBatchSubject = $teacherSubjectSchedule->load('batch.level', 'batchSubject.subject');
                         $this->validator->errors()->add(
                             'schedule_a',
                             'This schedule overlaps with the teacher\'s Grade'.
                             $overlappingBatchSubject->batch->level.' '.
                             $overlappingBatchSubject->batch->section.' '.
-                            $overlappingBatchSubject->subject->full_name.' class on '.
+                            $overlappingBatchSubject->batchSubject->subject->full_name.' class on '.
                             ucfirst($batchSchedule->day_of_week).'s at '.
                             $batchSchedule->schoolPeriod->start_time
                         );

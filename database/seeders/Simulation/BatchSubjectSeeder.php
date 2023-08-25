@@ -15,7 +15,7 @@ class BatchSubjectSeeder extends SubjectSeeder
     public function run(): void
     {
         $subjects = Subject::all();
-        $weeklyFrequency = 4;
+        $weeklyFrequency = 6;
 
         $allSubjects = $this->filterSubjectsByTag('All Levels', $subjects);
         $this->filterBatchesByLevelNames($this->allLevelNames())->each(function ($batch) use ($weeklyFrequency, $allSubjects) {
