@@ -17,22 +17,39 @@ class GradeResource extends JsonResource
         return [
             'student_id' => $this->id,
             'student_name' => $this->user->name,
+            'student_profile_image' => $this->user->profile_image,
             'grades' => $this->grades->map(function ($grade) {
                 return [
-                    'rank' => $grade->rank,
+                    'id' => $grade->id,
+                    'gradable' => [
+                        ...$grade->gradable->toArray(),
+                        'type' => $grade->gradable_type,
+                        'school_year' => $this->schoolYearName($grade->gradable),
+                    ],
+                    'grade_scale' => $grade->gradeScale,
                     'score' => $grade->score,
+                    'total_score' => $grade->total_score,
+                    'rank' => $grade->rank,
                     'conduct' => $grade->conduct,
                     'attendance' => $grade->attendance,
-                    'gradable_id' => $grade->gradable->id,
-                    'gradable_type' => $grade->gradable_type,
-                    'gradable_name' => $grade->gradable->name,
-                    'grade_scale_id' => $grade->gradeScale->id,
-                    'grade_scale_state' => $grade->gradeScale->state,
-                    'grade_scale_label' => $grade->gradeScale->label,
-                    'grade_scale_description' => $grade->gradeScale->description,
+                    'updated_at' => $grade->updated_at,
                 ];
             }),
 
         ];
+    }
+
+    private function schoolYearName($gradable): string
+    {
+        return $gradable->schoolYear ? $gradable->load('schoolYear')->schoolYear->name : $gradable->name;
+    }
+
+    private function semesterName($gradable): ?string
+    {
+        return match (get_class($gradable)) {
+            'App\Models\Quarter' => $gradable->load('semester')->semester->name,
+            'App\Models\Semester' => $gradable->name,
+            default => null,
+        };
     }
 }
