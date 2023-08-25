@@ -42,6 +42,10 @@ class Student extends Controller
         $semesters = Semester::with('schoolYear')->get();
         $schoolYears = SchoolYear::all();
 
+        //grade report
+        $homeroomTeacher = $student->activeBatch()->homeroomTeacher->teacher->user;
+        $level = $student->activeBatch()->level;
+
         $page = match (auth()->user()->type) {
             User::TYPE_TEACHER => 'Teacher/Student',
             User::TYPE_ADMIN => 'Admin/Students/Single',
@@ -66,6 +70,8 @@ class Student extends Controller
             'absentee_records' => $student->absenteeRecords(SchoolYear::getActiveSchoolYear()->id, $batchSubjectId)->with('batchSession.batchSchedule.batchSubject.subject', 'batchSession.schoolPeriod', 'batchSession.teacher.user')->paginate(5)->appends($request->all()),
             'flags' => $this->loadStudentFlags($student, $batchSubjectId),
             'assessment_types' => $assessmentTypes,
+            'homeroom_teacher' => $homeroomTeacher,
+            'level' => $level,
             'filters' => [
                 'quarters' => $quarters,
                 'semesters' => $semesters,

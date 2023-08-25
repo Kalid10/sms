@@ -18,6 +18,8 @@ class ChemistryTeacherSeeder extends TeacherSeeder
             $this->create('Chemistry', $level);
         }
 
-        $this->create(subject: 'Chemistry', level: ['11', '12'], section: ['C', 'D']);
+        $this->create(subject: 'Chemistry', level: ['11'], section: ['C', 'D']);
+        $this->create(subject: 'Chemistry', level: ['12'], section: ['C']);
+        $this->create(subject: 'Chemistry', level: ['12'], section: ['D']);
     }
 }

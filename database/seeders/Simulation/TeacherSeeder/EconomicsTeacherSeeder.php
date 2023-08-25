@@ -11,7 +11,8 @@ class EconomicsTeacherSeeder extends TeacherSeeder
      */
     public function run(): void
     {
-        $this->create('Economics', level: ['9', '10']);
+        $this->create('Economics', level: ['9']);
+        $this->create('Economics', level: ['10']);
         $this->create('Economics', level: ['11', '12'], section: ['A', 'B']);
     }
 }

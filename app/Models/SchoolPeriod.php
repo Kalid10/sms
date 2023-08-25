@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,8 @@ class SchoolPeriod extends Model
         'is_custom',
         'level_category_id',
     ];
+
+    protected $appends = ['order'];
 
     public function schoolYear(): BelongsTo
     {
@@ -67,5 +70,22 @@ class SchoolPeriod extends Model
         }
 
         return $this->getSchoolScheduleBySchoolYearId($schoolYear->id);
+    }
+
+    public function getOrderAttribute(): int
+    {
+        $schoolPeriod = $this->load('levelCategory', 'schoolYear');
+        $schoolPeriods = SchoolPeriod::where([
+            'level_category_id' => $schoolPeriod->level_category_id,
+            'school_year_id' => $schoolPeriod->school_year_id,
+        ])->pluck('start_time')->map(function ($startTime) {
+            return Carbon::today()->setTimeFromTimeString($startTime);
+        })->toArray();
+
+        usort($schoolPeriods, function ($a, $b) {
+            return $a->gt($b);
+        });
+
+        return array_search(Carbon::today()->setTimeFromTimeString($schoolPeriod->start_time), $schoolPeriods) + 1;
     }
 }

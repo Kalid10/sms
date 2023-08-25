@@ -117,7 +117,7 @@ const am = {
         goToAnnouncements: "መግለጫዎች ላይ ሂድ",
         viewAllAnnouncements: "ሁሉንም መግለጫዎች ይመልከቱ",
         publishAnnouncement: "ማስታወቂያ ያትሙ",
-        couldNotFound: "{searchKey} ጋር የተያያዘ ምንም አይነት ማስታወቂያ ማግኘት አልተቻለም",
+        couldNotFound: "<span class='font-normal italic'>'{searchKey}'</span> ጋር የተያያዘ ምንም አይነት ማስታወቂያ ማግኘት አልተቻለም።",
         noNewAnnouncement:
             "በአሁኑ ጊዜ ምንም አዲስ ማስታወቂያዎች የሉም። አዲስ ማስታወቂያዎችን ለማግኘት ይህንን ቦታ በተደጋጋሚ እንዲጎበኙ እናበረታታዎታለን።",
     },
@@ -151,7 +151,7 @@ const am = {
         or: "ወይም",
         scheduled: "ተመድቧል",
         message:
-            "ለአሳዳጊዎች እና ለርዕሰ መምህራን ወዲያውኑ ማሳወቂያዎችን ያስነሳል። ለበለጠ ግንዛቤ ስለ ግምገማው ዝርዝር መረጃ ማግኘት ይቻላል።",
+            "የማረጋገጫውን ሁኔታ ወደ <span class='font-semibold uppercase'>'መለጠፍ'</span> ወይም <span class='font-semibold uppercase'>'መርሃግብር'</span> መቀየር ወዲያውኑ ለአሳዳጊዎች እና ለመምህራን ማሳወቂያዎችን ይልካል። ለተጨማሪ ግንዛቤ የማረጋገጫው ዝርዝር መረጃ ማየት ይቻላል።",
         title: "ግምገማ አስገባ",
         alertMessage:
             "ይህን ድርጊት መፈጸም በጠቅላላው ርዕሰ ጉዳይ ላይ ከፍተኛ ለውጥ ያመጣል፣ እርግጠኛ ነዎት መቀጠል ይፈልጋሉ?",
@@ -181,6 +181,8 @@ const am = {
         gradeCategory: "ደረጃ ምድብ",
         updatedAt: "የተሻሻለበት ጊዜ",
         recentAssessments: "የቅርብ ጊዜ ግምገማዎች",
+        noAssessmentsFound:"ምንም ግምገማዎች አልተገኙም።"
+
     },
     assessmentOutcomePercentages: {
         passedPercentTitle: "አልፏል",
@@ -306,8 +308,8 @@ const am = {
         name: "ስም",
         email: "ኢሜል",
         gender: "ፆታ",
-        female: "ሴት",
-        male: "ወንድ",
+        female: "Female",
+        male: "Male",
     },
     batches: {
         myClasses: "ክፍሎቼ",
@@ -436,13 +438,14 @@ const am = {
         announcements: "መግለጫዎች",
         schedule: "መርሃግብር",
         schedules: "መርሃግብሮች",
+        timetable: "የክፍል ጊዜያት",
         users: "ተጠቃሚዎች",
         noDataFound: "ምንም መረጃ አልተገኘም",
         name: "ስም",
         email: "ኢሜይል",
         gender: "ፆታ",
-        male: "ወንድ",
-        female: "ሴት",
+        male: "Male",
+        female: "Female",
         close: "ዝጋ",
         clear: "ባዶ አርግ",
         submit: "አስገባ",
@@ -469,6 +472,7 @@ const am = {
         amharic: "አማርኛ",
         am: "አማ",
         notes: "ማስታዎች",
+        inventory: "ኢንቬንቶሪ",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
@@ -497,8 +501,8 @@ const am = {
         position: "ቦታ",
         genderLabel: "ፆታ",
         genderPlaceholder: "ፆታ ምረጥ",
-        male: "ወንድ",
-        female: "ሴት",
+        male: "Male",
+        female: "Female",
     },
     createStudent: {
         headingOne: "አዲስ ተማሪ እና አሳዳጊ ይመዝገቡ",
@@ -1075,7 +1079,7 @@ const am = {
     },
     registerSubjectForm: {
         formElementTitle: "አዲስ የትምህርት አይነት",
-        formElementSubtitle: "አዲስ የትምህርት አይነት ይፍጠሩ እና ለምድብ ያዛመኑት",
+        formElementSubtitle: "አዲስ የትምህርት አይነት ይፍጠሩ እና ለምድብ ያዛምዱት",
         fullNamePlaceholder: "የአዲሱ የትምህርት አይነት ስም",
         fullNameLabel: "የትምህርት አይነት ስም",
         shortNamePlaceholder: "ለትምህርት አይነት አጭር ስም",
@@ -1343,6 +1347,7 @@ const am = {
         message: "መልእክት",
     },
     staffAbsenteesTable: {
+        noAbsentStaff:"ምንም ቀሪ ሰራተኛ የለም።",
         searchStaff: "የቀረ ሰራተኛ በስም ይፈልጉ",
         newAbsentee: "አዲስ ቀሪ",
         userType: "የተጠቃሚዎች አይነት",
@@ -1572,8 +1577,8 @@ const am = {
         passwordPlaceholder: "አዲስ ይለፍ ቃልዎን ያስገቡ",
         passwordConfirmationLabel: "የአዲስ ይለፍ ቃል ማረጋገጫ",
         passwordConfirmationPlaceholder: "አዲስ ይለፍ ቃልዎን ያረጋግጡ",
-        male: "ወንድ",
-        female: "ሴት",
+        male: "Male",
+        female: "Female",
         updateProfile: "ፕሮፋይል አዘምን",
         updatePassword: "የይለፍ ቃል አዘምን",
         changeLanguage: "ቋንቋ ቀይር",
@@ -1802,9 +1807,9 @@ const am = {
     },
 
     absenteeAddModal: {
+        youAreAbout:"{selectedStaffLabel}ን እንደ ቀሪ ሊጨምሩ ነው።",
+        addAbsentee:"ቀሪ ጨምር",
         addStaffAbsentee: "የሰራተኛ መቅረትን ይጨምሩ",
-        yourAreAbout:
-            "<span class='px-2 font-bold'> { type } { label}</span>ን እንደ ቀሪ ሊያክሉ ነው::",
         enterReason: "ምክንያት ያስገቡ",
         searchAddAbsentee: "ሰራተኛን በመለያ ይፈልጉ አን ቀሪ ላይ ይጨምሩ",
         searchStaffMember: "በስም የሰራተኛ መለያ ይፈልጉ",

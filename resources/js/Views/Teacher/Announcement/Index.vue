@@ -87,12 +87,13 @@
                 v-else
                 class="flex h-3/5 w-full flex-col items-center justify-center text-3xl font-semibold text-gray-700"
             >
-                <div>
-                    Could not find any announcement related to
-                    <span class="font-normal italic">
-                        ' {{ searchKey }} '
-                    </span>
-                </div>
+                <span
+                    v-html="
+                        $t('announcementsIndex.couldNotFound', {
+                            searchKey: searchKey,
+                        })
+                    "
+                ></span>
             </div>
         </div>
     </div>
@@ -115,7 +116,8 @@
         </template>
     </EmptyView>
 
-    <Modal v-model:view="showAddAnnouncement">
+    <Modal v-model:view="showAddAnnouncement"
+        >z
         <AddAnnouncement @success="showAddAnnouncement = false" />
     </Modal>
 

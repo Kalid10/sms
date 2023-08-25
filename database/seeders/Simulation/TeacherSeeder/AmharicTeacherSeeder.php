@@ -11,8 +11,18 @@ class AmharicTeacherSeeder extends TeacherSeeder
      */
     public function run(): void
     {
-        $this->create('አማርኛ', ['Pre-KG']);
-        $this->create('አማርኛ', ['KG-1', 'KG-2']);
+        $this->create('አማርኛ', level: ['Pre-KG'], section: ['A']);
+        $this->create('አማርኛ', level: ['Pre-KG'], section: ['B']);
+        $this->create('አማርኛ', level: ['Pre-KG'], section: ['C']);
+        $this->create('አማርኛ', level: ['Pre-KG'], section: ['D']);
+        $this->create('አማርኛ', level: ['KG-1'], section: ['A']);
+        $this->create('አማርኛ', level: ['KG-1'], section: ['B']);
+        $this->create('አማርኛ', level: ['KG-1'], section: ['C']);
+        $this->create('አማርኛ', level: ['KG-1'], section: ['D']);
+        $this->create('አማርኛ', level: ['KG-2'], section: ['A']);
+        $this->create('አማርኛ', level: ['KG-2'], section: ['B']);
+        $this->create('አማርኛ', level: ['KG-2'], section: ['C']);
+        $this->create('አማርኛ', level: ['KG-2'], section: ['D']);
 
         $englishPrimary = [
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
@@ -21,7 +31,13 @@ class AmharicTeacherSeeder extends TeacherSeeder
             $this->create('አማርኛ', $level);
         }
 
-        $this->create(subject: 'አማርኛ', level: ['11', '12'], section: ['A', 'B']);
-        $this->create(subject: 'አማርኛ', level: ['11', '12'], section: ['C', 'D']);
+        $this->create(subject: 'አማርኛ', level: ['12'], section: ['A']);
+        $this->create(subject: 'አማርኛ', level: ['12'], section: ['B']);
+        $this->create(subject: 'አማርኛ', level: ['11'], section: ['A']);
+        $this->create(subject: 'አማርኛ', level: ['11'], section: ['B']);
+        $this->create(subject: 'አማርኛ', level: ['11'], section: ['C']);
+        $this->create(subject: 'አማርኛ', level: ['12'], section: ['C']);
+        $this->create(subject: 'አማርኛ', level: ['11'], section: ['D']);
+        $this->create(subject: 'አማርኛ', level: ['12'], section: ['D']);
     }
 }

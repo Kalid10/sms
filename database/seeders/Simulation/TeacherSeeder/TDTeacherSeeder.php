@@ -11,7 +11,9 @@ class TDTeacherSeeder extends TeacherSeeder
      */
     public function run(): void
     {
-        $this->create('Technical Drawing', level: ['9', '10']);
-        $this->create('Technical Drawing', level: ['11', '12'], section: ['C', 'D']);
+        $this->create('Technical Drawing', level: ['9']);
+        $this->create('Technical Drawing', level: ['10']);
+        $this->create('Technical Drawing', level: ['12'], section: ['C', 'D']);
+        $this->create('Technical Drawing', level: ['11'], section: ['C', 'D']);
     }
 }

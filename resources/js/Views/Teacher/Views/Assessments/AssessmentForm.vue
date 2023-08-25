@@ -186,13 +186,8 @@
                 <InformationCircleIcon class="mr-2 w-7 text-gray-600" />
 
                 <div>
-                    Setting an assessment as
-                    <span class="font-semibold uppercase">" PUBLISHED "</span>
-                    or
-                    <span class="font-semibold uppercase">" SCHEDULED "</span>
-                    will trigger immediate notifications to guardians and
-                    principals. Detailed information about the assessment can be
-                    accessed for further insight.
+                    <span v-html="$t('assessmentForm.message')"></span>
+
                 </div>
             </div>
         </FormElement>
