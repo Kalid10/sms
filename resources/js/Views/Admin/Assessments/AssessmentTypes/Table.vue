@@ -38,7 +38,7 @@
             </div>
 
             <div v-else>
-                <label class="pl-0.5 text-sm font-semibold text-brand-text-300">
+                <label class="pl-0.5 text-sm font-semibold text-black">
                     {{ $t("assessmentIndex.selectLevelCategories") }}</label
                 >
 
@@ -63,11 +63,20 @@
                 </div>
             </div>
 
-            <Toggle
-                v-model="form.customizable"
-                :label="$t('assessmentIndex.customizable')"
-            />
-
+            <div class="flex w-full">
+                <div class="w-full">
+                    <Toggle
+                        v-model="form.customizable"
+                        :label="$t('assessmentIndex.customizable')"
+                    />
+                </div>
+                <div class="w-full">
+                    <Toggle
+                        v-model="form.is_admin_controlled"
+                        label="Is Admin Controlled"
+                    />
+                </div>
+            </div>
             <div v-show="form.customizable">
                 <div class="flex gap-3">
                     <TextInput
@@ -229,6 +238,7 @@ function openUpdateModal(row) {
     form.percentage = row.percentage;
     form.level_category_id = row.level_category_id;
     form.customizable = row.customizable;
+    form.is_admin_controlled = row.is_admin_controlled;
     form.min_assessments = row.min_assessments;
     form.max_assessments = row.max_assessments;
     isModalOpen.value = true;
@@ -326,6 +336,7 @@ const form = useForm({
     percentage: "",
     level_category_id: [],
     customizable: false,
+    is_admin_controlled: false,
     min_assessments: "",
     max_assessments: "",
 });

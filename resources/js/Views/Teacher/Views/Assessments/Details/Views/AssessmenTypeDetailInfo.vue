@@ -140,7 +140,11 @@
                 </div>
             </div>
             <div
-                v-if="assessment.status !== 'completed' && isTeacher()"
+                v-if="
+                    assessment.status !== 'completed' &&
+                    isTeacher() &&
+                    assessment.assessment_type.is_admin_controlled === 0
+                "
                 class="my-1 flex w-11/12 cursor-pointer justify-center rounded-2xl bg-brand-450 py-1.5 text-center text-[0.6rem] font-semibold lg:w-1/2 2xl:w-5/12 2xl:text-xs"
                 :class="{
                     'bg-yellow-400 text-black':
@@ -178,6 +182,8 @@ const props = defineProps({
         required: true,
     },
 });
+
+console.log(props.assessment.assessment_type);
 
 const isSingleAssessmentType = computed(() => {
     return (

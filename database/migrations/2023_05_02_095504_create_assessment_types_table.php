@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('min_assessments')->nullable();
             $table->unsignedTinyInteger('max_assessments')->nullable();
             $table->boolean('customizable')->default(true);
+            $table->boolean('is_admin_controlled');
             $table->foreignId('school_year_id')->constrained('school_years')->cascadeOnDelete();
             $table->foreignId('level_category_id')->constrained('level_categories')->cascadeOnDelete();
             $table->softDeletes();

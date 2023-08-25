@@ -50,7 +50,6 @@
         <FormElement
             class="max-w-2xl"
             :title="$t('schoolScheduleItem.updateSchoolSchedule')"
-            :subtitle="$t('schoolScheduleItem.update')"
             @submit="update"
         >
             <TextInput

@@ -71,6 +71,7 @@ import {
     AcademicCapIcon,
     BookOpenIcon,
     CalendarDaysIcon,
+    CircleStackIcon,
     FaceFrownIcon,
     FingerPrintIcon,
     HomeIcon,
@@ -171,7 +172,9 @@ const sidebarItems = computed(() => [
             isRouteActive(/^\/admin\/levels\/\d+\/?$/) ||
             isRouteActive(/^\/admin\/levels\/?$/) ||
             isRouteActive(/^\/levels\/level-categories\/\d+\/?$/) ||
-            isRouteActive(/^\/levels\/level-categories\/?$/),
+            isRouteActive(/^\/levels\/level-categories\/?$/) ||
+            isRouteActive(/^\/levels\/assessments\/\d+\/?$/) ||
+            isRouteActive(/^\/levels\/ssessments\/?$/),
     },
     {
         name: t("common.subjects"),
@@ -211,7 +214,9 @@ const sidebarItems = computed(() => [
         name: t("common.assessments"),
         icon: NewspaperIcon,
         route: "/admin/assessments",
-        active: directory.value === "assessments",
+        active:
+            isRouteActive(/^\/admin\/assessments\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/assessments\/?$/),
     },
     {
         name: t("common.users"),
@@ -234,6 +239,14 @@ const sidebarItems = computed(() => [
         active:
             isRouteActive(/^\/admin\/absentees\/\d+\/?$/) ||
             isRouteActive(/^\/admin\/absentees\/?$/),
+    },
+    {
+        name: t("common.inventory"),
+        icon: CircleStackIcon,
+        route: "/admin/inventory",
+        active:
+            isRouteActive(/^\/admin\/inventory\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/inventory\/?$/),
     },
     {
         name: t("adminLayout.settings"),

@@ -46,4 +46,9 @@ class LevelCategory extends Model
     {
         return $this->hasMany(AssessmentType::class);
     }
+
+    public function assessmentMappings(): HasMany
+    {
+        return $this->hasMany(AssessmentMapping::class);
+    }
 }

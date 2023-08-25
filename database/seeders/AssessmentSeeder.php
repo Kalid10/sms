@@ -36,6 +36,10 @@ class AssessmentSeeder extends Seeder
 
                 $assessmentType = $assessmentTypes->random();
 
+                if ($assessmentType->is_admin_controlled) {
+                    continue;
+                }
+
                 Assessment::create([
                     'batch_subject_id' => $batchSubject->id,
                     'assessment_type_id' => $assessmentType->id,
