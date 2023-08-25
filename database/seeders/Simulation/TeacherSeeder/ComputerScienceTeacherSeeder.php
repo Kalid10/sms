@@ -11,7 +11,8 @@ class ComputerScienceTeacherSeeder extends TeacherSeeder
      */
     public function run(): void
     {
-        $this->create(subject: 'Computer Science', level: ['1', '2']);
+        $this->create(subject: 'Computer Science', level: ['1']);
+        $this->create(subject: 'Computer Science', level: ['2']);
 
         $elementaryTeachers = [
             '3', '4', '5', '6', '7', '8',
@@ -20,7 +21,8 @@ class ComputerScienceTeacherSeeder extends TeacherSeeder
             $this->create('Computer Science', $level);
         }
 
-        $this->create(subject: 'Computer Science', level: ['9', '10']);
+        $this->create(subject: 'Computer Science', level: ['10']);
+        $this->create(subject: 'Computer Science', level: ['9']);
         $this->create(subject: 'Computer Science', level: ['11', '12']);
     }
 }

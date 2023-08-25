@@ -18,6 +18,8 @@ class PhysicsTeacherSeeder extends TeacherSeeder
             $this->create('Physics', $level);
         }
 
-        $this->create(subject: 'Physics', level: ['11', '12'], section: ['C', 'D']);
+        $this->create(subject: 'Physics', level: ['12'], section: ['C', 'D']);
+        $this->create(subject: 'Physics', level: ['11'], section: ['D']);
+        $this->create(subject: 'Physics', level: ['11'], section: ['C']);
     }
 }

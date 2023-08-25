@@ -11,6 +11,17 @@ class NapTimeTeacherSeeder extends TeacherSeeder
      */
     public function run(): void
     {
-        $this->create(subject: 'Nap Time', level_category: 'Kindergarten');
+        $this->create(subject: 'Nap Time', level: ['Pre-KG'], section: ['A']);
+        $this->create(subject: 'Nap Time', level: ['Pre-KG'], section: ['B']);
+        $this->create(subject: 'Nap Time', level: ['Pre-KG'], section: ['C']);
+        $this->create(subject: 'Nap Time', level: ['Pre-KG'], section: ['D']);
+        $this->create(subject: 'Nap Time', level: ['KG-1'], section: ['A']);
+        $this->create(subject: 'Nap Time', level: ['KG-1'], section: ['B']);
+        $this->create(subject: 'Nap Time', level: ['KG-1'], section: ['C']);
+        $this->create(subject: 'Nap Time', level: ['KG-1'], section: ['D']);
+        $this->create(subject: 'Nap Time', level: ['KG-2'], section: ['A']);
+        $this->create(subject: 'Nap Time', level: ['KG-2'], section: ['B']);
+        $this->create(subject: 'Nap Time', level: ['KG-2'], section: ['C']);
+        $this->create(subject: 'Nap Time', level: ['KG-2'], section: ['D']);
     }
 }

@@ -438,6 +438,7 @@ const am = {
         announcements: "መግለጫዎች",
         schedule: "መርሃግብር",
         schedules: "መርሃግብሮች",
+        timetable: "የክፍል ጊዜያት",
         users: "ተጠቃሚዎች",
         noDataFound: "ምንም መረጃ አልተገኘም",
         name: "ስም",

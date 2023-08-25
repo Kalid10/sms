@@ -7,19 +7,19 @@
             <li
                 v-for="(tab, t) in tabs"
                 :key="t"
-                :class="[active === tab ? 'bg-brand-400' : '']"
+                :class="[isTabActive(tab) ? 'bg-brand-400' : '']"
                 class="mx-2 rounded-full px-4 py-2 transition-colors duration-300"
             >
                 <button
                     :class="[
-                        active === tab
+                        isTabActive(tab)
                             ? 'text-brand-text-500'
                             : inActiveTabText,
                     ]"
                     class="w-full whitespace-nowrap text-sm font-semibold capitalize transition-colors duration-300"
                     @click="setActiveTab(tab)"
                 >
-                    {{ tab }}
+                    {{ getTabLabel(tab) }}
                 </button>
             </li>
         </ul>
@@ -46,7 +46,7 @@ const props = defineProps({
         default: false,
     },
     active: {
-        type: String,
+        type: [String, Number],
         default: "Home",
     },
     inActiveTabText: {
@@ -57,16 +57,38 @@ const props = defineProps({
         type: String,
         default: "",
     },
+    objectList: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 const emit = defineEmits(["click", "update:active"]);
 
 function setActiveTab(tab) {
+    if (props.objectList) {
+        emit("update:active", tab.key);
+        return;
+    }
     emit("update:active", tab);
 }
 
 function toUnderscore(str) {
     return str.replace(" ", "_").toLowerCase();
+}
+
+function isTabActive(tab) {
+    if (props.objectList) {
+        return props.active === tab.key;
+    }
+    return props.active === tab
+}
+
+function getTabLabel(tab) {
+    if (props.objectList) {
+        return tab.label;
+    }
+    return tab;
 }
 </script>
 

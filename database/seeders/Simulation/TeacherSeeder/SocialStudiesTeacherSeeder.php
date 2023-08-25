@@ -11,7 +11,8 @@ class SocialStudiesTeacherSeeder extends TeacherSeeder
      */
     public function run(): void
     {
-        $this->create(subject: 'Social Studies', level: ['1', '2']);
+        $this->create(subject: 'Social Studies', level: ['1']);
+        $this->create(subject: 'Social Studies', level: ['2']);
 
         $elementaryTeachers = [
             '3', '4', '5', '6', '7', '8',
