@@ -19,14 +19,17 @@ class CheckSchoolYearStatus
         $activeSchoolYear = SchoolYear::getActiveSchoolYear();
 
         if ($isReady) {
-            if ($activeSchoolYear === null || ! $activeSchoolYear->is_ready) {
-                return redirect()->route('getting-started.index');
+            if ($activeSchoolYear === null || ! $activeSchoolYear?->is_ready) {
+
+                return redirect()->to('/getting-started');
             }
         }
 
-        if (! $isReady && $activeSchoolYear->is_ready) {
-
-            return redirect()->route('admin.show');
+        if (! $isReady) {
+            if ($activeSchoolYear !== null && $activeSchoolYear?->is_ready) {
+                return redirect()->to('/admin');
+            }
+            redirect()->to('/getting-started');
         }
 
         return $next($request);
