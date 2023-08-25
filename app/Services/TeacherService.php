@@ -185,6 +185,7 @@ class TeacherService
                 'batchSchedule.schoolPeriod',
                 'batchSchedule.batchSubject.subject',
                 'lessonPlan',
+                'aiNotes',
             ])
             ->get()
             ->sortBy('date')

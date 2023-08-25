@@ -3,8 +3,19 @@
         v-if="questions?.data?.length"
         class="flex h-screen w-11/12 flex-col space-y-4 p-4"
     >
-        <div class="flex w-full items-center justify-between py-3">
-            <Title :title="$t('teacherQuestions.myQuestionBank')" />
+        <div class="flex w-full items-center py-3">
+            <div class="w-full grow">
+                <Title :title="$t('teacherQuestions.myQuestionBank')" />
+            </div>
+
+            <div class="flex w-full justify-end space-x-2">
+                <span class="font-weight-light text-center text-sm">
+                    {{ $t("teacherQuestions.todaysGeneratedQuestions") }}:
+                </span>
+                <span class="text-center text-sm font-semibold">
+                    {{ totalNumberOfQuestions }} / {{ openaiQuestionLimit }}
+                </span>
+            </div>
         </div>
 
         <div class="flex w-full justify-between">
@@ -74,7 +85,7 @@
             <div
                 class="flex h-fit w-6/12 flex-col items-center space-y-3 rounded-lg bg-white p-4 shadow-sm"
             >
-                <div class="flex w-full justify-between">
+                <div class="flex w-full items-center justify-between">
                     <div class="grow text-center text-3xl font-semibold">
                         {{ $t("teacherQuestions.recentQuestions") }}
                     </div>
@@ -167,6 +178,7 @@ import TextArea from "@/Components/TextArea.vue";
 import DialogBox from "@/Components/DialogBox.vue";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
+import { toUnderscore } from "@/utils";
 
 const { t } = useI18n();
 const showUpdateModal = ref(false);
@@ -177,6 +189,14 @@ const selectedRow = ref(null);
 const questions = computed(() => usePage().props.questions);
 const selectedQuestion = ref(
     questions.value.data[questions.value.data.length - 1]
+);
+
+const totalNumberOfQuestions = computed(
+    () => usePage().props.total_number_of_questions
+);
+
+const openaiQuestionLimit = computed(
+    () => usePage().props.openai_question_limit
 );
 
 const formattedQuestionData = computed(() => {
@@ -265,7 +285,7 @@ const setSelectedQuestion = (id) => {
     );
 };
 
-const questionsTab = t("common.questions");
+const questionsTab = toUnderscore(t("common.questions"));
 const routeToQuestionGenerator = () => {
     router.get(
         "/teacher/copilot",

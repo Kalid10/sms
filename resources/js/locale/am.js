@@ -470,6 +470,7 @@ const am = {
         en: "እንግ",
         amharic: "አማርኛ",
         am: "አማ",
+        notes: "ማስታዎች",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
@@ -1160,6 +1161,7 @@ const am = {
         from: "ከ",
         searchForSchedule: "ለመርሐግብር ፍለጋ",
         addEvent: "ክስተት ይጨምሩ",
+        noScheduleFound: "ምንም መርሐግብር አልተገኘም",
     },
     schoolPeriodForm: {
         weekdays: ["ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ", "እሑድ"],
@@ -1585,11 +1587,13 @@ const am = {
         adminsTitle: "አስተዳዳሪዎች",
         adminStatSubtitle: "በስርዓቱ ውስጥ የተመዘገቡ አስተዳዳሪዎች",
         studentsStatTitle: "ተማሪዎች",
-        studentsStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ ተማሪዎች (ሁሉም ጊዜ)",
+        studentsStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ ተማሪዎች",
         teacherStatTitle: "አስተማሪዎች",
-        teacherStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ አስተማሪዎች (ሁሉም ጊዜ)",
+        teacherStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ አስተማሪዎች",
         newUsersStatTitle: "አዳዲስ ተጠቃሚዎች",
         newUserStatSubtitle: "አዳዲስ ተጠቃሚዎች (በመጨረሻው 30 ቀናት)",
+        guardianStatTitle: "ወላጆች",
+        guardianStatSubtitle: "በትምህርት ቤት ውስጥ ተመዝግበው ያሉ ወላጆች",
     },
 
     usersAbsentee: {
@@ -1680,6 +1684,7 @@ const am = {
         noOfQuestions: "የጥያቄዎች ቁጥር",
         difficultyLevel: "የክብደት ደረጃ",
         generatedAt: "የወጣበት ቀን",
+        todaysGeneratedQuestions: "ዛሬ የተፈጠሩ ጥያቄዎች",
     },
 
     adminUserIndex: {

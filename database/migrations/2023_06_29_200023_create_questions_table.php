@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('assessment_type_id')->constrained()->cascadeOnDelete();
             $table->json('lesson_plan_ids')->nullable();
-            $table->string('topic')->nullable()->default('open_ai');
+            $table->string('topic')->nullable();
             $table->string('category')->default('open_ai');
             $table->integer('no_of_questions');
             $table->integer('difficulty_level');

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="my-5 flex min-h-full w-10/12 flex-col">
         <div class="flex space-x-4">
             <CategoryTableElement
                 :columns="config"
@@ -19,10 +19,10 @@
                 </template>
                 <template #row-actions="{ row }">
                     <button @click="editCategory(row)">
-                        <PencilSquareIcon class="h-4 w-4"/>
+                        <PencilSquareIcon class="h-4 w-4" />
                     </button>
                     <button @click="toggleDialogBox(row.id)">
-                        <TrashIcon class="h-4 w-4"/>
+                        <TrashIcon class="h-4 w-4" />
                     </button>
                 </template>
             </CategoryTableElement>
@@ -31,7 +31,11 @@
 
     <!-- Add Modal-->
     <Modal v-model:view="addCategory">
-        <FormElement :title="$t('levelCategory.addLevelCategory')"  subtitle="" @submit="submit">
+        <FormElement
+            :title="$t('levelCategory.addLevelCategory')"
+            subtitle=""
+            @submit="submit"
+        >
             <TextInput
                 v-model="form.name"
                 :label="$t('levelCategory.category')"
@@ -56,21 +60,23 @@
     <DialogBox
         v-if="isDialogBoxOpen"
         open
-        @close="isDialogBoxOpen = false"
-        @confirm="removeCategory"/>
+        @confirm="removeCategory"
+        @abort="isDialogBoxOpen = false"
+    />
 </template>
 <script setup>
 import CategoryPrimaryButton from "@/Components/PrimaryButton.vue";
 import CategoryTableElement from "@/Components/TableElement.vue";
-import {computed, ref} from "vue";
-import {router, useForm, usePage} from "@inertiajs/vue3";
+import { computed, ref } from "vue";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
-import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/outline";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import DialogBox from "@/Components/DialogBox.vue";
-import {useI18n} from "vue-i18n";
-const {t} = useI18n()
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const addCategory = ref(false);
 const updateCategory = ref(false);
 
@@ -95,7 +101,7 @@ function editCategory(row) {
 
 const config = [
     {
-        name: t('common.name'),
+        name: t("common.name"),
         key: "name",
         sortable: true,
         searchable: true,
@@ -114,7 +120,7 @@ const editForm = useForm({
 });
 
 const updateCategoryForm = (id) => {
-    editForm.post(route("level-category.update", id), {
+    editForm.post(route("level-categories.update", id), {
         onSuccess: () => {
             updateCategory.value = false;
         },
@@ -122,7 +128,7 @@ const updateCategoryForm = (id) => {
 };
 
 const submit = () => {
-    form.post("level-category/create", {
+    form.post("/level-categories/create", {
         onSuccess: () => {
             toggleCategoryModal();
         },
@@ -130,7 +136,7 @@ const submit = () => {
 };
 
 const removeCategory = () => {
-    router.delete("/level-category/delete/" + selectedCategoryId.value, {
+    router.delete("/level-categories/delete/" + selectedCategoryId.value, {
         onFinish: () => {
             isDialogBoxOpen.value = false;
             selectedCategoryId.value = null;

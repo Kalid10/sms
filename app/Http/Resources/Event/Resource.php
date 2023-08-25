@@ -18,6 +18,7 @@ class Resource extends JsonResource
             return [
                 'student_id' => $this->student->id,
                 'student_name' => $this->student->user->name,
+                'student_profile_image' => $this->student->user->profile_image,
                 'title' => $this->assessment->title,
                 'long_title' => $this->assessment->long_title,
                 'description' => $this->assessment->description,

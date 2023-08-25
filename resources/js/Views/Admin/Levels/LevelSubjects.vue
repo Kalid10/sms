@@ -16,7 +16,7 @@
             </Link>
         </template>
         <template #short_name-column="{ data }">
-            <span class="text-xs text-brand-text-300">{{ data }}</span>
+            <span class="text-xs text-gray-700">{{ data }}</span>
         </template>
         <template #tags-column="{ data }">
             <div class="flex w-full items-center justify-center gap-2">
@@ -32,13 +32,13 @@
             />
         </template>
         <template #teacher-column="{ data }">
-            <div class="flex justify-end gap-2 text-xs">
+            <div class="flex justify-end gap-4 text-xs">
                 <span>{{ data["name"] }}</span>
-                <span class="text-brand-text-300">{{ data["email"] }}</span>
+                <span class="text-gray-700">{{ data["email"] }}</span>
             </div>
         </template>
         <template #updated_at-column="{ data }">
-            <span class="text-xs text-brand-text-300">
+            <span class="text-xs text-gray-700">
                 {{ moment(data).fromNow() }}
             </span>
         </template>

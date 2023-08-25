@@ -20,6 +20,16 @@
                 <UserIcon />
             </template>
         </StatisticsCard>
+
+        <StatisticsCard
+            :data="guardiansCount"
+            :subtitle="$t('userStatistics.guardianStatSubtitle')"
+            :title="$t('userStatistics.guardianStatTitle')"
+        >
+            <template #icon>
+                <UserIcon />
+            </template>
+        </StatisticsCard>
         <StatisticsCard
             :data="teachersCount"
             :subtitle="$t('userStatistics.teacherStatSubtitle')"
@@ -59,6 +69,8 @@ const teachersCount = computed(() => usePage().props.teachers_count);
 const adminsCount = computed(() => usePage().props.admins_count);
 
 const newUsersCount = computed(() => usePage().props.new_users_count);
+
+const guardiansCount = computed(() => usePage().props.guardians_count);
 </script>
 
 <style scoped></style>

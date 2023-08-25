@@ -3,7 +3,7 @@
         class="flex h-full w-full flex-col justify-between divide-x divide-gray-100 py-4 lg:flex-row lg:space-x-5 lg:px-2"
     >
         <div class="flex h-fit w-full flex-col space-y-5 lg:w-5/12">
-            <div class="text-2xl font-semibold uppercase text-brand-text-50">
+            <div class="text-2xl font-semibold uppercase text-black">
                 {{ $t("section.section") }} {{ batch.section }}
                 <span v-if="batch?.home_room_teacher" class="font-light">
                     ( {{ batch.home_room_teacher.teacher.user.name }} )
@@ -33,35 +33,16 @@
                     :title="$t('common.assessments')"
                     value="10 /10 Completed"
                     :icon="ClipboardIcon"
-                    :url="
-                        isTeacher()
-                            ? '/teacher/assessments'
-                            : '/admin/teachers/assessments?teacher_id='
-                    "
+                    :url="assessmentUrl"
                 />
+
                 <SummaryItem
-                    class-style="bg-fuchsia-100 text-black"
-                    icon-style="bg-fuchsia-500/20 text-white"
-                    :title="$t('common.lessonPlan')"
-                    value="10 /10 Completed"
-                    :icon="CalendarIcon"
-                    :url="
-                        isTeacher()
-                            ? '/teacher/lesson-plan'
-                            : '/admin/teachers/lesson-plan?teacher_id='
-                    "
-                />
-                <SummaryItem
+                    v-if="isTeacher()"
                     class-style="bg-brand-100 text-black"
                     icon-style="bg-brand-300/20 text-white"
                     :title="$t('common.students')"
                     value="75 Total Students"
                     :icon="UsersIcon"
-                    :url="
-                        isTeacher()
-                            ? '/teacher/students'
-                            : '/admin/teachers/students?teacher_id='
-                    "
                 />
                 <SummaryItem
                     class-style="bg-red-50 text-black"
@@ -69,11 +50,7 @@
                     :title="$t('common.announcements')"
                     value="10 Announcements Today"
                     :icon="ChatBubbleBottomCenterIcon"
-                    :url="
-                        isTeacher()
-                            ? '/teacher/announcements'
-                            : '/admin/teachers/announcements?teacher_id='
-                    "
+                    @click="showModal = true"
                 />
             </div>
         </div>
@@ -106,15 +83,40 @@
             </div>
         </div>
     </div>
+
+    <Modal v-model:view="showModal">
+        <div class="rounded bg-white p-4">
+            <Title
+                class="w-full lg:w-5/12"
+                :title="$t('announcementsIndex.announcementsTitle')"
+            />
+
+            <div
+                v-if="announcements"
+                :class="'h-fit w-full space-y-2 py-4 rounded-lg bg-white px-2 shadow-sm'"
+            >
+                <Item
+                    v-for="(item, index) in announcements"
+                    :key="index"
+                    :announcement="item"
+                    :class="index % 2 === 0 ? 'bg-brand-50/50' : ''"
+                />
+            </div>
+            <div v-else class="h-full rounded-lg bg-white py-10 shadow-sm">
+                <EmptyView
+                    :title="$t('announcementsIndex.noAnnouncementsFound')"
+                    class="flex w-full justify-center py-2"
+                />
+            </div>
+        </div>
+    </Modal>
 </template>
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import ActiveSession from "@/Views/Admin/Levels/Section/ActiveSession.vue";
 import AbsentStudents from "@/Views/Admin/Absentee/AbsenteeCard.vue";
 import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import {
-    CalendarIcon,
     ChatBubbleBottomCenterIcon,
     ClipboardIcon,
     UsersIcon,
@@ -126,6 +128,10 @@ import {
     ArrowTrendingUpIcon,
 } from "@heroicons/vue/24/outline";
 import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
+import Modal from "@/Components/Modal.vue";
+import Title from "@/Views/Teacher/Views/Title.vue";
+import EmptyView from "@/Views/EmptyView.vue";
+import Item from "@/Views/Announcements/Item.vue";
 
 const props = defineProps({
     batch: {
@@ -134,8 +140,14 @@ const props = defineProps({
     },
 });
 
+const showModal = ref(false);
+
 const level = computed(() => {
     return usePage().props.level;
+});
+
+const announcements = computed(() => {
+    return usePage().props.announcements;
 });
 
 const activeSession = computed(() => {
@@ -154,6 +166,13 @@ const activeSession = computed(() => {
         };
     }
     return null;
+});
+
+const assessmentUrl = computed(() => {
+    if (isTeacher()) {
+        return "/teacher/assessments";
+    }
+    return "/levels/assessments/" + props.batch.id;
 });
 </script>
 <style scoped></style>

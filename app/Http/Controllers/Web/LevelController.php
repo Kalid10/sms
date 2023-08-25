@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Announcement;
 use App\Models\Assessment;
+use App\Models\Batch;
 use App\Models\BatchStudent;
 use App\Models\BatchSubject;
 use App\Models\Level;
@@ -35,14 +37,19 @@ class LevelController extends Controller
         return redirect()->back()->with('success', 'Level created successfully');
     }
 
-    public function list(): Response
+    public function list(Request $request): Response
     {
+        // Get search key
+        $searchKey = $request->input('search');
+
         $levels = Level::with([
             'levelCategory',
             'batches' => function ($query) {
                 $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
             },
-        ])->get();
+        ])->when($searchKey, function ($query, $searchKey) {
+            $query->where('name', 'LIKE', "%{$searchKey}%");
+        })->get();
 
         return Inertia::render('Admin/Levels/Index', [
             'levels' => $levels,
@@ -139,16 +146,38 @@ class LevelController extends Controller
             ];
         });
 
+        // Get announcement with "students" target group
+        $announcements = Announcement::whereJsonContains('target_group', 'students')->with('author.user')->get();
+
         return Inertia::render('Admin/Levels/Single', [
             'level' => $level,
             'batches' => $level->activeBatches,
             'students' => Inertia::lazy(fn () => $students),
             'school_year' => SchoolYear::getActiveSchoolYear(),
+            'announcements' => $announcements,
         ]);
     }
 
     public function section(Level $level): Response
     {
         return Inertia::render('Admin/Levels/Section');
+    }
+
+    public function assessments(Batch $batch): Response
+    {
+        $levelAssessments = Assessment::whereIn('batch_subject_id', BatchSubject::whereIn('batch_id',
+            Batch::where('level_id', $batch->level_id)->pluck('id'))->pluck('id'))
+            ->where('status', '!=', Assessment::STATUS_DRAFT)
+            ->orderBy('updated_at', 'DESC')
+            ->with('assessmentType', 'batchSubject.batch:id,section,level_id',
+                'batchSubject.batch.level:id,name,level_category_id',
+                'batchSubject.subject:id,full_name')
+            ->paginate(10);
+
+        return Inertia::render('Admin/Levels/Assessments',
+            [
+                'batch' => $batch->load('level'),
+                'level_assessments' => $levelAssessments,
+            ]);
     }
 }

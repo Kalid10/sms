@@ -28,22 +28,30 @@
                         />
                     </div>
 
-                    <div
-                        class="mt-3 flex flex-col justify-center divide-y divide-gray-100"
-                    >
+                    <div v-if="schoolSchedule.data.length">
                         <div
-                            v-for="(item, index) in schoolSchedule.data"
-                            :key="index"
+                            class="mt-3 flex flex-col justify-center divide-y divide-gray-100"
                         >
-                            <SchoolScheduleItem :school-schedule="item" />
+                            <div
+                                v-for="(item, index) in schoolSchedule.data"
+                                :key="index"
+                            >
+                                <SchoolScheduleItem :school-schedule="item" />
+                            </div>
                         </div>
+
+                        <Pagination
+                            class="py-3"
+                            position="center"
+                            :links="schoolSchedule.links"
+                        />
                     </div>
 
-                    <Pagination
-                        class="py-3"
-                        position="center"
-                        :links="schoolSchedule.links"
-                    />
+                    <div v-else class="mt-8">
+                        <EmptyView
+                            :title="$t('schedulesIndex.noScheduleFound')"
+                        />
+                    </div>
                 </div>
             </div>
             <div
@@ -83,6 +91,7 @@ import moment from "moment";
 import TextInput from "@/Components/TextInput.vue";
 import SchoolScheduleAdd from "@/Views/Admin/GettingStarted/Schedule/SchoolSchedule.vue";
 import { isAdmin, isTeacher } from "@/utils";
+import EmptyView from "@/Views/EmptyView.vue";
 
 const schoolSchedule = computed(() => usePage().props.school_schedule);
 const filters = computed(() => usePage().props.filters);

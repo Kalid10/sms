@@ -1,15 +1,19 @@
 <template>
     <div
-        class="scrollbar-hide flex h-full w-full flex-col space-y-5 overflow-y-auto border-r border-zinc-100 px-5 py-2"
+        class="scrollbar-hide flex h-full w-full flex-col space-y-5 overflow-y-auto border-r border-zinc-100 p-2"
     >
-        <Loading
-            v-if="showLoading"
-            color="info"
-            class="absolute z-50 flex h-full w-4/12 items-center justify-center"
-        />
-
-        <div class="flex justify-between">
-            <div>
+        <Loading v-if="showLoading" :is-full-screen="true" type="bounce">
+            <template #description>
+                <div
+                    class="flex flex-col items-center justify-center space-y-2 rounded-lg bg-brand-350 p-5 text-brand-150 shadow-md"
+                >
+                    <SparklesIcon class="w-6 animate-bounce" />
+                    <div class="text-sm font-medium">Generating AI Note!</div>
+                </div>
+            </template>
+        </Loading>
+        <div class="flex justify-evenly">
+            <div class="w-7/12">
                 <div class="mb-1 text-2xl font-bold">
                     {{ $t("lessonPlanCopilot.rigelCopilot") }}
                 </div>
@@ -18,21 +22,14 @@
                 </div>
             </div>
 
-            <XMarkIcon
-                class="w-5 cursor-pointer text-black hover:scale-125 hover:text-red-600"
-                @click="emit('close')"
+            <AIUsageProgress
+                class="w-4/12 rounded-lg bg-brand-150 px-5 py-3 shadow-sm"
+                :update-usage="updateAIUsage"
+                page="/teacher/lesson-plan"
             />
         </div>
 
-        <div
-            v-if="
-                !generateNoteSuggestions &&
-                !noteSuggestions &&
-                !showLoading &&
-                !openAILimitReached
-            "
-            class="min-h-screen"
-        >
+        <div v-if="!openAILimitReached" class="min-h-screen px-5">
             <TabElement
                 v-model:active="activeTab"
                 class="min-h-screen"
@@ -42,64 +39,121 @@
                     <Chat
                         class="!h-[40rem] !w-full"
                         :show-getting-started="false"
+                        page="/teacher/lesson-plan"
                         @limit-reached="setLimitInfo"
+                        @update-ai-usage="setAIUsageUpdateValue"
                     />
                 </template>
 
-                <template #[questionsTab]>
-                    <QuestionPreparation
-                        :batch-subject-id="batchSubjectId"
-                        :lesson-plan-id="lessonPlanId"
-                        @limit-reached="setLimitInfo"
-                    />
+                <template #[notesTab]>
+                    <div
+                        v-if="noteSuggestion.content"
+                        ref="selectedTextPopUp"
+                        class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 py-6 text-sm text-black shadow-sm"
+                    >
+                        <div class="text-center text-xl font-semibold">
+                            {{
+                                noteSuggestion.title ??
+                                $t("lessonPlanCopilot.lessonPlanExplained")
+                            }}
+                        </div>
+                        <div
+                            class="px-4"
+                            @mouseup="
+                                showPopup = true;
+                                selectedText = getSelectedText();
+                                setPosition($event);
+                            "
+                        >
+                            {{ noteSuggestion.content }}
+                            <span v-if="isNoteUpdating" class="animate-blink"
+                                >|</span
+                            >
+
+                            <div class="flex w-full justify-end px-2 pt-2">
+                                <ClipboardDocumentIcon
+                                    class="w-4 cursor-pointer text-brand-text-250 hover:text-black"
+                                    @click="
+                                        copyToClipboardAndShowToast(
+                                            noteSuggestion.content,
+                                            $event
+                                        )
+                                    "
+                                />
+                                <Toast
+                                    :show-toast="showCopyToast"
+                                    class="!bg-purple-500 !text-white"
+                                    :event="toastEvent"
+                                    @copied="showCopyToast = false"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            v-if="!isNoteUpdating"
+                            class="flex w-full px-4 text-sm font-medium"
+                        >
+                            {{ noteSuggestion.date }}
+                        </div>
+                    </div>
+
+                    <div
+                        v-else-if="!showLoading"
+                        class="flex h-96 w-full flex-col items-center justify-center space-y-2 px-3"
+                    >
+                        <ExclamationTriangleIcon class="w-7 text-red-600" />
+                        <div class="text-center text-2xl font-semibold">
+                            No AI notes have been created for this lesson plan
+                            yet. To generate notes, click the AI icon next to
+                            the title input on the right side.
+                        </div>
+                    </div>
+
+                    <div
+                        v-if="previousNoteSuggestions.length > 1"
+                        class="mt-4 py-4"
+                    >
+                        <div class="flex w-full justify-evenly">
+                            <div
+                                class="flex w-5/12 items-center justify-center"
+                            >
+                                <PrimaryButton
+                                    :disabled="selectedNoteIndex === 0"
+                                    class="flex items-center justify-center space-x-1 !rounded-full text-sm"
+                                    @click="selectedNoteIndex--"
+                                >
+                                    <ChevronLeftIcon class="w-4" />
+                                    <div>Previous</div>
+                                </PrimaryButton>
+                            </div>
+                            <div
+                                class="flex w-5/12 items-center justify-center"
+                            >
+                                <PrimaryButton
+                                    :disabled="
+                                        selectedNoteIndex ===
+                                        previousNoteSuggestions.length - 1
+                                    "
+                                    class="flex items-center justify-center space-x-1 !rounded-full text-sm"
+                                    @click="selectedNoteIndex++"
+                                >
+                                    <div>Next</div>
+                                    <ChevronRightIcon class="w-4" />
+                                </PrimaryButton>
+                            </div>
+                        </div>
+                    </div>
                 </template>
             </TabElement>
         </div>
 
         <div
-            v-if="openAILimitReached"
+            v-else
             class="flex h-5/6 w-full flex-col items-center justify-center space-y-2 px-3"
         >
             <ExclamationTriangleIcon class="w-7 text-red-600" />
             <div class="text-center text-2xl font-semibold">
                 You have reached you AI daily limit. Please get in touch with
                 the administrator to increase limit.
-            </div>
-        </div>
-
-        <div
-            v-if="noteSuggestions"
-            ref="selectedTextPopUp"
-            class="flex flex-col space-y-2.5 rounded-lg bg-violet-100 p-3 text-sm text-black shadow-sm"
-        >
-            <div class="text-center text-xl font-semibold">
-                {{ $t("lessonPlanCopilot.lessonPlanExplained") }}
-            </div>
-            <div
-                class="px-4"
-                @mouseup="
-                    showPopup = true;
-                    selectedText = getSelectedText();
-                    setPosition($event);
-                "
-            >
-                {{ noteSuggestions }}
-                <span v-if="isNoteUpdating" class="animate-blink">|</span>
-
-                <div class="flex w-full justify-end px-2 pt-2">
-                    <ClipboardDocumentIcon
-                        class="w-4 cursor-pointer text-brand-text-250 hover:text-black"
-                        @click="
-                            copyToClipboardAndShowToast(noteSuggestions, $event)
-                        "
-                    />
-                    <Toast
-                        :show-toast="showCopyToast"
-                        class="!bg-purple-500 !text-white"
-                        :event="toastEvent"
-                        @copied="showCopyToast = false"
-                    />
-                </div>
             </div>
         </div>
 
@@ -176,18 +230,24 @@ import {
     ClipboardDocumentIcon,
     ExclamationTriangleIcon,
     MagnifyingGlassIcon,
-    XMarkIcon,
 } from "@heroicons/vue/20/solid";
 import Loading from "@/Components/Loading.vue";
-import { computed, inject, ref, watch } from "vue";
+import { computed, inject, onMounted, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { router, usePage } from "@inertiajs/vue3";
 import { copyToClipboard, toUnderscore } from "@/utils";
-import QuestionPreparation from "@/Views/Teacher/Views/LessonPlans/QuestionPreparation.vue";
 import Chat from "@/Views/Teacher/Views/Copilot/Chat/Index.vue";
 import Toast from "@/Components/Toast.vue";
 import TabElement from "@/Components/TabElement.vue";
 import { useI18n } from "vue-i18n";
+import AIUsageProgress from "@/Views/Teacher/AIUsageProgress.vue";
+import {
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    SparklesIcon,
+} from "@heroicons/vue/24/solid";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import moment from "moment";
 
 const emit = defineEmits(["selectedText", "finish", "close"]);
 const props = defineProps({
@@ -211,89 +271,23 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    batchSession: {
+        type: Number,
+        required: true,
+    },
 });
 
 const showLoading = ref(false);
-const noteSuggestions = ref("");
+const noteSuggestion = ref({
+    title: "",
+    content: "",
+    date: moment().format("dddd, MMMM DD, YYYY"),
+});
 const isNoteUpdating = ref(false);
 const questionSuggestions = computed(() => usePage().props.questions);
 const showNotification = inject("showNotification");
-
-const updateNoteSuggestion = () => {
-    if (showLoading.value) {
-        return;
-    }
-    showLoading.value = true;
-
-    // Remove previous suggestions
-    if (noteSuggestions.value) {
-        noteSuggestions.value = "";
-    }
-    if (props.generateNoteSuggestions) {
-        let es = new EventSource(
-            "/teacher/lesson-plan/ai/note?prompt=" +
-                props.topic +
-                "&batch_subject_id=" +
-                props.batchSubjectId
-        );
-
-        es.addEventListener("limit_reached", (event) => {
-            showLoading.value = false;
-            showNotification({
-                type: "error",
-                message: "You Have Reached Your Daily AI Limit", // "Limit reached"
-                position: "top-center",
-            });
-            es.close();
-        });
-
-        es.addEventListener(
-            "update",
-            (event) => {
-                if (event.data) {
-                    isNoteUpdating.value = true;
-                    showLoading.value = false;
-                    if (event.data === "<END_STREAMING_SSE>") {
-                        showLoading.value = false;
-                        isNoteUpdating.value = false;
-                        es.close();
-                    } else noteSuggestions.value += event.data;
-                }
-            },
-            false
-        );
-
-        es.addEventListener(
-            "error",
-            (event) => {
-                showLoading.value = false;
-                showNotification({
-                    type: "error",
-                    message: "Something went wrong.Please try again!",
-                    position: "top-center",
-                });
-            },
-            false
-        );
-    }
-    if (props.generateQuestionSuggestions) {
-        router.visit("/teacher/lesson-plan?prompt=" + props.topic, {
-            only: ["questions"],
-            preserveState: true,
-            onFinish: () => {
-                showLoading.value = false;
-            },
-        });
-    }
-    emit("finish");
-};
-watch(
-    () => [props.generateQuestionSuggestions, props.generateNoteSuggestions],
-    () => {
-        if (props.generateNoteSuggestions || props.generateQuestionSuggestions)
-            updateNoteSuggestion();
-    }
-);
+const updateAIUsage = ref(false);
+const previousNoteSuggestions = computed(() => props.batchSession.ai_notes);
 
 const showPopup = ref(false);
 const selectedText = ref("");
@@ -329,11 +323,11 @@ const copyToClipboardAndShowToast = (value, event) => {
 
 const { t } = useI18n();
 const chatTab = toUnderscore(t("common.chat"));
-const questionsTab = toUnderscore(t("common.questions"));
-const tabs = [chatTab, questionsTab];
+const notesTab = toUnderscore(t("common.notes"));
+const tabs = [chatTab, notesTab];
 
 const activeTabFromQuery = computed(() => usePage().props.active_tab);
-const activeTab = ref(activeTabFromQuery.value ?? chatTab);
+const activeTab = ref(activeTabFromQuery.value ?? notesTab);
 
 const openAILimitReached = ref(false);
 const openAIDailyUsage = ref();
@@ -341,6 +335,143 @@ const openAIDailyUsage = ref();
 const setLimitInfo = (usage) => {
     openAILimitReached.value = true;
     openAIDailyUsage.value = usage;
+};
+
+const updateNoteSuggestion = () => {
+    if (showLoading.value) {
+        return;
+    }
+    showLoading.value = true;
+    updateAIUsage.value = false;
+
+    // Remove previous suggestions
+    if (noteSuggestion.value.content) {
+        noteSuggestion.value.content = "";
+        noteSuggestion.value.title = "";
+    }
+
+    if (props.generateNoteSuggestions) {
+        activeTab.value = notesTab;
+
+        noteSuggestion.value.title = props.topic;
+        let es = new EventSource(
+            "/teacher/lesson-plan/ai/generate-note?prompt=" +
+                props.topic +
+                "&batch_subject_id=" +
+                props.batchSubjectId
+        );
+
+        es.addEventListener("limit_reached", (event) => {
+            showLoading.value = false;
+            showNotification({
+                type: "error",
+                message: "You Have Reached Your Daily AI Limit", // "Limit reached"
+                position: "top-center",
+            });
+            es.close();
+
+            updateAIUsage.value = true;
+            openAILimitReached.value = true;
+        });
+
+        es.addEventListener(
+            "update",
+            (event) => {
+                if (event.data) {
+                    isNoteUpdating.value = true;
+                    showLoading.value = false;
+                    if (event.data === "<END_STREAMING_SSE>") {
+                        showLoading.value = false;
+                        isNoteUpdating.value = false;
+                        es.close();
+                        saveNoteSuggestion();
+                    } else noteSuggestion.value.content += event.data;
+                }
+                updateAIUsage.value = true;
+            },
+            false
+        );
+
+        es.addEventListener(
+            "error",
+            (event) => {
+                showLoading.value = false;
+                showNotification({
+                    type: "error",
+                    message: "Something went wrong.Please try again!",
+                    position: "top-center",
+                });
+                updateAIUsage.value = true;
+            },
+            false
+        );
+    }
+    if (props.generateQuestionSuggestions) {
+        router.visit("/teacher/lesson-plan?prompt=" + props.topic, {
+            only: ["questions"],
+            preserveState: true,
+            onFinish: () => {
+                showLoading.value = false;
+                updateAIUsage.value = true;
+            },
+        });
+    }
+    emit("finish");
+};
+
+watch(
+    () => [props.generateQuestionSuggestions, props.generateNoteSuggestions],
+    () => {
+        if (props.generateNoteSuggestions || props.generateQuestionSuggestions)
+            updateNoteSuggestion();
+    }
+);
+
+const setAIUsageUpdateValue = (value) => {
+    updateAIUsage.value = value;
+};
+
+const saveNoteSuggestion = () => {
+    router.post(
+        "/teacher/lesson-plan/ai/save-note",
+        {
+            content: noteSuggestion.value.content,
+            title: props.topic,
+            lesson_plan_id: props.lessonPlanId,
+            batch_session_id: props.batchSession?.id,
+        },
+        {
+            preserveState: true,
+        }
+    );
+};
+
+const selectedNoteIndex = ref(0);
+onMounted(() => {
+    if (previousNoteSuggestions.value.length) {
+        setNoteSuggestion(
+            previousNoteSuggestions.value[selectedNoteIndex.value].content,
+            previousNoteSuggestions.value[selectedNoteIndex.value].title
+        );
+    }
+});
+
+watch(selectedNoteIndex, (newValue) => {
+    if (
+        previousNoteSuggestions.value.length &&
+        selectedNoteIndex.value < previousNoteSuggestions.value.length &&
+        selectedNoteIndex.value >= 0
+    ) {
+        setNoteSuggestion(
+            previousNoteSuggestions.value[selectedNoteIndex.value].content,
+            previousNoteSuggestions.value[selectedNoteIndex.value].title
+        );
+    }
+});
+
+const setNoteSuggestion = (content, title) => {
+    noteSuggestion.value.content = content;
+    noteSuggestion.value.title = title;
 };
 </script>
 <style scoped></style>

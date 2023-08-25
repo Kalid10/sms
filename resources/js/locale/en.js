@@ -152,8 +152,7 @@ const en = {
         Schedule: "Schedule",
         or: "or",
         scheduled: "Scheduled",
-        message:
-            "Setting an assessment as <span class='font-semibold uppercase'>' Published '</span> or <span class='font-semibold uppercase' >' Scheduled '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
+        message:"Setting an assessment as <span class='font-semibold uppercase'>' Published '</span> or <span class='font-semibold uppercase' >' Scheduled '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
         title: "Submit Assessment",
         alertMessage:
             "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?",
@@ -484,6 +483,7 @@ const en = {
         en: "EN",
         amharic: "Amharic",
         am: "AM",
+        notes: "Notes",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
@@ -868,7 +868,7 @@ const en = {
     lessonPlans: {
         viewAllLessonPlans: "View All Lesson Plans",
         noLessonPlan: "No Lesson Plan Found!",
-        yourLessonPlans: "Your Lesson Plans",
+        yourLessonPlans:"Your Lesson Plans"
     },
     lessonPlansIndex: {
         myLessonPlans: "My Lesson Plans",
@@ -1045,10 +1045,10 @@ const en = {
             "Opt for manual input if you prefer to generate questions based on your unique inputs and parameters. This option allows for greater control and specificity.",
         lessonPlans: "Lesson Plans",
         lessonPlanDescription:
-            "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we'll load your plans, and you can choose one for us to craft tailored questions.",
+            "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we will load your plans, and you can choose one for us to craft tailored questions.",
         question: "Question",
         enterQuestion: "Enter Question",
-        dailyAIUsageProgress: "Daily AI Usage Progress",
+        dailyAIUsageProgress: "Daily AI Usage ",
     },
     readMoreLess: {
         readMore: "Read more...",
@@ -1210,6 +1210,7 @@ const en = {
         from: "From",
         searchForSchedule: "Search for schedule",
         addEvent: "Add Event",
+        noScheduleFound: "No schedule found",
     },
     schoolPeriodForm: {
         weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -1645,11 +1646,13 @@ const en = {
         adminsTitle: "Admins",
         adminStatSubtitle: "Admins registered in the system",
         studentsStatTitle: "Students",
-        studentsStatSubtitle: "Students registered into the school (all-time)",
+        studentsStatSubtitle: "Students registered into the school",
         teacherStatTitle: "Teachers",
-        teacherStatSubtitle: "Teachers registered into the school (all-time)",
+        teacherStatSubtitle: "Teachers registered into the school",
         newUsersStatTitle: "New Users",
         newUserStatSubtitle: "New Users (last 30 days)",
+        guardianStatTitle: "Guardians",
+        guardianStatSubtitle: "Guardians registered into the school",
     },
 
     usersAbsentee: {
@@ -1740,6 +1743,7 @@ const en = {
         noOfQuestions: "No Of Que.",
         difficultyLevel: "Difficulty Level",
         generatedAt: "Generated At",
+        todaysGeneratedQuestions: "Today's Generated Questions",
     },
     adminUserIndex: {
         signUpAdministrators: "Register administrators with ease",

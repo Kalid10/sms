@@ -65,11 +65,7 @@
 import Notification from "@/Components/Notification.vue";
 import SideBar from "@/Layouts/SideBar.vue";
 import { computed, provide, ref } from "vue";
-import {
-    ChatBubbleBottomCenterIcon,
-    Cog6ToothIcon,
-    UserIcon,
-} from "@heroicons/vue/20/solid/index.js";
+import { Cog6ToothIcon, UserIcon } from "@heroicons/vue/20/solid/index.js";
 import { router, usePage } from "@inertiajs/vue3";
 import {
     AcademicCapIcon,
@@ -138,14 +134,6 @@ const sidebarItems = computed(() => [
         active: isRouteActive(/^\/admin\/\?$/) || isRouteActive(/^\/admin\/?$/),
     },
     {
-        name: t("common.chat"),
-        icon: ChatBubbleBottomCenterIcon,
-        route: "/admin/chat",
-        active:
-            isRouteActive(/^\/admin\/chat\/\d+\/?$/) ||
-            isRouteActive(/^\/admin\/chat\/?$/),
-    },
-    {
         name: t("common.teachers"),
         icon: UserIcon,
         route: "/admin/teachers",
@@ -181,7 +169,11 @@ const sidebarItems = computed(() => [
         route: "/admin/levels",
         active:
             isRouteActive(/^\/admin\/levels\/\d+\/?$/) ||
-            isRouteActive(/^\/admin\/levels\/?$/),
+            isRouteActive(/^\/admin\/levels\/?$/) ||
+            isRouteActive(/^\/levels\/level-categories\/\d+\/?$/) ||
+            isRouteActive(/^\/levels\/level-categories\/?$/) ||
+            isRouteActive(/^\/levels\/assessments\/\d+\/?$/) ||
+            isRouteActive(/^\/levels\/ssessments\/?$/),
     },
     {
         name: t("common.subjects"),
@@ -213,7 +205,9 @@ const sidebarItems = computed(() => [
         name: t("common.assessments"),
         icon: NewspaperIcon,
         route: "/admin/assessments",
-        active: directory.value === "assessments",
+        active:
+            isRouteActive(/^\/admin\/assessments\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/assessments\/?$/),
     },
     {
         name: t("common.users"),

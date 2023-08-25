@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckSchoolYearStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia;
@@ -11,6 +12,9 @@ it('renders the getting started page', function () {
     $admin = User::factory()->create([
         'type' => 'admin',
     ]);
+
+    // Disable the CheckSchoolYearStatus middleware
+    $this->withoutMiddleware(CheckSchoolYearStatus::class);
 
     // When the user visits the getting started page
     $response = $this->actingAs($admin)->get('/getting-started');
@@ -27,6 +31,9 @@ it('renders class schedule step', function () {
     $admin = User::factory()->create([
         'type' => 'admin',
     ]);
+
+    // Disable the CheckSchoolYearStatus middleware
+    $this->withoutMiddleware(CheckSchoolYearStatus::class);
 
     // When the user visits the getting started page
     $response = $this->actingAs($admin)->get('/getting-started/class-schedule');

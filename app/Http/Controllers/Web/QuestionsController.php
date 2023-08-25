@@ -22,8 +22,16 @@ class QuestionsController extends Controller
         $userId = $request->user_id ?? auth()->user()->id;
         $questions = Question::where('user_id', $userId)->with('user', 'batchSubject.subject', 'assessmentType')->paginate(7);
 
+        // Get the total number of questions of today by the logged-in user
+        $totalNumberOfQuestions = Question::where('user_id', $userId)->whereDate('created_at', today())->sum('no_of_questions');
+
+        // Get the DAILY_OPEN_AI_QUESTION_LIMIT from env file
+        $openAIQuestionLimit = env('DAILY_OPEN_AI_QUESTION_LIMIT');
+
         return Inertia::render('Teacher/Questions/Index', [
             'questions' => $questions,
+            'total_number_of_questions' => $totalNumberOfQuestions,
+            'openai_question_limit' => $openAIQuestionLimit,
         ]);
     }
 

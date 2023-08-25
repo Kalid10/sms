@@ -59,6 +59,9 @@ class UserController extends Controller
         // Get new users registered the last 30 days
         $newUsersCount = User::where('created_at', '>=', now()->subDays(30))->count();
 
+        // Get active school year guardians
+        $guardiansCount = Guardian::with('schoolYear', SchoolYear::getActiveSchoolYear())->count();
+
         return Inertia::render('Admin/Users/Index', [
             'users' => $users,
             'activity_log' => $activityLog,
@@ -66,6 +69,7 @@ class UserController extends Controller
             'teachers_count' => $teachersCount,
             'admins_count' => $adminsCount,
             'new_users_count' => $newUsersCount,
+            'guardians_count' => $guardiansCount,
         ]);
     }
 

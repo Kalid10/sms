@@ -15,11 +15,6 @@
             </div>
         </Modal>
 
-        <div
-            class="absolute right-36 top-6 flex w-3/12 flex-col items-center space-y-4 rounded-lg bg-white text-center"
-        >
-            <AIUsageProgress />
-        </div>
         <InformationCircleIcon
             class="absolute top-6 right-6 w-5 cursor-pointer text-black hover:scale-125 hover:text-brand-450"
             @click="showInfoModal = true"
@@ -149,7 +144,6 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextArea from "@/Components/TextArea.vue";
 import { useUIStore } from "@/Store/ui";
 import Modal from "@/Components/Modal.vue";
-import AIUsageProgress from "@/Views/Teacher/AIUsageProgress.vue";
 import { InformationCircleIcon } from "@heroicons/vue/24/outline";
 
 const showNotification = inject("showNotification");
@@ -187,7 +181,7 @@ const filteredAssessmentType = computed(() => {
 });
 
 const form = useForm({
-    assessment_type_id: assessmentTypes.value[0].id,
+    assessment_type_id: assessmentTypes?.value[0]?.id,
     number_of_questions: 3,
     question_source: null,
     lesson_plan_ids: [],
