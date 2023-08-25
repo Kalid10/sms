@@ -40,6 +40,7 @@ it('it creates a new assessment type', function () {
         'min_assessments' => null,
         'max_assessments' => null,
         'level_category_id' => [$levelCategory->id],
+        'is_admin_controlled' => '0',
     ];
 
     $response = $this->post(route('assessments.type.create'), $data);
@@ -53,6 +54,7 @@ it('it creates a new assessment type', function () {
         'min_assessments' => null,
         'max_assessments' => null,
         'level_category_id' => [$levelCategory->id],
+        'is_admin_controlled' => '0',
     ]);
 
     // Assert that the user was redirected back with a success message
@@ -73,6 +75,7 @@ it('it updates an existing assessment type', function () {
         'min_assessments' => null,
         'max_assessments' => null,
         'level_category_id' => $assessmentType->level_category_id,
+        'is_admin_controlled' => '0',
     ];
 
     $response = $this->post(route('assessments.type.update', $assessmentType->id), $data);
@@ -85,6 +88,7 @@ it('it updates an existing assessment type', function () {
         'min_assessments' => null,
         'max_assessments' => null,
         'level_category_id' => $assessmentType->level_category_id,
+        'is_admin_controlled' => '0',
     ]);
 
     $response->assertStatus(302);
@@ -117,6 +121,7 @@ it('it can not create assessment type with out manage-assessment-types role', fu
         'min_assessments' => null,
         'max_assessments' => null,
         'level_category_id' => [$levelCategory->id],
+        'is_admin_controlled' => '0',
     ];
 
     $response = $this->post(route('assessments.type.create'), $data);
