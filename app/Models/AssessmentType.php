@@ -18,6 +18,7 @@ class AssessmentType extends Model
         'min_assessments',
         'max_assessments',
         'customizable',
+        'is_admin_controlled',
         'school_year_id',
         'level_category_id',
     ];

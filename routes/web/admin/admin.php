@@ -25,6 +25,9 @@ Route::prefix('admin/')->middleware(['checkUserType:admin', 'checkSchoolYearStat
         Route::get('announcements', 'announcements')->name('announcements');
         Route::get('assessments', 'assessments')->name('assessments');
         Route::get('assessments/{assessment}', 'assessment')->name('assessment');
+        Route::post('assessments/create', 'createAssessment')->name('create-assessment');
+        Route::post('assessments/update', 'updateAssessment')->name('update-assessment');
+        Route::delete('assessments/delete/{assessment}', 'deleteAssessment')->name('delete-assessment');
     });
 
     Route::controller(StudentController::class)->prefix('students/')->middleware(['checkUserRole:manage-students'])->name('students.')->group(function () {
