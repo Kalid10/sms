@@ -10,7 +10,7 @@
                     <h2
                         class="title-font mb-2 text-lg font-medium text-gray-900"
                     >
-                        {{ props.assessment.title }}
+                        {{ props.assessment.long_title }}
                     </h2>
                     <p>{{ props.assessment.description }}</p>
                     <p class="text-base leading-relaxed">
@@ -20,7 +20,7 @@
                 <div
                     class="inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-500 sm:mr-10 sm:h-32 sm:w-32"
                 >
-                    {{ props.assessment.assessment_type.name }}
+                    {{ props.assessment.title }}
                 </div>
             </div>
             <div

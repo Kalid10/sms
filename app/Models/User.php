@@ -128,4 +128,9 @@ class User extends Authenticatable
     {
         return $this->fcm_tokens;
     }
+
+    public function assessmentMapping(): HasMany
+    {
+        return $this->hasMany(AssessmentMapping::class);
+    }
 }

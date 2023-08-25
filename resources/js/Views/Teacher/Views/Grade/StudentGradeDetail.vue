@@ -2,6 +2,179 @@
     <div class="flex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
         <div class="flex w-full items-center justify-between">
             <div class="flex grow justify-between py-3 text-2xl font-medium">
+                <button
+                    class="p-1 text-sm font-bold text-green-500 underline"
+                    @click="print()"
+                >
+                    Print
+                </button>
+                <!--test print start -->
+
+                <div id="grade-report" ref="printContainer" class="hidden">
+                    <div
+                        class="flex h-[297mm] w-[210mm] flex-col justify-between overflow-hidden bg-white"
+                    >
+                        <div>
+                            <!-- header  -->
+                            <div
+                                class="header flex h-[40mm] flex-col items-center justify-center bg-gray-600"
+                            >
+                                <span
+                                    class="header p-2 text-5xl font-extrabold uppercase text-white"
+                                >
+                                    Report card</span
+                                >
+                                <p
+                                    class="header text-2xl font-extrabold uppercase text-white"
+                                >
+                                    {{ schoolName }}
+                                </p>
+                                <p
+                                    class="header text-lg font-extrabold text-white"
+                                >
+                                    {{ tagline }}
+                                </p>
+                            </div>
+
+                            <!-- student info  -->
+                            <div class="flex h-[40] justify-between p-8">
+                                <div class="font-medium">
+                                    <p>
+                                        Name:
+                                        <span
+                                            class="pl-2 font-normal underline"
+                                        >
+                                            {{ studentName.user.name }}</span
+                                        >
+                                    </p>
+                                    <p>
+                                        Level:
+                                        <span class="pl-2 font-normal underline"
+                                            >Grade {{ level.id }}</span
+                                        >
+                                    </p>
+                                    <p>
+                                        Homeroom Teacher:
+                                        <span
+                                            class="pl-2 font-normal underline"
+                                            >{{ homeroomTeacher.name }}</span
+                                        >
+                                    </p>
+                                    <p></p>
+                                </div>
+
+                                <div>
+                                    <p>
+                                        <span class="font-normal">{{
+                                            activeYear.name
+                                        }}</span>
+                                    </p>
+                                    <p>
+                                        <span class="font-normal"
+                                            >{{ activeSemester.name }}
+                                        </span>
+                                    </p>
+                                    <p>
+                                        Issued Date:
+                                        <span class="font-normal">{{
+                                            formattedDate
+                                        }}</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- grading system -->
+                            <div class="px-8">
+                                <!--                                todo:Check if the class is primary or secondary and change description-->
+                                <p class="text-sm font-medium">
+                                    Grading System:
+                                    <span class="font-normal">
+                                        Percentage grades: 90-100 = A, 80-89 =
+                                        B, 70-79 = C, 60-69 = D, 59 and below =
+                                        F
+                                    </span>
+                                </p>
+                            </div>
+
+                            <!-- table -->
+                            <div class="flex justify-center px-8 pt-5">
+                                <table
+                                    class="mt-8 min-w-full overflow-hidden bg-white shadow-md"
+                                >
+                                    <thead>
+                                        <tr
+                                            class="bg-gray-200 text-sm uppercase text-gray-600"
+                                        >
+                                            <th class="py-3 px-6 text-left">
+                                                Subject Name
+                                            </th>
+                                            <th class="py-3 px-6 text-left">
+                                                Grade
+                                            </th>
+                                            <th class="py-3 px-6 text-left">
+                                                Conduct
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody
+                                        class="text-sm font-light text-gray-600"
+                                    >
+                                        <tr
+                                            v-for="(
+                                                grade, index
+                                            ) in studentGrades"
+                                            :key="index"
+                                            class="border-b border-gray-200 hover:bg-gray-100"
+                                        >
+                                            <td class="py-3 px-6 text-left">
+                                                {{ grade.subject.name }}
+                                            </td>
+                                            <td class="py-3 px-6 text-left">
+                                                {{ grade.grade }}
+                                            </td>
+                                            <td class="py-3 px-6 text-left">
+                                                {{ grade.conduct }}
+                                            </td>
+                                        </tr>
+
+                                        <!-- Add more rows as needed -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- note -->
+                        </div>
+                        <Statistics v-if="!showSubjectDetail" />
+
+                        <!-- footer  -->
+                        <div class="shrink-0 p-3 text-xs">
+                            <div class="flex justify-between">
+                                <div class="pl-3">
+                                    <p>
+                                        Email:
+                                        <span>contact.fks@gmail.com</span>
+                                    </p>
+                                    <p>
+                                        Phone: <span>+251-116-454919/20</span>
+                                    </p>
+                                    <p>P.O.Box: <span>257 CODE 1110</span></p>
+                                    <p>
+                                        Address:
+                                        <span
+                                            >CMC, in Bole Sub city, Woreda
+                                            8.</span
+                                        >
+                                    </p>
+                                </div>
+                                <div>
+                                    <img class="h-20 w-20" src="./fksQR.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--                test print end -->
                 <ArrowLeftCircleIcon
                     v-if="showSubjectDetail"
                     class="w-6 cursor-pointer"
@@ -69,7 +242,7 @@ import { ArrowLeftCircleIcon, FlagIcon } from "@heroicons/vue/20/solid";
 import TableElement from "@/Components/TableElement.vue";
 import AssessmentBreakDown from "@/Views/Teacher/Views/Assessments/AssessmentBreakDown.vue";
 import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import GradeFilter from "@/Views/Teacher/Views/Grade/GradeFilter.vue";
 import { useI18n } from "vue-i18n";
@@ -149,6 +322,65 @@ const config = [
         class: "h-12 !text-[0.65rem]",
     },
 ];
+
+// test print start
+const homeroomTeacher = computed(() => usePage().props.homeroom_teacher);
+const level = computed(() => usePage().props.level);
+const activeYear = computed(() => usePage().props.filters.school_year);
+const activeSemester = computed(() => usePage().props.filters.semester);
+const schoolName = ref("Fountain of Knowledge School");
+const tagline = ref("Running for Excellence");
+const printing = ref(false);
+
+const today = new Date();
+const formattedDate = today.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+});
+
+const printContainerRef = ref(null);
+
+onMounted(() => {
+    // Assign the template ref to the ref
+    printContainerRef.value = document.querySelector("#grade-report");
+});
+
+function print() {
+    console.log("here");
+    printing.value = true;
+
+    const printContainer = printContainerRef.value;
+
+    if (printContainer) {
+        // Store the original content
+        const originalContent = document.body.innerHTML;
+
+        // Replace the body content with the printContainer content
+        document.body.innerHTML = printContainer.innerHTML;
+
+        // Wait for the content to be rendered before printing
+        setTimeout(() => {
+            window.print();
+
+            // Restore the original content
+            document.body.innerHTML = originalContent;
+
+            printing.value = false;
+            refreshPage();
+        }, 100);
+    }
+}
+
+function refreshPage() {
+    location.reload();
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+@media print {
+    .header {
+        color: #5a5a5a;
+    }
+}
+</style>
