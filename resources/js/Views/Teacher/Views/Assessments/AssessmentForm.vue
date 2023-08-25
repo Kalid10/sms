@@ -4,7 +4,7 @@
         <FormElement
             :title="$t('assessmentForm.formElementTitle')"
             class="my-2"
-            @submit="handleSubmit"
+            @submit="isAdmin() ? handleAdminSubmit() : handleTeacherSubmit()"
         >
             <!-- Form Fields -->
             <TextInput
@@ -33,7 +33,71 @@
                 :error="form.errors.due_date"
             />
 
-            <div class="dropdown-container relative flex flex-col">
+            <div
+                v-if="isAdmin()"
+                class="dropdown-container relative flex flex-col"
+            >
+                <div
+                    class="mt-1 flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    @click="dropdownVisible = !dropdownVisible"
+                >
+                    <div>
+                        <span v-if="!form.level_category_ids" class="text-sm">
+                            Select Grade Category(ies)
+                        </span>
+
+                        <span v-else class="text-sm">
+                            Selected Category(ies):
+
+                            <span>
+                                {{
+                                    levelCategoryOptions
+                                        .filter((option) =>
+                                            form.level_category_ids.includes(
+                                                option.value
+                                            )
+                                        )
+                                        .map((option) => option.label)
+                                        .join(", ")
+                                }}
+                            </span>
+                        </span>
+                    </div>
+
+                    <ChevronDownIcon class="h-4 w-4" />
+                </div>
+                <div
+                    v-if="dropdownVisible"
+                    class="absolute z-10 mt-10 w-full rounded-md border border-gray-300 bg-white shadow-lg"
+                >
+                    <div
+                        v-for="level in levelCategoryOptions"
+                        :key="level"
+                        class="cursor-pointer p-2 hover:bg-gray-200"
+                        @click="toggleSelectionLevelCategory(level.value)"
+                    >
+                        <input
+                            type="checkbox"
+                            :checked="
+                                form.level_category_ids.includes(level.value)
+                            "
+                            class="mr-2"
+                        />
+                        {{ level.label }}
+                    </div>
+                </div>
+                <div
+                    v-if="form.errors && form.errors.level_category_ids"
+                    class="mt-2 text-xs text-negative-50"
+                >
+                    * {{ form.errors.level_category_ids }}
+                </div>
+            </div>
+
+            <div
+                v-if="isTeacher()"
+                class="dropdown-container relative flex flex-col"
+            >
                 <div
                     class="mt-1 flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     @click="dropdownVisible = !dropdownVisible"
@@ -92,7 +156,15 @@
             </div>
 
             <SelectInput
-                v-if="form.batch_subject_ids"
+                v-if="form.level_category_ids && isAdmin()"
+                v-model="form.assessment_type_id"
+                :options="batchAssessmentTypes"
+                :error="form.errors.assessment_type_id"
+                :placeholder="$t('assessmentForm.assessmentTypeId')"
+            />
+
+            <SelectInput
+                v-if="form.batch_subject_ids && isTeacher()"
                 v-model="form.assessment_type_id"
                 :options="selectedBatchAssessmentTypes"
                 :error="form.errors.assessment_type_id"
@@ -148,6 +220,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { useI18n } from "vue-i18n";
 import Loading from "@/Components/Loading.vue";
+import { isAdmin, isTeacher } from "@/utils";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -157,9 +230,23 @@ const props = defineProps({
     },
 });
 
+const levelCategories = computed(() => usePage().props.level_categories);
+const assessmentType = computed(() => usePage().props.filters.assessment_types);
+
+// Get level categories options
+const levelCategoryOptions = computed(() => {
+    return levelCategories.value.map((category) => {
+        return {
+            label: category.name,
+            value: category.id,
+        };
+    });
+});
+
 let form = useForm({
     assessment_type_id: "",
     batch_subject_ids: [],
+    level_category_ids: [],
     due_date: new Date(),
     title: "",
     description: "",
@@ -237,6 +324,24 @@ const selectedBatchAssessmentTypes = computed(() => {
     );
 });
 
+// Get selected assessment types based on selected level categories
+const batchAssessmentTypes = computed(() => {
+    if (form.level_category_ids.length > 0) {
+        return assessmentType.value
+            .filter((type) => {
+                return form.level_category_ids.includes(type.level_category_id);
+            })
+            .map((type) => {
+                return {
+                    label: type.name,
+                    value: type.id,
+                };
+            });
+    } else {
+        return [];
+    }
+});
+
 const batchSubjectOptions = computed(() => {
     return teacher?.batch_subjects.map((batchSubject) => {
         return {
@@ -267,10 +372,27 @@ const statusOptions = [
 
 const isLoading = ref(false);
 
-function handleSubmit() {
+function handleTeacherSubmit() {
     const url = form.assessment_id
         ? "/teacher/assessments/update/"
         : "/teacher/assessments/create";
+
+    isLoading.value = true;
+    form.post(url, {
+        preserveState: true,
+        onSuccess: () => {
+            emit("success");
+        },
+        onFinish: () => {
+            isLoading.value = false;
+        },
+    });
+}
+
+function handleAdminSubmit() {
+    const url = form.assessment_id
+        ? "/admin/assessments/update/"
+        : "/admin/assessments/create/";
 
     isLoading.value = true;
     form.post(url, {
@@ -290,6 +412,15 @@ const toggleSelection = (value) => {
         form.batch_subject_ids.push(value);
     } else {
         form.batch_subject_ids.splice(index, 1);
+    }
+};
+
+const toggleSelectionLevelCategory = (value) => {
+    const index = form.level_category_ids.indexOf(value);
+    if (index < 0) {
+        form.level_category_ids.push(value);
+    } else {
+        form.level_category_ids.splice(index, 1);
     }
 };
 </script>

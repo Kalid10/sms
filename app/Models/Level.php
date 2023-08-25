@@ -35,4 +35,9 @@ class Level extends Model
                 $query->with('batchSubject', 'schoolPeriod');
             }]);
     }
+
+    public function assessmentMappings(): HasMany
+    {
+        return $this->hasMany(AssessmentMapping::class);
+    }
 }

@@ -2,50 +2,63 @@
     <div class="flex min-h-screen w-full justify-center">
         <div class="flex w-full flex-col space-y-6 lg:w-11/12">
             <Title class="w-5/12" :title="$t('common.assessments')" />
+
             <div
                 class="flex h-full w-full flex-col lg:flex-row lg:justify-between lg:space-x-5"
             >
                 <div
-                    class="flex h-fit w-full flex-col space-y-4 rounded-lg bg-white p-5 shadow-sm lg:w-1/2"
+                    class="flex h-fit w-full flex-col space-y-6 rounded-lg bg-white p-5 shadow-sm lg:w-1/2"
                 >
-                    <div class="text-2xl font-medium">
-                        {{ $t("assessmentIndex.recentAssessments") }}
-                    </div>
-                    <div
-                        class="flex w-full flex-col items-center justify-between space-y-2 text-white"
-                    >
-                        <div
-                            class="flex w-full flex-col justify-center space-y-2 py-2"
-                        >
-                            <Filter v-if="!assessments?.data.length === 0" />
+                    <div class="flex w-full justify-between">
+                        <div class="text-2xl font-medium">
+                            Scheduled Assessments
                         </div>
-                        <div class="flex w-full justify-start"></div>
+                        <PrimaryButton
+                            class="rounded-full"
+                            @click="showModal = true"
+                        >
+                            Create Assessment
+                        </PrimaryButton>
                     </div>
 
                     <div
                         class="flex flex-col items-center justify-center space-y-2"
                     >
                         <div
-                            v-for="(item, index) in assessments.data"
+                            v-for="(item, index) in mappedAssessments.data"
                             :key="index"
-                            class="w-full"
+                            class="w-full border-b"
                         >
-                            <AssessmentItem
-                                :assessment="item"
-                                @click="loadDetail(item.id)"
-                            />
+                            <div
+                                class="group flex w-full cursor-pointer items-center justify-between py-4 text-sm hover:scale-105 hover:rounded-lg hover:bg-brand-450 hover:text-white"
+                            >
+                                <div
+                                    class="w-2/12 border-l px-3 text-center text-xs font-light capitalize group-hover:border-none group-hover:text-center"
+                                >
+                                    {{ item.due_date }}
+                                </div>
+                                <div class="w-3/12 text-center">
+                                    {{ item.level_category.name }} -
+                                    {{ item.assessment_type.name }}
+                                </div>
+                                <div
+                                    class="hidden w-3/12 text-center font-light lg:block"
+                                >
+                                    {{ item.user.name }}
+                                </div>
+                            </div>
                         </div>
 
                         <EmptyView
-                            v-if="assessments?.data.length === 0"
-                            :title="$t('assessmentIndex.noAssessmentsFound')"
+                            v-if="mappedAssessments?.data.length === 0"
+                            title="No assessments found"
                         />
                     </div>
 
                     <Pagination
                         class="py-3"
                         position="center"
-                        :links="assessments.links"
+                        :links="mappedAssessments.links"
                     />
                 </div>
 
@@ -61,25 +74,25 @@
     <Modal v-model="showModal">
         <Details />
     </Modal>
+
+    <Modal v-model:view="showModal">
+        <Form class="border-none" @success="showModal = false" />
+    </Modal>
 </template>
 <script setup>
 import Title from "@/Views/Teacher/Views/Title.vue";
-import Pagination from "@/Components/Pagination.vue";
 import { computed, ref } from "vue";
-import { router, usePage } from "@inertiajs/vue3";
-import AssessmentItem from "@/Views/Admin/Assessments/AssessmentItem.vue";
-import Filter from "@/Views/Admin/Assessments/Filter.vue";
 import AssessmentTypes from "@/Views/Admin/Assessments/AssessmentTypes/Table.vue";
-import EmptyView from "@/Views/EmptyView.vue";
 import Modal from "@/Components/Modal.vue";
 import Details from "@/Pages/Admin/Assessments/Details.vue";
+import Form from "@/Views/Teacher/Views/Assessments/AssessmentForm.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { usePage } from "@inertiajs/vue3";
+import EmptyView from "@/Views/EmptyView.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const showModal = ref(false);
 
-const assessments = computed(() => usePage().props.assessments);
-
-const loadDetail = (assessment) => {
-    router.get("/admin/assessments/" + assessment);
-};
+const mappedAssessments = computed(() => usePage().props.mapped_assessments);
 </script>
 <style scoped></style>

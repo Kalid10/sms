@@ -19,7 +19,10 @@
         </p>
         <div class="flex w-full flex-col justify-between lg:flex-row">
             <div class="mt-6 w-full">
-                <AssessmentTypeDetailInfo :assessment="selectedAssessment" />
+                <AssessmentTypeDetails
+                    :assessment="selectedAssessment"
+                    @update="showUpdateForm = true"
+                />
             </div>
         </div>
 
@@ -27,14 +30,25 @@
             <Details :assessment="selectedAssessment" />
         </div>
     </div>
+    <Modal v-model:view="showUpdateForm">
+        <UpdateForm
+            v-if="selectedAssessment.status !== 'completed'"
+            :assessment="selectedAssessment"
+            @success="showUpdateForm = false"
+        />
+    </Modal>
 </template>
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import Header from "@/Views/Teacher/Views/Assessments/Details/Views/Header.vue";
 import moment from "moment/moment";
-import AssessmentTypeDetailInfo from "@/Views/Teacher/Views/Assessments/Details/Views/AssessmenTypeDetailInfo.vue";
 import Details from "@/Views/Admin/Assessments/Details.vue";
+import Modal from "@/Components/Modal.vue";
+import UpdateForm from "@/Views/Teacher/Views/Assessments/AssessmentForm.vue";
+import AssessmentTypeDetails from "@/Views/Admin/Assessments/AssessmentTypeDetails.vue";
+
+const showUpdateForm = ref(false);
 
 const selectedAssessment = computed(() => usePage().props.assessment);
 

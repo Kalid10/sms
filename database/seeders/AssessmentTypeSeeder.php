@@ -25,6 +25,8 @@ class AssessmentTypeSeeder extends Seeder
                     'min_assessments' => 5,
                     'max_assessments' => 10,
                     'customizable' => true,
+                    'is_admin_controlled' => false,
+
                 ],
                 [
                     'name' => 'Classwork',
@@ -32,6 +34,8 @@ class AssessmentTypeSeeder extends Seeder
                     'min_assessments' => 5,
                     'max_assessments' => 10,
                     'customizable' => true,
+                    'is_admin_controlled' => false,
+
                 ],
                 [
                     'name' => 'Test',
@@ -39,13 +43,17 @@ class AssessmentTypeSeeder extends Seeder
                     'min_assessments' => 3,
                     'max_assessments' => 8,
                     'customizable' => true,
+                    'is_admin_controlled' => true,
+
                 ],
                 [
-                    'name' => 'Final Quarterly Exam',
+                    'name' => 'Mid Term Exam',
                     'percentage' => 20,
                     'min_assessments' => 1,
                     'max_assessments' => 1,
                     'customizable' => false,
+                    'is_admin_controlled' => true,
+
                 ],
                 [
                     'name' => 'Final Exam',
@@ -53,6 +61,8 @@ class AssessmentTypeSeeder extends Seeder
                     'min_assessments' => 1,
                     'max_assessments' => 1,
                     'customizable' => false,
+                    'is_admin_controlled' => true,
+
                 ],
             ];
 

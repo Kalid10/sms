@@ -136,7 +136,7 @@ class AssessmentController extends Controller
             ['assessment_type_id', $assessment->assessment_type_id],
         ])->get();
 
-        $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments,customizable', 'batchSubject:id,batch_id,subject_id',
+        $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments,customizable,is_admin_controlled', 'batchSubject:id,batch_id,subject_id',
             'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
             'students:id,student_id,assessment_id,point,comment,status',
             'students.student:id,user_id', 'students.student.user:id,name');
@@ -237,7 +237,7 @@ class AssessmentController extends Controller
         return Inertia::render($page, [
             'assessments' => $assessments,
             'teacher' => $this->teacherService->getTeacherDetails($teacherId),
-            'assessment_type' => AssessmentType::all(),
+            'assessment_type' => AssessmentType::where('is_admin_controlled', false)->get(),
             'quarters' => $quarters,
             'semesters' => $semesters,
             'school_years' => $schoolYears,

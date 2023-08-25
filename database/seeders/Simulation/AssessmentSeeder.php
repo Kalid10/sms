@@ -45,6 +45,10 @@ class AssessmentSeeder extends Seeder
                     $maximumPoint = rand(10, 50);
                     $maximumPoint = $maximumPoint - $maximumPoint % 5;
 
+                    if ($assessmentType->is_admin_controlled) {
+                        continue;
+                    }
+
                     Assessment::create([
                         'assessment_type_id' => $assessmentType->id,
                         'batch_subject_id' => $batchSubject->id,
