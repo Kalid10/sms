@@ -18,7 +18,13 @@ class MathsTeacherSeeder extends TeacherSeeder
             $this->create('Mathematics', $level);
         }
 
-        $this->create(subject: 'Mathematics', level: ['11', '12'], section: ['A', 'B']);
-        $this->create(subject: 'Mathematics', level: ['11', '12'], section: ['C', 'D']);
+        $this->create(subject: 'Mathematics', level: ['11'], section: ['A']);
+        $this->create(subject: 'Mathematics', level: ['11'], section: ['B']);
+        $this->create(subject: 'Mathematics', level: ['12'], section: ['B']);
+        $this->create(subject: 'Mathematics', level: ['12'], section: ['A']);
+        $this->create(subject: 'Mathematics', level: ['11'], section: ['C']);
+        $this->create(subject: 'Mathematics', level: ['11'], section: ['D']);
+        $this->create(subject: 'Mathematics', level: ['12'], section: ['C']);
+        $this->create(subject: 'Mathematics', level: ['12'], section: ['D']);
     }
 }

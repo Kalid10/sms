@@ -75,7 +75,7 @@ import {
     FingerPrintIcon,
     HomeIcon,
     MegaphoneIcon,
-    NewspaperIcon,
+    NewspaperIcon, TableCellsIcon,
     UserGroupIcon,
     UsersIcon,
 } from "@heroicons/vue/24/solid";
@@ -198,6 +198,14 @@ const sidebarItems = computed(() => [
         active:
             isRouteActive(/^\/admin\/schedules\/\d+\/?$/) ||
             isRouteActive(/^\/admin\/schedules\/?$/),
+    },
+    {
+        name: t("common.timetable"),
+        icon: TableCellsIcon,
+        route: "/admin/batch-schedules",
+        active:
+            isRouteActive(/^\/admin\/batch-schedules\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/batch-schedules\/?$/),
     },
     {
         name: t("common.assessments"),

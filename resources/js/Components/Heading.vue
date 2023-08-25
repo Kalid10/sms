@@ -1,6 +1,8 @@
 <template>
     <h3
         :class="{
+            'text-2xl': size === '2xl',
+            'text-xl': size === 'xl',
             'text-lg': size === 'lg',
             'text-base': size === 'md',
             'text-sm': size === 'sm',

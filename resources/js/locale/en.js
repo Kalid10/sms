@@ -452,6 +452,7 @@ const en = {
         teacher: "Teacher",
         announcements: "Announcements",
         schedule: "Schedule",
+        timetable: "Time tables",
         schedules: "Schedules",
         users: "Users",
         noDataFound: "No data found",

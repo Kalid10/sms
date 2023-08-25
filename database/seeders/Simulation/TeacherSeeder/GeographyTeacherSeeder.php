@@ -11,7 +11,8 @@ class GeographyTeacherSeeder extends TeacherSeeder
      */
     public function run(): void
     {
-        $this->create('Geography', level: ['7', '8']);
+        $this->create('Geography', level: ['8']);
+        $this->create('Geography', level: ['7']);
 
         $secondaryTeachers = [
             '9', '10', '11', '12',
