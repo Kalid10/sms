@@ -694,7 +694,7 @@ function submit() {
         },
         {
             onSuccess: () => {
-                router.get("/getting-started/class-schedule");
+                router.get("/getting-started/school-schedule");
             },
         }
     );

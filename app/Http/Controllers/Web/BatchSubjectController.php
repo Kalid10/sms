@@ -8,7 +8,6 @@ use App\Http\Requests\BatchSubjects\AssignTeacherToBatchSubjectRequest;
 use App\Http\Requests\BatchSubjects\SetBatchSubjectWeeklyFrequencyRequest;
 use App\Models\Batch;
 use App\Models\BatchSubject;
-use App\Models\SchoolYear;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
@@ -63,13 +62,6 @@ class BatchSubjectController extends Controller
         }
 
         DB::commit();
-
-        $schoolYear = SchoolYear::getActiveSchoolYear();
-
-        if (BatchSubject::count() > 0) {
-            $schoolYear->is_ready = true;
-            $schoolYear->save();
-        }
 
         return redirect()->back()->with('success', 'Batch subject added successfully.');
     }
