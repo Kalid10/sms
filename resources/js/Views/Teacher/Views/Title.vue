@@ -4,6 +4,7 @@
         <span v-if="isDateOpen" class="text-xs font-light">{{
             moment().format(" dddd MMMM D YYYY")
         }}</span>
+        <span v-if="subTitle" class="text-xs font-light">{{ subTitle }}</span>
     </div>
 </template>
 
@@ -18,6 +19,10 @@ defineProps({
     isDateOpen: {
         type: Boolean,
         default: true,
+    },
+    subTitle: {
+        type: String,
+        default: null,
     },
 });
 </script>
