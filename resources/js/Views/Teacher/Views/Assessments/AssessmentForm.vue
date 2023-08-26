@@ -187,7 +187,6 @@
 
                 <div>
                     <span v-html="$t('assessmentForm.message')"></span>
-
                 </div>
             </div>
         </FormElement>
@@ -329,7 +328,10 @@ const batchAssessmentTypes = computed(() => {
     if (form.level_category_ids.length > 0) {
         return assessmentType.value
             .filter((type) => {
-                return form.level_category_ids.includes(type.level_category_id);
+                return (
+                    form.level_category_ids.includes(type.level_category_id) &&
+                    type.is_admin_controlled
+                );
             })
             .map((type) => {
                 return {
