@@ -107,6 +107,7 @@ const homeroomTeacher = computed(() => {
 const filteredStudents = computed(() => {
     return students.value.data.map((item) => {
         return {
+            student_id: item.student.user.username,
             name: {
                 name: item.student.user.name,
                 id: item.student.id,
@@ -128,6 +129,12 @@ const filteredStudents = computed(() => {
 
 const config = [
     {
+        key: "student_id",
+        name: t("studentsTable.id"),
+        align: "center",
+        class: "h-12 !text-[0.7rem]",
+    },
+    {
         key: "name",
         name: t("studentsTable.name"),
         align: "center",
@@ -136,7 +143,7 @@ const config = [
     },
     {
         key: "flags",
-        name: "Flags",
+        name: t("studentsTable.flags"),
         align: "center",
         class: "h-12 !text-[0.7rem]",
     },

@@ -63,10 +63,10 @@ class StudentHelper
         $username = Str::lower($name);
 
         // Replace any spaces or special characters with underscores
-        $username = preg_replace('/[^a-zA-Z0-9]+/', '-', $username);
+        $username = preg_replace('/[^a-zA-Z0-9]+/', '-', $username.'/'.Carbon::now()->year);
 
         // Add a random number to the end to make it unique
-        $username .= rand(100, 999);
+        $username .= rand(001, 3000);
 
         // Check if the username already exists and add a number if necessary
         $i = 1;

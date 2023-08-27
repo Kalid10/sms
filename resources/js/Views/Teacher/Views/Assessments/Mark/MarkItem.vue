@@ -57,9 +57,12 @@
                             : (selectedCommentInput = index)
                     "
                 >
-                    <span class="font-semibold"> {{ index + 1 }}.</span>
-                    <span>
+                    <span class="font-semibold"> {{ index + 1 }}. </span>
+                    <span class="font-medium">
                         {{ item.student.user.name }}
+                        <span class="text-[0.7rem]">
+                            ({{ item.student?.user?.username }})
+                        </span>
                     </span>
                 </div>
 

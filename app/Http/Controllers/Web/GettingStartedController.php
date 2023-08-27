@@ -61,4 +61,13 @@ class GettingStartedController extends Controller
             'school_schedule' => SchoolSchedule::all(),
         ]);
     }
+
+    public function finish()
+    {
+        $schoolYear = SchoolYear::getActiveSchoolYear();
+        $schoolYear->is_ready = true;
+        $schoolYear->save();
+
+        return redirect()->to('/admin');
+    }
 }
