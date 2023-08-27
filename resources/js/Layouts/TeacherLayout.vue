@@ -28,43 +28,43 @@
         <Notification class="!my-3" />
 
         <div
-            v-if="isQuestionGenerationLoading || questionGenerationStatus"
+            v-if="isStoreLoading || storeResponseStatus"
             class="group absolute bottom-2 right-2 z-50 w-fit cursor-pointer text-white"
         >
             <div
-                v-if="isQuestionGenerationLoading"
+                v-if="isStoreLoading"
                 class="my-2 flex w-fit items-center justify-center space-x-2 rounded-full bg-violet-600 px-3 py-2 text-xs"
             >
                 <Loading size="small" type="spinner" />
                 <div
                     class="hidden group-hover:inline-block group-hover:animate-fade-in group-hover:delay-700"
                 >
-                    Generating Questions
+                    {{ storeLoadingMessage }}
                 </div>
             </div>
 
             <div
-                v-if="questionGenerationStatus === 'success'"
+                v-if="storeResponseStatus === 'success'"
                 class="flex items-center justify-center space-x-4 rounded-lg bg-emerald-500 py-2 px-4 text-sm"
                 @click="routeToQuestionsPage()"
             >
-                <span> Generated Questions Successfully!</span>
+                <span> {{ storeResponseMessage }}</span>
                 <SecondaryButton
                     title="View"
                     class="cursor-pointer !rounded-2xl bg-emerald-100 !py-1.5 !px-6 hover:scale-105"
                     @click="
-                        uiStore.setQuestionGenerationLoading(false);
-                        uiStore.setQuestionGenerationStatus(null);
+                        uiStore.setLoading(false);
+                        uiStore.responseStatus(null);
                     "
                 />
             </div>
             <div
-                v-if="questionGenerationStatus === 'error'"
+                v-if="storeResponseStatus === 'error'"
                 class="flex items-center justify-center space-x-2 rounded-lg bg-red-600 py-2 px-4 text-sm"
                 @click="routeToQuestionsPage()"
             >
                 <XCircleIcon class="w-6 text-white" />
-                <span>{{ questionGenerationMessage }}</span>
+                <span>{{ storeResponseMessage }}</span>
             </div>
         </div>
     </div>
@@ -291,15 +291,11 @@ const footerItems = [
 ];
 
 const uiStore = useUIStore();
-const isQuestionGenerationLoading = computed(
-    () => uiStore.isQuestionGenerationLoading
-);
-const questionGenerationStatus = computed(
-    () => uiStore.questionGenerationStatus
-);
-const questionGenerationMessage = computed(
-    () => uiStore.questionGenerationMessage
-);
+const isStoreLoading = computed(() => uiStore.isLoading);
+const storeResponseStatus = computed(() => uiStore.responseStatus);
+const storeResponseMessage = computed(() => uiStore.responseMessage);
+const storeLoadingMessage = computed(() => uiStore.loadingMessage);
+
 const routeToQuestionsPage = () => {
     router.get("/teacher/questions", {}, { preserveState: true });
 };

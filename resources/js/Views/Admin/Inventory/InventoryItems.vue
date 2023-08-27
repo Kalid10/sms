@@ -131,7 +131,6 @@ const inventoryItemsTableConfig = [
 
 onBeforeMount(() => {
     if (isAdmin()) {
-        console.log("Admin");
         inventoryItemsTableConfig.splice(2, 0, {
             name: "Low Stock Threshold",
             key: "low_stock_threshold",

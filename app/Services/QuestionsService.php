@@ -67,6 +67,7 @@ class QuestionsService
             }
         } catch (Exception $e) {
             Log::info($e->getMessage());
+            Log::info('fucker');
 
             return event(new QuestionGeneratorEvent('error', 'Question Generation failed!'));
         }

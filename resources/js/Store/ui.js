@@ -2,19 +2,23 @@ import { defineStore } from "pinia";
 
 export const useUIStore = defineStore("ui", {
     state: () => ({
-        isQuestionGenerationLoading: false,
-        questionGenerationStatus: null,
-        questionGenerationMessage: null,
+        isLoading: false,
+        loadingMessage: null,
+        responseStatus: null,
+        responseMessage: null,
     }),
     actions: {
-        setQuestionGenerationLoading(value) {
-            this.isQuestionGenerationLoading = value;
+        setLoading(value) {
+            this.isLoading = value;
         },
-        setQuestionGenerationStatus(value) {
-            this.questionGenerationStatus = value;
+        setResponseStatus(value) {
+            this.responseStatus = value;
         },
-        setQuestionGenerationMessage(value) {
-            this.questionGenerationMessage = value;
+        setResponseMessage(value) {
+            this.responseMessage = value;
+        },
+        setLoadingMessage(value) {
+            this.loadingMessage = value;
         },
     },
 });

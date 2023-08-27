@@ -207,20 +207,20 @@ const updateLessonPlanIds = (lessonPlanIds, batchSubject) => {
 
 const uiStore = useUIStore();
 const submit = () => {
-    uiStore.setQuestionGenerationLoading(true);
+    uiStore.setLoading(true);
     form.post("/teacher/questions/create", {
         preserveState: true,
         onError: (error) => {
-            uiStore.setQuestionGenerationLoading(false);
+            uiStore.setLoading(false);
             emit("limit-reached");
         },
     });
 };
 
 Echo.private("question-generator").listen(".question-generator", (e) => {
-    uiStore.setQuestionGenerationLoading(false);
+    uiStore.setLoading(false);
 
-    if (e.type === "success") uiStore.setQuestionGenerationStatus("success");
+    if (e.type === "success") uiStore.setResponseStatus("success");
 
     if (e.type === "error") {
         showNotification({
@@ -228,8 +228,8 @@ Echo.private("question-generator").listen(".question-generator", (e) => {
             message: e.message,
             position: "top-center",
         });
-        uiStore.setQuestionGenerationStatus("error");
-        uiStore.setQuestionGenerationMessage(e.message);
+        uiStore.setResponseStatus("error");
+        uiStore.setResponseMessage(e.message);
     }
 });
 
