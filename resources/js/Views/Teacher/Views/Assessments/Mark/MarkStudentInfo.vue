@@ -37,6 +37,7 @@
                 @click="studentDetail(student.id)"
             >
                 {{ student.user.name }}
+                <span class="text-2xl">({{ student.user?.username }})</span>
             </div>
         </div>
         <div
