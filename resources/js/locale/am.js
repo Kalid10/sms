@@ -117,7 +117,8 @@ const am = {
         goToAnnouncements: "መግለጫዎች ላይ ሂድ",
         viewAllAnnouncements: "ሁሉንም መግለጫዎች ይመልከቱ",
         publishAnnouncement: "ማስታወቂያ ያትሙ",
-        couldNotFound: "<span class='font-normal italic'>'{searchKey}'</span> ጋር የተያያዘ ምንም አይነት ማስታወቂያ ማግኘት አልተቻለም።",
+        couldNotFound:
+            "<span class='font-normal italic'>'{searchKey}'</span> ጋር የተያያዘ ምንም አይነት ማስታወቂያ ማግኘት አልተቻለም።",
         noNewAnnouncement:
             "በአሁኑ ጊዜ ምንም አዲስ ማስታወቂያዎች የሉም። አዲስ ማስታወቂያዎችን ለማግኘት ይህንን ቦታ በተደጋጋሚ እንዲጎበኙ እናበረታታዎታለን።",
     },
@@ -181,8 +182,7 @@ const am = {
         gradeCategory: "ደረጃ ምድብ",
         updatedAt: "የተሻሻለበት ጊዜ",
         recentAssessments: "የቅርብ ጊዜ ግምገማዎች",
-        noAssessmentsFound:"ምንም ግምገማዎች አልተገኙም።"
-
+        noAssessmentsFound: "ምንም ግምገማዎች አልተገኙም።",
     },
     assessmentOutcomePercentages: {
         passedPercentTitle: "አልፏል",
@@ -473,6 +473,7 @@ const am = {
         am: "አማ",
         notes: "ማስታዎች",
         inventory: "ኢንቬንቶሪ",
+        extras: "ሌሎች",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
@@ -1347,7 +1348,7 @@ const am = {
         message: "መልእክት",
     },
     staffAbsenteesTable: {
-        noAbsentStaff:"ምንም ቀሪ ሰራተኛ የለም።",
+        noAbsentStaff: "ምንም ቀሪ ሰራተኛ የለም።",
         searchStaff: "የቀረ ሰራተኛ በስም ይፈልጉ",
         newAbsentee: "አዲስ ቀሪ",
         userType: "የተጠቃሚዎች አይነት",
@@ -1810,8 +1811,8 @@ const am = {
     },
 
     absenteeAddModal: {
-        youAreAbout:"{selectedStaffLabel}ን እንደ ቀሪ ሊጨምሩ ነው።",
-        addAbsentee:"ቀሪ ጨምር",
+        youAreAbout: "{selectedStaffLabel}ን እንደ ቀሪ ሊጨምሩ ነው።",
+        addAbsentee: "ቀሪ ጨምር",
         addStaffAbsentee: "የሰራተኛ መቅረትን ይጨምሩ",
         enterReason: "ምክንያት ያስገቡ",
         searchAddAbsentee: "ሰራተኛን በመለያ ይፈልጉ አን ቀሪ ላይ ይጨምሩ",

@@ -117,7 +117,8 @@ const en = {
         goToAnnouncements: "Go To Announcements",
         viewAllAnnouncements: "View All Announcements",
         publishAnnouncement: "Publish Announcement",
-        couldNotFound: "Could not find any announcement related to <span class='font-normal italic'>'{searchKey}'</span>",
+        couldNotFound:
+            "Could not find any announcement related to <span class='font-normal italic'>'{searchKey}'</span>",
         noNewAnnouncement:
             "Currently, there are no new announcements. We encourage you to revisit this space frequently for updates.",
     },
@@ -152,7 +153,8 @@ const en = {
         Schedule: "Schedule",
         or: "or",
         scheduled: "Scheduled",
-        message:"Setting an assessment as <span class='font-semibold uppercase'>' Published '</span> or <span class='font-semibold uppercase' >' Scheduled '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
+        message:
+            "Setting an assessment as <span class='font-semibold uppercase'>' Published '</span> or <span class='font-semibold uppercase' >' Scheduled '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
         title: "Submit Assessment",
         alertMessage:
             "Performing this action will result significant change across the entire subject, Are you sure you want to proceed?",
@@ -181,7 +183,7 @@ const en = {
         gradeCategory: "Grade Category",
         updatedAt: "Updated at",
         recentAssessments: "Recent Assessments",
-        noAssessmentsFound:"No assessments found"
+        noAssessmentsFound: "No assessments found",
     },
 
     assessmentOutcomePercentages: {
@@ -486,6 +488,7 @@ const en = {
         am: "AM",
         notes: "Notes",
         inventory: "Inventory",
+        extras: "Extras",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
@@ -870,7 +873,7 @@ const en = {
     lessonPlans: {
         viewAllLessonPlans: "View All Lesson Plans",
         noLessonPlan: "No Lesson Plan Found!",
-        yourLessonPlans:"Your Lesson Plans"
+        yourLessonPlans: "Your Lesson Plans",
     },
     lessonPlansIndex: {
         myLessonPlans: "My Lesson Plans",
@@ -1400,7 +1403,7 @@ const en = {
         message: "message",
     },
     staffAbsenteesTable: {
-        noAbsentStaff:"No absent staff",
+        noAbsentStaff: "No absent staff",
         searchStaff: "Search for an absent staff by name",
         newAbsentee: "New Absentee",
         userType: "User Type",
@@ -1870,8 +1873,8 @@ const en = {
     },
 
     absenteeAddModal: {
-        youAreAbout:"You are about to add {selectedStaffLabel} as an absentee",
-        addAbsentee:"Add Absentee",
+        youAreAbout: "You are about to add {selectedStaffLabel} as an absentee",
+        addAbsentee: "Add Absentee",
         addStaffAbsentee: "Add Staff Absentee",
         enterReason: "Enter reason",
         searchAddAbsentee: "Search for a staff member to add as an absentee",

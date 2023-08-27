@@ -7,7 +7,7 @@
             v-if="pendingItems.data.length"
             class="text-center text-xl font-semibold"
         >
-            Your Pending Inventory Check outs
+            Your Pending Inventory CheckOuts
         </div>
 
         <div
@@ -59,7 +59,7 @@ const pendingItems = computed(
 
 const updateInventory = (status, inventory_item_id) => {
     router.post(
-        "/teacher/inventory/update",
+        "/teacher/extras/inventory/update",
         {
             status: status,
             inventory_item_id: inventory_item_id,

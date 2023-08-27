@@ -7,7 +7,7 @@
         :data="mappedInventoryItems"
         title="Inventory Items"
         header-style="!bg-brand-400 text-white"
-        class="h-full !w-9/12 !rounded-lg p-4 shadow-sm"
+        class="h-full !w-8/12 !rounded-lg p-4 shadow-sm"
     >
         <template #table-header>
             <div class="flex w-full justify-evenly py-5">
@@ -71,13 +71,14 @@
 
 <script setup>
 import moment from "moment";
-import { computed } from "vue";
+import { computed, onBeforeMount } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { UserMinusIcon } from "@heroicons/vue/24/outline";
 import { PlusCircleIcon } from "@heroicons/vue/24/solid";
+import { isAdmin } from "@/utils";
 
 const emit = defineEmits(["add", "allocate", "fill"]);
 
@@ -106,12 +107,6 @@ const inventoryItemsTableConfig = [
         key: "row",
         type: "custom",
     },
-
-    {
-        name: "Low Stock Alert Threshold",
-        key: "low_stock_threshold",
-        class: "uppercase",
-    },
     {
         name: "Is Returnable?",
         key: "is_returnable",
@@ -133,5 +128,15 @@ const inventoryItemsTableConfig = [
         type: "custom",
     },
 ];
+
+onBeforeMount(() => {
+    if (isAdmin()) {
+        console.log("Admin");
+        inventoryItemsTableConfig.splice(2, 0, {
+            name: "Low Stock Threshold",
+            key: "low_stock_threshold",
+        });
+    }
+});
 </script>
 <style scoped></style>
