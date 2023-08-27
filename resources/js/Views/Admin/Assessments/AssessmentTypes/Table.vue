@@ -111,7 +111,7 @@
     </Modal>
 
     <div
-        class="flex flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
+        class="flex h-[850px] flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
     >
         <div class="px-3 text-2xl font-medium">
             {{ $t("assessmentIndex.assessmentType") }}

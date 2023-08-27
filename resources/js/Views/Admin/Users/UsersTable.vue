@@ -7,7 +7,7 @@
             })
         "
         actionable
-        row-actionable
+        :row-actionable="false"
         selectable
         :title="$t('usersTable.tableElementTitle')"
         :subtitle="$t('usersTable.tableElementSubtitle')"
@@ -47,32 +47,32 @@
             </div>
         </template>
 
-        <template #row-actions="{ row }">
-            <Link
-                :href="'/admin/users/' + row.id"
-                class="flex flex-col items-center gap-1"
-            >
-                <EyeIcon
-                    class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"
-                />
-            </Link>
-            <Link
-                :href="'/admin/users/' + row.id + '/edit'"
-                class="flex flex-col items-center gap-1"
-            >
-                <ArrowPathIcon
-                    class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"
-                />
-            </Link>
-            <Link
-                :href="'/admin/users/' + row.id + '/delete'"
-                class="flex flex-col items-center gap-1"
-            >
-                <ArchiveBoxXMarkIcon
-                    class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"
-                />
-            </Link>
-        </template>
+        <!--        <template #row-actions="{ row }">-->
+        <!--            <Link-->
+        <!--                :href="'/admin/users/' + row.id"-->
+        <!--                class="flex flex-col items-center gap-1"-->
+        <!--            >-->
+        <!--                <EyeIcon-->
+        <!--                    class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"-->
+        <!--                />-->
+        <!--            </Link>-->
+        <!--            <Link-->
+        <!--                :href="'/admin/users/' + row.id + '/edit'"-->
+        <!--                class="flex flex-col items-center gap-1"-->
+        <!--            >-->
+        <!--                <ArrowPathIcon-->
+        <!--                    class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"-->
+        <!--                />-->
+        <!--            </Link>-->
+        <!--            <Link-->
+        <!--                :href="'/admin/users/' + row.id + '/delete'"-->
+        <!--                class="flex flex-col items-center gap-1"-->
+        <!--            >-->
+        <!--                <ArchiveBoxXMarkIcon-->
+        <!--                    class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"-->
+        <!--                />-->
+        <!--            </Link>-->
+        <!--        </template>-->
 
         <template #footer>
             <Pagination class="py-1" :links="users.links" position="center" />
@@ -81,11 +81,6 @@
 </template>
 <script setup>
 import TextInput from "@/Components/TextInput.vue";
-import {
-    ArchiveBoxXMarkIcon,
-    ArrowPathIcon,
-    EyeIcon,
-} from "@heroicons/vue/24/outline";
 import Pagination from "@/Components/Pagination.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import TableElement from "@/Components/TableElement.vue";

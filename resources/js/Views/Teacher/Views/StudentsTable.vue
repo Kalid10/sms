@@ -59,9 +59,9 @@
             </template>
         </TableElement>
     </div>
-    <Modal v-model:view="showAssignModal">
-        <AssignHomeroom />
-    </Modal>
+    <!--    <Modal v-model:view="showAssignModal">-->
+    <!--        <AssignHomeroom @close="showAssignModal = false" />-->
+    <!--    </Modal>-->
 </template>
 <script setup>
 import Pagination from "@/Components/Pagination.vue";
@@ -70,8 +70,6 @@ import TableElement from "@/Components/TableElement.vue";
 import { computed, ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import debounce from "lodash/debounce";
-import Modal from "@/Components/Modal.vue";
-import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 import { isAdmin } from "@/utils";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { AdjustmentsHorizontalIcon } from "@heroicons/vue/20/solid";

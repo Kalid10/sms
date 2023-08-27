@@ -91,12 +91,17 @@ import TextInput from "@/Components/TextInput.vue";
 
 const emit = defineEmits(["close"]);
 
-const batches = computed(() => usePage().props.batches);
+const batches = computed(() => usePage().props.get_batches);
 const teacher = computed(() => usePage().props.teacher);
 
 const isAssigned = computed(() => {
-    return teacher?.value.homeroom[0];
+    if (teacher.value.homeroom) {
+        return true;
+    }
+    return false;
 });
+
+console.log(batches.value);
 
 const props = defineProps({
     url: {
@@ -105,7 +110,7 @@ const props = defineProps({
     },
 });
 const batchOptions = computed(() => {
-    return batches.value.map((batch) => {
+    return batches?.value.map((batch) => {
         return {
             label:
                 batch.level.name +
