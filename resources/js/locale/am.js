@@ -1422,6 +1422,9 @@ const am = {
         grade: "ደረጃ",
         rank: "ደረጃ",
         conduct: "ባህሪ",
+        flags: "ተማሪ ማስጠንቀቂያዎች",
+
+        id: "መለያ ቁጥር ",
     },
     subjectGrades: {
         levels: "ደረጃዎችን",
