@@ -9,7 +9,12 @@
             class="w-20 rounded-md object-contain"
         />
 
-        <Title :title="title" :class="showCurrentClass ? 'w-4/12' : 'w-6/12'" />
+        <Title
+            :title="title"
+            :sub-title="subTitle"
+            :is-date-open="!subTitle"
+            :class="showCurrentClass ? 'w-4/12' : 'w-6/12'"
+        />
 
         <div
             class="flex h-full items-center justify-between divide-x divide-white lg:w-8/12"
@@ -83,6 +88,10 @@ const props = defineProps({
     showCurrentClass: {
         type: Boolean,
         default: true,
+    },
+    subTitle: {
+        type: String,
+        default: null,
     },
 });
 

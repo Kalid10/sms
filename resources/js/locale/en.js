@@ -488,6 +488,7 @@ const en = {
         am: "AM",
         notes: "Notes",
         inventory: "Inventory",
+        extras: "Extras",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
@@ -1108,7 +1109,7 @@ const en = {
         pleaseEnter: "Please enter the",
         startDate: "start date",
         ofTheNew: "of the new school year and the",
-        numberOfSemesters: "number of semesters",
+        numberOfSemesters: "Number of semesters",
         itIncludes:
             "it includes. You can also change the school year name by clicking the",
         iconOnTheRight: "icon on the right.",
@@ -1480,6 +1481,8 @@ const en = {
         grade: "Grade",
         rank: "Rank",
         conduct: "Conduct",
+        id: "ID",
+        flags: "Flags",
     },
 
     subjectGrades: {

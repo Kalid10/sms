@@ -1,10 +1,6 @@
 <template>
-    <div class="my-5 flex min-h-full w-11/12 flex-col space-y-5">
-        <div class="flex w-full items-center justify-between">
-            <Title title="School Inventory" />
-        </div>
-
-        <div class="flex h-full w-full justify-between">
+    <div class="flex min-h-full w-full flex-col space-y-5">
+        <div class="flex h-full w-full justify-between space-x-4">
             <InventoryItems class="!w-7/12" />
             <PendingCheckouts class="!w-4/12" />
         </div>
@@ -13,7 +9,6 @@
 </template>
 
 <script setup>
-import Title from "@/Views/Teacher/Views/Title.vue";
 import Logs from "@/Views/Admin/Inventory/Logs.vue";
 import InventoryItems from "@/Views/Admin/Inventory/InventoryItems.vue";
 import PendingCheckouts from "@/Views/Teacher/Inventory/PendingCheckouts.vue";

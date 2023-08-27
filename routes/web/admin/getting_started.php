@@ -8,4 +8,5 @@ Route::controller(GettingStartedController::class)->prefix('getting-started/')->
     Route::get('school-schedule', 'schoolSchedule')->name('school-schedule');
     Route::get('school-period', 'schoolPeriod')->name('school-period');
     Route::get('class-schedule', 'classSchedule')->name('class-schedule');
+    Route::get('/finish', 'finish')->name('finish');
 });

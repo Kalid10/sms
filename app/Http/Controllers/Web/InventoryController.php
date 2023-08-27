@@ -56,7 +56,7 @@ class InventoryController extends Controller
         }
 
         $page = match ($loggedInUserType) {
-            User::TYPE_TEACHER => 'Teacher/Inventory/Index',
+            User::TYPE_TEACHER => 'Teacher/Extras/Index',
             User::TYPE_ADMIN => 'Admin/Inventory/Index',
             default => throw new Exception('Type unknown!'),
         };

@@ -93,7 +93,7 @@ class AssessmentController extends Controller
 
         $student = null;
         if ($request->input('student_id')) {
-            $student = Student::find($request->input('student_id'))->load('user:id,name');
+            $student = Student::find($request->input('student_id'))->load('user:id,name,username');
             $student->absentee_percentage = $student->absenteePercentage();
             $student->assessment_quarter_grade = $student->fetchAssessmentsGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id);
             $student->total_batch_subject_grade = $student->fetchStudentBatchSubjectGrade($assessment->batch_subject_id, Quarter::getActiveQuarter()->id)->first()?->score;
@@ -116,7 +116,7 @@ class AssessmentController extends Controller
             'assessment' => $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments', 'batchSubject:id,batch_id,subject_id',
                 'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
                 'students:id,student_id,assessment_id,point,comment,status',
-                'students.student:id,user_id', 'students.student.user:id,name'),
+                'students.student:id,user_id', 'students.student.user:id,name,username'),
             'student' => $student,
         ]);
     }

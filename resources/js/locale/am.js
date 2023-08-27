@@ -473,6 +473,7 @@ const am = {
         am: "አማ",
         notes: "ማስታዎች",
         inventory: "ኢንቬንቶሪ",
+        extras: "ሌሎች",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
@@ -1424,6 +1425,9 @@ const am = {
         grade: "ደረጃ",
         rank: "ደረጃ",
         conduct: "ባህሪ",
+        flags: "ተማሪ ማስጠንቀቂያዎች",
+
+        id: "መለያ ቁጥር ",
     },
     subjectGrades: {
         levels: "ደረጃዎችን",

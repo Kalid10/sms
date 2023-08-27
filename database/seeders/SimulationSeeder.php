@@ -56,8 +56,8 @@ class SimulationSeeder extends Seeder
     private function admin()
     {
         $user = User::factory()->create([
-            'name' => 'Biniyam Lemma',
-            'email' => 'biniyam.lemma@gibson.edu.et',
+            'name' => 'School Admin',
+            'email' => 'biniyam@rigel.studio',
             'type' => User::TYPE_ADMIN,
         ]);
 

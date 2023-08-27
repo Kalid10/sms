@@ -12,6 +12,7 @@
             >
                 <Header
                     :title="student.user.name"
+                    :sub-title="'ID: ' + student.user.username"
                     :select-input-options="batchSubjectOptions"
                     :selected-input="batchSubject?.id ?? null"
                     image="sd"

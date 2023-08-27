@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Admin;
 use App\Models\Role;
 use App\Models\User;
 use Exception;
@@ -45,6 +46,11 @@ class CreateAdmin extends Command
                 'password' => Hash::make('secret'),
                 'type' => User::TYPE_ADMIN,
                 'gender' => $this->argument('gender'),
+            ]);
+
+            Admin::create([
+                'user_id' => $user->id,
+                'position' => 'Administrator',
             ]);
 
             // Get all roles and attach them to the user

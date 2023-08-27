@@ -54,7 +54,7 @@
                     <div class="flex w-full flex-col gap-2 md:flex-row">
                         <Card
                             class="group cursor-pointer hover:border-black"
-                            @click="registerSemesterStartDate"
+                            @click="router.get('/getting-started/finish')"
                         >
                             <div
                                 class="flex flex-col items-center justify-between gap-2"
@@ -89,7 +89,7 @@
                         </Card>
                         <Card
                             class="group cursor-pointer hover:border-black"
-                            @click="viewCalendar"
+                            @click="router.get('/getting-started/finish')"
                         >
                             <div
                                 class="flex h-full flex-col items-center gap-2"
@@ -461,7 +461,7 @@ function viewCalendar() {
 }
 
 function goToDashboard() {
-    router.get("/admin");
+    router.get("/getting-started/finish");
 }
 
 function addNewEvent(date) {

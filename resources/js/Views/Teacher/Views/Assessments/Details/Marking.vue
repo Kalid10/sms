@@ -20,7 +20,7 @@ const props = defineProps({
 
 function startMarking() {
     router.get("/teacher/assessments/mark/" + props.assessment.id, {
-        student_id: props.assessment.id,
+        student_id: null,
     });
 }
 </script>
