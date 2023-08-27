@@ -37,6 +37,7 @@ class Assessment extends Model
         'maximum_point',
         'lesson_plan_id',
         'status',
+        'created_by',
     ];
 
     protected $appends = ['long_title', 'assessment_period_time'];
@@ -157,6 +158,11 @@ class Assessment extends Model
         };
 
         return $prefix.$this->title.$suffix;
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
     protected $casts = [

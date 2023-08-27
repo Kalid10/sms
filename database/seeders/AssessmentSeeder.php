@@ -22,7 +22,9 @@ class AssessmentSeeder extends Seeder
                         $query->where('school_years.id', SchoolYear::getActiveSchoolYear()->id);
                     });
                 },
-                'batchSubjects.batch.level.levelCategory.assessmentTypes']);
+                'batchSubjects.batch.level.levelCategory.assessmentTypes'],
+                'user'
+            );
 
         if ($teacher) {
             $batchSubjects = $teacher->batchSubjects;
@@ -48,6 +50,7 @@ class AssessmentSeeder extends Seeder
                     'title' => "Assessment {$i}",
                     'description' => "This is assessment {$i}.",
                     'maximum_point' => rand(10, 100),
+                    'created_by' => $teacher->user->id,
                     'status' => fake()->randomElement([
                         // Uncomment the following statuses whenever needed
                         //                        Assessment::STATUS_CLOSED,

@@ -1,6 +1,6 @@
 <template>
     <GeneralInfo
-        :teacher-name="assessment.batch_subject.teacher.user.name"
+        :teacher-name="assessment.created_by.name"
         :total-students="assessment?.students.length"
         :status="capitalize(assessment.status)"
     />
