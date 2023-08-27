@@ -2,13 +2,10 @@
     <div class="flex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
         <div class="flex w-full items-center justify-between">
             <div class="flex grow justify-between py-3 text-2xl font-medium">
-                <button
-                    class="p-1 text-sm font-bold text-green-500 underline"
+                <PrinterIcon
+                    class="w-5 cursor-pointer hover:scale-110"
                     @click="print()"
-                >
-                    Print
-                </button>
-                <!--test print start -->
+                />
 
                 <div id="grade-report" ref="printContainer" class="hidden">
                     <div
@@ -17,53 +14,49 @@
                         <div>
                             <!-- header  -->
                             <div
-                                class="header flex h-[40mm] flex-col items-center justify-center bg-gray-600"
+                                class="header flex h-[20mm] items-center justify-center bg-gray-600"
                             >
                                 <span
-                                    class="header p-2 text-5xl font-extrabold uppercase text-white"
+                                    class="header p-2 text-2xl font-extrabold uppercase text-white"
                                 >
                                     Report card</span
                                 >
                                 <p
-                                    class="header text-2xl font-extrabold uppercase text-white"
+                                    class="header text-sm font-extrabold uppercase text-white"
                                 >
-                                    {{ schoolName }}
-                                </p>
-                                <p
-                                    class="header text-lg font-extrabold text-white"
-                                >
-                                    {{ tagline }}
+                                    ({{ schoolName }})
                                 </p>
                             </div>
 
                             <!-- student info  -->
                             <div class="flex h-[40] justify-between p-8">
                                 <div class="font-medium">
-                                    <p>
+                                    <p class="text-sm">
                                         Name:
                                         <span
-                                            class="pl-2 font-normal underline"
+                                            class="pl-2 text-sm font-normal underline"
                                         >
                                             {{ studentName.user.name }}</span
                                         >
                                     </p>
-                                    <p>
+                                    <p class="text-sm">
                                         Level:
-                                        <span class="pl-2 font-normal underline"
+                                        <span
+                                            class="pl-2 text-sm font-normal underline"
                                             >Grade {{ level.id }}</span
                                         >
                                     </p>
-                                    <p>
+                                    <p class="text-sm">
                                         Homeroom Teacher:
                                         <span
-                                            class="pl-2 font-normal underline"
+                                            class="pl-2 text-sm font-normal underline"
                                             >{{ homeroomTeacher.name }}</span
                                         >
                                     </p>
                                     <p></p>
                                 </div>
 
-                                <div>
+                                <div class="text-sm">
                                     <p>
                                         <span class="font-normal">{{
                                             activeYear.name
@@ -97,13 +90,13 @@
                             </div>
 
                             <!-- table -->
-                            <div class="flex justify-center px-8 pt-5">
+                            <div class="flex justify-center px-8">
                                 <table
                                     class="mt-8 min-w-full overflow-hidden bg-white shadow-md"
                                 >
                                     <thead>
                                         <tr
-                                            class="bg-gray-200 text-sm uppercase text-gray-600"
+                                            class="bg-gray-200 text-xs uppercase text-gray-600"
                                         >
                                             <th class="py-3 px-6 text-left">
                                                 Subject Name
@@ -117,7 +110,7 @@
                                         </tr>
                                     </thead>
                                     <tbody
-                                        class="text-sm font-light text-gray-600"
+                                        class="text-xs font-light text-gray-600"
                                     >
                                         <tr
                                             v-for="(
@@ -147,7 +140,7 @@
                         <Statistics v-if="!showSubjectDetail" />
 
                         <!-- footer  -->
-                        <div class="shrink-0 p-3 text-xs">
+                        <div class="shrink-0 px-3 text-xs">
                             <div class="flex justify-between">
                                 <div class="pl-3">
                                     <p>
@@ -238,7 +231,11 @@
     </div>
 </template>
 <script setup>
-import { ArrowLeftCircleIcon, FlagIcon } from "@heroicons/vue/20/solid";
+import {
+    ArrowLeftCircleIcon,
+    FlagIcon,
+    PrinterIcon,
+} from "@heroicons/vue/20/solid";
 import TableElement from "@/Components/TableElement.vue";
 import AssessmentBreakDown from "@/Views/Teacher/Views/Assessments/AssessmentBreakDown.vue";
 import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
@@ -347,7 +344,6 @@ onMounted(() => {
 });
 
 function print() {
-    console.log("here");
     printing.value = true;
 
     const printContainer = printContainerRef.value;
@@ -362,7 +358,6 @@ function print() {
         // Wait for the content to be rendered before printing
         setTimeout(() => {
             window.print();
-
             // Restore the original content
             document.body.innerHTML = originalContent;
 
