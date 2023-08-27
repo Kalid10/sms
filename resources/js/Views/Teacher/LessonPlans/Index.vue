@@ -21,8 +21,8 @@
         </div>
 
         <div class="flex h-full max-h-full w-full grow flex-col">
-            <ul class="flex gap-3 py-4">
-                <li v-for="(subject, s) in subjects" :key="s">
+            <ul class="scrollbar-hide flex gap-3 overflow-x-auto pt-2 pb-3">
+                <li v-for="(subject, s) in subjects" :key="s" class="w-full">
                     <Link
                         :href="getLink(subject)"
                         :class="
@@ -33,10 +33,10 @@
                                 ? ' text-white bg-brand-400 rounded-2xl'
                                 : 'text-brand-text-50'
                         "
-                        class="relative grid min-w-[4rem] cursor-pointer place-items-center py-2 px-5 text-center text-sm font-medium"
+                        class="relative grid min-w-[9rem] cursor-pointer place-items-center py-2 text-center text-sm font-medium"
                     >
-                        <span class="flex items-end">
-                            <span
+                        <span class="flex w-full items-end justify-center px-2">
+                            <span class=""
                                 >{{ parseLevel(subject.batch.level.name) }}
                                 {{ subject.batch.section }}</span
                             >
