@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Web\AbsenteesController;
 use App\Http\Controllers\Web\AdminController;
-use App\Http\Controllers\Web\AssessmentController;
+use App\Http\Controllers\Web\Assessments\TeacherAssessmentController;
 use App\Http\Controllers\Web\BatchController;
 use App\Http\Controllers\Web\BatchScheduleController;
 use App\Http\Controllers\Web\LessonPlanController;
@@ -26,9 +26,6 @@ Route::prefix('admin/')->middleware(['checkUserType:admin', 'checkSchoolYearStat
         Route::get('announcements', 'announcements')->name('announcements');
         Route::get('assessments', 'assessments')->name('assessments');
         Route::get('assessments/{assessment}', 'assessment')->name('assessment');
-        Route::post('assessments/create', 'createAssessment')->name('create-assessment');
-        Route::post('assessments/update', 'updateAssessment')->name('update-assessment');
-        Route::delete('assessments/delete/{assessment}', 'deleteAssessment')->name('delete-assessment');
     });
 
     Route::controller(StudentController::class)->prefix('students/')->middleware(['checkUserRole:manage-students'])->name('students.')->group(function () {
@@ -67,7 +64,7 @@ Route::prefix('admin/')->middleware(['checkUserType:admin', 'checkSchoolYearStat
         Route::get('homeroom', Homeroom::class)->name('homeroom.show');
         Route::get('students/{student}', Student::class)->name('student.show');
         Route::get('students', Students::class)->name('students.show');
-        Route::get('assessments', [AssessmentController::class, 'teacherAssessments'])->name('assessment');
+        Route::get('assessments', [TeacherAssessmentController::class, 'teacherAssessments'])->name('assessment');
         Route::get('announcements', Announcements::class)->name('announcement.show');
         Route::controller(TeacherController::class)->group(function () {
             Route::get('', 'index')->name('index');
