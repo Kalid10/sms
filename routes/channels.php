@@ -37,3 +37,7 @@ Broadcast::channel('mark-assessment', function ($user) {
 Broadcast::channel('question-generator', function ($user) {
     return $user->type === User::TYPE_TEACHER;
 });
+
+Broadcast::channel('mass-assessment-event', function ($user) {
+    return $user->hasRole('manage-assessment-types');
+});

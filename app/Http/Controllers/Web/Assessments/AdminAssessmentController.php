@@ -3,14 +3,8 @@
 namespace App\Http\Controllers\Web\Assessments;
 
 use App\Http\Controllers\Web\Controller;
+use App\Jobs\CreateMassAssessmentJob;
 use App\Models\Assessment;
-use App\Models\AssessmentMapping;
-use App\Models\Batch;
-use App\Models\BatchSubject;
-use App\Models\Level;
-use App\Models\Quarter;
-use App\Models\SchoolYear;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -30,52 +24,7 @@ class AdminAssessmentController extends Controller
             'status' => 'nullable|string|in:draft,published,scheduled',
         ]);
 
-        $levelCategoryIds = $request->input('level_category_ids');
-
-        // Loop through each level category id and get level ids
-        foreach ($levelCategoryIds as $levelCategoryId) {
-            $levelIds = Level::where('level_category_id', $levelCategoryId)->pluck('id');
-
-            // Loop through each level id and get batch ids
-            foreach ($levelIds as $levelId) {
-                $batchIds = Batch::where('level_id', $levelId)->pluck('id');
-
-                // Loop through each batch id and get batch subject ids
-                foreach ($batchIds as $batchId) {
-                    $batchSubjectIds = BatchSubject::where('batch_id', $batchId)->pluck('id');
-
-                    // Loop through each batch subject id and create assessment
-                    foreach ($batchSubjectIds as $batchSubjectId) {
-                        $batchSubject = BatchSubject::find($batchSubjectId);
-
-                        $batchSubject->assessments()->create(array_merge(
-
-                            $request->only([
-                                'assessment_type_id',
-                                'due_date',
-                                'title',
-                                'description',
-                                'maximum_point',
-                                'lesson_plan_id',
-                                'status',
-                            ]),
-                            [
-                                'school_year_id' => SchoolYear::getActiveSchoolYear()->id,
-                                'quarter_id' => Quarter::getActiveQuarter()->id,
-                                'created_by' => auth()->id(),
-                            ]
-                        ));
-                    }
-                }
-            }
-            // Create an assessment mapping
-            AssessmentMapping::create([
-                'due_date' => Carbon::parse($request->input('due_date')),
-                'user_id' => auth()->id(),
-                'level_category_id' => $levelCategoryId,
-                'assessment_type_id' => $request->input('assessment_type_id'),
-            ]);
-        }
+        CreateMassAssessmentJob::dispatch($request->all(), auth()->user()->id);
 
         return redirect()->back()->with('success', 'Assessment created.');
     }
@@ -95,12 +44,5 @@ class AdminAssessmentController extends Controller
         $assessment->update($validatedData);
 
         return redirect()->back()->with('success', 'Assessment updated.');
-    }
-
-    public function deleteas(Assessment $assessment): RedirectResponse
-    {
-        $assessment->delete();
-
-        return redirect()->back()->with('success', 'Assessment deleted.');
     }
 }
