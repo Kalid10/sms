@@ -17,6 +17,7 @@
         <p class="rounded px-2" :class="statusClass">
             {{ selectedAssessment.status }}
         </p>
+
         <div class="flex w-full flex-col justify-between lg:flex-row">
             <div class="mt-6 w-full">
                 <AssessmentTypeDetails

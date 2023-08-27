@@ -183,8 +183,6 @@ const props = defineProps({
     },
 });
 
-console.log(props.assessment.assessment_type);
-
 const isSingleAssessmentType = computed(() => {
     return (
         !props.assessment.assessment_type.customizable &&
