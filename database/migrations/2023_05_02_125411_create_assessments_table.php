@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('lesson_plan_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('status')->default('draft');
             $table->dateTime('due_date');
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

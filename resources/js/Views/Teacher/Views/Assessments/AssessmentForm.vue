@@ -195,7 +195,7 @@
             v-model:open="showDialog"
             type="update"
             :title="$t('assessmentForm.title')"
-            @confirm="handleSubmit"
+            @confirm="isAdmin() ? handleAdminSubmit() : handleTeacherSubmit()"
         >
             <template #description>
                 {{ $t("assessmentForm.alertMessage") }}
@@ -220,8 +220,11 @@ import {
 import { useI18n } from "vue-i18n";
 import Loading from "@/Components/Loading.vue";
 import { isAdmin, isTeacher } from "@/utils";
+import { useUIStore } from "@/Store/ui";
 
 const { t } = useI18n();
+
+const emit = defineEmits(["success"]);
 const props = defineProps({
     assessment: {
         type: Object,
@@ -247,10 +250,10 @@ let form = useForm({
     batch_subject_ids: [],
     level_category_ids: [],
     due_date: new Date(),
-    title: "",
-    description: "",
-    maximum_point: "",
-    status: "draft",
+    title: "asdf",
+    description: "asd",
+    maximum_point: "12",
+    status: "published",
 });
 
 watch(
@@ -269,9 +272,6 @@ watch(
 );
 
 const showDialog = ref(false);
-
-const emit = defineEmits(["success"]);
-
 const teacher = usePage().props.teacher;
 const assessmentTypes = usePage().props.assessment_type;
 
@@ -391,7 +391,11 @@ function handleTeacherSubmit() {
     });
 }
 
+const uiStore = useUIStore();
+
 function handleAdminSubmit() {
+    uiStore.setLoading(true, "Creating assessment...");
+
     const url = form.assessment_id
         ? "/admin/assessments/update/"
         : "/admin/assessments/create/";
@@ -404,6 +408,9 @@ function handleAdminSubmit() {
         },
         onFinish: () => {
             isLoading.value = false;
+        },
+        onError: () => {
+            uiStore.setLoading(null, null);
         },
     });
 }

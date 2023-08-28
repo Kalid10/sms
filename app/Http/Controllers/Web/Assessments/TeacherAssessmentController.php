@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Assessments;
 
+use App\Http\Controllers\Web\Controller;
 use App\Http\Requests\Teachers\CreateAssessmentRequest;
 use App\Models\Assessment;
 use App\Models\AssessmentType;
@@ -19,7 +20,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class AssessmentController extends Controller
+class TeacherAssessmentController extends Controller
 {
     protected TeacherService $teacherService;
 
@@ -37,7 +38,8 @@ class AssessmentController extends Controller
             $batchSubject->assessments()->create(array_merge(
                 $request->validated(),
                 ['quarter_id' => Quarter::getActiveQuarter()->id],
-                ['batch_subject_id' => $batchSubjectId]
+                ['batch_subject_id' => $batchSubjectId],
+                ['created_by' => auth()->user()->id],
             ));
         }
 
@@ -116,7 +118,8 @@ class AssessmentController extends Controller
             'assessment' => $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments', 'batchSubject:id,batch_id,subject_id',
                 'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
                 'students:id,student_id,assessment_id,point,comment,status',
-                'students.student:id,user_id', 'students.student.user:id,name,username'),
+                'students.student:id,user_id', 'students.student.user:id,name,username',
+                'createdBy:id,name'),
             'student' => $student,
         ]);
     }
@@ -139,7 +142,7 @@ class AssessmentController extends Controller
         $assessment->load('assessmentType:id,name,percentage,min_assessments,max_assessments,customizable,is_admin_controlled', 'batchSubject:id,batch_id,subject_id',
             'batchSubject.subject:id,full_name,short_name', 'batchSubject.batch:id,section,level_id', 'batchSubject.batch.level:id,name',
             'students:id,student_id,assessment_id,point,comment,status',
-            'students.student:id,user_id', 'students.student.user:id,name');
+            'students.student:id,user_id', 'students.student.user:id,name', 'createdBy:id,name');
 
         $assessment->assessment_type_points_sum = $completedAssessments->sum('maximum_point');
         $assessment->assessment_type_completed_count = $completedAssessments->count();

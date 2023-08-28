@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('assessments_mapping', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->dateTime('due_date');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('level_category_id')->constrained();
