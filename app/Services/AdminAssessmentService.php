@@ -57,6 +57,7 @@ class AdminAssessmentService
 
                 // Create an assessment mapping
                 AssessmentMapping::create([
+                    'title' => $requestData['title'],
                     'due_date' => Carbon::parse($requestData['due_date']),
                     'user_id' => $userId,
                     'level_category_id' => $levelCategoryId,
