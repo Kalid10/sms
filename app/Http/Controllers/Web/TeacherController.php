@@ -90,6 +90,7 @@ class TeacherController extends Controller
             'teachers' => $teachers,
             'subjects' => $subjects,
             'levels' => $levels,
+            'batches' => TeacherService::assignHomeroomTeacherData(),
         ]);
     }
 

@@ -896,6 +896,8 @@ const en = {
         addCategoryNamePlaceholder: "ex: ElementarySchool",
         updateLevelCategory: "Update Grade Category",
         updateCategory: "Update Category",
+        description:
+            "Grade Category is a group of grades, example: Elementary School, High School, etc.",
     },
     levelIndex: {
         searchGrades: "Search Grades",

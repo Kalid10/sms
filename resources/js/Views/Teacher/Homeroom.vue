@@ -128,7 +128,15 @@
     </Modal>
 
     <Modal v-model:view="showAssignModal">
-        <AssignHomeroom @close="showAssignModal = false" />
+        <AssignHomeroom
+            :url="
+                isAdmin()
+                    ? '/admin/teachers/homeroom/?teacher_id='
+                    : '/teacher/homeroom/'
+            "
+            :teacher="selectedTeacherId"
+            @close="showAssignModal = false"
+        />
     </Modal>
 </template>
 <script setup>
@@ -160,6 +168,7 @@ const showModal = ref(false);
 const showAssignModal = ref(false);
 const studentDetail = ref();
 const showAddFlagModal = ref(false);
+const selectedTeacherId = computed(() => usePage().props.teacher.id);
 
 const homeroomOptions = computed(() => {
     return homeroomClasses.value.map((homeroom) => {
