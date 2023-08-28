@@ -15,6 +15,7 @@ class StaffAbsentee extends Model
         'user_id',
         'reason',
         'type',
+        'is_leave',
     ];
 
     public function batchSession(): BelongsTo

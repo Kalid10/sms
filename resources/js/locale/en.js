@@ -489,6 +489,7 @@ const en = {
         notes: "Notes",
         inventory: "Inventory",
         extras: "Extras",
+        leave: "leave",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",

@@ -140,6 +140,7 @@ class AbsenteesController extends Controller
             'user_id' => 'required|integer|exists:users,id',
             'reason' => 'required|string',
             'type' => 'required|string',
+            'is_leave' => 'required|boolean',
         ]);
 
         // check if request has batch session id
@@ -181,6 +182,7 @@ class AbsenteesController extends Controller
                 'user_id' => $request->user_id,
                 'reason' => $request->reason,
                 'type' => $request->type,
+                'is_leave' => $request->is_leave,
             ]);
 
         return redirect()->back()->with('success', 'Staff Absentees updated successfully.');
@@ -244,5 +246,23 @@ class AbsenteesController extends Controller
                 'date' => $date,
             ],
         ]);
+    }
+
+    public function updateStaffAbsentee(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'id' => 'required|integer|exists:staff_absentees,id',
+            'reason' => 'required|string',
+            'is_leave' => 'required|boolean',
+        ]);
+
+        $staffAbsentee = StaffAbsentee::find($request->id);
+
+        $staffAbsentee->update([
+            'reason' => $request->reason,
+            'is_leave' => $request->is_leave,
+        ]);
+
+        return redirect()->back()->with('success', 'Staff Absentee updated successfully.');
     }
 }

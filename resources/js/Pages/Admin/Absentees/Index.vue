@@ -9,7 +9,7 @@
             <template #[staffTab]>
                 <StaffAbsenteesTable />
             </template>
-            <template #[studentTab]>
+            <template #[studentsTab]>
                 <StudentsAbsenteesTable />
             </template>
         </TabElement>
@@ -26,8 +26,8 @@ import { isSidebarOpenOnXlDevice, toUnderscore } from "@/utils";
 
 const { t } = useI18n();
 const staffTab = toUnderscore(t("common.staff"));
-const studentTab = toUnderscore(t("common.student"));
-const tabs = [staffTab, studentTab];
+const studentsTab = toUnderscore(t("common.students"));
+const tabs = [staffTab, studentsTab];
 const activeTab = ref(staffTab);
 </script>
 <style scoped></style>

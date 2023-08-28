@@ -474,6 +474,7 @@ const am = {
         notes: "ማስታዎች",
         inventory: "ኢንቬንቶሪ",
         extras: "ሌሎች",
+        leave: "ፍቃድ",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",

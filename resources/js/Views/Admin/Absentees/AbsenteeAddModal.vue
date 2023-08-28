@@ -52,7 +52,7 @@
                     <div
                         class="flex w-full flex-col items-center justify-center"
                     >
-                        <div class="flex w-full flex-col">
+                        <div class="flex w-full flex-col space-y-4">
                             <TextArea
                                 v-model="form.reason"
                                 :label="$t('common.reason')"
@@ -66,6 +66,10 @@
                                     })
                                 "
                                 :error="form.errors.reason"
+                            />
+                            <Toggle
+                                v-model="form.is_leave"
+                                label="Is this a valid leave?"
                             />
                         </div>
 
@@ -92,6 +96,7 @@ import Title from "@/Views/Teacher/Views/Title.vue";
 import TextArea from "@/Components/TextArea.vue";
 import { ArrowLeftCircleIcon } from "@heroicons/vue/20/solid";
 import Loading from "@/Components/Loading.vue";
+import Toggle from "@/Components/Toggle.vue";
 
 const emit = defineEmits(["add"]);
 
@@ -151,6 +156,7 @@ const form = useForm({
     user_id: "",
     reason: "",
     type: "",
+    is_leave: true,
 });
 
 const addAbsentee = () => {
@@ -160,7 +166,7 @@ const addAbsentee = () => {
     if (form.type === "Teacher") {
         form.batch_session_id = selectedStaff.value.batch_session_id;
     }
-    form.post("/absentee/staff/add", {
+    form.post("/admin/absentee/staff/add", {
         onSuccess: () => {
             showModal.value = false;
             form.reset();

@@ -41,20 +41,41 @@
                 </div>
             </div>
         </template>
+
         <template #empty-data>
             <EmptyView :title="$t('staffAbsenteesTable.noAbsentStaff')" />
+        </template>
+
+        <template #row-column="{ data }">
+            <PencilSquareIcon
+                class="w-5 cursor-pointer hover:scale-125"
+                @click="
+                    showUpdateModal = true;
+                    selectedAbsentee = data;
+                "
+            />
         </template>
     </TableElement>
 
     <Modal v-model:view="showModal">
         <AbsenteeAddModal @add="showModal = false" />
     </Modal>
+
+    <Modal v-model:view="showUpdateModal">
+        <UpdateAbsenteeForm
+            :absentee="selectedAbsentee"
+            @update="showUpdateModal = false"
+        />
+    </Modal>
 </template>
 <script setup>
 import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
-import { SquaresPlusIcon } from "@heroicons/vue/24/outline/index";
+import {
+    PencilSquareIcon,
+    SquaresPlusIcon,
+} from "@heroicons/vue/24/outline/index";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
@@ -66,10 +87,14 @@ import DatePicker from "@/Components/DatePicker.vue";
 import moment from "moment";
 
 import { useI18n } from "vue-i18n";
+import UpdateAbsenteeForm from "@/Views/Admin/Absentee/UpdateAbsenteeForm.vue";
 
 const { t } = useI18n();
 const showModal = ref(false);
 const selectedUserType = ref(usePage().props.filters.user_type);
+
+const showUpdateModal = ref(false);
+const selectedAbsentee = ref(null);
 
 const staffAbsenteesOfTheDay = computed(
     () => usePage().props.staff_absentees_of_the_day
@@ -137,6 +162,8 @@ const filteredStaffAbsentees = computed(() => {
             email: staffAbsentee.user.email,
             reason: staffAbsentee.reason,
             type: staffAbsentee.type,
+            leave: staffAbsentee.is_leave,
+            row: staffAbsentee,
         };
     });
 });
@@ -157,6 +184,16 @@ const config = [
     {
         key: "type",
         name: t("common.type"),
+    },
+    {
+        name: "Leave",
+        key: t("common.leave"),
+        type: Boolean,
+    },
+    {
+        name: "",
+        key: "row",
+        type: "custom",
     },
 ];
 
