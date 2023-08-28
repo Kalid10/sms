@@ -17,13 +17,6 @@
                         :placeholder="$t('studentsTable.search')"
                         class="w-6/12"
                     />
-                    <div v-if="!homeroomTeacher && isAdmin()">
-                        <SecondaryButton
-                            :title="$t('studentsTable.assignHomeroom')"
-                            class="!rounded-2xl bg-brand-450 text-white"
-                            @click="showAssignModal = true"
-                        />
-                    </div>
                     <div v-if="homeroomTeacher" class="text-xs font-semibold">
                         <div class="mb-1 text-[0.55rem] font-light">
                             {{ $t("studentsTable.homeroomTeacher") }}
@@ -59,9 +52,6 @@
             </template>
         </TableElement>
     </div>
-    <!--    <Modal v-model:view="showAssignModal">-->
-    <!--        <AssignHomeroom @close="showAssignModal = false" />-->
-    <!--    </Modal>-->
 </template>
 <script setup>
 import Pagination from "@/Components/Pagination.vue";
@@ -71,7 +61,6 @@ import { computed, ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import debounce from "lodash/debounce";
 import { isAdmin } from "@/utils";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { AdjustmentsHorizontalIcon } from "@heroicons/vue/20/solid";
 import { useI18n } from "vue-i18n";
 

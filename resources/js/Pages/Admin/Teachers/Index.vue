@@ -60,6 +60,21 @@
                     {{ data }}
                 </div>
             </template>
+            <template #homerooms-column="{ data }">
+                <div class="flex text-xs">
+                    {{ data }}
+                </div>
+            </template>
+
+            <template #id-column="{ data }">
+                <div class="flex rounded text-xs">
+                    <PrimaryButton
+                        class="bg-gray-500"
+                        @click="getSelectedTeacher(data)"
+                        >Assign
+                    </PrimaryButton>
+                </div>
+            </template>
 
             <template #footer>
                 <Pagination
@@ -130,6 +145,13 @@
             />
         </template>
     </DialogBox>
+
+    <Modal v-model:view="showAssignModal">
+        <AssignHomeroom
+            :teacher="selectedTeacherId"
+            @close="showAssignModal = false"
+        />
+    </Modal>
 </template>
 
 <script setup>
@@ -149,6 +171,11 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 
 import { useI18n } from "vue-i18n";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
+import Modal from "@/Components/Modal.vue";
+
+const showAssignModal = ref(false);
 
 const { t } = useI18n();
 const isDialogBoxOpen = ref(false);
@@ -156,6 +183,13 @@ const isDialogBoxOpen = ref(false);
 const teachers = computed(() => {
     return usePage().props.teachers;
 });
+
+const selectedTeacherId = ref(null);
+
+function getSelectedTeacher(data) {
+    selectedTeacherId.value = data;
+    showAssignModal.value = true;
+}
 
 const subjects = computed(() => usePage().props.subjects);
 
@@ -219,8 +253,6 @@ function toggleDialogBox(id, batch_session_id) {
     form.batch_session_id = batch_session_id;
     form.user_id = id;
 }
-
-const selectedTeacherUserId = ref(null);
 
 const formattedTeachersData = computed(() => {
     return teachers.value.data.map((teacher) => {
@@ -305,10 +337,6 @@ const config = [
         align: "left",
     },
     {
-        name: t("common.homeroom"),
-        key: "homerooms",
-    },
-    {
         name: t("common.gender"),
         key: "gender",
         type: "enum",
@@ -324,6 +352,19 @@ const config = [
         name: t("teachersIndex.absentee"),
         key: "session",
         type: "custom",
+    },
+    {
+        name: t("common.homeroom"),
+        key: "homerooms",
+        align: "right",
+        type: "custom",
+        class: "justify-end pt-4 flex",
+    },
+    {
+        name: "",
+        key: "id",
+        type: "custom",
+        align: "left",
     },
 ];
 </script>

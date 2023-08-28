@@ -1,31 +1,14 @@
 <template>
-    <div class="flex flex-col space-y-3 rounded-lg bg-white p-4 text-center">
+    <div
+        class="relative flex flex-col space-y-3 rounded-lg bg-white p-4 text-center"
+    >
         <div>
             <Title :title="$t('assignHomeroom.assignHomeroom')" />
         </div>
 
-        <div class="mx-auto mt-10 flex w-full flex-col space-y-4">
-            <div v-if="isAssigned" class="flex w-full flex-col gap-5">
-                <div class="flex w-full">
-                    <span class="flex items-center gap-5 text-lg font-medium"
-                        >Teacher: {{ teacher.user.name }} is currently assigned
-                        to Grade:
-                        <span
-                            v-for="homeroom in teacher.homeroom"
-                            :key="homeroom"
-                            class="mr-2 cursor-pointer rounded-md bg-brand-150 text-brand-text-300"
-                        >
-                            <p class="px-3 py-2 text-sm font-bold">
-                                {{ homeroom.batch?.level?.name }} -
-                                {{ homeroom.batch?.section }}
-                            </p>
-                        </span>
-                    </span>
-                </div>
-            </div>
-
+        <div class="mx-auto mt-10 flex w-full flex-col">
             <div
-                class="scrollbar-hide relative flex max-h-[500px] w-full flex-col justify-center space-y-4 overflow-y-scroll"
+                class="scrollbar-hide flex max-h-[500px] w-full flex-col space-y-4 overflow-y-scroll"
             >
                 <TextInput
                     v-model="searchKey"
@@ -50,29 +33,19 @@
 
                 <div
                     v-if="selectedBatch && selectedBatch.value"
-                    class="flex w-full flex-col items-center justify-center gap-5 py-3"
+                    class="absolute top-0 right-0 mx-3 flex w-4/12 items-center justify-center rounded"
                 >
                     <div
-                        class="flex w-full flex-col items-center justify-center py-3"
+                        class="flex w-full gap-5 rounded border-b border-black py-3"
                     >
-                        <div class="flex w-full flex-col gap-5 py-3">
-                            <h2 class="flex justify-center">
-                                Your are about to assign
-                                <span class="px-2 font-bold">
-                                    {{ teacher.user.name }}
-                                </span>
-                                as a homeroom teacher to Grade:
-                            </h2>
-                            <p class="flex justify-center underline">
-                                {{ selectedBatch.label }}
-                            </p>
-
-                            <div class="flex items-center justify-center">
-                                <PrimaryButton
-                                    :title="$t('assignHomeroom.assignHomeroom')"
-                                    @click="assignHomeroom"
-                                />
-                            </div>
+                        <p class="flex justify-center underline">
+                            {{ selectedBatch.label }}
+                        </p>
+                        <div class="flex items-center justify-center">
+                            <PrimaryButton
+                                :title="$t('assignHomeroom.assignHomeroom')"
+                                @click="assignHomeroom"
+                            />
                         </div>
                     </div>
                 </div>
@@ -91,35 +64,30 @@ import TextInput from "@/Components/TextInput.vue";
 
 const emit = defineEmits(["close"]);
 
-const batches = computed(() => usePage().props.get_batches);
-const teacher = computed(() => usePage().props.teacher);
-
-const isAssigned = computed(() => {
-    if (teacher.value.homeroom) {
-        return true;
-    }
-    return false;
-});
-
-console.log(batches.value);
-
 const props = defineProps({
     url: {
         type: String,
-        default: "/admin/teachers/homeroom?teacher_id=",
+        default: "/admin/teachers/?",
+    },
+    teacher: {
+        type: Object,
+        default: () => {},
     },
 });
+
+const batches = computed(() => usePage().props.batches);
+
 const batchOptions = computed(() => {
     return batches?.value.map((batch) => {
         return {
             label:
-                batch.level.name +
-                " " +
-                batch.section +
-                " - " +
                 (batch?.homeroom_teacher?.teacher
                     ? batch?.homeroom_teacher?.teacher?.user.name
-                    : "-"),
+                    : "-") +
+                " to " +
+                batch.level.name +
+                " " +
+                batch.section,
             value: batch.id,
         };
     });
@@ -140,7 +108,7 @@ watch(searchKey, () => {
 
 const search = debounce(() => {
     router.get(
-        props.url + teacher.value.id,
+        props.url ? props.url + props.teacher : "/admin/teachers/?",
         {
             search: searchKey.value,
         },
@@ -156,7 +124,7 @@ const assignHomeroom = () => {
     router.post(
         "/teachers/assign/homeroom",
         {
-            teacher_id: teacher.value.id,
+            teacher_id: props.teacher,
             batch_id: selectedBatch.value.value,
             replace: false,
         },
@@ -164,13 +132,14 @@ const assignHomeroom = () => {
         {
             onSuccess: () => {
                 selectedBatch.value = null;
+                emit("close");
 
                 router.get(
-                    "/admin/teachers/homeroom?teacher_id=" + teacher.value.id,
+                    props.url + props.teacher,
+
+                    {},
                     {
-                        only: ["teacher"],
                         preserveState: true,
-                        replace: true,
                     }
                 );
             },
