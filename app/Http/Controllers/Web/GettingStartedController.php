@@ -43,6 +43,11 @@ class GettingStartedController extends Controller
 
     public function schoolSchedule(): Response
     {
+        $schoolYear = SchoolYear::getActiveSchoolYear();
+
+        $schoolYear->is_ready = true;
+        $schoolYear->save();
+
         return Inertia::render('Admin/GettingStarted/SchoolSchedule', [
             'school_schedule' => SchoolSchedule::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->get(),
         ]);
