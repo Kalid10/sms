@@ -64,7 +64,7 @@ class FamilySeeder extends SimulationSeeder
             $student = Student::create([
                 'user_id' => User::create([
                     'name' => $fullName,
-                    'username' => 'GYA/'.fake()->unique()->numberBetween(10000, 99999),
+                    'username' => env('SCHOOL_SHORT_NAME', 'GYA').'/'.fake()->unique()->numberBetween(10000, 99999),
                     'profile_image' => 'https://avatars.dicebear.com/api/open-peeps/'.Str::camel($fullName).'.svg',
                     'phone_number' => rand(1, 5) % 2 === 0 ? Ethiopian::phoneNumber() : null,
                     'gender' => $gender,
