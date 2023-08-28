@@ -78,6 +78,8 @@
     <Modal v-model:view="showModal">
         <Form class="border-none" @success="showModal = false" />
     </Modal>
+
+    <Loading v-if="isLoading" is-full-screen />
 </template>
 <script setup>
 import Title from "@/Views/Teacher/Views/Title.vue";
@@ -87,12 +89,30 @@ import Modal from "@/Components/Modal.vue";
 import Details from "@/Pages/Admin/Assessments/Details.vue";
 import Form from "@/Views/Teacher/Views/Assessments/AssessmentForm.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import EmptyView from "@/Views/EmptyView.vue";
 import Pagination from "@/Components/Pagination.vue";
+import Loading from "@/Components/Loading.vue";
 
 const showModal = ref(false);
+const isLoading = ref(false);
 
 const mappedAssessments = computed(() => usePage().props.mapped_assessments);
+
+const getMappedAssessments = () => {
+    isLoading.value = true;
+    router.visit("/admin/assessments", {
+        only: ["mapped_assessments"],
+        onFinish: () => {
+            isLoading.value = false;
+        },
+    });
+};
+
+Echo.private("mass-assessment").listen(".mass-assessment", (e) => {
+    if (e.type === "success") {
+        getMappedAssessments();
+    }
+});
 </script>
 <style scoped></style>

@@ -26,7 +26,7 @@ class AdminAssessmentController extends Controller
 
         CreateMassAssessmentJob::dispatch($request->all(), auth()->user()->id);
 
-        return redirect()->back()->with('success', 'Assessment created.');
+        return redirect()->back()->with('success', 'Assessment is being created, we will notify you once it is done.');
     }
 
     public function update(Request $request): RedirectResponse
