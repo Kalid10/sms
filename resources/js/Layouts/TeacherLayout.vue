@@ -54,7 +54,7 @@
                     class="cursor-pointer !rounded-2xl bg-emerald-100 !py-1.5 !px-6 hover:scale-105"
                     @click="
                         uiStore.setLoading(false);
-                        uiStore.responseStatus(null);
+                        uiStore.setResponse(null);
                     "
                 />
             </div>
