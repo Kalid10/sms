@@ -33,7 +33,7 @@ class UserController extends Controller
         $logPage = (int) $request->input('log_page', 1);
 
         // Get users
-        $users = User::select('id', 'name', 'email', 'type', 'gender')
+        $users = User::select('id', 'name', 'email', 'type', 'gender', 'is_blocked')
             ->where('name', 'like', '%'.$searchKey.'%')
             ->paginate(12, ['*'], 'user_page', $userPage);
 
@@ -187,5 +187,28 @@ class UserController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Image uploaded successfully.');
+    }
+
+    public function blockUnblock(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'user_id' => 'required|integer|exists:users,id',
+        ]);
+
+        // Retrieve the user
+        $user = User::find($request->user_id);
+
+        // Toggle the is_blocked attribute
+        $user->update([
+            'is_blocked' => ! $user->is_blocked,
+        ]);
+
+        // Refresh the model to get the updated 'is_blocked' value
+        $user->refresh();
+
+        // Create a success message based on the new is_blocked value
+        $message = $user->is_blocked ? 'User blocked successfully.' : 'User unblocked successfully.';
+
+        return redirect()->back()->with('success', $message);
     }
 }
