@@ -129,17 +129,17 @@ const filteredStudents = computed(() => {
 
 const config = [
     {
-        key: "student_id",
-        name: t("studentsTable.id"),
-        align: "center",
-        class: "h-12 !text-[0.7rem]",
-    },
-    {
         key: "name",
         name: t("studentsTable.name"),
         align: "center",
         class: "h-12 !text-[0.7rem]",
         type: "custom",
+    },
+    {
+        key: "student_id",
+        name: t("studentsTable.id"),
+        align: "center",
+        class: "h-12 !text-[0.7rem]",
     },
     {
         key: "flags",
