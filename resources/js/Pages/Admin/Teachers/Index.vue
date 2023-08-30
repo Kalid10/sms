@@ -98,13 +98,14 @@
                 </div>
             </template>
 
-            <template #session-column="{ data }">
-                <SecondaryButton
-                    v-if="data.batch_session_id"
-                    :title="$t('teachersIndex.absentee')"
-                    class="!rounded-2xl bg-brand-400 text-white"
-                    @click="toggleDialogBox(data.id, data.batch_session_id)"
-                />
+            <template #row-column="{ data }">
+                <div class="flex w-full items-center justify-center">
+                    <UserMinusIcon
+                        :title="$t('teachersIndex.absentee')"
+                        class="w-5 cursor-pointer text-black hover:scale-125"
+                        @click="toggleDialogBox(data.teacher)"
+                    />
+                </div>
             </template>
         </TeacherTableElement>
     </div>
@@ -126,8 +127,29 @@
             <TextInput
                 v-model="form.reason"
                 :label="$t('teachersIndex.reason')"
-                placeholder="ex: sick"
+                placeholder="Ex: Sick"
+                :error="usePage().props.errors.reason"
             />
+
+            <Toggle
+                v-model="form.batch_session_only"
+                :label="
+                    'Is ' +
+                    selectedTeacher.user.name +
+                    ' absent for ' +
+                    selectedTeacher?.batch_sessions[0]?.batch_schedule.batch
+                        .level.name +
+                    ' ' +
+                    selectedTeacher?.batch_sessions[0]?.batch_schedule.batch
+                        .section +
+                    ' ' +
+                    selectedTeacher?.batch_sessions[0]?.batch_schedule
+                        ?.batch_subject.subject.full_name +
+                    ' Class Only?'
+                "
+            />
+
+            <Toggle v-model="form.is_leave" label="Is this a valid leave?" />
         </template>
     </DialogBox>
 </template>
@@ -139,16 +161,17 @@ import TeacherTableElement from "@/Components/TableElement.vue";
 import {
     ExclamationTriangleIcon,
     MinusCircleIcon,
+    UserMinusIcon,
 } from "@heroicons/vue/24/outline/index";
 import TextInput from "@/Components/TextInput.vue";
 import { debounce } from "lodash";
 import Pagination from "@/Components/Pagination.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import DialogBox from "@/Components/DialogBox.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 
 import { useI18n } from "vue-i18n";
+import Toggle from "@/Components/Toggle.vue";
 
 const { t } = useI18n();
 const isDialogBoxOpen = ref(false);
@@ -163,6 +186,7 @@ const levels = computed(() => usePage().props.levels);
 
 const selectedLevel = ref(null);
 const selectedSubject = ref(null);
+const selectedTeacher = ref(null);
 
 const levelsOptions = computed(() => {
     return levels.value?.map((level) => {
@@ -214,13 +238,12 @@ function applySubjectFilter() {
     );
 }
 
-function toggleDialogBox(id, batch_session_id) {
+function toggleDialogBox(teacher) {
     isDialogBoxOpen.value = !isDialogBoxOpen.value;
-    form.batch_session_id = batch_session_id;
-    form.user_id = id;
+    form.batch_session_id = teacher.batch_sessions[0].id;
+    form.user_id = teacher.user.id;
+    selectedTeacher.value = teacher;
 }
-
-const selectedTeacherUserId = ref(null);
 
 const formattedTeachersData = computed(() => {
     return teachers.value.data.map((teacher) => {
@@ -240,17 +263,12 @@ const formattedTeachersData = computed(() => {
                 .map((hr) => `${hr.batch.level.name}${hr.batch.section}`)
                 .join(", "),
             subjects: subjects,
-            session: {
-                id: teacher.user.id,
-                batch_session_id: teacher.batch_sessions.length
-                    ? teacher.batch_sessions[0].id
-                    : null,
-            },
+            row: { teacher },
         };
     });
 });
 
-const searchKey = ref("");
+const searchKey = ref(usePage().props.filters.search_key);
 const perPage = ref(15);
 
 const search = debounce(() => {
@@ -279,15 +297,29 @@ const form = useForm({
     user_id: "",
     reason: "",
     type: "teacher",
+    is_leave: false,
+    batch_session_only: false,
 });
 
 const markTeacherAsAbsent = () => {
-    form.post("/absentee/staff/add", {
-        onSuccess: () => {
-            isDialogBoxOpen.value = false;
-            form.reset();
+    router.post(
+        "/admin/absentee/staff/add",
+        {
+            user_id: form.user_id,
+            reason: form.reason,
+            type: form.type,
+            batch_session_id: form.batch_session_only
+                ? form.batch_session_id
+                : null,
+            is_leave: form.is_leave,
         },
-    });
+        {
+            onSuccess: () => {
+                isDialogBoxOpen.value = false;
+                form.reset();
+            },
+        }
+    );
 };
 
 const config = [
@@ -322,7 +354,7 @@ const config = [
     },
     {
         name: t("teachersIndex.absentee"),
-        key: "session",
+        key: "row",
         type: "custom",
     },
 ];

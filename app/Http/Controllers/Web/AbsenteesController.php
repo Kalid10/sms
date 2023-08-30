@@ -171,6 +171,7 @@ class AbsenteesController extends Controller
             }
         }
 
+        // TODO: Update to accept multiple batch_sessions
         // Check if the staff is already absent for the day
         if (StaffAbsentee::where('user_id', $request->user_id)->whereDate('created_at', Carbon::today())->first()) {
             return redirect()->back()->with('error', 'Staff is already absent for the day.');
