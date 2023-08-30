@@ -891,19 +891,21 @@ const en = {
         batchSession: "Batch Session",
     },
     levelCategory: {
-        categoryTableSubtitle: "list of level categories",
-        categoryTableTitle: "Level Category",
-        addLevelCategory: "Add Level Category",
+        categoryTableSubtitle: "list of Grade categories",
+        categoryTableTitle: "Grade Category",
+        addLevelCategory: "Add Grade Category",
         category: "Category",
         addCategoryNamePlaceholder: "ex: ElementarySchool",
-        updateLevelCategory: "Update Level Category",
+        updateLevelCategory: "Update Grade Category",
         updateCategory: "Update Category",
+        description:
+            "Grade Category is a group of grades, example: Elementary School, High School, etc.",
     },
     levelIndex: {
         searchGrades: "Search Grades",
-        goToLevelCategories: "Go to Level Categories",
+        goToLevelCategories: "Go to Grade Categories",
         activeSections: "active sections",
-        levelCategory: "Level Category",
+        levelCategory: "Grade Category",
         updatedAt: "Updated at",
     },
     levelSingle: {

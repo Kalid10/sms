@@ -23,7 +23,7 @@
                         <SecondaryButton
                             :title="$t('levelIndex.goToLevelCategories')"
                             value=" Go To Level Categories"
-                            class="!rounded-lg bg-brand-550 text-white"
+                            class="!rounded-lg bg-black text-white"
                             @click="levelCategoriesUrl()"
                         />
                     </div>

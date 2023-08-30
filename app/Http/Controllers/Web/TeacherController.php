@@ -94,6 +94,7 @@ class TeacherController extends Controller
             'filters' => [
                 'search_key' => $searchKey,
             ],
+            'batches' => TeacherService::assignHomeroomTeacherData(),
         ]);
     }
 

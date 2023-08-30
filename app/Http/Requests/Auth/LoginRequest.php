@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -22,7 +23,7 @@ class LoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
@@ -54,6 +55,15 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'emailOrPhone' => trans('auth.failed'),
+            ]);
+        }
+
+        // Check if the user is blocked
+        $user = Auth::user();
+        if ($user->is_blocked) {
+            Auth::logout(); // Log the user out
+            throw ValidationException::withMessages([
+                'emailOrPhone' => 'Your account has been blocked. Please contact the administrator.',
             ]);
         }
 

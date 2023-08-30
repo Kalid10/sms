@@ -867,6 +867,8 @@ const am = {
         addCategoryNamePlaceholder: "ለምሳሌ፡ መጀመሪያ ትምህርት ቤት",
         updateLevelCategory: "ደረጃ ምድብ ማሻሻል",
         updateCategory: "ምድብ ማሻሻል",
+        description:
+            "የክፍል ምድብ የክፍል ምድቦች ስብስብ ነው ፤ ለምሳሌ ፡ የመጀመሪያ ደረጃ ትምህርት ቤት፡ ሁለተኛ ደረጃ ትምህርት ቤት፡ ወዘተ።",
     },
     levelIndex: {
         searchGrades: "የደረጃዎችን ይፈልጉ",

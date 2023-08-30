@@ -22,4 +22,5 @@ Route::controller(UserController::class)->prefix('admin/user/')->middleware('che
     Route::get('profile', 'profile')->name('profile');
     Route::post('update', 'update')->name('update.profile');
     Route::post('update-password', 'updatePassword')->name('update.password');
+    Route::post('block-unblock', 'blockUnblock')->name('block-unblock');
 });
