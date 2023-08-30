@@ -140,7 +140,12 @@ class RegisterController extends Controller
     private function createTeacher(RegisterRequest $request)
     {
         $user = $this->createUser($request);
-        Teacher::create(['user_id' => $user->id]);
+        Teacher::create(['user_id' => $user->id,
+            'leave_info' => json_encode([
+                'total' => 3,
+                'remaining' => 3,
+            ]),
+        ]);
 
         return $user;
     }

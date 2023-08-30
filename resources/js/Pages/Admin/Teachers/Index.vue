@@ -107,6 +107,14 @@
                     />
                 </div>
             </template>
+
+            <template #leave_info-column="{ data }">
+                <div v-if="data.leave_info === null">Leave is not set!</div>
+                <div v-else>
+                    {{ data.leave_info.total - data.leave_info.remaining }} /
+                    {{ data.leave_info.total }}
+                </div>
+            </template>
         </TeacherTableElement>
     </div>
 
@@ -132,6 +140,7 @@
             />
 
             <Toggle
+                v-if="selectedTeacher.batch_sessions.length > 0"
                 v-model="form.batch_session_only"
                 :label="
                     'Is ' +
@@ -240,7 +249,9 @@ function applySubjectFilter() {
 
 function toggleDialogBox(teacher) {
     isDialogBoxOpen.value = !isDialogBoxOpen.value;
-    form.batch_session_id = teacher.batch_sessions[0].id;
+    form.batch_session_id = teacher.batch_sessions.length
+        ? teacher?.batch_sessions[0].id
+        : null;
     form.user_id = teacher.user.id;
     selectedTeacher.value = teacher;
 }
@@ -263,6 +274,10 @@ const formattedTeachersData = computed(() => {
                 .map((hr) => `${hr.batch.level.name}${hr.batch.section}`)
                 .join(", "),
             subjects: subjects,
+            leave_info: {
+                id: teacher.user.id,
+                leave_info: teacher.leave_info,
+            },
             row: { teacher },
         };
     });
@@ -350,6 +365,11 @@ const config = [
         name: t("common.subjects"),
         key: "subjects",
         align: "left",
+        type: "custom",
+    },
+    {
+        name: t("common.leave"),
+        key: "leave_info",
         type: "custom",
     },
     {

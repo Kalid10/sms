@@ -29,12 +29,37 @@
 
             <div class="flex w-4/12 items-center justify-center">
                 <div
-                    class="flex w-10/12 flex-col items-center justify-center space-y-6 rounded-lg bg-emerald-400 p-5 font-bold shadow-sm"
+                    v-if="teacher.leave_info !== null"
+                    class="flex w-9/12 flex-col items-center justify-center space-y-6 rounded-lg px-5 py-10 font-bold text-white shadow-sm"
+                    :class="
+                        teacher.leave_info.remaining > 0
+                            ? 'bg-emerald-400'
+                            : 'bg-red-600'
+                    "
                 >
-                    <span class="text-8xl">1/5</span>
-                    <span class="text-xl font-medium text-gray-700"
-                        >Your Leave Info</span
+                    <span class="text-8xl">
+                        {{
+                            teacher.leave_info.total -
+                            teacher.leave_info.remaining
+                        }}
+                        / {{ teacher.leave_info.total }}</span
                     >
+                    <span class="px-4 text-center font-light text-brand-50">
+                        <span v-if="teacher.leave_info.remaining > 0">
+                            Your Leave Info
+                        </span>
+                        <span v-else
+                            >You have reached your limit! Contact Admin to
+                            increase limit.</span
+                        >
+                    </span>
+                </div>
+                <div v-else>
+                    <div
+                        class="flex w-9/12 flex-col items-center justify-center space-y-6 rounded-lg bg-red-600 px-5 py-10 text-center font-bold text-white shadow-sm"
+                    >
+                        <span>Your is leave is not set, contact admin!</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,6 +71,7 @@ import { computed, onBeforeMount } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import moment from "moment";
 
+const teacher = usePage().props.auth.user.teacher;
 const absenteeList = computed(() => usePage().props.absentee_list);
 const mappedAbsenteeList = computed(() => {
     return absenteeList?.value?.data.map((item) => {

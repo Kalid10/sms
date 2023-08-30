@@ -55,7 +55,7 @@ class TeacherController extends Controller
             'batchSessions.batchSchedule.batchSubject.subject',
             'batchSessions.batchSchedule.batch.level',
 
-        ])->select('id', 'user_id')
+        ])->select('id', 'user_id', 'leave_info')
             ->when($searchKey, function ($query) use ($searchKey) {
                 return $query->whereHas('user', function ($query) use ($searchKey) {
                     return $query->where('name', 'like', "%{$searchKey}%");
@@ -79,8 +79,7 @@ class TeacherController extends Controller
         $subjects = Subject::select('id', 'full_name')
             ->whereHas('batches', function ($query) {
                 $query->where('school_year_id', SchoolYear::getActiveSchoolYear()?->id);
-            })
-            ->get();
+            })->get();
 
         // Active school year batches with level
         $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level:id,name')->get();
