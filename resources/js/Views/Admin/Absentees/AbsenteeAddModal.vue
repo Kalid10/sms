@@ -156,7 +156,7 @@ const form = useForm({
     user_id: "",
     reason: "",
     type: "",
-    is_leave: true,
+    is_leave: false,
 });
 
 const addAbsentee = () => {

@@ -475,6 +475,7 @@ const am = {
         inventory: "ኢንቬንቶሪ",
         extras: "ሌሎች",
         leave: "ፍቃድ",
+        absenteeList: "ቅሪ ዝርዝር",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",

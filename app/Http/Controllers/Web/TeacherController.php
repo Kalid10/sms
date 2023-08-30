@@ -52,6 +52,8 @@ class TeacherController extends Controller
             'batchSessions' => function ($query) {
                 $query->where('status', 'in_progress');
             },
+            'batchSessions.batchSchedule.batchSubject.subject',
+            'batchSessions.batchSchedule.batch.level',
 
         ])->select('id', 'user_id')
             ->when($searchKey, function ($query) use ($searchKey) {
@@ -90,6 +92,9 @@ class TeacherController extends Controller
             'teachers' => $teachers,
             'subjects' => $subjects,
             'levels' => $levels,
+            'filters' => [
+                'search_key' => $searchKey,
+            ],
         ]);
     }
 
