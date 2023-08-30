@@ -40,6 +40,7 @@ class User extends Authenticatable
         'fcm_tokens',
         'openai_daily_usage',
         'profile_image',
+        'is_blocked',
     ];
 
     protected $hidden = [
