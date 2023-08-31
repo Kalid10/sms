@@ -493,6 +493,10 @@ const en = {
         leave: "leave",
         absenteeList: "Absentee List",
     },
+    fees: {
+        configuration: "Configuration",
+        studentTuitions: "Student-Tuitions",
+    },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
         chat: "Chat",

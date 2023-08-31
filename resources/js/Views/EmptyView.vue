@@ -12,14 +12,14 @@
     </div>
     <div
         v-else
-        class="flex h-fit flex-col items-center justify-center space-y-4 text-center font-medium"
+        class="flex h-fit flex-col items-center justify-center space-y-6 text-center font-medium"
     >
         <div v-if="showStatusCode" class="text-xl font-light">404</div>
         <div v-else>
             <ExclamationTriangleIcon class="w-5 text-red-600" />
         </div>
         <div class="text-sm">{{ title }}</div>
-        <div class="text-sm font-light">{{ subTitle }}</div>
+        <div class="text-sm text-gray-700">{{ subTitle }}</div>
         <LinkCell
             v-if="linkTitle && linkUrl"
             :href="linkUrl"

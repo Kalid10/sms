@@ -478,6 +478,10 @@ const am = {
         leave: "ፍቃድ",
         absenteeList: "ቅሪ ዝርዝር",
     },
+    fees: {
+        configuration: "የክፍያ ማስተካክያ",
+        studentTuitions: "የተማሪ ክፍያዎች",
+    },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
         chat: "ቻት(Chat)",
