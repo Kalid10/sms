@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('payment_providers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('image');
+            $table->longText('logo')->nullable();
             $table->boolean('is_enabled')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->bigInteger('feeable_id');
             $table->string('feable_type');
             $table->json('details')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

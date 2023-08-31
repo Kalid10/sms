@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('student_tuition_id')->constrained('student_tuitions')->cascadeOnDelete();
             $table->foreignId('penalty_id')->constrained('penalties')->cascadeOnDelete();
             $table->float('amount');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

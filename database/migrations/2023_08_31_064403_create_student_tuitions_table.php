@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status')->default('pending');
             $table->string('transaction_id')->nullable();
             $table->json('details')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
