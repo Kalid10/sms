@@ -38,6 +38,7 @@ const en = {
         home: "Home",
         settings: "Settings",
         logout: "Logout",
+        fees: "Fees",
     },
     adminStudentsTable: {
         students: "Students",

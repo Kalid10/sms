@@ -101,6 +101,7 @@ import { Cog6ToothIcon, UserIcon } from "@heroicons/vue/20/solid/index.js";
 import { router, usePage } from "@inertiajs/vue3";
 import {
     AcademicCapIcon,
+    BanknotesIcon,
     BookOpenIcon,
     CalendarDaysIcon,
     CircleStackIcon,
@@ -277,6 +278,14 @@ const sidebarItems = computed(() => [
         active:
             isRouteActive(/^\/admin\/absentees\/\d+\/?$/) ||
             isRouteActive(/^\/admin\/absentees\/?$/),
+    },
+    {
+        name: t("adminLayout.fees"),
+        icon: BanknotesIcon,
+        route: "/admin/fees",
+        active:
+            isRouteActive(/^\/admin\/fees\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/fees\/?$/),
     },
     {
         name: t("common.inventory"),

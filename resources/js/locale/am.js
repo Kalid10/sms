@@ -38,6 +38,7 @@ const am = {
         home: "መነሻ",
         settings: "ቅንብሮች",
         logout: "መውጫ",
+        fees: "ክፍያዎች",
     },
     adminStudentsTable: {
         students: "ተማሪዎች",
