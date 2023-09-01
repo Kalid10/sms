@@ -141,10 +141,10 @@ class RegisterController extends Controller
     {
         $user = $this->createUser($request);
         Teacher::create(['user_id' => $user->id,
-            'leave_info' => json_encode([
+            'leave_info' => [
                 'total' => 3,
                 'remaining' => 3,
-            ]),
+            ],
         ]);
 
         return $user;

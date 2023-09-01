@@ -92,10 +92,10 @@ class TeacherSeeder extends SimulationSeeder
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
 
             ])->id,
-            'leave_info' => json_encode([
+            'leave_info' => [
                 'total' => 3,
                 'remaining' => 3,
-            ]),
+            ],
         ]);
     }
 

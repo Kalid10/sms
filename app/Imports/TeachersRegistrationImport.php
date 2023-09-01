@@ -47,10 +47,10 @@ class TeachersRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
             'user_id' => $teacherUserId,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'leave_info' => json_encode([
+            'leave_info' => [
                 'total' => 3,
                 'remaining' => 3,
-            ]),
+            ],
         ]);
 
         // Commit, everything is good
