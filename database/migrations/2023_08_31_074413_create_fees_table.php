@@ -18,11 +18,12 @@ return new class extends Migration
             $table->float('amount');
             $table->string('currency')->default('ETB');
             $table->string('status')->default('active');
-            $table->string('target_type');
+            $table->string('target_user_type');
             $table->timestamp('due_date');
             $table->bigInteger('feeable_id');
-            $table->string('feable_type');
+            $table->string('feeable_type');
             $table->json('details')->nullable();
+            $table->foreignId('penalty_id')->nullable()->constrained('penalties')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });
