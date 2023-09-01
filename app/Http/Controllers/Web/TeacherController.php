@@ -17,6 +17,7 @@ use App\Services\StudentService;
 use App\Services\TeacherService;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -219,6 +220,22 @@ class TeacherController extends Controller
                 'end_date' => $endDate,
                 'search' => $searchKey,
             ],
+        ]);
+    }
+
+    public function updateLeaveInfo(Request $request, Teacher $teacher): RedirectResponse
+    {
+        $request->validate([
+            'leave_info.total' => 'nullable|integer',
+            'leave_info.remaining' => 'nullable|integer',
+        ]);
+
+        $teacher->update([
+            'leave_info' => $request->input('leave_info'),
+        ]);
+
+        return back()->with([
+            'message' => 'Teacher leave info updated successfully!',
         ]);
     }
 }

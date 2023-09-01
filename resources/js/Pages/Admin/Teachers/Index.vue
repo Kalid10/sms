@@ -67,12 +67,13 @@
             </template>
 
             <template #id-column="{ data }">
-                <div class="flex rounded text-xs">
-                    <PrimaryButton
-                        class="bg-gray-500"
-                        @click="getSelectedTeacher(data)"
-                        >Assign
-                    </PrimaryButton>
+                <div
+                    class="flex cursor-pointer rounded text-xs"
+                    @click="getSelectedTeacher(data)"
+                >
+                    <PlusCircleIcon
+                        class="h-5 w-5 stroke-black hover:scale-125"
+                    />
                 </div>
             </template>
 
@@ -192,6 +193,7 @@ import TeacherTableElement from "@/Components/TableElement.vue";
 import {
     ExclamationTriangleIcon,
     MinusCircleIcon,
+    PlusCircleIcon,
     UserMinusIcon,
 } from "@heroicons/vue/24/outline/index";
 import TextInput from "@/Components/TextInput.vue";
@@ -203,11 +205,12 @@ import SelectInput from "@/Components/SelectInput.vue";
 
 import { useI18n } from "vue-i18n";
 import Toggle from "@/Components/Toggle.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 import Modal from "@/Components/Modal.vue";
 
 const showAssignModal = ref(false);
+
+const showLeaveInfoModal = ref(false);
 
 const { t } = useI18n();
 const isDialogBoxOpen = ref(false);
@@ -267,6 +270,13 @@ function applyLevelFilter() {
 
 watch(selectedSubject, () => {
     applySubjectFilter();
+});
+
+const leaveInfoForm = useForm({
+    leave_info: {
+        total: "",
+        remaining: "",
+    },
 });
 
 function applySubjectFilter() {
@@ -366,6 +376,24 @@ const markTeacherAsAbsent = () => {
             onSuccess: () => {
                 isDialogBoxOpen.value = false;
                 form.reset();
+                if (form.is_leave) {
+                    submitLeaveInfo();
+                }
+            },
+        }
+    );
+};
+
+const submitLeaveInfo = () => {
+    router.post(
+        "/teachers/leave-info/" + selectedTeacher.value.id,
+        {
+            leave_info: leaveInfoForm.leave_info,
+        },
+        {
+            onSuccess: () => {
+                showLeaveInfoModal.value = false;
+                leaveInfoForm.reset();
             },
         }
     );
