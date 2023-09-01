@@ -280,7 +280,7 @@ const sidebarItems = computed(() => [
             isRouteActive(/^\/admin\/absentees\/?$/),
     },
     {
-        name: t("adminLayout.fees"),
+        name: t("adminLayout.finance"),
         icon: BanknotesIcon,
         route: "/admin/fees",
         active:

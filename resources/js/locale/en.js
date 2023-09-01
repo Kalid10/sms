@@ -38,7 +38,7 @@ const en = {
         home: "Home",
         settings: "Settings",
         logout: "Logout",
-        fees: "Fees",
+        finance: "Finance",
     },
     adminStudentsTable: {
         students: "Students",
@@ -496,6 +496,9 @@ const en = {
     fees: {
         configuration: "Configuration",
         studentTuitions: "Student-Tuitions",
+        fees: "Fees",
+        paymentProviders: "Payment-Providers",
+        penalties: "Penalties",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",

@@ -38,7 +38,7 @@ const am = {
         home: "መነሻ",
         settings: "ቅንብሮች",
         logout: "መውጫ",
-        fees: "ክፍያዎች",
+        finance: "ክፍያዎች",
     },
     adminStudentsTable: {
         students: "ተማሪዎች",
@@ -481,6 +481,9 @@ const am = {
     fees: {
         configuration: "የክፍያ ማስተካክያ",
         studentTuitions: "የተማሪ ክፍያዎች",
+        fees: "ክፍያዎች",
+        paymentProviders: "የክፍያ አቅራቢዎች",
+        penalties: "የክፍያ ቅጣቶች",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
