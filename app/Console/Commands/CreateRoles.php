@@ -41,7 +41,7 @@ class CreateRoles extends Command
         'manage-batch-schedules',
         'manage-assessment-types',
         'manage-inventory',
-        'manage-fees',
+        'manage-finance',
     ];
 
     // Description for each user role
@@ -64,7 +64,7 @@ class CreateRoles extends Command
         'Manage Batch Schedules',
         'Manage Assessment Types',
         'Manage School Inventory',
-        'Manage Fees',
+        'Manage Finance',
     ];
 
     /**
