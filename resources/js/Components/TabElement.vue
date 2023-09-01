@@ -2,7 +2,7 @@
     <div class="flex w-full flex-col gap-3">
         <ul
             class="flex w-full items-center gap-4 overflow-auto py-2"
-            :class="backgroundColor"
+            :class="[backgroundColor, centerTabs ? 'justify-center' : '']"
         >
             <li
                 v-for="(tab, t) in tabs"
@@ -60,7 +60,11 @@ const props = defineProps({
     objectList: {
         type: Boolean,
         default: false,
-    }
+    },
+    centerTabs: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const emit = defineEmits(["click", "update:active"]);
@@ -81,7 +85,7 @@ function isTabActive(tab) {
     if (props.objectList) {
         return props.active === tab.key;
     }
-    return props.active === tab
+    return props.active === tab;
 }
 
 function getTabLabel(tab) {

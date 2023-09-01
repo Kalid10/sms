@@ -268,7 +268,9 @@ const sidebarItems = computed(() => [
             isRouteActive(/^\/admin\/user\/register\/teacher\/\d+\/?$/) ||
             isRouteActive(/^\/admin\/user\/register\/teacher\/?$/) ||
             isRouteActive(/^\/admin\/user\/register\/student\/\d+\/?$/) ||
-            isRouteActive(/^\/admin\/user\/register\/student\/?$/),
+            isRouteActive(/^\/admin\/user\/register\/student\/?$/) ||
+            isRouteActive(/^\/admin\/user\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/user\/?$/),
     },
     {
         name: t("common.absentees"),
