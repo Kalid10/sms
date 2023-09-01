@@ -33,7 +33,7 @@
                                 ? ' text-white bg-brand-400 rounded-2xl'
                                 : 'text-brand-text-50'
                         "
-                        class="relative grid min-w-[9rem] cursor-pointer place-items-center py-2 text-center text-sm font-medium"
+                        class="relative grid min-w-[9rem] max-w-sm cursor-pointer place-items-center py-2 text-center text-sm font-medium"
                     >
                         <span class="flex w-full items-end justify-center px-2">
                             <span class=""

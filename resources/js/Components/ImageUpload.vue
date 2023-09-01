@@ -26,7 +26,7 @@
         </div>
 
         <PrimaryButton
-            v-if="image"
+            v-if="image && showFinishButton"
             type="submit"
             class="rounded-md bg-brand-450 p-2 text-brand-50"
             @click="submit"
@@ -58,6 +58,10 @@ const props = defineProps({
         type: String,
         default: "/admin/user/register/upload",
     },
+    showFinishButton: {
+        type: Boolean,
+        default: true,
+    },
 });
 const emit = defineEmits(["imageUploaded"]);
 
@@ -84,7 +88,7 @@ function handleImageUpload(event) {
     let reader = new FileReader();
     reader.onload = (e) => {
         imagePreview.value = e.target.result;
-        emit("imageUploaded", imagePreview.value);
+        emit("imageUploaded", imagePreview.value, image.value);
     };
     reader.readAsDataURL(image.value);
 }
