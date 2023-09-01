@@ -59,7 +59,7 @@ const pendingItems = computed(
 
 const updateInventory = (status, inventory_item_id) => {
     router.post(
-        "/teacher/extras/inventory/update",
+        "/teacher/inventory/update",
         {
             status: status,
             inventory_item_id: inventory_item_id,

@@ -140,50 +140,75 @@ class AbsenteesController extends Controller
             'user_id' => 'required|integer|exists:users,id',
             'reason' => 'required|string',
             'type' => 'required|string',
+            'is_leave' => 'required|boolean',
         ]);
 
-        // check if request has batch session id
-        if ($request->batch_session_id) {
-            // Get the batch session
-            $batchSession = BatchSession::find($request->batch_session_id);
+        return DB::transaction(function () use ($request) {
 
-            $batchId = $batchSession->batchSchedule->batch_id;
+            $user = User::with(['teacher.batchSessions.batchSchedule'])
+                ->findOrFail($request->user_id);
 
-            // Check if the batch session is already closed
-            if ($batchSession->status !== BatchSession::STATUS_IN_PROGRESS) {
-                return redirect()->back()->with('error', 'Class is not active.');
+            if ($request->batch_session_id) {
+                $batchSession = BatchSession::with('batchSchedule')->findOrFail($request->batch_session_id);
+                $this->verifyBatchSession($batchSession, $user, $request->type);
             }
 
-            $user = User::with('teacher.batchSessions.batchSchedule')->where('id', $request->user_id)->first();
-
-            if ($request->type === User::TYPE_TEACHER && $user->type !== User::TYPE_TEACHER) {
-                return redirect()->back()->with('error', $user->name.' is not a teacher.');
+            if (StaffAbsentee::where('user_id', $user->id)->whereDate('created_at', Carbon::today())->first()) {
+                return redirect()->back()->with('error', 'Staff is already absent.');
             }
 
-            // Check if the teacher is assigned to the batch
-            if ($request->type === User::TYPE_TEACHER &&
-                ! $user->teacher->batchSessions->contains(function ($batchSession) use ($batchId) {
-                    return $batchSession->batchSchedule->batch_id == $batchId;
-                })
-            ) {
-                return redirect()->back()->with('error', $user->name.' is not assigned to this class.');
+            StaffAbsentee::create($request->only('batch_session_id', 'user_id', 'reason', 'type', 'is_leave'));
+
+            if ($request->type === User::TYPE_TEACHER && $request->is_leave) {
+                $this->updateTeacherLeaveInfo($user);
             }
+
+            return redirect()->back()->with('success', 'Staff Absentees updated successfully.');
+
+        }, 3); // Three is the number of attempts to run the block of code within the closure
+    }
+
+    private function verifyBatchSession($batchSession, $user, $type)
+    {
+        // Check if the batch session is in progress
+        if ($batchSession->status !== BatchSession::STATUS_IN_PROGRESS) {
+            return redirect()->back()->with('error', 'Class is not active.');
         }
 
-        // Check if the staff is already absent for the day
-        if (StaffAbsentee::where('user_id', $request->user_id)->whereDate('created_at', Carbon::today())->first()) {
-            return redirect()->back()->with('error', 'Staff is already absent for the day.');
+        // Check if the user is a teacher when the request type is for a teacher
+        if ($type === User::TYPE_TEACHER && $user->type !== User::TYPE_TEACHER) {
+            return redirect()->back()->with('error', $user->name.' is not a teacher.');
         }
 
-        StaffAbsentee::create(
-            [
-                'batch_session_id' => $request->batch_session_id,
-                'user_id' => $request->user_id,
-                'reason' => $request->reason,
-                'type' => $request->type,
-            ]);
+        // Check if the teacher is assigned to this batch
+        $batchId = $batchSession->batchSchedule->batch_id;
+        $isTeacherAssigned = $user->teacher->batchSessions->contains(function ($batchSession) use ($batchId) {
+            return $batchSession->batchSchedule->batch_id == $batchId;
+        });
 
-        return redirect()->back()->with('success', 'Staff Absentees updated successfully.');
+        if (! $isTeacherAssigned) {
+            return redirect()->back()->with('error', $user->name.'is not assigned to this class.');
+        }
+    }
+
+    private function updateTeacherLeaveInfo($user): void
+    {
+        try {
+            // Decode the 'leave_info' and subtract 1 from 'remaining'.
+            $leaveInfo = $user->teacher->leave_info;
+            if (isset($leaveInfo['remaining'])) {
+                $leaveInfo['remaining'] -= 1;
+                $user->teacher->update(['leave_info' => $leaveInfo]);
+            } else {
+                // Log an error or redirect back if 'remaining' is not set
+                Log::error("The 'remaining' field is not set in 'leave_info'");
+                redirect()->back()->with('error', 'Something went wrong.');
+            }
+        } catch (Exception $e) {
+            // Handle the exception
+            Log::error($e->getMessage());
+            redirect()->back()->with('error', 'Something went wrong.');
+        }
     }
 
     public function index(Request $request): Response
@@ -244,5 +269,23 @@ class AbsenteesController extends Controller
                 'date' => $date,
             ],
         ]);
+    }
+
+    public function updateStaffAbsentee(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'id' => 'required|integer|exists:staff_absentees,id',
+            'reason' => 'required|string',
+            'is_leave' => 'required|boolean',
+        ]);
+
+        $staffAbsentee = StaffAbsentee::find($request->id);
+
+        $staffAbsentee->update([
+            'reason' => $request->reason,
+            'is_leave' => $request->is_leave,
+        ]);
+
+        return redirect()->back()->with('success', 'Staff Absentee updated successfully.');
     }
 }
