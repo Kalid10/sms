@@ -1107,7 +1107,8 @@ const en = {
         sections: "Sections",
         finish: "Finish",
         updateLevelSectionTitle: "Number of Sections",
-        updateLevelSectionSubtitle: "Update the number of Sections for Grade 7",
+        updateLevelSectionSubtitle:
+            "Update the number of Sections for Grade {grade}",
         updateLevelSectionInputPlaceholder:
             "Specify the number of sections for Grade 7",
     },

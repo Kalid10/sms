@@ -103,7 +103,11 @@
                                 }}</span>
                                 <button
                                     class="ml-2 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-neutral-200 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                                    @click="editSection(l)"
+                                    @click="
+                                        editSection(
+                                            getGlobalIndexForLevel(level)
+                                        )
+                                    "
                                 >
                                     <PencilIcon
                                         class="h-3 w-3 stroke-black stroke-2"
@@ -128,7 +132,11 @@
             v-model:show-modal="updateLevelSection"
             modal
             :title="$t('registerBatches.updateLevelSectionTitle')"
-            :subtitle="$t('registerBatches.updateLevelSectionSubtitle')"
+            :subtitle="
+                $t('registerBatches.updateLevelSectionSubtitle', {
+                    grade: updatedLevels[levelToUpdateSection].name,
+                })
+            "
             @submit="updateSection"
         >
             <TextInput
@@ -231,6 +239,10 @@ const levelToUpdateSection = ref(null);
 function editSection(index) {
     levelToUpdateSection.value = index;
     updateLevelSection.value = true;
+}
+
+function getGlobalIndexForLevel(level) {
+    return updatedLevels.value.findIndex((l) => l.id === level.id);
 }
 
 const registerBatchesForm = useForm({

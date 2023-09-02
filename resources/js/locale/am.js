@@ -1061,7 +1061,7 @@ const am = {
         sections: "ክፍል",
         finish: "ጨርስ",
         updateLevelSectionTitle: "የክፍሎች ብዛት",
-        updateLevelSectionSubtitle: "ለ7ኛ ክፍል የክፍሎች ብዛት ያዘምኑ",
+        updateLevelSectionSubtitle: "ለ {grade} ኛ ክፍል የክፍሎች ብዛት ያዘምኑ",
         updateLevelSectionInputPlaceholder: "ለ7ኛ ክፍል የክፍሎችን ብዛት ይግለጹ",
     },
     registerSchoolYear: {
