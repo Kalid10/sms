@@ -113,7 +113,8 @@ class TeacherController extends Controller
         $schoolYearId = SchoolYear::getActiveSchoolYear()?->id;
         $batchSubject = $this->teacherService->prepareBatchSubject($request, $id);
         $batches = $this->teacherService->getBatches($id);
-        $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'), $request);
+        //        $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'), $request);
+        $students = $batchSubject ? $this->teacherService->getStudents($batchSubject->id, $request->input('search'), $request) : [];
         $teacher = $this->teacherService->getTeacherDetails($id);
         $teacherBatchSubjects = $teacher->batchSubjects->pluck('id');
         $teacherSchedules = BatchSchedule::whereIn('batch_subject_id', $teacherBatchSubjects)
@@ -182,7 +183,7 @@ class TeacherController extends Controller
             'announcements' => $announcements,
             'flags' => $flags,
             'filters' => [
-                'batch_subject_id' => $batchSubject->id,
+                'batch_subject_id' => $batchSubject?->id,
                 'search' => $request->input('search'),
             ],
             'teacher_absentee_percentage' => $teacherAbsenteePercentage,

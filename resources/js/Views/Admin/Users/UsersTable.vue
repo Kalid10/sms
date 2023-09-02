@@ -91,10 +91,21 @@
             <NoSymbolIcon />
         </template>
 
-        <template #title> Block User</template>
+        <template #title>
+            <span v-if="selectedUserInformation.is_blocked">
+                Unblock User
+            </span>
+            <span v-else> Block User </span>
+        </template>
         <template #description>
-            You are about to block this {{ selectedUserInformation.name }}. Are
-            you sure you want to continue?
+            <span v-if="selectedUserInformation.is_blocked">
+                Are you sure you want to unblock
+                {{ selectedUserInformation.name }}?
+            </span>
+            <span v-else>
+                Are you sure you want to block
+                {{ selectedUserInformation.name }}?
+            </span>
         </template>
         <template #action> Yes</template>
     </DialogBox>
@@ -199,25 +210,6 @@ function navigateToUserPage(user) {
             break;
     }
 }
-
-// function navigateToUserPage(user) {
-//     switch (user.type) {
-//         case "admin":
-//             router.get(`/admin/user/${user.admin.id}`);
-//             break;
-//         case "teacher":
-//             router.get(`/admin/teachers/${user.teacher.id}`);
-//             break;
-//         case "student":
-//             router.get(`/admin/teachers/students/${user.student.id}`);
-//             break;
-//         case "guardian":
-//             router.get(`/admin/guardians/${user.guardian.id}`);
-//             break;
-//         default:
-//             break;
-//     }
-// }
 
 const users_config = [
     {

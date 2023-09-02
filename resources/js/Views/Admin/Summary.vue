@@ -1,19 +1,11 @@
 <template>
     <div class="flex w-11/12 flex-col space-y-6">
         <SummaryItem
-            class-style="bg-sky-100 text-black"
-            icon-style="bg-sky-500/20 text-white"
-            :title="$t('common.chat')"
-            :value="$t('adminSummary.chatValue')"
-            :icon="PaperAirplaneIcon"
-            url="/admin/chat"
-        />
-        <SummaryItem
             class-style="bg-fuchsia-100 text-black"
             icon-style="bg-fuchsia-500/20 text-white"
             :title="$t('common.students')"
             :value="$t('adminSummary.studentValue')"
-            :icon="UserGroupIcon"
+            :icon="UsersIcon"
             url="/admin/students"
         />
         <SummaryItem
@@ -28,16 +20,15 @@
         <SummaryItem
             class-style="bg-brand-100 text-black"
             icon-style="bg-brand-300/20 text-white"
-            :title="$t('common.admins')"
-            :value="$t('adminSummary.adminValue')"
-            :icon="UsersIcon"
-            url="/admin/admins "
+            :title="$t('common.users')"
+            :value="$t('adminSummary.userValue')"
+            :icon="UserGroupIcon"
+            url="/admin/users "
         />
     </div>
 </template>
 <script setup>
 import {
-    PaperAirplaneIcon,
     UserCircleIcon,
     UserGroupIcon,
     UsersIcon,

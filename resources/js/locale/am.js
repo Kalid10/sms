@@ -1819,7 +1819,7 @@ const am = {
         chatValue: "ከአስተማሪዎች እና ከአድሚኖች ጋር ይነጋገሩ",
         studentValue: "መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ",
         teacherValue: "መዝገብ፣ ማረጋገጥ፣ መርምር እና ተጨማሪ",
-        adminValue: "መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ።",
+        userValue: "መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ።",
     },
 
     absenteeAddModal: {
