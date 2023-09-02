@@ -496,7 +496,8 @@ const en = {
     fees: {
         configuration: "Configuration",
         studentTuitions: "Student-Tuitions",
-        fees: "Finance",
+        finance: "Finance",
+        fees: "Fees",
         paymentProviders: "Payment-Providers",
         penalties: "Penalties",
     },

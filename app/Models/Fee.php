@@ -26,6 +26,7 @@ class Fee extends Model
         'status',
         'due_date',
         'level_category_id',
+        'is_student_tuition_fee',
     ];
 
     public function penalty(): BelongsTo

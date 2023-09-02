@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('fee_id')->constrained('fees')->cascadeOnDelete();
-            $table->foreignId('payment_provider_id')->constrained('payment_providers')->cascadeOnDelete();
+            $table->foreignId('payment_provider_id')->nullable()->constrained('payment_providers')->cascadeOnDelete();
             $table->float('amount');
-            $table->string('status')->default('pending');
+            $table->string('status')->default('unpaid');
+            $table->timestamp('paid_at')->nullable();
             $table->string('transaction_id')->nullable();
             $table->json('details')->nullable();
             $table->softDeletes();

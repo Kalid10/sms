@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Jobs\StudentFeeJob;
 use App\Models\Fee;
 use App\Models\LevelCategory;
 use App\Models\PaymentProvider;
@@ -10,6 +11,7 @@ use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Semester;
 use App\Models\User;
+use App\Services\StudentFeeService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -34,7 +36,7 @@ class FeeController extends Controller
         ]);
     }
 
-    public function create(Request $request): RedirectResponse
+    public function create(Request $request, StudentFeeService $studentFeeService): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|unique:fees,name',
@@ -47,6 +49,7 @@ class FeeController extends Controller
             'due_date' => 'date|after_or_equal:today',
             'level_category_ids' => 'required|array|min:1',
             'level_category_ids.*' => 'required|exists:level_categories,id',
+            'is_student_tuition_fee' => 'required|boolean',
         ]);
 
         match ($request->feeable_type) {
@@ -55,8 +58,10 @@ class FeeController extends Controller
             'school_years' => $request->merge(['feeable_type' => SchoolYear::class]),
         };
 
+        $fees = collect();
+
         foreach ($request->level_category_ids as $level_category_id) {
-            Fee::create([
+            $fee = Fee::create([
                 'name' => $request->name,
                 'description' => $request->description,
                 'amount' => $request->amount,
@@ -67,9 +72,15 @@ class FeeController extends Controller
                 'status' => $request->is_active ? Fee::STATUS_ACTIVE : Fee::STATUS_INACTIVE,
                 'due_date' => Carbon::parse($request->due_date),
                 'level_category_id' => $level_category_id,
+                'is_student_tuition_fee' => $request->is_student_tuition_fee,
+
             ]);
+
+            $fees = $fees->push($fee);
         }
 
-        return redirect()->back()->with('success', 'Fee created successfully!');
+        StudentFeeJob::dispatch($request->all(), $fees);
+
+        return redirect()->back()->with('success', 'Fee is being created, we will notify you once we are done!');
     }
 }

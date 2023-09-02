@@ -47,7 +47,7 @@ const studentTuitionsTab = toUnderscore(t("fees.studentTuitions"));
 const penaltyTab = toUnderscore(t("fees.penalties"));
 
 const tabs = [studentTuitionsTab, feesTab, penaltyTab, paymentProvidersTab];
-const activeTab = ref(penaltyTab);
+const activeTab = ref(feesTab);
 
 const fees = computed(() => usePage().props.fees);
 const paymentProviders = computed(() => usePage().props.payment_providers);

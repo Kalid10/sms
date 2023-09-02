@@ -51,7 +51,9 @@
         />
 
         <div class="w-full rounded-md border p-2">
-            <div class="text-sm font-semibold">Select Grade Category</div>
+            <div class="text-sm font-semibold">
+                Select Target Grade Categories
+            </div>
             <div
                 v-for="(item, index) in levelCategoryOptions"
                 :key="index"
@@ -136,7 +138,13 @@
             />
         </div>
 
-        <Toggle v-model="feeForm.is_active" label="Is fee active?" />
+        <div class="flex w-full justify-between p-3">
+            <Toggle
+                v-model="feeForm.is_student_tuition_fee"
+                label="Is this student tuition fee?"
+            />
+            <Toggle v-model="feeForm.is_active" label="Is fee active?" />
+        </div>
 
         <Loading v-if="isLoading" is-full-screen />
     </FormElement>
@@ -153,6 +161,7 @@ import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { upperCase } from "lodash";
 import Toggle from "@/Components/Toggle.vue";
 import DatePicker from "@/Components/DatePicker.vue";
+import { useUIStore } from "@/Store/ui";
 
 const emit = defineEmits(["close"]);
 const isLoading = ref(false);
@@ -169,6 +178,7 @@ const feeForm = useForm({
     is_active: true,
     due_date: new Date(),
     level_category_ids: [],
+    is_student_tuition_fee: false,
 });
 
 // Penalties section
@@ -267,8 +277,12 @@ const savePenalty = () => {
     });
 };
 
+const uiStore = useUIStore();
+
 const submit = () => {
     isLoading.value = true;
+    uiStore.setLoading(true, "Creating fee");
+
     feeForm.post("/admin/fees/create", {
         preserveScroll: true,
         onSuccess: () => {
@@ -281,6 +295,7 @@ const submit = () => {
                 type: "error",
                 message: "There was an error adding the fee.",
             });
+            uiStore.setLoading(false);
         },
     });
 };

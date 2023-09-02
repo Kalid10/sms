@@ -25,6 +25,7 @@ return new class extends Migration
             $table->json('details')->nullable();
             $table->foreignId('penalty_id')->nullable()->constrained('penalties')->cascadeOnDelete();
             $table->foreignId('level_category_id')->constrained('level_categories')->cascadeOnDelete();
+            $table->boolean('is_student_tuition_fee')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

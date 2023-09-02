@@ -329,11 +329,33 @@ const storeResponseStatus = computed(() => uiStore.responseStatus);
 const storeResponseMessage = computed(() => uiStore.responseMessage);
 const storeLoadingMessage = computed(() => uiStore.loadingMessage);
 
+// TODO:: Move websocket listeners to a separate file
 Echo.private("mass-assessment").listen(".mass-assessment", (e) => {
     uiStore.setLoading(false);
 
     if (e.type === "success") {
         uiStore.setResponse("success", "Assessments created successfully!");
+    }
+
+    if (e.type === "error") {
+        showNotification({
+            type: "error",
+            message: e.message,
+            position: "top-center",
+        });
+        uiStore.setResponse("error", e.message);
+    }
+
+    setTimeout(() => {
+        uiStore.setResponse(null, null);
+    }, 5000);
+});
+
+Echo.private("student-fee").listen(".student-fee", (e) => {
+    uiStore.setLoading(false);
+
+    if (e.type === "success") {
+        uiStore.setResponse("success", e.message);
     }
 
     if (e.type === "error") {
