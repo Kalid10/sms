@@ -10,5 +10,5 @@ Route::prefix('teachers/')->middleware(['checkUserRole:manage-teachers', 'auth']
         Route::post('assign/homeroom', 'assignHomeroomTeacher')->name('assign.homeroom');
         Route::delete('remove/homeroom/{id}', 'removeHomeroomTeacher')->name('remove.homeroom');
     });
-    Route::post('leave-info/{teacher}', [TeacherController::class, 'updateLeaveInfo'])->name('leave-info');
+    Route::post('leave-info', [TeacherController::class, 'updateLeaveInfo'])->name('leave-info');
 });

@@ -125,10 +125,31 @@
             </template>
 
             <template #leave_info-column="{ data }">
-                <div v-if="data.leave_info === null">Leave is not set!</div>
-                <div v-else>
-                    {{ data.leave_info.total - data.leave_info.remaining }} /
-                    {{ data.leave_info.total }}
+                <div
+                    v-if="data.leave_info === null"
+                    class="flex justify-between"
+                >
+                    <span> Leave is not set! </span>
+                    <div class="cursor-pointer hover:scale-125">
+                        <PlusIcon
+                            class="h-4 w-4"
+                            @click="selectLeaveInfo(data)"
+                        />
+                    </div>
+                </div>
+                <div v-else class="flex justify-between">
+                    <span>
+                        {{ data.leave_info.remaining }}
+                        /
+                        {{ data.leave_info.total }}
+                    </span>
+
+                    <div class="cursor-pointer hover:scale-125">
+                        <PencilSquareIcon
+                            class="h-3 w-3"
+                            @click="selectLeaveInfo(data)"
+                        />
+                    </div>
                 </div>
             </template>
         </TeacherTableElement>
@@ -184,6 +205,18 @@
             @close="showAssignModal = false"
         />
     </Modal>
+
+    <Modal v-model:view="showLeaveInfoModal">
+        <FormElement title="Leave Info" @submit="submitLeaveInfo">
+            <TextInput
+                v-model="leaveInfoForm.leave_info.total"
+                label="Total Leave"
+                placeholder="Total Leave"
+                type="number"
+                required
+            />
+        </FormElement>
+    </Modal>
 </template>
 
 <script setup>
@@ -193,7 +226,9 @@ import TeacherTableElement from "@/Components/TableElement.vue";
 import {
     ExclamationTriangleIcon,
     MinusCircleIcon,
+    PencilSquareIcon,
     PlusCircleIcon,
+    PlusIcon,
     UserMinusIcon,
 } from "@heroicons/vue/24/outline/index";
 import TextInput from "@/Components/TextInput.vue";
@@ -207,10 +242,13 @@ import { useI18n } from "vue-i18n";
 import Toggle from "@/Components/Toggle.vue";
 import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 import Modal from "@/Components/Modal.vue";
+import FormElement from "@/Components/FormElement.vue";
 
 const showAssignModal = ref(false);
 
 const showLeaveInfoModal = ref(false);
+
+const selectedTeacherForLeaveInfo = ref(null);
 
 const { t } = useI18n();
 const isDialogBoxOpen = ref(false);
@@ -274,8 +312,7 @@ watch(selectedSubject, () => {
 
 const leaveInfoForm = useForm({
     leave_info: {
-        total: "",
-        remaining: "",
+        total: null,
     },
 });
 
@@ -300,6 +337,12 @@ function toggleDialogBox(teacher) {
     selectedTeacher.value = teacher;
 }
 
+function selectLeaveInfo(data) {
+    showLeaveInfoModal.value = true;
+    selectedTeacherForLeaveInfo.value = data.teacher_id;
+    leaveInfoForm.leave_info.total = data.leave_info?.total;
+}
+
 const formattedTeachersData = computed(() => {
     return teachers.value.data.map((teacher) => {
         // Use Set to get distinct values
@@ -320,6 +363,7 @@ const formattedTeachersData = computed(() => {
             subjects: subjects,
             leave_info: {
                 id: teacher.user.id,
+                teacher_id: teacher.id,
                 leave_info: teacher.leave_info,
             },
             row: { teacher },
@@ -386,8 +430,9 @@ const markTeacherAsAbsent = () => {
 
 const submitLeaveInfo = () => {
     router.post(
-        "/teachers/leave-info/" + selectedTeacher.value.id,
+        "/teachers/leave-info/",
         {
+            teacher_id: selectedTeacherForLeaveInfo.value,
             leave_info: leaveInfoForm.leave_info,
         },
         {

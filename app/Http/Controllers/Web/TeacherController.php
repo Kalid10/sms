@@ -224,19 +224,33 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function updateLeaveInfo(Request $request, Teacher $teacher): RedirectResponse
+    public function updateLeaveInfo(Request $request): RedirectResponse
     {
         $request->validate([
             'leave_info.total' => 'nullable|integer',
-            'leave_info.remaining' => 'nullable|integer',
+            'teacher_id' => 'required|exists:teachers,id',
         ]);
 
+        $teacher = Teacher::findOrFail($request->input('teacher_id'));
+
+        if (! $teacher->leave_info) {
+            $leaveInfo = [
+                'total' => $request->input('leave_info.total'),
+                'remaining' => $request->input('leave_info.total'),
+            ];
+        } else {
+            $leaveInfo = [
+                'total' => $request->input('leave_info.total'),
+                'remaining' => $teacher->leave_info['remaining'],
+            ];
+        }
+
         $teacher->update([
-            'leave_info' => $request->input('leave_info'),
+            'leave_info' => $leaveInfo,
         ]);
 
         return back()->with([
-            'message' => 'Teacher leave info updated successfully!',
+            'success' => 'Teacher leave information updated successfully!',
         ]);
     }
 }
