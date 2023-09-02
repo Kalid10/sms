@@ -28,7 +28,7 @@
                 <div
                     class="flex w-full flex-col justify-between lg:flex-row lg:space-x-10"
                 >
-                    <div class="w-full lg:w-6/12">
+                    <div class="w-full lg:w-8/12">
                         <StudentsTable
                             :title="tableTitle"
                             :table-model-value="batchSubject.id"
@@ -38,7 +38,7 @@
                         />
                     </div>
                     <div
-                        class="flex h-full w-full flex-col justify-center space-y-8 lg:w-5/12"
+                        class="flex h-full w-full flex-col justify-center space-y-8 lg:w-4/12"
                     >
                         <SummaryItem
                             class-style="bg-sky-100 text-black"

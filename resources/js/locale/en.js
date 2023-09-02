@@ -38,6 +38,7 @@ const en = {
         home: "Home",
         settings: "Settings",
         logout: "Logout",
+        finance: "Finance",
     },
     adminStudentsTable: {
         students: "Students",
@@ -278,7 +279,7 @@ const en = {
     batchPerformanceIndex: {
         classAverage: "Class Average",
         classRank: "Class Rank",
-        classAttendance: "Class Attendance",
+        classAttendance: "Class Absentee",
         classConduct: "Class Conduct",
     },
     batchScheduler: {
@@ -447,7 +448,7 @@ const en = {
         goToGrades: "Go To Grades",
         and: "And",
         period: "Period",
-        attendance: "Attendance",
+        attendance: "Absentee",
         homeroom: "Homeroom",
         viewAll: "VIEW ALL",
         teachers: "Teachers",
@@ -489,6 +490,15 @@ const en = {
         notes: "Notes",
         inventory: "Inventory",
         extras: "Extras",
+        leave: "leave",
+        absenteeList: "Absentee List",
+    },
+    fees: {
+        configuration: "Configuration",
+        studentTuitions: "Student-Tuitions",
+        fees: "Fees",
+        paymentProviders: "Payment-Providers",
+        penalties: "Penalties",
     },
     copilotIndex: {
         rigelCopilot: "Rigel Copilot",
@@ -889,19 +899,21 @@ const en = {
         batchSession: "Batch Session",
     },
     levelCategory: {
-        categoryTableSubtitle: "list of level categories",
-        categoryTableTitle: "Level Category",
-        addLevelCategory: "Add Level Category",
+        categoryTableSubtitle: "list of Grade categories",
+        categoryTableTitle: "Grade Category",
+        addLevelCategory: "Add Grade Category",
         category: "Category",
         addCategoryNamePlaceholder: "ex: ElementarySchool",
-        updateLevelCategory: "Update Level Category",
+        updateLevelCategory: "Update Grade Category",
         updateCategory: "Update Category",
+        description:
+            "Grade Category is a group of grades, example: Elementary School, High School, etc.",
     },
     levelIndex: {
         searchGrades: "Search Grades",
-        goToLevelCategories: "Go to Level Categories",
+        goToLevelCategories: "Go to Grade Categories",
         activeSections: "active sections",
-        levelCategory: "Level Category",
+        levelCategory: "Grade Category",
         updatedAt: "Updated at",
     },
     levelSingle: {
@@ -967,7 +979,7 @@ const en = {
         headerTwo:
             "If you would like to see the student's overall performance, you can click",
         here: "here",
-        attendance: "Attendance",
+        attendance: "Absentee",
         total: "Total",
         result: "Result",
         rank: "Rank",
@@ -1421,7 +1433,7 @@ const en = {
     studentGradeDetail: {
         gradeReport: "Grade Report",
         subject: "Subject",
-        attendance: "Attendance%",
+        attendance: "Absentee%",
         grade: "Grade",
         rank: "Rank",
         conduct: "Conduct",
@@ -1458,7 +1470,7 @@ const en = {
     },
     studentStatistics: {
         grade: "Grade",
-        attendance: "Attendance",
+        attendance: "Absentee",
         conduct: "Conduct",
         vitals: "Vitals",
     },
@@ -1475,7 +1487,7 @@ const en = {
         assignHomeroom: "Assign Homeroom",
         homeroomTeacher: "Homeroom Teacher",
         name: "Name",
-        attendance: "Attendance%",
+        attendance: "Absentee%",
         grade: "Grade",
         rank: "Rank",
         conduct: "Conduct",
@@ -1616,7 +1628,7 @@ const en = {
     },
     teachersIndex: {
         absentee: "Absentee",
-        confirmIf: "confirm if you want to mark this teacher as absent",
+        confirmIf: "Are you sure you want to add this teacher as an absentee?",
         absent: "Absent",
         reason: "Reason",
         noTeacher: "No teacher has been enrolled",
@@ -1764,7 +1776,7 @@ const en = {
         noStudentsFound: "No students found",
     },
     attendanceCard: {
-        YourAttendance: "Your Attendance For This Quarter",
+        YourAttendance: "Your Absentee For This Quarter",
     },
     ai: {
         artificialIntelligence: "Artificial Intelligence",

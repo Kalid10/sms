@@ -27,6 +27,38 @@
         <Notification />
     </div>
 
+    <div
+        v-if="isStoreLoading || storeResponseStatus"
+        class="group absolute bottom-2 right-2 z-50 w-fit cursor-pointer text-white"
+    >
+        <div
+            v-if="isStoreLoading"
+            class="my-2 flex w-fit items-center justify-center space-x-2 rounded-full bg-violet-600 px-3 py-2 text-xs"
+        >
+            <Loading size="small" type="spinner" />
+            <div
+                class="hidden group-hover:inline-block group-hover:animate-fade-in group-hover:delay-700"
+            >
+                {{ storeLoadingMessage }}
+            </div>
+        </div>
+
+        <div
+            v-if="storeResponseStatus === 'success'"
+            class="flex items-center justify-center space-x-4 rounded-lg bg-emerald-500 py-3 px-4 text-sm"
+        >
+            <CheckCircleIcon class="w-5 text-white" />
+            <span> {{ storeResponseMessage }}</span>
+        </div>
+        <div
+            v-if="storeResponseStatus === 'error'"
+            class="flex items-center justify-center space-x-2 rounded-lg bg-red-600 py-3 px-4 text-sm"
+        >
+            <XCircleIcon class="w-5 text-white" />
+            <span>{{ storeResponseMessage }}</span>
+        </div>
+    </div>
+
     <DialogBox
         :open="isLogoutDialogOpen"
         @abort="isLogoutDialogOpen = false"
@@ -69,6 +101,7 @@ import { Cog6ToothIcon, UserIcon } from "@heroicons/vue/20/solid/index.js";
 import { router, usePage } from "@inertiajs/vue3";
 import {
     AcademicCapIcon,
+    BanknotesIcon,
     BookOpenIcon,
     CalendarDaysIcon,
     CircleStackIcon,
@@ -76,14 +109,20 @@ import {
     FingerPrintIcon,
     HomeIcon,
     MegaphoneIcon,
-    NewspaperIcon, TableCellsIcon,
+    NewspaperIcon,
+    TableCellsIcon,
     UserGroupIcon,
     UsersIcon,
 } from "@heroicons/vue/24/solid";
-import { ArrowLeftOnRectangleIcon } from "@heroicons/vue/20/solid/index";
+import {
+    ArrowLeftOnRectangleIcon,
+    CheckCircleIcon,
+    XCircleIcon,
+} from "@heroicons/vue/20/solid/index";
 import { useI18n } from "vue-i18n";
 import DialogBox from "@/Components/DialogBox.vue";
 import Loading from "@/Components/Loading.vue";
+import { useUIStore } from "@/Store/ui";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -241,6 +280,14 @@ const sidebarItems = computed(() => [
             isRouteActive(/^\/admin\/absentees\/?$/),
     },
     {
+        name: t("adminLayout.finance"),
+        icon: BanknotesIcon,
+        route: "/admin/fees",
+        active:
+            isRouteActive(/^\/admin\/fees\/\d+\/?$/) ||
+            isRouteActive(/^\/admin\/fees\/?$/),
+    },
+    {
         name: t("common.inventory"),
         icon: CircleStackIcon,
         route: "/admin/inventory",
@@ -275,6 +322,33 @@ const showNotification = (data) => {
 // TODO: Migrate the two providers
 provide("showNotification", showNotification);
 provide("notificationData", notificationData);
+
+const uiStore = useUIStore();
+const isStoreLoading = computed(() => uiStore.isLoading);
+const storeResponseStatus = computed(() => uiStore.responseStatus);
+const storeResponseMessage = computed(() => uiStore.responseMessage);
+const storeLoadingMessage = computed(() => uiStore.loadingMessage);
+
+Echo.private("mass-assessment").listen(".mass-assessment", (e) => {
+    uiStore.setLoading(false);
+
+    if (e.type === "success") {
+        uiStore.setResponse("success", "Assessments created successfully!");
+    }
+
+    if (e.type === "error") {
+        showNotification({
+            type: "error",
+            message: e.message,
+            position: "top-center",
+        });
+        uiStore.setResponse("error", e.message);
+    }
+
+    setTimeout(() => {
+        uiStore.setResponse(null, null);
+    }, 5000);
+});
 </script>
 
 <style scoped></style>

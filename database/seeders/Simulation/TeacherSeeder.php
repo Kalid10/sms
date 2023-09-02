@@ -90,7 +90,12 @@ class TeacherSeeder extends SimulationSeeder
                 'date_of_birth' => fake()->date('Y-m-d', '-'.(rand(-2, 6) + 24).' years'),
                 'type' => User::TYPE_TEACHER,
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+
             ])->id,
+            'leave_info' => [
+                'total' => 3,
+                'remaining' => 3,
+            ],
         ]);
     }
 

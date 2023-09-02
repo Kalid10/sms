@@ -2,7 +2,7 @@
     <div v-if="view === 'default'">
         <div
             v-if="inProgressSession"
-            class="flex w-full flex-col items-center justify-evenly space-y-1 rounded-md py-2 px-3 text-center text-brand-text-150"
+            class="flex w-full flex-col items-center justify-evenly space-y-1 rounded-md py-2 px-3 text-center text-white"
         >
             <div class="text-[0.6rem] font-light">
                 {{ $t("currentClass.currentClass") }}
@@ -33,7 +33,7 @@
     <div v-else-if="view === 'absentee'">
         <div
             v-if="yourInProgressSession"
-            class="flex h-full w-full items-center justify-between space-y-2 divide-x divide-fuchsia-50 rounded-lg border-2 border-black bg-gradient-to-tl from-zinc-600 to-neutral-600 px-5 py-3 text-white shadow-sm"
+            class="flex h-full w-full items-center justify-between space-y-2 divide-x divide-fuchsia-50 rounded-lg border-2 border-black bg-gradient-to-tl from-brand-300 to-brand-350 px-5 py-3 text-white shadow-sm"
         >
             <div
                 class="flex h-full w-6/12 flex-col items-center justify-between space-y-4"

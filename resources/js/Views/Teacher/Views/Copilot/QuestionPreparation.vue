@@ -207,7 +207,8 @@ const updateLessonPlanIds = (lessonPlanIds, batchSubject) => {
 
 const uiStore = useUIStore();
 const submit = () => {
-    uiStore.setLoading(true);
+    uiStore.setLoading(true, "Generating questions...");
+
     form.post("/teacher/questions/create", {
         preserveState: true,
         onError: (error) => {
@@ -220,7 +221,9 @@ const submit = () => {
 Echo.private("question-generator").listen(".question-generator", (e) => {
     uiStore.setLoading(false);
 
-    if (e.type === "success") uiStore.setResponseStatus("success");
+    if (e.type === "success") {
+        uiStore.setResponse("success", "Questions generated successfully!");
+    }
 
     if (e.type === "error") {
         showNotification({
@@ -228,9 +231,12 @@ Echo.private("question-generator").listen(".question-generator", (e) => {
             message: e.message,
             position: "top-center",
         });
-        uiStore.setResponseStatus("error");
-        uiStore.setResponseMessage(e.message);
+        uiStore.setResponse("error", e.message);
     }
+
+    setTimeout(() => {
+        uiStore.setResponse(null, null);
+    }, 5000);
 });
 
 const isSubmitDisabled = computed(() => {

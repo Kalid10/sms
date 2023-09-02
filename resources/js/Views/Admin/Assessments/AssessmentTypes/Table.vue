@@ -8,7 +8,7 @@
                     :error="form.errors.name"
                     class="w-8/12"
                     :label="$t('common.name')"
-                    :placeholder="$t('assessmentIndex.name')"
+                    :placeholder="$t('common.name')"
                     required
                 />
                 <TextInput
@@ -55,7 +55,7 @@
                                 v-model="form.level_category_id"
                                 type="checkbox"
                                 :value="levelCategory.value"
-                                class="rounded border-gray-300 text-black focus:ring-black"
+                                class="rounded border-gray-300 text-brand-400 focus:ring-black"
                             />
                         </div>
                         <label class="text-sm">{{ levelCategory.label }}</label>
@@ -111,7 +111,7 @@
     </Modal>
 
     <div
-        class="flex flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
+        class="flex h-[850px] flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
     >
         <div class="px-3 text-2xl font-medium">
             {{ $t("assessmentIndex.assessmentType") }}

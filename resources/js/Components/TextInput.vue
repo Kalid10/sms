@@ -26,7 +26,7 @@
             @focusin="toggleSubtext ? (showSubText = true) : null"
             @focusout="toggleSubtext ? (showSubText = false) : null"
         />
-        <span v-if="subtext && showSubText" class="text-xs text-brand-text-300">
+        <span v-if="subtext && showSubText" class="text-xs text-gray-600">
             <component
                 :is="descriptionIcon"
                 class="inline-block h-4 w-4 stroke-2"

@@ -20,6 +20,7 @@ class AssessmentMapping extends Model
         'assessment_id',
         'assessment_type_id',
         'assessment_type_id',
+        'title',
     ];
 
     public function user(): BelongsTo

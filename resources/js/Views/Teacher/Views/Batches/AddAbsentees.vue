@@ -1,6 +1,10 @@
 <template>
-    <div class="h-screen">
-        <FormElement class="h-full" title="Add Absentee" @submit="handleSubmit">
+    <div class="scrollbar-hide h-screen overflow-y-auto pb-8">
+        <FormElement
+            class="h-fit pb-5"
+            title="Add Absentee"
+            @submit="handleSubmit"
+        >
             <div class="flex h-full flex-col space-y-3 overflow-y-auto">
                 <TextInput
                     v-model="searchText"
@@ -10,7 +14,7 @@
 
                 <div
                     v-if="absenteeStudents.length"
-                    class="flex w-full flex-col space-y-2 rounded-lg bg-brand-150 py-3 px-4 shadow-md"
+                    class="flex w-full flex-col space-y-2 rounded-lg border border-brand-450 bg-brand-150 py-3 px-4 shadow-sm"
                 >
                     <div class="text-sm font-light">
                         {{ $t("addAbsentees.absenteeStudents") }}
@@ -38,7 +42,13 @@
                     v-for="(item, index) in studentList"
                     :key="index"
                     class="mt-3 flex w-full flex-col justify-between p-2 text-sm font-semibold"
-                    :class="index % 2 === 0 ? 'bg-brand-100' : 'bg-white'"
+                    :class="
+                        selectedReasonInput === index
+                            ? 'border-2 border-brand-500 p-3 rounded-lg bg-brand-300 text-white'
+                            : index % 2 === 0
+                            ? 'bg-brand-50'
+                            : 'bg-white border-none'
+                    "
                 >
                     <div class="flex w-full justify-between px-4">
                         <div class="w-6/12">
@@ -48,28 +58,35 @@
                             v-model="studentList[index].isAbsentee"
                             class="w-5/12"
                             @change="
-                                handleAbsenteeChanges({
-                                    user_id: item.user_id,
-                                    name: item.name,
-                                    reason: studentList[index].reason,
-                                })
+                                handleAbsenteeChanges(
+                                    {
+                                        user_id: item.user_id,
+                                        name: item.name,
+                                        reason: studentList[index].reason,
+                                    },
+                                    studentList[index].isAbsentee
+                                )
                             "
                         />
                         <ChatBubbleBottomCenterIcon
                             :class="
                                 studentList[index].reason
                                     ? 'text-black'
-                                    : 'text-brand-text-200 hover:text-black'
+                                    : 'text-brand-text-350 hover:text-black'
                             "
                             class="w-5 cursor-pointer hover:scale-125"
                             @click="handleReasonClick(index, item)"
                         />
                     </div>
-                    {{ selectedReasonInput }}
                     <div v-if="selectedReasonInput === index" class="p-4">
                         <TextArea
                             v-model="studentList[index].reason"
                             rows="4"
+                            :class="
+                                selectedReasonInput === index
+                                    ? '!text-white'
+                                    : 'text-black'
+                            "
                             :label="$t('addAbsentees.reasonLabel')"
                             :placeholder="$t('addAbsentees.reasonPlaceholder')"
                         />
@@ -153,14 +170,14 @@ function updateAbsenteeList() {
     });
 }
 
-function handleAbsenteeChanges(student) {
+function handleAbsenteeChanges(student, value) {
     const existingStudentIndex = absenteeStudents.findIndex(
         (item) => item.user_id === student.user_id
     );
-    if (existingStudentIndex === -1) {
+    if (existingStudentIndex === -1 && value) {
         // Student not found in the array, so add them
         absenteeStudents.push(student);
-    } else {
+    } else if (!value) {
         // Remove comment
         selectedReasonInput.value = null;
 
@@ -189,12 +206,13 @@ function handleSubmit() {
     );
 }
 
-function handleReasonClick(index) {
+function handleReasonClick(index, student) {
     if (selectedReasonInput.value === index)
         return (selectedReasonInput.value = null);
 
     selectedReasonInput.value = index;
     studentList.value[index].isAbsentee = true;
+    handleAbsenteeChanges(student);
 }
 
 const updateBatchInfo = () => {

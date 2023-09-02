@@ -8,17 +8,13 @@ export const useUIStore = defineStore("ui", {
         responseMessage: null,
     }),
     actions: {
-        setLoading(value) {
+        setLoading(value, message = null) {
             this.isLoading = value;
+            this.loadingMessage = message;
         },
-        setResponseStatus(value) {
-            this.responseStatus = value;
-        },
-        setResponseMessage(value) {
-            this.responseMessage = value;
-        },
-        setLoadingMessage(value) {
-            this.loadingMessage = value;
+        setResponse(status, message = null) {
+            this.responseStatus = status;
+            this.responseMessage = message;
         },
     },
 });

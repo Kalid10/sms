@@ -6,8 +6,12 @@
             in-active-tab-text="text-brand-text-100"
             :tabs="tabs"
         >
-            <template #inventory>
+            <template #[inventoryTab]>
                 <InventoryPage />
+            </template>
+
+            <template #[absenteeTab]>
+                <AbsenteePage />
             </template>
         </TabElement>
     </div>
@@ -15,10 +19,16 @@
 <script setup>
 import TabElement from "@/Components/TabElement.vue";
 import { ref } from "vue";
-import InventoryPage from "@/Pages/Teacher/Extras/Inventory/Index.vue";
+import InventoryPage from "@/Views/Teacher/Extras/Inventory/Index.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
+import AbsenteePage from "@/Views/Teacher/Extras/Absentee/Index.vue";
+import { toUnderscore } from "@/utils";
+import { useI18n } from "vue-i18n";
 
-const tabs = ["Inventory", "Attendance"];
-const activeTab = ref("Inventory");
+const { t } = useI18n();
+const inventoryTab = toUnderscore(t("common.inventory"));
+const absenteeTab = toUnderscore(t("common.absentee"));
+const activeTab = ref(absenteeTab);
+const tabs = [inventoryTab, absenteeTab];
 </script>
 <style scoped></style>

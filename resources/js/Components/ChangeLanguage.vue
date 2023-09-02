@@ -53,6 +53,7 @@ const changeLanguage = (event) => {
     const selectedLanguage = event.target.value;
     locale.value = selectedLanguage;
     localStorage.setItem("selectedLanguage", selectedLanguage);
+    location.reload();
 };
 </script>
 

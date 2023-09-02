@@ -38,6 +38,6 @@ Broadcast::channel('question-generator', function ($user) {
     return $user->type === User::TYPE_TEACHER;
 });
 
-Broadcast::channel('mass-assessment-event', function ($user) {
+Broadcast::channel('mass-assessment', function ($user) {
     return $user->hasRole('manage-assessment-types');
 });

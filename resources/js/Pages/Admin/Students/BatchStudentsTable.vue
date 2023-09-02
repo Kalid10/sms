@@ -169,7 +169,7 @@ const config = [
     {
         name: t("common.name"),
         key: "name",
-        link: "/admin/students/{id}",
+        link: "/admin/teachers/students/{id}",
         align: "left",
         type: "custom",
     },

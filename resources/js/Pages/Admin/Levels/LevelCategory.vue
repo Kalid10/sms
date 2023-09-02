@@ -40,6 +40,8 @@
                 v-model="form.name"
                 :label="$t('levelCategory.category')"
                 :placeholder="$t('levelCategory.addCategoryNamePlaceholder')"
+                :subtext="$t('levelCategory.description')"
+                class="gap-2"
             />
         </FormElement>
     </Modal>

@@ -22,11 +22,11 @@ class MassAssessmentEvent implements ShouldBroadcast
      */
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('mass-assessment-event');
+        return new PrivateChannel('mass-assessment');
     }
 
     public function broadcastAs(): string
     {
-        return 'mass-assessment-event';
+        return 'mass-assessment';
     }
 }

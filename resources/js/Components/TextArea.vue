@@ -1,11 +1,9 @@
 <template>
-    <label class="flex flex-col gap-1">
+    <label class="flex flex-col gap-1 text-black">
         <span class="">
             <span
                 :class="
-                    labelStyle
-                        ? labelStyle
-                        : 'pl-0.5 text-sm font-semibold text-black'
+                    labelStyle ? labelStyle : 'pl-0.5 text-sm font-semibold '
                 "
                 >{{ label }}</span
             >
@@ -18,7 +16,7 @@
             :required="required"
             :value="modelValue"
             :class="leading"
-            class="w-full rounded-md border border-gray-200 text-sm placeholder:text-xs placeholder:text-gray-400 focus:border-none focus:ring-1 focus:ring-brand-300 lg:text-xs"
+            class="w-full rounded-md border border-gray-200 text-sm text-black placeholder:text-xs placeholder:text-gray-400 focus:border-none focus:ring-1 focus:ring-brand-300 lg:text-xs"
             @input="$emit('update:modelValue', $event.target.value)"
         />
         <span v-if="error" class="text-xs text-negative-50">

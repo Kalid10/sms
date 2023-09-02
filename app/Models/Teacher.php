@@ -15,6 +15,7 @@ class Teacher extends Model
 
     protected $fillable = [
         'user_id',
+        'leave_info',
     ];
 
     protected $appends = ['active_weekly_sessions'];
@@ -97,4 +98,8 @@ class Teacher extends Model
     {
         return $this->hasMany(StaffAbsentee::class);
     }
+
+    protected $casts = [
+        'leave_info' => 'array',
+    ];
 }
