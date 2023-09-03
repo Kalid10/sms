@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Jobs\StudentFeeJob;
 use App\Models\Fee;
+use App\Models\LevelCategory;
 use App\Models\PaymentProvider;
 use App\Models\Penalty;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Semester;
 use App\Models\User;
+use App\Services\StudentFeeService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,17 +35,18 @@ class FeeController extends Controller
             return $query->where('target_user_type', $target_user_type);
         })->get();
 
-        return Inertia::render('Admin/Fees/Index', [
+        return Inertia::render('Admin/Finance/Index', [
             'payment_providers' => PaymentProvider::all(),
             'fees' => $fees,
             'penalties' => Penalty::all(),
             'active_semesters' => $activeSemesters,
             'active_quarters' => $activeQuarters,
             'active_school_year_id' => SchoolYear::getActiveSchoolYear()->id,
+            'level_categories' => LevelCategory::all(),
         ]);
     }
 
-    public function create(Request $request): RedirectResponse
+    public function create(Request $request, StudentFeeService $studentFeeService): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|unique:fees,name',
@@ -53,20 +57,40 @@ class FeeController extends Controller
             'feeable_id' => 'required|exists:'.$request->feeable_type.',id',
             'is_active' => 'required|boolean',
             'due_date' => 'date|after_or_equal:today',
+            'level_category_ids' => 'required|array|min:1',
+            'level_category_ids.*' => 'required|exists:level_categories,id',
+            'is_student_tuition_fee' => 'required|boolean',
         ]);
 
-        Fee::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'amount' => $request->amount,
-            'penalty_id' => $request->penalty_id,
-            'feeable_type' => $request->feeable_type,
-            'feeable_id' => $request->feeable_id,
-            'target_user_type' => User::TYPE_STUDENT,
-            'status' => $request->is_active ? Fee::STATUS_ACTIVE : Fee::STATUS_INACTIVE,
-            'due_date' => Carbon::parse($request->due_date),
-        ]);
+        match ($request->feeable_type) {
+            'semesters' => $request->merge(['feeable_type' => Semester::class]),
+            'quarters' => $request->merge(['feeable_type' => Quarter::class]),
+            'school_years' => $request->merge(['feeable_type' => SchoolYear::class]),
+        };
 
-        return redirect()->back()->with('success', 'Fee created successfully!');
+        $fees = collect();
+
+        foreach ($request->level_category_ids as $level_category_id) {
+            $fee = Fee::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'amount' => $request->amount,
+                'penalty_id' => $request->penalty_id,
+                'feeable_type' => $request->feeable_type,
+                'feeable_id' => $request->feeable_id,
+                'target_user_type' => User::TYPE_STUDENT,
+                'status' => $request->is_active ? Fee::STATUS_ACTIVE : Fee::STATUS_INACTIVE,
+                'due_date' => Carbon::parse($request->due_date),
+                'level_category_id' => $level_category_id,
+                'is_student_tuition_fee' => $request->is_student_tuition_fee,
+
+            ]);
+
+            $fees = $fees->push($fee);
+        }
+
+        StudentFeeJob::dispatch($request->all(), $fees);
+
+        return redirect()->back()->with('success', 'Fee is being created, we will notify you once we are done!');
     }
 }

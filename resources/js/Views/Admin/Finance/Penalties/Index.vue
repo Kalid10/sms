@@ -24,13 +24,14 @@
     </Modal>
 </template>
 <script setup>
-import { capitalize, computed, ref } from "vue";
+import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import moment from "moment";
 import Modal from "@/Components/Modal.vue";
-import AddPenalty from "@/Views/Admin/Fees/Penalties/AddPenalty.vue";
+import AddPenalty from "@/Views/Admin/Finance/Penalties/AddPenalty.vue";
+import { upperCase } from "lodash";
 
 const penalties = computed(() => usePage().props.penalties);
 
@@ -38,7 +39,7 @@ const showAddPenaltyForm = ref(false);
 const mappedPenalties = computed(() => {
     return penalties.value.map((penalty) => {
         return {
-            type: capitalize(penalty.type),
+            type: upperCase(penalty.type),
             amount: penalty.amount,
             date: moment(penalty.created_at).format("MMMM DD, YYYY"),
             last_updated: moment(penalty.updated_at).format("MMMM DD, YYYY"),

@@ -1,5 +1,10 @@
 <template>
-    <FormElement title="Add Fee" @cancel="feeForm.reset()" @submit="submit">
+    <FormElement
+        title="Add Fee"
+        class="!overflow-y-auto"
+        @cancel="feeForm.reset()"
+        @submit="submit"
+    >
         <TextInput
             v-model="feeForm.name"
             placeholder="Name"
@@ -28,6 +33,42 @@
             label="Due Date"
             :error="usePage().props.errors.due_date"
         />
+
+        <SelectInput
+            v-model="feeForm.feeable_type"
+            :options="feeableTypeOptions"
+            label="Select Fee Period"
+            placeholder="Select Fee Period"
+            :error="usePage().props.errors.feeable_type"
+        />
+        <SelectInput
+            v-if="feeForm.feeable_type"
+            v-model="feeForm.feeable_id"
+            :options="feableIdOptions"
+            label="Select Fee Period"
+            placeholder="Select Fee Period"
+            :error="usePage().props.errors.feeable_id"
+        />
+
+        <div class="w-full rounded-md border p-2">
+            <div class="text-sm font-semibold">
+                Select Target Grade Categories
+            </div>
+            <div
+                v-for="(item, index) in levelCategoryOptions"
+                :key="index"
+                class="cursor-pointer p-2 hover:bg-gray-200"
+                @click="toggleLevelCategorySelection(item.value)"
+            >
+                <input
+                    type="checkbox"
+                    :checked="feeForm.level_category_ids.includes(item.value)"
+                    class="mr-2 rounded-md text-brand-450"
+                />
+                {{ item.label }}
+            </div>
+        </div>
+
         <SelectInput
             v-if="penalties.length"
             v-model="feeForm.penalty_id"
@@ -37,7 +78,6 @@
         />
 
         <!--        Create new penalty section-->
-
         <div
             v-if="!showPenaltyForm & penalties.length"
             class="cursor-pointer text-end text-sm underline-offset-2 hover:font-medium hover:underline"
@@ -49,7 +89,7 @@
         <!--        Empty penalty section-->
         <div
             v-if="!showPenaltyForm & !penalties.length"
-            class="flex w-full flex-col items-center justify-center space-y-3"
+            class="flex w-full flex-col items-center justify-center space-y-3 rounded-lg border border-brand-500 p-3"
         >
             <div class="px-5 text-center font-medium">
                 No penalties have been found. To add a penalty with this fee,
@@ -65,7 +105,7 @@
         <!--        Add penalty form-->
         <div
             v-if="showPenaltyForm"
-            class="flex flex-col items-center space-y-3"
+            class="flex flex-col items-center space-y-3 rounded-md border border-brand-500 p-3"
         >
             <div class="flex w-full justify-between px-4 pt-5">
                 <div class="grow text-center font-medium">Add Penalty</div>
@@ -98,6 +138,13 @@
             />
         </div>
 
+        <div class="flex w-full justify-between p-3">
+            <Toggle
+                v-model="feeForm.is_student_tuition_fee"
+                label="Is this student tuition fee?"
+            />
+            <Toggle v-model="feeForm.is_active" label="Is fee active?" />
+        </div>
         <SelectInput
             v-model="feeForm.feeable_type"
             :options="feeableTypeOptions"
@@ -130,6 +177,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { upperCase } from "lodash";
 import DatePicker from "@/Components/DatePicker.vue";
+import { useUIStore } from "@/Store/ui";
 
 const emit = defineEmits(["close"]);
 const isLoading = ref(false);
@@ -145,8 +193,11 @@ const feeForm = useForm({
     feeable_id: "",
     is_active: true,
     due_date: new Date(),
+    level_category_ids: [],
+    is_student_tuition_fee: false,
 });
 
+// Penalties section
 const penalties = computed(() => usePage().props.penalties);
 const penaltiesOptions = computed(() => {
     return penalties.value.map((penalty) => {
@@ -177,6 +228,7 @@ const penaltyTypeSelectOptions = [
     },
 ];
 
+// Feeable section
 const activeQuarters = computed(() => usePage().props.active_quarters);
 const activeSemesters = computed(() => usePage().props.active_semesters);
 const activeSchoolYearId = computed(
@@ -241,8 +293,12 @@ const savePenalty = () => {
     });
 };
 
+const uiStore = useUIStore();
+
 const submit = () => {
     isLoading.value = true;
+    uiStore.setLoading(true, "Creating fee");
+
     feeForm.post("/admin/fees/create", {
         preserveScroll: true,
         onSuccess: () => {
@@ -255,8 +311,30 @@ const submit = () => {
                 type: "error",
                 message: "There was an error adding the fee.",
             });
+            uiStore.setLoading(false);
         },
     });
+};
+
+// Level categories
+const levelCategories = computed(() => usePage().props.level_categories);
+const levelCategoryOptions = computed(() => {
+    return levelCategories.value.map((levelCategory) => {
+        return {
+            value: levelCategory.id,
+            label: levelCategory.name,
+        };
+    });
+});
+
+const toggleLevelCategorySelection = (value) => {
+    if (feeForm.level_category_ids.includes(value)) {
+        feeForm.level_category_ids = feeForm.level_category_ids.filter(
+            (id) => id !== value
+        );
+    } else {
+        feeForm.level_category_ids.push(value);
+    }
 };
 </script>
 

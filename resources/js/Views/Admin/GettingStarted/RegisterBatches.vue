@@ -1,6 +1,6 @@
 <template>
     <div
-        class="container mx-auto flex h-full max-h-full max-w-7xl flex-col gap-4 px-2 pt-6 md:px-6 md:pt-6"
+        class="container mx-auto flex h-full max-h-full max-w-7xl flex-col gap-4 space-y-4 px-2 pt-6 md:px-6 md:pt-6"
     >
         <div class="flex flex-col">
             <Heading>{{ $t("registerBatches.registerGrades") }}</Heading>
@@ -15,18 +15,16 @@
 
         <div class="relative flex gap-5">
             <span
-                class="col-span1 text-brand-text-600 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="col-span1 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
-                <span class="font-semibold text-black">{{
-                    selectedGradeCount
-                }}</span>
+                <span class="font-bold">{{ selectedGradeCount }}</span>
                 {{ $t("registerBatches.gradesSelected") }}
             </span>
 
             <span
                 class="col-span1 text-brand-text-600 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
-                <span class="font-semibold text-black">{{ batchesCount }}</span>
+                <span class="font-bold">{{ batchesCount }}</span>
                 {{ $t("registerBatches.sectionsSelected") }}
             </span>
 
