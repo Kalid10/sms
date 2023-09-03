@@ -1,6 +1,5 @@
 <template>
     <div class="flex h-full w-full gap-4 overflow-hidden">
-        <GradesList :levels="levels" />
         <BatchesScheduleTab
             v-if="!!selectedBatch"
             :selected="selectedBatch"
@@ -20,6 +19,8 @@
                 </Heading>
             </div>
         </div>
+
+        <GradesList :levels="levels" />
     </div>
 </template>
 

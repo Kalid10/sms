@@ -1,6 +1,6 @@
 <template>
     <TableElement
-        :data="mappedFees"
+        :data="mappedPenalties"
         :columns="columns"
         :selectable="false"
         :filterable="false"
@@ -9,18 +9,18 @@
     >
         <template #table-header>
             <div class="flex w-full justify-between py-5">
-                <div class="text-xl font-semibold capitalize">Fees</div>
+                <div class="text-xl font-semibold capitalize">Penalties</div>
                 <SecondaryButton
                     class="w-fit !rounded-2xl bg-brand-400 text-white"
-                    title="Add Fee"
-                    @click="showAddFeeForm = true"
+                    title="Add Penalty"
+                    @click="showAddPenaltyForm = true"
                 />
             </div>
         </template>
     </TableElement>
 
-    <Modal v-model:view="showAddFeeForm">
-        <AddFee @close="showAddFeeForm = false" />
+    <Modal v-model:view="showAddPenaltyForm">
+        <AddPenalty @close="showAddPenaltyForm = false" />
     </Modal>
 </template>
 <script setup>
@@ -30,43 +30,36 @@ import TableElement from "@/Components/TableElement.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import moment from "moment";
 import Modal from "@/Components/Modal.vue";
-import AddFee from "@/Views/Admin/Fees/Fees/AddFee.vue";
+import AddPenalty from "@/Views/Admin/Finance/Penalties/AddPenalty.vue";
+import { upperCase } from "lodash";
 
-const fees = computed(() => usePage().props.fees);
+const penalties = computed(() => usePage().props.penalties);
 
-const showAddFeeForm = ref(false);
-const mappedFees = computed(() => {
-    return fees.value.map((fee) => {
+const showAddPenaltyForm = ref(false);
+const mappedPenalties = computed(() => {
+    return penalties.value.map((penalty) => {
         return {
-            name: fee.name,
-            amount: fee.amount,
-            due_date: moment(fee.due_date).format("MMMM DD, YYYY"),
-            last_updated: moment(fee.updated_at).format("MMMM DD, YYYY"),
-            is_active: fee.status === "active",
+            type: upperCase(penalty.type),
+            amount: penalty.amount,
+            date: moment(penalty.created_at).format("MMMM DD, YYYY"),
+            last_updated: moment(penalty.updated_at).format("MMMM DD, YYYY"),
         };
     });
 });
 
 const columns = [
     {
-        key: "name",
-        name: "Name",
+        key: "type",
+        name: "Type",
     },
     {
         key: "amount",
         name: "Amount",
     },
-
     {
-        key: "is_active",
-        name: "Active",
-        type: Boolean,
+        key: "date",
+        name: "Date",
     },
-    {
-        key: "due_date",
-        name: "Due Date",
-    },
-
     {
         key: "last_updated",
         name: "Last Updated",
