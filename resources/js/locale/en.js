@@ -1108,7 +1108,8 @@ const en = {
         sections: "Sections",
         finish: "Finish",
         updateLevelSectionTitle: "Number of Sections",
-        updateLevelSectionSubtitle: "Update the number of Sections for Grade 7",
+        updateLevelSectionSubtitle:
+            "Update the number of Sections for Grade {grade}",
         updateLevelSectionInputPlaceholder:
             "Specify the number of sections for Grade 7",
     },
@@ -1882,7 +1883,7 @@ const en = {
         chatValue: "Chat with teachers and admins",
         studentValue: "Register, Review, explore and More",
         teacherValue: "Register, evaluate, explore and more",
-        adminValue: "Register, Review, explore and More",
+        userValue: "Register, Review, explore and More",
     },
 
     absenteeAddModal: {

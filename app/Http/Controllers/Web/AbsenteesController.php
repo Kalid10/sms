@@ -197,7 +197,7 @@ class AbsenteesController extends Controller
             // Decode the 'leave_info' and subtract 1 from 'remaining'.
             $leaveInfo = $user->teacher->leave_info;
             if (isset($leaveInfo['remaining'])) {
-                $leaveInfo['remaining'] -= 1;
+                $leaveInfo['remaining']--;
                 $user->teacher->update(['leave_info' => $leaveInfo]);
             } else {
                 // Log an error or redirect back if 'remaining' is not set

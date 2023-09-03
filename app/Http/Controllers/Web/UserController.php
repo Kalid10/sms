@@ -35,6 +35,17 @@ class UserController extends Controller
         // Get users
         $users = User::select('id', 'name', 'email', 'type', 'gender', 'is_blocked')
             ->where('name', 'like', '%'.$searchKey.'%')
+            ->with([
+                'student:id,user_id',
+                'teacher:id,user_id',
+                'admin:id,position,user_id',
+                'guardian:id,user_id',
+                'guardian.children.batches.batch.level',
+                'guardian.children.grades',
+                'guardian.children.user:id,name,username,gender,profile_image',
+                'address',
+                'roles',
+            ])
             ->paginate(12, ['*'], 'user_page', $userPage);
 
         // Get activity logs of users
