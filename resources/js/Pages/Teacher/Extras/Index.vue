@@ -1,5 +1,5 @@
 <template>
-    <div class="my-5 flex min-h-full w-11/12 flex-col space-y-5">
+    <div class="flex min-h-full w-11/12 flex-col space-y-5 py-5">
         <Title title="Extras" />
         <TabElement
             v-model:active="activeTab"
@@ -13,6 +13,10 @@
             <template #[absenteeTab]>
                 <AbsenteePage />
             </template>
+
+            <template #[schedulesTab]>
+                <BatchSchedule />
+            </template>
         </TabElement>
     </div>
 </template>
@@ -24,11 +28,13 @@ import Title from "@/Views/Teacher/Views/Title.vue";
 import AbsenteePage from "@/Views/Teacher/Extras/Absentee/Index.vue";
 import { toUnderscore } from "@/utils";
 import { useI18n } from "vue-i18n";
+import BatchSchedule from "@/Views/Teacher/BatchSchedule/Index.vue";
 
 const { t } = useI18n();
 const inventoryTab = toUnderscore(t("common.inventory"));
 const absenteeTab = toUnderscore(t("common.absentee"));
+const schedulesTab = toUnderscore(t("common.schedules"));
 const activeTab = ref(absenteeTab);
-const tabs = [inventoryTab, absenteeTab];
+const tabs = [inventoryTab, absenteeTab, schedulesTab];
 </script>
 <style scoped></style>
