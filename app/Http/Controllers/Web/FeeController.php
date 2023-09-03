@@ -17,14 +17,24 @@ use Inertia\Response;
 
 class FeeController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
+
+        $feeable_type = $request->input('feeable_type');
+        $target_user_type = $request->input('target_user_type');
+
         $activeSemesters = Semester::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->get();
         $activeQuarters = Quarter::whereIn('semester_id', $activeSemesters->pluck('id'))->with('semester')->get();
 
+        $fees = Fee::when($feeable_type, function ($query, $feeable_type) {
+            return $query->where('feeable_type', $feeable_type);
+        })->when($target_user_type, function ($query, $target_user_type) {
+            return $query->where('target_user_type', $target_user_type);
+        })->get();
+
         return Inertia::render('Admin/Fees/Index', [
             'payment_providers' => PaymentProvider::all(),
-            'fees' => Fee::all(),
+            'fees' => $fees,
             'penalties' => Penalty::all(),
             'active_semesters' => $activeSemesters,
             'active_quarters' => $activeQuarters,

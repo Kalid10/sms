@@ -114,7 +114,7 @@
             :error="usePage().props.errors.feeable_id"
         />
 
-        <Toggle v-model="feeForm.is_active" label="Is this fee active?" />
+        <!--        <Toggle v-model="feeForm.is_active" label="Is this fee active?" />-->
 
         <Loading v-if="isLoading" is-full-screen />
     </FormElement>
@@ -129,7 +129,6 @@ import { computed, inject, ref, watch } from "vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { upperCase } from "lodash";
-import Toggle from "@/Components/Toggle.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 
 const emit = defineEmits(["close"]);
