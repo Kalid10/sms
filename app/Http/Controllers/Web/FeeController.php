@@ -10,6 +10,8 @@ use App\Models\Penalty;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\Semester;
+use App\Models\Student;
+use App\Models\StudentTuition;
 use App\Models\User;
 use App\Services\StudentFeeService;
 use Carbon\Carbon;
@@ -22,18 +24,38 @@ class FeeController extends Controller
 {
     public function index(Request $request): Response
     {
+        $searchKey = $request->input('find');
 
         $feeable_type = $request->input('feeable_type');
         $target_user_type = $request->input('target_user_type');
 
+        $status = $request->input('status');
+
         $activeSemesters = Semester::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->get();
         $activeQuarters = Quarter::whereIn('semester_id', $activeSemesters->pluck('id'))->with('semester')->get();
 
-        $fees = Fee::when($feeable_type, function ($query, $feeable_type) {
-            return $query->where('feeable_type', $feeable_type);
-        })->when($target_user_type, function ($query, $target_user_type) {
-            return $query->where('target_user_type', $target_user_type);
-        })->get();
+        $fees = Fee::with('penalty', 'levelCategory')
+            ->when($feeable_type, function ($query, $feeable_type) {
+                return $query->where('feeable_type', $feeable_type);
+            })->when($target_user_type, function ($query, $target_user_type) {
+                return $query->where('target_user_type', $target_user_type);
+            })->get();
+
+        $studentTuitions = StudentTuition::with(
+            'fee',
+            'student.user:id,name,gender,username',
+            'student.guardian.user:id,name,phone_number,email',
+            'paymentProvider'
+        )->when($searchKey, function ($query, $searchKey) {
+            return $query->whereHas('student.user', function ($query) use ($searchKey) {
+                return $query->where('name', 'like', '%'.$searchKey.'%')
+                    ->orWhere('username', 'like', '%'.$searchKey.'%');
+            });
+        })
+            ->when($status, function ($query, $status) {
+                return $query->where('status', $status);
+            })
+            ->paginate(10);
 
         return Inertia::render('Admin/Finance/Index', [
             'payment_providers' => PaymentProvider::all(),
@@ -43,6 +65,17 @@ class FeeController extends Controller
             'active_quarters' => $activeQuarters,
             'active_school_year_id' => SchoolYear::getActiveSchoolYear()->id,
             'level_categories' => LevelCategory::all(),
+            'student_tuitions' => $studentTuitions,
+            'student_tuition_history' => Inertia::lazy(function () use ($request) {
+
+                if ($request->input('student_id')) {
+                    $student = Student::find($request->input('student_id'))->load('user');
+
+                    return StudentTuition::with('fee', 'student.user:id,name,gender,username', 'paymentProvider')
+                        ->where('student_id', $student->id)
+                        ->get();
+                }
+            }),
         ]);
     }
 
