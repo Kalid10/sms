@@ -17,6 +17,7 @@ use App\Services\StudentService;
 use App\Services\TeacherService;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -112,7 +113,8 @@ class TeacherController extends Controller
         $schoolYearId = SchoolYear::getActiveSchoolYear()?->id;
         $batchSubject = $this->teacherService->prepareBatchSubject($request, $id);
         $batches = $this->teacherService->getBatches($id);
-        $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'), $request);
+        //        $students = $this->teacherService->getStudents($batchSubject->id, $request->input('search'), $request);
+        $students = $batchSubject ? $this->teacherService->getStudents($batchSubject->id, $request->input('search'), $request) : [];
         $teacher = $this->teacherService->getTeacherDetails($id);
         $teacherBatchSubjects = $teacher->batchSubjects->pluck('id');
         $teacherSchedules = BatchSchedule::whereIn('batch_subject_id', $teacherBatchSubjects)
@@ -181,7 +183,7 @@ class TeacherController extends Controller
             'announcements' => $announcements,
             'flags' => $flags,
             'filters' => [
-                'batch_subject_id' => $batchSubject->id,
+                'batch_subject_id' => $batchSubject?->id,
                 'search' => $request->input('search'),
             ],
             'teacher_absentee_percentage' => $teacherAbsenteePercentage,
@@ -219,6 +221,36 @@ class TeacherController extends Controller
                 'end_date' => $endDate,
                 'search' => $searchKey,
             ],
+        ]);
+    }
+
+    public function updateLeaveInfo(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'leave_info.total' => 'nullable|integer',
+            'teacher_id' => 'required|exists:teachers,id',
+        ]);
+
+        $teacher = Teacher::findOrFail($request->input('teacher_id'));
+
+        if (! $teacher->leave_info) {
+            $leaveInfo = [
+                'total' => $request->input('leave_info.total'),
+                'remaining' => $request->input('leave_info.total'),
+            ];
+        } else {
+            $leaveInfo = [
+                'total' => $request->input('leave_info.total'),
+                'remaining' => $teacher->leave_info['remaining'],
+            ];
+        }
+
+        $teacher->update([
+            'leave_info' => $leaveInfo,
+        ]);
+
+        return back()->with([
+            'success' => 'Teacher leave information updated successfully!',
         ]);
     }
 }

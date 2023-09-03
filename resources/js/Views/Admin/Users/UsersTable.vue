@@ -8,7 +8,7 @@
         "
         actionable
         row-actionable
-        selectable
+        :selectable="false"
         :title="$t('usersTable.tableElementTitle')"
         :subtitle="$t('usersTable.tableElementSubtitle')"
     >
@@ -48,19 +48,31 @@
         </template>
 
         <template #row-actions="{ row }">
-            <div v-if="row.id !== $page.props.auth.user.id">
+            <div class="flex w-full space-x-4">
+                <div class="flex w-full justify-start">
+                    <div v-if="row.id !== $page.props.auth.user.id">
+                        <button
+                            v-if="row.is_blocked === 0"
+                            @click="toggleDialogBox(row)"
+                        >
+                            <LockOpenIcon class="h-4 w-4" />
+                        </button>
+                        <button v-else @click="toggleDialogBox(row)">
+                            <LockClosedIcon class="h-4 w-4" />
+                        </button>
+                    </div>
+                    <div v-else>
+                        <span class="text-sm font-light"> </span>
+                    </div>
+                </div>
                 <button
-                    v-if="row.is_blocked === 0"
-                    @click="toggleDialogBox(row)"
+                    class="flex w-full justify-end"
+                    @click="navigateToUserPage(row)"
                 >
-                    <LockOpenIcon class="h-4 w-4" />
+                    <ArrowTopRightOnSquareIcon
+                        class="h-4 w-4 stroke-blue-600"
+                    />
                 </button>
-                <button v-else @click="toggleDialogBox(row)">
-                    <LockClosedIcon class="h-4 w-4" />
-                </button>
-            </div>
-            <div v-else>
-                <span class="text-sm font-light"> </span>
             </div>
         </template>
 
@@ -79,13 +91,28 @@
             <NoSymbolIcon />
         </template>
 
-        <template #title> Block User</template>
+        <template #title>
+            <span v-if="selectedUserInformation.is_blocked">
+                Unblock User
+            </span>
+            <span v-else> Block User </span>
+        </template>
         <template #description>
-            You are about to block this {{ selectedUserInformation.name }}. Are
-            you sure you want to continue?
+            <span v-if="selectedUserInformation.is_blocked">
+                Are you sure you want to unblock
+                {{ selectedUserInformation.name }}?
+            </span>
+            <span v-else>
+                Are you sure you want to block
+                {{ selectedUserInformation.name }}?
+            </span>
         </template>
         <template #action> Yes</template>
     </DialogBox>
+
+    <Modal v-model:view="showUserModal">
+        <Index :user="selectedUser" />
+    </Modal>
 </template>
 <script setup>
 import TextInput from "@/Components/TextInput.vue";
@@ -96,6 +123,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
 import {
+    ArrowTopRightOnSquareIcon,
     LockClosedIcon,
     LockOpenIcon,
     NoSymbolIcon,
@@ -103,11 +131,17 @@ import {
 
 import { useI18n } from "vue-i18n";
 import DialogBox from "@/Components/DialogBox.vue";
+import Modal from "@/Components/Modal.vue";
+import Index from "@/Views/Admin/Users/Type/Index.vue";
+
+const selectedUser = ref(null);
 
 const { t } = useI18n();
 const users = computed(() => {
     return usePage().props.users;
 });
+
+const showUserModal = ref(false);
 
 const showModal = ref(false);
 const query = ref("");
@@ -124,8 +158,6 @@ function search() {
         }
     );
 }
-
-const selectedUser = ref(null);
 
 const selectedUserInformation = ref(null);
 
@@ -153,15 +185,36 @@ const blockUser = () => {
 };
 
 const key = ref(0);
+
 watch([query], () => {
     search();
 });
+
+function navigateToUserPage(user) {
+    switch (user.type) {
+        case "admin":
+            showUserModal.value = true;
+            selectedUser.value = user;
+            break;
+        case "teacher":
+            router.get(`/admin/teachers/${user.teacher.id}`);
+            break;
+        case "student":
+            router.get(`/admin/teachers/students/${user.student.id}`);
+            break;
+        case "guardian":
+            showUserModal.value = true;
+            selectedUser.value = user;
+            break;
+        default:
+            break;
+    }
+}
 
 const users_config = [
     {
         name: t("usersTable.fullName"),
         key: "name",
-        // link: "/admin/{type}s/{id}",
         class: "w-[35%]",
         align: "left",
         type: "custom",
@@ -169,7 +222,6 @@ const users_config = [
     {
         name: t("usersTable.email"),
         key: "email",
-        // link: "mailto:{email}",
         class: "w-[35%]",
         align: "left",
         type: "custom",
