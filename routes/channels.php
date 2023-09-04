@@ -41,3 +41,7 @@ Broadcast::channel('question-generator', function ($user) {
 Broadcast::channel('mass-assessment', function ($user) {
     return $user->hasRole('manage-assessment-types');
 });
+
+Broadcast::channel('student-fee', function ($user) {
+    return $user->hasRole('manage-finance');
+});

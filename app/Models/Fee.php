@@ -25,10 +25,17 @@ class Fee extends Model
         'target_user_type',
         'status',
         'due_date',
+        'level_category_id',
+        'is_student_tuition_fee',
     ];
 
     public function penalty(): BelongsTo
     {
         return $this->belongsTo(Penalty::class);
+    }
+
+    public function levelCategory(): BelongsTo
+    {
+        return $this->belongsTo(LevelCategory::class);
     }
 }
