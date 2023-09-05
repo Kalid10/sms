@@ -1,9 +1,5 @@
 <template>
-    <div class="grid grid-cols-6 gap-2 overflow-hidden">
-        <div class="flex items-center justify-center">
-            <!--           Period Title -->
-        </div>
-
+    <div class="grid-rows-10 grid grid-cols-5 gap-2">
         <div
             v-for="(day, d) in [
                 'Monday',
@@ -12,24 +8,15 @@
                 'Thursday',
                 'Friday',
             ]"
-            :key="'day-' + d"
-            :class="`col-start-${d + 2}`"
+            :key="d"
             class="flex items-center justify-center py-1 text-brand-text-50"
         >
             <Heading size="xs">{{ day }}</Heading>
         </div>
 
-        <div v-for="n in schoolPeriodCount" :key="'template-' + n">
-            <div
-                class="flex h-full items-center justify-center rounded-md bg-gradient-to-r from-gray-50 to-gray-100 py-1"
-            >
-                <Heading size="sm"> {{ addSuffix(n) }} Period</Heading>
-            </div>
-        </div>
-
         <div
             v-for="(subject, s) in normalizedSchedule"
-            :key="'subject-' + s"
+            :key="s"
             :class="[
                 getColumnByDay(subject.day),
                 subject.slot &&
@@ -45,39 +32,50 @@
                     subject.slot ? subject.slot['batch_subject'] : null
                 ),
             ]"
-            class="flex rounded-lg border p-4"
+            class="flex rounded-lg border p-2"
         >
-            <div
-                v-if="subject.slot && !!subject.slot['batch_subject']"
-                class="flex flex-col"
-            >
-                <Heading class="text-brand-text-50" size="sm">
-                    {{ subject.slot["batch_subject"]["subject"]["full_name"] }}
-                </Heading>
-                <Heading
-                    v-if="!!subject.slot.batch_subject.teacher"
-                    class="text-brand-450"
-                    size="xs"
-                >
-                    Teacher {{ subject.slot.batch_subject.teacher?.user?.name }}
-                </Heading>
-            </div>
-            <div
-                v-else-if="subject.slot && subject.slot['school_period']"
-                class="flex flex-col"
-            >
-                <Heading size="sm"
-                    >{{ subject["school_period"]["name"] }}
-                </Heading>
-                <div class="flex items-center gap-1">
-                    <ClockIcon class="h-3.5 w-3.5 stroke-2" />
-                    <Heading class="!font-normal" size="xs"
-                        >{{ subject["school_period"]["duration"] }}
-                        minutes
+            <div v-if="subject.slot" class="flex w-full">
+                <div class="flex w-7/12 flex-col">
+                    <div class="flex flex-col">
+                        <Heading class="text-brand-text-50" size="sm">
+                            {{ subject.slot.batch_subject?.subject?.full_name }}
+                        </Heading>
+                        <Heading
+                            v-if="!!subject.slot.batch_subject.teacher"
+                            class="text-brand-450"
+                            size="xs"
+                        >
+                            Teacher
+                            {{ subject.slot.batch_subject.teacher?.user?.name }}
+                        </Heading>
+                    </div>
+                    <div class="flex flex-col">
+                        <Heading size="sm"
+                            >{{ addSuffix(subject.slot.school_period?.name) }}
+                            period
+                        </Heading>
+                        <div class="flex items-center gap-1">
+                            <ClockIcon class="h-3.5 w-3.5 stroke-2" />
+                            <Heading class="!font-normal" size="xs"
+                                >{{ subject.slot.school_period?.duration }}
+                                minutes
+                            </Heading>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex w-4/12 flex-col">
+                    <Heading size="sm">
+                        {{ subject.slot.batch?.level?.level_category?.name }}
+                    </Heading>
+                    <Heading size="sm">
+                        Grade: {{ subject.slot.batch?.level?.name }}
+                        {{ subject.slot.batch?.section }}
                     </Heading>
                 </div>
             </div>
-            <div v-else class="flex flex-col">
+
+            <div v-else class="flex h-10 items-center justify-center">
                 <Heading size="sm"> No Schedule</Heading>
             </div>
         </div>
@@ -89,7 +87,7 @@ import Heading from "@/Components/Heading.vue";
 import { ClockIcon } from "@heroicons/vue/24/outline";
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import { addSuffix } from "@/utils.js";
+import { addSuffix } from "@/utils";
 
 const schedules = computed(() => usePage().props.batch_schedules);
 const schoolPeriodCount = computed(() => usePage().props.school_period_count);
@@ -154,19 +152,19 @@ function getColumnByDay(day) {
     let style = "";
     switch (day) {
         case "monday":
-            style += "col-start-2";
+            style += "col-start-1";
             break;
         case "tuesday":
-            style += "col-start-3";
+            style += "col-start-2";
             break;
         case "wednesday":
-            style += "col-start-4";
+            style += "col-start-3";
             break;
         case "thursday":
-            style += "col-start-5";
+            style += "col-start-4";
             break;
         case "friday":
-            style += "col-start-6";
+            style += "col-start-5";
             break;
         default:
             style += "";
