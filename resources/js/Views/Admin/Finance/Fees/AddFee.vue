@@ -138,13 +138,30 @@
             />
         </div>
 
-        <div class="flex w-full justify-between p-3">
-            <Toggle
-                v-model="feeForm.is_student_tuition_fee"
-                label="Is this student tuition fee?"
-            />
-            <Toggle v-model="feeForm.is_active" label="Is fee active?" />
-        </div>
+        <!--        <div class="flex w-full justify-between p-3">-->
+        <!--            <Toggle-->
+        <!--                v-model="feeForm.is_student_tuition_fee"-->
+        <!--                label="Is this student tuition fee?"-->
+        <!--            />-->
+        <!--            <Toggle v-model="feeForm.is_active" label="Is fee active?" />-->
+        <!--        </div>-->
+        <SelectInput
+            v-model="feeForm.feeable_type"
+            :options="feeableTypeOptions"
+            label="Select Fee Period"
+            placeholder="Select Fee Period"
+            :error="usePage().props.errors.feeable_type"
+        />
+        <SelectInput
+            v-if="feeForm.feeable_type"
+            v-model="feeForm.feeable_id"
+            :options="feableIdOptions"
+            label="Select Fee Period"
+            placeholder="Select Fee Period"
+            :error="usePage().props.errors.feeable_id"
+        />
+
+        <Toggle v-model="feeForm.is_active" label="Is this fee active?" />
 
         <Loading v-if="isLoading" is-full-screen />
     </FormElement>
@@ -159,9 +176,9 @@ import { computed, inject, ref, watch } from "vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { upperCase } from "lodash";
-import Toggle from "@/Components/Toggle.vue";
 import DatePicker from "@/Components/DatePicker.vue";
 import { useUIStore } from "@/Store/ui";
+import Toggle from "@/Components/Toggle.vue";
 
 const emit = defineEmits(["close"]);
 const isLoading = ref(false);
@@ -178,7 +195,7 @@ const feeForm = useForm({
     is_active: true,
     due_date: new Date(),
     level_category_ids: [],
-    is_student_tuition_fee: false,
+    is_student_tuition_fee: true,
 });
 
 // Penalties section

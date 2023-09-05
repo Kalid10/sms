@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\InventoryCheckInOut;
 use App\Models\InventoryItem;
+use App\Models\SchoolPeriod;
+use App\Models\SchoolYear;
 use App\Models\StaffAbsentee;
 use App\Models\User;
 use Exception;
@@ -54,6 +56,18 @@ class ExtrasController extends Controller
                 ->count();
         }
 
+        $teacher = auth()->user()->teacher;
+
+        $batchSchedules = $teacher->batchSchedules()
+            ->with('batchSubject.subject', 'schoolPeriod', 'batch.level', 'batch.level.levelCategory')
+            ->get();
+
+        // Get school period count for the current school year for a single level category
+        $schoolPeriodCount = SchoolPeriod::where([
+            'school_year_id' => SchoolYear::getActiveSchoolYear()->id,
+            'is_custom' => false,
+        ])->distinct('start_time')->count();
+
         $page = match ($loggedInUserType) {
             User::TYPE_TEACHER => 'Teacher/Extras/Index',
             User::TYPE_ADMIN => 'Admin/Inventory/Index',
@@ -69,6 +83,8 @@ class ExtrasController extends Controller
             'pending_count' => $pending_count ?? null,
             'inventory_count' => InventoryItem::count(),
             'absentee_list' => $this->getAbsentees($request->input('date')),
+            'batch_schedules' => $batchSchedules,
+            'school_period_count' => $schoolPeriodCount,
         ]);
     }
 

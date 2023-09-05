@@ -174,7 +174,7 @@
                     </div>
                 </template>
                 <template #short_name-column="{ data }">
-                    <span class="text-xs text-brand-text-300">{{ data }}</span>
+                    <span class="text-xs text-gray-700">{{ data }}</span>
                 </template>
                 <template #tags-column="{ data }">
                     <div class="flex w-full items-center justify-center gap-2">
@@ -187,7 +187,7 @@
                     </div>
                 </template>
                 <template #updated_at-column="{ data }">
-                    <span class="text-xs text-brand-text-300">
+                    <span class="text-xs text-gray-700">
                         {{ moment(data).fromNow() }}
                     </span>
                 </template>
