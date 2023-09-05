@@ -11,13 +11,13 @@
                 >
                     <div class="flex w-full justify-between">
                         <div class="text-2xl font-medium">
-                            Scheduled Assessments
+                            {{ $t("assessmentIndex.scheduledAssessments") }}
                         </div>
                         <PrimaryButton
                             class="rounded-full"
                             @click="showModal = true"
                         >
-                            Create Assessment
+                            {{ $t("assessmentIndex.createAssessment") }}
                         </PrimaryButton>
                     </div>
 
@@ -51,7 +51,7 @@
 
                         <EmptyView
                             v-if="mappedAssessments?.data.length === 0"
-                            title="No assessments found"
+                            :title="$t('assessmentIndex.noAssessmentsFound')"
                         />
                     </div>
 

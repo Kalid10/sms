@@ -55,6 +55,7 @@
     <Modal v-model:view="showFeeHistoryModal">
         <FeeHistory :student="studentTuitionHistory" />
     </Modal>
+
 </template>
 <script setup>
 import TableElement from "@/Components/TableElement.vue";

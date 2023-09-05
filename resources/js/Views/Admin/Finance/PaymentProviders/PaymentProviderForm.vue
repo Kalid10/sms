@@ -1,17 +1,20 @@
 <template>
     <FormElement
-        title="Payment Provider Form"
+        :title="$t('paymentProviders.paymentProviderForm')"
         @submit="submit"
         @cancel="form.reset()"
     >
         <TextInput
             v-model="form.name"
-            placeholder="Name"
-            label="Name"
+            :placeholder="$t('common.name')"
+            :label="$t('common.name')"
             :error="usePage().props.errors.name"
         />
 
-        <Toggle v-model="form.is_enabled" label="Enable or Disable" />
+        <Toggle
+            v-model="form.is_enabled"
+            :label="$t('paymentProviders.enableDisable')"
+        />
 
         <img
             v-if="imagePreview"

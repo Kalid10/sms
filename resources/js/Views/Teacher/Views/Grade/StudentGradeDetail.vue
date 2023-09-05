@@ -145,18 +145,15 @@
                                 <div class="pl-3">
                                     <p>
                                         Email:
-                                        <span>contact.fks@gmail.com</span>
+                                        <span>contact.test@gmail.com</span>
                                     </p>
                                     <p>
-                                        Phone: <span>+251-116-454919/20</span>
+                                        Phone: <span>+251-000-000000/20</span>
                                     </p>
                                     <p>P.O.Box: <span>257 CODE 1110</span></p>
                                     <p>
                                         Address:
-                                        <span
-                                            >CMC, in Bole Sub city, Woreda
-                                            8.</span
-                                        >
+                                        <span>CMC, Woreda 8.</span>
                                     </p>
                                 </div>
                                 <div>
