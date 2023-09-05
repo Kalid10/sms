@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API\Teachers;
 
-use App\Http\Requests\API\Teachers\AssessmentRequest;
+use App\Http\Requests\API\Teachers\Assessments\AssessmentRequest;
+use App\Http\Requests\API\Teachers\Assessments\MarkAssessmentRequest;
+use App\Http\Requests\API\Teachers\Assessments\UpdateAssessmentStatusRequest;
 use App\Http\Resources\Teachers\AssessmentCollection;
 use App\Http\Resources\Teachers\AssessmentResource;
 use App\Http\Resources\Teachers\StudentAssessmentCollection;
@@ -45,6 +47,13 @@ class AssessmentController extends Controller
                 'assessments.batchSubject.subject'
             )
             ->assessments
+            ->whereIn('status', $request->input('status', [
+                Assessment::STATUS_DRAFT,
+                Assessment::STATUS_SCHEDULED,
+                Assessment::STATUS_PUBLISHED,
+                Assessment::STATUS_MARKING,
+                Assessment::STATUS_COMPLETED,
+            ]))
             ->when($request->has('active'), function ($query) use ($request) {
 
                 if ($request->input('active')) {
@@ -86,9 +95,24 @@ class AssessmentController extends Controller
     /**
      * @return Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
      *
+     * Update the assessment's status.
+     */
+    public function updateStatus(UpdateAssessmentStatusRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+    {
+        $assessment->status = $request->input('new_status');
+        $assessment->save();
+
+        return response([
+            'message' => `Assessment successfully status set to ${$request->input('new_status')}`,
+        ], 200);
+    }
+
+    /**
+     * @return Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+     *
      * Insert the students' assessments.
      */
-    public function mark(AssessmentRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+    public function mark(MarkAssessmentRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
         InsertStudentsAssessmentsJob::dispatch($request->validated('points'), $assessment);
 
