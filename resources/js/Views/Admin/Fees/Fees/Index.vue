@@ -9,10 +9,12 @@
     >
         <template #table-header>
             <div class="flex w-full justify-between py-5">
-                <div class="text-xl font-semibold capitalize">Fees</div>
+                <div class="text-xl font-semibold capitalize">
+                    {{ $t("fees.fees") }}
+                </div>
                 <SecondaryButton
                     class="w-fit !rounded-2xl bg-brand-400 text-white"
-                    title="Add Fee"
+                    :title="$t('fees.addFee')"
                     @click="showAddFeeForm = true"
                 />
             </div>
@@ -31,7 +33,9 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import moment from "moment";
 import Modal from "@/Components/Modal.vue";
 import AddFee from "@/Views/Admin/Fees/Fees/AddFee.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const fees = computed(() => usePage().props.fees);
 
 const showAddFeeForm = ref(false);
@@ -50,26 +54,26 @@ const mappedFees = computed(() => {
 const columns = [
     {
         key: "name",
-        name: "Name",
+        name: t("common.name"),
     },
     {
         key: "amount",
-        name: "Amount",
+        name: t("fees.amount"),
     },
 
     {
         key: "is_active",
-        name: "Active",
+        name: t("fees.active"),
         type: Boolean,
     },
     {
         key: "due_date",
-        name: "Due Date",
+        name: t("fees.dueDate"),
     },
 
     {
         key: "last_updated",
-        name: "Last Updated",
+        name: t("fees.lastUpdated"),
     },
 ];
 </script>

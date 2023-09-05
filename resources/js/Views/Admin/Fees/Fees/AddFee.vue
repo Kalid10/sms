@@ -1,39 +1,43 @@
 <template>
-    <FormElement title="Add Fee" @cancel="feeForm.reset()" @submit="submit">
+    <FormElement
+        :title="$t('addFee.addFee')"
+        @cancel="feeForm.reset()"
+        @submit="submit"
+    >
         <TextInput
             v-model="feeForm.name"
-            placeholder="Name"
-            label="Name"
+            :placeholder="$t('common.name')"
+            :label="$t('common.name')"
             :error="usePage().props.errors.name"
         />
 
         <TextInput
             v-model="feeForm.description"
-            placeholder="Description"
-            label="Description"
+            :placeholder="$t('common.description')"
+            :label="$t('common.description')"
             :error="usePage().props.errors.description"
         />
 
         <TextInput
             v-model="feeForm.amount"
-            placeholder="Amount"
-            label="Amount"
+            :placeholder="$t('fees.amount')"
+            :label="$t('fees.amount')"
             type="number"
             :error="usePage().props.errors.amount"
         />
 
         <DatePicker
             v-model="feeForm.due_date"
-            placeholder="Due Date"
-            label="Due Date"
+            :placeholder="$t('fees.dueDate')"
+            :label="$t('fees.dueDate')"
             :error="usePage().props.errors.due_date"
         />
         <SelectInput
             v-if="penalties.length"
             v-model="feeForm.penalty_id"
             :options="penaltiesOptions"
-            label="Select Penalty"
-            placeholder="Select Penalty"
+            :placeholder="$t('addFee.selectPenalty')"
+            :label="$t('addFee.selectPenalty')"
         />
 
         <!--        Create new penalty section-->
@@ -43,7 +47,7 @@
             class="cursor-pointer text-end text-sm underline-offset-2 hover:font-medium hover:underline"
             @click="showPenaltyForm = true"
         >
-            Do you want to create a new penalty for this fee?
+            {{ $t("addFee.wantCreatePenalty") }}
         </div>
 
         <!--        Empty penalty section-->
@@ -52,11 +56,10 @@
             class="flex w-full flex-col items-center justify-center space-y-3"
         >
             <div class="px-5 text-center font-medium">
-                No penalties have been found. To add a penalty with this fee,
-                you may create one below.
+                {{ $t("addFee.noPenaltiesFound") }}
             </div>
             <SecondaryButton
-                title="Add Penalty"
+                :title="$t('addPenalty.addPenalty')"
                 class="!rounded-2xl bg-brand-400 text-white"
                 @click="showPenaltyForm = true"
             />
@@ -68,7 +71,9 @@
             class="flex flex-col items-center space-y-3"
         >
             <div class="flex w-full justify-between px-4 pt-5">
-                <div class="grow text-center font-medium">Add Penalty</div>
+                <div class="grow text-center font-medium">
+                    {{ $t("addPenalty.addPenalty") }}
+                </div>
                 <XMarkIcon
                     class="h-5 w-5 cursor-pointer hover:scale-125 hover:text-red-500"
                     @click="showPenaltyForm = false"
@@ -77,22 +82,22 @@
             <SelectInput
                 v-model="penaltyForm.type"
                 :options="penaltyTypeSelectOptions"
-                label="Type"
+                :placeholder="$t('addPenalty.selectType')"
+                :label="$t('common.type')"
                 class="w-full"
-                placeholder="Select Type"
                 :error="usePage().props.errors.type"
             />
 
             <TextInput
                 v-model="penaltyForm.amount"
-                placeholder="Amount"
-                label="Amount"
+                :placeholder="$t('fees.amount')"
+                :label="$t('fees.amount')"
                 class="w-full"
                 type="number"
                 :error="usePage().props.errors.amount"
             />
             <SecondaryButton
-                title="Save Penalty"
+                :title="$t('addFee.savePenalty')"
                 class="w-fit !rounded-2xl bg-brand-400 text-white"
                 @click="savePenalty"
             />
@@ -101,20 +106,20 @@
         <SelectInput
             v-model="feeForm.feeable_type"
             :options="feeableTypeOptions"
-            label="Select Fee Period"
-            placeholder="Select Fee Period"
+            :placeholder="$t('addFee.selectFeePeriod')"
+            :label="$t('addFee.selectFeePeriod')"
             :error="usePage().props.errors.feeable_type"
         />
         <SelectInput
             v-if="feeForm.feeable_type"
             v-model="feeForm.feeable_id"
             :options="feableIdOptions"
-            label="Select Fee Period"
-            placeholder="Select Fee Period"
+            :placeholder="$t('addFee.selectFeePeriod')"
+            :label="$t('addFee.selectFeePeriod')"
             :error="usePage().props.errors.feeable_id"
         />
 
-        <Toggle v-model="feeForm.is_active" label="Is this fee active?" />
+        <Toggle v-model="feeForm.is_active" :label="$t('addFee.isFeeActive')" />
 
         <Loading v-if="isLoading" is-full-screen />
     </FormElement>
@@ -131,7 +136,9 @@ import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { upperCase } from "lodash";
 import Toggle from "@/Components/Toggle.vue";
 import DatePicker from "@/Components/DatePicker.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const emit = defineEmits(["close"]);
 const isLoading = ref(false);
 const showPenaltyForm = ref(false);
@@ -166,15 +173,15 @@ const penaltyForm = useForm({
 const penaltyTypeSelectOptions = [
     {
         value: "flat_rate",
-        label: "Flat Rate",
+        label: t("addPenalty.flatRate"),
     },
     {
         value: "percentage",
-        label: "Percentage",
+        label: t("addPenalty.percentage"),
     },
     {
         value: "daily",
-        label: "Per Day",
+        label: t("addPenalty.perDay"),
     },
 ];
 
@@ -186,15 +193,15 @@ const activeSchoolYearId = computed(
 const feeableTypeOptions = [
     {
         value: "quarters",
-        label: "Quarter",
+        label: t("common.quarter"),
     },
     {
         value: "semesters",
-        label: "Semester",
+        label: t("common.semester"),
     },
     {
         value: "school_years",
-        label: "School Year",
+        label: t("common.schoolYear"),
     },
 ];
 const feableIdOptions = ref();
@@ -236,7 +243,7 @@ const savePenalty = () => {
             isLoading.value = false;
             showNotification({
                 type: "error",
-                message: "There was an error adding the penalty.",
+                message: t("addFee.errorAddingPenalty"),
             });
         },
     });
@@ -254,7 +261,7 @@ const submit = () => {
             isLoading.value = false;
             showNotification({
                 type: "error",
-                message: "There was an error adding the fee.",
+                message: t("addFee.errorAddingFee"),
             });
         },
     });

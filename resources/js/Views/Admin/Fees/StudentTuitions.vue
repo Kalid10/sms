@@ -1,5 +1,5 @@
 <template>
-    <div>Student</div>
+    <div>{{ $t("common.student") }}</div>
 </template>
 <script setup></script>
 <style scoped></style>

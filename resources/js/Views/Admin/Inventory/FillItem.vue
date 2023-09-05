@@ -1,17 +1,20 @@
 <template>
-    <FormElement :title="'Fill ' + item.name + ' inventory'" @submit="submit">
+    <FormElement
+        :title="$t('fillItem.fill', { name: item.name })"
+        @submit="submit"
+    >
         <TextInput
             v-model="itemForm.quantity"
-            label="Quantity"
+            :label="$t('common.quantity')"
+            :placeholder="$t('common.quantity')"
             type="number"
-            placeholder="Quantity"
             :error="usePage().props.errors.quantity"
         />
         <TextInput
             v-model="itemForm.low_stock_threshold"
-            label="Low Stock Alert Threshold"
+            :label="$t('inventoryAddItem.lowStockAlertThreshold')"
+            :placeholder="$t('inventoryAddItem.enterQuantityAlert')"
             type="number"
-            placeholder="Enter the quantity at which to alert"
             :error="usePage().props.errors.low_stock_threshold"
         />
     </FormElement>
