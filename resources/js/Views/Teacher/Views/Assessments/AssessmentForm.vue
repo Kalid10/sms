@@ -250,10 +250,10 @@ let form = useForm({
     batch_subject_ids: [],
     level_category_ids: [],
     due_date: new Date(),
-    title: "asdf",
-    description: "asd",
-    maximum_point: "12",
-    status: "published",
+    title: "",
+    description: "",
+    maximum_point: "",
+    status: "",
 });
 
 watch(

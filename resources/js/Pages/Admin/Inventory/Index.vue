@@ -1,7 +1,7 @@
 <template>
     <div class="my-5 flex min-h-full w-11/12 flex-col space-y-6">
         <div class="flex w-full items-center justify-between">
-            <Title title="Inventory Management" />
+            <Title :title="$t('inventoryIndex.inventoryManagement')" />
         </div>
 
         <div class="flex h-full w-full flex-col items-center justify-between">
@@ -26,15 +26,15 @@
                     <div class="font-light">
                         {{
                             showInventoryItems
-                                ? "Pending Transactions"
-                                : "Total Inventory Items"
+                                ? $t("inventoryIndex.pendingTransactions")
+                                : $t("inventoryIndex.totalInventoryItems")
                         }}
                     </div>
                     <SecondaryButton
                         :title="
                             showInventoryItems
-                                ? 'View Transactions'
-                                : 'View Items'
+                                ? $t('inventoryIndex.viewTransactions')
+                                : $t('inventoryIndex.viewItems')
                         "
                         class="w-full !rounded-2xl bg-brand-200 font-semibold"
                         @click="showInventoryItems = !showInventoryItems"

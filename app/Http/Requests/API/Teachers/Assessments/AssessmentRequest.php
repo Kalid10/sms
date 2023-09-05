@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests\API\Teachers;
+namespace App\Http\Requests\API\Teachers\Assessments;
 
+use App\Http\Requests\API\Teachers\Request;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class AssessmentRequest extends Request
@@ -36,6 +37,8 @@ class AssessmentRequest extends Request
     {
         return [
             'active' => 'nullable|boolean',
+            'status' => 'nullable|array',
+            'status.*' => 'in:completed,marking,published,scheduled,draft',
         ];
     }
 }

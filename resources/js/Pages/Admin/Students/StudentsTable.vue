@@ -116,7 +116,7 @@
                     <p class="text-sm font-semibold">
                         {{ $t("adminStudentsTable.noDataFound") }}
                     </p>
-                    <div v-if="searchKey.length">
+                    <div>
                         <p
                             v-if="searchKey === null"
                             class="text-sm text-brand-text-300"
