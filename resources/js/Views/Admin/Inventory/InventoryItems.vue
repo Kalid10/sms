@@ -5,7 +5,7 @@
         :selectable="false"
         :filterable="false"
         :data="mappedInventoryItems"
-        title="Inventory Items"
+        :title="$t('pendingInventoryItems.inventoryItems')"
         header-style="!bg-brand-400 text-white"
         class="h-full !w-8/12 !rounded-lg p-4 shadow-sm"
     >
@@ -15,14 +15,14 @@
                     class="text-2xl font-semibold"
                     :class="canManageInventory ? 'w-10/12' : 'w-full px-6'"
                 >
-                    Inventory Items
+                    {{ $t("pendingInventoryItems.inventoryItems") }}
                 </div>
                 <PrimaryButton
                     v-if="canManageInventory"
                     class="h-fit w-fit"
                     @click="emit('add')"
                 >
-                    Add Item
+                    {{ $t("pendingInventoryItems.addItem") }}
                 </PrimaryButton>
             </div>
         </template>
@@ -79,7 +79,9 @@ import Pagination from "@/Components/Pagination.vue";
 import { UserMinusIcon } from "@heroicons/vue/24/outline";
 import { PlusCircleIcon } from "@heroicons/vue/24/solid";
 import { isAdmin } from "@/utils";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const emit = defineEmits(["add", "allocate", "fill"]);
 
 const canManageInventory = computed(() => usePage().props.can_manage_inventory);
@@ -98,22 +100,22 @@ const mappedInventoryItems = computed(() =>
 );
 const inventoryItemsTableConfig = [
     {
-        name: "Name",
+        name: t("common.name"),
         key: "name",
         class: "font-semibold",
     },
     {
-        name: "Quantity",
+        name: t("common.quantity"),
         key: "row",
         type: "custom",
     },
     {
-        name: "Is Returnable?",
+        name: t("inventoryItems.isReturnable"),
         key: "is_returnable",
         type: Boolean,
     },
     {
-        name: "Added At",
+        name: t("inventoryItems.addedAt"),
         key: "date",
         type: "custom",
     },

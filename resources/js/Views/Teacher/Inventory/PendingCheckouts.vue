@@ -7,7 +7,7 @@
             v-if="pendingItems.data.length"
             class="text-center text-xl font-semibold"
         >
-            Your Pending Inventory CheckOuts
+            {{ $t("pendingCheckouts.pendingInventoryCheckout") }}
         </div>
 
         <div
@@ -22,18 +22,23 @@
                 <div
                     class="flex w-full flex-col items-center space-y-6 py-4 font-semibold"
                 >
-                    {{ item.provider.name }} wants your approval for
-                    {{ item.quantity }} X {{ item.item.name }} ?
+                    <span>{{
+                        $t("pendingCheckouts.wantToApproval", {
+                            userName: item.provider.name,
+                            quantity: item.quantity,
+                            itemName: item.item.name,
+                        })
+                    }}</span>
                 </div>
             </div>
             <div class="mt-4 flex justify-evenly">
                 <SecondaryButton
-                    title="Decline"
+                    :title="$t('pendingCheckouts.decline')"
                     class="rounded bg-red-600 py-2 px-4 text-white hover:bg-red-700"
                     @click="updateInventory('declined', item.id)"
                 />
                 <SecondaryButton
-                    title="Confirm"
+                    :title="$t('pendingCheckouts.confirm')"
                     class="rounded bg-brand-400 py-2 px-4 text-white hover:bg-brand-500"
                     @click="updateInventory('approved', item.id)"
                 />
@@ -42,7 +47,7 @@
 
         <EmptyView
             v-if="!pendingItems.data.length"
-            title="You dont have any pending check outs"
+            :title="$t('pendingCheckouts.dontHavePending')"
         />
     </div>
 </template>
@@ -52,7 +57,9 @@ import { router, usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import EmptyView from "@/Views/EmptyView.vue";
 import moment from "moment";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const pendingItems = computed(
     () => usePage().props.pending_inventory_check_outs
 );
@@ -66,10 +73,12 @@ const updateInventory = (status, inventory_item_id) => {
         },
         {
             onSuccess: () => {
-                Notification.success("Inventory Updated Successfully");
+                Notification.success(
+                    t("pendingCheckouts.inventoryUpdateSuccessfully")
+                );
             },
             onError: () => {
-                Notification.error("Something went wrong");
+                Notification.error(t("pendingCheckouts.somethingWentWrong"));
             },
         }
     );

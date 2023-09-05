@@ -9,10 +9,12 @@
     >
         <template #table-header>
             <div class="flex w-full justify-between py-5">
-                <div class="text-xl font-semibold capitalize">Penalties</div>
+                <div class="text-xl font-semibold capitalize">
+                    {{ $t("fees.penalties") }}
+                </div>
                 <SecondaryButton
                     class="w-fit !rounded-2xl bg-brand-400 text-white"
-                    title="Add Penalty"
+                    :title="$t('fees.addPenalty')"
                     @click="showAddPenaltyForm = true"
                 />
             </div>
@@ -32,7 +34,9 @@ import moment from "moment";
 import Modal from "@/Components/Modal.vue";
 import AddPenalty from "@/Views/Admin/Finance/Penalties/AddPenalty.vue";
 import { upperCase } from "lodash";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const penalties = computed(() => usePage().props.penalties);
 
 const showAddPenaltyForm = ref(false);
@@ -50,19 +54,19 @@ const mappedPenalties = computed(() => {
 const columns = [
     {
         key: "type",
-        name: "Type",
+        name: t("common.type"),
     },
     {
         key: "amount",
-        name: "Amount",
+        name: t("fees.amount"),
     },
     {
         key: "date",
-        name: "Date",
+        name: t("addPenalty.date"),
     },
     {
         key: "last_updated",
-        name: "Last Updated",
+        name: t("fees.lastUpdated"),
     },
 ];
 </script>

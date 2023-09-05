@@ -1,9 +1,12 @@
 <template>
-    <FormElement title="Allocate Item" @submit="allocateItem">
+    <FormElement
+        :title="$t('allocateItem.allocateItem')"
+        @submit="allocateItem"
+    >
         <TextInput
             v-if="!allocateItemForm.recipient_user"
             v-model="searchText"
-            placeholder="Search User"
+            :placeholder="$t('allocateItem.searchUser')"
             class="w-full"
         />
 
@@ -12,7 +15,8 @@
                 class="flex w-fit space-x-1 rounded-lg bg-brand-400 px-3 py-1 text-sm font-light text-white shadow-sm"
             >
                 <span>
-                    Selected User: {{ allocateItemForm.recipient_user.name }}
+                    {{ $t("allocateItem.selectedUser") }}
+                    {{ allocateItemForm.recipient_user.name }}
                 </span>
                 <XMarkIcon
                     class="w-4 cursor-pointer text-white hover:scale-110 hover:text-red-500"
@@ -45,9 +49,9 @@
 
         <TextInput
             v-model="allocateItemForm.quantity"
-            label="Quantity"
+            :placeholder="$t('common.quantity')"
+            :label="$t('common.quantity')"
             type="number"
-            placeholder="Quantity"
             :error="usePage().props.errors.quantity"
         />
     </FormElement>

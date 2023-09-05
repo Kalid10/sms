@@ -2,14 +2,13 @@
     <div class="h-full">
         <EmptyView
             v-if="paymentProviders.length === 0"
-            title="No Payment Providers Found"
+            :title="$t('paymentProviders.noPaymentProvider')"
             class="py-5"
-            sub-title=" There are no payment providers configured. To start accepting
-            payments, please configure a payment provider first."
+            :sub-title="$t('paymentProviders.noPaymentProviderConfigured')"
         >
             <SecondaryButton
                 class="!rounded-2xl bg-brand-400 text-white"
-                title="Configure Payment Provider"
+                :title="$t('paymentProviders.configurePaymentProvider')"
                 @click="showPaymentProviderForm = true"
             />
         </EmptyView>
@@ -26,11 +25,11 @@
             <template #table-header>
                 <div class="flex w-full justify-between py-5">
                     <div class="text-xl font-semibold capitalize">
-                        Payment Providers
+                        {{ $t("paymentProviders.paymentProviders") }}
                     </div>
                     <SecondaryButton
                         class="w-fit !rounded-2xl bg-brand-400 text-white"
-                        title="Add Payment Provider"
+                        :title="$t('paymentProviders.addPaymentProvider')"
                         @click="showPaymentProviderForm = true"
                     />
                 </div>
