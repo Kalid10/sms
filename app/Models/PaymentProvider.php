@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PaymentProvider extends Model
@@ -16,4 +17,9 @@ class PaymentProvider extends Model
         'logo',
         'is_enabled',
     ];
+
+    public function studentTuitions(): HasMany
+    {
+        return $this->hasMany(StudentTuition::class);
+    }
 }

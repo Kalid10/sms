@@ -13,7 +13,7 @@
                     {{ $t("schoolPeriodFormWrapper.step") }}
 
                     <div
-                        class="grid h-6 w-6 place-items-center rounded-full border bg-black text-xs font-semibold text-white"
+                        class="grid h-6 w-6 place-items-center rounded-full border bg-brand-400 text-xs font-semibold text-white"
                     >
                         {{ formStep }}
                     </div>
@@ -44,10 +44,7 @@
                                 $t("schoolPeriodFormWrapper.startTimeOfTheDay")
                             }}
                         </h3>
-                        <h3
-                            v-if="formStep === 1"
-                            class="text-brand-text-600 text-right text-sm"
-                        >
+                        <h3 v-if="formStep === 1" class="text-right text-sm">
                             {{
                                 $t(
                                     "schoolPeriodFormWrapper.whatTimeFirstPeriod"
@@ -128,8 +125,8 @@
                         type="button"
                         :class="
                             form.minutes_per_period === minute
-                                ? 'bg-black text-white'
-                                : 'bg-white text-black'
+                                ? 'bg-brand-400 text-white'
+                                : 'bg-white hover:bg-brand-400 hover:text-white text-black'
                         "
                         class="text-brand-text-600 grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold"
                         @click="setDuration(minute)"
@@ -156,7 +153,7 @@
                 >
                     <button
                         type="button"
-                        class="absolute right-0 mr-[0.2rem] h-[calc(2.25rem-0.4rem)] rounded-[calc(0.375rem-0.1rem)] border bg-black px-2 text-xs font-semibold text-white"
+                        class="absolute right-0 mr-[0.2rem] h-[calc(2.25rem-0.4rem)] rounded-[calc(0.375rem-0.1rem)] border bg-brand-400 px-2 text-xs font-semibold text-white"
                         @click="setOtherDuration"
                     >
                         {{ $t("schoolPeriodFormWrapper.setMinute") }}
@@ -237,8 +234,8 @@
                         type="button"
                         :class="
                             form.no_of_periods === session
-                                ? 'bg-black text-white'
-                                : 'bg-white text-black'
+                                ? 'bg-brand-400 text-white'
+                                : 'bg-white hover:bg-brand-400 hover:text-white text-black'
                         "
                         class="text-brand-text-600 grid h-10 w-10 place-items-center rounded-full border border-gray-500 font-semibold"
                         @click="setPeriod(session)"
@@ -261,7 +258,7 @@
                 >
                     <button
                         type="button"
-                        class="absolute right-0 mr-[0.2rem] h-[calc(2.25rem-0.4rem)] rounded-[calc(0.375rem-0.1rem)] border bg-black px-2 text-xs font-semibold text-white"
+                        class="absolute right-0 mr-[0.2rem] h-[calc(2.25rem-0.4rem)] rounded-[calc(0.375rem-0.1rem)] border bg-brand-400 px-2 text-xs font-semibold text-white"
                         @click="setOtherPeriod"
                     >
                         {{ $t("schoolPeriodFormWrapper.setPeriods") }}
@@ -401,7 +398,7 @@
                                     :key="m"
                                     type="button"
                                     :class="{
-                                        'border-2 !border-black bg-black text-white':
+                                        ' bg-brand-400 text-white':
                                             customPeriod.duration === minute,
                                     }"
                                     class="text-brand-text-600 grid h-8 w-8 place-items-center rounded-full border border-gray-500 text-xs font-semibold"
@@ -432,7 +429,7 @@
                                         :key="p"
                                         type="button"
                                         :class="{
-                                            'border-2 !border-black bg-black text-white':
+                                            ' bg-brand-400 text-white':
                                                 customPeriod.before_period ===
                                                 period,
                                         }"
@@ -471,7 +468,7 @@
                                     ]"
                                     :key="d"
                                     :class="{
-                                        'border-2 !border-black bg-black text-white':
+                                        ' bg-brand-400 text-white':
                                             customPeriod.days.includes(day),
                                     }"
                                     type="button"
@@ -524,7 +521,7 @@
 
         <div v-if="formStep === 4" class="sticky bottom-0 h-fit w-full p-4">
             <button
-                class="grid h-12 w-full place-items-center rounded-md bg-black font-semibold text-white"
+                class="grid h-12 w-full place-items-center rounded-md bg-brand-400 font-semibold text-white"
                 @click="submit"
             >
                 {{ $t("schoolPeriodFormWrapper.finish") }}

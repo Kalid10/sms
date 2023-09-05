@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Fee extends Model
@@ -25,10 +26,22 @@ class Fee extends Model
         'target_user_type',
         'status',
         'due_date',
+        'level_category_id',
+        'is_student_tuition_fee',
     ];
 
     public function penalty(): BelongsTo
     {
         return $this->belongsTo(Penalty::class);
+    }
+
+    public function levelCategory(): BelongsTo
+    {
+        return $this->belongsTo(LevelCategory::class);
+    }
+
+    public function studentTuitions(): HasMany
+    {
+        return $this->hasMany(StudentTuition::class);
     }
 }

@@ -41,7 +41,7 @@
                     >
                         <Card
                             :class="{
-                                '!bg-black !text-white':
+                                '!bg-brand-400 !text-white':
                                     selectedSubject?.id === subject.id,
                             }"
                             class="group !min-w-full cursor-pointer transition duration-150 hover:border-gray-500 hover:shadow-md"
@@ -243,15 +243,20 @@
                                     :key="LC"
                                     :class="
                                         isGroupSelected(levelCategory.id)
-                                            ? 'border-black'
+                                            ? 'border-brand-300 !bg-gradient-to-bl from-brand-350 to-brand-400 text-white border-2 '
                                             : ''
                                     "
-                                    class="!w-full cursor-pointer hover:border-gray-500 hover:shadow-lg"
+                                    class="group !w-full cursor-pointer hover:border-gray-500 hover:bg-brand-400 hover:text-white hover:shadow-lg"
                                     :title="levelCategory.name"
                                     :subtitle="
                                         levelCategoryDescriptions[
                                             levelCategory.id
                                         ]
+                                    "
+                                    :sub-title-style="
+                                        isGroupSelected(levelCategory.id)
+                                            ? 'text-gray-300'
+                                            : 'text-gray-500 group-hover:text-gray-300'
                                     "
                                     @click="
                                         isGroupSelected(levelCategory.id)

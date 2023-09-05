@@ -13,7 +13,7 @@
                 <input
                     ref="schoolYearName"
                     v-model="formData.name"
-                    class="min-w-[205px] max-w-[212px] appearance-none border-none bg-transparent p-0 text-center text-4xl font-bold focus:outline-0 focus:ring-0"
+                    class="min-w-[205px] max-w-[212px] appearance-none border-none bg-transparent p-0 text-center text-4xl font-bold text-brand-400 focus:text-black focus:outline-0 focus:ring-0"
                     type="text"
                 />
 
@@ -112,7 +112,7 @@
 
                 <PrimaryButton
                     v-if="formComplete"
-                    class="w-72"
+                    class="w-72 bg-brand-400"
                     @click="handleSubmit"
                 >
                     {{ $t("registerSchoolYear.createAndProceed") }}

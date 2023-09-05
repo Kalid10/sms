@@ -18,7 +18,7 @@
                         {{ title }}
                     </slot>
                 </h3>
-                <h3 class="text-xs text-gray-500">
+                <h3 class="text-xs" :class="subTitleStyle">
                     <slot name="subtitle">
                         {{ subtitle }}
                     </slot>
@@ -59,6 +59,10 @@ const props = defineProps({
     icon: {
         type: Boolean,
         default: false,
+    },
+    subTitleStyle: {
+        type: String,
+        default: "text-gray-500",
     },
 });
 </script>

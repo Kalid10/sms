@@ -132,8 +132,8 @@
                     class="absolute z-10 mt-10 w-full rounded-md border border-gray-300 bg-white shadow-lg"
                 >
                     <div
-                        v-for="batch in batchSubjectOptions"
-                        :key="batch"
+                        v-for="(batch, index) in batchSubjectOptions"
+                        :key="index"
                         class="cursor-pointer p-2 hover:bg-gray-200"
                         @click="toggleSelection(batch.value)"
                     >
@@ -142,7 +142,7 @@
                             :checked="
                                 form.batch_subject_ids.includes(batch.value)
                             "
-                            class="mr-2"
+                            class="mr-2 rounded-md text-brand-400"
                         />
                         {{ batch.label }}
                     </div>
@@ -250,10 +250,10 @@ let form = useForm({
     batch_subject_ids: [],
     level_category_ids: [],
     due_date: new Date(),
-    title: "asdf",
-    description: "asd",
-    maximum_point: "12",
-    status: "published",
+    title: "",
+    description: "",
+    maximum_point: "",
+    status: "",
 });
 
 watch(
