@@ -1105,7 +1105,7 @@ const am = {
         sections: "ክፍል",
         finish: "ጨርስ",
         updateLevelSectionTitle: "የክፍሎች ብዛት",
-        updateLevelSectionSubtitle: "ለ7ኛ ክፍል የክፍሎች ብዛት ያዘምኑ",
+        updateLevelSectionSubtitle: "ለ {grade} ኛ ክፍል የክፍሎች ብዛት ያዘምኑ",
         updateLevelSectionInputPlaceholder: "ለ7ኛ ክፍል የክፍሎችን ብዛት ይግለጹ",
     },
     registerSchoolYear: {
@@ -1863,7 +1863,7 @@ const am = {
         chatValue: "ከአስተማሪዎች እና ከአድሚኖች ጋር ይነጋገሩ",
         studentValue: "መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ",
         teacherValue: "መዝገብ፣ ማረጋገጥ፣ መርምር እና ተጨማሪ",
-        adminValue: "መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ።",
+        userValue: "መዝገብ፣ መገምገም፣ መርምር እና ተጨማሪ።",
     },
 
     absenteeAddModal: {

@@ -47,7 +47,7 @@ import { usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import EmptyView from "@/Views/EmptyView.vue";
 import Modal from "@/Components/Modal.vue";
-import PaymentProviderForm from "@/Views/Admin/Fees/PaymentProviders/PaymentProviderForm.vue";
+import PaymentProviderForm from "@/Views/Admin/Finance/PaymentProviders/PaymentProviderForm.vue";
 import TableElement from "@/Components/TableElement.vue";
 import moment from "moment";
 

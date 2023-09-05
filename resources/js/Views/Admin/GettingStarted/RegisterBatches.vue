@@ -1,6 +1,6 @@
 <template>
     <div
-        class="container mx-auto flex h-full max-h-full max-w-7xl flex-col gap-4 px-2 pt-6 md:px-6 md:pt-6"
+        class="container mx-auto flex h-full max-h-full max-w-7xl flex-col gap-4 space-y-4 px-2 pt-6 md:px-6 md:pt-6"
     >
         <div class="flex flex-col">
             <Heading>{{ $t("registerBatches.registerGrades") }}</Heading>
@@ -15,18 +15,16 @@
 
         <div class="relative flex gap-5">
             <span
-                class="col-span1 text-brand-text-600 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
+                class="col-span1 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
-                <span class="font-semibold text-black">{{
-                    selectedGradeCount
-                }}</span>
+                <span class="font-bold">{{ selectedGradeCount }}</span>
                 {{ $t("registerBatches.gradesSelected") }}
             </span>
 
             <span
                 class="col-span1 text-brand-text-600 text-sm sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-4"
             >
-                <span class="font-semibold text-black">{{ batchesCount }}</span>
+                <span class="font-bold">{{ batchesCount }}</span>
                 {{ $t("registerBatches.sectionsSelected") }}
             </span>
 
@@ -103,7 +101,11 @@
                                 }}</span>
                                 <button
                                     class="ml-2 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-neutral-200 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                                    @click="editSection(l)"
+                                    @click="
+                                        editSection(
+                                            getGlobalIndexForLevel(level)
+                                        )
+                                    "
                                 >
                                     <PencilIcon
                                         class="h-3 w-3 stroke-black stroke-2"
@@ -128,7 +130,11 @@
             v-model:show-modal="updateLevelSection"
             modal
             :title="$t('registerBatches.updateLevelSectionTitle')"
-            :subtitle="$t('registerBatches.updateLevelSectionSubtitle')"
+            :subtitle="
+                $t('registerBatches.updateLevelSectionSubtitle', {
+                    grade: updatedLevels[levelToUpdateSection].name,
+                })
+            "
             @submit="updateSection"
         >
             <TextInput
@@ -231,6 +237,10 @@ const levelToUpdateSection = ref(null);
 function editSection(index) {
     levelToUpdateSection.value = index;
     updateLevelSection.value = true;
+}
+
+function getGlobalIndexForLevel(level) {
+    return updatedLevels.value.findIndex((l) => l.id === level.id);
 }
 
 const registerBatchesForm = useForm({

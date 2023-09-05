@@ -33,11 +33,11 @@ import TabElement from "@/Components/TabElement.vue";
 import { useI18n } from "vue-i18n";
 import { toUnderscore } from "@/utils";
 import { computed, onBeforeMount, ref } from "vue";
-import PaymentProviders from "@/Views/Admin/Fees/PaymentProviders/PaymentProviders.vue";
-import StudentTuitions from "@/Views/Admin/Fees/StudentTuitions.vue";
+import PaymentProviders from "@/Views/Admin/Finance/PaymentProviders/PaymentProviders.vue";
+import StudentTuitions from "@/Views/Admin/Finance/StudentTuitions.vue";
 import { usePage } from "@inertiajs/vue3";
-import FeeTab from "@/Views/Admin/Fees/Fees/Index.vue";
-import PenaltyTabView from "@/Views/Admin/Fees/Penalties/Index.vue";
+import FeeTab from "@/Views/Admin/Finance/Fees/Index.vue";
+import PenaltyTabView from "@/Views/Admin/Finance/Penalties/Index.vue";
 
 const { t } = useI18n();
 
@@ -47,7 +47,7 @@ const studentTuitionsTab = toUnderscore(t("fees.studentTuitions"));
 const penaltyTab = toUnderscore(t("fees.penalties"));
 
 const tabs = [studentTuitionsTab, feesTab, penaltyTab, paymentProvidersTab];
-const activeTab = ref(penaltyTab);
+const activeTab = ref(feesTab);
 
 const fees = computed(() => usePage().props.fees);
 const paymentProviders = computed(() => usePage().props.payment_providers);
