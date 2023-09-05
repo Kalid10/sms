@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('school_schedules', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('body')->nullable();
+            $table->text('body')->nullable();
             $table->timestamp('start_date');
             $table->timestamp('end_date')->nullable();
             $table->string('type');

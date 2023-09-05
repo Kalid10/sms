@@ -1,17 +1,17 @@
 <template>
-    <FormElement title="Add Penalty" @submit="submit">
+    <FormElement :title="$t('addPenalty.addPenalty')" @submit="submit">
         <SelectInput
             v-model="form.type"
             :options="selectOptions"
-            label="Type"
-            placeholder="Select Type"
+            :label="$t('common.type')"
+            :placeholder="$t('addPenalty.selectType')"
             :error="usePage().props.errors.type"
         />
 
         <TextInput
             v-model="form.amount"
-            placeholder="Amount"
-            label="Amount"
+            :placeholder="$t('addPenalty.amount')"
+            :label="$t('addPenalty.amount')"
             type="number"
             :error="usePage().props.errors.amount"
         />
@@ -26,7 +26,9 @@ import SelectInput from "@/Components/SelectInput.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { inject, ref } from "vue";
 import Loading from "@/Components/Loading.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const emit = defineEmits(["close"]);
 
 const showNotification = inject("showNotification");
@@ -35,15 +37,15 @@ const isLoading = ref(false);
 const selectOptions = [
     {
         value: "flat_rate",
-        label: "Flat Rate",
+        label: t("addPenalty.flatRate"),
     },
     {
         value: "percentage",
-        label: "Percentage",
+        label: t("addPenalty.percentage"),
     },
     {
         value: "daily",
-        label: "Per Day",
+        label: t("addPenalty.perDay"),
     },
 ];
 const form = useForm({
@@ -63,7 +65,7 @@ const submit = () => {
             isLoading.value = false;
             showNotification({
                 type: "error",
-                message: "There was an error adding the penalty.",
+                message: t("addPenalty.errorAddingPenalty"),
             });
         },
     });
