@@ -26,11 +26,13 @@
         >
             <slot name="form-actions">
                 <SecondaryButton
+                    v-if="showClearButton"
                     :title="modal ? $t('common.close') : $t('common.clear')"
                     class="!bg-red-600 text-white"
                     @click="cancel"
                 />
                 <PrimaryButton
+                    v-if="showSubmitButton"
                     :title="$t('common.submit')"
                     class="!bg-brand-450"
                     @click="submit"
@@ -62,6 +64,14 @@ defineProps({
     subtitle: {
         type: String,
         default: null,
+    },
+    showClearButton: {
+        type: Boolean,
+        default: true,
+    },
+    showSubmitButton: {
+        type: Boolean,
+        default: true,
     },
 });
 
