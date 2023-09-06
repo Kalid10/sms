@@ -31,7 +31,7 @@
                 >
                     <div
                         v-for="(staff, index) in staffUsers"
-                        v-show="searchKey.length > 0"
+                        v-show="searchKey"
                         :key="staff"
                         class="w-11/12 cursor-pointer py-2 hover:rounded-lg hover:bg-brand-400 hover:text-white"
                         :class="

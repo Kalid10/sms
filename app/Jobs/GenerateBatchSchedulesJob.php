@@ -7,6 +7,7 @@ use App\Models\Batch;
 use App\Models\BatchSchedule;
 use App\Models\SchoolPeriod;
 use App\Models\SchoolYear;
+use App\Services\BatchScheduleService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,17 +28,20 @@ class GenerateBatchSchedulesJob implements ShouldQueue
         $this->activeSchoolYearId = SchoolYear::getActiveSchoolYear()->id;
     }
 
-    public function handle()
+    public function handle(BatchScheduleService $batchScheduleService): void
     {
         // Adds 1GB of memory to the PHP process
-        //        ini_set('memory_limit', '1024M');
+        ini_set('memory_limit', '2048M');
 
-        $this->createSchedule();
+        //        $this->createSchedule();
+        $batchScheduleService->createSchedule();
+        $batchScheduleService->teachersSchedule();
+
     }
 
     public function createSchedule(): array|RedirectResponse|null
     {
-        $batches = Batch::with(['subjects.subject', 'level.levelCategory'])
+        $batches = Batch::with(['subjects', 'level.levelCategory'])
             ->where('school_year_id', $this->activeSchoolYearId)
             ->get();
 
@@ -65,14 +69,12 @@ class GenerateBatchSchedulesJob implements ShouldQueue
                         $remainingSubjects[] = [
                             'subject' => $batchSubject,
                             'remaining_slots' => $batchSubject->weekly_frequency,
-                            'priority' => $batchSubject->subject->priority,
                         ];
                     }
                 }
 
-                // Sort remaining subjects based on priority (lower value indicates higher priority)
                 usort($remainingSubjects, function ($a, $b) {
-                    return $a['priority'] <=> $b['priority'];
+                    return $b['remaining_slots'] <=> $a['remaining_slots'];
                 });
 
                 // Initialize the scheduled count for each batch subject

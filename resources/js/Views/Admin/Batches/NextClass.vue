@@ -3,7 +3,7 @@
         class="flex w-full flex-col items-center justify-center rounded-lg bg-gradient-to-bl from-pink-400 to-purple-500 py-2 text-center uppercase text-white shadow-sm"
     >
         <div
-            v-if="nextClassSession.school_period"
+            v-if="nextClassSession?.school_period"
             class="flex h-full flex-col items-center space-y-1.5"
         >
             <div class="text-[0.65rem] font-light">Next Class</div>

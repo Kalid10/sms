@@ -171,6 +171,7 @@ class BatchController extends Controller
             'schedule:id,school_period_id,batch_subject_id,day_of_week,batch_id',
             'schedule.batchSubject:id,teacher_id,subject_id,weekly_frequency',
             'schedule.batchSubject.subject',
+            'schedule.batchSubject.teacher.user',
             'schedule.schoolPeriod:id,name,start_time,duration,is_custom,level_category_id',
         )->only('schedule')['schedule'];
 
