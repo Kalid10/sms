@@ -7,7 +7,7 @@
                 'bg-transparent': backgroundColor === 'transparent',
                 'grid place-items-center': placeItemsCenter,
             }"
-            class="fixed z-50 h-screen w-full p-4"
+            class="scrollbar-hide fixed z-50 h-screen w-full overflow-scroll p-4"
         >
             <div
                 ref="modal"

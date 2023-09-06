@@ -62,7 +62,7 @@ const config = [
     {
         name: "",
         key: "username",
-        class: "text-brand-text-300 text-xs font-semibold",
+        class: "text-gray-500 text-xs font-semibold",
         align: "left",
     },
     {

@@ -14,7 +14,7 @@
                         {{ subject["full_name"] }}
                     </h3>
 
-                    <h3 class="whitespace-nowrap text-sm text-brand-text-300">
+                    <h3 class="whitespace-nowrap text-sm text-gray-500">
                         {{ $t("subjectTeachers.listOfTeachers") }}
                         {{ subject["short_name"] }}
                         {{ $t("subjectTeachers.faculty") }}
@@ -84,7 +84,7 @@
                             >{{ data["gender"] }}</span
                         >
                     </div>
-                    <span class="text-brand-text-300">{{ data["email"] }}</span>
+                    <span class="text-gray-500">{{ data["email"] }}</span>
                 </div>
             </Link>
         </template>

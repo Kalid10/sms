@@ -101,7 +101,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import EmptyView from "@/Views/EmptyView.vue";
 import { numberWithOrdinal } from "@/utils";
@@ -119,6 +119,8 @@ const schoolPeriods = computed(() => usePage().props.school_periods);
 const schoolPeriodNames = computed(() =>
     schoolPeriods.value.map((period) => period.name)
 );
+
+const showNotification = inject("showNotification");
 
 const allSchedules = computed(() => usePage().props.schedules);
 
@@ -195,8 +197,13 @@ function attemptSwap() {
                 swapSchedule.value.schedule_a = null;
                 swapSchedule.value.schedule_b = null;
             },
-            onError() {
-                alert(JSON.stringify(usePage().props.errors));
+            onError: (error) => {
+                if (error.schedule_a)
+                    showNotification({
+                        type: "error",
+                        message: error.schedule_a,
+                        position: "top-center",
+                    });
             },
         }
     );
