@@ -1,7 +1,7 @@
 <template>
     <div class="my-5 flex min-h-full w-11/12 flex-col space-y-6">
         <div class="flex w-full items-center justify-between">
-            <Title title="Finance" />
+            <Title :title="t('adminLayout.finance')" />
         </div>
 
         <TabElement

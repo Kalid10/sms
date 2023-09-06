@@ -5,7 +5,7 @@
         :selectable="false"
         :filterable="false"
         :data="mappedPendingItems"
-        title="Inventory Items"
+        :title="$t('pendingInventoryItems.inventoryItems')"
         header-style="!bg-brand-400 text-white"
         class="!w-9/12 !rounded-lg p-4 shadow-sm"
     >
@@ -15,14 +15,14 @@
                     class="text-2xl font-semibold"
                     :class="canManageInventory ? 'w-10/12' : 'w-full px-6'"
                 >
-                    Pending CheckOuts
+                    {{ $t("pendingInventoryItems.pendingCheckout") }}
                 </div>
                 <PrimaryButton
                     v-if="canManageInventory"
                     class="h-fit w-fit"
                     @click="emit('add')"
                 >
-                    Add Item
+                    {{ $t("common.addItem") }}
                 </PrimaryButton>
             </div>
         </template>
@@ -62,7 +62,9 @@ import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { useI18n } from "vue-i18n";
 
+const { $t } = useI18n();
 const emit = defineEmits(["add"]);
 
 const canManageInventory = computed(() => usePage().props.can_manage_inventory);
@@ -84,30 +86,30 @@ const mappedPendingItems = computed(() =>
 
 const pendingCheckoutsTableConfig = [
     {
-        name: "Name",
+        name: t("common.name"),
         key: "name",
         class: "font-semibold",
     },
     {
-        name: "Quantity",
+        name: t("common.quantity"),
         key: "quantity",
     },
     {
-        name: "Status",
+        name: t("inventoryLogs.status"),
         key: "status",
         class: "font-medium uppercase",
     },
     {
-        name: "To",
+        name: t("inventoryLogs.to"),
         key: "recipient_user",
     },
     {
-        name: "From",
+        name: t("inventoryLogs.from"),
         key: "provider_user",
     },
 
     {
-        name: "Date",
+        name: t("inventoryLogs.date"),
         key: "date",
         type: "custom",
     },

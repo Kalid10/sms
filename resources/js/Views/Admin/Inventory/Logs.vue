@@ -9,7 +9,7 @@
         >
             <template #filter>
                 <div class="text-center text-3xl font-semibold">
-                    Latest Transactions
+                    {{ $t("inventoryLogs.latestTransaction") }}
                 </div>
             </template>
             <template #status-column="{ data }">
@@ -39,7 +39,9 @@ import { usePage } from "@inertiajs/vue3";
 import Pagination from "@/Components/Pagination.vue";
 import TableElement from "@/Components/TableElement.vue";
 import moment from "moment";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const transactions = computed(() => usePage().props.transactions);
 
 const mappedTransactions = computed(() =>
@@ -57,30 +59,30 @@ const mappedTransactions = computed(() =>
 
 const columns = [
     {
-        name: "Name",
+        name: t("common.name"),
         key: "name",
         class: "font-semibold",
     },
     {
-        name: "Quantity",
+        name: t("common.quantity"),
         key: "quantity",
     },
     {
-        name: "Status",
+        name: t("inventoryLogs.status"),
         key: "status",
         class: "font-medium uppercase",
         type: "custom",
     },
     {
-        name: "To",
+        name: t("inventoryLogs.to"),
         key: "recipient_user",
     },
     {
-        name: "From",
+        name: t("inventoryLogs.from"),
         key: "provider_user",
     },
     {
-        name: "Date",
+        name: t("inventoryLogs.date"),
         key: "date",
     },
 ];

@@ -3,11 +3,14 @@
         <TextArea
             v-model="form.reason"
             rows="3"
-            label="Reason"
-            placeholder="Reason"
+            :label="$t('updateAbsenteeForm.reason')"
+            :placeholder="$t('updateAbsenteeForm.reason')"
             :error="form.errors.reason"
         />
-        <Toggle v-model="form.is_leave" label="Is this a valid leave?" />
+        <Toggle
+            v-model="form.is_leave"
+            :label="$t('updateAbsenteeForm.isValidLeave')"
+        />
     </FormElement>
 </template>
 <script setup>
