@@ -58,11 +58,14 @@ class UserController extends Controller
         $studentsCount = Student::with('currentBatch')->count();
 
         // Get active school year teachers count through batch subject and batch and school year
-        $teachersCount = Teacher::whereHas('batchSubjects', function ($query) {
-            $query->whereHas('batch', function ($query) {
-                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-            });
-        })->count();
+        //        $teachersCount = Teacher::whereHas('batchSubjects', function ($query) {
+        //            $query->whereHas('batch', function ($query) {
+        //                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+        //            });
+        //        })->count();
+
+        // Get teachers count with the current school year
+        $teachersCount = Teacher::with('user.is_blocked', 1)->count();
 
         // Get active school year admins
         $adminsCount = Admin::with('schoolYear', SchoolYear::getActiveSchoolYear())->count();

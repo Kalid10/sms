@@ -170,7 +170,8 @@ watch(announcements, () => {
     announcements.value?.data.splice(0, 2);
 });
 
-const searchKey = ref(null);
+const searchKey = ref(usePage().props.filters?.searchKey);
+
 const isSearchCleared = ref(false);
 
 watch(searchKey, () => {
