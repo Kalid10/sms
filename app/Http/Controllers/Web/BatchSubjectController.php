@@ -47,23 +47,39 @@ class BatchSubjectController extends Controller
     {
         DB::beginTransaction();
 
-        // Loop through the batchesSubjects
         foreach ($request->batches_subjects as $batchData) {
             $batchId = $batchData['batch_id'];
 
-            // Loop through the subject_ids in each batch
-            foreach ($batchData['subject_ids'] as $subjectId) {
-                // Create a new batch subject
-                BatchSubject::create([
-                    'batch_id' => $batchId,
-                    'subject_id' => $subjectId,
-                ]);
+            // Getting the existing subject IDs for this batch
+            $existingSubjectIds = BatchSubject::where('batch_id', $batchId)->pluck('subject_id')->toArray();
+
+            // New subject IDs from the request
+            $newSubjectIds = $batchData['subject_ids'];
+
+            // Subject IDs to delete are those that are in the existing subject IDs but not in the new subject IDs
+            $subjectIdsToDelete = array_diff($existingSubjectIds, $newSubjectIds);
+
+            // Subject IDs to add are those that are in the new subject IDs but not in the existing subject IDs
+            $subjectIdsToAdd = array_diff($newSubjectIds, $existingSubjectIds);
+
+            // Deleting the unselected subjects
+            if (! empty($subjectIdsToDelete)) {
+                BatchSubject::where('batch_id', $batchId)
+                    ->whereIn('subject_id', $subjectIdsToDelete)
+                    ->delete();
+            }
+
+            // Inserting the newly selected subjects
+            foreach ($subjectIdsToAdd as $subjectId) {
+                BatchSubject::updateOrInsert(
+                    ['batch_id' => $batchId, 'subject_id' => $subjectId],
+                );
             }
         }
 
         DB::commit();
 
-        return redirect()->back()->with('success', 'Batch subject added successfully.');
+        return redirect()->back()->with('success', 'Batch subject updated successfully.');
     }
 
     public function assignTeacher(AssignSubjectTeacherRequest $request): RedirectResponse

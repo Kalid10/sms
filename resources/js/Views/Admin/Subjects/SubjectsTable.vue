@@ -193,6 +193,9 @@
                 </template>
             </TableElement>
         </template>
+        <template #[assignTab]>
+            <AssignSubjects :width-class="'w-full'" :url="'/admin/subjects'" />
+        </template>
     </TabElement>
 </template>
 
@@ -219,13 +222,15 @@ import TabElement from "@/Components/TabElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 
 import { useI18n } from "vue-i18n";
+import AssignSubjects from "@/Views/Admin/GettingStarted/AssignSubjects.vue";
 
 const { t } = useI18n();
 
 const subjectsTab = toUnderscore(t("common.subjects"));
 const gradesTab = toUnderscore(t("common.grades"));
+const assignTab = toUnderscore(t("common.assign"));
 const activeTab = ref(subjectsTab);
-const tabs = [subjectsTab, gradesTab];
+const tabs = [subjectsTab, gradesTab, assignTab];
 
 // Map the batch_subjects data
 const batchSubjects = computed(() => {
@@ -271,7 +276,7 @@ const schoolName = computed(() => import.meta.env.SCHOOL_LONG_NAME);
 
 const emits = defineEmits(["new", "update", "archive"]);
 
-const subjects = ref(usePage().props.subjects);
+const subjects = computed(() => usePage().props.subjects);
 
 const formattedSubjects = computed(() => {
     return subjects.value.data.map((subject) => {
@@ -284,20 +289,6 @@ const formattedSubjects = computed(() => {
         };
     });
 });
-
-// const formattedSubjects = computed(() => {
-//     return subjects.value.map((subject) => {
-//         return {
-//             id: subject.id,
-//             priority: subject.priority,
-//             full_name: subject.full_name,
-//             short_name: subject.short_name,
-//             tags: subject.tags,
-//             updated_at: subject.updated_at,
-//             archived_at: subject.archived_at,
-//         };
-//     });
-// });
 
 const query = ref(null);
 const search = debounce(() => {

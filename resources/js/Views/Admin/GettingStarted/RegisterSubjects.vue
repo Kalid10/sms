@@ -313,7 +313,7 @@ function submitSubjects() {
     router.post(
         "/subjects/create-bulk",
         {
-            subjects: updatedSubjects.value.map((subject) => {
+            subjects: selectedSubjects.value.map((subject) => {
                 return {
                     full_name: subject["full_name"],
                     short_name: subject["short_name"],

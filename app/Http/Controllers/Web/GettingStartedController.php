@@ -30,12 +30,20 @@ class GettingStartedController extends Controller
             $step = $step + 1;
         }
 
+        $levelCategories = Inertia::lazy(fn () => LevelCategory::whereHas('levels.batches', function ($query) {
+            $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+        })->with(['levels' => function ($query) {
+            $query->whereHas('batches', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            });
+        }])->get());
+
         return Inertia::render('Admin/GettingStarted/Index', [
             'step' => $step,
-            'levels' => Level::with('levelCategory')->get(),
-            'batches' => Inertia::lazy(fn () => Batch::active(['level'])),
+            'levels' => Level::with('batches', 'levelCategory')->get(),
+            'batches' => Inertia::lazy(fn () => Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level.levelCategory', 'subjects.subject')->get()),
             'subjects' => Inertia::lazy(fn () => Subject::all()),
-            'level_categories' => LevelCategory::all(),
+            'level_categories' => $levelCategories,
             'school_periods' => SchoolPeriod::with('levelCategory')->get(),
             'school_schedule' => SchoolSchedule::all(),
         ]);
