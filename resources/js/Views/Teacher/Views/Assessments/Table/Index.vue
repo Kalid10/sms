@@ -36,7 +36,7 @@
                             'bg-cyan-400': data === 'Scheduled',
                         }"
                     >
-                        {{ data.toUpperCase() }}
+                        {{ data?.toUpperCase() ?? "" }}
                     </div>
                 </div>
             </template>
@@ -59,18 +59,27 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const emit = defineEmits(["click", "create"]);
 const assessments = computed(() => usePage().props.assessments);
+
 const filteredAssessments = computed(() => {
-    return assessments.value?.data.map((assessment) => {
-        return {
-            assessment: assessment,
-            max_points: assessment.maximum_point,
-            status: capitalize(assessment.status),
-            due_date: moment(assessment.due_date).fromNow(),
-            updated_at: moment(assessment.updated_at).fromNow(),
-            assessment_type: capitalize(assessment.assessment_type.name),
-            id: assessment.id,
-        };
-    });
+    return (
+        assessments.value?.data?.map((assessment) => {
+            return {
+                assessment: assessment,
+                max_points: assessment?.maximum_point,
+                status: assessment?.status ? capitalize(assessment.status) : "",
+                due_date: assessment?.due_date
+                    ? moment(assessment.due_date).fromNow()
+                    : "",
+                updated_at: assessment?.updated_at
+                    ? moment(assessment.updated_at).fromNow()
+                    : "",
+                assessment_type: assessment?.assessment_type?.name
+                    ? capitalize(assessment.assessment_type.name)
+                    : "",
+                id: assessment?.id,
+            };
+        }) ?? []
+    );
 });
 
 const config = [

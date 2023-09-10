@@ -18,9 +18,12 @@ Route::controller(RegisterController::class)->prefix('register/')->middleware('a
     Route::post('teacher', 'register')->name('teacher');
 });
 
-Route::controller(UserController::class)->prefix('admin/user/')->middleware('checkUserType:admin')->name('user.')->group(function () {
+Route::controller(UserController::class)->prefix('admin/user/')->middleware('auth')->name('user.')->group(function () {
     Route::get('profile', 'profile')->name('profile');
     Route::post('update', 'update')->name('update.profile');
     Route::post('update-password', 'updatePassword')->name('update.password');
+});
+
+Route::controller(UserController::class)->prefix('admin/user/')->middleware('checkUserType:admin')->name('user.')->group(function () {
     Route::post('block-unblock', 'blockUnblock')->name('block-unblock');
 });

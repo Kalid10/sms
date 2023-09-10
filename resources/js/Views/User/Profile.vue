@@ -216,7 +216,7 @@ const passwordForm = useForm({
 });
 
 const submitPasswordForm = () => {
-    passwordForm.post("/user/update-password/", {
+    passwordForm.post(route("user.update.password"), {
         onFinish: () => passwordForm.reset(),
         onSuccess: () => {
             passwordForm.reset();

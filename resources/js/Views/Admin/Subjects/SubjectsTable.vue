@@ -167,9 +167,7 @@
                 :data="batchSubjects"
             >
                 <template #full_name-column="{ data }">
-                    <div
-                        class="font-semibold hover:underline hover:underline-offset-2"
-                    >
+                    <div class="font-semibold hover:underline-offset-2">
                         {{ data }}
                     </div>
                 </template>

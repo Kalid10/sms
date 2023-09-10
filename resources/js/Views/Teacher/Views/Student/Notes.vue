@@ -14,7 +14,7 @@
             </div>
             <div class="flex w-1/12 justify-center">
                 <PlusIcon
-                    class="w-4 cursor-pointer text-brand-text-350 hover:scale-125 hover:text-black"
+                    class="w-4 cursor-pointer text-gray-700 hover:scale-125 hover:text-black"
                     @click="handleAddNote"
                 />
             </div>

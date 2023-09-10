@@ -15,8 +15,10 @@
                 <h3 class="text-xs text-gray-700">
                     {{
                         subject["tags"]
-                            .map((tag) => toHashTag(tag))
-                            .join("&nbsp;&nbsp;")
+                            ? subject["tags"]
+                                  .map((tag) => toHashTag(tag))
+                                  .join("&nbsp;&nbsp;")
+                            : ""
                     }}
                 </h3>
             </div>
