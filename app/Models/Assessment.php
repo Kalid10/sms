@@ -108,10 +108,8 @@ class Assessment extends Model
                 ->whereDate('date', $assessmentDate)
                 ->first();
 
-            if ($session) {
-                $schoolPeriod = $session->schoolPeriod;
-
-                return $schoolPeriod;
+            if ($session->exists) {
+                return $session->load('schoolPeriod')->schoolPeriod;
             }
         }
 
