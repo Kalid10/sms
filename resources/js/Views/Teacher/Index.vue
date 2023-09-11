@@ -62,7 +62,10 @@
             <div
                 class="flex h-full w-full flex-col items-center space-y-8 lg:w-3/12"
             >
-                <NextClass class="!w-11/12" @click="scheduleUrl" />
+                <NextClass
+                    class="!w-11/12"
+                    @view="activeTab = toDaysScheduleTab"
+                />
 
                 <Summary class="!w-11/12" />
 
@@ -76,7 +79,7 @@
 </template>
 
 <script setup>
-import { router, usePage } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 import NextClass from "@/Views/Teacher/Views/NextClass/Index.vue";
 import moment from "moment/moment";
 import { computed, ref } from "vue";
@@ -111,10 +114,6 @@ const schoolSchedulesTab = toUnderscore(t("teacherIndex.schoolSchedules"));
 const toDaysScheduleTab = toUnderscore(t("teacherIndex.toDaysSchedule"));
 const tabs = [announcementsTab, schoolSchedulesTab, toDaysScheduleTab];
 const activeTab = ref(announcementsTab);
-
-function scheduleUrl() {
-    router.get("/teacher/extras", {});
-}
 </script>
 
 <style scoped></style>
