@@ -273,7 +273,7 @@ class BatchScheduleController extends Controller
 
         return Teacher::whereHas('user', function ($query) use ($request) {
             $query->where('name', 'like', "%{$request->input('search_teacher_text')}%");
-        })->with('user')->get()->take(7);
+        })->with(['user', 'activeBatchSubjects'])->get()->take(7);
     }
 
     public function updateBatchSubjects(Request $request): RedirectResponse
