@@ -8,7 +8,6 @@ use App\Models\BatchSchedule;
 use App\Models\BatchSubject;
 use App\Models\SchoolPeriod;
 use App\Models\SchoolYear;
-use App\Models\Teacher;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 
@@ -38,6 +37,8 @@ class BatchScheduleService
 
         foreach ($batches as $batch) {
             Log::info('BATCH-LOOP:  batch_id '.$batch->id.' is being scheduled.');
+
+            $isBatchFullyScheduled = false;
 
             do {
                 $schoolPeriods = SchoolPeriod::where('school_year_id', $this->activeSchoolYearId)
@@ -326,7 +327,7 @@ class BatchScheduleService
                 $this->scheduleBatchSubject($freeBatchSchedule['school_period_id'], $freeBatchSchedule['day_of_week'], $batchId, $unScheduledBatchSubject);
 
                 // Remove the unscheduled batch subject from the array
-                $unScheduledBatchSubjects = array_filter($unScheduledBatchSubjects, function ($item) use ($unScheduledBatchSubject) {
+                $unScheduledBatchSubjects = $unScheduledBatchSubjects->filter(function ($item) use ($unScheduledBatchSubject) {
                     return $item->id !== $unScheduledBatchSubject->id;
                 });
 
@@ -392,11 +393,11 @@ class BatchScheduleService
         })->delete();
     }
 
-    private function isBatchScheduledFully($batches)
+    public function isBatchScheduledFully($batches)
     {
         foreach ($batches as $batch) {
 
-            Log::info("\n");
+            Log::info("{$batch->level->name}-{$batch->section}\n");
 
             // Fetch the batch with its subjects
             $batch->load('subjects.subject', 'schedule');
@@ -426,36 +427,5 @@ class BatchScheduleService
             }
             Log::info("\n");
         }
-    }
-
-    public function teachersSchedule()
-    {
-        $teachers = Teacher::all();
-
-        foreach ($teachers as $teacher) {
-            $teacher->load([
-                'batchSchedules' => function ($query) {
-                    $query->orderBy('day_of_week');
-                },
-                'batchSchedules.batchSubject.subject',
-                'batchSchedules.batch.level',
-                'batchSchedules.schoolPeriod' => function ($query) {
-                    $query->orderBy('start_time');
-                },
-            ]);
-
-            Log::info('TEACHER-LOOP:  teacher_id '.$teacher->id);
-            Log::info('Teacher weekly session count '.count($teacher->batchSchedules));
-            foreach ($teacher->batchSchedules as $batchSchedule) {
-
-                $dayOfWeek = $batchSchedule->day_of_week;
-                $startTime = $batchSchedule->schoolPeriod->start_time;
-                $subjectName = $batchSchedule->batchSubject->subject->full_name;
-                $gradeLevel = $batchSchedule->batch->level->name;
-
-                Log::info("{$gradeLevel}{$batchSchedule->batch->section}"."  {$dayOfWeek} - Period-{$batchSchedule->schoolPeriod->name}(id: {$batchSchedule->schoolPeriod->id}) - {$startTime}"." batchSubjectId: {$batchSchedule->batchSubject->id} -  {$subjectName}");
-            }
-        }
-
     }
 }
