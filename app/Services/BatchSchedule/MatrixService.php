@@ -98,15 +98,11 @@ class MatrixService
 
         self::getUnAllocatedSchoolPeriods();
 
-        Log::info("\n");
-        Log::info('this is before the 50: '.self::$unAllocatedBatchSubjects->pluck('batchSubjectId'));
-
-        Log::info(self::$unAllocatedBatchSubjects->take(10));
-
         // Swap unallocated school periods with allocated school periods
-        $index = 0;
         $lastUnAllocatedSchoolPeriodsCount = self::$unAllocatedSchoolPeriods->count();
+
         $similarUnAllocatedSchoolPeriodsCount = 0;
+
         while (self::$unAllocatedBatchSubjects->count() > 0) {
             SwapService::handle();
 
@@ -129,18 +125,9 @@ class MatrixService
 
         self::getUnAllocatedSchoolPeriods();
 
-        Log::info('this is after the 50: '.self::$unAllocatedBatchSubjects->pluck('batchSubjectId'));
-        Log::info("\n");
-
         if (self::$unAllocatedBatchSubjects->count() > 0) {
             SwapCycleService::handle();
         }
-        Log::info('this is after the cycle: '.self::$unAllocatedBatchSubjects->pluck('batchSubjectId'));
-
-        // Log the first 10 unallocated batch subjects
-        Log::info("\n");
-        Log::info('Unallocated batch subjects');
-        Log::info(self::$unAllocatedBatchSubjects->take(10));
     }
 
     protected function isValidSlot($batchId, $batchSubject, $dayName, $periodId): int
@@ -245,6 +232,13 @@ class MatrixService
             // Populate the matrix from the database
             foreach ($batchSchedules as $schedule) {
                 $matrix[$schedule->batch_id][$schedule->day_of_week][$schedule->school_period_id] = $schedule->batch_subject_id;
+
+                if ($schedule->batch_subject_id === null) {
+                    continue;
+                }
+
+                // update the batch subject allocation matrix to decrease the available frequency for this subject
+                self::$batchSubjectAllocationMatrix[$schedule->batch_id][$schedule->batch_subject_id]--;
             }
         } else {
             foreach ($batches as $batch) {
@@ -262,8 +256,7 @@ class MatrixService
                 }
             }
         }
-        //        Log::info("scheduleMatrix");
-        //        Log::info($matrix);
+
         return $matrix;
     }
 
@@ -276,6 +269,31 @@ class MatrixService
             foreach (self::$scheduleMatrix as $batchId => $days) {
                 foreach ($days as $dayName => $periods) {
                     foreach ($periods as $periodId => $batchSubjectId) {
+                        // Check db if this slot already exists
+                        $existingSchedule = BatchSchedule::where('batch_id', $batchId)
+                            ->where('day_of_week', $dayName)
+                            ->where('school_period_id', $periodId)
+                            ->first();
+
+                        if ($existingSchedule) {
+                            // Skip if batch subject id is null
+                            if ($batchSubjectId === null) {
+                                continue;
+                            }
+
+                            // Check the subjects weekly limit
+                            if (self::$batchSubjectAllocationMatrix[$batchId][$batchSubjectId] <= 0) {
+                                continue;
+                            }
+
+                            // update the db and continue
+                            $existingSchedule->update([
+                                'batch_subject_id' => $batchSubjectId,
+                            ]);
+
+                            continue;
+                        }
+
                         BatchSchedule::create([
                             'batch_id' => $batchId,
                             'day_of_week' => $dayName,
@@ -342,13 +360,6 @@ class MatrixService
                     }
                 }
             }
-            if ($showLog) {
-                Log::info("\n");
-            }
-        }
-
-        if ($showLog) {
-            Log::info('unAllocatedBatchSubjects Count '.self::$unAllocatedBatchSubjects->count());
         }
     }
 
@@ -367,23 +378,5 @@ class MatrixService
                 }
             }
         }
-
-        Log::info('unAllocatedSchoolPeriods Count '.self::$unAllocatedSchoolPeriods->count());
-    }
-
-    protected function isValidForSwap($batchId, $batchSubject, $toDay, $toPeriod)
-    {
-        // Check if the teacher is available on day and period of $toDay and $toPeriod
-        $teacherId = $batchSubject->teacher_id;
-        if (! self::$teacherAvailabilityMatrix[$teacherId][$toDay][$toPeriod]) {
-            return false;
-        }
-
-        // Check if the subject already exists on day of $toDay
-        if (in_array($batchSubject->id, self::$scheduleMatrix[$batchId][$toDay])) {
-            return false;
-        }
-
-        return true;
     }
 }
