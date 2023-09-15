@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col">
-        <div v-if="isAssessmentFound" class="flex w-full justify-between pr-2">
+        <div class="flex w-full justify-between pr-2">
             <div class="text-xl font-medium">
                 {{ $t("studentAssessments.recentAssessments") }}
             </div>
@@ -11,7 +11,7 @@
         </div>
 
         <div
-            v-if="assessments?.data?.length"
+            v-if="assessmentTypeOptions.length > 0 && batchSubject"
             class="flex flex-row items-center justify-end space-x-2"
         >
             <SelectInput
@@ -74,6 +74,8 @@ const assessmentTypeOptions = computed(() => {
         };
     });
 });
+
+const batchSubject = computed(() => usePage().props.batch_subject);
 
 function applyFilters() {
     router.get(
