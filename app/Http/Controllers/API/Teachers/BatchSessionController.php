@@ -18,7 +18,12 @@ class BatchSessionController extends Controller
     public function index(Request $request, ?BatchSession $batchSession): BatchSessionCollection|BatchSessionResource
     {
         if ($batchSession->exists) {
-            return new BatchSessionResource($batchSession);
+            return new BatchSessionResource($batchSession->load([
+                'batchSchedule.schoolPeriod',
+                'batchSchedule.batchSubject.batch.level',
+                'batchSchedule.batchSubject.batch.schoolYear',
+                'batchSchedule.batchSubject.subject',
+            ]));
         }
 
         $teacher = auth()->user()->load('teacher')->teacher;

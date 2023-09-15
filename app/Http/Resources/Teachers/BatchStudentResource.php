@@ -17,7 +17,7 @@ class BatchStudentResource extends JsonResource
         $batchSubject = $this->batchSubject;
 
         return [
-            'batch' => new BatchResource($batchSubject),
+            'batch' => new BatchResource($batchSubject->batch),
             'student' => new StudentResource($this->student),
         ];
     }

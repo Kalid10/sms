@@ -23,16 +23,7 @@ class BatchSubjectResource extends JsonResource
                 'full_name' => $this->subject->full_name,
                 'short_name' => $this->subject->short_name,
             ],
-            'batch' => [
-                'id' => $this->batch->id,
-                'name' => $this->parseBatchName(
-                    $this->batch->level->name,
-                    $this->batch->section
-                ),
-                'level' => $this->batch->level->name,
-                'section' => $this->batch->section,
-                'school_year' => $this->batch->schoolYear->name,
-            ],
+            'batch' => new BatchResource($this->batch),
         ];
     }
 

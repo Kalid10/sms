@@ -16,17 +16,13 @@ class BatchResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'batch_id' => $this->batch->id,
-            'batch' => [
-                'id' => $this->batch->id,
-                'name' => $this->parseBatchName(
-                    $this->batch->level->name,
-                    $this->batch->section
-                ),
-                'level' => $this->batch->level->name,
-                'section' => $this->batch->section,
-                'school_year' => $this->batch->schoolYear->name,
-            ],
+            'name' => $this->parseBatchName(
+                $this->level->name,
+                $this->section
+            ),
+            'level' => $this->level->name,
+            'section' => $this->section,
+            'school_year' => $this->schoolYear->name,
         ];
     }
 
