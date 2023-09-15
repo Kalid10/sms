@@ -68,7 +68,16 @@
                             }"
                             class="text-xs font-medium transition-all duration-500"
                         >
-                            {{ getPeriodName(schedule) }}
+                            <span v-if="schedule?.batch_subject">
+                                {{
+                                    schedule?.batch_subject?.subject?.full_name
+                                }}
+                                {{ schedule.batch_subject.teacher.user.name }}
+                            </span>
+                            <span v-else>
+                                {{ schedule.school_period.name }}
+                            </span>
+                            <!--                            {{ getPeriodName(schedule) }}-->
                         </span>
                         <span
                             :class="{

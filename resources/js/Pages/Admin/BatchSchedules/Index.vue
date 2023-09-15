@@ -1,9 +1,19 @@
 <template>
-    <div class="flex h-full w-full gap-4 overflow-hidden">
+    <Config v-if="!batchScheduleConfiguration" :levels="levels" />
+
+    <div v-else class="flex h-full w-full gap-4 overflow-hidden">
         <BatchesScheduleTab
             v-if="!!selectedBatch"
             :selected="selectedBatch"
             :batches="selectedLevelBatches"
+            view="generated-schedule"
+        />
+
+        <BatchesScheduleTab
+            v-if="!!selectedBatch"
+            :selected="selectedBatch"
+            :batches="selectedLevelBatches"
+            :view="view"
         />
         <div v-else class="h-full w-full p-6">
             <div
@@ -29,6 +39,8 @@ import GradesList from "@/Views/BatchSchedule/GradesList.vue";
 import BatchesScheduleTab from "@/Views/BatchSchedule/BatchesScheduleTab.vue";
 import { computed } from "vue";
 import Heading from "@/Components/Heading.vue";
+import { usePage } from "@inertiajs/vue3";
+import Config from "@/Views/BatchSchedule/Setup/Config.vue";
 
 const props = defineProps({
     levels: {
@@ -62,6 +74,16 @@ const selectedLevelBatches = computed(() => {
     return batches.value.find((batch) =>
         batch.map((b) => b.id).includes(props.selectedBatch.id)
     );
+});
+
+const batchScheduleConfiguration = computed(() => {
+    return usePage().props.batchScheduleConfig;
+});
+
+const view = computed(() => {
+    return props.selectedBatch && props.schoolPeriods?.length > 0
+        ? "generated-schedule"
+        : "setup";
 });
 </script>
 

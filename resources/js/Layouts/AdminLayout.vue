@@ -1,7 +1,12 @@
 <template>
     <div id="top-view"></div>
 
-    <div class="relative flex h-screen w-full flex-col">
+    <div class="scrollbar-hide relative flex h-screen w-full flex-col">
+        <Banner
+            title="Generate your school schedule"
+            button-text="Setup Schedule"
+            button-url="/admin/batch-schedules"
+        />
         <div
             class="hide-scrollbar w-full grow overflow-y-auto bg-brand-50/30 p-0"
         >
@@ -18,7 +23,7 @@
                     :class="
                         openSideBar ? 'min-w-full lg:min-w-0 lg:blur-0' : ''
                     "
-                    class="flex flex-col items-center overflow-x-hidden p-2 lg:w-full"
+                    class="scrollbar-hide flex flex-col items-center overflow-x-hidden p-2 lg:w-full"
                 >
                     <slot />
                 </div>
@@ -123,6 +128,7 @@ import { useI18n } from "vue-i18n";
 import DialogBox from "@/Components/DialogBox.vue";
 import Loading from "@/Components/Loading.vue";
 import { useUIStore } from "@/Store/ui";
+import Banner from "@/Components/Banner.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -354,6 +360,27 @@ Echo.private("mass-assessment").listen(".mass-assessment", (e) => {
 });
 
 Echo.private("student-fee").listen(".student-fee", (e) => {
+    uiStore.setLoading(false);
+
+    if (e.type === "success") {
+        uiStore.setResponse("success", e.message);
+    }
+
+    if (e.type === "error") {
+        showNotification({
+            type: "error",
+            message: e.message,
+            position: "top-center",
+        });
+        uiStore.setResponse("error", e.message);
+    }
+
+    setTimeout(() => {
+        uiStore.setResponse(null, null);
+    }, 5000);
+});
+
+Echo.private("batch-schedule").listen(".batch-schedule", (e) => {
     uiStore.setLoading(false);
 
     if (e.type === "success") {

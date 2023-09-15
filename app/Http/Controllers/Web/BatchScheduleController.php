@@ -6,13 +6,17 @@ use App\Http\Requests\BatchSchedule\SwapScheduleRequest;
 use App\Jobs\GenerateBatchSchedulesJob;
 use App\Models\Batch;
 use App\Models\BatchSchedule;
+use App\Models\BatchScheduleConfig;
 use App\Models\BatchSubject;
 use App\Models\Level;
 use App\Models\SchoolPeriod;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -37,6 +41,12 @@ class BatchScheduleController extends Controller
             $selectedBatch = null;
         }
 
+        // TODO:For the time being I am checking if there are any batch schedules in the database since it the first year,
+        // TODO:but if there are schedules from previous school years, this will not work.
+        $batchSchedules = BatchSchedule::all();
+
+        $batchScheduleConfig = BatchScheduleConfig::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->first();
+
         return Inertia::render('Admin/BatchSchedules/Index', [
             'levels' => Level::with([
                 'batches' => function ($query) {
@@ -54,6 +64,12 @@ class BatchScheduleController extends Controller
 
                 return null;
             },
+            'isBatchScheduleGenerated' => $batchSchedules->count() > 0,
+            'batchScheduleConfig' => $batchScheduleConfig,
+            'batchSubjects' => $selectedBatch ? $this->getBatchSubjects($request->input('batch_id')) : null,
+            'teachers' => Inertia::lazy(function () use ($request) {
+                return $this->searchTeachers($request);
+            }),
         ]);
     }
 
@@ -208,5 +224,120 @@ class BatchScheduleController extends Controller
         } else {
             Log::info('No teacher schedule conflicts found.');
         }
+    }
+
+    public function saveConfiguration(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'daily_period_limit' => 'required|integer',
+            'weekly_period_limit' => 'required|integer',
+        ]);
+
+        // Check if there is a configuration for the current school year if so update else creates
+        $batchScheduleConfig = BatchScheduleConfig::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->first();
+
+        if ($batchScheduleConfig) {
+            $batchScheduleConfig->update([
+                'max_periods_per_day' => $request->input('daily_period_limit'),
+                'max_periods_per_week' => $request->input('weekly_period_limit'),
+            ]);
+
+            return redirect()->back()->with('success', 'School year configurations updated successfully.');
+        }
+        BatchScheduleConfig::create([
+            'max_periods_per_day' => $request->input('daily_period_limit'),
+            'max_periods_per_week' => $request->input('weekly_period_limit'),
+            'school_year_id' => SchoolYear::getActiveSchoolYear()->id,
+        ]);
+
+        return redirect()->back()->with('success', 'School year configurations created successfully.');
+    }
+
+    private function getBatchSubjects($batchId): Collection
+    {
+
+        if (! $batchId) {
+            return collect();
+        }
+
+        $batch = Batch::find($batchId);
+
+        return $batch->load('subjects.subject', 'subjects.teacher.user')->subjects->sortBy('priority');
+    }
+
+    private function searchTeachers(Request $request)
+    {
+        $request->validate([
+            'search_teacher_text' => 'nullable|string',
+        ]);
+
+        return Teacher::whereHas('user', function ($query) use ($request) {
+            $query->where('name', 'like', "%{$request->input('search_teacher_text')}%");
+        })->with('user')->get()->take(7);
+    }
+
+    public function updateBatchSubjects(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'batch_subjects' => 'required|array',
+            'batch_subjects.*.id' => 'required|exists:batch_subjects,id',
+            'batch_subjects.*.teacher_id' => 'required|exists:teachers,id',
+            'batch_subjects.*.weekly_frequency' => 'required|integer',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            foreach ($request->input('batch_subjects') as $batchSubject) {
+
+                // Get the teachers batch subjects for this school year and check if the teacher total weekly frequency is not exceeded from the batch_schedule_config table
+                $teacherBatchSubjects = BatchSubject::where('teacher_id', $batchSubject['teacher_id'])->with(['batch' => function ($query) {
+                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+                }])->get();
+
+                $teacherTotalWeeklyFrequency = $teacherBatchSubjects->sum('weekly_frequency');
+
+                $batchScheduleConfig = BatchScheduleConfig::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->first();
+
+                if ($teacherTotalWeeklyFrequency + $batchSubject['weekly_frequency'] > $batchScheduleConfig->max_periods_per_week) {
+                    DB::rollBack();
+
+                    return redirect()->back()->with('error', $batchSubject['teacher']['user']['name'].' has exceeded the weekly frequency limit of '.$batchScheduleConfig->max_periods_per_week.' periods per week.');
+                }
+
+                $batchSubjectModel = BatchSubject::find($batchSubject['id']);
+                $batchSubjectModel->weekly_frequency = $batchSubject['weekly_frequency'];
+                $batchSubjectModel->teacher_id = $batchSubject['teacher_id'];
+                $batchSubjectModel->save();
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Batch subjects updated successfully.');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'An error occurred while updating batch subjects.');
+        }
+
+    }
+
+    public function generateBatchSchedules(): RedirectResponse
+    {
+        // Check if there is any batch subject with no teacher assigned
+        $batchSubjects = BatchSubject::whereNull('teacher_id')->get();
+
+        if ($batchSubjects->count() > 0) {
+            return redirect()->back()->withErrors([
+                'schedule_generator_error' => 'There are batch subjects with no teacher assigned. Please assign teachers to all batch subjects before generating batch schedules.',
+            ]);
+        }
+
+        $schoolPeriods = SchoolPeriod::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->where('level_category_id', 1)->get();
+
+        GenerateBatchSchedulesJob::dispatch();
+
+        return redirect()->back()->with('success', 'Batch schedules are being generated. Please check the logs for more information.');
     }
 }

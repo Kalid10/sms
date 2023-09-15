@@ -88,7 +88,7 @@ watch(flash, () => {
     setTimeout(() => {
         showNotification.value = false;
         usePage().props.flash = { success: null, error: null, info: null };
-    }, 4000);
+    }, 5500);
 });
 
 const notificationData = inject("notificationData");
@@ -116,7 +116,7 @@ watch(notificationData, (newVal) => {
                 info: null,
             };
             notificationData.value.position = null;
-        }, newVal.timeout || 4000);
+        }, newVal.timeout || 5500);
     }
 });
 

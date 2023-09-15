@@ -72,7 +72,10 @@ Route::prefix('admin/')->middleware(['checkUserType:admin', 'checkSchoolYearStat
         });
     });
 
-    Route::controller(BatchScheduleController::class)->prefix('batch-schedules')->name('batch-schedules.')->group(function () {
+    Route::controller(BatchScheduleController::class)->prefix('batch-schedules/')->name('batch-schedules.')->group(function () {
         Route::get('', 'index')->name('index');
+        Route::post('configure', 'saveConfiguration')->name('configure');
+        Route::post('batch-subjects/update', 'updateBatchSubjects')->name('update.batch-subjects');
+        Route::post('generate', 'generateBatchSchedules')->name('generate');
     });
 });
