@@ -5,7 +5,7 @@
             :title="teacher.user.name"
         />
         <div
-            v-if="formattedUnAssignedTeacher.includes(teacher.id)"
+            v-if="formattedUnAssignedTeacher?.includes(teacher.id)"
             class="flex w-full flex-col items-center justify-center gap-10 py-20 text-center"
         >
             <h1 class="text-4xl font-semibold">
@@ -121,7 +121,7 @@ watch(activeTab, (tab) => {
 const unassignedTeachers = computed(() => usePage().props.unassigned_teachers);
 
 const formattedUnAssignedTeacher = computed(() => {
-    return unassignedTeachers?.value.map((teacher) => {
+    return unassignedTeachers?.value?.map((teacher) => {
         return teacher.id;
     });
 });
