@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('batch_subject_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('batch_id')->nullable()->constrained()->cascadeOnDelete();
             $table->enum('day_of_week', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']);
-            $table->unique(['batch_subject_id', 'school_period_id', 'day_of_week'], 'bs_bsi_spi_dow_unique');
+            $table->unique(['batch_id', 'school_period_id', 'day_of_week'], 'bs_bsi_spi_dow_unique');
             $table->timestamps();
         });
     }

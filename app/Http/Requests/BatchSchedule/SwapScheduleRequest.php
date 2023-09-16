@@ -41,11 +41,11 @@ class SwapScheduleRequest extends FormRequest
 
     private function ensureSwapMaintainsOverlapConstraints(): void
     {
-        $teacher = Teacher::find(BatchSchedule::find($this->input('schedule_a'))->id);
+        $teacher = Teacher::find(BatchSchedule::find($this->input('schedule_a'))->load('batchSubject')->batchSubject->teacher_id);
         $batchSchedule = BatchSchedule::find($this->input('schedule_b'));
         $this->ensureTeacherScheduleDoesNotOverlap($teacher, $batchSchedule);
 
-        $teacher = Teacher::find(BatchSchedule::find($this->input('schedule_b'))->id);
+        $teacher = Teacher::find(BatchSchedule::find($this->input('schedule_b'))->load('batchSubject')->batchSubject->teacher_id);
         $batchSchedule = BatchSchedule::find($this->input('schedule_a'));
         $this->ensureTeacherScheduleDoesNotOverlap($teacher, $batchSchedule);
     }

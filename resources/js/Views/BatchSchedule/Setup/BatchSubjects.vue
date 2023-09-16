@@ -9,15 +9,9 @@
     </div>
     <div
         v-if="batchSubjects"
-        class="flex h-full w-full flex-col items-center justify-center space-y-2"
+        class="flex h-full w-full flex-col items-center justify-evenly space-y-2"
     >
-        <div class="py-3 text-center text-2xl font-semibold">
-            {{ batch.level.name }} {{ batch.section }} Subject List
-            <span class="text-xl font-medium">
-                ( Total
-                {{ batchSubjects.length }})</span
-            >
-        </div>
+        <div class="py-3 text-center text-2xl font-semibold">Subject List</div>
 
         <div
             v-if="batchSubjects"
@@ -26,7 +20,7 @@
             <div
                 v-for="(item, index) in displayBatchSubjects"
                 :key="index"
-                class="flex w-3/12 cursor-pointer flex-col space-y-2 rounded-lg border-2 p-3 pl-4 hover:scale-105 hover:text-white"
+                class="flex w-2/12 cursor-pointer flex-col space-y-2 rounded-lg border-2 p-3 pl-4 hover:scale-105 hover:text-white"
                 :class="
                     item?.teacher_id
                         ? 'bg-white text-black border-brand-500 hover:bg-brand-400'
@@ -37,17 +31,17 @@
                     showEditModal = true;
                 "
             >
-                <div class="text-lg font-bold uppercase">
+                <div class="text-sm font-bold uppercase">
                     {{ item.subject.full_name }}
                 </div>
-                <div class="">
+                <div class="text-xs">
                     <span v-if="item.teacher_id" class="font-medium uppercase">
                         {{ item.teacher.user.name }}
                     </span>
                     <span v-else class="font-bold"> Teacher is not set </span>
                 </div>
 
-                <div class="text-xs font-semibold">
+                <div class="text-xs font-semibold uppercase">
                     <span v-if="item.weekly_frequency">
                         {{ item.weekly_frequency }} periods a week
                     </span>
@@ -62,10 +56,17 @@
                 class="w-fit !rounded-2xl bg-brand-400 py-2 !px-10 text-white"
                 @click="saveBatchSubjects"
             />
+        </div>
 
+        <div
+            class="flex w-5/12 flex-col items-center justify-center space-y-2 rounded-lg border-2 border-black bg-brand-400 p-4 text-white"
+        >
+            <div class="py-2">
+                Teachers have been allocated to their respective subjects.
+            </div>
             <SecondaryButton
                 title="Generate Schedule"
-                class="w-fit !rounded-2xl bg-brand-400 !px-10 text-white"
+                class="w-fit !rounded-2xl bg-brand-100 !px-10 font-bold"
                 @click="generateSchedule"
             />
         </div>
@@ -130,7 +131,7 @@
                     <div>
                         {{ item.user.name }}({{ item.user.phone_number }}),
                         Active weekly sessions
-                        {{ item.active_weekly_sessions }}
+                        {{ sumWeeklyFrequency(item.active_batch_subjects) }}
                     </div>
                 </div>
             </div>
@@ -272,6 +273,14 @@ const generateSchedule = () => {
         }
     );
 };
+
+function sumWeeklyFrequency(batchSubjects) {
+    console.log("batchSubjects", batchSubjects);
+    return batchSubjects.reduce(
+        (total, subject) => total + subject.weekly_frequency,
+        0
+    );
+}
 </script>
 
 <style scoped></style>
