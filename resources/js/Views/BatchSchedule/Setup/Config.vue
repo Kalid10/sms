@@ -1,39 +1,55 @@
 <template>
-    <div
-        class="flex w-full flex-col items-center justify-between space-y-10 p-4"
-    >
-        <Title class="w-full" title="Class Schedule Generator" />
+    <div class="flex h-screen w-full flex-col items-center space-y-10 p-4">
+        <Title
+            v-if="!gettingStarted"
+            class="w-full"
+            title="Class Schedule Generator"
+        />
         <div
-            class="flex w-full items-center justify-evenly rounded-lg p-5 font-medium"
+            class="flex h-full w-full justify-center rounded-lg px-1 font-medium"
         >
             <div
-                class="flex h-full w-5/12 flex-col items-center justify-center space-y-8 text-center"
+                v-if="gettingStarted"
+                class="flex h-4/6 w-10/12 flex-col items-center justify-center space-y-14 text-center"
             >
-                <div class="text-4xl font-semibold">
-                    Welcome to Your Class Schedule Management Portal
+                <div
+                    class="flex flex-col items-center justify-center space-y-5 text-5xl font-bold"
+                >
+                    <div>
+                        <div>We've Got You Covered</div>
+                        <div>No More Manual Scheduling</div>
+                    </div>
+                    <p class="w-8/12 text-lg font-medium text-gray-700">
+                        Just a couple more steps: Set your daily teacher quotas
+                        and assign educators to subjects. Once that's done,
+                        you're on the fast track to a seamlessly organized
+                        semester. Can't wait? Neither can we.
+                    </p>
                 </div>
-                <p class="">
-                    Begin by selecting a grade from the list to your right. This
-                    will unlock access to all corresponding sections. Once a
-                    grade is selected, you can assign teachers and set the
-                    weekly frequency for each subject. Before proceeding, please
-                    specify the daily and weekly class limits for teachers using
-                    the fields below.
-                </p>
+                <div class="flex w-full items-center justify-center space-x-7">
+                    <SecondaryButton
+                        title="Get Started"
+                        class="w-fit bg-brand-400 !py-2 text-white"
+                        @click="gettingStarted = false"
+                    />
 
-                <SecondaryButton
-                    title="Save Configuration"
-                    class="w-1/3 !rounded-2xl bg-brand-400 text-white"
-                    @click="saveConfig"
-                />
+                    <div
+                        class="hover:text-bold flex cursor-pointer space-x-1.5 text-sm font-medium text-black hover:scale-105"
+                    >
+                        <div>Learn more</div>
+
+                        <ArrowRightIcon class="w-3.5" />
+                    </div>
+                </div>
             </div>
             <div
-                class="flex w-5/12 flex-col items-center space-y-8 rounded-lg border-2 border-black p-10"
+                v-else
+                class="flex h-fit w-7/12 flex-col items-center space-y-8 rounded-lg border-2 border-black p-10"
             >
-                <p class="text-center">
+                <p class="w-9/12 text-center">
                     For optimal scheduling, we kindly ask you to establish the
-                    daily and weekly teaching quotas for each instructor in the
-                    fields below.
+                    daily and weekly teaching quotas that will be applied to all
+                    teachers.
                 </p>
 
                 <TextInput
@@ -72,9 +88,11 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { ref } from "vue";
 import Loading from "@/Components/Loading.vue";
+import { ArrowRightIcon } from "@heroicons/vue/24/outline";
 
 const emit = defineEmits(["success"]);
 
+const gettingStarted = ref(true);
 const isLoading = ref(false);
 
 const configForm = useForm({

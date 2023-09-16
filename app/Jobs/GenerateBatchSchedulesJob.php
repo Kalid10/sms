@@ -7,7 +7,8 @@ use App\Models\Batch;
 use App\Models\BatchSchedule;
 use App\Models\SchoolPeriod;
 use App\Models\SchoolYear;
-use App\Services\BatchScheduleService;
+use App\Models\Teacher;
+use App\Services\BatchSchedule\MatrixService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 
 class GenerateBatchSchedulesJob implements ShouldQueue
 {
@@ -23,20 +25,33 @@ class GenerateBatchSchedulesJob implements ShouldQueue
 
     protected int $activeSchoolYearId;
 
+    protected static bool $isScheduledFully = false;
+
     public function __construct()
     {
         $this->activeSchoolYearId = SchoolYear::getActiveSchoolYear()->id;
     }
 
-    public function handle(BatchScheduleService $batchScheduleService): void
+    public function handle(MatrixService $batchScheduleService): void
     {
         // Adds 1GB of memory to the PHP process
         ini_set('memory_limit', '2048M');
 
         //        $this->createSchedule();
+        //        $batchScheduleService->createSchedule();
+        //
+        //
+        $this->clearOldSchedules();
         $batchScheduleService->createSchedule();
-        $batchScheduleService->teachersSchedule();
 
+        $batchSchedules = BatchSchedule::whereNull('batch_subject_id')->count();
+        while ($batchSchedules > 0) {
+            $batchScheduleService->createSchedule();
+            $batchSchedules = BatchSchedule::whereNull('batch_subject_id')->count();
+        }
+        ////
+        $this->isBatchScheduledFully();
+        $this->teachersSchedule();
     }
 
     public function createSchedule(): array|RedirectResponse|null
@@ -178,5 +193,95 @@ class GenerateBatchSchedulesJob implements ShouldQueue
         }
         // Broadcast the event to the frontend
         return Event::dispatch(new BatchScheduleEvent('success', 'Batch schedules generated successfully.'));
+    }
+
+    private function clearOldSchedules(): void
+    {
+        BatchSchedule::whereHas('batch', function ($query) {
+            $query->where('school_year_id', $this->activeSchoolYearId);
+        })->delete();
+    }
+
+    public function teachersSchedule(): void
+    {
+        $teachers = Teacher::all();
+
+        foreach ($teachers as $teacher) {
+            $teacher->load([
+                'batchSchedules' => function ($query) {
+                    $query->orderBy('day_of_week');
+                },
+                'batchSchedules.batchSubject.subject',
+                'batchSchedules.batch.level',
+                'batchSchedules.schoolPeriod' => function ($query) {
+                    $query->orderBy('start_time');
+                },
+                'user',
+            ]);
+
+            Log::info('TEACHER-LOOP:  teacher_id '.$teacher->id.' - '.$teacher->user->name);
+            Log::info('Teacher weekly session count '.count($teacher->batchSchedules));
+            foreach ($teacher->batchSchedules as $batchSchedule) {
+
+                $dayOfWeek = $batchSchedule->day_of_week;
+                $startTime = $batchSchedule->schoolPeriod->start_time;
+                $subjectName = $batchSchedule->batchSubject->subject->full_name;
+                $gradeLevel = $batchSchedule->batch->level->name;
+
+                Log::info("{$gradeLevel}{$batchSchedule->batch->section}"."  {$dayOfWeek} - Period-{$batchSchedule->schoolPeriod->name}(id: {$batchSchedule->schoolPeriod->id}) - {$startTime}"." batchSubjectId: {$batchSchedule->batchSubject->id} -  {$subjectName}");
+            }
+        }
+
+    }
+
+    public function isBatchScheduledFully(): void
+    {
+        $batches = Batch::with(['subjects.schedule', 'level.levelCategory'])
+            ->where('school_year_id', $this->activeSchoolYearId)
+            ->get();
+
+        $unAllocatedCount = 0;
+
+        foreach ($batches as $batch) {
+
+            Log::info("{$batch->level->name}-{$batch->section}\n");
+
+            // Fetch the batch with its subjects
+            $batch->load('subjects.subject', 'schedule');
+
+            // Count the number of scheduled classes for each subject in this batch
+            $scheduledSubjectCounts = [];
+            foreach ($batch->schedule as $schedule) {
+                if (! array_key_exists($schedule->batch_subject_id, $scheduledSubjectCounts)) {
+                    $scheduledSubjectCounts[$schedule->batch_subject_id] = 0;
+                }
+                $scheduledSubjectCounts[$schedule->batch_subject_id]++;
+            }
+
+            // Check if the count matches the subject's weekly frequency
+            foreach ($batch->subjects as $batchSubject) {
+                $expectedCount = $batchSubject->weekly_frequency;
+                $actualCount = $scheduledSubjectCounts[$batchSubject->id] ?? 0;
+
+                // Load the schedule for this batch subject
+                $batchSubject->load('schedule');
+
+                if ($actualCount != $expectedCount) {
+                    $unAllocatedCount++;
+                    Log::info("Mismatch in batch: $batch->id . ' batch subject id: {$batchSubject->id} for subject: {$batchSubject->subject->full_name} . Expected: $expectedCount, Got: $actualCount");
+
+                } else {
+                    Log::info('BATCH-ID: '.$batch->id.' - '.$batchSubject->subject->full_name.' complete with weekly frequency: '.$batchSubject->weekly_frequency.' - '.$actualCount.' scheduled on the following days: '.implode(', ', $batchSubject->schedule->pluck('day_of_week')->toArray()));
+                    // Add new line
+
+                }
+            }
+
+            if ($unAllocatedCount === 0) {
+                self::$isScheduledFully = true;
+            }
+
+            Log::info("\n");
+        }
     }
 }
