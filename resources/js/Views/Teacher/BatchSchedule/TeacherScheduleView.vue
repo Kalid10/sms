@@ -9,7 +9,7 @@
                 'Friday',
             ]"
             :key="d"
-            class="flex items-center justify-center py-1 text-brand-text-50"
+            class="flex items-center justify-center rounded-md py-4"
         >
             <Heading size="xs">{{ day }}</Heading>
         </div>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                <div class="flex w-4/12 flex-col">
+                <div class="flex w-4/12 flex-col justify-between">
                     <Heading size="sm">
                         {{ subject.slot.batch?.level?.level_category?.name }}
                     </Heading>

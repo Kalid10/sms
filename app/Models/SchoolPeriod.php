@@ -74,24 +74,9 @@ class SchoolPeriod extends Model
 
     public function getOrderAttribute(): int
     {
-        if (auth()->user() && auth()->user()->isTeacher()) {
-            return 0;
-        }
-
-        $schoolPeriod = $this->load('levelCategory', 'schoolYear');
-
-        // Check for null relationships
-        if ($schoolPeriod->levelCategory === null || $schoolPeriod->schoolYear === null) {
-            // Handle the error
-            return 0;
-        }
-
-        $levelCategoryId = $schoolPeriod->levelCategory->id;
-        $schoolYearId = $schoolPeriod->schoolYear->id;
-
         $schoolPeriods = SchoolPeriod::where([
-            'level_category_id' => $levelCategoryId,
-            'school_year_id' => $schoolYearId,
+            'level_category_id' => $this->level_category_id,
+            'school_year_id' => $this->school_year_id,
         ])->pluck('start_time')->map(function ($startTime) {
             return Carbon::today()->setTimeFromTimeString($startTime);
         })->toArray();
@@ -100,6 +85,10 @@ class SchoolPeriod extends Model
             return $a->gt($b) ? 1 : -1;
         });
 
-        return array_search(Carbon::today()->setTimeFromTimeString($schoolPeriod->start_time), $schoolPeriods) + 1;
+        if (! $this->start_time) {
+            return 0;
+        }
+
+        return array_search(Carbon::today()->setTimeFromTimeString($this->start_time), $schoolPeriods) + 1;
     }
 }

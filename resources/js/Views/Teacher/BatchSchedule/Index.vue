@@ -1,6 +1,6 @@
 <template>
-    <div class="flex w-full flex-col p-6">
-        <div class="flex flex-col">
+    <div class="flex w-full flex-col">
+        <div class="flex flex-col pb-6">
             <Heading size="2xl"> Your Weekly Schedule</Heading>
         </div>
         <TeacherScheduleView />

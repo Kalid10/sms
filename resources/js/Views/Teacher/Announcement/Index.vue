@@ -116,8 +116,7 @@
         </template>
     </EmptyView>
 
-    <Modal v-model:view="showAddAnnouncement"
-        >z
+    <Modal v-model:view="showAddAnnouncement">
         <AddAnnouncement @success="showAddAnnouncement = false" />
     </Modal>
 
