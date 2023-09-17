@@ -48,11 +48,11 @@ class BatchScheduleController extends Controller
         $batchScheduleConfig = BatchScheduleConfig::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->first();
 
         return Inertia::render('Admin/BatchSchedules/Index', [
-            'levels' => Level::with([
-                'batches' => function ($query) {
-                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-                },
-            ])->get(),
+            'levels' => Level::whereHas('batches', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            })->with(['batches' => function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            }])->get(),
             'selectedBatch' => $selectedBatch,
             'schoolPeriods' => function () use ($selectedBatch) {
                 if ($selectedBatch) {
@@ -273,7 +273,7 @@ class BatchScheduleController extends Controller
 
         return Teacher::whereHas('user', function ($query) use ($request) {
             $query->where('name', 'like', "%{$request->input('search_teacher_text')}%");
-        })->with('user')->get()->take(7);
+        })->with(['user', 'activeBatchSubjects'])->get()->take(7);
     }
 
     public function updateBatchSubjects(Request $request): RedirectResponse
@@ -302,7 +302,7 @@ class BatchScheduleController extends Controller
                 if ($teacherTotalWeeklyFrequency + $batchSubject['weekly_frequency'] > $batchScheduleConfig->max_periods_per_week) {
                     DB::rollBack();
 
-                    return redirect()->back()->with('error', $batchSubject['teacher']['user']['name'].' has exceeded the weekly frequency limit of '.$batchScheduleConfig->max_periods_per_week.' periods per week.');
+                    return redirect()->back()->withErrors(['error', $batchSubject['teacher']['user']['name'].' has exceeded the weekly frequency limit of '.$batchScheduleConfig->max_periods_per_week.' periods per week.']);
                 }
 
                 $batchSubjectModel = BatchSubject::find($batchSubject['id']);
@@ -325,12 +325,82 @@ class BatchScheduleController extends Controller
 
     public function generateBatchSchedules(): RedirectResponse
     {
-        // Check if there is any batch subject with no teacher assigned
-        $batchSubjects = BatchSubject::whereNull('teacher_id')->get();
+        // Get active school year batches
+        $batches = Batch::with(['subjects', 'level.levelCategory'])
+            ->where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->get();
 
-        if ($batchSubjects->count() > 0) {
+        // Check if there is any batch subject which is not custom but there is no teacher assigned to it but should be from the current school year
+        $isBatchSubjectComplete = $batches->map(function ($batch) {
+            $batchIsNotComplete = $batch->subjects->filter(function ($subject) {
+                return $subject->teacher_id == null && $subject->is_custom == false;
+            });
+
+            if ($batchIsNotComplete->count() > 0) {
+                return $batch;
+            }
+
+            return null;
+        });
+
+        // remove the nulls from the batch subjects
+        $isBatchSubjectComplete = $isBatchSubjectComplete->filter(function ($batchSubject) {
+            return $batchSubject != null;
+        });
+
+        $isReady = false;
+
+        if (count($isBatchSubjectComplete) === 0) {
+            $isReady = true;
+        }
+
+        // get the batch section and level names of the batch subjects
+        $batchNames = $isBatchSubjectComplete->map(function ($batch) {
+            return "{$batch->level->name}{$batch->section}";
+        })->implode(', ');
+
+        if (! $isReady) {
+            $errorMessage =
+                'Missing teachers! Assign teachers to the following classes '.
+                'before generating batch schedules: '.$batchNames;
+
             return redirect()->back()->withErrors([
-                'schedule_generator_error' => 'There are batch subjects with no teacher assigned. Please assign teachers to all batch subjects before generating batch schedules.',
+                'schedule_generator_error' => $errorMessage,
+            ]);
+        }
+
+        // Now lets check if the batch subjects have the same weekly frequency as the school periods
+        $batches = $batches->map(function ($batch) {
+            $schoolPeriods = SchoolPeriod::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+                ->where('level_category_id', $batch->level->levelCategory->id)
+                ->where('is_custom', false)
+                ->get();
+
+            // Get me the sum of the weekly frequency of the batch subjects
+            $batchSubjectsWeeklyFrequency = $batch->subjects->sum('weekly_frequency');
+
+            if ($schoolPeriods->count() * 5 != $batchSubjectsWeeklyFrequency) {
+                return $batch;
+            }
+
+            return null;
+        });
+
+        // remove the nulls from the batch subjects
+        $batches = $batches->filter(function ($batchSubject) {
+            return $batchSubject != null;
+        });
+
+        if ($batches->count() > 0) {
+            $batchNames = $batches->map(function ($batch) {
+                return "{$batch->level->name}{$batch->section}";
+            })->implode(', ');
+
+            $errorMessage =
+                'Batches with different weekly frequency than the school periods: '.$batchNames;
+
+            return redirect()->back()->withErrors([
+                'schedule_generator_error' => $errorMessage,
             ]);
         }
 

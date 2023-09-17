@@ -253,13 +253,6 @@ const batchOptions = computed(() => {
     });
 });
 
-const selectedBatchLabel = computed(() => {
-    return (
-        usePage().props.selected_batch.level.name +
-        " " +
-        usePage().props.selected_batch.section
-    );
-});
 const selectedBatchId = ref(usePage().props.selected_batch.id);
 
 watch(selectedBatchId, () => {
@@ -269,8 +262,6 @@ watch(selectedBatchId, () => {
         { preserveState: true, replace: true }
     );
 });
-
-const schoolName = computed(() => import.meta.env.SCHOOL_LONG_NAME);
 
 const emits = defineEmits(["new", "update", "archive"]);
 

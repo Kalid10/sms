@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Jobs\GenerateBatchSchedulesJob;
 use App\Models\Role;
 use App\Models\User;
 use Database\Seeders\Simulation\BatchSeeder;
@@ -48,9 +47,9 @@ class SimulationSeeder extends Seeder
             AnnouncementSeeder::class,
             SchoolScheduleSeeder::class,
         ]);
-
-        GenerateBatchSchedulesJob::dispatchSync();
-        Artisan::call('app:generate-batch-sessions', ['--duration' => 'weekly']);
+        //
+        //        GenerateBatchSchedulesJob::dispatchSync();
+        //        Artisan::call('app:generate-batch-sessions', ['--duration' => 'weekly']);
     }
 
     private function admin()
