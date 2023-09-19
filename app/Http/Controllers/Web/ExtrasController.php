@@ -62,11 +62,11 @@ class ExtrasController extends Controller
             ->with('batchSubject.subject', 'schoolPeriod', 'batch.level', 'batch.level.levelCategory')
             ->get();
 
-        // Get school period count for the current school year for a single level category
+        // Get school period count for the current school year for elementary level category
         $schoolPeriodCount = SchoolPeriod::where([
             'school_year_id' => SchoolYear::getActiveSchoolYear()->id,
             'is_custom' => false,
-        ])->distinct('start_time')->count();
+        ])->where('level_category_id', 1)->distinct('start_time')->count();
 
         $page = match ($loggedInUserType) {
             User::TYPE_TEACHER => 'Teacher/Extras/Index',

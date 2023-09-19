@@ -158,6 +158,9 @@ class TeacherController extends Controller
         $flags = Flag::whereIn('batch_subject_id', $teacherBatchSubjects)->with(['flaggedBy', 'flaggable.user.admin', 'batchSubject.subject',
         ])->latest('updated_at')->paginate(7);
 
+        // Get teachers not assigned to any batch subject
+        $unassignedTeachers = Teacher::whereDoesntHave('batchSubjects')->get();
+
         $page = match (auth()->user()->type) {
             User::TYPE_TEACHER => 'Teacher/Index',
             User::TYPE_ADMIN => 'Admin/Teachers/Single',
@@ -187,6 +190,7 @@ class TeacherController extends Controller
                 'search' => $request->input('search'),
             ],
             'teacher_absentee_percentage' => $teacherAbsenteePercentage,
+            'unassigned_teachers' => $unassignedTeachers,
         ]);
     }
 

@@ -54,7 +54,7 @@ it('can assign subjects to batches', function () {
 
     // Assert that the response is a redirect with success message
     $this->assertInstanceOf(RedirectResponse::class, $response);
-    $this->assertEquals('Batch subject added successfully.', Session::get('success'));
+    $this->assertEquals('Batch subject updated successfully.', Session::get('success'));
 
     // Assert that batch subjects were created
     foreach ($subjects as $subject) {

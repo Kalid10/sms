@@ -377,6 +377,11 @@
                                     )
                                 "
                                 required
+                                :error="
+                                    errors[
+                                        'school_periods.0.custom_periods.0.name'
+                                    ]
+                                "
                             />
 
                             <div
@@ -537,12 +542,12 @@ import {
     XCircleIcon,
 } from "@heroicons/vue/24/outline";
 import FormIntroduction from "@/Views/Admin/GettingStarted/Schedule/FormIntroduction.vue";
-import { nextTick, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import TextInput from "@/Components/TextInput.vue";
 import TertiaryButton from "@/Components/TertiaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { addSuffix } from "@/utils.js";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -682,6 +687,8 @@ function setOtherPeriod() {
         otherPeriod.value = null;
     }
 }
+
+const errors = computed(() => usePage().props.errors);
 
 function submit() {
     router.post(

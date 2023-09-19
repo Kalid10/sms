@@ -167,9 +167,7 @@
                 :data="batchSubjects"
             >
                 <template #full_name-column="{ data }">
-                    <div
-                        class="font-semibold hover:underline hover:underline-offset-2"
-                    >
+                    <div class="font-semibold hover:underline-offset-2">
                         {{ data }}
                     </div>
                 </template>
@@ -192,6 +190,9 @@
                     </span>
                 </template>
             </TableElement>
+        </template>
+        <template #[assignTab]>
+            <AssignSubjects :width-class="'w-full'" :url="'/admin/subjects'" />
         </template>
     </TabElement>
 </template>
@@ -219,13 +220,15 @@ import TabElement from "@/Components/TabElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 
 import { useI18n } from "vue-i18n";
+import AssignSubjects from "@/Views/Admin/GettingStarted/AssignSubjects.vue";
 
 const { t } = useI18n();
 
 const subjectsTab = toUnderscore(t("common.subjects"));
 const gradesTab = toUnderscore(t("common.grades"));
+const assignTab = toUnderscore(t("common.assign"));
 const activeTab = ref(subjectsTab);
-const tabs = [subjectsTab, gradesTab];
+const tabs = [subjectsTab, gradesTab, assignTab];
 
 // Map the batch_subjects data
 const batchSubjects = computed(() => {

@@ -9,14 +9,16 @@
                 {{ subject["full_name"] }}
             </h3>
             <div class="flex flex-col items-baseline gap-1">
-                <h3 class="text-md text-brand-text-300">
+                <h3 class="text-md text-gray-700">
                     {{ subject["category"] }}
                 </h3>
-                <h3 class="text-xs text-brand-text-300">
+                <h3 class="text-xs text-gray-700">
                     {{
                         subject["tags"]
-                            .map((tag) => toHashTag(tag))
-                            .join("&nbsp;&nbsp;")
+                            ? subject["tags"]
+                                  .map((tag) => toHashTag(tag))
+                                  .join("&nbsp;&nbsp;")
+                            : ""
                     }}
                 </h3>
             </div>

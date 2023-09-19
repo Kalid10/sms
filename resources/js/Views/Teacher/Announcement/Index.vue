@@ -116,8 +116,7 @@
         </template>
     </EmptyView>
 
-    <Modal v-model:view="showAddAnnouncement"
-        >z
+    <Modal v-model:view="showAddAnnouncement">
         <AddAnnouncement @success="showAddAnnouncement = false" />
     </Modal>
 
@@ -171,6 +170,7 @@ watch(announcements, () => {
 });
 
 const searchKey = ref(usePage().props.filters?.searchKey);
+
 const isSearchCleared = ref(false);
 
 watch(searchKey, () => {

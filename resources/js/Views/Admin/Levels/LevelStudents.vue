@@ -49,7 +49,7 @@
                     <p class="text-sm font-semibold">
                         {{ $t("levelStudent.noDataFound") }}
                     </p>
-                    <div v-if="searchKey.length">
+                    <div v-if="searchKey">
                         <p v-if="searchKey === null" class="text-sm text-black">
                             {{ $t("levelStudent.noStudentEnrolled") }}
                         </p>
@@ -78,22 +78,6 @@
                         class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"
                     />
                 </Link>
-                <Link
-                    :href="'/users/' + row['student_id'] + '/edit'"
-                    class="flex flex-col items-center gap-1"
-                >
-                    <ArrowPathIcon
-                        class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"
-                    />
-                </Link>
-                <Link
-                    :href="'/users/' + row['student_id'] + '/delete'"
-                    class="flex flex-col items-center gap-1"
-                >
-                    <ArchiveBoxXMarkIcon
-                        class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"
-                    />
-                </Link>
             </template>
 
             <template #footer>
@@ -114,8 +98,6 @@ import TableElement from "@/Components/TableElement.vue";
 import RadioGroup from "@/Components/RadioGroup.vue";
 import { parseLevel } from "@/utils.js";
 import {
-    ArchiveBoxXMarkIcon,
-    ArrowPathIcon,
     ExclamationTriangleIcon,
     EyeIcon,
 } from "@heroicons/vue/24/outline/index.js";

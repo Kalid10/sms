@@ -4,48 +4,75 @@
             class="w-full rounded-t-md bg-brand-550 px-3 !py-6 text-white shadow-sm"
             :title="teacher.user.name"
         />
-        <TabElement
-            v-model:active="activeTab"
-            background-color="bg-brand-550"
-            in-active-tab-text="text-brand-text-400"
-            :tabs="tabs"
+        <div
+            v-if="formattedUnAssignedTeacher?.includes(teacher.id)"
+            class="flex w-full flex-col items-center justify-center gap-10 py-20 text-center"
         >
-            <template #[homeTab]>
-                <Home v-if="activeTab === homeTab && !showLoading" />
-            </template>
+            <h1 class="text-4xl font-semibold">
+                Teacher {{ teacher.user.name }} is not assigned to any class.
+            </h1>
 
-            <template #[classesTab]>
-                <Batches
-                    v-if="activeTab === classesTab && !showLoading"
-                    class="p-4"
-                />
-            </template>
+            <span class="text-lg font-light">
+                Please assign a class to this teacher.
+            </span>
+            <SecondaryButton
+                title="Assign Class"
+                class="max-w-fit !rounded-lg bg-black text-white"
+                @click="batchScheduleUrl()"
+            />
+        </div>
 
-            <template #[studentsTab]>
-                <Students v-if="activeTab === studentsTab && !showLoading" />
-            </template>
+        <div v-else>
+            <TabElement
+                v-model:active="activeTab"
+                background-color="bg-brand-550"
+                in-active-tab-text="text-brand-text-400"
+                :tabs="tabs"
+            >
+                <template #[homeTab]>
+                    <Home v-if="activeTab === homeTab && !showLoading" />
+                </template>
 
-            <template #[lessonPlans]>
-                <LessonPlans v-if="activeTab === lessonPlans && !showLoading" />
-            </template>
+                <template #[classesTab]>
+                    <Batches
+                        v-if="activeTab === classesTab && !showLoading"
+                        class="p-4"
+                    />
+                </template>
 
-            <template #[assessmentsTab]>
-                <Assessments
-                    v-if="activeTab === assessmentsTab && !showLoading"
-                    :teacher-id="teacher.id"
-                />
-            </template>
+                <template #[studentsTab]>
+                    <Students
+                        v-if="activeTab === studentsTab && !showLoading"
+                    />
+                </template>
 
-            <template #[homeroomTab]>
-                <Homeroom v-if="activeTab === homeroomTab && !showLoading" />
-            </template>
+                <template #[lessonPlans]>
+                    <LessonPlans
+                        v-if="activeTab === lessonPlans && !showLoading"
+                    />
+                </template>
 
-            <template #[announcementsTab]>
-                <Announcement
-                    v-if="activeTab === announcementsTab && !showLoading"
-                />
-            </template>
-        </TabElement>
+                <template #[assessmentsTab]>
+                    <Assessments
+                        v-if="activeTab === assessmentsTab && !showLoading"
+                        :teacher-id="teacher.id"
+                    />
+                </template>
+
+                <template #[homeroomTab]>
+                    <Homeroom
+                        v-if="activeTab === homeroomTab && !showLoading"
+                    />
+                </template>
+
+                <template #[announcementsTab]>
+                    <Announcement
+                        v-if="activeTab === announcementsTab && !showLoading"
+                    />
+                </template>
+            </TabElement>
+        </div>
+
         <Loading v-if="showLoading" is-full-screen />
     </div>
 </template>
@@ -64,6 +91,7 @@ import Announcement from "@/Views/Teacher/Announcement/Index.vue";
 import Loading from "@/Components/Loading.vue";
 import { useI18n } from "vue-i18n";
 import { toUnderscore } from "@/utils";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const { t } = useI18n();
 const showLoading = ref(false);
@@ -88,6 +116,14 @@ onMounted(() => {
 });
 watch(activeTab, (tab) => {
     handleTabClick(tab);
+});
+
+const unassignedTeachers = computed(() => usePage().props.unassigned_teachers);
+
+const formattedUnAssignedTeacher = computed(() => {
+    return unassignedTeachers?.value?.map((teacher) => {
+        return teacher.id;
+    });
 });
 
 const tabs = [
@@ -127,6 +163,10 @@ const handleTabClick = (tab) => {
             break;
     }
 };
+
+function batchScheduleUrl() {
+    router.get("/admin/batch-schedules");
+}
 
 const fetchData = (url, tab) => {
     showLoading.value = true;
