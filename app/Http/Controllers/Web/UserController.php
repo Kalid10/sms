@@ -57,12 +57,8 @@ class UserController extends Controller
         // Get current batch students count
         $studentsCount = Student::with('currentBatch')->count();
 
-        // Get active school year teachers count through batch subject and batch and school year
-        $teachersCount = Teacher::whereHas('batchSubjects', function ($query) {
-            $query->whereHas('batch', function ($query) {
-                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-            });
-        })->count();
+        // Get teachers count with the current school year
+        $teachersCount = Teacher::with('user.is_blocked', 1)->count();
 
         // Get active school year admins
         $adminsCount = Admin::with('schoolYear', SchoolYear::getActiveSchoolYear())->count();
@@ -106,8 +102,11 @@ class UserController extends Controller
 
     public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
     {
+        $user = auth()->user();
+
+        $user->refresh();
         // Check if this is the logged-in user
-        if ($request->id != auth()->user()->id) {
+        if ($request->id != $user->id) {
             return redirect()->back()->with('error', 'You are not authorized to update this user.');
         }
         // Check if old password and current password are same
@@ -120,7 +119,7 @@ class UserController extends Controller
         }
 
         // Update password
-        auth()->user()->update([
+        $user->update([
             'password' => Hash::make($request->password),
         ]);
 

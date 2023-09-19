@@ -41,6 +41,7 @@
                         class="flex h-full w-full flex-col justify-center space-y-8 lg:w-4/12"
                     >
                         <SummaryItem
+                            v-if="isTeacher()"
                             class-style="bg-sky-100 text-black"
                             icon-style="bg-sky-500/20 text-white"
                             :title="$t('common.aiChat')"

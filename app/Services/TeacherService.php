@@ -270,7 +270,7 @@ class TeacherService
         $teacher = Teacher::findOrFail($id);
 
         return StaffAbsentee::with('user.teacher')->get()->filter(function ($absentee) use ($teacher) {
-            return $absentee->user->teacher->id === $teacher->id;
+            return $absentee->user?->teacher?->id === $teacher->id;
         })->count();
 
     }

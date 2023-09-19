@@ -12,8 +12,9 @@
                 :title="$t('levelCategory.categoryTableTitle')"
             >
                 <template #action>
-                    <CategoryPrimaryButton
+                    <SecondaryButton
                         :title="$t('levelCategory.addLevelCategory')"
+                        class="!rounded-lg bg-black text-white"
                         @click="toggleCategoryModal"
                     />
                 </template>
@@ -67,7 +68,6 @@
     />
 </template>
 <script setup>
-import CategoryPrimaryButton from "@/Components/PrimaryButton.vue";
 import CategoryTableElement from "@/Components/TableElement.vue";
 import { computed, ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
@@ -77,6 +77,7 @@ import FormElement from "@/Components/FormElement.vue";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import DialogBox from "@/Components/DialogBox.vue";
 import { useI18n } from "vue-i18n";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const { t } = useI18n();
 const addCategory = ref(false);

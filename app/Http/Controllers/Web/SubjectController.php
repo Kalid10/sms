@@ -7,6 +7,8 @@ use App\Http\Requests\Subjects\CreateRequest;
 use App\Http\Requests\Subjects\UpdateRequest;
 use App\Models\Batch;
 use App\Models\BatchSubject;
+use App\Models\Level;
+use App\Models\LevelCategory;
 use App\Models\SchoolYear;
 use App\Models\Subject;
 use Exception;
@@ -32,7 +34,7 @@ class SubjectController extends Controller
             ->paginate(15)->appends(request()->query());
 
         // Get all batches
-        $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level')->get();
+        $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level.levelCategory', 'subjects.subject')->get();
 
         $request->validate([
             'batch_id' => 'nullable|exists:batches,id',
@@ -43,11 +45,22 @@ class SubjectController extends Controller
 
         $batchSubjects = BatchSubject::where('batch_id', $batchId)->with('subject')->get();
 
+        $levelCategories = LevelCategory::whereHas('levels.batches', function ($query) {
+            $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+        })->with(['levels' => function ($query) {
+            $query->whereHas('batches', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            });
+        }])->get();
+
         return Inertia::render('Admin/Subjects/Index', [
             'subjects' => $subjects,
             'batch_subjects' => $batchSubjects,
             'batches' => $batches,
             'selected_batch' => $selectedBatch,
+            'level_categories' => $levelCategories,
+            'levels' => Level::with('batches')->get(),
+
         ]);
     }
 

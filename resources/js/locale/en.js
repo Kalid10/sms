@@ -186,9 +186,7 @@ const en = {
         recentAssessments: "Recent Assessments",
         noAssessmentsFound: "No assessments found",
         scheduledAssessments: "Scheduled Assessments",
-        createAssessment:"Create Assessment",
-
-
+        createAssessment: "Create Assessment",
     },
 
     assessmentOutcomePercentages: {
@@ -249,7 +247,7 @@ const en = {
         english: "English",
         mathematics: "Mathematics",
         amharic: "አማርኛ",
-        selectedLevels: "15 Levels Selected",
+        selectedLevels: "Grades Selected",
         classesSelected: "Classes Selected",
         selectClassesInLevels: "Select Classes in Levels",
         deselectAll: "Deselect All",
@@ -395,11 +393,11 @@ const en = {
         ],
     },
     common: {
-        quarter:"Quarters",
-        semester:"Semesters",
-        schoolYear:"schoolYears",
-        inventoryItems:"Inventory Items",
-        quantity:"Quantity",
+        quarter: "Quarters",
+        semester: "Semesters",
+        schoolYear: "schoolYears",
+        inventoryItems: "Inventory Items",
+        quantity: "Quantity",
         overseeHomeroomClasses: "Oversee your homeroom classes",
         addViewUpdateLessonPlans: "Add, view and update lesson plans",
         viewStudents: "View your students",
@@ -501,6 +499,7 @@ const en = {
         extras: "Extras",
         leave: "leave",
         absenteeList: "Absentee List",
+        assign: "Assign",
     },
     fees: {
         configuration: "Configuration",
@@ -509,43 +508,45 @@ const en = {
         fees: "Fees",
         paymentProviders: "Payment-Providers",
         penalties: "Penalties",
-        addFee:"Add Fee",
-        amount:"Amount",
-        active:"Active",
-        dueDate:"Due Date",
-        lastUpdated:"Last Updated",
-        addPenalty:"Add Penalty"
+        addFee: "Add Fee",
+        amount: "Amount",
+        active: "Active",
+        dueDate: "Due Date",
+        lastUpdated: "Last Updated",
+        addPenalty: "Add Penalty",
     },
-    paymentProviders:{
-        noPaymentProvider:"No Payment Providers Found",
-        noPaymentProviderConfigured:" There are no payment providers configured. To start accepting payments, please configure a payment provider first.",
-        configurePaymentProvider:"Configure Payment Provider",
-        paymentProviders:"Payment Providers",
-        addPaymentProvider:"Add Payment Provider",
-        enabled:"Enabled",
-        paymentProviderForm:"Payment Provider Form",
-        enableDisable:"Enable or Disable" 
+    paymentProviders: {
+        noPaymentProvider: "No Payment Providers Found",
+        noPaymentProviderConfigured:
+            " There are no payment providers configured. To start accepting payments, please configure a payment provider first.",
+        configurePaymentProvider: "Configure Payment Provider",
+        paymentProviders: "Payment Providers",
+        addPaymentProvider: "Add Payment Provider",
+        enabled: "Enabled",
+        paymentProviderForm: "Payment Provider Form",
+        enableDisable: "Enable or Disable",
     },
-    addPenalty:{
-        addPenalty:"Add Penalty",
-        selectType:"Select Type",
-        flatRate:"Flat Rate",
-        percentage:"Percentage",
-        perDay:"Per Day",
-        date:"Date",
-        errorAddingPenalty:"There was an error adding the penalty.",
-        amount:"Amount"
+    addPenalty: {
+        addPenalty: "Add Penalty",
+        selectType: "Select Type",
+        flatRate: "Flat Rate",
+        percentage: "Percentage",
+        perDay: "Per Day",
+        date: "Date",
+        errorAddingPenalty: "There was an error adding the penalty.",
+        amount: "Amount",
     },
-    addFee:{
-        addFee:"Add Fee",
-        selectPenalty:"Select Penalty",
-        wantCreatePenalty:" Do you want to create a new penalty for this fee?",
-        noPenaltiesFound:"No penalties have been found. To add a penalty with this fee,you may create one below.",
-        savePenalty:"Save Penalty",
-        selectFeePeriod:"Select Fee Period",
-        isFeeActive:"Is this fee active?",
-        errorAddingPenalty:"There was an error adding the penalty.",
-        errorAddingFee:"There was an error adding the fee.",
+    addFee: {
+        addFee: "Add Fee",
+        selectPenalty: "Select Penalty",
+        wantCreatePenalty: " Do you want to create a new penalty for this fee?",
+        noPenaltiesFound:
+            "No penalties have been found. To add a penalty with this fee,you may create one below.",
+        savePenalty: "Save Penalty",
+        selectFeePeriod: "Select Fee Period",
+        isFeeActive: "Is this fee active?",
+        errorAddingPenalty: "There was an error adding the penalty.",
+        errorAddingFee: "There was an error adding the fee.",
     },
 
     copilotIndex: {
@@ -1941,10 +1942,10 @@ const en = {
         searchAddAbsentee: "Search for a staff member to add as an absentee",
         searchStaffMember: "Search for a staff member by name",
     },
-    updateAbsenteeForm:{
-        updateAbsentee:"Update Absentee",
-        reason:"Reason",
-        isValidLeave:"Is this a valid leave?"
+    updateAbsenteeForm: {
+        updateAbsentee: "Update Absentee",
+        reason: "Reason",
+        isValidLeave: "Is this a valid leave?",
     },
     rigelChat: {
         typeMessage: "Type a message...",
@@ -1973,56 +1974,57 @@ const en = {
         imageSizeLimit: "Image size must be less than 3MB",
         chooseImage: "Choose Image To Upload",
     },
-    pendingCheckouts:{
-        pendingInventoryCheckout:"Your Pending Inventory Checkouts",
-        wantToApproval:"{userName} wants your approval for {quantity} X {itemName} ?",
-        decline:"Decline",
-        confirm:"Confirm",
-        dontHavePending:"You don't have any pending checkouts",
-        inventoryUpdateSuccessfully:"Inventory Updated Successfully",
-        somethingWentWrong:"Something went wrong",
+    pendingCheckouts: {
+        pendingInventoryCheckout: "Your Pending Inventory Checkouts",
+        wantToApproval:
+            "{userName} wants your approval for {quantity} X {itemName} ?",
+        decline: "Decline",
+        confirm: "Confirm",
+        dontHavePending: "You don't have any pending checkouts",
+        inventoryUpdateSuccessfully: "Inventory Updated Successfully",
+        somethingWentWrong: "Something went wrong",
     },
-    inventoryIndex:{
-        inventoryManagement:"Inventory Management",
-        pendingTransactions:"Pending Transactions",
-        totalInventoryItems:"Total Inventory Items",
-        viewTransactions:"View Transactions",
-        viewItems:"View Items",   
+    inventoryIndex: {
+        inventoryManagement: "Inventory Management",
+        pendingTransactions: "Pending Transactions",
+        totalInventoryItems: "Total Inventory Items",
+        viewTransactions: "View Transactions",
+        viewItems: "View Items",
     },
-    inventoryAddItem:{
-        addItem:"Add Item" ,
-        itemDescription:"Item Description",
-        quantity:"Quantity",
-        lowStockAlertThreshold:"Low Stock Alert Threshold",
-        enterQuantityAlert:"Enter the quantity at which to alert",
-        selectVisibility:"Select Visibility",
-        isItemReturnable:"Is the Item Returnable?"
+    inventoryAddItem: {
+        addItem: "Add Item",
+        itemDescription: "Item Description",
+        quantity: "Quantity",
+        lowStockAlertThreshold: "Low Stock Alert Threshold",
+        enterQuantityAlert: "Enter the quantity at which to alert",
+        selectVisibility: "Select Visibility",
+        isItemReturnable: "Is the Item Returnable?",
     },
-    allocateItem:{
-        allocateItem:"Allocate Item",
-        searchUser:"Search User",
-        selectedUser:"Selected User:",
+    allocateItem: {
+        allocateItem: "Allocate Item",
+        searchUser: "Search User",
+        selectedUser: "Selected User:",
     },
-    fillItem:{
-        fill:"Fill {name} inventory",
+    fillItem: {
+        fill: "Fill {name} inventory",
     },
-    inventoryItems:{
-        inventoryItems:"Inventory Items",
-        isReturnable:"Is Returnable?",
+    inventoryItems: {
+        inventoryItems: "Inventory Items",
+        isReturnable: "Is Returnable?",
         addedAt: "Added At",
     },
-    inventoryLogs:{
-        latestTransaction:"Latest Transactions",
-        status:"Status",
-        to:"To",
-        from:"From",
-        date:"Date"
+    inventoryLogs: {
+        latestTransaction: "Latest Transactions",
+        status: "Status",
+        to: "To",
+        from: "From",
+        date: "Date",
     },
-    pendingInventoryItems:{
-        inventoryItems:"Inventory Items",
-        pendingCheckout:"Pending Checkouts",
-        addItem:"Add Item"
-    }
+    pendingInventoryItems: {
+        inventoryItems: "Inventory Items",
+        pendingCheckout: "Pending Checkouts",
+        addItem: "Add Item",
+    },
 };
 
 export default en;

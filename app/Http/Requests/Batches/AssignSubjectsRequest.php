@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Batches;
 
 use App\Models\Batch;
-use App\Models\BatchSubject;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -28,7 +27,8 @@ class AssignSubjectsRequest extends FormRequest
             'batches_subjects' => 'required|array',
             'batches_subjects.*.batch_id' => 'required|integer|exists:batches,id',
             'batches_subjects.*.subject_ids' => 'required|array',
-            'batches_subjects.*.subject_ids.*' => 'integer|exists:subjects,id',
+            'batches_subjects.*.subject_ids.*.id' => 'integer|exists:subjects,id',
+            'batches_subjects.*.subject_ids.*.selected' => 'nullable|boolean',
         ];
     }
 
@@ -41,14 +41,6 @@ class AssignSubjectsRequest extends FormRequest
 
                 if (isset($batch->schoolYear->end_date)) {
                     $validator->errors()->add('batches_subjects', 'The batch with ID '.$batchId.' is not active.');
-                }
-
-                foreach ($batchData['subject_ids'] as $subjectId) {
-                    if (BatchSubject::where('batch_id', $batchId)
-                        ->where('subject_id', $subjectId)
-                        ->exists()) {
-                        $validator->errors()->add('batches_subjects', 'The subject with ID '.$subjectId.' already exists in batch '.$batchId.'.');
-                    }
                 }
             }
         });

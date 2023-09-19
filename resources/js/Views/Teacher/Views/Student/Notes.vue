@@ -14,7 +14,7 @@
             </div>
             <div class="flex w-1/12 justify-center">
                 <PlusIcon
-                    class="w-4 cursor-pointer text-brand-text-350 hover:scale-125 hover:text-black"
+                    class="w-4 cursor-pointer text-gray-700 hover:scale-125 hover:text-black"
                     @click="handleAddNote"
                 />
             </div>
@@ -57,14 +57,15 @@
             <div
                 v-if="!notes?.data.length"
                 class="flex w-full flex-col items-center py-2"
-                @click="showModal = true"
             >
                 <EmptyView
                     :title="'No notes found for ' + student?.user.name"
                 />
                 <SecondaryButton
+                    v-if="isTeacher()"
                     :title="$t('studentNotes.addNote')"
                     class="mt-4 w-9/12 !rounded-2xl border-none bg-brand-300 text-white"
+                    @click="showModal = true"
                 />
             </div>
         </div>
@@ -161,6 +162,7 @@ import Pagination from "@/Components/Pagination.vue";
 import TextArea from "@/Components/TextArea.vue";
 import EmptyView from "@/Views/EmptyView.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import { isTeacher } from "@/utils";
 
 const showModal = ref(false);
 const student = usePage().props.student;

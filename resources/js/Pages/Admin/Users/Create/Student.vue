@@ -185,7 +185,7 @@ import StudentSample from "@/Views/Admin/Users/Samples/Student.vue";
 import { QuestionMarkCircleIcon } from "@heroicons/vue/20/solid";
 import { value } from "lodash/seq";
 import { useI18n } from "vue-i18n";
-import { computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import Modal from "@/Components/Modal.vue";
 import Toggle from "@/Components/Toggle.vue";
 import GuardianSearch from "@/Views/Admin/Users/GuardianSearch.vue";
@@ -255,10 +255,20 @@ const bulkForm = useForm({
     file: "",
 });
 
+const showNotification = inject("showNotification");
+
 const submit = () => {
     form.post(route("register.guardian"), {
         onSuccess: () => {
             form.reset();
+        },
+        onError: (error) => {
+            if (error.date_of_birth)
+                showNotification({
+                    type: "error",
+                    message: error.date_of_birth,
+                    position: "top-center",
+                });
         },
     });
 };

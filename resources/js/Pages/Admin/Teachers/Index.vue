@@ -66,7 +66,7 @@
                 </div>
             </template>
 
-            <template #id-column="{ data }">
+            <template #label-column="{ data }">
                 <div
                     class="flex cursor-pointer rounded text-xs"
                     @click="getSelectedTeacher(data)"
@@ -201,7 +201,8 @@
 
     <Modal v-model:view="showAssignModal">
         <AssignHomeroom
-            :teacher="selectedTeacherId"
+            :teacher-id="selectedTeacherId"
+            :teacher-name="selectedTeacherName"
             @close="showAssignModal = false"
         />
     </Modal>
@@ -259,8 +260,11 @@ const teachers = computed(() => {
 
 const selectedTeacherId = ref(null);
 
+const selectedTeacherName = ref(null);
+
 function getSelectedTeacher(data) {
-    selectedTeacherId.value = data;
+    selectedTeacherId.value = data.id;
+    selectedTeacherName.value = data.name;
     showAssignModal.value = true;
 }
 
@@ -353,6 +357,10 @@ const formattedTeachersData = computed(() => {
         const subjects = Array.from(subjectsSet).join(", ");
 
         return {
+            label: {
+                id: teacher.id,
+                name: teacher.user.name,
+            },
             id: teacher.id,
             name: teacher.user.name,
             email: teacher.user.email,
@@ -489,7 +497,7 @@ const config = [
     },
     {
         name: "",
-        key: "id",
+        key: "label",
         type: "custom",
         align: "left",
     },

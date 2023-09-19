@@ -92,8 +92,7 @@ class RegisterController extends Controller
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->getMessageBag());
         } catch (Exception $exception) {
-            // If an error occurs, log the error and return an error message
-            Log::error($exception->getMessage());
+            Log::error($exception->getMessage(), ['exception' => $exception]);
 
             return redirect()->back()->with('error', 'Something went wrong!');
         }
