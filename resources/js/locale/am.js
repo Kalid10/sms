@@ -185,7 +185,7 @@ const am = {
         recentAssessments: "የቅርብ ጊዜ ግምገማዎች",
         noAssessmentsFound: "ምንም ግምገማዎች አልተገኙም።",
         scheduledAssessments: "የተመደበ ግምገማዎች",
-        createAssessment: "ግምገማ ይፍጠሩ"
+        createAssessment: "ግምገማ ይፍጠሩ",
     },
     assessmentOutcomePercentages: {
         passedPercentTitle: "አልፏል",
@@ -242,7 +242,7 @@ const am = {
         english: "እንግሊዝኛ",
         mathematics: "ሒሳብ",
         amharic: "አማርኛ",
-        selectedLevels: "15 ደረጃዎች ተመርጠዋል",
+        selectedLevels: "ደረጃዎች ተመርጠዋል",
         classesSelected: "ክፍሎች ተመርጠዋል",
         selectClassesInLevels: "በደረጃዎች ውስጥ ክፍሎችን ይምረጡ",
         deselectAll: "ሁሉንም አለመምረጥ",
@@ -484,50 +484,53 @@ const am = {
         extras: "ሌሎች",
         leave: "ፍቃድ",
         absenteeList: "ቅሪ ዝርዝር",
+        assign: "ምደባ",
     },
     fees: {
         configuration: "የክፍያ ማስተካክያ",
         studentTuitions: "የተማሪ ክፍያዎች",
         fees: "ክፍያዎች",
         paymentProviders: "የክፍያ አቅራቢዎች",
-        penalties: "የክፍያ ቅጣቶች",  
-        addFee:"ክፍያ ይጨምሩ",
+        penalties: "የክፍያ ቅጣቶች",
+        addFee: "ክፍያ ይጨምሩ",
         amount: "መጠን",
         active: "ንቁ",
         dueDate: "መክፈያ ቀን",
         lastUpdated: "መጨረሻው የተሻሻለው",
-        addPenalty:"ቅጣት ጨምር"
+        addPenalty: "ቅጣት ጨምር",
     },
-    paymentProviders:{
-        noPaymentProvider:"ምንም ክፍያ አቅራቢዎች አልተገኙም።",
-        noPaymentProviderConfigured:"ምንም የተዋቀሩ የክፍያ አቅራቢዎች የሉም። ክፍያዎችን መቀበል ለመጀመር፣ እባክዎ መጀመሪያ የክፍያ አቅራቢን ያዋቅሩ።",
+    paymentProviders: {
+        noPaymentProvider: "ምንም ክፍያ አቅራቢዎች አልተገኙም።",
+        noPaymentProviderConfigured:
+            "ምንም የተዋቀሩ የክፍያ አቅራቢዎች የሉም። ክፍያዎችን መቀበል ለመጀመር፣ እባክዎ መጀመሪያ የክፍያ አቅራቢን ያዋቅሩ።",
         configurePaymentProvider: "የክፍያ አቅራቢን ያዋቅሩ",
         paymentProviders: "የክፍያ አቅራቢዎች",
         addPaymentProvider: "የክፍያ አቅራቢ ያክሉ",
         enabled: "የተነቃበት",
-        paymentProviderForm:"የክፍያ አቅራቢ ቅጽ",
-        enableDisable:"ፍቀድ ወይም ከልክል" 
+        paymentProviderForm: "የክፍያ አቅራቢ ቅጽ",
+        enableDisable: "ፍቀድ ወይም ከልክል",
     },
-    addPenalty:{
+    addPenalty: {
         addPenalty: "ቅጣት ይጨምሩ",
         selectType: "ዓይነት ይምረጡ",
         flatRate: "ቋሚ መጠን",
         percentage: "መቶኛ",
         perDay: "በቀን",
-        date:"ቀን",
-        errorAddingPenalty:"ቅጣቱን ማከል ላይ ስህተት ነበር።",
-        amount:"መጠን"
+        date: "ቀን",
+        errorAddingPenalty: "ቅጣቱን ማከል ላይ ስህተት ነበር።",
+        amount: "መጠን",
     },
-    addFee:{
-        addFee:"ክፍያ ጨምር",
-        selectPenalty:"ቅጣትን ይምረጡ",
-        wantCreatePenalty:"ለዚህ ክፍያ አዲስ ቅጣት መፍጠር ይፈልጋሉ?",
-        noPenaltiesFound:"ምንም ቅጣቶች አልተገኙም። በዚህ ክፍያ ቅጣትን ለመጨመር ከታች አንዱን መፍጠር ይችላሉ።",
-        savePenalty:"ቅጣትን ያስቀምጡ",
-        selectFeePeriod:"የክፍያ ጊዜን ይምረጡ",
-        isFeeActive:"ይህ ክፍያ ንቁ ነው?",
-        errorAddingPenalty:"ቅጣቱን ማከል ላይ ስህተት ነበር።",
-        errorAddingFee:"ክፍያውን በመጨመር ላይ ስህተት ነበር።",
+    addFee: {
+        addFee: "ክፍያ ጨምር",
+        selectPenalty: "ቅጣትን ይምረጡ",
+        wantCreatePenalty: "ለዚህ ክፍያ አዲስ ቅጣት መፍጠር ይፈልጋሉ?",
+        noPenaltiesFound:
+            "ምንም ቅጣቶች አልተገኙም። በዚህ ክፍያ ቅጣትን ለመጨመር ከታች አንዱን መፍጠር ይችላሉ።",
+        savePenalty: "ቅጣትን ያስቀምጡ",
+        selectFeePeriod: "የክፍያ ጊዜን ይምረጡ",
+        isFeeActive: "ይህ ክፍያ ንቁ ነው?",
+        errorAddingPenalty: "ቅጣቱን ማከል ላይ ስህተት ነበር።",
+        errorAddingFee: "ክፍያውን በመጨመር ላይ ስህተት ነበር።",
     },
     copilotIndex: {
         rigelCopilot: "ሪግል ኮፓይሎት",
@@ -1874,10 +1877,10 @@ const am = {
         searchAddAbsentee: "ሰራተኛን በመለያ ይፈልጉ አን ቀሪ ላይ ይጨምሩ",
         searchStaffMember: "በስም የሰራተኛ መለያ ይፈልጉ",
     },
-    updateAbsenteeForm:{
+    updateAbsenteeForm: {
         updateAbsentee: "ቀሪን ያዘምኑ",
         reason: "ምክንያት",
-        isValidLeave: "ይህ ትክክለኛ ፈቃድ ነው?"
+        isValidLeave: "ይህ ትክክለኛ ፈቃድ ነው?",
     },
     rigelChat: {
         typeMessage: "መልዕክት ይጻፉ...",
@@ -1907,20 +1910,21 @@ const am = {
     },
     pendingCheckouts: {
         pendingInventoryCheckout: "ለርክክብ በመጠባበቅ ላይ ያሉ የእቃዎ ዝርዝር",
-        wantToApproval: "{userName} ለ{quantity} X {itemName} የእርስዎን ማጽደቅ ይፈልጋል ?",
+        wantToApproval:
+            "{userName} ለ{quantity} X {itemName} የእርስዎን ማጽደቅ ይፈልጋል ?",
         decline: "አትቀበል",
         confirm: "አረጋግጥ",
         dontHavePending: "ምንም በመጠባበቅ ላይ ያሉ እቃዎች የለዎትም።",
         inventoryUpdateSuccessfully: "መረጃ መዝገብ በተሳካ ሁኔታ ተዘምኗል",
-        somethingWentWrong: "አንድ ነገር ተሳሳተ"
-        },
+        somethingWentWrong: "አንድ ነገር ተሳሳተ",
+    },
     inventoryIndex: {
         inventoryManagement: "የእቃዎች አስተዳደር",
         pendingTransactions: "በመጠባበቅ ላይ ያሉ እቃዎች",
         totalInventoryItems: "ጠቅላላ የግምጃ ቤት እቃዎች",
         viewTransactions: "ግብይቶችን ይመልከቱ",
         viewItems: "ዕቃዎችን ይመልከቱ",
-        },
+    },
     inventoryAddItem: {
         addItem: "አዲስ ዕቃ ማከያ",
         itemDescription: "የዕቃው መግለጫ",
@@ -1928,36 +1932,33 @@ const am = {
         lowStockAlertThreshold: "ዝቅተኛ የእቃዎች ማንቂያ ገደብ",
         enterQuantityAlert: "ለማስጠንቀቂያ የሚገባውን የእቃ ብዛት ያስገቡ",
         selectVisibility: "ግልጽነት ይምረጡ",
-        isItemReturnable: "ዕቃው ሊመለስ ይችላል?"
-        },
-    allocateItem:{
-        allocateItem:"ንጥል ይመድቡ(Allocate Item)",
-        searchUser:"ተጠቃሚን ፈልግ",
-        selectedUser:"የተመረጠ ተጠቃሚ:",
+        isItemReturnable: "ዕቃው ሊመለስ ይችላል?",
     },
-    fillItem:{
-        fill:"የ{name} መረጃ መዝገብ ይሙሉ",
+    allocateItem: {
+        allocateItem: "ንጥል ይመድቡ(Allocate Item)",
+        searchUser: "ተጠቃሚን ፈልግ",
+        selectedUser: "የተመረጠ ተጠቃሚ:",
+    },
+    fillItem: {
+        fill: "የ{name} መረጃ መዝገብ ይሙሉ",
     },
     inventoryItems: {
         inventoryItems: "የመረጃ መዝገብ ዕቃዎች",
         isReturnable: "መመለስ ይቻላል?",
-        addedAt: "የተጨመረበት ጊዜ"
+        addedAt: "የተጨመረበት ጊዜ",
     },
-    inventoryLogs:{
-        latestTransaction:"የቅርብ ጊዜ ልውውጦች",
+    inventoryLogs: {
+        latestTransaction: "የቅርብ ጊዜ ልውውጦች",
         status: "ሁኔታ",
         to: "ወደ",
         from: "ከ",
-        date: "ቀን"
+        date: "ቀን",
     },
-    pendingInventoryItems:{
-        inventoryItems:"እቃዎች",
-        pendingCheckout:"በመጠባበቅ ላይ ያሉ (Checkouts)",
-        addItem:"እቃ ያክሉ"
-
-    }
-        
-            
+    pendingInventoryItems: {
+        inventoryItems: "እቃዎች",
+        pendingCheckout: "በመጠባበቅ ላይ ያሉ (Checkouts)",
+        addItem: "እቃ ያክሉ",
+    },
 };
 
 export default am;

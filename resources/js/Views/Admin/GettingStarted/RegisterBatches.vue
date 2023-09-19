@@ -181,8 +181,13 @@ const updatedLevels = ref(
         return { ...level, selected: true, no_of_sections: 3 };
     })
 );
+
+const selectedLevels = computed(() =>
+    updatedLevels.value.filter((level) => level.selected)
+);
+
 const formData = computed(() => {
-    return updatedLevels.value.map((level) => {
+    return selectedLevels.value.map((level) => {
         return {
             level_id: level.isNew ? { name: level.name } : level.id,
             no_of_sections: level.no_of_sections,

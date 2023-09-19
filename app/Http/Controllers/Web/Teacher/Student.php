@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\Teacher;
 
-use App\Models\AssessmentType;
 use App\Models\BatchSubject;
 use App\Models\Flag;
 use App\Models\Level;
@@ -42,7 +41,6 @@ class Student extends Controller
         $semesters = Semester::with('schoolYear')->get();
         $schoolYears = SchoolYear::all();
 
-        //grade report
         $homeroomTeacher = $student->activeBatch()->homeroomTeacher->teacher->user;
         $level = $student->activeBatch()->level;
 
@@ -216,6 +214,7 @@ class Student extends Controller
             return $student->activeBatch()->load('level.levelCategory.assessmentTypes')->level->levelCategory->assessmentTypes;
         }
 
-        return AssessmentType::all();
+        // return the assessment types of the selected student's level category
+        return $student->activeBatch()->load('level.levelCategory.assessmentTypes')->level->levelCategory->assessmentTypes;
     }
 }

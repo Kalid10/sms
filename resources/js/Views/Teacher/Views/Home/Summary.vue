@@ -2,6 +2,7 @@
     <!--    TODO: Add value to locale -->
     <div class="flex w-5/12 flex-col items-center space-y-5">
         <SummaryItem
+            v-if="isTeacher()"
             class-style="bg-sky-100 text-black"
             icon-style="bg-sky-500/20 text-white"
             :title="$t('common.aiChat')"

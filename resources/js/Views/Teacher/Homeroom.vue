@@ -134,7 +134,8 @@
                     ? '/admin/teachers/homeroom/?teacher_id='
                     : '/teacher/homeroom/'
             "
-            :teacher="selectedTeacherId"
+            :teacher-id="selectedTeacherId"
+            :teacher-name="selectedTeacher.user.name"
             @close="showAssignModal = false"
         />
     </Modal>
@@ -169,6 +170,7 @@ const showAssignModal = ref(false);
 const studentDetail = ref();
 const showAddFlagModal = ref(false);
 const selectedTeacherId = computed(() => usePage().props.teacher.id);
+const selectedTeacher = computed(() => usePage().props.teacher);
 
 const homeroomOptions = computed(() => {
     return homeroomClasses.value.map((homeroom) => {

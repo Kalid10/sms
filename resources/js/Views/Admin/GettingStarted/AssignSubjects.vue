@@ -1,6 +1,7 @@
 <template>
     <div
-        class="container mx-auto flex h-full max-h-full w-9/12 flex-col gap-4 px-2 pt-6 md:px-6 md:pt-6"
+        class="container mx-auto flex h-full max-h-full flex-col gap-4 px-2 pt-6 md:px-6 md:pt-6"
+        :class="widthClass"
     >
         <div
             class="grid h-full grid-cols-12 grid-rows-[auto_1fr] overflow-auto"
@@ -35,14 +36,14 @@
                         :key="s"
                         :class="{
                             'sticky inset-y-0 z-10':
-                                selectedSubject?.id === subject.id,
+                                selectedSubject?.id === subject?.id,
                         }"
                         @click="selectSubject(subject)"
                     >
                         <Card
                             :class="{
                                 '!bg-brand-400 !text-white':
-                                    selectedSubject?.id === subject.id,
+                                    selectedSubject?.id === subject?.id,
                             }"
                             class="group !min-w-full cursor-pointer transition duration-150 hover:border-gray-500 hover:shadow-md"
                         >
@@ -57,25 +58,25 @@
                                             <span
                                                 class="mr-2 whitespace-nowrap font-semibold"
                                             >
-                                                {{ subject.full_name }}
+                                                {{ subject?.full_name }}
                                             </span>
                                             <span
                                                 :class="[
                                                     selectedSubject?.id ===
-                                                    subject.id
+                                                    subject?.id
                                                         ? 'text-white'
                                                         : 'text-brand-text-600',
                                                 ]"
                                                 class="whitespace-nowrap text-sm uppercase"
                                             >
-                                                {{ subject.short_name }}
+                                                {{ subject?.short_name }}
                                             </span>
                                         </h3>
 
                                         <CheckCircleIcon
                                             v-if="
                                                 selectedSubject?.id ===
-                                                subject.id
+                                                subject?.id
                                             "
                                             class="mt-1 h-6 w-6 stroke-white stroke-2"
                                         />
@@ -85,11 +86,11 @@
                                         class="flex w-fit origin-left scale-[.85] flex-wrap gap-1"
                                     >
                                         <span
-                                            v-for="(label, l) in subject.tags"
+                                            v-for="(label, l) in subject?.tags"
                                             :key="l"
                                             :class="[
                                                 selectedSubject?.id ===
-                                                subject.id
+                                                subject?.id
                                                     ? 'text-white'
                                                     : 'text-brand-text-600',
                                             ]"
@@ -106,7 +107,7 @@
                                     }}</span>
                                     <span
                                         :class="[
-                                            selectedSubject?.id === subject.id
+                                            selectedSubject?.id === subject?.id
                                                 ? 'text-white'
                                                 : 'text-brand-text-600',
                                         ]"
@@ -120,7 +121,7 @@
                                     }}</span>
                                     <span
                                         :class="[
-                                            selectedSubject?.id === subject.id
+                                            selectedSubject?.id === subject?.id
                                                 ? 'text-white'
                                                 : 'text-brand-text-600',
                                         ]"
@@ -154,53 +155,27 @@
                 <div class="relative flex flex-col gap-4">
                     <div
                         v-if="!!!selectedSubject"
-                        class="absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center gap-8 bg-white/100"
+                        class="absolute top-0 left-0 flex h-full w-full flex-col gap-8 bg-white/100"
                     >
-                        <div class="flex flex-col items-center justify-center">
-                            <h3 class="font-semibold">
+                        <div
+                            class="flex h-full w-full flex-col items-center gap-5 pt-60"
+                        >
+                            <Heading class="pb-3 !text-3xl">
                                 {{ $t("assignSubjects.selectSubject") }}
-                            </h3>
-                            <h3 class="text-brand-text-600 text-center text-sm">
+                            </Heading>
+                            <Heading
+                                class="flex w-full flex-col text-center text-gray-500"
+                            >
                                 {{ $t("assignSubjects.chooseSubject") }}
-                                <span>
-                                    <!--                                    on the left-->
+                                <span class="text-black">
                                     {{ $t("assignSubjects.onTheLeft") }}
                                 </span>
                                 <span class="block">
-                                    <!--                                    to start assigning classes-->
                                     {{
                                         $t("assignSubjects.startAssigningClass")
                                     }}
                                 </span>
-                            </h3>
-                        </div>
-
-                        <div class="flex flex-col items-center gap-2">
-                            <h3 class="text-brand-text-600 text-sm">
-                                {{ $t("assignSubjects.pickOne") }}
-
-                                <!--                                ...or pick one of these subjects to start-->
-                            </h3>
-                            <div class="flex gap-2">
-                                <button
-                                    class="text-brand-text-600 rounded-md border border-gray-500 p-2 text-sm font-semibold"
-                                    @click="selectSubjectByName('English')"
-                                >
-                                    {{ $t("assignSubjects.english") }}
-                                </button>
-                                <button
-                                    class="text-brand-text-600 rounded-md border border-gray-500 p-2 text-sm font-semibold"
-                                    @click="selectSubjectByName('Mathematics')"
-                                >
-                                    {{ $t("assignSubjects.mathematics") }}
-                                </button>
-                                <button
-                                    class="text-brand-text-600 rounded-md border border-gray-500 p-2 text-sm font-semibold"
-                                    @click="selectSubjectByName('አማርኛ')"
-                                >
-                                    {{ $t("assignSubjects.amharic") }}
-                                </button>
-                            </div>
+                            </Heading>
                         </div>
                     </div>
 
@@ -335,6 +310,7 @@
                                     "
                                 >
                                     <Card
+                                        v-if="level.batches.length > 0"
                                         class="group !w-full overflow-hidden transition-all duration-150 hover:border-black focus:border-black focus:shadow-lg"
                                         :class="[
                                             showSectionsFor === level.id
@@ -486,7 +462,6 @@
                                                         v-for="(
                                                             section, sec
                                                         ) in sectionsOfLevel(
-                                                            batches,
                                                             level.id
                                                         )"
                                                         :key="sec"
@@ -511,7 +486,6 @@
                                                                 'border-b':
                                                                     sec !==
                                                                     sectionsOfLevel(
-                                                                        batches,
                                                                         level.id
                                                                     ).length -
                                                                         1,
@@ -618,12 +592,9 @@
 
                             <div
                                 v-if="!!selectedSubject"
-                                class="flex items-center justify-between gap-3"
+                                class="flex items-center justify-end gap-3"
                             >
                                 <PrimaryButton @click="saveBatches">
-                                    {{ $t("assignSubjects.save") }}
-                                </PrimaryButton>
-                                <PrimaryButton @click="submitForm">
                                     {{ $t("assignSubjects.finish") }}
                                 </PrimaryButton>
                             </div>
@@ -636,11 +607,10 @@
 </template>
 
 <script setup>
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { useI18n } from "vue-i18n";
 import { parseLevel, toHashTag } from "@/utils";
-import { computed, onMounted, ref, watch } from "vue";
-import { allLevels, sectionsOfLevel } from "@/fake";
+import { computed, inject, onMounted, ref, watch } from "vue";
 import {
     CheckCircleIcon,
     ChevronDoubleUpIcon,
@@ -654,29 +624,53 @@ import Heading from "@/Components/Heading.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
+const props = defineProps({
+    widthClass: {
+        type: String,
+        default: "w-9/12",
+    },
+    url: {
+        type: String,
+        default: "/getting-started/school-period",
+    },
+});
+
 const emits = defineEmits(["success"]);
 
-const subjects = ref(null);
-const batches = ref(null);
-const levelCategories = ref(null);
-const levels = computed(() =>
-    allLevels(batches.value).map((level) => ({
-        ...level.level,
-        batch_id: level.id,
-        selected: true,
-    }))
-);
+const subjects = computed(() => {
+    if (usePage().props.subjects?.data) {
+        return usePage().props.subjects?.data;
+    }
+
+    return usePage().props.subjects;
+});
+const batches = computed(() => usePage().props.batches);
+const levelCategories = computed(() => usePage().props.level_categories);
+
+const levels = computed(() => usePage().props.levels);
+
 const selectedSubject = ref(null);
 
 function selectSubject(subject) {
     selectedSubject.value = subject;
 }
 
-function selectSubjectByName(name) {
-    selectedSubject.value = subjects.value.find(
-        (subject) => subject.full_name === name
-    );
-}
+const sectionsOfLevel = computed(() => {
+    return (level_id) => {
+        if (!batches.value) {
+            return [];
+        }
+
+        return batches.value
+            .filter((batch) => batch.level_id === level_id)
+            .map((batch) => {
+                return {
+                    id: batch.id,
+                    section: batch.section,
+                };
+            });
+    };
+});
 
 const batchToSelectedSubject = computed(() =>
     batchToSubjects.value.filter((batchToSubject) => {
@@ -896,7 +890,6 @@ function toggleSelectAllSectionsOfLevelToSubject(
         });
 }
 
-// remap batchToSubjects list of objects to a list of objects with structure { batch_id: int, subject_ids: array }
 const formData = computed(() => {
     const grouped = batchToSubjects.value.reduce((acc, item) => {
         if (item?.selected) {
@@ -914,6 +907,8 @@ const formData = computed(() => {
     return Object.values(grouped);
 });
 
+const showNotification = inject("showNotification");
+
 function saveBatches() {
     router.post(
         "/batches/subjects/assign",
@@ -923,16 +918,23 @@ function saveBatches() {
         {
             onSuccess() {
                 showSectionsFor.value = null;
+                submitForm();
             },
-            onError() {
+            onError(error) {
                 showSectionsFor.value = null;
+                if (error.batches_subjects)
+                    showNotification({
+                        type: "error",
+                        message: error.batches_subjects,
+                        position: "top-center",
+                    });
             },
         }
     );
 }
 
 function submitForm() {
-    router.get("/getting-started/school-period");
+    router.get(props.url);
 }
 
 const { t } = useI18n();
@@ -951,7 +953,6 @@ onMounted(() => {
             batches.value = data.props.batches;
             levelCategories.value = data.props.level_categories;
             subjects.value = data.props.subjects;
-
             batches.value.forEach((batch) => {
                 subjects.value.forEach((subject) => {
                     batchToSubjects.value.push({
@@ -959,7 +960,9 @@ onMounted(() => {
                         level_id: batch.level_id,
                         level_category_id: batch.level.level_category_id,
                         subject_id: subject.id,
-                        selected: false,
+                        selected: batch.subjects
+                            .map((sub) => sub.subject_id)
+                            .includes(subject.id),
                     });
                 });
             });

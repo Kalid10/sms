@@ -9,7 +9,7 @@
     >
         <template #full_name-column="{ data }">
             <Link
-                :href="`/subjects/${data['id']}`"
+                :href="`/admin/subjects/${data['id']}`"
                 class="font-semibold hover:underline hover:underline-offset-2"
             >
                 {{ data["full_name"] }}

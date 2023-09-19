@@ -8,7 +8,7 @@
                         : 'text-xs font-semibold lg:text-sm'
                 "
             >
-                {{ item.title }}
+                {{ item?.title }}
             </div>
         </div>
         <div
@@ -18,17 +18,17 @@
                 class="flex space-x-1"
                 :class="view === 'class' ? 'text-[0.6rem]' : ''"
             >
-                <span>{{ item.batch_subject.subject.full_name }}</span>
+                <span>{{ item?.batch_subject.subject.full_name }}</span>
                 <span class="font-normal">{{
-                    item.assessment_type.name + " ,"
+                    item?.assessment_type?.name + " ,"
                 }}</span>
             </span>
             <span :class="view === 'class' ? 'text-[0.6rem]' : ''">
-                On {{ moment(item.due_date).format("dddd MMMM Do") }}
+                On {{ moment(item?.due_date).format("dddd MMMM Do") }}
                 <span class="font-semibold lg:hidden">
                     <span class="font-light">for </span>
-                    {{ item.batch_subject.batch.level.name
-                    }}{{ item.batch_subject.batch.section }}
+                    {{ item?.batch_subject.batch?.level.name
+                    }}{{ item?.batch_subject.batch.section }}
                 </span>
             </span>
         </div>

@@ -74,7 +74,10 @@
             </template>
             <template #row-actions="{ row }">
                 <div class="flex flex-col items-center gap-1">
-                    <button @click="transferStudent(row)">
+                    <button
+                        v-if="!formattedStudentsHasAssessment.includes(row.id)"
+                        @click="transferStudent(row)"
+                    >
                         <ArrowsRightLeftIcon
                             class="h-4 w-4 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-blue-700"
                         />
@@ -279,6 +282,16 @@ const todayAbsentees = computed(() => {
 
 const latestPeriodAbsentees = computed(() => {
     return usePage().props.latest_period_absentees;
+});
+
+const studentsHasAssessment = computed(() => {
+    return usePage().props.students_has_assessment;
+});
+
+const formattedStudentsHasAssessment = computed(() => {
+    return studentsHasAssessment.value.map((student) => {
+        return student.id;
+    });
 });
 
 const formattedStudentsData = computed(() => {

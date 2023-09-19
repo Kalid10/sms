@@ -201,8 +201,11 @@ class BatchController extends Controller
             ->with('assessmentType', 'batchSubject.subject', 'teacher.user')
             ->get();
 
-        $flaggedStudents = Flag::whereHas('batchSubject.subject', function ($query) use ($batch) {
-            $query->where('batch_id', $batch->id);
+        // Get the flagged students of the batch
+        $flaggedStudents = Flag::whereHas('flaggable', function ($query) use ($batch) {
+            $query->whereHas('batches', function ($query) use ($batch) {
+                $query->where('batch_id', $batch->id);
+            });
         })->with('flaggedBy', 'flaggable.user.admin')->paginate(10);
 
         $studentsNotes = StudentNote::whereHas('student', function ($query) use ($batch) {
@@ -230,8 +233,6 @@ class BatchController extends Controller
         })->whereDate('date', '>', Carbon::now())
             ->with('schoolPeriod', 'teacher.user')
             ->first();
-
-        Log::info($nextClassSession);
 
         return Inertia::render('Admin/Batches/Index', [
             'batch' => $batch,

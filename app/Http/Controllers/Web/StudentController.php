@@ -45,6 +45,8 @@ class StudentController extends Controller
             'level',
         ])->paginate(15);
 
+        $studentsHasAssessment = Student::whereHas('assessments')->get();
+
         return Inertia::render('Admin/Students/Index', [
             'students' => $students,
             'batches' => $batches,
@@ -53,6 +55,7 @@ class StudentController extends Controller
             'students_count' => $studentsCount,
             'today_absentees' => $todayAbsentees,
             'latest_period_absentees' => $latestPeriodAbsentees,
+            'students_has_assessment' => $studentsHasAssessment,
         ]);
     }
 

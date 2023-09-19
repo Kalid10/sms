@@ -2,28 +2,15 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Http\Requests\SchoolPeriods\CreateRequest;
 use App\Models\SchoolPeriod;
 use App\Models\SchoolYear;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class SchoolPeriodController extends Controller
 {
-    public function create(Request $request)
+    public function create(CreateRequest $request)
     {
-        $request->validate([
-            'school_periods' => 'required|array',
-            'school_periods.*.no_of_periods' => 'required|integer|gt:0',
-            'school_periods.*.minutes_per_period' => 'required|integer|gt:0',
-            'school_periods.*.start_time' => 'required|date_format:H:i',
-            'school_periods.*.custom_periods' => 'nullable|array',
-            'school_periods.*.custom_periods.*.name' => 'required|string',
-            'school_periods.*.custom_periods.*.before_period' => 'required|integer|gt:0',
-            'school_periods.*.custom_periods.*.duration' => 'required|integer',
-            'school_periods.*.level_category_ids' => 'required|array',
-            'school_periods.*.level_category_ids.*' => 'required|integer|distinct:strict|exists:level_categories,id',
-        ]);
-
         $activeSchoolYearId = SchoolYear::getActiveSchoolYear()->id;
         $activeSchoolYearPeriods = SchoolPeriod::where('school_year_id', $activeSchoolYearId);
 

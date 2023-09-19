@@ -38,14 +38,32 @@
                     <div
                         class="flex w-full gap-5 rounded border-b border-black py-3"
                     >
-                        <p class="flex justify-center underline">
-                            {{ selectedBatch.label }}
-                        </p>
                         <div class="flex items-center justify-center">
-                            <PrimaryButton
-                                :title="$t('assignHomeroom.assignHomeroom')"
-                                @click="assignHomeroom"
-                            />
+                            <div v-if="selectedBatch.label">
+                                <p class="text-sm font-semibold">
+                                    {{
+                                        selectedBatch.label
+                                            ? selectedBatch.label
+                                            : selectedBatch.value
+                                    }}
+                                </p>
+
+                                <div>
+                                    <PrimaryButton
+                                        :title="`Change to ${props.teacherName}`"
+                                        @click="assignHomeroom"
+                                    />
+                                </div>
+                            </div>
+
+                            <div v-else>
+                                <div>
+                                    <PrimaryButton
+                                        :title="`Assign ${props.teacherName} to ${selectedBatch.label}`"
+                                        @click="assignHomeroom"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -59,8 +77,8 @@ import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import { debounce } from "lodash";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const emit = defineEmits(["close"]);
 
@@ -69,7 +87,11 @@ const props = defineProps({
         type: String,
         default: "/admin/teachers/?",
     },
-    teacher: {
+    teacherId: {
+        type: Object,
+        default: () => {},
+    },
+    teacherName: {
         type: Object,
         default: () => {},
     },
@@ -84,7 +106,7 @@ const batchOptions = computed(() => {
                 (batch?.homeroom_teacher?.teacher
                     ? batch?.homeroom_teacher?.teacher?.user.name
                     : "-") +
-                " to " +
+                " is assigned to " +
                 batch.level.name +
                 " " +
                 batch.section,
@@ -108,7 +130,7 @@ watch(searchKey, () => {
 
 const search = debounce(() => {
     router.get(
-        props.url ? props.url + props.teacher : "/admin/teachers/?",
+        props.url ? props.url + props.teacherId : "/admin/teachers/?",
         {
             search: searchKey.value,
         },
@@ -124,7 +146,7 @@ const assignHomeroom = () => {
     router.post(
         "/teachers/assign/homeroom",
         {
-            teacher_id: props.teacher,
+            teacher_id: props.teacherId,
             batch_id: selectedBatch.value.value,
             replace: false,
         },
@@ -132,11 +154,10 @@ const assignHomeroom = () => {
         {
             onSuccess: () => {
                 selectedBatch.value = null;
+                searchKey.value = "";
                 emit("close");
-
                 router.get(
-                    props.url + props.teacher,
-
+                    props.url + props.teacherId,
                     {},
                     {
                         preserveState: true,
