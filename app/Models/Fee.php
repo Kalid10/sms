@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Fee extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     const STATUS_ACTIVE = 'active';
 
@@ -40,8 +40,13 @@ class Fee extends Model
         return $this->belongsTo(LevelCategory::class);
     }
 
-    public function studentTuitions(): HasMany
+    public function studentsTuition(): HasMany
     {
         return $this->hasMany(StudentTuition::class);
+    }
+
+    public function feeable(): MorphTo
+    {
+        return $this->morphTo();
     }
 }
