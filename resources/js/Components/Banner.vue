@@ -8,7 +8,12 @@
             aria-hidden="true"
         >
             <div
-                class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
+                class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r"
+                :class="
+                    customStyle
+                        ? customStyle
+                        : 'from-[#ff80b5] to-[#9089fc] opacity-30'
+                "
                 style="
                     clip-path: polygon(
                         74.8% 41.9%,
@@ -63,10 +68,19 @@
             <p class="text-sm leading-6 text-gray-900">
                 <span class="font-semibold">{{ title }}</span>
             </p>
+            <div
+                v-if="isEmit"
+                class="flex-none cursor-pointer rounded-full bg-brand-400 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-brand-350 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                @click="$emit('buttonClicked')"
+            >
+                {{ buttonText }}
+                <span aria-hidden="true">&rarr;</span>
+            </div>
             <Link
+                v-else
                 :href="buttonUrl"
                 :preserve-state="true"
-                class="flex-none rounded-full bg-brand-400 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-brand-350 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                class="flex-none cursor-pointer rounded-full bg-brand-400 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-brand-350 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
                 >{{ buttonText }} <span aria-hidden="true">&rarr;</span></Link
             >
         </div>
@@ -78,6 +92,7 @@
             >
                 <span class="sr-only">Dismiss</span>
                 <XMarkIcon
+                    v-if="showCloseButton"
                     class="h-5 w-5 cursor-pointer text-gray-900 hover:scale-125 hover:text-red-500"
                     aria-hidden="true"
                 />
@@ -92,6 +107,7 @@ import { ref } from "vue";
 import { Link } from "@inertiajs/vue3";
 
 const show = ref(true);
+defineEmits(["buttonClicked"]);
 defineProps({
     title: {
         type: String,
@@ -104,6 +120,18 @@ defineProps({
     buttonUrl: {
         type: String,
         default: "",
+    },
+    isEmit: {
+        type: Boolean,
+        default: false,
+    },
+    customStyle: {
+        type: String,
+        default: null,
+    },
+    showCloseButton: {
+        type: Boolean,
+        default: true,
     },
 });
 </script>
