@@ -30,19 +30,34 @@
                                 : $t("inventoryIndex.totalInventoryItems")
                         }}
                     </div>
-                    <SecondaryButton
-                        :title="
-                            showInventoryItems
-                                ? $t('inventoryIndex.viewTransactions')
-                                : $t('inventoryIndex.viewItems')
-                        "
-                        class="w-full !rounded-2xl bg-brand-200 font-semibold"
-                        @click="showInventoryItems = !showInventoryItems"
-                    />
+
+                    <div v-if="pendingCount > 0">
+                        <SecondaryButton
+                            :title="
+                                showInventoryItems
+                                    ? $t('inventoryIndex.viewTransactions')
+                                    : $t('inventoryIndex.viewItems')
+                            "
+                            class="w-full !rounded-2xl bg-brand-200 font-semibold"
+                            @click="handleButtonClick"
+                        >
+                            {{
+                                showInventoryItems
+                                    ? $t("inventoryIndex.viewPending")
+                                    : $t("inventoryIndex.viewInventoryItems")
+                            }}
+                        </SecondaryButton>
+                    </div>
+
+                    <div v-else>
+                        <span class="text-sm font-light">
+                            No pending transactions
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <Logs />
+            <Logs v-if="showLatestLogs || showLogs" ref="logsComponent" />
         </div>
 
         <Modal v-model:view="showAddItemModal">
@@ -64,7 +79,7 @@
 <script setup>
 import Title from "@/Views/Teacher/Views/Title.vue";
 import Modal from "@/Components/Modal.vue";
-import { computed, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import AddItem from "@/Views/Admin/Inventory/AddItem.vue";
 import AllocateItem from "@/Views/Admin/Inventory/AllocateItem.vue";
 import InventoryItems from "@/Views/Admin/Inventory/InventoryItems.vue";
@@ -79,9 +94,18 @@ const showAllocateItemModal = ref(false);
 const selectedItemId = ref(null);
 const showInventoryItems = ref(true);
 const showFillItemModal = ref(false);
+const showLatestLogs = ref(false);
 const selectedItem = ref();
 const pendingCount = computed(() => usePage().props.pending_count);
 const inventoryItemCount = computed(() => usePage().props.inventory_count);
+
+const logsComponent = ref(null);
+
+const smoothScrollToLogs = () => {
+    nextTick(() => {
+        logsComponent.value.$el.scrollIntoView({ behavior: "smooth" });
+    });
+};
 
 const setupSelectedItem = (item) => {
     selectedItemId.value = item;
@@ -91,6 +115,15 @@ const setupSelectedItem = (item) => {
 const setupFill = (value) => {
     selectedItem.value = value;
     showFillItemModal.value = true;
+};
+
+const showLogs = computed(() => {
+    return pendingCount.value > 0;
+});
+
+const handleButtonClick = () => {
+    showLatestLogs.value = !showLatestLogs.value;
+    smoothScrollToLogs();
 };
 </script>
 <style scoped></style>

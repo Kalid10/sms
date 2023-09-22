@@ -34,9 +34,7 @@
             </template>
 
             <template #[studentTab]>
-                <div class="flex w-10/12">
-                    <LevelStudents />
-                </div>
+                <UnderConstruction />
             </template>
         </TabElement>
     </div>
@@ -48,10 +46,10 @@ import { usePage } from "@inertiajs/vue3";
 import { parseLevel, toUnderscore } from "@/utils.js";
 import TabElement from "@/Components/TabElement.vue";
 import LevelSubjects from "@/Views/Admin/Levels/LevelSubjects.vue";
-import LevelStudents from "@/Views/Admin/Levels/LevelStudents.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Section from "@/Pages/Admin/Levels/Section.vue";
 import { useI18n } from "vue-i18n";
+import UnderConstruction from "@/Components/UnderConstruction.vue";
 
 const { t } = useI18n();
 const level = computed(() => usePage().props.level);

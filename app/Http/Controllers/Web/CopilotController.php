@@ -28,10 +28,13 @@ class CopilotController extends Controller
 
         $lessonPlansData = $teacherService->getLessonPlansData($request, $teacherId);
 
-        // TODO: Change level category id
+        // Logged-in teacher's level category id
+        $levelCategoryId = auth()->user()->teacher->batchSubjects()->first()->batch->level->level_category_id;
+
+        // Get assessment types based on the logged-in teacher's level category
         $assessmentTypes = AssessmentType::where([
             ['school_year_id', SchoolYear::getActiveSchoolYear()->id], [
-                'level_category_id', 1,
+                'level_category_id', $levelCategoryId,
             ]])->get(['name', 'id']);
 
         $teacherSubjects = BatchSubject::with([

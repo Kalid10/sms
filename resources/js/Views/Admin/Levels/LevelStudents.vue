@@ -13,7 +13,7 @@
                 level.name
             )} ${$t('common.for')} ${schoolYear.name}`"
             class="w-fit"
-            :row-actionable="true"
+            :row-actionable="false"
             :selectable="false"
             :columns="studentsConfig"
             :data="students.data"
@@ -69,22 +69,12 @@
                 </div>
             </template>
 
-            <template #row-actions="{ row }">
-                <Link
-                    :href="'/students/' + row['student_id']"
-                    class="flex flex-col items-center gap-1"
-                >
-                    <EyeIcon
-                        class="h-3 w-3 stroke-2 transition-transform duration-150 hover:scale-125"
-                    />
-                </Link>
-            </template>
-
             <template #footer>
                 <Pagination
                     :preserve-state="true"
                     :links="students.links"
                     position="center"
+                    @page-changed="changePage"
                 />
             </template>
         </TableElement>
@@ -93,14 +83,11 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
-import { Link, router, usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import RadioGroup from "@/Components/RadioGroup.vue";
 import { parseLevel } from "@/utils.js";
-import {
-    ExclamationTriangleIcon,
-    EyeIcon,
-} from "@heroicons/vue/24/outline/index.js";
+import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline/index.js";
 import moment from "moment";
 import TextInput from "@/Components/TextInput.vue";
 import Pagination from "@/Components/Pagination.vue";
@@ -175,6 +162,7 @@ const studentsConfig = [
         key: "name",
         class: "font-semibold",
         align: "right",
+        link: "/admin/teachers/students/{id}",
     },
     {
         name: "",
