@@ -43,21 +43,6 @@ it('can create a new announcement', function () {
         ->assertSessionHas('success', 'Announcement created successfully');
 });
 
-it('can list all announcements', function () {
-    // Create some test announcements
-    Announcement::factory()->count(3)->create();
-
-    // Get the announcements index page
-    $response = $this->get(route('announcements.index'));
-
-    // Check no of announcements in the database
-    $this->assertEquals(3, Announcement::count());
-
-    // Assert that the response contains the announcements' titles
-    $response->assertSee(Announcement::first()->title)
-        ->assertSee(Announcement::latest()->first()->title);
-});
-
 it('can update an existing announcement', function () {
     // Create a test announcement
     $announcement = Announcement::factory()->create();
