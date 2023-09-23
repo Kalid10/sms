@@ -56,7 +56,7 @@ class LevelController extends Controller
         ]);
     }
 
-    public function show(Level $level, Request $request): Response
+    public function show(Level $level, Request $request, Batch $batch): Response
     {
         // Get search key
         $searchKey = $request->input('search');
@@ -149,12 +149,15 @@ class LevelController extends Controller
         // Get announcement with "students" target group
         $announcements = Announcement::whereJsonContains('target_group', 'students')->with('author.user')->get();
 
+        $levelAssessments = $this->getLevelAssessments($batch);
+
         return Inertia::render('Admin/Levels/Single', [
             'level' => $level,
             'batches' => $level->activeBatches,
             'students' => Inertia::lazy(fn () => $students),
             'school_year' => SchoolYear::getActiveSchoolYear(),
             'announcements' => $announcements,
+            'level_assessments' => $levelAssessments,
         ]);
     }
 
@@ -165,19 +168,23 @@ class LevelController extends Controller
 
     public function assessments(Batch $batch): Response
     {
-        $levelAssessments = Assessment::whereIn('batch_subject_id', BatchSubject::whereIn('batch_id',
-            Batch::where('level_id', $batch->level_id)->pluck('id'))->pluck('id'))
-            ->where('status', '!=', Assessment::STATUS_DRAFT)
-            ->orderBy('updated_at', 'DESC')
-            ->with('assessmentType', 'batchSubject.batch:id,section,level_id',
-                'batchSubject.batch.level:id,name,level_category_id',
-                'batchSubject.subject:id,full_name')
-            ->paginate(10);
+        $levelAssessments = $this->getLevelAssessments($batch);
 
         return Inertia::render('Admin/Levels/Assessments',
             [
                 'batch' => $batch->load('level'),
                 'level_assessments' => $levelAssessments,
             ]);
+    }
+
+    private function getLevelAssessments(Batch $batch)
+    {
+        return Assessment::whereIn('batch_subject_id', BatchSubject::whereIn('batch_id',
+            Batch::where('level_id', $batch->level_id)->pluck('id'))->pluck('id'))
+            ->where('status', '!=', Assessment::STATUS_DRAFT)
+            ->orderBy('updated_at', 'DESC')
+            ->with('assessmentType', 'batchSubject.batch:id,section,level_id',
+                'batchSubject.subject:id,full_name')
+            ->paginate(10);
     }
 }
