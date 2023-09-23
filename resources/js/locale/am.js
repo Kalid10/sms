@@ -1000,7 +1000,7 @@ const am = {
         lessonPlan: "ትምህርት መርሃግብር",
         addLessonPlan: "ትምህርት መርሃግብር ያክሉ",
         teacher: "መምህር",
-        viewFullSchedule: "ሙሉ መርሐግብር ይመልከቱ",
+        viewFullSchedule: "ሙሉ የቀኑን መርሐግብር ይመልከቱ",
     },
     nextClassIndex: {
         noUpcomingClasses: "ምንም ቀጣይ ክፍሎች አልተገኙም! እባክዎ መርሐግብርዎን ይመልከቱ ወይም ያነጋግሩ",

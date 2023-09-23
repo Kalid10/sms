@@ -419,7 +419,7 @@ const en = {
         aiChatDescription: "Experience the power of AI in education",
         sections: "Sections",
         section: "Section",
-        question: "Question",
+        input: "Input",
         questions: "Questions",
         studentNotes: "Student Notes",
         days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -1043,7 +1043,7 @@ const en = {
         lessonPlan: "Lesson Plan",
         addLessonPlan: "Add Lesson Plan",
         teacher: "Teacher",
-        viewFullSchedule: "View Full Schedule",
+        viewFullSchedule: "View Today's Schedule",
     },
     nextClassIndex: {
         noUpcomingClasses:
@@ -1113,7 +1113,7 @@ const en = {
         lessonPlanDescription:
             "Select 'Lesson Plans' to automatically generate questions from your existing plans. Upon selection, we will load your plans, and you can choose one for us to craft tailored questions.",
         question: "Question",
-        enterQuestion: "Enter Question",
+        enterInput: "Enter Input",
         dailyAIUsageProgress: "Daily AI Usage ",
     },
     readMoreLess: {

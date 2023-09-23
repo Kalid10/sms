@@ -114,8 +114,8 @@
                     v-if="selectedSubject && form.question_source === 'custom'"
                     v-model="form.manual_question"
                     class="w-full"
-                    :label="$t('common.question')"
-                    :placeholder="$t('questionPreparation.enterQuestion')"
+                    :label="$t('common.input')"
+                    :placeholder="$t('questionPreparation.enterInput')"
                     rows="10"
                     :error="form.errors.manual_question"
                 />
