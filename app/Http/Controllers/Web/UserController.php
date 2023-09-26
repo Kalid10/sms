@@ -128,7 +128,10 @@ class UserController extends Controller
 
     public function student(Request $request): Response
     {
-        $levels = Level::all();
+        $levels = Level::whereHas('batches', function ($query) {
+            $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+        })->with('batches:id,level_id,section,min_students,max_students')
+            ->with('batches.students.student.user:id,name')->get();
 
         $searchKey = $request->input('search');
 

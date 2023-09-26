@@ -34,10 +34,10 @@ class Subject extends Model
             ->get()
             ->groupBy('teacher_id')
             ->map(fn ($teacherBatches) => [
-                'teacher' => [
+                'teacher' => $teacherBatches->first()->teacher ? [
                     'teacher_id' => $teacherBatches->first()->teacher->id,
                     ...$teacherBatches->first()->teacher->user->toArray(),
-                ],
+                ] : null,
                 'batches' => $teacherBatches->map(fn ($teacherBatch) => [
                     'batch_id' => $teacherBatch->batch_id,
                     ...$teacherBatch->batch->level->toArray(),

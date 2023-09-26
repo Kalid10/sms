@@ -47,9 +47,13 @@ class LevelController extends Controller
             'batches' => function ($query) {
                 $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
             },
-        ])->when($searchKey, function ($query, $searchKey) {
-            $query->where('name', 'LIKE', "%{$searchKey}%");
-        })->get();
+        ])
+            ->whereHas('batches', function ($query) {
+                $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            })
+            ->when($searchKey, function ($query, $searchKey) {
+                $query->where('name', 'LIKE', "%{$searchKey}%");
+            })->get();
 
         return Inertia::render('Admin/Levels/Index', [
             'levels' => $levels,
