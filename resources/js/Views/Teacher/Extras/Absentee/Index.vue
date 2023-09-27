@@ -58,7 +58,9 @@
                     <div
                         class="flex w-9/12 flex-col items-center justify-center space-y-6 rounded-lg bg-red-600 px-5 py-10 text-center font-bold text-white shadow-sm"
                     >
-                        <span>Your is leave is not set, contact admin!</span>
+                        <span>
+                            You have not been assigned any leave info yet!
+                        </span>
                     </div>
                 </div>
             </div>
