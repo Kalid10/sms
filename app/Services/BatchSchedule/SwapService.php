@@ -280,8 +280,6 @@ class SwapService extends MatrixService
         // Update matrix
         parent::$scheduleMatrix[$batchSubject['batchId']][$schoolPeriodSlot['dayName']][$schoolPeriodSlot['periodId']] = $batchSubject['batchSubjectId'];
 
-        //Log::info('$scheduleMatrix in batchId ' . $batchSubject['batchId'] . ' day ' . $schoolPeriodSlot['dayName'] . ' period ' . $schoolPeriodSlot['periodId'] . ' is now ' . parent::$scheduleMatrix[$batchSubject['batchId']][$schoolPeriodSlot['dayName']][$schoolPeriodSlot['periodId']]);
-
         parent::$unAllocatedBatchSubjects = parent::$unAllocatedBatchSubjects->filter(function ($unAllocatedBatchSubject) use ($batchSubject) {
 
             return $unAllocatedBatchSubject['batchSubjectId'] !== $batchSubject['batchSubjectId'];
@@ -294,18 +292,6 @@ class SwapService extends MatrixService
         });
 
         parent::$teacherAvailabilityMatrix[$batchSubject['teacherId']][$schoolPeriodSlot['dayName']][$schoolPeriodSlot['periodId']] = false;
-
-        //Log::info('Before Update: Ensuring there was NO $batchSubject with query ' . json_encode([
-        //                'batch_id' => $batchSubject['batchId'],
-        //                'batch_subject_id' => $batchSubject['batchSubjectId'],
-        //                'school_period_id' => $schoolPeriodSlot['periodId'],
-        //                'day_of_week' => $schoolPeriodSlot['dayName'],
-        //            ]) . '... Count: ' . json_encode(BatchSchedule::where([
-        //                'batch_id' => $batchSubject['batchId'],
-        //                'batch_subject_id' => $batchSubject['batchSubjectId'],
-        //                'school_period_id' => $schoolPeriodSlot['periodId'],
-        //                'day_of_week' => $schoolPeriodSlot['dayName'],
-        //            ])->count()));
 
         // Check if there is already a schedule for this batch subject in this slot, if there is, update it, else create a new one
         if (BatchSchedule::where([
@@ -338,17 +324,9 @@ class SwapService extends MatrixService
 
         }
 
-        //Log::info('After Update: Ensuring there is only 1 $batchSubject with query ' . json_encode([
-        //                'batch_id' => $batchSubject['batchId'],
-        //                'batch_subject_id' => $batchSubject['batchSubjectId'],
-        //                'school_period_id' => $schoolPeriodSlot['periodId'],
-        //                'day_of_week' => $schoolPeriodSlot['dayName'],
-        //            ]) . '... Count: ' . json_encode(BatchSchedule::where([
-        //                'batch_id' => $batchSubject['batchId'],
-        //                'batch_subject_id' => $batchSubject['batchSubjectId'],
-        //                'school_period_id' => $schoolPeriodSlot['periodId'],
-        //                'day_of_week' => $schoolPeriodSlot['dayName'],
-        //            ])->count()));
+        // Update the batch subject weekly frequency
+        parent::$batchSubjectAllocationMatrix[$batchSubject['batchId']][$batchSubject['batchSubjectId']]--;
+
     }
 
     protected static function reAssignBatchSubjectToSlot($batchSubject, $fromSchoolPeriodSlot, $toSchoolPeriodSlot): void
@@ -369,9 +347,6 @@ class SwapService extends MatrixService
 
         });
 
-        //Log::info('toSchoolPeriodSlot: ' . json_encode($toSchoolPeriodSlot));
-        //Log::info('$toSchoolPeriodSlot: before update query' . json_encode(self::getBatchSubjectFromSlot($toSchoolPeriodSlot, $batchSubject['batchId'])));
-
         // Add the old slot to the unallocated school periods
         self::$unAllocatedSchoolPeriods->push([
             'batch_id' => $fromSchoolPeriodSlot['batchId'],
@@ -385,8 +360,6 @@ class SwapService extends MatrixService
             'school_period_id' => $toSchoolPeriodSlot['periodId'],
             'day_of_week' => $toSchoolPeriodSlot['dayName'],
         ])->count() > 0) {
-
-            //Log::info('Updating $batchSubject and deleting: ' . json_encode($batchSubject) . ' to $toSchoolPeriodSlot: ' . json_encode($toSchoolPeriodSlot));
 
             BatchSchedule::where([
                 'batch_id' => $batchSubject['batchId'],
@@ -417,7 +390,6 @@ class SwapService extends MatrixService
                 return;
             }
 
-            //Log::info("This is the batch schedule to be updated: " . json_encode($batchScheduleToBeUpdated));
             // Update the batch schedule table
             $batchScheduleToBeUpdated->update([
                 'school_period_id' => $toSchoolPeriodSlot['periodId'],
@@ -429,15 +401,11 @@ class SwapService extends MatrixService
 
     protected static function canTeacherTeachInSlot($teacherId, $schoolPeriodSlotDay, $schoolPeriodSlotId): bool
     {
-        //Log::info('canTeacherTeachInSlot $batchSubject: ' . json_encode($batchSubject) . ' $schoolPeriodSlot: ' . json_encode($schoolPeriodSlot) . '?');
-        //Log::info(parent::$teacherAvailabilityMatrix[$batchSubject['teacherId']][$schoolPeriodSlot['dayName']][$schoolPeriodSlot['periodId']]);
         return parent::$teacherAvailabilityMatrix[$teacherId][$schoolPeriodSlotDay][$schoolPeriodSlotId];
     }
 
     protected static function canBatchSubjectBeAllocatedOnSlotDay($batchSubjectId, $dayName, $batchId): bool
     {
-        //Log::info('canBatchSubjectBeAllocatedOnSlotDay $batchSubject: ' . json_encode($batchSubject) . ' $schoolPeriodSlot: ' . json_encode($schoolPeriodSlot) . '?');
-        //Log::info(!in_array($batchSubject['batchSubjectId'], parent::$scheduleMatrix[$batchSubject['batchId']][$schoolPeriodSlot['dayName']]));
         return ! in_array($batchSubjectId, parent::$scheduleMatrix[$batchId][$dayName]);
     }
 }
