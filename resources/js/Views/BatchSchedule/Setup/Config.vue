@@ -29,17 +29,9 @@
                 <div class="flex w-full items-center justify-center space-x-7">
                     <SecondaryButton
                         title="Get Started"
-                        class="w-fit bg-brand-400 !py-2 text-white"
+                        class="w-fit !rounded-3xl bg-brand-400 !px-10 !py-2 text-white"
                         @click="gettingStarted = false"
                     />
-
-                    <div
-                        class="hover:text-bold flex cursor-pointer space-x-1.5 text-sm font-medium text-black hover:scale-105"
-                    >
-                        <div>Learn more</div>
-
-                        <ArrowRightIcon class="w-3.5" />
-                    </div>
                 </div>
             </div>
             <div
@@ -88,7 +80,6 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { ref } from "vue";
 import Loading from "@/Components/Loading.vue";
-import { ArrowRightIcon } from "@heroicons/vue/24/outline";
 
 const emit = defineEmits(["success"]);
 
