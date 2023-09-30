@@ -67,6 +67,7 @@
             >
         </div>
         <!--            LessonPlan section-->
+        <!--        TODO: If there is a lesson plan linked to this session, onclick open the linked lesson plan-->
         <span
             v-if="
                 (!isTeacherView && isNextClassSubjectTeacher) ||
@@ -74,6 +75,7 @@
             "
             class="text-xs font-light hover:cursor-pointer hover:font-medium hover:underline"
             :class="fontSizeSmall"
+            @click="router.get('/teacher/lesson-plan')"
         >
             <span v-if="nextClass.lesson_plan">
                 {{ $t("nextClass.lessonPlan") }} #{{
@@ -92,9 +94,9 @@
             </div>
         </div>
         <PrimaryButton
-            class="w-8/12 !border-none bg-brand-400 !text-xs lg:w-10/12 2xl:w-10/12"
+            class="w-8/12 !border-none bg-brand-400 !text-xs lg:w-10/12"
             :class="buttonWidth"
-            @click="$emit('view')"
+            @click="router.get('/teacher/extras', { active_tab: 'Schedules' })"
             >{{ $t("nextClass.viewFullSchedule") }}
         </PrimaryButton>
     </div>
@@ -103,11 +105,10 @@
 <script setup>
 import moment from "moment/moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { addSuffix, isSidebarOpenOnXlDevice } from "@/utils";
 import { computed } from "vue";
 
-defineEmits(["view"]);
 const props = defineProps({
     nextClass: {
         type: Object,

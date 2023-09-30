@@ -85,9 +85,11 @@ class ExtrasController extends Controller
             'absentee_list' => $this->getAbsentees($request->input('date')),
             'batch_schedules' => $batchSchedules,
             'school_period_count' => $schoolPeriodCount,
+            'active_tab' => $request->input('active_tab') ?? 'Inventory',
         ]);
     }
 
+    // TODO: The date params is not used, find out why
     private function getAbsentees($date)
     {
         return StaffAbsentee::where('user_id', auth()->user()->id)->with('batchSession.batchSchedule.batchSubject.subject', 'batchSession.batchSchedule.batch.level')->paginate(10);
