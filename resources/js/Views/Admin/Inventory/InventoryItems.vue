@@ -46,13 +46,13 @@
             {{ moment(data).format("dddd MMM DD, YYYY") }}
         </template>
 
-        <template #id-column="{ data }">
+        <template v-if="isAdmin()" #id-column="{ data }">
             <UserMinusIcon
                 class="w-5 cursor-pointer hover:scale-125"
                 @click="emit('allocate', data)"
             />
         </template>
-        <template #item-column="{ data }">
+        <template v-if="isAdmin()" #item-column="{ data }">
             <PlusCircleIcon
                 class="hover:brand500 w-5 cursor-pointer text-brand-400 hover:scale-125"
                 @click="emit('fill', data)"

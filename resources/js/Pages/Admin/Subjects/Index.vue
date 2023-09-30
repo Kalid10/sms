@@ -16,7 +16,7 @@
         />
         <DialogBox
             v-model:open="isDialogBoxOpen"
-            type="archive"
+            type="delete"
             @confirm="archiveSubject"
         >
             <template #description>

@@ -31,7 +31,7 @@
                     class-style="bg-orange-100 text-black"
                     icon-style="bg-orange-500/20 text-white"
                     :title="$t('common.assessments')"
-                    value="10 /10 Completed"
+                    :value="levelAssessments.data.length + ' Assessments'"
                     :icon="ClipboardIcon"
                     :url="assessmentUrl"
                 />
@@ -48,7 +48,11 @@
                     class-style="bg-red-50 text-black"
                     icon-style="bg-red-500/20 text-white"
                     :title="$t('common.announcements')"
-                    value="10 Announcements Today"
+                    :value="
+                        announcements
+                            ? announcements.length + ' Announcements'
+                            : 0 + ' Announcements'
+                    "
                     :icon="ChatBubbleBottomCenterIcon"
                     @click="showModal = true"
                 />
@@ -86,10 +90,7 @@
 
     <Modal v-model:view="showModal">
         <div class="rounded bg-white p-4">
-            <Title
-                class="w-full lg:w-5/12"
-                :title="$t('announcementsIndex.announcementsTitle')"
-            />
+            <Heading value="Student-Related Announcements" size="2xl" />
 
             <div
                 v-if="announcements"
@@ -129,9 +130,9 @@ import {
 } from "@heroicons/vue/24/outline";
 import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 import Modal from "@/Components/Modal.vue";
-import Title from "@/Views/Teacher/Views/Title.vue";
 import EmptyView from "@/Views/EmptyView.vue";
 import Item from "@/Views/Announcements/Item.vue";
+import Heading from "@/Components/Heading.vue";
 
 const props = defineProps({
     batch: {
@@ -148,6 +149,10 @@ const level = computed(() => {
 
 const announcements = computed(() => {
     return usePage().props.announcements;
+});
+
+const levelAssessments = computed(() => {
+    return usePage().props.level_assessments;
 });
 
 const activeSession = computed(() => {

@@ -39,7 +39,7 @@
     <div v-if="assessments?.data?.length" class="my-2 flex justify-center">
         <LinkCell
             class="flex w-fit items-center justify-end"
-            href="/teacher/assessments"
+            :href="getAssessmentLink()"
             :value="$t('studentAssessments.seeAll')"
         />
     </div>
@@ -51,6 +51,7 @@ import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import EmptyView from "@/Views/EmptyView.vue";
 import SelectInput from "@/Components/SelectInput.vue";
+import { isTeacher } from "@/utils";
 
 const showFilter = ref(false);
 
@@ -74,6 +75,14 @@ const assessmentTypeOptions = computed(() => {
         };
     });
 });
+
+const getAssessmentLink = () => {
+    if (isTeacher()) {
+        return "/teacher/assessments";
+    } else {
+        return "/admin/assessments";
+    }
+};
 
 const batchSubject = computed(() => usePage().props.batch_subject);
 
