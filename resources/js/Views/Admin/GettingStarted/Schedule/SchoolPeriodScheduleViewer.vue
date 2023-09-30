@@ -1,5 +1,5 @@
 <template>
-    <div class="col-span-9 grid w-full grid-rows-[1fr] gap-4 p-4">
+    <div class="col-span-9 grid h-full w-full grid-rows-[1fr] gap-4 p-4">
         <div
             class="grid max-h-full w-full grid-cols-[repeat(5,1fr)_auto] grid-rows-[auto_repeat(8,1fr)] gap-2 rounded-t-md"
         >

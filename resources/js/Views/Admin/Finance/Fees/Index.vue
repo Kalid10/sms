@@ -19,12 +19,7 @@
                     />
 
                     <!--                    TODO: Add this filter When there is more than one target user type-->
-                    <!--                    <SelectInput-->
-                    <!--                        v-model="selectedTargetUserType"-->
-                    <!--                        class="h-fit w-full rounded-2xl !text-sm lg:w-3/12"-->
-                    <!--                        :options="targetUserTypeOptions"-->
-                    <!--                        placeholder="Filter by Target User"-->
-                    <!--                    />-->
+
                     <SecondaryButton
                         class="w-fit !rounded-2xl bg-brand-400 text-white"
                         title="Add Fee"

@@ -1,5 +1,5 @@
 <template>
-    <div class="grid-rows-10 grid grid-cols-5 gap-2">
+    <div class="grid-rows-10 grid grid-cols-5 gap-x-5 gap-y-3">
         <div
             v-for="(day, d) in [
                 'Monday',
@@ -34,8 +34,8 @@
             ]"
             class="flex rounded-lg border p-2"
         >
-            <div v-if="subject.slot" class="flex w-full">
-                <div class="flex w-7/12 flex-col">
+            <div v-if="subject.slot" class="flex w-full justify-evenly">
+                <div class="flex w-7/12 flex-col space-y-1">
                     <div class="flex flex-col">
                         <Heading class="text-brand-text-50" size="sm">
                             {{ subject.slot.batch_subject?.subject?.full_name }}
@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                <div class="flex w-4/12 flex-col justify-between">
+                <div class="flex w-4/12 flex-col justify-between text-center">
                     <Heading size="sm">
                         {{ subject.slot.batch?.level?.level_category?.name }}
                     </Heading>
@@ -75,7 +75,10 @@
                 </div>
             </div>
 
-            <div v-else class="flex h-10 items-center justify-center">
+            <div
+                v-else
+                class="flex h-14 w-full items-center justify-center text-center"
+            >
                 <Heading size="sm"> No Schedule</Heading>
             </div>
         </div>
@@ -145,7 +148,7 @@ function getRowByName(schedule, day, index) {
 function getStyleForSubject(batchSubject) {
     return batchSubject
         ? "bg-brand-100 border-brand-150"
-        : "bg-gray-50 text-gray-500 border-gray-200 opacity-50";
+        : "bg-gray-100 text-gray-500  border-gray-700 opacity-50";
 }
 
 function getColumnByDay(day) {

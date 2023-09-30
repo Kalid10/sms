@@ -7,6 +7,7 @@
                 : 'rounded-md shadow-sm',
         ]"
         class="flex min-h-10 w-full flex-col border bg-white"
+        @submit.prevent
     >
         <div class="flex flex-col gap-3 p-4">
             <div class="flex flex-col">

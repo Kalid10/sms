@@ -38,7 +38,7 @@
                 @click="onRowClick(data)"
             >
                 <ArrowTopRightOnSquareIcon
-                    class="h-5 w-5 stroke-blue-600 hover:scale-125"
+                    class="w-4 stroke-black hover:scale-125"
                 />
             </div>
         </template>
@@ -55,7 +55,6 @@
     <Modal v-model:view="showFeeHistoryModal">
         <FeeHistory :student="studentTuitionHistory" />
     </Modal>
-
 </template>
 <script setup>
 import TableElement from "@/Components/TableElement.vue";

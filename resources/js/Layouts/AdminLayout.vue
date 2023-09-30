@@ -2,11 +2,6 @@
     <div id="top-view"></div>
 
     <div class="scrollbar-hide relative flex h-screen w-full flex-col">
-        <Banner
-            title="Generate your school schedule"
-            button-text="Setup Schedule"
-            button-url="/admin/batch-schedules"
-        />
         <div
             class="hide-scrollbar w-full grow overflow-y-auto bg-brand-50/30 p-0"
         >
@@ -128,7 +123,6 @@ import { useI18n } from "vue-i18n";
 import DialogBox from "@/Components/DialogBox.vue";
 import Loading from "@/Components/Loading.vue";
 import { useUIStore } from "@/Store/ui";
-import Banner from "@/Components/Banner.vue";
 
 const { t } = useI18n();
 const props = defineProps({

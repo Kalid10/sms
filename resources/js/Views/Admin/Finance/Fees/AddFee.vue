@@ -138,29 +138,6 @@
             />
         </div>
 
-        <!--        <div class="flex w-full justify-between p-3">-->
-        <!--            <Toggle-->
-        <!--                v-model="feeForm.is_student_tuition_fee"-->
-        <!--                label="Is this student tuition fee?"-->
-        <!--            />-->
-        <!--            <Toggle v-model="feeForm.is_active" :label="$t('addFee.isFeeActive')" />-->
-        <!--        </div>-->
-        <SelectInput
-            v-model="feeForm.feeable_type"
-            :options="feeableTypeOptions"
-            label="Select Fee Period"
-            placeholder="Select Fee Period"
-            :error="usePage().props.errors.feeable_type"
-        />
-        <SelectInput
-            v-if="feeForm.feeable_type"
-            v-model="feeForm.feeable_id"
-            :options="feableIdOptions"
-            label="Select Fee Period"
-            placeholder="Select Fee Period"
-            :error="usePage().props.errors.feeable_id"
-        />
-
         <Toggle v-model="feeForm.is_active" label="Is this fee active?" />
 
         <Loading v-if="isLoading" is-full-screen />
