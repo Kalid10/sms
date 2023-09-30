@@ -160,15 +160,6 @@ const schoolYears = computed(() => usePage().props.school_years);
 const selectedAnnouncement = ref(announcements.value?.data[0]);
 const selectedAnnouncement2 = ref(announcements.value?.data[1]);
 
-// Splice the latest two announcements
-announcements.value?.data.splice(0, 2);
-
-watch(announcements, () => {
-    selectedAnnouncement.value = announcements.value?.data[0];
-    selectedAnnouncement2.value = announcements.value?.data[1];
-    announcements.value?.data.splice(0, 2);
-});
-
 const searchKey = ref(usePage().props.filters?.searchKey);
 
 const isSearchCleared = ref(false);
