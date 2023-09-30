@@ -14,7 +14,7 @@
                 <template #action>
                     <SecondaryButton
                         :title="$t('levelCategory.addLevelCategory')"
-                        class="!rounded-lg bg-black text-white"
+                        class="!rounded-lg bg-brand-400 text-white"
                         @click="toggleCategoryModal"
                     />
                 </template>

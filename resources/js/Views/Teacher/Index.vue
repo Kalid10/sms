@@ -62,7 +62,7 @@
             <div
                 class="flex h-full w-full flex-col items-center space-y-8 lg:w-3/12"
             >
-                <NextClass
+                <NextClassPage
                     class="!w-11/12"
                     @view="activeTab = toDaysScheduleTab"
                 />
@@ -80,7 +80,7 @@
 
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import NextClass from "@/Views/Teacher/Views/NextClass/Index.vue";
+import NextClassPage from "@/Views/Teacher/Views/NextClass/Index.vue";
 import moment from "moment/moment";
 import { computed, ref } from "vue";
 import { isTeacher, toUnderscore } from "@/utils";
