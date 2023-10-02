@@ -43,7 +43,7 @@
         <div class="flex w-full justify-center py-1">
             <SecondaryButton
                 :title="$t('guardianInformation.requestMeeting')"
-                class="mt-3 w-8/12 !rounded-2xl bg-brand-300 py-1 text-white"
+                class="mt-3 w-8/12 !rounded-2xl bg-brand-450 py-1 text-white"
                 @click="showModal = true"
             />
         </div>
