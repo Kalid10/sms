@@ -12,11 +12,14 @@
                 <div class="text-xl font-semibold capitalize">
                     {{ $t("fees.penalties") }}
                 </div>
-                <SecondaryButton
-                    class="w-fit !rounded-2xl bg-brand-400 text-white"
+                <PrimaryButton
+                    class="flex h-fit items-center justify-center space-x-1 bg-brand-450"
                     :title="$t('fees.addPenalty')"
                     @click="showAddPenaltyForm = true"
-                />
+                >
+                    <SquaresPlusIcon class="w-4 stroke-white stroke-2" />
+                    <span>{{ $t("fees.addPenalty") }}</span>
+                </PrimaryButton>
             </div>
         </template>
     </TableElement>
@@ -29,12 +32,13 @@
 import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import moment from "moment";
 import Modal from "@/Components/Modal.vue";
 import AddPenalty from "@/Views/Admin/Finance/Penalties/AddPenalty.vue";
 import { upperCase } from "lodash";
 import { useI18n } from "vue-i18n";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { SquaresPlusIcon } from "@heroicons/vue/24/outline";
 
 const { t } = useI18n();
 const penalties = computed(() => usePage().props.penalties);

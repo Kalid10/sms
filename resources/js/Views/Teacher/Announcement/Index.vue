@@ -26,15 +26,15 @@
                         :class="isAdmin() ? 'lg:w-6/12 xl:w-8/12' : 'lg:w-9/12'"
                         class-style="focus:ring-1 focus:ring-zinc-700 focus:border-none focus:outline-none rounded-2xl"
                     />
-                    <div
-                        class="flex w-full cursor-pointer items-center justify-center space-x-2 rounded-2xl bg-brand-450 px-4 py-1 text-xs text-white lg:w-fit"
+                    <PrimaryButton
+                        class="flex w-full cursor-pointer items-center justify-center space-x-2 bg-brand-450 px-4 py-1 text-white lg:w-fit"
                         @click="showAddAnnouncement = true"
                     >
                         <SquaresPlusIcon class="w-4 text-white" />
                         <span>
                             {{ $t("announcementsIndex.publishAnnouncement") }}
                         </span>
-                    </div>
+                    </PrimaryButton>
                 </div>
             </div>
 
@@ -141,6 +141,7 @@ import ShowAnnouncementView from "@/Views/Announcements/ShowAnnouncement.vue";
 import { isAdmin } from "@/utils";
 import EmptyView from "@/Views/EmptyView.vue";
 import Loading from "@/Components/Loading.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
     url: {
