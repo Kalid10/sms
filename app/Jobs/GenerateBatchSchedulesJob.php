@@ -37,10 +37,6 @@ class GenerateBatchSchedulesJob implements ShouldQueue
         // Adds 1GB of memory to the PHP process
         ini_set('memory_limit', '2048M');
 
-        //        $this->createSchedule();
-        //        $batchScheduleService->createSchedule();
-        //
-        //
         $this->clearOldSchedules();
         $batchScheduleService->createSchedule();
 
@@ -49,7 +45,11 @@ class GenerateBatchSchedulesJob implements ShouldQueue
             $batchScheduleService->createSchedule();
             $batchSchedules = BatchSchedule::whereNull('batch_subject_id')->count();
         }
-        ////
+
+        if ($batchSchedules === 0) {
+            Event::dispatch(new BatchScheduleEvent('success', 'Batch schedules generated successfully.'));
+        }
+
         $this->isBatchScheduledFully();
         $this->teachersSchedule();
     }

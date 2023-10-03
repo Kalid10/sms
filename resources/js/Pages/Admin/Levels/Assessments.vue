@@ -13,7 +13,7 @@
                 <Title :title="batch.level.name + ' Assessments'" />
             </div>
         </div>
-        <div class="flex w-full">
+        <div v-if="levelAssessments?.data.length > 0" class="flex w-full">
             <div class="w-7/12">
                 <div
                     class="flex flex-col items-center justify-center space-y-2 px-12"
@@ -26,11 +26,6 @@
                     >
                         <AssessmentItem :assessment="item" />
                     </div>
-
-                    <EmptyView
-                        v-if="levelAssessments?.data.length === 0"
-                        title="No assessments found"
-                    />
                 </div>
 
                 <Pagination
@@ -54,6 +49,12 @@
                 </div>
             </div>
         </div>
+
+        <EmptyView
+            v-else
+            :title="$t('assessmentIndex.noAssessmentsFound')"
+            class="flex w-full justify-center py-2"
+        />
     </div>
 </template>
 <script setup>

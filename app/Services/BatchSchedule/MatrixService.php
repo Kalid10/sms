@@ -103,7 +103,10 @@ class MatrixService
 
         $similarUnAllocatedSchoolPeriodsCount = 0;
 
-        while (self::$unAllocatedBatchSubjects->count() > 0) {
+        $index = 0;
+        while (self::$unAllocatedBatchSubjects->count() > 0 && $index < 1500) {
+            $index++;
+
             SwapService::handle();
 
             $this->isBatchScheduledFully(showLog: false);
@@ -125,7 +128,9 @@ class MatrixService
 
         self::getUnAllocatedSchoolPeriods();
 
-        if (self::$unAllocatedBatchSubjects->count() > 0) {
+        $index = 0;
+        while (self::$unAllocatedBatchSubjects->count() > 0 && $index === 0) {
+            $index++;
             SwapCycleService::handle();
         }
     }

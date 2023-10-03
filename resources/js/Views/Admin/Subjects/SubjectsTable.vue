@@ -120,7 +120,7 @@
                             class="flex flex-col items-center gap-1"
                             @click="$emit('archive', row['id'])"
                         >
-                            <ArchiveBoxXMarkIcon
+                            <TrashIcon
                                 class="h-3 w-3 stroke-2 transition-all duration-150 hover:scale-125 hover:stroke-red-700"
                             />
                         </button>
@@ -202,7 +202,6 @@ import { toHashTag, toUnderscore } from "@/utils.js";
 import moment from "moment";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {
-    ArchiveBoxXMarkIcon,
     ArrowPathIcon,
     ExclamationTriangleIcon,
     PencilIcon,

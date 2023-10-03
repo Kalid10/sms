@@ -70,6 +70,10 @@ class BatchScheduleController extends Controller
             'teachers' => Inertia::lazy(function () use ($request) {
                 return $this->searchTeachers($request);
             }),
+            'teacher' => Inertia::lazy(function () use ($request) {
+                return $this->getTeacherSchedule($request);
+            }),
+            'isReadyForGeneratingSchedule' => $this->isReadyForGeneratingSchedule(),
         ]);
     }
 
@@ -268,12 +272,32 @@ class BatchScheduleController extends Controller
     private function searchTeachers(Request $request)
     {
         $request->validate([
-            'search_teacher_text' => 'nullable|string',
+            'search' => 'nullable|string',
         ]);
 
         return Teacher::whereHas('user', function ($query) use ($request) {
-            $query->where('name', 'like', "%{$request->input('search_teacher_text')}%");
+            $query->where('name', 'like', "%{$request->input('search')}%");
         })->with(['user', 'activeBatchSubjects'])->get()->take(7);
+    }
+
+    private function getTeacherSchedule(Request $request)
+    {
+        $request->validate([
+            'teacher_id' => 'nullable|exists:teachers,id',
+        ]);
+
+        Log::info('teacher '.$request->input('teacher_id'));
+
+        return Teacher::find($request->input('teacher_id'))->load([
+            'activeBatchSubjects' => function ($query) {
+                $query->with(['batch.level']);
+            },
+        ]);
+    }
+
+    private function isReadyForGeneratingSchedule(): bool
+    {
+        return BatchSubject::whereIn('batch_id', Batch::active()->pluck('id')->toArray())->where('teacher_id', null)->count() === 0;
     }
 
     public function updateBatchSubjects(Request $request): RedirectResponse
@@ -369,7 +393,7 @@ class BatchScheduleController extends Controller
             ]);
         }
 
-        // Now lets check if the batch subjects have the same weekly frequency as the school periods
+        // Now let's check if the batch subjects have the same weekly frequency as the school periods
         $batches = $batches->map(function ($batch) {
             $schoolPeriods = SchoolPeriod::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
                 ->where('level_category_id', $batch->level->levelCategory->id)
