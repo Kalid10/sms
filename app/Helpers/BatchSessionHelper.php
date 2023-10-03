@@ -5,93 +5,118 @@ namespace App\Helpers;
 use App\Models\Batch;
 use App\Models\BatchSession;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 class BatchSessionHelper
 {
     /**
-     * @return void
-     *
-     * Sync the Batch Session statuses for a given Batch.
-     * Runs only once per minute for a given Batch.
+     * Sync the Batch Sessions of a given Batch
+     * - Get the scheduled BatchSession
+     * - Set all previous BatchSessions to "completed"
+     * - Set the scheduled BatchSession to "scheduled"
+     * - Set the last "completed" BatchSession to "in_progress" if it overlaps with the current time
      */
-    public static function sync(Batch $batch): void
+    public static function sync(Batch $batch, bool $force): void
     {
-        if (! self::shouldSync($batch)) {
+        if (! self::shouldSync($batch, $force)) {
             return;
         }
 
-        // Initialize $synced to false and $batchSession
-        // to an "in_progress" BatchSession if any
-        $synced = false;
-        $batchSession = $batch->inProgressSession();
+        Log::info('syncing for batch '.$batch->id);
 
-        // Run the loop until $synced is true
-        while (! $synced) {
-            // If $batchSession is null, compute the BatchSession that
-            // overlaps with the current time and set it to "in_progress",
-            // if any.
-            // Finally, set the statuses of all the BatchSessions that
-            // have passed the current time to "completed".
-            if (is_null($batchSession)) {
-                $batchSessionInRange = self::findBatchSessionInRange($batch);
+        $scheduledBatchSessions = self::findUpcomingBatchSessions($batch);
+        $previousBatchSessions = self::findPreviousBatchSessions($batch);
 
-                // If no BatchSession that overlaps with the current time
-                // is found, find and store the next upcoming BatchSession
-                if (is_null($batchSessionInRange)) {
-                    $batchSessionInRange = self::findUpcomingBatchSession($batch);
-                } else {
-                    $batchSessionInRange->update(['status' => BatchSession::STATUS_IN_PROGRESS]);
-                }
+        $scheduledBatchSessions->where('status', '!=', BatchSession::STATUS_SCHEDULED)
+            ->each(function (BatchSession $batchSession) {
+                $batchSession->update(['status' => BatchSession::STATUS_SCHEDULED]);
+            });
 
-                BatchSession::whereHas('batchSchedule', function ($query) use ($batch) {
-                    $query->where('batch_id', $batch->id);
-                })
-                    ->where('id', '<', $batchSessionInRange->id)
-                    ->whereNot('status', BatchSession::STATUS_COMPLETED)
-                    ->update([
-                        'status' => BatchSession::STATUS_COMPLETED,
-                    ]);
+        $previousBatchSessions->where('status', '!=', BatchSession::STATUS_COMPLETED)
+            ->each(function (BatchSession $batchSession) {
+                $batchSession->update(['status' => BatchSession::STATUS_COMPLETED]);
+            });
 
-                $synced = true;
+        //        Log::info($batch->inProgressSession);
 
-                continue;
-            }
+        $potentiallyInProgressSession = self::findPotentiallyInProgressSession($batch);
+        self::doesBatchSessionOverlapWithCurrentTime($potentiallyInProgressSession) ?
+            $potentiallyInProgressSession->update(['status' => BatchSession::STATUS_IN_PROGRESS]) :
+            $potentiallyInProgressSession->update(['status' => BatchSession::STATUS_COMPLETED]);
 
-            // If $batchSession is not null, check if it overlaps
-            // with the current time. If it does, set it to "in_progress",
-            // then break.
-            if (self::isBatchSessionInRange($batchSession)) {
-                $batchSession->update([
-                    'status' => BatchSession::STATUS_IN_PROGRESS,
-                ]);
-
-                $synced = true;
-
-                continue;
-            }
-
-            // If $batchSession is not null, and it does not overlap
-            // with the current time, increment the $batchSession
-            // to the next one and continue the loop.
-            $batchSession = $batch->sessions
-                ->where('id', $batchSession->id + 1)
-                ->first();
-        }
+        //        Log::info($batch->inProgressSession);
+        //        Log::info("\n");
 
         $batch['session_last_synced'] = Carbon::now();
         $batch->save();
     }
 
     /**
-     * @return bool
-     *
+     * Fetch the previous Batch Sessions for a given Batch
+     */
+    public static function findPreviousBatchSessions(Batch $batch): Collection
+    {
+        return $batch->load('sessions')
+            ->sessions
+            ->where('date', '<=', Carbon::now())
+            ->sortByDesc('date');
+    }
+
+    /**
+     * Fetch the upcoming Batch Sessions for a given Batch
+     */
+    public static function findUpcomingBatchSessions(Batch $batch): Collection
+    {
+        return $batch
+            ->load('sessions')
+            ->sessions
+            ->where('date', '>=', Carbon::now())
+            ->sortBy('date');
+    }
+
+    /**
+     * Fetch the Batch Session that could be in progress
+     */
+    public static function findPotentiallyInProgressSession(Batch $batch): BatchSession
+    {
+        Log::info('finding potentially in progress session: ');
+        Log::info(json_encode(self::findPreviousBatchSessions($batch)->values()->first()));
+
+        return self::findPreviousBatchSessions($batch)->values()->first();
+    }
+
+    /**
+     * Check if a Batch Session range overlaps with current time
+     */
+    public static function doesBatchSessionOverlapWithCurrentTime(BatchSession $batchSession): bool
+    {
+        $batchSessionStartTime = $batchSession->load('batchSchedule.schoolPeriod')->date;
+        $batchSessionEndTime = $batchSessionStartTime->copy()->addMinutes($batchSession->batchSchedule->schoolPeriod->duration);
+
+        if ($batchSession->batchSchedule->batch_id === 289) {
+            Log::info('Is Batch Session time overlapping? '.Carbon::now()->between($batchSessionStartTime, $batchSessionEndTime));
+        }
+
+        Log::info('Batch Session that should be set in progress: '.json_encode(BatchSession::find(93)->date));
+        Log::info('Current time: '.json_encode(Carbon::now()));
+
+        return Carbon::now()->addSecond()->between($batchSessionStartTime, $batchSessionEndTime);
+    }
+
+    /**
      * Check whether the batch session should be synced or not
      * - Disallow if Batch is not active
-     * - Disallow if session_last_synced is null
-     * - Disallow if session_last_synced is less than a minute ago
+     * - Allow if ignore is true
+     * - Allow if session_last_synced is null
+     * - Allow if session_last_synced is at least a minute ago
      */
-    private static function shouldSync(Batch $batch): bool
+    private static function shouldSync(Batch $batch, bool $ignore = false): bool
     {
+        if ($ignore) {
+            return true;
+        }
+
         if (! $batch->isActive()) {
             return false;
         }
@@ -101,66 +126,5 @@ class BatchSessionHelper
         } else {
             return $batch->session_last_synced->diffInMinutes(Carbon::now());
         }
-    }
-
-    /**
-     * @return bool
-     *
-     * Check whether the given BatchSession overlaps with the current time
-     */
-    public static function isBatchSessionInRange(BatchSession $batchSession): bool
-    {
-        $schoolPeriod = $batchSession->schoolPeriod;
-
-        return $batchSession->date->isToday() &&
-            Carbon::createFromDate($schoolPeriod->start_time)->isBefore(now()) &&
-            Carbon::createFromDate($schoolPeriod->start_time)
-                ->addMinutes($schoolPeriod->duration)
-                ->isAfter(now());
-    }
-
-    /**
-     * @return BatchSession|null
-     *
-     * Find the BatchSession that overlaps with the current time
-     */
-    public static function findBatchSessionInRange(Batch $batch): ?BatchSession
-    {
-        $now = Carbon::now();
-        $today = $now->today();
-
-        return $batch
-            ->sessions
-            ->where('date', $today)
-            ->filter(function ($session) use ($now) {
-                return (Carbon::createFromDate($session->schoolPeriod->start_time)
-                    ->format('His') < $now->format('His')) &&
-                    (Carbon::createFromDate($session->schoolPeriod->start_time)
-                        ->addMinutes($session->schoolPeriod->duration)
-                        ->format('His') > $now->format('His'));
-            })
-            ->first();
-    }
-
-    /**
-     * @return BatchSession|null
-     *
-     * Find the next upcoming BatchSession
-     */
-    public static function findUpcomingBatchSession(Batch $batch): ?BatchSession
-    {
-        $now = Carbon::now();
-        $today = $now->today();
-
-        return $batch
-            ->sessions
-            ->where('date', '>=', $today)
-            ->filter(function ($session) use ($now) {
-                return
-                    $session->date->greaterThan(Carbon::today()) ||
-                    Carbon::createFromDate($session->schoolPeriod->start_time)->format('His') >
-                        $now->format('His');
-            })
-            ->first();
     }
 }
