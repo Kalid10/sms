@@ -551,6 +551,7 @@ const am = {
     createAdmin: {
         headingOne: "ሲስተም አስተዳዳሪ ይመዝገቡ",
         headingTwo: "የሚጠየቀውን መረጃ ይሙሉ።",
+        headingThree: "በጅምላ ሲስተም አድሚን የመዝግቡ",
         adminFormElementTitle: "ሲስተም አስተዳዳሪ ይመዝገቡ",
         namePlaceholder: "ሙሉ ስም",
         phoneNumber: "ስልክ ቁጥር",
@@ -591,6 +592,7 @@ const am = {
     createTeacher: {
         headerOne: "አዲስ መምህር ይመዝገቡ",
         headerTwo: "የሚጠየቀውን መረጃ ይሙሉ።",
+        headerThree: "በጅምላ መምህር ይመዝግቡ",
         registerTeacher: "መምህር ይመዝገቡ",
         namePlaceholder: "የአዲሱ መምህር ሙሉ ስም",
         usernameLabel: "መለያ ስም",
@@ -1604,6 +1606,7 @@ const am = {
         settings: "ቅንብሮች",
         logout: "ይወጡ",
         questionBank: "የጥያቄ ባንክ",
+        books: "መፅሀፍት",
     },
     teacherStudents: {
         myStudents: "ተማሪዎቼ",

@@ -233,7 +233,7 @@ const en = {
     assignSubjects: {
         assignSubjects: "Assign Subjects",
         assignClassHint:
-            "Now that you have registered your classes and subjects, it's time to assign each class to the subject they will be taking.",
+            "Assign each class to the subject they will be taking.",
         subjects: "Subjects",
         queryPlaceholder: "Search for a subject, tag or category",
         levels: "Levels",
@@ -569,6 +569,7 @@ const en = {
     createAdmin: {
         headingOne: "Register an Admin",
         headingTwo: "Fill in the information required.",
+        headingThree: "Admin Bulk Registration",
         adminFormElementTitle: "Register Admin",
         namePlaceholder: "Full Name",
         phoneNumber: "Phone Number",
@@ -609,6 +610,7 @@ const en = {
     createTeacher: {
         headerOne: "Register new teacher",
         headerTwo: "Fill in the information required.",
+        headerThree: "Teacher Bulk Registration",
         registerTeacher: "Register Teacher",
         namePlaceholder: "Full name of new teacher",
         usernameLabel: "User Name",
@@ -1043,7 +1045,7 @@ const en = {
         lessonPlan: "Lesson Plan",
         addLessonPlan: "Add Lesson Plan",
         teacher: "Teacher",
-        viewFullSchedule: "View Today's Schedule",
+        viewFullSchedule: "View Full Schedule",
     },
     nextClassIndex: {
         noUpcomingClasses:
@@ -1667,6 +1669,7 @@ const en = {
         settings: "Settings",
         logout: "Logout",
         questionBank: "Question Bank",
+        books: "Books",
     },
     teacherStudents: {
         myStudents: "My Students",
@@ -1788,7 +1791,7 @@ const en = {
     },
 
     viewsTeacherStudent: {
-        wantToSee: "Want to see how { student } is doing on otherclasses?",
+        wantToSee: "Want to see how { student } is doing on other classes?",
         viewFullGrade: "View Full Grade Report",
     },
     welcomeHeader: {

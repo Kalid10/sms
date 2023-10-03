@@ -73,7 +73,7 @@
         <div class="mt-10 flex md:w-full">
             <div class="mb-6 flex shrink-0 md:mb-0 md:w-3/12">
                 <div class="">
-                    <Heading :value="$t('createStudent.headingThree')" />
+                    <Heading :value="$t('createTeacher.headerThree')" />
                     <Heading
                         :value="$t('createStudent.headingFour')"
                         size="sm"
