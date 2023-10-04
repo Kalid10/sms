@@ -2,28 +2,53 @@
 
 namespace App\Http\Controllers\API\Teachers;
 
-use App\Http\Requests\API\Teachers\Request;
+use App\Http\Requests\API\Teachers\BatchSessionRequest;
 use App\Http\Resources\Teachers\BatchSessionCollection;
 use App\Http\Resources\Teachers\BatchSessionResource;
+use App\Http\Resources\Teachers\EmptyResource;
 use App\Models\Batch;
 use App\Models\BatchSession;
+use Illuminate\Support\Facades\Log;
 
 class BatchSessionController extends Controller
 {
     /**
-     * @return BatchSessionCollection|BatchSessionResource
+     * @return BatchSessionCollection|BatchSessionResource|EmptyResource
      *
      * Get all batch sessions of a teacher
      */
-    public function index(Request $request, ?BatchSession $batchSession): BatchSessionCollection|BatchSessionResource
+    public function index(BatchSessionRequest $request, ?BatchSession $batchSession): BatchSessionCollection|BatchSessionResource|EmptyResource
     {
+        Log::info('inside BatchSessionController@index');
+        Log::info('teachers active Batches '.json_encode(parent::teacher()->activeBatches->pluck('id')));
+
+        parent::teacher()->activeBatches()->each(function ($batch) use ($request) {
+            $batch->getSessions($request->input('force', false));
+        });
+
         if ($batchSession->exists) {
-            return new BatchSessionResource($batchSession);
+            return new BatchSessionResource($batchSession->load([
+                'batchSchedule.schoolPeriod',
+                'batchSchedule.batchSubject.batch.level',
+                'batchSchedule.batchSubject.batch.schoolYear',
+                'batchSchedule.batchSubject.subject',
+            ]));
         }
 
-        $teacher = auth()->user()->load('teacher')->teacher;
+        if ($request->has('status') && $request->input('status') === 'in_progress') {
+            if (parent::teacher()->inProgressBatchSession) {
+                return new BatchSessionResource(parent::teacher()->inProgressBatchSession->load([
+                    'batchSchedule.schoolPeriod',
+                    'batchSchedule.batchSubject.batch.level',
+                    'batchSchedule.batchSubject.batch.schoolYear',
+                    'batchSchedule.batchSubject.subject',
+                ]));
+            }
 
-        $batchSessions = $teacher->load([
+            return new EmptyResource([]);
+        }
+
+        $batchSessions = parent::teacher()->load([
             'batchSessions.batchSchedule.schoolPeriod',
             'batchSessions.batchSchedule.batchSubject.batch.level',
             'batchSessions.batchSchedule.batchSubject.batch.schoolYear',

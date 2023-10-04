@@ -27,25 +27,25 @@ class SimulationSeeder extends Seeder
         $this->admin()->roles()->attach(Role::all());
 
         $this->call([
-            SubjectSeeder::class,
-            LevelCategorySeeder::class,
-            LevelSeeder::class,
-            SchoolYearSeeder::class,
+            //            SubjectSeeder::class,
+            //            LevelCategorySeeder::class,
+            //            LevelSeeder::class,
+            //            SchoolYearSeeder::class,
             FamilySeeder::class,
-            BatchSeeder::class,
-            BatchSubjectSeeder::class,
-            SchoolPeriodSeeder::class,
+            //            BatchSeeder::class,
+            //            BatchSubjectSeeder::class,
+            //            SchoolPeriodSeeder::class,
         ]);
 
         $this->call([
-            TeacherSeeder::class,
-            HomeroomTeacherSeeder::class,
+            //            TeacherSeeder::class,
+            //            HomeroomTeacherSeeder::class,
             AssessmentTypeSeeder::class,
-            AssessmentSeeder::class,
-            LessonPlanSeeder::class,
-            GradeScaleSeeder::class,
-            AnnouncementSeeder::class,
-            SchoolScheduleSeeder::class,
+            //            AssessmentSeeder::class,
+            //            LessonPlanSeeder::class,
+            //            GradeScaleSeeder::class,
+            //            AnnouncementSeeder::class,
+            //            SchoolScheduleSeeder::class,
         ]);
         //
         //        GenerateBatchSchedulesJob::dispatchSync();

@@ -94,9 +94,9 @@ class Batch extends Model
         return $this->sessions->where('status', BatchSession::STATUS_IN_PROGRESS)->first()?->load('absentees.user');
     }
 
-    public function getSessions(string $span = 'now'): BatchSession|Collection|null
+    public function getSessions(bool $force = false, string $span = 'now'): BatchSession|Collection|null
     {
-        BatchSessionHelper::sync($this->load('sessions.schoolPeriod'));
+        BatchSessionHelper::sync($this->load('sessions.schoolPeriod'), $force);
 
         AbsenteeHelper::setAbsenteesFromPreviousSession();
 

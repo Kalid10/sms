@@ -78,6 +78,6 @@ class BatchSession extends Model
     }
 
     protected $casts = [
-        'date' => 'date',
+        'date' => 'datetime',
     ];
 }
