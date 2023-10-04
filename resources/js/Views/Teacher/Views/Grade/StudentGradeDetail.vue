@@ -50,7 +50,7 @@
                                         Homeroom Teacher:
                                         <span
                                             class="pl-2 text-sm font-normal underline"
-                                            >{{ homeroomTeacher.name }}</span
+                                            >{{ homeroomTeacher?.name }}</span
                                         >
                                     </p>
                                     <p></p>

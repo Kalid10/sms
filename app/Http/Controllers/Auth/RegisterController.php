@@ -171,7 +171,9 @@ class RegisterController extends Controller
             'guardian_relation' => $request->guardian_relation,
         ]);
 
-        $assigned = StudentHelper::assignStudentToBatch($student->id, $request->input('level_id'));
+        $batchId = $request->input('batch_id');
+
+        $assigned = StudentHelper::assignStudentToBatch($student->id, $batchId);
 
         if (! $assigned) {
             // Rollback transaction

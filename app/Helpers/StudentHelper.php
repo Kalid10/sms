@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 
 class StudentHelper
 {
-    public static function assignStudentToBatch($studentId, $levelId): bool
+    public static function assignStudentToBatch($studentId, $batchId): bool
     {
         // Check if the student is already assigned to a batch
         $alreadyAssigned = BatchStudent::where('student_id', $studentId)->exists();
@@ -23,27 +23,10 @@ class StudentHelper
             return true;
         }
 
-        // Find all the batches in the student's level
-        $batches = Batch::where('level_id', $levelId)->get();
-
-        // Initialize variables to store the minimum number of students and the target batch
-        $minStudentCount = PHP_INT_MAX;
-        $targetBatch = null;
-
-        // Loop through the batches and find the batch with the minimum number of students
-        foreach ($batches as $batch) {
-            $studentCount = BatchStudent::where('batch_id', $batch->id)->count();
-
-            if ($studentCount < $minStudentCount && $studentCount < $batch->max_students) {
-                $minStudentCount = $studentCount;
-                $targetBatch = $batch;
-            }
-        }
-
-        // If a target batch is found, assign the student to the batch
-        if ($targetBatch) {
+        $batch = Batch::find($batchId);
+        if ($batch && $batch->max_students > BatchStudent::where('batch_id', $batchId)->count()) {
             DB::table('batch_students')->updateOrInsert(
-                ['batch_id' => $targetBatch->id, 'student_id' => $studentId],
+                ['batch_id' => $batchId, 'student_id' => $studentId],
                 [
                     'updated_at' => Carbon::now(),
                     'created_at' => Carbon::now(),

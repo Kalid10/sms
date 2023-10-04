@@ -41,7 +41,7 @@ class Student extends Controller
         $semesters = Semester::with('schoolYear')->get();
         $schoolYears = SchoolYear::all();
 
-        $homeroomTeacher = $student->activeBatch()->homeroomTeacher->teacher->user;
+        $homeroomTeacher = $student->activeBatch()->homeroomTeacher->teacher->user ?? null;
         $level = $student->activeBatch()->level;
 
         $page = match (auth()->user()->type) {

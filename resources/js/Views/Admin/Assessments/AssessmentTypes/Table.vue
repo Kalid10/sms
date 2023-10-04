@@ -152,7 +152,7 @@
 
             <template #name-column="{ data }">
                 <div class="flex items-center gap-2">
-                    <div class="h-1.5 w-1.5 rotate-45 bg-orange-300" />
+                    <div class="h-1.5 w-1.5 rotate-45 bg-black" />
                     <span class="form-control-sm text-sm">{{ data }}</span>
                 </div>
             </template>
@@ -387,8 +387,8 @@ const remove = () => {
 
 const categoryColors = {
     Kindergarten: "bg-blue-500",
-    Primary: "bg-orange-500",
-    Secondary: "bg-green-500",
+    ElementarySchool: "bg-orange-500",
+    HighSchool: "bg-green-500",
 };
 </script>
 <style scoped></style>

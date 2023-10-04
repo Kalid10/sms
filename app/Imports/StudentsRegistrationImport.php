@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Events\UserImportEvent;
 use App\Helpers\StudentHelper;
+use App\Models\Batch;
 use App\Models\Level;
 use App\Models\User;
 use Carbon\Carbon;
@@ -30,14 +31,23 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
 
     public function model(array $row)
     {
-        // Check if level exists
-        $level = Level::where('name', $row['grade']);
-        if (! $level->exists()) {
-            throw new Exception("Level {$row['grade']} does not exist");
+        // Extract grade and section from the input row
+        $gradeWithSection = $row['grade'];
+
+        // Split the grade to separate grade and section
+        [$grade, $section] = explode('-', $gradeWithSection, 2);
+
+        // Check if the level exists
+        $level = Level::where('name', $grade)->first();
+
+        if (! $level) {
+            throw new Exception("Grade {$grade} does not exist");
         }
 
-        // Get the level ID based on the level name
-        $levelId = $level->first()->id;
+        // Get the batch ID based on the level name and batch name
+        $batchId = Batch::where('level_id', $level->id)
+            ->where('section', $section)
+            ->first()->id;
 
         // Start db transaction
         DB::beginTransaction();
@@ -123,7 +133,7 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
         $student = DB::table('students')->where('user_id', $studentUser->id)->first();
 
         // Assign the student to a batch
-        $assign = StudentHelper::assignStudentToBatch($student->id, $levelId);
+        $assign = StudentHelper::assignStudentToBatch($student->id, $batchId);
 
         // Throw exception
         if (! $assign) {
@@ -138,12 +148,12 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
 
     public function chunkSize(): int
     {
-        return env('STUDENT_IMPORT_CHUNK_SIZE', 100);
+        return env('STUDENT_IMPORT_CHUNK_SIZE', 50);
     }
 
     public function batchSize(): int
     {
-        return env('STUDENT_IMPORT_BATCH_SIZE', 100);
+        return env('STUDENT_IMPORT_BATCH_SIZE', 50);
     }
 
     public function rules(): array
