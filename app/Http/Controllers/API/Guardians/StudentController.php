@@ -8,7 +8,6 @@ use App\Http\Requests\API\Students\GradeRequest;
 use App\Http\Requests\API\Students\Request;
 use App\Http\Requests\API\Students\SubjectAssessmentsRequest;
 use App\Http\Requests\API\Students\TermRequest;
-use App\Http\Requests\API\Students\UpdateRequest;
 use App\Http\Resources\Guardians\Student\AssessmentCollection;
 use App\Http\Resources\Guardians\Student\AssessmentGradeCollection;
 use App\Http\Resources\Guardians\Student\AssessmentGradeResource;
@@ -30,7 +29,6 @@ use App\Http\Resources\Guardians\Student\StudentAssessmentsGradeCollection;
 use App\Http\Resources\Guardians\Student\SubjectCollection;
 use App\Http\Resources\Guardians\Student\SubjectResource;
 use App\Http\Resources\Guardians\Term\TermCollection;
-use App\Models\Address;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
@@ -38,7 +36,6 @@ use App\Models\Semester;
 use App\Models\Student;
 use App\Models\StudentAssessmentsGrade;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -51,38 +48,6 @@ class StudentController extends Controller
                 'guardian.children.user.address',
                 'guardian.children.currentBatch.homeRoomTeacher.teacher.user'
             )->guardian->children);
-    }
-
-    public function update(UpdateRequest $request, Student $student): Resource
-    {
-        try {
-            DB::beginTransaction();
-
-            $user = $student->user;
-
-            $user->update($request->only([
-                'name', 'email', 'date_of_birth', 'phone_number', 'gender',
-            ]));
-
-            $addressData = $request->only(['sub_city', 'woreda', 'house_number']);
-
-            if ($user->address) {
-                $user->address->update($addressData);
-            } else {
-                $address = Address::create($addressData + ['city' => 'Addis Ababa', 'country' => 'Ethiopia']);
-
-                $user->address()->associate($address);
-                $user->save();
-            }
-
-            DB::commit();
-
-            return new Resource($student);
-        } catch (\Exception $e) {
-            DB::rollback();
-
-            throw $e;
-        }
     }
 
     public function notes(Request $request, ?Student $student): NoteResource|NoteCollection
