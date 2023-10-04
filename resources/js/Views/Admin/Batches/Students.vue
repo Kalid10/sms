@@ -37,6 +37,7 @@ import TableElement from "@/Components/TableElement.vue";
 import Pagination from "@/Components/Pagination.vue";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
+import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 
 const { t } = useI18n();
 const students = computed(() => usePage().props.students);

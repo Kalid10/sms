@@ -4,9 +4,14 @@
             v-if="!selectedHomeroom"
             class="flex h-96 flex-col items-center justify-center space-y-5"
         >
-            <div class="">404</div>
-            <div class="w-6/12 text-center text-3xl font-semibold text-black">
-                {{ $t("homeRooms.noHomeroomClasses") }}
+            <div
+                class="flex h-fit flex-col items-center justify-center space-y-6 text-center font-medium"
+            >
+                <ExclamationTriangleIcon class="w-10 text-red-600" />
+
+                <div class="text-2xl font-semibold">
+                    {{ $t("homeRooms.noHomeroomClasses") }}
+                </div>
             </div>
 
             <SecondaryButton
@@ -148,6 +153,7 @@ import StudentsTable from "@/Views/Teacher/Views/StudentsTable.vue";
 import {
     ArrowTrendingDownIcon,
     ArrowTrendingUpIcon,
+    ExclamationTriangleIcon,
 } from "@heroicons/vue/24/outline";
 import StudentsList from "@/Views/Teacher/Views/Batches/PerformanceHighlights/StudentsList.vue";
 import Statistics from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";

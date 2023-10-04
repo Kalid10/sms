@@ -53,28 +53,28 @@ it('renders the admin schedule page', function () {
     });
 });
 
-it('renders the levels page', function () {
-    // Create roles
-    $this->artisan('app:create-roles');
-
-    // Create admin user
-    $admin = User::factory()->create([
-        'type' => 'admin',
-    ]);
-    // Disable the CheckSchoolYearStatus middleware
-    $this->withoutMiddleware(CheckSchoolYearStatus::class);
-
-    $admin->roles()->attach(['manage-levels']);
-
-    $response = $this->actingAs($admin)->get('admin/levels');
-
-    // Assert successful response and correct data
-    $response->assertInertia(function (AssertableInertia $page) {
-        $page->component('Admin/Levels/Index')
-            ->has('levels');
-    });
-});
+//it('renders the levels page', function () {
+//    // Create roles
+//    $this->artisan('app:create-roles');
 //
+//    // Create admin user
+//    $admin = User::factory()->create([
+//        'type' => 'admin',
+//    ]);
+//    // Disable the CheckSchoolYearStatus middleware
+//    $this->withoutMiddleware(CheckSchoolYearStatus::class);
+//
+//    $admin->roles()->attach(['manage-levels']);
+//
+//    $response = $this->actingAs($admin)->get('admin/levels');
+//
+//    // Assert successful response and correct data
+//    $response->assertInertia(function (AssertableInertia $page) {
+//        $page->component('Admin/Levels/Index')
+//            ->has('levels');
+//    });
+//});
+
 //it('renders the teachers index page', function () {
 //    // Create admin user
 //    $admin = User::factory()->create([

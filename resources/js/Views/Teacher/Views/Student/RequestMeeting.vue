@@ -34,11 +34,11 @@ const emit = defineEmits(["success"]);
 const guardian = computed(() => usePage().props.student.guardian);
 
 const message = computed(() => {
-    return `Hello ${guardian.value.user.name}, your ward ${
-        usePage().props.student.user.name
-    } is requesting a meeting with you. Please contact ${
-        usePage().props.student.user.name
-    } on ${usePage().props.auth.user.phone_number} to schedule a meeting`;
+    return `Dear ${
+        guardian.value.user.name
+    },\n\nI would like to request a meeting with you to discuss your child's progress.\n\nThank you. please contact me at ${
+        usePage().props.auth.user.phone_number
+    }`;
 });
 
 const form = useForm({

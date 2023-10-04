@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Admin;
+use App\Models\Batch;
 use App\Models\Level;
+use App\Models\SchoolYear;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
@@ -75,6 +77,12 @@ it('registers a student', function () {
     // Get first level
     $level = Level::first();
 
+    // Create School Year
+    $schoolYear = SchoolYear::factory()->create(['end_date' => null]);
+
+    // Create batch
+    $batch = Batch::factory()->create(['school_year_id' => $schoolYear->id, 'level_id' => $level->id]);
+
     // Add school year and batch seeder
     $this->seed('SchoolYearSeeder');
     $this->seed('BatchSeeder');
@@ -90,7 +98,7 @@ it('registers a student', function () {
         'guardian_phone_number' => '0911111111',
         'username' => 'lucybrown',
         'guardian_gender' => 'male',
-        'level_id' => $level->id,
+        'batch_id' => $batch->id,
         'guardian_relation' => 'father',
     ];
 

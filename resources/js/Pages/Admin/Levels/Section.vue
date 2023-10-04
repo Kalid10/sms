@@ -11,7 +11,7 @@
             </div>
             <div class="flex w-full justify-between space-x-5">
                 <div class="h-32 w-6/12">
-                    <ActiveSession :batch="batch" />
+                    <ActiveSessions :batch="batch" />
                 </div>
                 <div class="h-32 w-6/12">
                     <AbsentStudents
@@ -93,7 +93,7 @@
             <Heading value="Student-Related Announcements" size="2xl" />
 
             <div
-                v-if="announcements"
+                v-if="announcements.length > 0"
                 :class="'h-fit w-full space-y-2 py-4 rounded-lg bg-white px-2 shadow-sm'"
             >
                 <Item
@@ -115,6 +115,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import ActiveSessions from "@/Views/Admin/Levels/Section/ActiveSession.vue";
 import AbsentStudents from "@/Views/Admin/Absentee/AbsenteeCard.vue";
 import BatchPerformance from "@/Views/Teacher/Views/Batches/BatchPerformance/Index.vue";
 import {

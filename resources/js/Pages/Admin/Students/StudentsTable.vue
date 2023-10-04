@@ -120,16 +120,10 @@
                         {{ $t("adminStudentsTable.noDataFound") }}
                     </p>
                     <div>
-                        <p
-                            v-if="searchKey === null"
-                            class="text-sm text-brand-text-300"
-                        >
+                        <p v-if="searchKey === null" class="text-sm text-black">
                             {{ $t("adminStudentsTable.noStudentEnrolled") }}
                         </p>
-                        <p
-                            v-else
-                            class="text-center text-sm text-brand-text-300"
-                        >
+                        <p v-else class="text-center text-sm text-gray-500">
                             <span
                                 v-html="
                                     $t('adminStudentsTable.yourSearchQuery', {

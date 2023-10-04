@@ -96,14 +96,11 @@
                     <div>
                         <p
                             v-if="searchKey === null"
-                            class="text-sm text-brand-text-300"
+                            class="text-sm text-gray-500"
                         >
                             {{ $t("teachersIndex.noTeacher") }}
                         </p>
-                        <p
-                            v-else
-                            class="text-center text-sm text-brand-text-300"
-                        >
+                        <p v-else class="text-center text-sm text-gray-500">
                             Your search query "<span
                                 class="font-medium text-black"
                                 >{{ searchKey }}</span

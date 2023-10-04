@@ -31,8 +31,8 @@ class RegisterRequest extends FormRequest
             'gender' => 'required|string|max:255',
             'date_of_birth' => 'required_if:type,student|date',
             'position' => 'required_if:type,admin',
-            'level_id' => 'required_if:type,student|exists:levels,id',
             'existing_guardian_id' => 'nullable|exists:guardians,id',
+            'batch_id' => 'required_if:type,student|exists:batches,id',
         ];
 
         if ($this->input('existing_guardian_id')) {

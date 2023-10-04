@@ -27,12 +27,6 @@
                 <span class="font-bold">{{ batchesCount }}</span>
                 {{ $t("registerBatches.sectionsSelected") }}
             </span>
-
-            <!--            <PrimaryButton-->
-            <!--                class="absolute right-0"-->
-            <!--                :title="$t('registerBatches.buttonTitle')"-->
-            <!--                @click="isNewLevelFormOpened = true"-->
-            <!--            />-->
         </div>
 
         <div
@@ -41,17 +35,36 @@
             class="flex flex-col gap-4"
         >
             <div class="flex items-center gap-2">
-                <div
-                    class="z-10 h-3.5 w-3.5 rounded-full"
-                    :class="colors[lc]"
+                <Checkbox
+                    :model-value="isAnyLevelSelected(levelCategory)"
+                    class="z-10 h-3.5 w-3.5 rounded-full border-gray-700 bg-transparent checked:ring-0 focus:ring-0"
+                    @update:modelValue="
+                        selectAllLevelsInCategory(levelCategory, $event)
+                    "
                 />
-                <Heading size="sm" class="text-brand-text-600 font-normal">
-                    {{
-                        updatedLevels.filter(
-                            (level) => level.level_category_id === levelCategory
-                        )[0].level_category.name
-                    }}
-                </Heading>
+                <div class="flex w-full justify-between">
+                    <Heading size="sm" class="text-brand-text-600 font-normal">
+                        {{
+                            updatedLevels.filter(
+                                (level) =>
+                                    level.level_category_id === levelCategory
+                            )[0].level_category.name
+                        }}
+                    </Heading>
+                    <span class="text-sm font-semibold">
+                        {{
+                            updatedLevels.filter(
+                                (level) =>
+                                    level.level_category_id === levelCategory &&
+                                    level.selected
+                            ).length
+                        }}
+
+                        <span class="font-light text-black">
+                            Grades Selected
+                        </span>
+                    </span>
+                </div>
             </div>
             <div
                 class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4"
@@ -281,6 +294,21 @@ function submitBatches() {
     );
 }
 
+function isAnyLevelSelected(levelCategory) {
+    return updatedLevels.value.some(
+        (level) => level.level_category_id === levelCategory && level.selected
+    );
+}
+
+function selectAllLevelsInCategory(levelCategory, isSelected) {
+    updatedLevels.value = updatedLevels.value.map((level) => {
+        if (level.level_category_id === levelCategory) {
+            level.selected = isSelected;
+        }
+        return level;
+    });
+}
+
 const sectionsOptions = [
     { value: 1, label: "1 Section" },
     { value: 2, label: "2 Sections" },
@@ -288,17 +316,6 @@ const sectionsOptions = [
     { value: 4, label: "4 Sections" },
     { value: 5, label: "5 Sections" },
     { value: 0, label: "Custom number" },
-];
-
-const colors = [
-    "bg-blue-500",
-    "bg-yellow-500",
-    "bg-green-500",
-    "bg-red-500",
-    "bg-purple-500",
-    "bg-pink-500",
-    "bg-indigo-500",
-    "bg-brand-300",
 ];
 </script>
 
