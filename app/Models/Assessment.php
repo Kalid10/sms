@@ -149,7 +149,7 @@ class Assessment extends Model
         $suffix = match (true) {
             $this->isToday() => ' Today'.
             $this->asssessment_period_time ?
-                ' on '.Carbon::createFromDate($this->due_date)->format('M jS').' at '.Carbon::parse($this->assessment_period_time->start_time)->format('H:i A') :
+                ' on '.Carbon::createFromDate($this->due_date)->format('M jS').' at '.Carbon::parse($this->assessment_period_time?->start_time)->format('H:i A') :
                 ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
             $this->isThisWeek() => ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
             default => ' on '.$this->due_date->format('F jS'),
