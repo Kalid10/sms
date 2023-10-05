@@ -93,7 +93,7 @@ const fetchStudent = debounce(async function () {
 
 const filteredStudents = computed(() => {
     if (query.value === "") {
-        return students.value || [];
+        return [];
     } else {
         return students.value
             ? students.value.filter((student) =>
