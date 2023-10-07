@@ -5,14 +5,18 @@ namespace App\Http\Controllers\API\Teachers;
 use App\Http\Requests\API\Teachers\Assessments\AssessmentRequest;
 use App\Http\Requests\API\Teachers\Assessments\MarkAssessmentRequest;
 use App\Http\Requests\API\Teachers\Assessments\UpdateAssessmentStatusRequest;
+use App\Http\Requests\Teachers\CreateAssessmentRequest;
 use App\Http\Resources\Teachers\AssessmentCollection;
 use App\Http\Resources\Teachers\AssessmentResource;
 use App\Http\Resources\Teachers\StudentAssessmentCollection;
 use App\Jobs\InsertStudentsAssessmentsJob;
 use App\Models\Assessment;
+use App\Models\BatchSubject;
+use App\Models\Quarter;
 use App\Models\StudentAssessment;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class AssessmentController extends Controller
@@ -97,6 +101,44 @@ class AssessmentController extends Controller
      *
      * Update the assessment's status.
      */
+    public function create(CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+    {
+        $request->validated();
+
+        foreach ($request->input('batch_subject_ids') as $batchSubjectId) {
+            $batchSubject = BatchSubject::find($batchSubjectId);
+            $batchSubject->assessments()->create(array_merge(
+                $request->validated(),
+                ['quarter_id' => Quarter::getActiveQuarter()->id],
+                ['batch_subject_id' => $batchSubjectId],
+                ['created_by' => auth()->user()->id],
+            ));
+        }
+
+        return response([
+            'message' => 'Assessment successfully created.',
+        ], 201);
+    }
+
+    public function updateAssessment(Request $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+    {
+        $validatedData = $request->validate([
+            'assessment_id' => 'required|integer|exists:assessments,id',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'maximum_point' => 'required|integer',
+            'status' => 'required|string|in:draft,published,closed,marking,completed,scheduled',
+            'due_date' => 'required|date',
+        ]);
+
+        $assessment = Assessment::find($validatedData['assessment_id']);
+        $assessment->update($validatedData);
+
+        return response([
+            'message' => 'Assessment successfully updated.',
+        ], 200);
+    }
+
     public function updateStatus(UpdateAssessmentStatusRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
         $assessment->status = $request->input('new_status');
