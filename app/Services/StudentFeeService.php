@@ -5,8 +5,11 @@ namespace App\Services;
 use App\Events\StudentFeeEvent;
 use App\Models\Fee;
 use App\Models\LevelCategory;
+use App\Models\Penalty;
 use App\Models\SchoolYear;
 use App\Models\StudentTuition;
+use App\Models\StudentTuitionPenalty;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -61,5 +64,70 @@ class StudentFeeService
 
             return event(new StudentFeeEvent('error', 'Error while creating new fees, please try again later.'));
         }
+    }
+
+    public function prepareTuitionPayment(StudentTuition $studentTuition): bool
+    {
+        /**
+         * Steps
+         *
+         * 1. Check if the student tuition is already paid
+         * 2. Check if the student tuition is already overdue
+         * 3. Calculate the penalty
+         * 4. Update Tuition Penalty and Tuition Amount
+         */
+
+        // 1. Check if the student tuition is already paid
+        if ($studentTuition->status === StudentTuition::STATUS_PAID) {
+            return false;
+        }
+
+        // 2. Check if the student tuition is already overdue
+        if ($studentTuition->status === StudentTuition::STATUS_UNPAID && $studentTuition->load('fee')->fee->due_date < now()) {
+
+            // 3. Calculate the penalty
+            $penalty = $this->calculateTuitionPenalty($studentTuition->load('fee.penalty'));
+            StudentTuitionPenalty::updateOrCreate([
+                'student_tuition_id' => $studentTuition->id,
+                'penalty_id' => $studentTuition->fee->penalty_id,
+            ], [
+                'amount' => $penalty,
+            ]);
+        }
+
+        return true;
+    }
+
+    protected function calculateTuitionPenalty(StudentTuition $studentTuition): float
+    {
+        $today = today();
+        $due_date = Carbon::createFromDate($studentTuition->fee->due_date);
+        $penaltyType = $studentTuition->fee->penalty->type;
+
+        return match ($penaltyType) {
+            Penalty::TYPE_PERCENTAGE => $this->calculatePercentagePenalty($studentTuition->fee),
+            Penalty::TYPE_FLAT_RATE => $this->calculateFlatRatePenalty($studentTuition->fee),
+            Penalty::TYPE_DAILY => $this->calculateDailyPenalty($studentTuition->fee, $today, $due_date),
+        };
+    }
+
+    private function calculatePercentagePenalty(Fee $fee): float
+    {
+        $penaltyPercentage = $fee->penalty->amount / 100;
+
+        return $fee->amount * $penaltyPercentage;
+    }
+
+    private function calculateFlatRatePenalty(Fee $fee): float
+    {
+        return $fee->penalty->amount;
+    }
+
+    private function calculateDailyPenalty(Fee $fee, Carbon $to, Carbon $from): float
+    {
+        $dailyPenalty = $fee->penalty->amount;
+        $overdueDays = $to->diffInDays($from);
+
+        return $overdueDays * $dailyPenalty;
     }
 }

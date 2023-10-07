@@ -22,7 +22,10 @@ class AssessmentResource extends JsonResource
             'maximum_point' => $this->maximum_point,
             'status' => $this->status,
             'due_date' => $this->due_date,
-            'assessment_type_id' => $this->assessment_type_id,
+            'assessment_type' => [
+                'id' => $this->assessment_type_id,
+                'name' => $this->assessmentType->name,
+            ],
             'batch_subject_id' => $this->batch_subject_id,
             'quarter_id' => $this->quarter_id,
             'batch_id' => $this->batchSubject->batch_id,

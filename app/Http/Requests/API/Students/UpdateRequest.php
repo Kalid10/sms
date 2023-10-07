@@ -18,12 +18,16 @@ class UpdateRequest extends Request
             'name' => 'required|string|max:255',
             'email' => [
                 'required', 'email', 'max:255',
-                new UniqueForUser($this->route('student')->user_id),
+                new UniqueForUser(
+                    $this->route('student') ? $this->route('student')->user_id : auth()->user()->id
+                ),
             ],
             'date_of_birth' => 'required|date',
             'phone_number' => [
                 'required', 'string', 'max:255',
-                new UniqueForUser($this->route('student')->user_id),
+                new UniqueForUser(
+                    $this->route('student') ? $this->route('student')->user_id : auth()->user()->id
+                ),
             ],
             'gender' => 'string|max:255',
             'sub_city' => 'string|max:255',

@@ -26,7 +26,10 @@ class AdminAssessmentService
 
                 // Loop through each level id and get batch ids
                 foreach ($levelIds as $levelId) {
-                    $batchIds = Batch::where('level_id', $levelId)->pluck('id');
+                    $batchIds = Batch::where([
+                        'level_id' => $levelId,
+                        'school_year_id' => SchoolYear::getActiveSchoolYear()->id,
+                    ])->pluck('id');
 
                     // Loop through each batch id and get batch subject ids
                     foreach ($batchIds as $batchId) {

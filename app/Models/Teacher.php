@@ -36,6 +36,18 @@ class Teacher extends Model
             ->whereIn('batch_id', Batch::active()->pluck('id'));
     }
 
+    public function activeBatches(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Batch::class,
+            BatchSubject::class,
+            'teacher_id', // Foreign key on BatchSubject table
+            'id', // Foreign key on Batch table
+            'id', // Local key on Teacher table
+            'batch_id' // Local key on BatchSubject table
+        );
+    }
+
     public function batchSchedules(): HasManyThrough
     {
         return $this->hasManyThrough(
@@ -82,6 +94,12 @@ class Teacher extends Model
             ->where('status', BatchSession::STATUS_SCHEDULED)
             ->whereDate('date', '>', now())
             ->orderBy('date', 'asc');
+    }
+
+    public function inProgressBatchSession(): HasOne
+    {
+        return $this->hasOne(BatchSession::class)
+            ->where('status', BatchSession::STATUS_IN_PROGRESS);
     }
 
     public function lessonPlans(): HasMany

@@ -27,7 +27,7 @@
                     </div>
                     <div class="flex gap-3">
                         <GuardianSelectInput
-                            v-model="form.level_id"
+                            v-model="form.batch_id"
                             class="w-full cursor-pointer"
                             :options="levelOptions"
                             :label="$t('createStudent.levelIdLabel')"
@@ -214,11 +214,13 @@ const handleFileUploaded = (file) => {
 const levels = computed(() => usePage().props.levels);
 
 const levelOptions = computed(() => {
-    return levels.value.map((level) => {
-        return {
-            value: level.id,
-            label: `Grade ${level.name}`,
-        };
+    return levels.value.flatMap((level) => {
+        return level.batches.map((batch) => {
+            return {
+                value: batch.id,
+                label: ` Grade ${level.name} ${batch.section} - ${batch.students.length} / ${batch.max_students}`,
+            };
+        });
     });
 });
 
@@ -246,7 +248,7 @@ const form = useForm({
     guardian_email: "",
     guardian_phone_number: "",
     guardian_gender: "",
-    level_id: "",
+    batch_id: "",
     guardian_relation: "",
     existing_guardian_id: "",
 });

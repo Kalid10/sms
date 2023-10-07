@@ -26,14 +26,13 @@ class AssessmentController extends Controller
     {
         if ($assessment->exists) {
 
-            $assessment->load([
+            return new AssessmentResource($assessment->load([
                 'quarter.semester',
                 'batchSubject.batch.schoolYear',
                 'batchSubject.batch.level.levelCategory',
                 'batchSubject.subject',
-            ]);
-
-            return new AssessmentResource($assessment->load('batchSubject'));
+                'assessmentType',
+            ]));
 
         }
 
@@ -44,7 +43,8 @@ class AssessmentController extends Controller
                 'assessments.quarter.semester',
                 'assessments.batchSubject.batch.schoolYear',
                 'assessments.batchSubject.batch.level.levelCategory',
-                'assessments.batchSubject.subject'
+                'assessments.batchSubject.subject',
+                'assessments.assessmentType'
             )
             ->assessments
             ->whereIn('status', $request->input('status', [

@@ -68,6 +68,7 @@
                                 :error="form.errors.reason"
                             />
                             <Toggle
+                                v-if="selectedStaff.type === 'teacher'"
                                 v-model="form.is_leave"
                                 label="Is this a valid leave?"
                             />

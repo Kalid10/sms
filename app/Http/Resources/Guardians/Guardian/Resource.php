@@ -22,6 +22,10 @@ class Resource extends JsonResource
             'phone_number' => $this->phone_number,
             'date_of_birth' => $this->date_of_birth,
             'guardian_id' => $this->guardian->id,
+            'city' => $this->address?->city,
+            'sub_city' => $this->address?->sub_city,
+            'woreda' => $this->address?->woreda,
+            'house_number' => $this->address?->house_number,
         ];
     }
 }

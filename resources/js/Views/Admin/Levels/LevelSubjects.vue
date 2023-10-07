@@ -32,15 +32,27 @@
             />
         </template>
         <template #teacher-column="{ data }">
-            <div class="flex justify-end gap-4 text-xs">
-                <span>{{ data["name"] }}</span>
-                <span class="text-gray-700">{{ data["email"] }}</span>
+            <div class="flex items-center gap-2">
+                <div
+                    class="h-1.5 w-1.5 rounded-full"
+                    :class="data ? 'bg-emerald-400' : 'bg-red-400'"
+                />
+                <span class="text-xs">
+                    {{ data ? data["name"] : "Teacher not assigned" }}
+                </span>
             </div>
         </template>
         <template #updated_at-column="{ data }">
             <span class="text-xs text-gray-700">
                 {{ moment(data).fromNow() }}
             </span>
+        </template>
+
+        <template #empty-data>
+            <EmptyView
+                :title="$t('common.noDataFound')"
+                :description="$t('common.noDataFoundDescription')"
+            />
         </template>
     </TableElement>
 </template>
@@ -52,6 +64,7 @@ import { toHashTag } from "@/utils.js";
 import TableElement from "@/Components/TableElement.vue";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
+import EmptyView from "@/Views/EmptyView.vue";
 
 const { t } = useI18n();
 const batchesSubjects = computed(() =>
@@ -76,7 +89,7 @@ const subjects = computed(() =>
                     full_name: subject.subject.full_name,
                     id: subject.subject.id,
                 },
-                teacher: subject.teacher.user,
+                teacher: subject.teacher?.user,
             };
         })
 );
