@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div v-else class="w-full">
+    <div v-else class="w-11/12">
         <Config v-if="!batchScheduleConfiguration" :levels="levels" />
 
         <div v-else class="flex h-full w-full gap-4 overflow-hidden">

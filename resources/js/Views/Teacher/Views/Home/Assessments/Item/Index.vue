@@ -3,7 +3,7 @@
         v-for="(item, index) in assessments.data"
         :key="index"
         class="mt-1 flex cursor-pointer items-center justify-between space-y-2 rounded-lg py-1.5 px-4 hover:bg-brand-450 hover:pr-4 hover:text-white lg:mt-2 lg:py-1.5"
-        :class="index % 2 === 1 ? 'bg-brand-50' : ''"
+        :class="index % 2 === 0 ? 'bg-brand-50' : ''"
         @click="handleClick(item.id)"
     >
         <div class="flex min-h-full w-2/12 flex-col space-y-2 font-bold">

@@ -4,25 +4,31 @@
             <Title class="w-5/12" :title="$t('common.assessments')" />
 
             <div
-                class="flex h-full w-full flex-col lg:flex-row lg:justify-between lg:space-x-5"
+                class="flex w-full flex-col lg:flex-row lg:justify-between lg:space-x-5"
             >
                 <div
-                    class="flex h-fit w-full flex-col space-y-6 rounded-lg bg-white p-5 shadow-sm lg:w-1/2"
+                    class="flex h-full w-full flex-col space-y-6 rounded-lg bg-white p-5 shadow-sm lg:w-5/12"
                 >
                     <div class="flex w-full justify-between">
                         <div class="text-2xl font-medium">
                             {{ $t("assessmentIndex.scheduledAssessments") }}
                         </div>
-                        <PrimaryButton
-                            class="rounded-full"
-                            @click="showModal = true"
-                        >
-                            {{ $t("assessmentIndex.createAssessment") }}
+                        <PrimaryButton @click="showModal = true">
+                            <span
+                                class="flex items-center justify-center space-x-1"
+                            >
+                                <SquaresPlusIcon
+                                    class="h-4 w-4 stroke-white stroke-2"
+                                />
+                                <span>
+                                    {{ $t("assessmentIndex.createAssessment") }}
+                                </span>
+                            </span>
                         </PrimaryButton>
                     </div>
 
                     <div
-                        class="flex flex-col items-center justify-center space-y-2"
+                        class="flex h-full flex-col items-center justify-center space-y-2"
                     >
                         <div
                             v-for="(item, index) in mappedAssessments.data"
@@ -63,7 +69,7 @@
                 </div>
 
                 <div
-                    class="flex h-fit w-full flex-col space-y-4 rounded-lg lg:w-5/12"
+                    class="flex h-full w-full flex-col space-y-4 rounded-lg bg-red-600 lg:w-5/12"
                 >
                     <AssessmentTypes />
                 </div>
@@ -93,6 +99,7 @@ import { router, usePage } from "@inertiajs/vue3";
 import EmptyView from "@/Views/EmptyView.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Loading from "@/Components/Loading.vue";
+import { SquaresPlusIcon } from "@heroicons/vue/24/outline/index";
 
 const showModal = ref(false);
 const isLoading = ref(false);
