@@ -1,11 +1,17 @@
 <template>
-    <div class="flex w-full items-center justify-center">
+    <div class="flex w-full items-center justify-between">
+        <div class="flex w-6/12">
+            <img
+                alt="Under Construction"
+                src="/assets/under-construction.svg"
+            />
+        </div>
         <div class="flex min-h-full w-5/12 flex-col justify-center text-center">
             <h1 class="mb-4 text-3xl font-extrabold md:text-5xl">
-                Under Construction
+                {{ title }}
             </h1>
             <p class="mb-8 text-lg">
-                We're working hard to bring you this feature. Check back soon!
+                {{ subTitle }}
             </p>
             <div class="flex justify-center">
                 <SecondaryButton
@@ -15,18 +21,23 @@
                 />
             </div>
         </div>
-        <div class="flex w-6/12">
-            <img
-                alt="Under Construction"
-                src="/assets/under-construction.svg"
-            />
-        </div>
     </div>
 </template>
 
 <script setup>
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
+defineProps({
+    title: {
+        type: String,
+        default: "Under Construction",
+    },
+    subTitle: {
+        type: String,
+        default:
+            "We're working hard to bring you this feature. Check back soon!",
+    },
+});
 const goBack = () => {
     window.history.back();
 };
