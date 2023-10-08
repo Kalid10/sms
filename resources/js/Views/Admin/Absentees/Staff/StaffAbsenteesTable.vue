@@ -24,19 +24,13 @@
                     v-model="selectedDate"
                     class="h-full w-full rounded-2xl !text-sm lg:w-2/12"
                 />
-                <div class="flex justify-end">
+                <div class="flex items-center justify-end">
                     <PrimaryButton
-                        class="!rounded-2xl bg-brand-450"
+                        class="flex h-fit items-center justify-center space-x-1 bg-brand-450"
                         @click="showModal = true"
                     >
-                        <span class="flex space-x-1">
-                            <SquaresPlusIcon
-                                class="w-3 stroke-white stroke-2"
-                            />
-                            <span class="!text-xs">{{
-                                $t("staffAbsenteesTable.newAbsentee")
-                            }}</span>
-                        </span>
+                        <SquaresPlusIcon class="w-4 stroke-white stroke-2" />
+                        <span>{{ $t("staffAbsenteesTable.newAbsentee") }}</span>
                     </PrimaryButton>
                 </div>
             </div>
