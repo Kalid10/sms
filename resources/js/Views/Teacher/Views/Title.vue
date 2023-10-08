@@ -4,7 +4,7 @@
         <span v-if="isDateOpen" class="text-xs font-light">{{
             moment().format(" dddd MMMM D YYYY")
         }}</span>
-        <span v-if="subTitle" class="text-xs font-light">{{ subTitle }}</span>
+        <span v-if="subTitle" class="text-xs font-medium">{{ subTitle }}</span>
     </div>
 </template>
 
