@@ -1,11 +1,12 @@
 <template>
     <TableElement
-        :header="false"
         :footer="false"
         :columns="subjectsConfig"
-        :filterable="false"
         :data="subjects"
         :selectable="false"
+        :filterable="false"
+        class="!rounded-lg !px-5 !pb-4"
+        header-style="!bg-brand-450 text-white !font-medium !capitalize text-xs"
     >
         <template #full_name-column="{ data }">
             <Link
@@ -112,21 +113,23 @@ const subjectsConfig = [
         align: "left",
     },
     {
+        name: "Tags",
         key: "tags",
         type: "custom",
-        class: "w-full",
+        class: "w-5/12",
     },
     {
         key: "teacher",
-        name: "Views",
+        name: "Teacher",
         type: "custom",
-        align: "right",
+        align: "center",
+        class: "w-3/12",
     },
     {
         key: "updated_at",
         name: "Last Updated",
         type: "custom",
-        align: "right",
+        align: "center",
     },
 ];
 

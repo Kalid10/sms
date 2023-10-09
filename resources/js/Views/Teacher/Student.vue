@@ -79,7 +79,7 @@
             "
         >
             <div
-                class="flex h-36 w-full flex-col items-center justify-evenly rounded-lg bg-brand-300 shadow-sm"
+                class="flex h-36 w-full flex-col items-center justify-evenly rounded-lg bg-brand-450 shadow-sm"
             >
                 <div class="px-4 text-center text-white">
                     <span
@@ -89,9 +89,6 @@
                             })
                         "
                     />
-
-                    <!--                    Want to see how {{ student?.user.name }} is doing on other-->
-                    <!--                    classes?-->
                 </div>
 
                 <SecondaryButton
