@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+/**
+ * @mixin IdeHelperStudent
+ */
 class Student extends Model
 {
     use HasFactory;

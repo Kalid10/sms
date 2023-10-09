@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @mixin IdeHelperTeacher
+ */
 class Teacher extends Model
 {
     use HasFactory;
@@ -56,6 +59,16 @@ class Teacher extends Model
             'teacher_id', // Foreign key on BatchSubject table
             'batch_subject_id' // Foreign key on BatchSchedule table
         );
+    }
+
+    public function activeBatchSchedules(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            BatchSchedule::class,
+            BatchSubject::class,
+            'teacher_id', // Foreign key on BatchSubject table
+            'batch_subject_id' // Foreign key on BatchSchedule table
+        )->whereIn('batch_schedules.batch_id', Batch::active()->pluck('id'));
     }
 
     public function activeWeeklySessions(): int

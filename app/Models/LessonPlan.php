@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @mixin IdeHelperLessonPlan
+ */
 class LessonPlan extends Model
 {
     use HasFactory, LogsActivity;

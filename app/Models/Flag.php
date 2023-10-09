@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @mixin IdeHelperFlag
+ */
 class Flag extends Model
 {
     use HasFactory, SoftDeletes;

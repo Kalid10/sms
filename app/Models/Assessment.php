@@ -10,7 +10,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
+/**
+ * @mixin IdeHelperAssessment
+ */
 class Assessment extends Model
 {
     use HasFactory, SoftDeletes;
@@ -146,10 +150,13 @@ class Assessment extends Model
     {
         $prefix = $this->load('batchSubject.subject', 'batchSubject.batch.level', 'batchSubject.teacher.user')->batchSubject->subject->full_name.' ';
 
+        Log::info('assessment period time: ');
+        Log::info(json_encode($this->assessment_period_time));
+
         $suffix = match (true) {
             $this->isToday() => ' Today'.
-            $this->asssessment_period_time ?
-                ' on '.Carbon::createFromDate($this->due_date)->format('M jS').' at '.Carbon::parse($this->assessment_period_time->start_time)->format('H:i A') :
+            ($this->assessment_period_time) ?
+                ' on '.Carbon::createFromDate($this->due_date)->format('M jS').' at '.Carbon::parse($this->assessment_period_time?->start_time)->format('H:i A') :
                 ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
             $this->isThisWeek() => ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
             default => ' on '.$this->due_date->format('F jS'),
