@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Teachers;
 
 use App\Http\Requests\API\Teachers\Assessments\AssessmentRequest;
 use App\Http\Requests\API\Teachers\Assessments\MarkAssessmentRequest;
+use App\Http\Requests\API\Teachers\Assessments\UpdateAssessmentRequest;
 use App\Http\Requests\API\Teachers\Assessments\UpdateAssessmentStatusRequest;
 use App\Http\Requests\Teachers\CreateAssessmentRequest;
 use App\Http\Resources\Teachers\AssessmentCollection;
@@ -16,7 +17,6 @@ use App\Models\Quarter;
 use App\Models\StudentAssessment;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class AssessmentController extends Controller
@@ -120,19 +120,9 @@ class AssessmentController extends Controller
         ], 201);
     }
 
-    public function updateAssessment(Request $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+    public function updateAssessment(UpdateAssessmentRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
-        $validatedData = $request->validate([
-            'assessment_id' => 'required|integer|exists:assessments,id',
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'maximum_point' => 'required|integer',
-            'status' => 'required|string|in:draft,published,closed,marking,completed,scheduled',
-            'due_date' => 'required|date',
-        ]);
-
-        $assessment = Assessment::find($validatedData['assessment_id']);
-        $assessment->update($validatedData);
+        $assessment->update($request->validated());
 
         return response([
             'message' => 'Assessment successfully updated.',

@@ -7,8 +7,8 @@ Route::prefix('/teacher')->name('teacher.')->middleware('auth:sanctum')->group(f
     Route::controller(AssessmentController::class)->prefix('/assessments')->name('assessment.')->group(function () {
         Route::get('/{assessment?}', 'index')->name('index');
         Route::get('/{assessment}/students', 'students')->name('students');
-        Route::post('/create', 'create')->name('create');
-        Route::post('/update', 'updateAssessment')->name('update');
+        Route::post('', 'create')->name('create');
+        Route::post('/{assessment}', 'updateAssessment')->name('update');
         Route::post('/{assessment}/update-status', 'updateStatus')->name('updateStatus');
         Route::post('/{assessment}/mark', 'mark')->name('mark');
     });
