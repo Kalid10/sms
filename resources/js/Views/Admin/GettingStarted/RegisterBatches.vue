@@ -42,7 +42,7 @@
                         selectAllLevelsInCategory(levelCategory, $event)
                     "
                 />
-                <div class="flex w-full justify-between">
+                <div class="flex w-full space-x-2">
                     <Heading size="sm" class="text-brand-text-600 font-normal">
                         {{
                             updatedLevels.filter(
@@ -52,6 +52,7 @@
                         }}
                     </Heading>
                     <span class="text-sm font-semibold">
+                        ~
                         {{
                             updatedLevels.filter(
                                 (level) =>
@@ -60,9 +61,7 @@
                             ).length
                         }}
 
-                        <span class="font-light text-black">
-                            Grades Selected
-                        </span>
+                        <span class="text-black"> Grades Selected </span>
                     </span>
                 </div>
             </div>
