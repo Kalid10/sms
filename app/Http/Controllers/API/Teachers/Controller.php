@@ -6,7 +6,7 @@ use App\Models\Teacher;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
-class Controller extends \Illuminate\Routing\Controller
+class Controller extends \App\Http\Controllers\API\Controller
 {
     use AuthorizesRequests, ValidatesRequests;
 
