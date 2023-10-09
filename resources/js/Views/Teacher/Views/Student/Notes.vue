@@ -64,7 +64,7 @@
                 <SecondaryButton
                     v-if="isTeacher()"
                     :title="$t('studentNotes.addNote')"
-                    class="mt-4 w-9/12 !rounded-2xl border-none bg-brand-300 text-white"
+                    class="mt-4 w-9/12 !rounded-2xl border-none bg-brand-450 text-white"
                     @click="showModal = true"
                 />
             </div>

@@ -4,7 +4,11 @@
     >
         <img
             v-if="image"
-            :src="`https://xsgames.co/randomusers/avatar.php?g=male`"
+            :src="
+                'https://avatars.dicebear.com/api/open-peeps/' +
+                usePage().props.auth.user.name +
+                '.svg'
+            "
             alt="avatar"
             class="w-20 rounded-md object-contain"
         />
@@ -58,6 +62,7 @@ import CurrentClass from "@/Views/Teacher/Views/Batches/CurrentClass.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import { ref, watch } from "vue";
 import { numberWithOrdinal } from "@/utils";
+import { usePage } from "@inertiajs/vue3";
 
 const emit = defineEmits(["change"]);
 const props = defineProps({
