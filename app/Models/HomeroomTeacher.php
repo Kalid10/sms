@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @mixin IdeHelperHomeroomTeacher
+ */
 class HomeroomTeacher extends Model
 {
     use HasFactory, LogsActivity;

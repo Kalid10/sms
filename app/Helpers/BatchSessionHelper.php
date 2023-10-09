@@ -38,15 +38,12 @@ class BatchSessionHelper
                 $batchSession->update(['status' => BatchSession::STATUS_COMPLETED]);
             });
 
-        //        Log::info($batch->inProgressSession);
-
         $potentiallyInProgressSession = self::findPotentiallyInProgressSession($batch);
-        self::doesBatchSessionOverlapWithCurrentTime($potentiallyInProgressSession) ?
-            $potentiallyInProgressSession->update(['status' => BatchSession::STATUS_IN_PROGRESS]) :
-            $potentiallyInProgressSession->update(['status' => BatchSession::STATUS_COMPLETED]);
-
-        //        Log::info($batch->inProgressSession);
-        //        Log::info("\n");
+        if ($potentiallyInProgressSession) {
+            self::doesBatchSessionOverlapWithCurrentTime($potentiallyInProgressSession) ?
+                $potentiallyInProgressSession->update(['status' => BatchSession::STATUS_IN_PROGRESS]) :
+                $potentiallyInProgressSession->update(['status' => BatchSession::STATUS_COMPLETED]);
+        }
 
         $batch['session_last_synced'] = Carbon::now();
         $batch->save();
@@ -78,12 +75,12 @@ class BatchSessionHelper
     /**
      * Fetch the Batch Session that could be in progress
      */
-    public static function findPotentiallyInProgressSession(Batch $batch): BatchSession
+    public static function findPotentiallyInProgressSession(Batch $batch): ?BatchSession
     {
         Log::info('finding potentially in progress session: ');
         Log::info(json_encode(self::findPreviousBatchSessions($batch)->values()->first()));
 
-        return self::findPreviousBatchSessions($batch)->values()->first();
+        return self::findPreviousBatchSessions($batch)?->values()?->first();
     }
 
     /**

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
+/**
+ * @mixin IdeHelperBatchSession
+ */
 class BatchSession extends Model
 {
     const STATUS_SCHEDULED = 'scheduled';

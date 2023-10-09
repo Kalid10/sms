@@ -5,6 +5,9 @@ namespace App\Models;
 use Chatify\Traits\UUID;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin IdeHelperChMessage
+ */
 class ChMessage extends Model
 {
     use UUID;

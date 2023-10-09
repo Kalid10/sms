@@ -17,6 +17,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @mixin IdeHelperBatch
+ */
 class Batch extends Model
 {
     use HasFactory, SoftDeletes, LogsActivity;
