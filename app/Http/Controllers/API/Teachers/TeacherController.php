@@ -10,6 +10,6 @@ class TeacherController extends Controller
 {
     public function index(): Resource
     {
-        return new Resource(Auth::user()->load('index'));
+        return new Resource(Auth::user()->load('address', 'teacher'));
     }
 }
