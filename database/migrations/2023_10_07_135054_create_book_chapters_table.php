@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('book_id')->constrained()->cascadeOnDelete();
             $table->string('title');
-            $table->foreignId('start_page')->references('id')->on('book_pages')->cascadeOnDelete();
-            $table->foreignId('end_page')->references('id')->on('book_pages')->cascadeOnDelete();
+            $table->integer('start_page');
+            $table->integer('end_page');
             $table->longText('summary')->nullable();
             $table->json('tags')->nullable();
             $table->timestamps();
