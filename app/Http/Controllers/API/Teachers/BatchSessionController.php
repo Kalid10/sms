@@ -6,7 +6,6 @@ use App\Http\Requests\API\Teachers\BatchSessionRequest;
 use App\Http\Resources\Teachers\BatchSessionCollection;
 use App\Http\Resources\Teachers\BatchSessionResource;
 use App\Http\Resources\Teachers\EmptyResource;
-use App\Models\Batch;
 use App\Models\BatchSession;
 use Illuminate\Support\Facades\Log;
 
@@ -46,6 +45,18 @@ class BatchSessionController extends Controller
             }
 
             return new EmptyResource([]);
+        }
+
+        if ($request->has('batch_subject_id')) {
+
+            $batchSessions = BatchSession::where('batch_subject_id', $request->input('batch_subject_id'))
+                ->when($request->has('status'), function ($query) {
+                    return $query->where('status', $this->input('status'));
+                })
+                ->get()
+                ->sortBy('date');
+
+            return new BatchSessionCollection($batchSessions);
         }
 
         $batchSessions = parent::teacher()->load([
