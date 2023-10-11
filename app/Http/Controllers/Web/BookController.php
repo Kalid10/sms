@@ -9,7 +9,6 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -31,44 +30,59 @@ class BookController extends Controller
 
     public function showAddBookForm(): Response
     {
-        return Inertia::render('Admin/Books/Add', [
+        return Inertia::render('Admin/Books/Add/Basic', [
             'levels' => Level::all(),
             'subjects' => Subject::all(),
         ]);
     }
 
-    public function showAddBockChapterForm(Request $request): Response
+    public function showAddChapters(Book $book): Response
     {
-        Log::info("Request: $request");
-        $request->validate([
-            'title' => 'required|string|exists:books,title',
-            'level_id' => 'required|exists:levels,id',
-            'subject_id' => 'required|exists:subjects,id',
-        ]);
-
-        // Get book
-        $book = Book::where('title', $request->title)
-            ->where('level_id', $request->level_id)
-            ->where('subject_id', $request->subject_id)
-            ->first();
-
-        Log::info("Book: $book");
-
         return Inertia::render('Admin/Books/Add/Chapter', [
-            'book' => $book,
+            'book' => $book->load('chapters'),
+
         ]);
     }
 
     public function create(Request $request): RedirectResponse
     {
         $request->validate([
-            'title' => 'required|string',
+            'title' => 'required|string|unique:books',
             'level_id' => 'required|exists:levels,id',
             'subject_id' => 'required|exists:subjects,id',
         ]);
 
-        Book::create($request->all());
+        $book = Book::create($request->all());
 
-        return redirect()->back()->with('success', 'Book created successfully!');
+        return redirect()->to('/admin/books/'.$book->id.'/chapter');
+    }
+
+    public function createChapter(Book $book, Request $request): RedirectResponse
+    {
+
+        $request->validate([
+            'title' => 'required|string',
+            'summary' => 'string',
+            'start_page' => 'required|integer|lte:end_page',
+            'end_page' => 'required|integer|gte:start_page',
+        ]);
+
+        // Check if there is no similar chapter in this book
+        if ($book->chapters()->where('title', $request->title)->exists()) {
+            return redirect()->back()->with('error', 'Chapter with this title already exists in this book.');
+        }
+
+        // Check if the start_page and end_page are not included on any other chapter
+        if ($book->chapters()->where('start_page', '>=', $request->start_page)->exists()) {
+            return redirect()->back()->withErrors(['start_page' => 'Invalid page, this page is already included on other chapter!']);
+        }
+
+        if ($book->chapters()->where('end_page', '>=', $request->end_page)->exists()) {
+            return redirect()->back()->withErrors(['end_page' => 'Invalid page, this page is already included on other chapter!']);
+        }
+
+        $book->chapters()->create($request->all());
+
+        return redirect()->back()->with('success', 'Chapter added successfully.');
     }
 }
