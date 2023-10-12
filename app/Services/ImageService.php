@@ -21,7 +21,7 @@ class ImageService
         return $img;
     }
 
-    public static function upload($image, $name, $visibility = 'public', $directory = 'profile-images/'): void
+    public static function upload($image, $name, $directory = 'profile-images/', $visibility = 'public'): void
     {
         // Use Storage to put the file on Spaces
         Storage::disk('spaces')->put('rigel/'.$directory.$name, $image->encode(), $visibility);
