@@ -25,7 +25,7 @@
                     />
                     <div
                         v-if="chat.active_status"
-                        class="absolute right-[0px] bottom-[4px] h-3 w-3 rounded-full border-2 border-white bg-[#41D37E]"
+                        class="absolute bottom-[4px] right-[0px] h-3 w-3 rounded-full border-2 border-white bg-[#41D37E]"
                     ></div>
                 </div>
 

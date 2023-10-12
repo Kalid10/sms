@@ -16,7 +16,7 @@
 
         <span
             v-if="!visible"
-            class="relative flex w-full items-center justify-between rounded-md border border-gray-200 bg-white py-2 px-3 placeholder:text-sm"
+            class="relative flex w-full items-center justify-between rounded-md border border-gray-200 bg-white px-3 py-2 placeholder:text-sm"
             :class="[labelLocation === 'inside' ? 'relative h-12' : 'h-10']"
             @click.prevent="viewPanel = !viewPanel"
         >

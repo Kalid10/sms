@@ -2,7 +2,7 @@
     <h3 class="mx-2 text-sm text-brand-text-250">
         Graphical Reports based on statistics and student information.
     </h3>
-    <div class="my-4 mx-auto flex items-center rounded-xl px-6">
+    <div class="mx-auto my-4 flex items-center rounded-xl px-6">
         <div class="flex-1">
             <svg
                 class="h-32 w-full border-b-2 border-gray-200 py-3"

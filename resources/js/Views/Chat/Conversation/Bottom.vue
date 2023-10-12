@@ -11,7 +11,7 @@
             <EmojiPicker
                 v-show="showEmoji"
                 ref="emoji"
-                class="absolute left-0 bottom-full z-20 mb-3"
+                class="absolute bottom-full left-0 z-20 mb-3"
                 :native="true"
                 @select="onSelectEmoji"
             />

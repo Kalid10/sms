@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="announcements?.data?.length || selectedAnnouncement || searchKey"
-        class="flex min-h-screen w-full flex-col px-1 py-2 lg:py-5 lg:px-10"
+        class="flex min-h-screen w-full flex-col px-1 py-2 lg:px-10 lg:py-5"
     >
         <div
             class="flex h-full w-full flex-col items-center space-y-2 px-0 py-3 lg:px-5"

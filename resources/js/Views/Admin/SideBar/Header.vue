@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="header && isOpen"
-        class="flex w-full flex-col items-center justify-center space-x-4 space-y-2 py-2 px-1 lg:space-y-1"
+        class="flex w-full flex-col items-center justify-center space-x-4 space-y-2 px-1 py-2 lg:space-y-1"
     >
         <div class="h-full w-fit lg:w-full">
             <img

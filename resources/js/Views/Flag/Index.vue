@@ -79,7 +79,7 @@
                     <span
                         v-for="(type, index) in item?.type"
                         :key="index"
-                        class="mx-1 flex h-fit w-fit flex-wrap rounded-3xl bg-red-600 py-0.5 px-2 text-center text-[0.65rem] font-medium lowercase text-white hover:scale-110"
+                        class="mx-1 flex h-fit w-fit flex-wrap rounded-3xl bg-red-600 px-2 py-0.5 text-center text-[0.65rem] font-medium lowercase text-white hover:scale-110"
                     >
                         {{ type.substring(0, 3) }}
                     </span>
