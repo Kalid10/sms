@@ -6,9 +6,11 @@ use App\Models\Book;
 use App\Models\Level;
 use App\Models\Subject;
 use App\Models\User;
+use App\Services\ImageService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -24,11 +26,11 @@ class BookController extends Controller
 
         // TODO: Check is user is teacher and fetch books for his/her batches only
         return Inertia::render($page, [
-            'books' => Book::paginate(10),
+            'books' => Book::with('level', 'subject', 'chapters')->paginate(10),
         ]);
     }
 
-    public function showAddBookForm(): Response
+    public function showAddBook(): Response
     {
         return Inertia::render('Admin/Books/Add/Basic', [
             'levels' => Level::all(),
@@ -36,11 +38,18 @@ class BookController extends Controller
         ]);
     }
 
+    public function showUploadBookCover(Book $book): Response
+    {
+        return Inertia::render('Admin/Books/Add/UploadBookCover', [
+            'book' => $book,
+        ]);
+    }
+
     public function showAddChapters(Book $book): Response
     {
         return Inertia::render('Admin/Books/Add/Chapter', [
             'book' => $book->load('chapters'),
-
+            'chapters_count' => $book->chapters()->count(),
         ]);
     }
 
@@ -54,7 +63,7 @@ class BookController extends Controller
 
         $book = Book::create($request->all());
 
-        return redirect()->to('/admin/books/'.$book->id.'/chapter');
+        return redirect()->to('/admin/books/'.$book->id.'/upload-book-cover');
     }
 
     public function createChapter(Book $book, Request $request): RedirectResponse
@@ -84,5 +93,39 @@ class BookController extends Controller
         $book->chapters()->create($request->all());
 
         return redirect()->back()->with('success', 'Chapter added successfully.');
+    }
+
+    public function uploadBookCover(Request $request, Book $book): RedirectResponse
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Get file from request
+        $file = $request->file('image');
+
+        // Resize the image before uploading to Spaces
+        $img = ImageService::resize($file->getRealPath(), 500, 900);
+
+        // Generate a new filename for the resized image
+        $filename = $book->title.'.'.$file->getClientOriginalExtension();
+
+        if ($book->cover_image) {
+            $imageName = substr($book->cover_image, strrpos($book->cover_image, '/') + 1);
+
+            // Delete old image
+            if (! Storage::disk('spaces')->delete($imageName)) {
+                throw new Exception("Error deleting file: {$imageName}");
+            }
+        }
+
+        // Upload the resized image to Spaces
+        ImageService::upload($img, $filename, 'book-cover-images/');
+
+        $book->update([
+            'cover_image' => Storage::disk('spaces')->url('rigel/book-cover-images/'.$filename),
+        ]);
+
+        return redirect()->to('/admin/books/'.$book->id.'/chapter');
     }
 }

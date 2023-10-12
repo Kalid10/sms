@@ -2028,6 +2028,9 @@ const en = {
         pendingCheckout: "Pending Checkouts",
         addItem: "Add Item",
     },
+    book: {
+        uploadBookCover: "Upload Book Cover",
+    },
 };
 
 export default en;

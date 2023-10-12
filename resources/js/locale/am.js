@@ -1962,6 +1962,9 @@ const am = {
         pendingCheckout: "በመጠባበቅ ላይ ያሉ (Checkouts)",
         addItem: "እቃ ያክሉ",
     },
+    book: {
+        uploadBookCover: "የመጽሐፍ ከቨር ያስገቡ",
+    },
 };
 
 export default am;
