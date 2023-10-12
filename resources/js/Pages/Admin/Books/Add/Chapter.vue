@@ -26,7 +26,8 @@
                     </div>
                 </div>
                 <AddCard
-                    class="h-full !w-44"
+                    class="h-full min-h-[13rem] !w-44"
+                    title="Add Chapter"
                     @click="showAddChapterModal = true"
                 />
             </div>

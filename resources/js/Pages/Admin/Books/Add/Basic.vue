@@ -4,7 +4,9 @@
         <div
             class="flex w-full flex-col items-center justify-center space-y-5 rounded-lg bg-white p-4"
         >
-            <div class="w-full text-lg font-semibold">Basic Information</div>
+            <div class="w-full text-center text-xl font-semibold">
+                Basic Information
+            </div>
             <TextInput
                 v-model="form.title"
                 :error="form.errors.title"
@@ -45,7 +47,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import SelectInput from "@/Components/SelectInput.vue";
@@ -55,7 +57,7 @@ import Title from "@/Views/Teacher/Views/Title.vue";
 const books = computed(() => usePage().props.books);
 const levels = computed(() => usePage().props.levels);
 const subjects = computed(() => usePage().props.subjects);
-
+const showUploadBookCover = ref(false);
 const levelOptions = computed(() => {
     return levels.value.map((level) => {
         return {
@@ -82,7 +84,9 @@ const form = useForm({
 
 const submitForm = () => {
     form.post("/admin/books/create", {
-        onSuccess: () => {},
+        onSuccess: () => {
+            showUploadBookCover.value = true;
+        },
     });
 };
 </script>
