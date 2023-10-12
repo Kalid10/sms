@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('level_id')->constrained()->cascadeOnDelete();
             $table->foreignId('subject_id')->constrained()->cascadeOnDelete();
             $table->json('tags')->nullable();
-            $table->string('cover')->nullable();
+            $table->string('cover_image')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->unique(['title', 'level_id', 'subject_id']);
             $table->softDeletes();
