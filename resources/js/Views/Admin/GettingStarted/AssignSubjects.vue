@@ -29,7 +29,7 @@
                 />
 
                 <div
-                    class="relative grid h-full max-h-full grow gap-3 overflow-auto pr-2 pb-3 sm:grid-cols-2 md:grid-cols-3 lg:flex lg:w-full lg:flex-col"
+                    class="relative grid h-full max-h-full grow gap-3 overflow-auto pb-3 pr-2 sm:grid-cols-2 md:grid-cols-3 lg:flex lg:w-full lg:flex-col"
                 >
                     <label
                         v-for="(subject, s) in searchedSubjects"
@@ -155,7 +155,7 @@
                 <div class="relative flex flex-col gap-4">
                     <div
                         v-if="!!!selectedSubject"
-                        class="absolute top-0 left-0 flex h-full w-full flex-col gap-8 bg-white/100"
+                        class="absolute left-0 top-0 flex h-full w-full flex-col gap-8 bg-white/100"
                     >
                         <div
                             class="flex h-full w-full flex-col items-center gap-5 pt-60"
@@ -372,7 +372,7 @@
                                                             ? 'hidden'
                                                             : 'group-hover:flex group-focus:flex'
                                                     "
-                                                    class="-ml-4 -mb-4 hidden h-[36px] w-[calc(100%+32px)] rounded-b-md py-2 transition-all duration-150"
+                                                    class="-mb-4 -ml-4 hidden h-[36px] w-[calc(100%+32px)] rounded-b-md py-2 transition-all duration-150"
                                                 >
                                                     <button
                                                         class="w-1/2 text-xs transition-transform duration-150 hover:scale-105 hover:font-semibold"
@@ -505,7 +505,7 @@
                                                     </li>
                                                 </ul>
                                                 <div
-                                                    class="-ml-4 -mb-4 mt-2 h-10 w-[calc(100%+32px)] items-center justify-end"
+                                                    class="-mb-4 -ml-4 mt-2 h-10 w-[calc(100%+32px)] items-center justify-end"
                                                     :class="
                                                         showSectionsFor ===
                                                         level.id

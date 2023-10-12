@@ -33,7 +33,7 @@
 
                 <div
                     v-if="selectedBatch && selectedBatch.value"
-                    class="absolute top-0 right-0 mx-3 flex w-4/12 items-center justify-center rounded"
+                    class="absolute right-0 top-0 mx-3 flex w-4/12 items-center justify-center rounded"
                 >
                     <div
                         class="flex w-full gap-5 rounded border-b border-black py-3"

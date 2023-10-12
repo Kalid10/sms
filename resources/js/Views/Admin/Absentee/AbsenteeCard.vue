@@ -5,7 +5,7 @@
                 ? classStyle
                 : 'bg-gradient-to-bl from-zinc-600 to-neutral-600 '
         "
-        class="flex h-full max-h-full w-full cursor-pointer flex-col justify-evenly rounded-lg py-3 px-2 text-center text-white shadow-sm"
+        class="flex h-full max-h-full w-full cursor-pointer flex-col justify-evenly rounded-lg px-2 py-3 text-center text-white shadow-sm"
         @click="
             batch?.active_session[0]?.absentees.length > 0
                 ? (showModal = true)
