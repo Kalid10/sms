@@ -27,7 +27,7 @@
             <template #status-column="{ data }">
                 <div class="flex w-full items-center justify-center">
                     <div
-                        class="w-fit rounded-xl py-1 px-2 text-center text-[0.55rem] font-semibold lg:px-2"
+                        class="w-fit rounded-xl px-2 py-1 text-center text-[0.55rem] font-semibold lg:px-2"
                         :class="{
                             'bg-zinc-500 text-white': data === 'Draft',
                             'bg-emerald-400': data === 'Published',

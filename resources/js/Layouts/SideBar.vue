@@ -9,7 +9,7 @@
         @click="toggleSidebar"
     >
         <div
-            class="flex min-h-screen w-full flex-col items-center justify-between pt-1 pb-4 text-white lg:pt-2"
+            class="flex min-h-screen w-full flex-col items-center justify-between pb-4 pt-1 text-white lg:pt-2"
         >
             <div class="flex w-full flex-col items-center justify-center">
                 <Header :header="header" />

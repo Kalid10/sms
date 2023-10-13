@@ -2,7 +2,7 @@
     <div
         v-for="(item, index) in assessments.data"
         :key="index"
-        class="mt-1 flex cursor-pointer items-center justify-between space-y-2 rounded-lg py-1.5 px-4 hover:bg-brand-450 hover:pr-4 hover:text-white lg:mt-2 lg:py-1.5"
+        class="mt-1 flex cursor-pointer items-center justify-between space-y-2 rounded-lg px-4 py-1.5 hover:bg-brand-450 hover:pr-4 hover:text-white lg:mt-2 lg:py-1.5"
         :class="index % 2 === 0 ? 'bg-brand-50' : ''"
         @click="handleClick(item.id)"
     >

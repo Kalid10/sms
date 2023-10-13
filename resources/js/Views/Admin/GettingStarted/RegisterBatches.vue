@@ -38,7 +38,7 @@
                 <Checkbox
                     :model-value="isAnyLevelSelected(levelCategory)"
                     class="z-10 h-3.5 w-3.5 rounded-full border-gray-700 bg-transparent checked:ring-0 focus:ring-0"
-                    @update:modelValue="
+                    @update:model-value="
                         selectAllLevelsInCategory(levelCategory, $event)
                     "
                 />

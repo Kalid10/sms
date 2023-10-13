@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full cursor-pointer items-center justify-between rounded-2xl py-4 px-5 hover:scale-105"
+        class="flex w-full cursor-pointer items-center justify-between rounded-2xl px-5 py-4 hover:scale-105"
         :class="classStyle"
         @click="url ? router.get(url, {}, { preserveState: true }) : null"
     >

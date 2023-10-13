@@ -1,5 +1,5 @@
 <template>
-    <button :type="type" class="rounded-md border bg-white py-1.5 px-4 text-sm text-black" @click="click">
+    <button :type="type" class="rounded-md border bg-white px-4 py-1.5 text-sm text-black" @click="click">
         <slot>
             {{ title }}
         </slot>

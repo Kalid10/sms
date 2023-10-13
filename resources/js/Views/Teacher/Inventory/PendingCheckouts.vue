@@ -34,12 +34,12 @@
             <div class="mt-4 flex justify-evenly">
                 <SecondaryButton
                     :title="$t('pendingCheckouts.decline')"
-                    class="rounded bg-red-600 py-2 px-4 text-white hover:bg-red-700"
+                    class="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
                     @click="updateInventory('declined', item.id)"
                 />
                 <SecondaryButton
                     :title="$t('pendingCheckouts.confirm')"
-                    class="rounded bg-brand-400 py-2 px-4 text-white hover:bg-brand-500"
+                    class="rounded bg-brand-400 px-4 py-2 text-white hover:bg-brand-500"
                     @click="updateInventory('approved', item.id)"
                 />
             </div>

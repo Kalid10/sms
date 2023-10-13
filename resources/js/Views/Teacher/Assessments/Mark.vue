@@ -1,6 +1,6 @@
 <template>
     <div
-        class="scrollbar-hide flex min-h-screen w-full flex-col space-y-2 py-2 px-5"
+        class="scrollbar-hide flex min-h-screen w-full flex-col space-y-2 px-5 py-2"
     >
         <div class="flex w-full justify-between">
             <!--Left Side-->

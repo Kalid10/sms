@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen w-full flex-col px-5 pt-10 pl-10">
+    <div class="flex h-screen w-full flex-col px-5 pl-10 pt-10">
         <div class="flex w-full">
             <div class="mb-6 flex shrink-0 flex-col px-3 md:mb-0 md:w-3/12">
                 <Heading :value="$t('createStudent.headingOne')" />

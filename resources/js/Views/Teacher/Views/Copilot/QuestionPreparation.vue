@@ -16,7 +16,7 @@
         </Modal>
 
         <InformationCircleIcon
-            class="absolute top-6 right-6 w-5 cursor-pointer text-black hover:scale-125 hover:text-brand-450"
+            class="absolute right-6 top-6 w-5 cursor-pointer text-black hover:scale-125 hover:text-brand-450"
             @click="showInfoModal = true"
         />
 
@@ -24,7 +24,7 @@
             class="flex w-full flex-col justify-between lg:flex-row lg:space-x-5"
         >
             <div
-                class="flex w-full flex-col items-center space-y-6 rounded-lg bg-white px-5 pt-3 pb-5 shadow-sm lg:w-5/12"
+                class="flex w-full flex-col items-center space-y-6 rounded-lg bg-white px-5 pb-5 pt-3 shadow-sm lg:w-5/12"
             >
                 <div class="text-xl font-light">
                     {{ $t("questionPreparation.questionGeneration") }}
@@ -71,7 +71,7 @@
                 </div>
                 <div
                     v-if="form.number_of_questions"
-                    class="flex w-full flex-col justify-evenly space-y-2 lg:flex-row lg:space-y-0 lg:space-x-4"
+                    class="flex w-full flex-col justify-evenly space-y-2 lg:flex-row lg:space-x-4 lg:space-y-0"
                 >
                     <QuestionSource
                         :title="$t('questionPreparation.manualInput')"

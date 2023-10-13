@@ -1,7 +1,7 @@
 <template>
     <div class="flex min-h-screen w-full flex-col lg:pl-5">
         <Title
-            class="w-full rounded-t-md bg-brand-550 px-3 !py-6 text-white shadow-sm"
+            class="w-full rounded-t-md bg-brand-550 !py-6 px-3 text-white shadow-sm"
             :title="teacher.user.name"
         />
         <div

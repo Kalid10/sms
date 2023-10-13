@@ -30,7 +30,7 @@
                 @click="handleClicked(item)"
             >
                 <div
-                    class="min-h-full w-[0.01rem] rounded-t-lg rounded-b-md bg-brand-350 py-2"
+                    class="min-h-full w-[0.01rem] rounded-b-md rounded-t-lg bg-brand-350 py-2"
                 ></div>
 
                 <div class="relative flex w-full flex-col space-y-2 pt-1">
