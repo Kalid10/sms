@@ -11,4 +11,5 @@ Route::controller(BookController::class)->prefix('admin/books/')->middleware(['a
     Route::post('create', 'create')->name('create');
     Route::post('{book}/chapter/create', 'createChapter')->name('create.chapter');
     Route::post('{book}/upload-book-cover', 'uploadBookCover')->name('upload.book.cover');
+    Route::post('{book}/upload-book-pages', 'uploadPages')->name('upload.book.pages');
 });

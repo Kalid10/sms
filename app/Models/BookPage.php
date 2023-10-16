@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class BookPage extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'book_id',
+        'path',
+        'page_number',
+    ];
 }

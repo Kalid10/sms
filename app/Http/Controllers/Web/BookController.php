@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Level;
 use App\Models\Subject;
 use App\Models\User;
+use App\Services\BookUploadService;
 use App\Services\ImageService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -127,5 +128,14 @@ class BookController extends Controller
         ]);
 
         return redirect()->to('/admin/books/'.$book->id.'/chapter');
+    }
+
+    public function uploadPages(Request $request, Book $book): void
+    {
+        $request->validate([
+            'files' => 'required|mimes:pdf|max:1000',
+        ]);
+
+        BookUploadService::upload($book, $request->file('file'));
     }
 }
