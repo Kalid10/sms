@@ -66,11 +66,19 @@ const props = defineProps({
         type: String,
         default: null,
     },
+    showResponseNotification: {
+        type: Boolean,
+        default: false,
+    },
+    imagePreview: {
+        type: String,
+        default: null,
+    },
 });
 const emit = defineEmits(["imageUploaded"]);
 
 const image = ref(null);
-const imagePreview = ref(null);
+const imagePreview = ref(props.imagePreview);
 const showNotification = inject("showNotification");
 const isUploading = ref(false);
 
@@ -108,6 +116,15 @@ const submit = () => {
             preserveState: true,
             onFinish: () => {
                 isUploading.value = false;
+            },
+            onSuccess: () => {
+                if (props.showResponseNotification) {
+                    showNotification({
+                        type: "success",
+                        message: t("imageUpload.imageUploadedSuccessfully"),
+                        position: "top-center",
+                    });
+                }
             },
         }
     );
