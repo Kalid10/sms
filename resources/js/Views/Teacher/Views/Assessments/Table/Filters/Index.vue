@@ -61,7 +61,7 @@
         />
         <div
             v-if="showFilter"
-            class="fixed z-50 h-fit w-9/12 rounded-md bg-gradient-to-br from-zinc-200 via-zinc-200 to-zinc-100 py-2 px-1 shadow-md backdrop-blur-none lg:ml-10 lg:w-80"
+            class="fixed z-50 h-fit w-9/12 rounded-md bg-gradient-to-br from-zinc-200 via-zinc-200 to-zinc-100 px-1 py-2 shadow-md backdrop-blur-none lg:ml-10 lg:w-80"
         >
             <div class="flex w-full justify-between">
                 <div class="px-2 text-sm">{{ $t("filtersIndex.filters") }}</div>

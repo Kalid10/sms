@@ -41,7 +41,7 @@
             <Detail
                 v-if="!isLoading"
                 ref="assessmentDetailsRef"
-                class="pt-8 pb-4"
+                class="pb-4 pt-8"
                 :assessment="selectedAssessment"
             />
         </div>
