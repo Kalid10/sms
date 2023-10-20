@@ -15,13 +15,13 @@
                 :class="
                     book?.cover_image
                         ? 'bg-[image:var(--image-url)] bg-cover z-10'
-                        : 'bg-gradient-to-br from-brand-400 to-brand-300 text-white'
+                        : 'bg-gradient-to-br from-violet-500 to-purple-500 text-white'
                 "
                 @click="router.get(`/admin/books/${book.id}/chapter`)"
             >
                 <span
                     :class="book?.cover_image ? 'hidden' : 'flex'"
-                    class="z-50 min-h-full min-w-full flex-col items-center justify-evenly space-y-2 from-brand-400 to-brand-300 text-white group-hover:flex group-hover:bg-gradient-to-br"
+                    class="z-50 min-h-full min-w-full flex-col items-center justify-evenly space-y-2 from-violet-500 to-purple-500 text-white group-hover:flex group-hover:bg-gradient-to-br"
                 >
                     <span class="px-2 text-lg font-bold">
                         {{ book.title }}

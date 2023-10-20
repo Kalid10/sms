@@ -12,6 +12,8 @@
                 finish-button-text="Finish Upload"
                 :upload-url="'/admin/books/' + book.id + '/upload-book-cover'"
                 :upload-image-button-text="$t('book.uploadBookCover')"
+                :show-response-notification="true"
+                :image-preview="book.cover_image"
             />
 
             <div class="flex w-full justify-end space-x-2">
