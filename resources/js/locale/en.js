@@ -1976,6 +1976,7 @@ const en = {
     imageUpload: {
         imageSizeLimit: "Image size must be less than 3MB",
         chooseImage: "Choose Image To Upload",
+        imageUploadedSuccessfully: "Image Uploaded Successfully",
     },
     pendingCheckouts: {
         pendingInventoryCheckout: "Your Pending Inventory Checkouts",

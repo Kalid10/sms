@@ -1910,6 +1910,7 @@ const am = {
     imageUpload: {
         imageSizeLimit: "የምስሉ መጠን ከ3MB ያነሰ መሆን አለበት",
         chooseImage: "ምስል ለመጫን ይምረጡ",
+        imageUploadedSuccessfully: "ምስል በተሳካ ሁኔታ ተጭኗል፡፡",
     },
     pendingCheckouts: {
         pendingInventoryCheckout: "ለርክክብ በመጠባበቅ ላይ ያሉ የእቃዎ ዝርዝር",
