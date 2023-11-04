@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @mixin IdeHelperAssessment
+ */
 class Assessment extends Model
 {
     use HasFactory, SoftDeletes;
@@ -148,7 +151,7 @@ class Assessment extends Model
 
         $suffix = match (true) {
             $this->isToday() => ' Today'.
-            $this->asssessment_period_time ?
+            ($this->assessment_period_time) ?
                 ' on '.Carbon::createFromDate($this->due_date)->format('M jS').' at '.Carbon::parse($this->assessment_period_time?->start_time)->format('H:i A') :
                 ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),
             $this->isThisWeek() => ' on '.Carbon::createFromDate($this->due_date)->getTranslatedDayName(),

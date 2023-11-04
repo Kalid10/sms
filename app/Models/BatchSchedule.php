@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
+/**
+ * @mixin IdeHelperBatchSchedule
+ */
 class BatchSchedule extends Model
 {
     use HasFactory;
@@ -53,8 +57,15 @@ class BatchSchedule extends Model
         return $this->belongsTo(Batch::class);
     }
 
-    public function teacher(): BelongsTo
+    public function teacher(): HasOneThrough
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->hasOneThrough(
+            Teacher::class,
+            BatchSubject::class,
+            'id', // Foreign key on BatchSubject table
+            'id', // Foreign key on Teacher table
+            'batch_subject_id', // Local key on BatchSchedule table
+            'teacher_id' // Local key on BatchSubject table
+        );
     }
 }

@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @mixin IdeHelperSchoolYear
+ */
 class SchoolYear extends Model
 {
     use HasFactory, SoftDeletes, LogsActivity;
