@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-11/12 flex-col space-y-6">
+    <div class="flex h-3/5 w-11/12 flex-col justify-evenly">
         <SummaryItem
             class-style="bg-fuchsia-100 text-black"
             icon-style="bg-fuchsia-500/20 text-white"
