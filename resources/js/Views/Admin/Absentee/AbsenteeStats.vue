@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col space-y-3 divide-y divide-black rounded-lg bg-red-600 p-3 text-white shadow-sm"
+        class="flex flex-col space-y-3 rounded-lg bg-brand-100 p-3 text-black shadow-sm"
     >
         <div class="flex items-center space-x-2.5 pl-3">
             <UserMinusIcon class="w-5" />
@@ -13,7 +13,7 @@
             />
         </div>
         <div
-            class="flex w-full items-center justify-between divide-x divide-black pt-4"
+            class="flex w-full items-center justify-between divide-x divide-brand-500 pt-4"
         >
             <AbsenteeStatItem
                 class="w-1/3"
