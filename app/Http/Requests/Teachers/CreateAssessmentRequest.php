@@ -32,7 +32,7 @@ class CreateAssessmentRequest extends FormRequest
             'batch_subject_ids' => 'required|array',
             'batch_subject_ids.*' => 'required|integer|exists:batch_subjects,id',
             'assessment_type_id' => 'required|exists:assessment_types,id',
-            'due_date' => 'required|date',
+            'due_date' => 'required|date|after_or_equal:today',
             'title' => 'required|string',
             'description' => 'string',
             'maximum_point' => 'required|integer|min:1|max:100',
@@ -49,7 +49,6 @@ class CreateAssessmentRequest extends FormRequest
             'assessment_type_id.required' => 'Assessment type is required.',
             'assessment_type_id.exists' => 'Assessment type does not exist.',
             'due_date.required' => 'Due date is required.',
-            'due_date.date' => 'Due date is not a valid date.',
         ];
     }
 
