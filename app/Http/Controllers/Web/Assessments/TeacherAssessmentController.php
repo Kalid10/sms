@@ -147,13 +147,7 @@ class TeacherAssessmentController extends Controller
         $assessment->assessment_type_points_sum = $completedAssessments->sum('maximum_point');
         $assessment->assessment_type_completed_count = $completedAssessments->count();
 
-        $page = match (auth()->user()->type) {
-            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
-            User::TYPE_ADMIN => 'Admin/Teachers/Single',
-            default => throw new Exception('Type unknown!'),
-        };
-
-        return Inertia::render($page, [
+        return Inertia::render($this->getPage(), [
             'assessment' => $assessment,
         ]);
     }
@@ -181,7 +175,7 @@ class TeacherAssessmentController extends Controller
             BatchSubject::where('teacher_id', $teacherId)
                 ->whereHas('batch', function ($query) {
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-                })->first()->id;
+                })->first()?->id;
 
         $quarters = Quarter::with('semester.schoolYear')->get();
         $semesters = Semester::with('schoolYear')->get();
@@ -231,13 +225,7 @@ class TeacherAssessmentController extends Controller
             ->orderBy('due_date', 'asc')
             ->paginate(15);
 
-        $page = match (auth()->user()->type) {
-            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
-            User::TYPE_ADMIN => 'Admin/Teachers/Single',
-            default => throw new Exception('Type unknown!'),
-        };
-
-        return Inertia::render($page, [
+        return Inertia::render($this->getPage(), [
             'assessments' => $assessments,
             'teacher' => $this->teacherService->getTeacherDetails($teacherId),
             'assessment_type' => AssessmentType::where('is_admin_controlled', false)->get(),
@@ -282,5 +270,14 @@ class TeacherAssessmentController extends Controller
         });
 
         return $assessments;
+    }
+
+    private function getPage(): string
+    {
+        return match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
     }
 }
