@@ -29,7 +29,7 @@ class TeacherAssessmentController extends Controller
         $this->teacherService = $teacherService;
     }
 
-    public function create(CreateAssessmentRequest $request): RedirectResponse
+    public function create(CreateAssessmentRequest $request): Response
     {
         $request->validated();
 
@@ -43,10 +43,10 @@ class TeacherAssessmentController extends Controller
             ));
         }
 
-        return redirect()->back()->with('success', 'Assessment created.');
+        return $this->teacherAssessments(new Request());
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request): Response
     {
         $validatedData = $request->validate([
             'assessment_id' => 'required|integer|exists:assessments,id',
@@ -60,7 +60,7 @@ class TeacherAssessmentController extends Controller
         $assessment = Assessment::find($validatedData['assessment_id']);
         $assessment->update($validatedData);
 
-        return redirect()->back()->with('success', 'Assessment updated successfully!');
+        return $this->teacherAssessments(new Request());
     }
 
     public function delete(Assessment $assessment, Request $request): RedirectResponse
