@@ -82,7 +82,9 @@
                     nextClass.lesson_plan_id
                 }}</span
             >
-            <span v-else>{{ $t("nextClass.addLessonPlan") }}</span>
+            <span v-else @click="router('/teacher/lesson-plan')">{{
+                $t("nextClass.addLessonPlan")
+            }}</span>
         </span>
         <div
             v-else-if="!isTeacherView"
