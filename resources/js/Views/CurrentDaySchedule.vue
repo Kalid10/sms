@@ -30,10 +30,11 @@
                     "
                 >
                     <div class="text-black">
-                        {{ item.batch_subject.subject.short_name }}
+                        {{ item.batch.level.name }}-{{ item.batch.section }}
+
                         <span v-if="item?.batch" class="text-xs"
-                            >({{ item.batch.level.name }}
-                            {{ item.batch.section }})</span
+                            >(
+                            {{ item.batch_subject.subject.short_name }})</span
                         >
                     </div>
                     <div class="text-[0.65rem] uppercase text-gray-500">
