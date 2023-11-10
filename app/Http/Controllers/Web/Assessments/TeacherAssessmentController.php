@@ -133,7 +133,7 @@ class TeacherAssessmentController extends Controller
         $assessment = $this->populateAssessmentDetails(collect([$assessment]))->first();
 
         $completedAssessments = Assessment::where([
-            ['status', Assessment::STATUS_COMPLETED],
+            ['status', ! Assessment::STATUS_DRAFT],
             ['quarter_id', Quarter::getActiveQuarter()->id],
             ['batch_subject_id', $assessment->batch_subject_id],
             ['assessment_type_id', $assessment->assessment_type_id],
