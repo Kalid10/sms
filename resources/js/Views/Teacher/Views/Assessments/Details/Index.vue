@@ -1,7 +1,7 @@
 <template>
     <div v-if="assessment" class="flex h-full w-full justify-center">
         <div
-            class="flex w-full flex-col items-center space-y-10 lg:w-11/12 2xl:w-10/12"
+            class="flex w-full flex-col items-center space-y-12 lg:w-11/12 2xl:w-10/12"
         >
             <Header
                 :title="title"
@@ -60,7 +60,7 @@
 import { computed, ref } from "vue";
 import Draft from "@/Views/Teacher/Views/Assessments/Details/Draft.vue";
 import UpdateAssessmentForm from "@/Views/Teacher/Views/Assessments/AssessmentForm.vue";
-import AssessmentTypeDetailInfo from "@/Views/Teacher/Views/Assessments/Details/Views/AssessmenTypeDetailInfo.vue";
+import AssessmentTypeDetailInfo from "@/Views/Teacher/Views/Assessments/Details/Views/AssessmentTypeDetailInfo.vue";
 import Header from "@/Views/Teacher/Views/Assessments/Details/Views/Header.vue";
 import moment from "moment";
 import Modal from "@/Components/Modal.vue";
