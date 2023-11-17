@@ -11,7 +11,7 @@
             version="1.1"
             :width="diameter + (strokeWidth ? strokeWidth / 2 : 0)"
             :height="diameter + (strokeWidth ? strokeWidth / 2 : 0)"
-            class="absolute top-0 left-0 -rotate-90"
+            class="absolute left-0 top-0 -rotate-90"
         >
             <circle
                 :style="{
@@ -33,7 +33,7 @@
             version="1.1"
             :width="diameter + (strokeWidth ? strokeWidth / 2 : 0)"
             :height="diameter + (strokeWidth ? strokeWidth / 2 : 0)"
-            class="absolute top-0 left-0 -rotate-90"
+            class="absolute left-0 top-0 -rotate-90"
         >
             <circle
                 v-if="percentage > 0"

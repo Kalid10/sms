@@ -12,13 +12,13 @@
             :required="required"
             :type="type"
             :value="modelValue"
-            class="h-9 w-full outline-none placeholder:text-xs placeholder:text-gray-400"
+            class="h-9 w-full placeholder:text-xs placeholder:text-gray-400"
             :class="
                 disabled
                     ? 'blur-0 cursor-not-allowed rounded-2xl'
                     : classStyle
                     ? classStyle
-                    : 'border border-brand-150 text-sm focus:ring-1 focus:ring-brand-400 focus:border-none focus:outline-none rounded-md '
+                    : 'border border-brand-150 text-sm focus:ring-0 focus:border-brand-300 focus:outline-none rounded-md '
             "
             :min="min"
             :max="max"

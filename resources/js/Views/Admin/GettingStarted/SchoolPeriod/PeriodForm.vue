@@ -140,7 +140,7 @@
                                     :required="true"
                                 />
                             </div>
-                            <div class="absolute top-0 right-0 p-2">
+                            <div class="absolute right-0 top-0 p-2">
                                 <TrashIcon
                                     class="w-4 stroke-red-500"
                                     @click="removeCustomPeriod(customIndex)"

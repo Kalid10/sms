@@ -1,4 +1,89 @@
 <template>
+    <div
+        class="flex h-full flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
+    >
+        <div class="flex w-full justify-between px-3 text-2xl font-medium">
+            <span>
+                {{ $t("assessmentIndex.assessmentType") }}
+            </span>
+            <PrimaryButton
+                class="flex items-center justify-center space-x-1"
+                @click="openAddModal"
+            >
+                <SquaresPlusIcon class="w-4 text-white" />
+                <span>{{ $t("assessmentIndex.addType") }}</span>
+            </PrimaryButton>
+        </div>
+
+        <TableElement
+            :selectable="false"
+            :columns="config"
+            :footer="false"
+            :header="true"
+            :data="filteredAssessmentTypes"
+            actionable
+            row-actionable
+            class="px-2 !shadow-none"
+        >
+            <template #filter>
+                <div class="flex w-full items-center justify-between gap-2">
+                    <div class="flex w-full items-center space-x-2">
+                        <SelectInput
+                            v-model="filterByLevelCategory"
+                            :options="levelCategories"
+                            :placeholder="
+                                $t('assessmentIndex.filterByLevelCategory')
+                            "
+                            class="w-8/12"
+                        />
+                    </div>
+                </div>
+            </template>
+
+            <template #name-column="{ data }">
+                <div class="flex items-center gap-2">
+                    <div class="h-1.5 w-1.5 rotate-45 bg-orange-300" />
+                    <span class="form-control-sm text-sm">{{ data }}</span>
+                </div>
+            </template>
+
+            <template #percentage-column="{ data }">
+                <div class="flex justify-start gap-1">
+                    <span class="text-xs font-semibold"> {{ data }}% </span>
+                </div>
+            </template>
+
+            <template #level_category-column="{ data }">
+                <div class="flex items-center gap-1">
+                    <div
+                        class="h-1.5 w-1.5 rounded-full"
+                        :class="categoryColors[data.name]"
+                    />
+                    <div class="flex items-center gap-1">
+                        <span class="text-xs">
+                            {{ data.name }}
+                        </span>
+                    </div>
+                </div>
+            </template>
+
+            <template #updated_at-column="{ data }">
+                <div class="flex w-full justify-start">
+                    <span class="text-xs text-gray-500"> {{ data }}</span>
+                </div>
+            </template>
+
+            <template #row-actions="{ row }">
+                <button @click="openUpdateModal(row)">
+                    <PencilSquareIcon class="h-4 w-4" />
+                </button>
+                <button @click="toggleDialogBox(row.id)">
+                    <TrashIcon class="h-4 w-4" />
+                </button>
+            </template>
+        </TableElement>
+    </div>
+
     <!-- Add/Update Modal -->
     <Modal v-model:view="isModalOpen">
         <FormElement :title="modalTitle" @submit="submitForm">
@@ -109,90 +194,6 @@
             </div>
         </FormElement>
     </Modal>
-
-    <div
-        class="flex h-[850px] flex-col space-y-1 rounded-lg bg-white px-2 py-4 shadow-sm"
-    >
-        <div class="px-3 text-2xl font-medium">
-            {{ $t("assessmentIndex.assessmentType") }}
-        </div>
-
-        <TableElement
-            :selectable="false"
-            :columns="config"
-            :footer="false"
-            :header="true"
-            :data="filteredAssessmentTypes"
-            actionable
-            row-actionable
-            class="px-2 !shadow-none"
-        >
-            <template #filter>
-                <div class="flex w-full items-center justify-between gap-2">
-                    <div class="flex w-full items-center space-x-2">
-                        <SelectInput
-                            v-model="filterByLevelCategory"
-                            :options="levelCategories"
-                            :placeholder="
-                                $t('assessmentIndex.filterByLevelCategory')
-                            "
-                            class="w-8/12"
-                        />
-                    </div>
-
-                    <PrimaryButton
-                        class="flex w-4/12 items-center justify-center space-x-1.5 !rounded-3xl bg-brand-450 p-2"
-                        @click="openAddModal"
-                    >
-                        <SquaresPlusIcon class="w-3.5 text-white" />
-                        <span>{{ $t("assessmentIndex.addType") }}</span>
-                    </PrimaryButton>
-                </div>
-            </template>
-
-            <template #name-column="{ data }">
-                <div class="flex items-center gap-2">
-                    <div class="h-1.5 w-1.5 rotate-45 bg-black" />
-                    <span class="form-control-sm text-sm">{{ data }}</span>
-                </div>
-            </template>
-
-            <template #percentage-column="{ data }">
-                <div class="flex justify-start gap-1">
-                    <span class="text-xs font-semibold"> {{ data }}% </span>
-                </div>
-            </template>
-
-            <template #level_category-column="{ data }">
-                <div class="flex items-center gap-1">
-                    <div
-                        class="h-1.5 w-1.5 rounded-full"
-                        :class="categoryColors[data.name]"
-                    />
-                    <div class="flex items-center gap-1">
-                        <span class="text-xs">
-                            {{ data.name }}
-                        </span>
-                    </div>
-                </div>
-            </template>
-
-            <template #updated_at-column="{ data }">
-                <div class="flex w-full justify-start">
-                    <span class="text-xs text-gray-500"> {{ data }}</span>
-                </div>
-            </template>
-
-            <template #row-actions="{ row }">
-                <button @click="openUpdateModal(row)">
-                    <PencilSquareIcon class="h-4 w-4" />
-                </button>
-                <button @click="toggleDialogBox(row.id)">
-                    <TrashIcon class="h-4 w-4" />
-                </button>
-            </template>
-        </TableElement>
-    </div>
 
     <DialogBox
         v-if="isDialogBoxOpen"

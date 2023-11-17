@@ -11,20 +11,19 @@
                     : 'flex w-full flex-col justify-evenly divide-y-2 divide-neutral-800 py-2 lg:flex-row lg:divide-y-0 lg:py-0',
             ]"
         >
-            <NextClassSection @click="$emit('view')" />
+            <NextClassSection />
         </div>
 
         <!--        Fall back message-->
         <div
             v-else
-            class="flex h-32 w-11/12 flex-col justify-center text-center text-sm font-light leading-relaxed lg:h-44 lg:w-10/12 lg:text-base"
+            class="flex h-32 w-11/12 flex-col justify-center text-center text-sm font-light leading-relaxed lg:h-36 lg:w-10/12 lg:text-base"
         >
             <div>
                 {{ $t("nextClassIndex.noUpcomingClasses") }}
-                <span
-                    class="cursor-pointer underline underline-offset-2 hover:font-medium"
-                    >{{ $t("nextClassIndex.admin") }}</span
-                >
+                <span class="font-medium">{{
+                    $t("nextClassIndex.admin")
+                }}</span>
                 {{ $t("nextClassIndex.forAssistance") }}
             </div>
         </div>
@@ -36,7 +35,6 @@ import { usePage } from "@inertiajs/vue3";
 import { isSidebarOpenOnXlDevice } from "@/utils";
 import NextClassSection from "@/Views/Teacher/Views/NextClass/NextClass.vue";
 
-defineEmits(["view"]);
 const nextClass = usePage().props.teacher.next_batch_session;
 </script>
 

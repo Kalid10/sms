@@ -20,7 +20,7 @@
             :key="index"
             class="flex w-full items-center justify-between space-x-2 rounded-lg py-3"
             :class="{
-                'bg-brand-50': index % 2 === 1,
+                'bg-brand-50': index % 2 === 0,
             }"
         >
             <div class="w-7/12 text-center text-xs font-medium">

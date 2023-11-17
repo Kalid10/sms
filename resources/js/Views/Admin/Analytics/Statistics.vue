@@ -27,7 +27,7 @@
                     </ChevronRightIcon>
 
                     <ArrowRightOnRectangleIcon
-                        class="absolute right-0 bottom-0 mr-10 mb-4 h-7 w-7 cursor-pointer rounded-lg hover:bg-brand-150"
+                        class="absolute bottom-0 right-0 mb-4 mr-10 h-7 w-7 cursor-pointer rounded-lg hover:bg-brand-150"
                         @click="usersLink"
                     >
                     </ArrowRightOnRectangleIcon>

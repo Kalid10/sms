@@ -18,7 +18,7 @@
                 />
 
                 <div
-                    class="absolute top-0 right-0 -mr-4 flex translate-x-full flex-col gap-2"
+                    class="absolute right-0 top-0 -mr-4 flex translate-x-full flex-col gap-2"
                 >
                     <PencilIcon
                         class="h-3 w-3 stroke-gray-500 stroke-2"

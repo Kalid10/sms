@@ -1,7 +1,7 @@
 <template>
     <Modal v-model:view="openForm" background-color="transparent">
         <div
-            class="fixed top-0 left-0 grid h-screen w-full"
+            class="fixed left-0 top-0 grid h-screen w-full"
             :class="isTeacher() ? 'grid-cols-12' : 'grid-cols-5'"
         >
             <div

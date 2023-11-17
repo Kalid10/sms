@@ -4,7 +4,7 @@
     >
         <div
             v-if="!feedbacks.data.length"
-            class="py-5 px-3 text-center text-sm font-light"
+            class="px-3 py-5 text-center text-sm font-light"
         >
             {{ $t("common.noFeedbacks") }}
         </div>
@@ -20,7 +20,7 @@
                     </div>
                     <div>
                         <p
-                            class="line-clamp-3 mt-5 w-full text-sm leading-6 text-brand-text-350"
+                            class="mt-5 line-clamp-3 w-full text-sm leading-6 text-brand-text-350"
                         >
                             {{ item.feedback }}
                         </p>

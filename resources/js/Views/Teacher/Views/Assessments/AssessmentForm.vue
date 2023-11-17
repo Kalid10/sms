@@ -38,7 +38,7 @@
                 class="dropdown-container relative flex flex-col"
             >
                 <div
-                    class="mt-1 flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    class="mt-1 flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     @click="dropdownVisible = !dropdownVisible"
                 >
                     <div>
@@ -99,7 +99,7 @@
                 class="dropdown-container relative flex flex-col"
             >
                 <div
-                    class="mt-1 flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    class="mt-1 flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     @click="dropdownVisible = !dropdownVisible"
                 >
                     <div>

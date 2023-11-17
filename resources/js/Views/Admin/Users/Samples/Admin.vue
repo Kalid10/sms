@@ -1,6 +1,6 @@
 <template>
     <div
-        class="scrollbar-hide mb-2 flex flex-col space-y-3 overflow-y-scroll rounded-lg bg-white p-4 text-center text-sm"
+        class="scrollbar-hide mb-2 flex flex-col space-y-5 overflow-y-scroll rounded-lg bg-white px-4 py-6 text-center text-sm"
     >
         Prepare a CSV file with the following columns, ensure all data is
         accurate and correctly spelled. <br />
@@ -11,39 +11,40 @@
                     class="flex min-w-full flex-col space-y-5 py-2 align-middle sm:px-6 lg:px-8"
                 >
                     <div
-                        class="scrollbar-hide overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
+                        class="scrollbar-hide overflow-hidden border-gray-200 sm:rounded-lg"
                     >
-                        <div class="p-2 font-semibold">Admin Data</div>
                         <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-brand-400 text-brand-text-500">
+                            <thead
+                                class="bg-brand-400 uppercase text-brand-text-500"
+                            >
                                 <tr>
                                     <th
                                         scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium tracking-wider"
+                                        class="px-6 py-3 text-xs font-medium tracking-wider"
                                     >
                                         name
                                     </th>
                                     <th
                                         scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium tracking-wider"
+                                        class="px-6 py-3 text-xs font-medium tracking-wider"
                                     >
                                         email
                                     </th>
                                     <th
                                         scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium tracking-wider"
+                                        class="px-6 py-3 text-xs font-medium tracking-wider"
                                     >
                                         phone_number
                                     </th>
                                     <th
                                         scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium tracking-wider"
+                                        class="px-6 py-3 text-xs font-medium tracking-wider"
                                     >
                                         gender
                                     </th>
                                     <th
                                         scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium tracking-wider"
+                                        class="px-6 py-3 text-xs font-medium tracking-wider"
                                     >
                                         position
                                     </th>

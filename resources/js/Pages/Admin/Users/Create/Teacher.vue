@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen w-full flex-col px-5 pt-10 pl-10">
+    <div class="flex h-screen w-full flex-col px-5 pl-10 pt-10">
         <div class="flex w-full">
             <div class="mb-6 flex flex-col md:mb-0 md:w-3/12">
                 <Heading :value="$t('createTeacher.headerOne')" />
@@ -73,7 +73,7 @@
         <div class="mt-10 flex md:w-full">
             <div class="mb-6 flex shrink-0 md:mb-0 md:w-3/12">
                 <div class="">
-                    <Heading :value="$t('createStudent.headingThree')" />
+                    <Heading :value="$t('createTeacher.headerThree')" />
                     <Heading
                         :value="$t('createStudent.headingFour')"
                         size="sm"

@@ -42,6 +42,7 @@ class CreateRoles extends Command
         'manage-assessment-types',
         'manage-inventory',
         'manage-finance',
+        'manage-books',
     ];
 
     // Description for each user role
@@ -65,6 +66,7 @@ class CreateRoles extends Command
         'Manage Assessment Types',
         'Manage School Inventory',
         'Manage Finance',
+        'Manage Books',
     ];
 
     /**

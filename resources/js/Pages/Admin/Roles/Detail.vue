@@ -69,7 +69,7 @@
                         class="my-3"
                     >
                         <div
-                            class="flex items-center justify-between border-b border-l-4 border-slate-200 border-l-transparent bg-gradient-to-r from-transparent to-transparent py-3 px-2 transition duration-150 ease-linear hover:from-slate-100"
+                            class="flex items-center justify-between border-b border-l-4 border-slate-200 border-l-transparent bg-gradient-to-r from-transparent to-transparent px-2 py-3 transition duration-150 ease-linear hover:from-slate-100"
                         >
                             <div class="inline-flex items-center space-x-2">
                                 <div>

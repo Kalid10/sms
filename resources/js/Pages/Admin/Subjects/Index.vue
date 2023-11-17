@@ -2,7 +2,7 @@
     <div class="w-full py-2 lg:w-10/12 lg:py-5">
         <Title class="pb-8" :title="$t('common.subjects')" />
 
-        <SubjectsTable
+        <SubjectsTab
             @new="isAddModalOpen = true"
             @archive="archiveConfirmation"
             @update="selectSubject"
@@ -32,7 +32,7 @@ import { router } from "@inertiajs/vue3";
 import SubjectUpdate from "@/Views/Admin/SubjectUpdate.vue";
 import RegisterSubjectForm from "@/Views/Admin/RegisterSubjectForm.vue";
 import DialogBox from "@/Components/DialogBox.vue";
-import SubjectsTable from "@/Views/Admin/Subjects/SubjectsTable.vue";
+import SubjectsTab from "@/Views/Admin/Subjects/SubjectsTab.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 
 const isAddModalOpen = ref(false);

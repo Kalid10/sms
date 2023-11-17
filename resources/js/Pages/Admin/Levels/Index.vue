@@ -20,12 +20,12 @@
                             :placeholder="$t('levelIndex.searchGrades')"
                             class="w-6/12"
                         />
-                        <SecondaryButton
-                            :title="$t('levelIndex.goToLevelCategories')"
-                            value=" Go To Level Categories"
-                            class="!rounded-lg bg-brand-400 text-white"
-                            @click="levelCategoriesUrl()"
-                        />
+
+                        <Link
+                            href="/levels/level-categories"
+                            class="text-sm underline underline-offset-4 hover:font-semibold"
+                            >Level Categories
+                        </Link>
                     </div>
                 </div>
             </template>
@@ -71,7 +71,6 @@ import { computed, ref, watch } from "vue";
 import moment from "moment/moment";
 import TextInput from "@/Components/TextInput.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { useI18n } from "vue-i18n";
 import { debounce } from "lodash";
 
@@ -132,10 +131,6 @@ const search = debounce(() => {
 watch([searchKey], () => {
     search();
 });
-
-function levelCategoriesUrl() {
-    router.get("/levels/level-categories");
-}
 </script>
 
 <style scoped></style>

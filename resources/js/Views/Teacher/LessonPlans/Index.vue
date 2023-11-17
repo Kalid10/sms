@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-screen max-h-full w-full flex-col space-y-5 overflow-auto bg-white py-5 px-3 text-white"
+        class="flex h-screen max-h-full w-full flex-col space-y-5 overflow-auto bg-white px-3 py-5 text-white"
     >
         <div class="flex w-full justify-evenly">
             <Header
@@ -20,8 +20,10 @@
             </Header>
         </div>
 
-        <div class="flex h-full max-h-full w-full grow flex-col">
-            <ul class="scrollbar-hide flex gap-3 overflow-x-auto pt-2 pb-3">
+        <div class="flex h-full max-h-full w-full grow flex-col space-y-2">
+            <ul
+                class="scrollbar-hide flex h-fit items-center overflow-x-auto py-5"
+            >
                 <li v-for="(subject, s) in subjects" :key="s" class="w-full">
                     <Link
                         :href="getLink(subject)"
@@ -33,7 +35,7 @@
                                 ? ' text-white bg-brand-400 rounded-2xl'
                                 : 'text-brand-text-50'
                         "
-                        class="relative grid min-w-[9rem] max-w-sm cursor-pointer place-items-center py-2 text-center text-sm font-medium"
+                        class="grid min-w-[9rem] max-w-sm cursor-pointer place-items-center py-2 text-center text-sm font-medium"
                     >
                         <span class="flex w-full items-end justify-center px-2">
                             <span class=""
@@ -43,16 +45,6 @@
                             &nbsp;
                             <span>{{ subject.subject.full_name }}</span>
                         </span>
-
-                        <div
-                            v-if="
-                                lessonPlanSubject.batch.level.name ===
-                                    subject.batch.level.name &&
-                                lessonPlanSubject.batch.section ===
-                                    subject.batch.section
-                            "
-                            class="absolute bottom-0 h-[2px] w-full translate-y-full"
-                        ></div>
                     </Link>
                 </li>
             </ul>

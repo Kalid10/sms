@@ -24,7 +24,9 @@
                 </TabElement>
             </div>
 
-            <div class="flex w-full flex-col items-center space-y-8 lg:w-4/12">
+            <div
+                class="flex w-full flex-col items-center justify-between space-y-8 lg:w-4/12"
+            >
                 <StudentSearch />
 
                 <AbsenteeStats class="w-full lg:w-11/12" />

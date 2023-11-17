@@ -21,12 +21,14 @@
                 "
             />
         </div>
-        <LinkCell
-            v-if="view === 'detail'"
-            :href="'/teacher/assessments/mark/' + assessment.id"
-            class="w-full pr-2 text-end"
-            :value="$t('studentScoreList.viewAllResults')"
-        />
+        <div class="flex w-full justify-center pt-4">
+            <LinkCell
+                v-if="view === 'detail'"
+                :href="'/teacher/assessments/mark/' + assessment.id"
+                class="w-fit rounded-lg bg-yellow-400 px-6 py-1 text-end font-medium no-underline"
+                :value="$t('studentScoreList.viewAllResults')"
+            />
+        </div>
     </div>
 </template>
 

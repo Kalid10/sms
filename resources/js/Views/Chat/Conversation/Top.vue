@@ -17,13 +17,13 @@
                     />
                     <div
                         v-if="activeChat.active_status"
-                        class="absolute right-[0px] bottom-[4px] h-3 w-3 rounded-full border-2 border-white bg-[#41D37E]"
+                        class="absolute bottom-[4px] right-[0px] h-3 w-3 rounded-full border-2 border-white bg-[#41D37E]"
                     ></div>
                 </div>
 
                 <div>
                     <h1
-                        class="w-fit overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium"
+                        class="w-fit truncate text-sm font-medium"
                     >
                         {{ activeChat.name }}
                     </h1>

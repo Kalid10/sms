@@ -16,13 +16,13 @@
 
             <PrimaryButton
                 title="Go to Home Page"
-                class="w-fit !rounded-2xl bg-brand-400 py-2 !px-10 text-white"
+                class="w-fit !rounded-2xl bg-brand-400 !px-10 py-2 text-white"
                 @click="router.visit('/admin')"
             />
         </div>
     </div>
 
-    <div v-else class="w-full">
+    <div v-else class="w-11/12">
         <Config v-if="!batchScheduleConfiguration" :levels="levels" />
 
         <div v-else class="flex h-full w-full gap-4 overflow-hidden">

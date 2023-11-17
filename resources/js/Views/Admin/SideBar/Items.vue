@@ -1,7 +1,7 @@
 <template>
     <div
-        class="scrollbar-hide mt-1 flex w-full flex-col justify-evenly overflow-y-scroll lg:mt-7 2xl:mt-10"
-        :class="isOpen ? 'lg:space-y-1 space-y-3' : 'space-y-3'"
+        class="scrollbar-hide mt-1 flex w-full flex-col justify-evenly overflow-y-scroll"
+        :class="isOpen ? 'lg:space-y-1 space-y-3 lg:mt-4 ' : 'space-y-3 mt-2'"
     >
         <Link
             v-for="(item, index) in items"

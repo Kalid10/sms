@@ -20,11 +20,13 @@
 
                     <!--                    TODO: Add this filter When there is more than one target user type-->
 
-                    <SecondaryButton
-                        class="w-fit !rounded-2xl bg-brand-400 text-white"
-                        title="Add Fee"
+                    <PrimaryButton
+                        class="flex h-fit items-center justify-center space-x-1 bg-brand-450"
                         @click="showAddFeeForm = true"
-                    />
+                    >
+                        <SquaresPlusIcon class="w-4 stroke-white stroke-2" />
+                        <span>Add Fee</span>
+                    </PrimaryButton>
                 </div>
             </template>
         </TableElement>
@@ -38,12 +40,13 @@
 import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import moment from "moment";
 import Modal from "@/Components/Modal.vue";
 import AddFee from "@/Views/Admin/Finance/Fees/AddFee.vue";
 import { upperCase } from "lodash";
 import SelectInput from "@/Components/SelectInput.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { SquaresPlusIcon } from "@heroicons/vue/24/outline";
 
 const fees = computed(() => usePage().props.fees);
 

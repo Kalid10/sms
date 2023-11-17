@@ -68,7 +68,7 @@
                     </div>
                     <SecondaryButton
                         title="Generate Class Schedule"
-                        class="w-fit !rounded-2xl bg-brand-100 py-2 !px-10 !font-semibold"
+                        class="w-fit !rounded-2xl bg-brand-100 !px-10 py-2 !font-semibold"
                         @click="generateSchedule"
                     />
                 </div>

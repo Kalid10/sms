@@ -6,7 +6,7 @@
         <img
             v-if="imagePreview && showImagePreview"
             :src="imagePreview"
-            class="h-48 w-52 rounded-3xl"
+            class="h-56 w-52 rounded-3xl object-cover"
             alt="img"
         />
         <div class="flex items-center">
@@ -14,7 +14,7 @@
                 class="block w-96 cursor-pointer rounded-lg border-2 border-brand-500 bg-gray-500 py-1 text-center text-sm font-medium text-white hover:scale-105 focus:outline-none"
                 for="fileInput"
             >
-                {{ $t("imageUpload.chooseImage") }}
+                {{ uploadImageButtonText ?? $t("imageUpload.chooseImage") }}
             </label>
             <input
                 id="fileInput"
@@ -28,7 +28,7 @@
         <PrimaryButton
             v-if="image && showFinishButton"
             type="submit"
-            class="rounded-md bg-brand-450 p-2 text-brand-50"
+            class="rounded-md bg-brand-400 p-2 text-brand-50"
             @click="submit"
         >
             {{ finishButtonText }}
@@ -62,11 +62,23 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    uploadImageButtonText: {
+        type: String,
+        default: null,
+    },
+    showResponseNotification: {
+        type: Boolean,
+        default: false,
+    },
+    imagePreview: {
+        type: String,
+        default: null,
+    },
 });
 const emit = defineEmits(["imageUploaded"]);
 
 const image = ref(null);
-const imagePreview = ref(null);
+const imagePreview = ref(props.imagePreview);
 const showNotification = inject("showNotification");
 const isUploading = ref(false);
 
@@ -104,6 +116,15 @@ const submit = () => {
             preserveState: true,
             onFinish: () => {
                 isUploading.value = false;
+            },
+            onSuccess: () => {
+                if (props.showResponseNotification) {
+                    showNotification({
+                        type: "success",
+                        message: t("imageUpload.imageUploadedSuccessfully"),
+                        position: "top-center",
+                    });
+                }
             },
         }
     );

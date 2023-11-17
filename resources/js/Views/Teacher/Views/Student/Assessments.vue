@@ -1,39 +1,35 @@
 <template>
     <div class="flex flex-col">
-        <div class="flex w-full justify-between pr-2">
+        <div class="flex w-full items-center justify-between">
             <div class="text-xl font-medium">
                 {{ $t("studentAssessments.recentAssessments") }}
             </div>
 
             <div
-                class="flex w-1/2 flex-col justify-end space-y-3 rounded-lg bg-white p-4 text-center"
-            ></div>
+                v-if="assessmentTypeOptions.length > 0 && batchSubject"
+                class="flex w-1/2 flex-col space-y-3 rounded-lg bg-white p-4 text-center"
+            >
+                <SelectInput
+                    v-model="selectedAssessmentType"
+                    :options="assessmentTypeOptions"
+                    placeholder="Filter by Assessment Type"
+                    class="w-full justify-end"
+                />
+            </div>
         </div>
+    </div>
 
-        <div
-            v-if="assessmentTypeOptions.length > 0 && batchSubject"
-            class="flex flex-row items-center justify-end space-x-2"
-        >
-            <SelectInput
-                v-model="selectedAssessmentType"
-                :options="assessmentTypeOptions"
-                placeholder="Filter by Assessment Type"
-                class="w-1/2 justify-end"
-            />
-        </div>
-
-        <Item
-            v-if="isAssessmentFound"
-            class="mt-3"
-            :assessments="assessments"
-            view="student"
-        />
-        <div
-            v-else
-            class="flex h-32 flex-col items-center justify-center space-y-4 lg:h-44"
-        >
-            <EmptyView :title="$t('studentAssessments.noAssessmentsFound')" />
-        </div>
+    <Item
+        v-if="isAssessmentFound"
+        class="mt-3"
+        :assessments="assessments"
+        view="student"
+    />
+    <div
+        v-else
+        class="flex h-32 flex-col items-center justify-center space-y-4 lg:h-44"
+    >
+        <EmptyView :title="$t('studentAssessments.noAssessmentsFound')" />
     </div>
 
     <div v-if="assessments?.data?.length" class="my-2 flex justify-center">

@@ -45,13 +45,13 @@
 
             <div
                 v-if="storeResponseStatus === 'success'"
-                class="flex items-center justify-center space-x-4 rounded-lg bg-emerald-500 py-2 px-4 text-sm"
+                class="flex items-center justify-center space-x-4 rounded-lg bg-emerald-500 px-4 py-2 text-sm"
                 @click="routeToQuestionsPage()"
             >
                 <span> {{ storeResponseMessage }}</span>
                 <SecondaryButton
                     title="View"
-                    class="cursor-pointer !rounded-2xl bg-emerald-100 !py-1.5 !px-6 hover:scale-105"
+                    class="cursor-pointer !rounded-2xl bg-emerald-100 !px-6 !py-1.5 hover:scale-105"
                     @click="
                         uiStore.setLoading(false);
                         uiStore.setResponse(null);
@@ -60,7 +60,7 @@
             </div>
             <div
                 v-if="storeResponseStatus === 'error'"
-                class="flex items-center justify-center space-x-2 rounded-lg bg-red-600 py-2 px-4 text-sm"
+                class="flex items-center justify-center space-x-2 rounded-lg bg-red-600 px-4 py-2 text-sm"
                 @click="routeToQuestionsPage()"
             >
                 <XCircleIcon class="w-6 text-white" />

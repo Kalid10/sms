@@ -19,10 +19,13 @@
                 </div>
                 <PrimaryButton
                     v-if="canManageInventory"
-                    class="h-fit w-fit"
+                    class="flex h-fit items-center justify-center space-x-1 bg-brand-450"
                     @click="emit('add')"
                 >
-                    {{ $t("pendingInventoryItems.addItem") }}
+                    <SquaresPlusIcon class="w-4 stroke-white stroke-2" />
+                    <span>
+                        {{ $t("pendingInventoryItems.addItem") }}
+                    </span>
                 </PrimaryButton>
             </div>
         </template>
@@ -76,7 +79,7 @@ import { usePage } from "@inertiajs/vue3";
 import TableElement from "@/Components/TableElement.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Pagination from "@/Components/Pagination.vue";
-import { UserMinusIcon } from "@heroicons/vue/24/outline";
+import { SquaresPlusIcon, UserMinusIcon } from "@heroicons/vue/24/outline";
 import { PlusCircleIcon } from "@heroicons/vue/24/solid";
 import { isAdmin } from "@/utils";
 import { useI18n } from "vue-i18n";

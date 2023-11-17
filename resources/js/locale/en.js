@@ -199,7 +199,7 @@ const en = {
         maxPts: "MAX PTS",
         previous: "Previous",
         count: "COUNT",
-        totalPts: "TOTAL PTS",
+        totalPts: "PTS",
         assessmentCompleted:
             "You have successfully completed this assessment, and as a result, any further modifications or creation of new assessments are no longer permitted.",
         assessmentCompletedAdmin:
@@ -233,7 +233,7 @@ const en = {
     assignSubjects: {
         assignSubjects: "Assign Subjects",
         assignClassHint:
-            "Now that you have registered your classes and subjects, it's time to assign each class to the subject they will be taking.",
+            "Assign each class to the subject they will be taking.",
         subjects: "Subjects",
         queryPlaceholder: "Search for a subject, tag or category",
         levels: "Levels",
@@ -569,6 +569,7 @@ const en = {
     createAdmin: {
         headingOne: "Register an Admin",
         headingTwo: "Fill in the information required.",
+        headingThree: "Admin Bulk Registration",
         adminFormElementTitle: "Register Admin",
         namePlaceholder: "Full Name",
         phoneNumber: "Phone Number",
@@ -609,6 +610,7 @@ const en = {
     createTeacher: {
         headerOne: "Register new teacher",
         headerTwo: "Fill in the information required.",
+        headerThree: "Teacher Bulk Registration",
         registerTeacher: "Register Teacher",
         namePlaceholder: "Full name of new teacher",
         usernameLabel: "User Name",
@@ -673,7 +675,7 @@ const en = {
     },
     draft: {
         currentlyFull:
-            "Currently, this assessment is in <span class='-skew-x-3 bg-zinc-500 text-white px-2 py-0.5 text-sm font-bold italic'>DRAFT </span> state! You can:",
+            "Currently, this assessment <span class=' py-0.5 text-sm font-bold'>DRAFT!</span> You can:",
         settingAssessmentFull:
             "Setting an assessment as <span class='font-semibold uppercase'>' PUBLISHED '</span> or <span class='font-semibold uppercase'>' SCHEDULED '</span> will trigger immediate notifications to guardians and principals. Detailed information about the assessment can be accessed for further insight.",
         currently: "Currently, this assessment is in",
@@ -1043,7 +1045,7 @@ const en = {
         lessonPlan: "Lesson Plan",
         addLessonPlan: "Add Lesson Plan",
         teacher: "Teacher",
-        viewFullSchedule: "View Today's Schedule",
+        viewFullSchedule: "View Full Schedule",
     },
     nextClassIndex: {
         noUpcomingClasses:
@@ -1264,7 +1266,7 @@ const en = {
     },
     scheduled: {
         currentlyFull:
-            "Currently, this assessment is in <span class='mx-0.5 -skew-x-3 bg-cyan-400 px-2 py-0.5 text-sm font-bold italic text-black'>SCHEDULED</span>state! You can:",
+            "Currently, this assessment is in <span class='mx-0.5 py-0.5 text-sm font-bold'>SCHEDULED</span>! You can:",
         currentlyThisAssessment: "Currently, this assessment is in",
         scheduled: "SCHEDULED",
         stateYouCan: "state! You can",
@@ -1641,7 +1643,7 @@ const en = {
         info: "Info",
         caution: "CAUTION",
         message:
-            "Please note, upon clicking 'Finish Marking', notifications, emails and SMS will be sent to parents and relevant authorities regarding the students' performance. However, rest assured, you will retain the ability to make necessary adjustments to these assessments until the end of the current quarter or semester.",
+            "Please note, upon clicking <span class='bg-brand-150 px-1 font-medium text-black'> Finish Marking</span> , notifications, emails and SMS will be sent to parents and relevant authorities regarding the students' performance. However, rest assured, you will retain the ability to make necessary adjustments to these assessments until the end of the current quarter or semester.",
         finishMarking: "Finish Marking",
     },
 
@@ -1667,6 +1669,7 @@ const en = {
         settings: "Settings",
         logout: "Logout",
         questionBank: "Question Bank",
+        books: "Books",
     },
     teacherStudents: {
         myStudents: "My Students",
@@ -1788,7 +1791,7 @@ const en = {
     },
 
     viewsTeacherStudent: {
-        wantToSee: "Want to see how { student } is doing on otherclasses?",
+        wantToSee: "Want to see how { student } is doing on other classes?",
         viewFullGrade: "View Full Grade Report",
     },
     welcomeHeader: {
@@ -1973,6 +1976,7 @@ const en = {
     imageUpload: {
         imageSizeLimit: "Image size must be less than 3MB",
         chooseImage: "Choose Image To Upload",
+        imageUploadedSuccessfully: "Image Uploaded Successfully",
     },
     pendingCheckouts: {
         pendingInventoryCheckout: "Your Pending Inventory Checkouts",
@@ -2024,6 +2028,9 @@ const en = {
         inventoryItems: "Inventory Items",
         pendingCheckout: "Pending Checkouts",
         addItem: "Add Item",
+    },
+    book: {
+        uploadBookCover: "Upload Book Cover",
     },
 };
 

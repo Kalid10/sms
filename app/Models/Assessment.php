@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Log;
 
 /**
  * @mixin IdeHelperAssessment
@@ -149,9 +148,6 @@ class Assessment extends Model
     protected function longTitle(): string
     {
         $prefix = $this->load('batchSubject.subject', 'batchSubject.batch.level', 'batchSubject.teacher.user')->batchSubject->subject->full_name.' ';
-
-        Log::info('assessment period time: ');
-        Log::info(json_encode($this->assessment_period_time));
 
         $suffix = match (true) {
             $this->isToday() => ' Today'.

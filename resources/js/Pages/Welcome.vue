@@ -4,7 +4,7 @@
     <p v-html="$t('test.name')"></p>
 
     <div>
-        <Localization :current-locale="title">
+        <Localization :locale="title">
             <div class="bg-pink-400 text-2xl">english</div>
         </Localization>
     </div>

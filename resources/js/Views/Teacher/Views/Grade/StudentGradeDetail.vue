@@ -98,13 +98,13 @@
                                         <tr
                                             class="bg-gray-200 text-xs uppercase text-gray-600"
                                         >
-                                            <th class="py-3 px-6 text-left">
+                                            <th class="px-6 py-3 text-left">
                                                 Subject Name
                                             </th>
-                                            <th class="py-3 px-6 text-left">
+                                            <th class="px-6 py-3 text-left">
                                                 Grade
                                             </th>
-                                            <th class="py-3 px-6 text-left">
+                                            <th class="px-6 py-3 text-left">
                                                 Conduct
                                             </th>
                                         </tr>
@@ -119,13 +119,13 @@
                                             :key="index"
                                             class="border-b border-gray-200 hover:bg-gray-100"
                                         >
-                                            <td class="py-3 px-6 text-left">
+                                            <td class="px-6 py-3 text-left">
                                                 {{ grade.subject.name }}
                                             </td>
-                                            <td class="py-3 px-6 text-left">
+                                            <td class="px-6 py-3 text-left">
                                                 {{ grade.grade }}
                                             </td>
-                                            <td class="py-3 px-6 text-left">
+                                            <td class="px-6 py-3 text-left">
                                                 {{ grade.conduct }}
                                             </td>
                                         </tr>

@@ -81,7 +81,7 @@
                         </p>
                     </h3>
                     <p
-                        class="absolute top-0 right-0 mb-3 text-xs font-normal text-brand-text-300"
+                        class="absolute right-0 top-0 mb-3 text-xs font-normal text-brand-text-300"
                     >
                         {{ schoolSchedule.tags }}
                     </p>

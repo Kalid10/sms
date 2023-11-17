@@ -61,12 +61,14 @@
         />
         <div
             v-if="showFilter"
-            class="fixed z-50 h-fit w-9/12 rounded-md bg-gradient-to-br from-zinc-200 via-zinc-200 to-zinc-100 py-2 px-1 shadow-md backdrop-blur-none lg:ml-10 lg:w-80"
+            class="fixed z-50 h-fit w-9/12 rounded-md bg-brand-100 p-3 shadow-sm backdrop-blur-none lg:ml-10 lg:w-96"
         >
             <div class="flex w-full justify-between">
-                <div class="px-2 text-sm">{{ $t("filtersIndex.filters") }}</div>
+                <div class="px-2 font-medium uppercase">
+                    {{ $t("filtersIndex.filters") }}
+                </div>
                 <XMarkIcon
-                    class="w-4 cursor-pointer text-black hover:text-red-600"
+                    class="w-5 cursor-pointer text-black hover:text-red-600"
                     @click="showFilter = !showFilter"
                 />
             </div>
@@ -144,21 +146,22 @@
                     />
                 </div>
             </div>
-            <div class="flex justify-between px-2">
+
+            <div class="flex justify-between justify-self-center px-3">
                 <div
                     v-if="showFilter"
-                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-brand-450 from-violet-600 to-fuchsia-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
+                    class="flex h-fit w-32 cursor-pointer items-center justify-center space-x-1.5 rounded-md bg-brand-450 from-violet-600 to-fuchsia-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
                     @click="showFilter = false"
                 >
-                    <CheckCircleIcon class="w-3 text-brand-text-100" />
+                    <CheckCircleIcon class="w-3 text-brand-100" />
                     <span>{{ $t("filtersIndex.done") }}</span>
                 </div>
                 <div
                     v-if="showFilter"
-                    class="flex h-fit w-5/12 cursor-pointer items-center justify-center space-x-1 rounded-md bg-brand-450 from-red-600 to-orange-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
+                    class="flex h-fit w-32 cursor-pointer items-center justify-center space-x-1.5 rounded-md bg-brand-450 from-red-600 to-red-500 p-1.5 text-xs font-bold text-white hover:bg-gradient-to-br"
                     @click="clearFilters"
                 >
-                    <TrashIcon class="w-3 text-brand-text-100" />
+                    <TrashIcon class="w-3 text-brand-100" />
                     <span>{{ $t("filtersIndex.clearAll") }}</span>
                 </div>
             </div>

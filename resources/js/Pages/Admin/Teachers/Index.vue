@@ -14,7 +14,7 @@
                     </div>
 
                     <div
-                        class="flex w-full flex-col justify-between space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2"
+                        class="flex w-full flex-col justify-between space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0"
                     >
                         <TextInput
                             v-model="searchKey"
@@ -22,7 +22,7 @@
                             :placeholder="$t('teachersIndex.searchTeacher')"
                         />
                         <div
-                            class="flex w-full flex-col justify-between space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2"
+                            class="flex w-full flex-col justify-between space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0"
                         >
                             <SelectInput
                                 v-model="selectedSubject"

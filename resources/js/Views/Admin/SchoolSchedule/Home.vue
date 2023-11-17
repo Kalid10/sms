@@ -99,7 +99,7 @@ const filterSchedule = debounce(() => {
     showLoading.value = true;
 
     router.get(
-        "admin",
+        "/admin",
         {
             start_date: startDate.value,
             end_date: endDate.value,

@@ -31,7 +31,7 @@
                         class="h-12 w-12 rounded-full object-contain"
                     />
                     <div
-                        class="absolute right-[0px] bottom-[4px] h-3 w-3 rounded-full border-2 border-white"
+                        class="absolute bottom-[4px] right-[0px] h-3 w-3 rounded-full border-2 border-white"
                         :class="
                             chat.active_status ? 'bg-green-500' : 'bg-brand-350'
                         "
