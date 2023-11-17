@@ -106,8 +106,6 @@ class AssessmentController extends Controller
      */
     public function create(CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
-        $request->validated();
-
         foreach ($request->input('batch_subject_ids') as $batchSubjectId) {
             $batchSubject = BatchSubject::find($batchSubjectId);
             $batchSubject->assessments()->create(array_merge(
