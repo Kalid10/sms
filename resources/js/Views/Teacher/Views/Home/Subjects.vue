@@ -1,7 +1,7 @@
 <template>
     <div>
         <Heading size="lg">{{ $t('common.subjects')}}</Heading>
-        <div v-if="uniqueSubjectsAndLevels.length > 0" class="flex w-full flex-col items-center space-y-3 space-x-1.5">
+        <div v-if="uniqueSubjectsAndLevels.length > 0" class="flex w-full flex-col items-center space-x-1.5 space-y-3">
             <div
                 v-for="(item, index) in uniqueSubjectsAndLevels" :key="index"
                 class="m-0.5 mt-3 w-full">

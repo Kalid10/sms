@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="announcements?.data?.length || selectedAnnouncement || searchKey"
-        class="flex min-h-screen w-full flex-col px-1 py-2 lg:py-5 lg:px-10"
+        class="flex min-h-screen w-full flex-col px-1 py-2 lg:px-10 lg:py-5"
     >
         <div
             class="flex h-full w-full flex-col items-center space-y-2 px-0 py-3 lg:px-5"
@@ -26,15 +26,15 @@
                         :class="isAdmin() ? 'lg:w-6/12 xl:w-8/12' : 'lg:w-9/12'"
                         class-style="focus:ring-1 focus:ring-zinc-700 focus:border-none focus:outline-none rounded-2xl"
                     />
-                    <div
-                        class="flex w-full cursor-pointer items-center justify-center space-x-2 rounded-2xl bg-brand-450 px-4 py-1 text-xs text-white lg:w-fit"
+                    <PrimaryButton
+                        class="flex w-full cursor-pointer items-center justify-center space-x-2 bg-brand-450 px-4 py-1 text-white lg:w-fit"
                         @click="showAddAnnouncement = true"
                     >
                         <SquaresPlusIcon class="w-4 text-white" />
                         <span>
                             {{ $t("announcementsIndex.publishAnnouncement") }}
                         </span>
-                    </div>
+                    </PrimaryButton>
                 </div>
             </div>
 
@@ -141,6 +141,7 @@ import ShowAnnouncementView from "@/Views/Announcements/ShowAnnouncement.vue";
 import { isAdmin } from "@/utils";
 import EmptyView from "@/Views/EmptyView.vue";
 import Loading from "@/Components/Loading.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
     url: {

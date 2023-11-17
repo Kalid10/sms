@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full flex-col items-center justify-center space-y-2 rounded-b-md bg-white px-2 pl-3 pb-5 shadow-sm"
+        class="flex w-full flex-col items-center justify-center space-y-2 rounded-b-md bg-white px-2 pb-5 pl-3 shadow-sm"
     >
         <div class="flex w-full flex-col justify-evenly py-2">
             <div

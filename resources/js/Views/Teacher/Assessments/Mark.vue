@@ -1,6 +1,6 @@
 <template>
     <div
-        class="scrollbar-hide flex min-h-screen w-full flex-col space-y-2 py-2 px-5"
+        class="scrollbar-hide flex min-h-screen w-full flex-col space-y-2 px-5 py-2"
     >
         <div class="flex w-full justify-between">
             <!--Left Side-->
@@ -64,23 +64,25 @@
 
                 <div
                     v-if="showFinishMarkingButton && isTeacher()"
-                    class="flex h-fit w-full animate-scale-up flex-col items-center space-y-4 rounded-md border-2 border-black px-2 py-3 text-center font-semibold lg:w-10/12 2xl:w-9/12"
+                    class="flex h-fit w-full animate-scale-up flex-col items-center space-y-4 rounded-md border-2 border-black bg-brand-300 p-3 text-center text-white lg:w-10/12 2xl:w-9/12"
                 >
                     <div
-                        class="flex w-full items-center justify-center space-x-1 text-xs font-light"
+                        class="flex w-full items-center justify-center space-x-1.5 text-sm font-medium"
                     >
-                        <ExclamationTriangleIcon class="w-4 text-red-600" />
+                        <ExclamationTriangleIcon class="w-4 text-brand-100" />
                         <span>
                             {{ $t("teacherAssessmentsMark.caution") }}
                         </span>
                     </div>
-                    <div class="text-xs font-light">
-                        {{ $t("teacherAssessmentsMark.message") }}
+                    <div class="text-xs">
+                        <span
+                            v-html:="$t('teacherAssessmentsMark.message')"
+                        ></span>
                     </div>
                     <SecondaryButton
                         :is-disabled="isLoading"
                         :title="$t('teacherAssessmentsMark.finishMarking')"
-                        class="w-3/5 rounded-2xl bg-brand-450 text-white"
+                        class="w-1/2 rounded-2xl border-2 border-black bg-brand-150 font-medium uppercase"
                         @click.="insertStudentsAssessment"
                     />
                 </div>

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col space-y-3 divide-y divide-gray-600 rounded-lg bg-zinc-800 p-3 text-white shadow-sm"
+        class="flex flex-col space-y-3 rounded-lg bg-brand-100 p-3 text-black shadow-sm"
     >
         <div class="flex items-center space-x-2.5 pl-3">
             <UserMinusIcon class="w-5" />
@@ -8,12 +8,12 @@
                 {{ $t("absenteeStats.todayAbsentees") }}
             </div>
             <EyeIcon
-                class="w-4 cursor-pointer text-brand-text-500 hover:scale-125 hover:text-white"
+                class="w-4 cursor-pointer text-black hover:scale-125 hover:text-white"
                 @click="absenteeLink"
             />
         </div>
         <div
-            class="flex w-full items-center justify-between divide-x divide-gray-600 pt-4"
+            class="flex w-full items-center justify-between divide-x divide-brand-500 pt-4"
         >
             <AbsenteeStatItem
                 class="w-1/3"

@@ -30,7 +30,7 @@
                 @click="handleClicked(item)"
             >
                 <div
-                    class="min-h-full w-[0.01rem] rounded-t-lg rounded-b-md bg-brand-350 py-2"
+                    class="min-h-full w-[0.01rem] rounded-b-md rounded-t-lg bg-brand-350 py-2"
                 ></div>
 
                 <div class="relative flex w-full flex-col space-y-2 pt-1">
@@ -64,7 +64,7 @@
                 <SecondaryButton
                     v-if="isTeacher()"
                     :title="$t('studentNotes.addNote')"
-                    class="mt-4 w-9/12 !rounded-2xl border-none bg-brand-300 text-white"
+                    class="mt-4 w-9/12 !rounded-2xl border-none bg-brand-450 text-white"
                     @click="showModal = true"
                 />
             </div>

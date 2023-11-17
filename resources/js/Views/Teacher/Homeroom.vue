@@ -28,7 +28,7 @@
         >
             <!--        Left Side-->
             <div
-                class="flex w-full flex-col space-y-4 py-5 px-3 lg:w-9/12 lg:pl-5"
+                class="flex w-full flex-col space-y-4 px-3 py-5 lg:w-9/12 lg:pl-5"
             >
                 <Header
                     :title="$t('homeRooms.homeroomClasses')"

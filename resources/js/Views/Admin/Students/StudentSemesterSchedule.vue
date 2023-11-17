@@ -12,12 +12,12 @@
         <div class="flex h-full w-full rounded-md border-l border-t">
             <div class="hours grid w-fit grid-cols-1 flex-col">
                 <div
-                    class="grid w-[5rem] max-w-[5rem] place-items-center whitespace-nowrap border-r border-b px-3 text-xs font-semibold text-brand-text-300 last:border-b-0"
+                    class="grid w-[5rem] max-w-[5rem] place-items-center whitespace-nowrap border-b border-r px-3 text-xs font-semibold text-brand-text-300 last:border-b-0"
                 ></div>
                 <div
                     v-for="(period, p) in periods"
                     :key="p"
-                    class="flex w-[5rem] max-w-[5rem] flex-col items-center justify-center whitespace-nowrap border-r border-b px-3 text-xs font-semibold text-brand-text-300"
+                    class="flex w-[5rem] max-w-[5rem] flex-col items-center justify-center whitespace-nowrap border-b border-r px-3 text-xs font-semibold text-brand-text-300"
                 >
                     <span>
                         {{ period["start_time"] }}
@@ -58,7 +58,7 @@
                                         ? 'bg-brand-50/15 text-brand-100 col-span-5'
                                         : 'col-span-1 session'
                                 "
-                                class="row-span-1 flex items-center justify-center border-r border-b text-xs font-semibold"
+                                class="row-span-1 flex items-center justify-center border-b border-r text-xs font-semibold"
                             >
                                 {{ getPeriodName(schedule) }}
                             </div>

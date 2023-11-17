@@ -16,7 +16,7 @@
 
         <span
             v-if="!visible"
-            class="relative flex w-full items-center justify-between rounded-md border border-gray-200 bg-white py-2 px-3 placeholder:text-sm"
+            class="relative flex w-full items-center justify-between rounded-md border border-gray-200 bg-white px-3 py-2 placeholder:text-sm"
             :class="[labelLocation === 'inside' ? 'relative h-12' : 'h-10']"
             @click.prevent="viewPanel = !viewPanel"
         >
@@ -120,8 +120,8 @@
                                     ? isDateSelected(i).range === 'start'
                                         ? 'rounded-tl-md bg-brand-450 text-white'
                                         : 'rounded-br-md bg-brand-450 text-white'
-                                    : 'rounded-md bg-black text-white'
-                                : 'hover:rounded-md hover:bg-black/10',
+                                    : 'rounded-md bg-brand-400 text-white'
+                                : 'hover:rounded-md hover:bg-brand-100',
                             isBetweenRange(i) ? 'bg-black/10' : '',
                         ]"
                         :disabled="isDateDisabled(i)"
@@ -143,7 +143,7 @@
                     <span
                         v-for="k in 7 - ((offsetDays + numberOfDays) % 7)"
                         :key="k"
-                        class="grid place-items-center p-2.5 text-sm text-brand-text-300"
+                        class="grid place-items-center p-2.5 text-sm text-black"
                     >
                         {{ k }}
                     </span>
@@ -202,7 +202,7 @@
                             modelValue?.toDateString() ===
                             new Date().toDateString()
                                 ? 'bg-black/10 border-black text-black'
-                                : 'text-brand-text-300 hover:bg-black/10'
+                                : 'bg-brand-150 font-semibold hover:bg-black/10'
                         "
                         class="flex h-10 w-full items-center justify-center gap-1 rounded-md border text-center text-sm focus:outline-none"
                         @click="selectToday"
@@ -229,6 +229,9 @@
                     </button>
                 </span>
             </span>
+        </span>
+        <span v-if="error" class="text-xs text-negative-50">
+            * {{ error }}
         </span>
     </label>
 </template>
@@ -298,6 +301,10 @@ const props = defineProps({
     visible: {
         type: Boolean,
         default: false,
+    },
+    error: {
+        type: String,
+        default: null,
     },
 });
 

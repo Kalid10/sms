@@ -62,10 +62,7 @@
             <div
                 class="flex h-full w-full flex-col items-center space-y-8 lg:w-3/12"
             >
-                <NextClassPage
-                    class="!w-11/12"
-                    @view="activeTab = toDaysScheduleTab"
-                />
+                <NextClassPage class="!w-11/12" />
 
                 <Summary class="!w-11/12" />
 

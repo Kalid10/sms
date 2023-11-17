@@ -47,7 +47,7 @@
             >
                 <template v-for="(option, index) in options" :key="index">
                     <li
-                        class="flex items-center justify-between py-2 px-3"
+                        class="flex items-center justify-between px-3 py-2"
                         @click="selectOption(option)"
                     >
                         <span class="text-xs 2xl:text-sm">{{

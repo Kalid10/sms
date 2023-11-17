@@ -197,7 +197,7 @@
                 >
                     <ClipboardDocumentIcon class="w-3" />
                     <div
-                        class="!py-0.5 !px-0 text-xs font-medium"
+                        class="!px-0 !py-0.5 text-xs font-medium"
                         @click="addToDescription"
                     >
                         {{ $t("lessonPlanCopilot.copyToLessonPlan") }}
@@ -208,7 +208,7 @@
                 >
                     <MagnifyingGlassIcon class="w-3" />
                     <div
-                        class="!py-0.5 !px-0 text-xs font-medium"
+                        class="!px-0 !py-0.5 text-xs font-medium"
                         @click="
                             router.visit(
                                 `https://www.google.com/search?q=${encodeURIComponent(

@@ -44,7 +44,7 @@
                 </div>
 
                 <div
-                    class="mt-4 w-full rounded-lg border border-gray-400 py-3 px-2 text-start text-sm font-normal"
+                    class="mt-4 w-full rounded-lg border border-gray-400 px-2 py-3 text-start text-sm font-normal"
                 >
                     <span class="font-semibold">Input:</span>
                     {{ selectedQuestion.input }}

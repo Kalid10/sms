@@ -6,7 +6,7 @@
             {{ $t("lessonPlans.yourLessonPlans") }}
         </div>
         <div
-            class="flex w-full flex-col space-y-2 p-2 text-black lg:flex-row lg:space-y-0 lg:space-x-5"
+            class="flex w-full flex-col space-y-2 p-2 text-black lg:flex-row lg:space-x-5 lg:space-y-0"
         >
             <div v-if="subjectOptions?.length > 0" class="w-full lg:w-4/12">
                 <SelectInput

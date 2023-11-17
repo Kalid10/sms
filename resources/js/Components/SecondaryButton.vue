@@ -1,7 +1,7 @@
 <template>
     <button
         :type="type"
-        class="rounded-md py-1.5 px-4 text-sm text-black"
+        class="rounded-md px-4 py-1.5 text-sm text-black"
         :class="isDisabled ? 'opacity-70' : 'opacity-100'"
         :disabled="isDisabled"
         @click="click"

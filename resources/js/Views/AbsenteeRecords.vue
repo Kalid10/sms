@@ -4,14 +4,14 @@
             v-if="absenteeRecords?.data.length"
             class="flex w-full flex-col space-y-2"
         >
-            <div class="text-xl font-medium">
+            <div class="py-2 text-center text-xl font-medium">
                 {{ $t("absenteeRecords.absenteeRecords") }}
             </div>
             <div
                 v-for="(item, index) in absenteeRecords.data"
                 :key="index"
-                class="flex w-full justify-evenly space-x-2 rounded-lg p-3 text-sm"
-                :class="index % 2 === 1 ? 'bg-brand-50' : ''"
+                class="flex w-full justify-evenly space-x-2 rounded-lg px-3 py-4 text-xs"
+                :class="index % 2 === 0 ? 'bg-brand-50' : ''"
             >
                 <div class="w-5/12">
                     {{
@@ -27,7 +27,7 @@
                 <div class="w-2/12">
                     {{
                         item.batch_session.batch_schedule.batch_subject.subject
-                            .full_name
+                            .short_name
                     }}
                 </div>
                 <div class="">

@@ -16,7 +16,9 @@
                 <span v-if="view === 'student'">
                     {{ student.user.name }} {{ $t("flagIndex.flagList") }}
                 </span>
-                <span v-else class="text-center"> {{ title }} </span>
+                <span v-else-if="flags?.data?.length" class="text-center">
+                    {{ title }}
+                </span>
             </span>
 
             <SquaresPlusIcon
@@ -28,26 +30,10 @@
         <!--        List-->
         <div v-if="flags?.data?.length" class="flex w-full flex-col">
             <div
-                class="mb-2 flex w-full bg-brand-450 py-2 text-center text-xs text-white"
-            >
-                <span :class="viewDate ? 'w-3/12' : 'w-4/12'">
-                    {{ $t("common.name") }}</span
-                >
-                <span :class="viewDate ? 'w-3/12' : 'w-4/12'">
-                    {{ $t("common.by") }}</span
-                >
-                <span :class="viewDate ? 'w-3/12' : 'w-4/12'">
-                    {{ $t("common.type") }}
-                </span>
-                <span v-if="viewDate" class="w-3/12 text-center"
-                    >{{ $t("flagIndex.duration") }}
-                </span>
-            </div>
-            <div
                 v-for="(item, index) in flags.data"
                 :key="index"
-                class="group flex w-full cursor-pointer items-center justify-evenly space-x-2 py-3 text-xs hover:rounded-lg hover:bg-brand-50"
-                :class="index % 2 === 1 ? 'bg-brand-50' : ''"
+                class="group flex w-full cursor-pointer items-center justify-evenly space-x-2 rounded-lg py-3 text-xs hover:bg-brand-50"
+                :class="index % 2 === 0 ? 'bg-brand-50' : ''"
                 @click="
                     showDetailModal = true;
                     selectedFlag = item;
@@ -80,7 +66,7 @@
                         >
                         <span v-else-if="item.flagged_by.type === 'teacher'"
                             >(
-                            {{ item.batch_subject?.subject.full_name }} )</span
+                            {{ item.batch_subject?.subject.short_name }} )</span
                         >
                         <span v-else>{{ item.flaggable.user.admin }}</span>
                     </span>
@@ -93,7 +79,7 @@
                     <span
                         v-for="(type, index) in item?.type"
                         :key="index"
-                        class="mx-1 flex h-fit w-fit flex-wrap rounded-3xl bg-red-600 py-0.5 px-2 text-center text-[0.65rem] font-medium lowercase text-white hover:scale-110"
+                        class="mx-1 flex h-fit w-fit flex-wrap rounded-3xl bg-red-600 px-2 py-0.5 text-center text-[0.65rem] font-medium lowercase text-white hover:scale-110"
                     >
                         {{ type.substring(0, 3) }}
                     </span>

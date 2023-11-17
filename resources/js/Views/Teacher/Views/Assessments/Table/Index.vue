@@ -1,11 +1,10 @@
 <template>
-    <div v-if="filteredAssessments" class="flex flex-col space-y-4">
+    <div v-if="filteredAssessments" class="flex flex-col space-y-6">
         <Filters
             class="z-10"
             @filter-enabled="setFilterValue"
             @create="$emit('create')"
         />
-
         <TableElement
             class="h-full bg-white text-black !shadow-none"
             :data="filteredAssessments"
@@ -27,7 +26,7 @@
             <template #status-column="{ data }">
                 <div class="flex w-full items-center justify-center">
                     <div
-                        class="w-fit rounded-xl py-1 px-2 text-center text-[0.55rem] font-semibold lg:px-2"
+                        class="w-fit rounded-xl px-2 py-1 text-center text-[0.55rem] font-semibold lg:px-2"
                         :class="{
                             'bg-zinc-500 text-white': data === 'Draft',
                             'bg-emerald-400': data === 'Published',
@@ -87,7 +86,7 @@ const config = [
         name: t("tableIndex.title"),
         key: "assessment",
         type: "custom",
-        class: "text-xs py-3.5",
+        class: "text-xs !py-4",
     },
     {
         name: t("tableIndex.type"),

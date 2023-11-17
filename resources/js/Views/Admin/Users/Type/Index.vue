@@ -21,7 +21,7 @@
             >
                 {{ props.user.name }}
             </h3>
-            <div class="mt-0 mb-2 text-sm font-bold uppercase leading-normal">
+            <div class="mb-2 mt-0 text-sm font-bold uppercase leading-normal">
                 <span class="mr-2 text-lg"></span>
                 {{ props.user.address }}
             </div>
@@ -104,7 +104,7 @@
                             class="relative flex w-full flex-col justify-center space-x-2"
                         >
                             <div
-                                class="absolute top-0 right-0 cursor-pointer hover:scale-125"
+                                class="absolute right-0 top-0 cursor-pointer hover:scale-125"
                                 @click="selectChild(child)"
                             >
                                 <ArrowTopRightOnSquareIcon

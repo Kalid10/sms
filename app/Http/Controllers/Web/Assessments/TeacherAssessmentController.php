@@ -29,7 +29,7 @@ class TeacherAssessmentController extends Controller
         $this->teacherService = $teacherService;
     }
 
-    public function create(CreateAssessmentRequest $request): RedirectResponse
+    public function create(CreateAssessmentRequest $request): Response
     {
         $request->validated();
 
@@ -43,10 +43,10 @@ class TeacherAssessmentController extends Controller
             ));
         }
 
-        return redirect()->back()->with('success', 'Assessment created.');
+        return $this->teacherAssessments(new Request());
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request): Response
     {
         $validatedData = $request->validate([
             'assessment_id' => 'required|integer|exists:assessments,id',
@@ -60,7 +60,7 @@ class TeacherAssessmentController extends Controller
         $assessment = Assessment::find($validatedData['assessment_id']);
         $assessment->update($validatedData);
 
-        return redirect()->back()->with('success', 'Assessment updated successfully!');
+        return $this->teacherAssessments(new Request());
     }
 
     public function delete(Assessment $assessment, Request $request): RedirectResponse
@@ -133,7 +133,7 @@ class TeacherAssessmentController extends Controller
         $assessment = $this->populateAssessmentDetails(collect([$assessment]))->first();
 
         $completedAssessments = Assessment::where([
-            ['status', Assessment::STATUS_COMPLETED],
+            ['status', ! Assessment::STATUS_DRAFT],
             ['quarter_id', Quarter::getActiveQuarter()->id],
             ['batch_subject_id', $assessment->batch_subject_id],
             ['assessment_type_id', $assessment->assessment_type_id],
@@ -147,13 +147,7 @@ class TeacherAssessmentController extends Controller
         $assessment->assessment_type_points_sum = $completedAssessments->sum('maximum_point');
         $assessment->assessment_type_completed_count = $completedAssessments->count();
 
-        $page = match (auth()->user()->type) {
-            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
-            User::TYPE_ADMIN => 'Admin/Teachers/Single',
-            default => throw new Exception('Type unknown!'),
-        };
-
-        return Inertia::render($page, [
+        return Inertia::render($this->getPage(), [
             'assessment' => $assessment,
         ]);
     }
@@ -181,7 +175,7 @@ class TeacherAssessmentController extends Controller
             BatchSubject::where('teacher_id', $teacherId)
                 ->whereHas('batch', function ($query) {
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-                })->first()->id;
+                })->first()?->id;
 
         $quarters = Quarter::with('semester.schoolYear')->get();
         $semesters = Semester::with('schoolYear')->get();
@@ -231,13 +225,7 @@ class TeacherAssessmentController extends Controller
             ->orderBy('due_date', 'asc')
             ->paginate(15);
 
-        $page = match (auth()->user()->type) {
-            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
-            User::TYPE_ADMIN => 'Admin/Teachers/Single',
-            default => throw new Exception('Type unknown!'),
-        };
-
-        return Inertia::render($page, [
+        return Inertia::render($this->getPage(), [
             'assessments' => $assessments,
             'teacher' => $this->teacherService->getTeacherDetails($teacherId),
             'assessment_type' => AssessmentType::where('is_admin_controlled', false)->get(),
@@ -282,5 +270,14 @@ class TeacherAssessmentController extends Controller
         });
 
         return $assessments;
+    }
+
+    private function getPage(): string
+    {
+        return match (auth()->user()->type) {
+            User::TYPE_TEACHER => 'Teacher/Assessments/Index',
+            User::TYPE_ADMIN => 'Admin/Teachers/Single',
+            default => throw new Exception('Type unknown!'),
+        };
     }
 }

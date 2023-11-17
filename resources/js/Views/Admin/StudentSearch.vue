@@ -1,5 +1,5 @@
 <template>
-    <div ref="container" class="relative w-full">
+    <div ref="container " class="relative w-full">
         <div class="flex flex-col">
             <TextInput
                 v-model="query"
@@ -9,7 +9,7 @@
             />
             <div
                 v-if="filteredStudents.length > 0 && showStudents"
-                class="absolute mt-10 w-full rounded-lg bg-white p-2 shadow-sm"
+                class="absolute mt-10 w-full rounded-lg bg-white p-2 shadow-lg"
             >
                 <div
                     v-for="(student, index) in filteredStudents"
@@ -93,7 +93,7 @@ const fetchStudent = debounce(async function () {
 
 const filteredStudents = computed(() => {
     if (query.value === "") {
-        return students.value || [];
+        return [];
     } else {
         return students.value
             ? students.value.filter((student) =>

@@ -24,7 +24,7 @@
                             class="w-10 rounded-full object-contain"
                         />
                         <div
-                            class="absolute right-[0px] bottom-[4px] h-3 w-3 rounded-full border-2 border-white"
+                            class="absolute bottom-[4px] right-[0px] h-3 w-3 rounded-full border-2 border-white"
                             :class="
                                 chat.active_status
                                     ? 'bg-green-500'
@@ -41,7 +41,7 @@
                             {{ chat.name }}
                         </h1>
                         <h1
-                            class="block w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-gray-600"
+                            class="block w-[200px] truncate text-xs text-gray-600"
                         >
                             {{ chat?.latest_message?.body }}
                         </h1>

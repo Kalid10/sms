@@ -70,7 +70,7 @@
     </div>
 </template>
 <script setup>
-import { computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import {
     CalendarDaysIcon,
     CheckCircleIcon,
@@ -100,6 +100,8 @@ const title = computed(
 
 const showDialog = ref(false);
 
+const showNotification = inject("showNotification");
+
 function updateAssessment() {
     router.post(
         "/teacher/assessments/update",
@@ -113,6 +115,13 @@ function updateAssessment() {
         },
         {
             preserveState: true,
+            onSuccess: () => {
+                showNotification({
+                    type: "success",
+                    message: "Assessment updated successfully",
+                    position: "top-center",
+                });
+            },
         }
     );
 }

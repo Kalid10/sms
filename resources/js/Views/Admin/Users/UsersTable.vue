@@ -69,9 +69,7 @@
                     class="flex w-full justify-end"
                     @click="navigateToUserPage(row)"
                 >
-                    <ArrowTopRightOnSquareIcon
-                        class="h-4 w-4 stroke-blue-600"
-                    />
+                    <ArrowTopRightOnSquareIcon class="h-4 w-4" />
                 </button>
             </div>
         </template>

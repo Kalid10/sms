@@ -52,7 +52,7 @@
             <div class="flex w-11/12 justify-center pt-14">
                 <SecondaryButton
                     title="Update"
-                    class="w-fit !rounded-2xl bg-brand-400 py-2 !px-10 text-white"
+                    class="w-fit !rounded-2xl bg-brand-400 !px-10 py-2 text-white"
                     @click="saveBatchSubjects"
                 />
             </div>

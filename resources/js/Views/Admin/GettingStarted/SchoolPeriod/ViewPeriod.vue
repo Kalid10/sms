@@ -45,7 +45,7 @@
                 <div
                     v-for="(period, periodIndex) in day.periods"
                     :key="periodIndex"
-                    class="mt-4 w-full rounded-sm border-b py-1.5 px-2 text-center text-xs"
+                    class="mt-4 w-full rounded-sm border-b px-2 py-1.5 text-center text-xs"
                 >
                     <h3 class="mb-1 font-semibold">
                         {{ period.start }} - {{ period.end }}

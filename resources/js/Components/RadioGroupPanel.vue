@@ -12,11 +12,11 @@
                 v-for="(option, index) in options"
                 :key="index"
                 :class="{
-                    'border-b border-black bg-black/5 [&+label]:border-t-0':
+                    'border-b border-brand-150 bg-brand-50  [&+label]:border-t-0':
                         modelValue === option.value,
                 }"
                 :for="option.id"
-                class="flex items-start justify-start gap-3 border-x border-t p-3 first:rounded-t-md last:rounded-b-md last:border-b"
+                class="flex cursor-pointer items-start justify-start gap-3 border-x border-t p-3 first:rounded-t-md last:rounded-b-md last:border-b hover:bg-brand-100"
             >
                 <span class="mt-0.5 flex items-baseline gap-2">
                     <input
@@ -24,7 +24,7 @@
                         :checked="option.value === modelValue"
                         :name="name"
                         :value="option.value"
-                        class="h-3 w-3 border-neutral-300 bg-brand-100 pt-1.5 text-black checked:outline-0 focus:border-0 focus:outline-0 focus:ring-0"
+                        class="h-3 w-3 border-neutral-300 bg-brand-100 pt-1.5 text-brand-450 checked:outline-0 focus:border-0 focus:outline-0 focus:ring-0"
                         type="radio"
                         @change="changeSelection"
                     />

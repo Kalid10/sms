@@ -2,7 +2,7 @@
     <div v-if="view === 'default'">
         <div
             v-if="inProgressSession"
-            class="flex w-full flex-col items-center justify-evenly space-y-1 rounded-md py-2 px-3 text-center text-white"
+            class="flex w-full flex-col items-center justify-evenly space-y-1 rounded-md px-3 py-2 text-center text-white"
         >
             <div class="text-[0.6rem] font-light">
                 {{ $t("currentClass.currentClass") }}

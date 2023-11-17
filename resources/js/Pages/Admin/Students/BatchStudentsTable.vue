@@ -12,11 +12,11 @@
                 class="w-full cursor-pointer lg:w-4/12"
             />
         </div>
-        <SecondaryButton
+        <PrimaryButton
             :title="
                 'Go To Grade ' + selectedBatchLevel + ' ' + selectedBatchLabel
             "
-            class="!rounded-2xl bg-brand-400 text-white"
+            class="w-3/12 !rounded-2xl bg-brand-400 text-white"
             @click="levelDetailLink"
         />
     </div>
@@ -89,9 +89,9 @@ import { computed, ref, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { debounce } from "lodash";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { useI18n } from "vue-i18n";
 import Pagination from "@/Components/Pagination.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const { t } = useI18n();
 

@@ -1,10 +1,10 @@
 <template>
     <div
-        class="flex h-full w-full flex-col lg:flex-row lg:space-x-8"
+        class="flex h-screen w-full flex-col lg:flex-row lg:space-x-8"
         :class="showGettingStarted ? 'justify-between' : 'justify-center'"
     >
         <div
-            class="flex h-full max-h-screen flex-col items-center space-y-2 rounded-lg bg-white p-3 shadow"
+            class="flex h-[75%] flex-col items-center space-y-2 rounded-lg bg-white p-3 shadow"
             :class="
                 showGettingStarted ? 'w-full lg:w-8/12' : 'w-full lg:w-11/12'
             "
@@ -45,12 +45,13 @@
                                 >|</span
                             >
                         </div>
+
                         <div
                             v-if="message.role === 'assistant'"
-                            class="hidden px-1 group-hover:flex"
+                            class="invisible flex w-full group-hover:visible"
                         >
                             <ClipboardDocumentIcon
-                                class="w-3 cursor-pointer text-brand-text-400"
+                                class="w-4 cursor-pointer text-brand-text-400"
                                 @click="
                                     copyToClipboardAndShowToast(
                                         message.content,
@@ -107,8 +108,9 @@
                     class="scrollbar-hide w-full rounded-2xl border-none bg-brand-50/50 ring-2 ring-purple-600 placeholder:text-xs focus:ring-2 focus:ring-purple-500"
                     :placeholder="$t('chat.typeYourMessageHere')"
                     :style="{ maxHeight: `${maxRows * lineHeight}px` }"
-                    @input="autoResize"
-                    @keydown.enter.prevent="sendMessage"
+                    @input="autoResize(false)"
+                    @keydown.enter.prevent="autoResize(true)"
+                    @keydown.enter.shift.exact="sendMessage"
                 />
 
                 <button
@@ -234,14 +236,15 @@ const startStreaming = () => {
                 // Check if there are any messages before updating the latest one
                 if (event.data && messages.value.length > 0) {
                     isChatUpdating.value = true;
+
+                    messages.value[messages.value.length - 1].content +=
+                        event.data;
+
                     // Scroll to the bottom of chatContainer after state updates
                     nextTick(() => {
                         chatContainer.value.scrollTop =
                             chatContainer.value.scrollHeight;
                     });
-
-                    messages.value[messages.value.length - 1].content +=
-                        event.data;
                 }
             }
         },
@@ -296,6 +299,9 @@ const startStreaming = () => {
         },
         false
     );
+
+    // Set the inputMessage height to default
+    inputRef.value.style.height = "40px";
 };
 
 const stopStreaming = () => {
@@ -328,10 +334,10 @@ const regenerateResponseAndStopStreaming = (param) => {
 
 // Input resizing section
 const maxRows = 10;
-const lineHeight = 40;
+const lineHeight = 25;
 const inputRef = ref(null);
 
-const autoResize = () => {
+const autoResize = (isNewLine) => {
     if (inputRef.value) {
         // Reset the text-area's height to a smaller value
         inputRef.value.style.height = "1px";
@@ -340,15 +346,23 @@ const autoResize = () => {
             inputRef.value.scrollHeight,
             lineHeight * maxRows
         );
-        // If there's only one line or no content, set the height to one line height
-        if (inputRef.value.value.split(/\r\n|\r|\n/).length <= 1) {
-            newHeight = lineHeight;
+
+        if (isNewLine) {
+            inputMessage.value += "\n";
+            inputRef.value.style.height = `${newHeight + 25}px`;
+
+            // Scroll to the text-area's bottom using nextTick to ensure that the textarea has resized before scrolling
+            nextTick(() => {
+                inputRef.value.scrollTop = inputRef.value.scrollHeight;
+            });
+        } else {
+            inputRef.value.style.height = `${newHeight}px`;
         }
-        inputRef.value.style.height = `${newHeight}px`;
     }
 };
+
 watchEffect(() => {
-    autoResize();
+    autoResize(false);
 });
 
 const showCopyToast = ref(false);

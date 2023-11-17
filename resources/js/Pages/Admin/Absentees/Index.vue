@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-full py-5 px-3 lg:px-0"
+        class="w-full px-3 py-5 lg:px-0"
         :class="isSidebarOpenOnXlDevice ? 'lg:w-11/12' : 'lg:w-10/12'"
     >
         <Title class="pb-8" :title="$t('common.absentees')" />

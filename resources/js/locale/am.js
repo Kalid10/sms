@@ -551,6 +551,7 @@ const am = {
     createAdmin: {
         headingOne: "ሲስተም አስተዳዳሪ ይመዝገቡ",
         headingTwo: "የሚጠየቀውን መረጃ ይሙሉ።",
+        headingThree: "በጅምላ ሲስተም አድሚን የመዝግቡ",
         adminFormElementTitle: "ሲስተም አስተዳዳሪ ይመዝገቡ",
         namePlaceholder: "ሙሉ ስም",
         phoneNumber: "ስልክ ቁጥር",
@@ -591,6 +592,7 @@ const am = {
     createTeacher: {
         headerOne: "አዲስ መምህር ይመዝገቡ",
         headerTwo: "የሚጠየቀውን መረጃ ይሙሉ።",
+        headerThree: "በጅምላ መምህር ይመዝግቡ",
         registerTeacher: "መምህር ይመዝገቡ",
         namePlaceholder: "የአዲሱ መምህር ሙሉ ስም",
         usernameLabel: "መለያ ስም",
@@ -1578,7 +1580,7 @@ const am = {
         info: "መረጃ",
         caution: "ማስጠንቀቂያ",
         message:
-            "እባክዎን ያስተውሉ 'ምልክት ማጠናቀቅን ጨርስ' የሚለውን ሲጫኑ የተማሪዎችን አፈጻጸም በተመለከተ ማሳወቂያዎች፣ ኢሜል እና ኤስኤምኤስ ለወላጆች እና ለሚመለከታቸው አካላት ይላካሉ። ነገር ግን፣ እርግጠኛ ይሁኑ፣ በእነዚህ ግምገማዎች ላይ አስፈላጊውን ማስተካከያ ለማድረግ እስከ የአሁኑ ሩብ ወይም ሴሚስተር መጨረሻ ድረስ ይቆያሉ።",
+            "እባክዎን ያስተውሉ <span class='bg-brand-150 px-1 font-medium text-black'> ምልክት ማጠናቀቅን ጨርስ </span> የሚለውን ሲጫኑ የተማሪዎችን አፈጻጸም በተመለከተ ማሳወቂያዎች፣ ኢሜል እና ኤስኤምኤስ ለወላጆች እና ለሚመለከታቸው አካላት ይላካሉ። ነገር ግን፣ እርግጠኛ ይሁኑ፣ በእነዚህ ግምገማዎች ላይ አስፈላጊውን ማስተካከያ ለማድረግ እስከ የአሁኑ ሩብ ወይም ሴሚስተር መጨረሻ ድረስ ይቆያሉ።",
         finishMarking: "ምልክት ማጠናቀቅን ጨርስ",
     },
 
@@ -1604,6 +1606,7 @@ const am = {
         settings: "ቅንብሮች",
         logout: "ይወጡ",
         questionBank: "የጥያቄ ባንክ",
+        books: "መፅሀፍት",
     },
     teacherStudents: {
         myStudents: "ተማሪዎቼ",
@@ -1907,6 +1910,7 @@ const am = {
     imageUpload: {
         imageSizeLimit: "የምስሉ መጠን ከ3MB ያነሰ መሆን አለበት",
         chooseImage: "ምስል ለመጫን ይምረጡ",
+        imageUploadedSuccessfully: "ምስል በተሳካ ሁኔታ ተጭኗል፡፡",
     },
     pendingCheckouts: {
         pendingInventoryCheckout: "ለርክክብ በመጠባበቅ ላይ ያሉ የእቃዎ ዝርዝር",
@@ -1958,6 +1962,9 @@ const am = {
         inventoryItems: "እቃዎች",
         pendingCheckout: "በመጠባበቅ ላይ ያሉ (Checkouts)",
         addItem: "እቃ ያክሉ",
+    },
+    book: {
+        uploadBookCover: "የመጽሐፍ ከቨር ያስገቡ",
     },
 };
 

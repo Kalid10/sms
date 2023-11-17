@@ -51,8 +51,6 @@ class SimulationSeeder extends Seeder
             SchoolScheduleSeeder::class,
         ]);
         //
-        //        GenerateBatchSchedulesJob::dispatchSync();
-        //        Artisan::call('app:generate-batch-sessions', ['--duration' => 'weekly']);
 
         BatchScheduleConfig::create([
             'school_year_id' => SchoolYear::getActiveSchoolYear()?->id ?? 1,

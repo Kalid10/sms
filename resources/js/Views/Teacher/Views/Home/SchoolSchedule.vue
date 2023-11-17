@@ -1,6 +1,6 @@
 <template>
     <div
-        class="space flex w-full flex-col space-y-5 rounded-lg bg-white py-5 px-3 shadow-sm"
+        class="space flex w-full flex-col space-y-5 rounded-lg bg-white px-3 py-5 shadow-sm"
     >
         <div class="px-2 text-xl font-medium lg:text-2xl">
             Upcoming Schedules

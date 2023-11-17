@@ -45,14 +45,14 @@
 
         <div
             v-if="storeResponseStatus === 'success'"
-            class="flex items-center justify-center space-x-4 rounded-lg bg-emerald-500 py-3 px-4 text-sm"
+            class="flex items-center justify-center space-x-4 rounded-lg bg-emerald-500 px-4 py-3 text-sm"
         >
             <CheckCircleIcon class="w-5 text-white" />
             <span> {{ storeResponseMessage }}</span>
         </div>
         <div
             v-if="storeResponseStatus === 'error'"
-            class="flex items-center justify-center space-x-2 rounded-lg bg-red-600 py-3 px-4 text-sm"
+            class="flex items-center justify-center space-x-2 rounded-lg bg-red-600 px-4 py-3 text-sm"
         >
             <XCircleIcon class="w-5 text-white" />
             <span>{{ storeResponseMessage }}</span>

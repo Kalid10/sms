@@ -1,13 +1,20 @@
 <template>
-    <div class="flex w-full flex-col items-center justify-center space-y-5">
-        <div class="w-full text-center font-semibold text-black">
-            <span v-html:="$t('scheduled.currentlyFull')"></span>
+    <div
+        class="flex w-full flex-col items-center justify-center space-y-5 rounded-lg border-2 border-black bg-emerald-400 p-4"
+    >
+        <div class="w-full rounded-lg p-2 text-center text-xs">
+            Setting an assessment as
+            <span class="bg-emerald-200 px-1 font-semibold">' PUBLISHED '</span>
+            will trigger immediate notifications to guardians and principals.
+            Detailed information about the assessment can be accessed for
+            further insight.
         </div>
         <SecondaryButton
             :title="$t('scheduled.publishAssessment')"
-            class="w-44 rounded-xl bg-emerald-400 font-semibold uppercase lg:w-56"
+            class="w-32 rounded-xl border-2 border-black bg-emerald-200 font-semibold uppercase text-black lg:w-56"
             @click="showDialog = true"
         />
+
         <DialogBox
             v-model:open="showDialog"
             type="update"
@@ -24,7 +31,7 @@
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { router } from "@inertiajs/vue3";
 import DialogBox from "@/Components/DialogBox.vue";
-import { ref } from "vue";
+import { inject, ref } from "vue";
 
 const props = defineProps({
     assessment: {
@@ -35,15 +42,29 @@ const props = defineProps({
 
 const showDialog = ref(false);
 
+const showNotification = inject("showNotification");
+
 function updateAssessment() {
-    router.post("/teacher/assessments/update", {
-        title: props.assessment.title,
-        description: props.assessment.description,
-        maximum_point: props.assessment.maximum_point,
-        assessment_id: props.assessment.id,
-        status: "published",
-        due_date: props.assessment.due_date,
-    });
+    router.post(
+        "/teacher/assessments/update",
+        {
+            title: props.assessment.title,
+            description: props.assessment.description,
+            maximum_point: props.assessment.maximum_point,
+            assessment_id: props.assessment.id,
+            status: "published",
+            due_date: props.assessment.due_date,
+        },
+        {
+            onSuccess: () => {
+                showNotification({
+                    title: "Assessment Published",
+                    message: "Assessment has been published successfully",
+                    type: "success",
+                });
+            },
+        }
+    );
 }
 </script>
 <style scoped></style>

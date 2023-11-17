@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen w-full flex-col px-5 pt-10 pl-10">
+    <div class="flex h-screen w-full flex-col px-5 pl-10 pt-10">
         <div class="flex w-full">
             <div class="mb-6 flex flex-col md:mb-0 md:w-3/12">
                 <Heading :value="$t('createAdmin.headingOne')" />
@@ -75,13 +75,22 @@
         </div>
         <div class="mt-10 flex md:w-full">
             <div class="mb-6 flex shrink-0 md:mb-0 md:w-3/12">
-                <div class="">
-                    <Heading :value="$t('createStudent.headingThree')" />
-                    <Heading
-                        :value="$t('createStudent.headingFour')"
-                        size="sm"
-                        class="text-xs !font-light text-zinc-700"
-                    />
+                <div class="flex flex-col space-y-10">
+                    <span>
+                        <Heading :value="$t('createAdmin.headingThree')" />
+                        <Heading
+                            :value="$t('createStudent.headingFour')"
+                            size="sm"
+                            class="text-xs !font-light text-zinc-700"
+                        />
+                    </span>
+                    <a
+                        class="rounded-md border border-black bg-brand-400 px-3 py-1.5 text-center text-xs text-white opacity-100 transition-opacity duration-150 disabled:opacity-50"
+                        href="/assets/admin_bulk_registration_sample.xlsx"
+                        download
+                    >
+                        Download Sample
+                    </a>
                 </div>
 
                 <div
@@ -153,10 +162,6 @@ const form = useForm({
     phone_number: "",
     position: "",
     gender: "",
-});
-
-const bulkForm = useForm({
-    file: "",
 });
 
 const submit = () => {

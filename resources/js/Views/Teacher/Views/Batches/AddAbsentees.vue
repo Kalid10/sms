@@ -14,7 +14,7 @@
 
                 <div
                     v-if="absenteeStudents.length"
-                    class="flex w-full flex-col space-y-2 rounded-lg border border-brand-450 bg-brand-150 py-3 px-4 shadow-sm"
+                    class="flex w-full flex-col space-y-2 rounded-lg border border-brand-450 bg-brand-150 px-4 py-3 shadow-sm"
                 >
                     <div class="text-sm font-light">
                         {{ $t("addAbsentees.absenteeStudents") }}
@@ -23,7 +23,7 @@
                         <div
                             v-for="(item, index) in absenteeStudents"
                             :key="index"
-                            class="flex w-fit space-x-1 rounded-md bg-brand-450 py-1 px-2 text-xs text-white"
+                            class="flex w-fit space-x-1 rounded-md bg-brand-450 px-2 py-1 text-xs text-white"
                         >
                             <div>
                                 {{ item.name }}
