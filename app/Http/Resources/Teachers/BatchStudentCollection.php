@@ -16,7 +16,7 @@ class BatchStudentCollection extends ResourceCollection
     {
         return [
             'data' => [
-                'batch' => $this->collection->first()->batch,
+                'batch' => $this->collection->first()?->batch,
                 'students' => StudentResource::collection($this->collection->transform(function ($batchStudent) {
                     return $batchStudent->student;
                 })),
