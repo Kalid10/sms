@@ -12,9 +12,12 @@ use App\Http\Resources\Teachers\AssessmentResource;
 use App\Http\Resources\Teachers\StudentAssessmentCollection;
 use App\Jobs\InsertStudentsAssessmentsJob;
 use App\Models\Assessment;
+use App\Models\AssessmentType;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
+use App\Models\SchoolYear;
 use App\Models\StudentAssessment;
+use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
@@ -103,8 +106,6 @@ class AssessmentController extends Controller
      */
     public function create(CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
-        $request->validated();
-
         foreach ($request->input('batch_subject_ids') as $batchSubjectId) {
             $batchSubject = BatchSubject::find($batchSubjectId);
             $batchSubject->assessments()->create(array_merge(
@@ -163,5 +164,97 @@ class AssessmentController extends Controller
         $query->whereHas('quarter', function ($query) {
             $query->whereNull('end_date');
         });
+    }
+
+    public function createClassworkAssessment(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+    {
+        $batchSubjectId = $request->input('batch_subject_id');
+        $batchSubject = BatchSubject::find($batchSubjectId);
+        $type = $request->input('type');
+        $assessmentTypeId = $batchSubject->level->levelCategory->assessmentTypes->where('name', $type)->first()->id;
+        $isAssessmentTypeValid = $this->isAssessmentTypeValid($request);
+
+        $schoolPeriod = $batchSubject->load('inProgressSession.batchSchedule.schoolPeriod')
+            ->inProgressSession->batchSchedule->schoolPeriod;
+
+        [$hours, $minutes, $seconds] = explode(':', $schoolPeriod->start_time);
+
+        $deadline = Carbon::today()->setTime($hours, $minutes, $seconds);
+        $deadline->addMinutes($schoolPeriod->duration);
+
+        $batchSubject->assessments()->create(array_merge(
+            $request->validated(),
+            [
+                'quarter_id' => Quarter::getActiveQuarter()->id,
+                'batch_subject_id' => $batchSubjectId,
+                'created_by' => auth()->user()->id,
+                'assessment_type_id' => $assessmentTypeId,
+                'due_date' => $deadline,
+            ]
+        ));
+
+        return response([
+            'message' => 'Classwork Assessment successfully created.',
+        ], $isAssessmentTypeValid['status'] ? 201 : 403);
+    }
+
+    public function createHomeworkAssessment(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+    {
+        $batchSubjectId = $request->input('batch_subject_id');
+        $batchSubject = BatchSubject::find($batchSubjectId);
+        $type = $request->input('type');
+        $assessmentTypeId = $batchSubject->level->levelCategory->assessmentTypes->where('name', $type)->first()->id;
+
+        $isAssessmentTypeValid = $this->isAssessmentTypeValid($request);
+
+        $batchSubject->assessments()->create(array_merge(
+            $request->validated(),
+            ['quarter_id' => Quarter::getActiveQuarter()->id],
+            ['batch_subject_id' => $batchSubjectId],
+            ['created_by' => auth()->user()->id],
+            ['assessment_type_id' => $assessmentTypeId],
+        ));
+
+        return response([
+            'message' => 'Homework Assessment successfully created.',
+        ], $isAssessmentTypeValid['status'] ? 201 : 403);
+    }
+
+    private function isAssessmentTypeValid(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): array
+    {
+        $batchSubjectId = $request->input('batch_subject_id');
+        $batchSubject = BatchSubject::find($batchSubjectId);
+        $type = $request->input('type');
+        $assessmentTypeId = $batchSubject->level->levelCategory->assessmentTypes->where('name', $type)->first()->id;
+
+        // Check if assessment type is active
+        $assessmentType = AssessmentType::find($assessmentTypeId);
+        if ($assessmentType->school_year_id !== SchoolYear::getActiveSchoolYear()->id) {
+            return [
+                'status' => false,
+                'error' => 'Invalid assessment type.',
+            ];
+        }
+
+        // If assessment type is not customizable, check if it has reached its maximum count for this quarter
+        if (! $assessmentType->customizable) {
+            $assessments = Assessment::where([
+                ['assessment_type_id', $assessmentTypeId],
+                ['batch_subject_id', $batchSubjectId],
+                ['quarter_id', Quarter::getActiveQuarter()->id],
+            ]);
+
+            if ($assessments->count() >= $assessmentType->max_assessments) {
+                return [
+                    'status' => false,
+                    'error' => $assessmentType->name.' has reached its maximum count for this quarter.',
+                ];
+            }
+        }
+
+        return [
+            'status' => true,
+            'assessment_type_id' => $assessmentTypeId,
+        ];
     }
 }

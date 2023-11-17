@@ -71,6 +71,17 @@ class BatchSubject extends Model
         );
     }
 
+    public function inProgressSession(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            BatchSession::class,
+            BatchSchedule::class,
+            'batch_subject_id', // Foreign key on BatchSchedule table
+            'batch_schedule_id'
+        )
+            ->where('status', 'in_progress');
+    }
+
     public function nextSession(): HasOneThrough
     {
         return $this->hasOneThrough(

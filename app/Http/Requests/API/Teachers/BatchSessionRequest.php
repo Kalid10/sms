@@ -29,6 +29,7 @@ class BatchSessionRequest extends Request
         return [
             'status' => 'nullable|in:in_progress',
             'force' => 'nullable|boolean',
+            'batch_subject_id' => 'nullable|exists:batch_subjects,id',
         ];
     }
 }
