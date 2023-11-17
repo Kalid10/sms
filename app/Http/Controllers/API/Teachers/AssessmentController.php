@@ -168,7 +168,6 @@ class AssessmentController extends Controller
 
     public function createClassworkAssessment(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
-        $request->validated();
         $batchSubjectId = $request->input('batch_subject_id');
         $batchSubject = BatchSubject::find($batchSubjectId);
         $type = $request->input('type');
@@ -201,8 +200,6 @@ class AssessmentController extends Controller
 
     public function createHomeworkAssessment(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
-        $request->validated();
-
         $batchSubjectId = $request->input('batch_subject_id');
         $batchSubject = BatchSubject::find($batchSubjectId);
         $type = $request->input('type');
