@@ -159,10 +159,7 @@
                     </td>
                 </tr>
             </table>
-            <div
-                v-if="emptyData"
-                class="grid h-48 w-full place-items-center border-t"
-            >
+            <div v-if="emptyData" class="grid h-48 w-full place-items-center">
                 <slot name="empty-data">
                     <p class="text-sm font-semibold text-black">
                         No data found
