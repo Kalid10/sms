@@ -408,7 +408,7 @@ const en = {
         for: "for",
         add: "Add",
         absentees: "Absentees",
-        all: "all",
+        all: "All",
         password: "Password",
         home: "Home",
         classes: "Classes",
