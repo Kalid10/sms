@@ -23,8 +23,8 @@
 
                         <Link
                             href="/levels/level-categories"
-                            class="text-sm underline underline-offset-4 hover:font-semibold"
-                            >Level Categories
+                            class="text-xs font-medium underline hover:text-violet-700"
+                            >Go To Level Categories
                         </Link>
                     </div>
                 </div>
