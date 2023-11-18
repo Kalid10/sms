@@ -215,6 +215,8 @@
             />
         </FormElement>
     </Modal>
+
+    <Loading v-if="showLoading" is-full-screen />
 </template>
 
 <script setup>
@@ -241,12 +243,13 @@ import Toggle from "@/Components/Toggle.vue";
 import AssignHomeroom from "@/Views/Teacher/Views/Homeroom/AssignHomeroom.vue";
 import Modal from "@/Components/Modal.vue";
 import FormElement from "@/Components/FormElement.vue";
+import Loading from "@/Components/Loading.vue";
 
 const showAssignModal = ref(false);
-
 const showLeaveInfoModal = ref(false);
-
 const selectedTeacherForLeaveInfo = ref(null);
+
+const showLoading = ref(false);
 
 const { t } = useI18n();
 const isDialogBoxOpen = ref(false);
@@ -296,6 +299,7 @@ watch(selectedLevel, () => {
 });
 
 function applyLevelFilter() {
+    showLoading.value = true;
     router.get(
         "/admin/teachers/",
         {
@@ -303,6 +307,9 @@ function applyLevelFilter() {
         },
         {
             preserveState: true,
+            onFinish: () => {
+                showLoading.value = false;
+            },
         }
     );
 }
@@ -318,6 +325,7 @@ const leaveInfoForm = useForm({
 });
 
 function applySubjectFilter() {
+    showLoading.value = true;
     router.get(
         "/admin/teachers/",
         {
@@ -325,6 +333,9 @@ function applySubjectFilter() {
         },
         {
             preserveState: true,
+            onFinish: () => {
+                showLoading.value = false;
+            },
         }
     );
 }
@@ -380,6 +391,7 @@ const searchKey = ref(usePage().props.filters.search_key);
 const perPage = ref(15);
 
 const search = debounce(() => {
+    showLoading.value = true;
     router.get(
         "/admin/teachers/",
         {
@@ -390,6 +402,9 @@ const search = debounce(() => {
             only: ["teachers"],
             preserveState: true,
             replace: true,
+            onFinish: () => {
+                showLoading.value = false;
+            },
         }
     );
 }, 300);
