@@ -27,28 +27,33 @@
                         </PrimaryButton>
                     </div>
 
-                    <div
-                        class="flex h-full flex-col items-center justify-center space-y-2"
-                    >
+                    <div class="flex h-full flex-col items-center">
                         <div
                             v-for="(item, index) in mappedAssessments.data"
                             :key="index"
-                            class="w-full border-b"
+                            class="w-full"
+                            :class="
+                                index % 2 === 0 ? 'bg-white' : 'bg-brand-50'
+                            "
                         >
                             <div
                                 class="group flex w-full cursor-pointer items-center justify-between py-4 text-sm hover:scale-105 hover:rounded-lg hover:bg-brand-450 hover:text-white"
                             >
                                 <div
-                                    class="w-2/12 border-l px-3 text-center text-xs font-light capitalize group-hover:border-none group-hover:text-center"
+                                    class="w-2/12 text-center text-xs font-light capitalize group-hover:border-none group-hover:text-center"
                                 >
-                                    {{ item.due_date }}
+                                    {{
+                                        moment(item.start_date).format(
+                                            "DD MMM, YYYY"
+                                        )
+                                    }}
                                 </div>
-                                <div class="w-3/12 text-center">
+                                <div class="w-5/12 text-center">
                                     {{ item.level_category.name }} -
                                     {{ item.assessment_type.name }}
                                 </div>
                                 <div
-                                    class="hidden w-3/12 text-center font-light lg:block"
+                                    class="hidden w-3/12 text-center text-xs lg:block"
                                 >
                                     {{ item.user.name }}
                                 </div>
@@ -77,10 +82,6 @@
         </div>
     </div>
 
-    <Modal v-model="showModal">
-        <Details />
-    </Modal>
-
     <Modal v-model:view="showModal">
         <Form class="border-none" @success="showModal = false" />
     </Modal>
@@ -92,7 +93,6 @@ import Title from "@/Views/Teacher/Views/Title.vue";
 import { computed, ref } from "vue";
 import AssessmentTypes from "@/Views/Admin/Assessments/AssessmentTypes/Table.vue";
 import Modal from "@/Components/Modal.vue";
-import Details from "@/Pages/Admin/Assessments/Details.vue";
 import Form from "@/Views/Teacher/Views/Assessments/AssessmentForm.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { router, usePage } from "@inertiajs/vue3";
@@ -100,6 +100,7 @@ import EmptyView from "@/Views/EmptyView.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Loading from "@/Components/Loading.vue";
 import { SquaresPlusIcon } from "@heroicons/vue/24/outline/index";
+import moment from "moment";
 
 const showModal = ref(false);
 const isLoading = ref(false);
