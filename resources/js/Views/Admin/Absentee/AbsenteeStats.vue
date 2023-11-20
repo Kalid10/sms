@@ -8,7 +8,7 @@
                 {{ $t("absenteeStats.todayAbsentees") }}
             </div>
             <EyeIcon
-                class="w-4 cursor-pointer text-black hover:scale-125 hover:text-white"
+                class="w-4 cursor-pointer text-black hover:scale-125 hover:text-violet-700"
                 @click="absenteeLink"
             />
         </div>
