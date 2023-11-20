@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 
 class RegisterController extends Controller
@@ -54,8 +55,11 @@ class RegisterController extends Controller
                     'gender',
                     'guardian_name',
                     'guardian_email',
-                    'guardian_phone_number',
-                    'guardian_gender',
+                    'father_phone_number',
+                    'mother_phone_number',
+                    'other_guardian_phone_number',
+                    'other_guardian_gender',
+                    'other_guardian_relation',
                     'grade',
                 ];
                 $importClass = new StudentsRegistrationImport();
@@ -86,7 +90,7 @@ class RegisterController extends Controller
             $this->validateHeaders($request->file('user_file'), $expectedHeaders);
 
             // Start the import queue
-            $importClass->queue($request->file('user_file'));
+            Excel::queueImport($importClass, $request->file('user_file'));
 
             return redirect()->back();
         } catch (ValidationException $e) {
