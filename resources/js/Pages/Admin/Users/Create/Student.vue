@@ -134,22 +134,23 @@
 
         <div class="mt-10 flex md:w-full">
             <div class="mb-6 flex shrink-0 md:mb-0 md:w-3/12">
-                <div class="">
-                    <Heading :value="$t('createStudent.headingThree')" />
-                    <Heading
-                        :value="$t('createStudent.headingFour')"
-                        size="sm"
-                        class="text-xs !font-light text-zinc-700"
-                    />
-                </div>
-                <div
-                    v-if="!showManual"
-                    class="flex w-6/12 items-start justify-center py-4"
-                >
-                    <QuestionMarkCircleIcon
-                        class="h-10 cursor-pointer text-zinc-700 hover:scale-125"
-                        @click="showManual = !showManual"
-                    />
+                <div class="flex flex-col space-y-10">
+                    <span>
+                        <Heading :value="$t('createStudent.headingThree')" />
+                        <Heading
+                            :value="$t('createStudent.headingFour')"
+                            size="sm"
+                            class="text-xs !font-light text-zinc-700"
+                        />
+                    </span>
+                    <a
+                        class="flex items-center justify-center space-x-2 rounded-md border border-black bg-brand-400 px-3 py-1.5 text-center text-xs text-white opacity-100 transition-opacity duration-150 disabled:opacity-50"
+                        href="/assets/bulk_registration_samples/student_bulk_registration_sample.xlsx"
+                        download
+                    >
+                        <ArrowDownCircleIcon class="w-4" />
+                        <span> Download Sample </span>
+                    </a>
                 </div>
             </div>
             <div class="flex w-8/12 items-center justify-center">
@@ -182,13 +183,13 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianDatePicker from "@/Components/DatePicker.vue";
 import GuardianSelectInput from "@/Components/SelectInput.vue";
 import StudentSample from "@/Views/Admin/Users/Samples/Student.vue";
-import { QuestionMarkCircleIcon } from "@heroicons/vue/20/solid";
 import { value } from "lodash/seq";
 import { useI18n } from "vue-i18n";
 import { computed, inject, ref } from "vue";
 import Modal from "@/Components/Modal.vue";
 import Toggle from "@/Components/Toggle.vue";
 import GuardianSearch from "@/Views/Admin/Users/GuardianSearch.vue";
+import { ArrowDownCircleIcon } from "@heroicons/vue/20/solid";
 
 const { t } = useI18n();
 defineEmits(["file-uploaded"]);
