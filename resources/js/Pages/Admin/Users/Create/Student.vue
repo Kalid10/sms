@@ -206,10 +206,22 @@ const genderOptions = [
 ];
 
 const handleFileUploaded = (file) => {
-    router.post("/register-bulk", {
-        user_file: file,
-        user_type: "student",
-    });
+    router.post(
+        "/register-bulk",
+        {
+            user_file: file,
+            user_type: "student",
+        },
+        {
+            onError: (error) => {
+                showNotification({
+                    type: "error",
+                    message: error.headers,
+                    position: "top-center",
+                });
+            },
+        }
+    );
 };
 const levels = computed(() => usePage().props.levels);
 
