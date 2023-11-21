@@ -121,7 +121,7 @@ import { QuestionMarkCircleIcon } from "@heroicons/vue/20/solid";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianFileInput from "@/Components/FileInput.vue";
 import TeacherSample from "@/Views/Admin/Users/Samples/Teacher.vue";
-import { ref } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import Modal from "@/Components/Modal.vue";
 
 const { t } = useI18n();
@@ -134,11 +134,30 @@ const genderOptions = [
     { value: "female", label: t("common.female") },
 ];
 
+const showNotification = inject("showNotification");
 const handleFileUploaded = (file) => {
-    router.post("/register-bulk", {
-        user_file: file,
-        user_type: "teacher",
-    });
+    router.post(
+        "/register-bulk",
+        {
+            user_file: file,
+            user_type: "teacher",
+        },
+        {
+            onError: (error) => {
+                const message = ref("Something went wrong! Please try again.");
+
+                if (error?.user_file) message.value = error.user_file;
+
+                if (error?.header) message.value = error.header;
+
+                showNotification({
+                    type: "error",
+                    message: message,
+                    position: "top-center",
+                });
+            },
+        }
+    );
 };
 
 const form = useForm({
