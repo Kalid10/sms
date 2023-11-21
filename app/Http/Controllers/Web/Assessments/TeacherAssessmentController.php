@@ -227,6 +227,7 @@ class TeacherAssessmentController extends Controller
 
         return Inertia::render($this->getPage(), [
             'assessments' => $assessments,
+            'markable_assessments' => $this->populateAssessmentDetails($assessments->whereIn('status', [Assessment::STATUS_PUBLISHED, Assessment::STATUS_MARKING])),
             'teacher' => $this->teacherService->getTeacherDetails($teacherId),
             'assessment_type' => AssessmentType::where('is_admin_controlled', false)->get(),
             'quarters' => $quarters,
@@ -259,7 +260,7 @@ class TeacherAssessmentController extends Controller
                     return $student->point >= GradeScale::get($student->point, $assessment->maximum_point)->minimum_score;
                 })->count() / max($assessment->students->count(), 1) * 100, 1);
 
-                // Get highest and lowest score
+                // Get the highest and lowest score
                 $assessment->highest_score = $assessment->students->max('point');
                 $assessment->lowest_score = $assessment->students->min('point');
 
