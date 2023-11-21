@@ -10,6 +10,7 @@ use App\Imports\StudentsRegistrationImport;
 use App\Imports\TeachersRegistrationImport;
 use App\Mail\AdminRegistered;
 use App\Models\Admin;
+use App\Models\BatchSubject;
 use App\Models\Guardian;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -143,12 +144,20 @@ class RegisterController extends Controller
     private function createTeacher(RegisterRequest $request)
     {
         $user = $this->createUser($request);
-        Teacher::create(['user_id' => $user->id,
+
+        $teacher = Teacher::create(['user_id' => $user->id,
             'leave_info' => [
                 'total' => 3,
                 'remaining' => 3,
             ],
         ]);
+
+        $batchSubject = $request->input('batch_subject');
+        $teacherTeachesAllBatchSubjects = $request->input('teaches_all_batch_subjects');
+
+        if ($batchSubject && $teacherTeachesAllBatchSubjects) {
+            $this->assignTeacherSubjects($teacher, $batchSubject, $request->input('batch_id'), $teacherTeachesAllBatchSubjects);
+        }
 
         return $user;
     }
@@ -306,5 +315,15 @@ class RegisterController extends Controller
                 throw ValidationException::withMessages($errors);
             }
         }
+    }
+
+    private function assignTeacherSubjects(Teacher $teacher, int $batchSubject, int $batchId, bool $assignAllSubjects): void
+    {
+        if ($assignAllSubjects) {
+            // Get all current subjects for batchId
+            BatchSubject::where('batch_id', $batchId)->update(['teacher_id' => $teacher->id]);
+        }
+
+        BatchSubject::where('id', $batchSubject)->first()->update(['teacher_id' => $teacher->id]);
     }
 }

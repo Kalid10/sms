@@ -9,63 +9,99 @@
                     class="text-xs !font-light text-zinc-700"
                 />
             </div>
-            <div class="w-8/12 rounded-lg bg-white">
+            <div
+                class="flex w-8/12 flex-col space-y-4 divide-y divide-black rounded-lg bg-white"
+            >
                 <TeacherFormElement
                     :title="$t('createTeacher.registerTeacher')"
                     @submit="submit"
                     @cancel="form.reset()"
                 >
-                    <TeacherTextInput
-                        v-model="form.name"
-                        :label="$t('common.name')"
-                        :placeholder="$t('createTeacher.namePlaceholder')"
-                        :error="form.errors.name"
-                        required
-                    />
-
-                    <div class="flex gap-3">
+                    <div class="flex items-center justify-between">
                         <TeacherTextInput
-                            v-model="form.username"
-                            class="w-full"
-                            :label="$t('createTeacher.usernameLabel')"
-                            :placeholder="
-                                $t('createTeacher.usernamePlaceholder')
-                            "
-                            :error="form.errors.username"
+                            v-model="form.name"
+                            :label="$t('common.name')"
+                            :placeholder="$t('createTeacher.namePlaceholder')"
+                            :error="form.errors.name"
+                            class="w-5/12"
                             required
                         />
 
-                        <TeacherTextInput
-                            v-model="form.phone_number"
-                            class="w-full"
-                            :label="$t('createTeacher.phoneNumberLabel')"
-                            :placeholder="
-                                $t('createTeacher.phoneNUmberPlaceholder')
-                            "
-                            :error="form.errors.phone_number"
-                            required
-                        />
-                    </div>
-
-                    <div class="flex gap-3">
-                        <TeacherTextInput
-                            v-model="form.email"
-                            class="w-full"
-                            :label="$t('common.email')"
-                            :placeholder="$t('common.email')"
-                            type="email"
-                            :error="form.errors.email"
-                            required
-                        />
                         <TeacherSelectInput
                             v-model="form.gender"
-                            class="w-full cursor-pointer"
+                            class="w-5/12"
                             :label="$t('common.gender')"
                             :placeholder="$t('createTeacher.genderPlaceholder')"
                             :error="form.errors.gender"
                             :options="genderOptions"
                             required
                         />
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <TeacherTextInput
+                            v-model="form.phone_number"
+                            class="w-5/12"
+                            :label="$t('createTeacher.phoneNumberLabel')"
+                            :placeholder="
+                                $t('createTeacher.phoneNUmberPlaceholder')
+                            "
+                            :error="form.errors.phone_number"
+                            type="number"
+                            required
+                        />
+                        <TeacherTextInput
+                            v-model="form.email"
+                            class="w-5/12"
+                            :label="$t('common.email')"
+                            :placeholder="$t('common.email')"
+                            type="email"
+                            :error="form.errors.email"
+                        />
+                    </div>
+
+                    <div class="flex flex-col space-y-2 py-4">
+                        <span
+                            class="py-3 text-center text-xl font-semibold capitalize"
+                        >
+                            Assign Class & Subject
+                        </span>
+
+                        <div class="flex justify-between space-x-2">
+                            <TeacherSelectInput
+                                v-model="selectedBatch"
+                                :options="batchesOptions"
+                                class="w-5/12"
+                                placeholder="Select Class"
+                                label="Select Class"
+                            />
+                            <span
+                                v-if="selectedBatch"
+                                class="flex w-5/12 flex-col space-y-5"
+                            >
+                                <TeacherSelectInput
+                                    v-model="form.batch_subject"
+                                    :options="batchSubjectOptions"
+                                    class="w-full"
+                                    placeholder="Select Subject"
+                                    label="Select Subject"
+                                    :disabled="form.teaches_all_batch_subjects"
+                                />
+                                <span class="flex items-center space-x-2">
+                                    <Checkbox
+                                        v-model="
+                                            form.teaches_all_batch_subjects
+                                        "
+                                        label="Teaches All Subjects?"
+                                        name="asf"
+                                    />
+                                    <span class="text-sm font-medium capitalize"
+                                        >{{ form.name }} Teaches All Class
+                                        Subjects?</span
+                                    >
+                                </span>
+                            </span>
+                        </div>
                     </div>
                 </TeacherFormElement>
             </div>
@@ -91,16 +127,10 @@
                 </div>
             </div>
             <div class="flex w-8/12 items-center justify-center">
-                <div class="relative w-full flex-col rounded-lg bg-white">
-                    <GuardianFileInput
-                        max-file-size="10000000"
-                        @file-uploaded="handleFileUploaded"
-                    />
-
-                    <div class="absolute right-0 mt-4">
-                        <PrimaryButton title="Submit" class="bg-brand-450" />
-                    </div>
-                </div>
+                <GuardianFileInput
+                    max-file-size="10000000"
+                    @file-uploaded="handleFileUploaded"
+                />
             </div>
         </div>
     </div>
@@ -115,14 +145,14 @@ import TeacherFormElement from "@/Components/FormElement.vue";
 import TeacherTextInput from "@/Components/TextInput.vue";
 import TeacherSelectInput from "@/Components/SelectInput.vue";
 import Heading from "@/Components/Heading.vue";
-import { router, useForm } from "@inertiajs/vue3";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import { useI18n } from "vue-i18n";
 import { QuestionMarkCircleIcon } from "@heroicons/vue/20/solid";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianFileInput from "@/Components/FileInput.vue";
 import TeacherSample from "@/Views/Admin/Users/Samples/Teacher.vue";
 import { computed, inject, ref, watch } from "vue";
 import Modal from "@/Components/Modal.vue";
+import Checkbox from "@/Components/Checkbox.vue";
 
 const { t } = useI18n();
 defineEmits(["file-uploaded"]);
@@ -167,13 +197,46 @@ const form = useForm({
     phone_number: "",
     username: "",
     gender: "",
-});
-
-const bulkForm = useForm({
-    file: "",
+    batch_id: "",
+    batch_subject: "",
+    teaches_all_batch_subjects: false,
 });
 
 const submit = () => {
-    form.post(route("register.admin"));
+    form.post(route("register.admin"), {
+        onSuccess: () => {
+            form.reset();
+        },
+    });
 };
+
+// Assign class and subject section
+const batches = computed(() => usePage().props.batches);
+
+const selectedBatch = ref();
+const batchesOptions = computed(() => {
+    return batches.value.map((batch) => {
+        return {
+            value: batch.id,
+            label: batch.level.name + "-" + batch.section,
+        };
+    });
+});
+
+const batchSubjectOptions = ref();
+watch(selectedBatch, () => {
+    if (selectedBatch.value) {
+        form.batch_id = selectedBatch.value;
+
+        // Get subjects for selected batch
+        batchSubjectOptions.value = batches.value
+            .find((batch) => batch.id === selectedBatch.value)
+            .subjects.map((batchSubject) => {
+                return {
+                    value: batchSubject.id,
+                    label: batchSubject.subject.full_name,
+                };
+            });
+    }
+});
 </script>
