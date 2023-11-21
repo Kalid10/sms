@@ -1,6 +1,14 @@
 <template>
     <div v-if="assessment" class="flex h-full w-full justify-center">
         <div
+            class="absolute right-5 top-5 cursor-pointer"
+            @click="$emit('close')"
+        >
+            <XMarkIcon
+                class="absolute right-5 top-5 w-5 cursor-pointer hover:scale-105 hover:text-red-600"
+            />
+        </div>
+        <div
             class="flex w-full flex-col items-center space-y-12 lg:w-11/12 2xl:w-10/12"
         >
             <Header
@@ -69,6 +77,7 @@ import Completed from "@/Views/Teacher/Views/Assessments/Details/Completed.vue";
 import Marking from "@/Views/Teacher/Views/Assessments/Details/Marking.vue";
 import Scheduled from "@/Views/Teacher/Views/Assessments/Details/Scheduled.vue";
 import { isTeacher } from "@/utils";
+import { XMarkIcon } from "@heroicons/vue/20/solid";
 
 const props = defineProps({
     assessment: {
@@ -76,6 +85,8 @@ const props = defineProps({
         required: true,
     },
 });
+
+const emit = defineEmits(["close"]);
 const showUpdateForm = ref(false);
 
 const title = computed(
