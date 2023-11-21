@@ -57,10 +57,9 @@
                             v-model="form.emailOrPhone"
                             class="w-full"
                             :label="$t('login.emailOrPhoneLabel')"
-                            placeholder="johndoe@school.org"
+                            placeholder="johndoe@school.org/09********"
                             required
                             :error="form.errors.emailOrPhone"
-                            type="email"
                         />
                         <TextInput
                             v-model="form.password"
