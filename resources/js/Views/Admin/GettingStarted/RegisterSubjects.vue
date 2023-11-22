@@ -190,7 +190,7 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center justify-end gap-3">
             <PrimaryButton @click="submitSubjects"
                 >{{ $t("registerSubjects.finish") }}
             </PrimaryButton>
@@ -236,7 +236,10 @@
                     :options="categoryOptions"
                     required
                     :placeholder="
-                        $t('registerSubjects.subjectCategoryOptionsPlaceholder')
+                        $t(
+                            'registerSubjects.subjectCategoryOptionsPlacehold' +
+                                'er'
+                        )
                     "
                     :label="$t('registerSubjects.subjectCategoryOptionsLabel')"
                 />
