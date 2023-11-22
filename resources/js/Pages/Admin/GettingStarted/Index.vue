@@ -24,6 +24,11 @@ const steps = {
     },
     4: {
         component: defineAsyncComponent(() =>
+            import("@/Views/Admin/GettingStarted/BulkUserRegistration.vue")
+        ),
+    },
+    5: {
+        component: defineAsyncComponent(() =>
             import("@/Views/Admin/GettingStarted/AssignSubjects.vue")
         ),
     },
