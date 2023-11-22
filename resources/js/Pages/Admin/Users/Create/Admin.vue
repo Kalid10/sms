@@ -138,7 +138,7 @@ import {
 import AdminSample from "@/Views/Admin/Users/Samples/Admin.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianFileInput from "@/Components/FileInput.vue";
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import Modal from "@/Components/Modal.vue";
 
 const { t } = useI18n();
@@ -151,11 +151,24 @@ const genderOptions = [
     { value: "female", label: t("common.female") },
 ];
 
+const showNotification = inject("showNotification");
 const handleFileUploaded = (file) => {
-    router.post("/register-bulk", {
-        user_file: file,
-        user_type: "admin",
-    });
+    router.post(
+        "/register-bulk",
+        {
+            user_file: file,
+            user_type: "admin",
+        },
+        {
+            onError: (error) => {
+                showNotification({
+                    type: "error",
+                    message: error.headers,
+                    position: "top-center",
+                });
+            },
+        }
+    );
 };
 
 const form = useForm({
