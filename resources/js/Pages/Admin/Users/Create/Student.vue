@@ -266,10 +266,6 @@ const form = useForm({
     existing_guardian_id: "",
 });
 
-const bulkForm = useForm({
-    file: "",
-});
-
 const showNotification = inject("showNotification");
 
 const submit = () => {
