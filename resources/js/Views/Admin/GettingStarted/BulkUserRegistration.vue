@@ -50,10 +50,12 @@
             </span>
         </span>
         <div class="flex items-center justify-end gap-3">
-            <TertiaryButton class="!bg-brand-100" @click="notify"
+            <TertiaryButton class="!bg-brand-100" @click="$emit('success')"
                 >Skip
             </TertiaryButton>
-            <PrimaryButton>{{ $t("registerSubjects.finish") }}</PrimaryButton>
+            <PrimaryButton @click="$emit('success')"
+                >{{ $t("registerSubjects.finish") }}
+            </PrimaryButton>
         </div>
     </div>
     <Loading v-if="showLoading" is-full-screen />
@@ -71,6 +73,7 @@ import { ArrowDownCircleIcon } from "@heroicons/vue/20/solid";
 import Loading from "@/Components/Loading.vue";
 import { useUIStore } from "@/Store/ui";
 
+defineEmits(["success"]);
 const userTypeOptions = computed(() => [
     { value: "admin", label: "Admin" },
     { value: "teacher", label: "Teacher" },
@@ -94,7 +97,7 @@ const handleFileUploaded = (file) => {
             onError: (error) => {
                 showNotification({
                     type: "error",
-                    message: error.headers,
+                    message: error.headers || error.user_file,
                     position: "top-center",
                 });
             },
@@ -120,13 +123,5 @@ const getSelectedUserTypeSampleLocation = computed(() => {
             return "/assets/bulk_registration_samples/admin_bulk_registration_sample.xlsx";
     }
 });
-
-function notify() {
-    showNotification({
-        type: "success",
-        message: "File uploaded successfully",
-        position: "top-center",
-    });
-}
 </script>
 <style scoped></style>
