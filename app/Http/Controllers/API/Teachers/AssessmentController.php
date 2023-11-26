@@ -13,6 +13,7 @@ use App\Http\Resources\Teachers\StudentAssessmentCollection;
 use App\Jobs\InsertStudentsAssessmentsJob;
 use App\Models\Assessment;
 use App\Models\AssessmentType;
+use App\Models\BatchSession;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
@@ -61,6 +62,11 @@ class AssessmentController extends Controller
                 Assessment::STATUS_MARKING,
                 Assessment::STATUS_COMPLETED,
             ]))
+            ->when($request->has('batch_session_id'), function ($query) use ($request) {
+                $batchSubject = BatchSession::find($request->input('batch_session_id'))->load('batchSchedule');
+
+                return $query->where('batch_subject_id', $batchSubject->batchSchedule->batch_subject_id);
+            })
             ->when($request->has('active'), function ($query) use ($request) {
 
                 if ($request->input('active')) {
