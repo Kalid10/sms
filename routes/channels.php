@@ -45,3 +45,7 @@ Broadcast::channel('mass-assessment', function ($user) {
 Broadcast::channel('student-fee', function ($user) {
     return $user->hasRole('manage-finance');
 });
+
+Broadcast::channel('batch-schedule-import', function ($user) {
+    return $user->hasRole('manage-batch-schedules');
+});
