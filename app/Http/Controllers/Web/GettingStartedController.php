@@ -83,4 +83,16 @@ class GettingStartedController extends Controller
 
         return redirect()->to('/admin');
     }
+
+    public function batchScheduleImport(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        // Start the import queue
+        Excel::queueImport(new BatchScheduleImport(), $request->file('file'));
+
+        return redirect()->back()->with('success', 'Batch schedules imported successfully.');
+    }
 }
