@@ -1,5 +1,9 @@
 <template>
-    <component :is="steps[currentStep].component" @success="next" />
+    <component
+        :is="steps[currentStep].component"
+        @success="next"
+        @back="back"
+    />
 </template>
 
 <script setup>
@@ -24,12 +28,22 @@ const steps = {
     },
     4: {
         component: defineAsyncComponent(() =>
-            import("@/Views/Admin/GettingStarted/BulkUserRegistration.vue")
+            import("@/Views/Admin/GettingStarted/Schedule/BatchSchedule.vue")
         ),
     },
     5: {
         component: defineAsyncComponent(() =>
-            import("@/Views/Admin/GettingStarted/AssignSubjects.vue")
+            import("@/Views/Admin/GettingStarted/BulkUserRegistration.vue")
+        ),
+    },
+    // 6: {
+    //     component: defineAsyncComponent(() =>
+    //         import("@/Views/Admin/GettingStarted/AssignTeachers.vue")
+    //     ),
+    // },
+    6: {
+        component: defineAsyncComponent(() =>
+            import("@/Views/Admin/GettingStarted/AssignTeachers.vue")
         ),
     },
     // 5: {
@@ -44,6 +58,10 @@ const currentStep = ref(step.value);
 
 function next() {
     currentStep.value += 1;
+}
+
+function back() {
+    currentStep.value -= 1;
 }
 
 function updateStep(step) {

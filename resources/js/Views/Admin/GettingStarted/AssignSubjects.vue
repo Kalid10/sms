@@ -6,15 +6,22 @@
         <div
             class="grid h-full grid-cols-12 grid-rows-[auto_1fr] overflow-auto"
         >
-            <div class="col-span-12 mb-4 flex h-fit flex-col">
-                <Heading>
-                    {{ $t("assignSubjects.assignSubjects") }}
-                </Heading>
-                <h3 class="text-brand-text-600 text-sm">
-                    {{ $t("assignSubjects.assignClassHint") }}
-                </h3>
-            </div>
+            <div class="col-span-12 flex w-full items-center justify-between">
+                <div class="mb-4 flex h-fit flex-col">
+                    <Heading>
+                        {{ $t("assignSubjects.assignSubjects") }}
+                    </Heading>
+                    <h3 class="text-brand-text-600 text-sm">
+                        {{ $t("assignSubjects.assignClassHint") }}
+                    </h3>
+                </div>
 
+                <PrimaryButton
+                    title="Skip"
+                    class="h-fit !w-fit !bg-brand-100 !text-black hover:!bg-brand-300 hover:!text-white"
+                    @click="$emit('success')"
+                />
+            </div>
             <div
                 class="relative col-span-12 flex h-full max-h-full flex-col gap-3 overflow-auto px-0.5 lg:col-span-3"
             >
@@ -918,7 +925,7 @@ function saveBatches() {
         {
             onSuccess() {
                 showSectionsFor.value = null;
-                submitForm();
+                emits("success");
             },
             onError(error) {
                 showSectionsFor.value = null;

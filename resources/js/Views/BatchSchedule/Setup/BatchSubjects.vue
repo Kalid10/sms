@@ -82,13 +82,17 @@
 
     <div
         v-else
-        class="flex w-full items-center justify-center py-10 text-2xl font-light"
+        class="flex w-full flex-col items-center justify-center space-y-5 py-10 text-2xl font-light"
     >
         <span class="w-11/12 text-center"
             >No grade selected, please select a grade from the list to your
             right to continue With the schedule setup process and generate a
             class schedule.
         </span>
+
+        <div>
+            <slot name="EmptySlot" />
+        </div>
     </div>
 
     <Modal v-model:view="showEditModal" @close="closeModals">

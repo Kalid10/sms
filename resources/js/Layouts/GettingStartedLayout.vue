@@ -80,7 +80,29 @@ const storeResponseStatus = computed(() => uiStore.responseStatus);
 const storeResponseMessage = computed(() => uiStore.responseMessage);
 const storeLoadingMessage = computed(() => uiStore.loadingMessage);
 
+// TODO : Migrate this to a separate file
 Echo.private("students-import").listen(".students-import", (e) => {
+    uiStore.setLoading(false);
+
+    if (e.type === "success") {
+        uiStore.setResponse("success", e.message);
+    }
+
+    if (e.type === "error") {
+        showNotification({
+            type: "error",
+            message: e.message,
+            position: "top-center",
+        });
+        uiStore.setResponse("error", e.message);
+    }
+
+    setTimeout(() => {
+        uiStore.setResponse(null, null);
+    }, 8000);
+});
+
+Echo.private("batch-schedule-import").listen(".batch-schedule-import", (e) => {
     uiStore.setLoading(false);
 
     if (e.type === "success") {

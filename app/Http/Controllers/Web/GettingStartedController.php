@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Imports\BatchScheduleImport;
 use App\Models\Batch;
 use App\Models\Level;
 use App\Models\LevelCategory;
@@ -9,12 +10,16 @@ use App\Models\SchoolPeriod;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Subject;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GettingStartedController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $step = 1;
 
@@ -46,6 +51,7 @@ class GettingStartedController extends Controller
             'level_categories' => $levelCategories,
             'school_periods' => SchoolPeriod::with('levelCategory')->get(),
             'school_schedule' => SchoolSchedule::all(),
+            'batchSubjects' => Inertia::lazy(fn () => $this->getBatchSubjects($request->input('batch_id'))),
         ]);
     }
 
@@ -94,5 +100,17 @@ class GettingStartedController extends Controller
         Excel::queueImport(new BatchScheduleImport(), $request->file('file'));
 
         return redirect()->back()->with('success', 'Batch schedules imported successfully.');
+    }
+
+    private function getBatchSubjects($batchId): Collection
+    {
+
+        if (! $batchId) {
+            return collect();
+        }
+
+        $batch = Batch::find($batchId);
+
+        return $batch->load('subjects.subject', 'subjects.teacher.user')->subjects->sortBy('priority');
     }
 }
