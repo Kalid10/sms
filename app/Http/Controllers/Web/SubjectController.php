@@ -126,7 +126,7 @@ class SubjectController extends Controller
                     'full_name' => $subject['full_name'],
                     'short_name' => $subject['short_name'],
                     'category' => $subject['category'],
-                    'tags' => $subject['tags'],
+                    'tags' => $subject['tags'] ?? [],
                 ]);
             }
 
