@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API\Teachers;
 
+use App\Http\Requests\API\Teachers\BatchRequest;
 use App\Http\Requests\API\Teachers\BatchSubjects\BatchSubjectRequest;
-use App\Http\Requests\API\Teachers\Request;
 use App\Http\Resources\Teachers\BatchStudentCollection;
 use App\Http\Resources\Teachers\BatchSubjectCollection;
 use App\Http\Resources\Teachers\BatchSubjectResource;
@@ -47,9 +47,9 @@ class BatchSubjectController extends BatchController
         return new BatchSubjectCollection($batchSubjects);
     }
 
-    public function batchSubjectStudents(Request $request, BatchSubject $batchSubject): BatchStudentCollection
+    public function batchSubjectStudents(BatchRequest $request, BatchSubject $batchSubject): BatchStudentCollection
     {
-        return parent::students($request, $batchSubject->batch_id);
+        return parent::students($request, $batchSubject->batch);
     }
 
     private function filterActiveBatchSubjects($query)
