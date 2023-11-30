@@ -32,7 +32,15 @@ class GettingStartedController extends Controller
         }
 
         if (Subject::count() > 1) {
-            $step = $step + 1;
+            $step++;
+        }
+
+        if (BatchSubject::count() > 0) {
+            $step++;
+        }
+
+        if (Teacher::count() > 0) {
+            $step++;
         }
 
         $levelCategories = Inertia::lazy(fn () => LevelCategory::whereHas('levels.batches', function ($query) {
