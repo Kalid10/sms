@@ -144,7 +144,7 @@ class BatchScheduleImport implements ToModel, WithBatchInserts, WithHeadingRow, 
 
     private function checkIfBatchSubjectExists($batchId, $subjectName)
     {
-        $subject = Subject::where('full_name', $subjectName)->first();
+        $subject = Subject::where('full_name', $subjectName)->orWhere('short_name', $subjectName)->first();
 
         if ($subject) {
             return BatchSubject::where('batch_id', $batchId)->where('subject_id', $subject->id)->first();
