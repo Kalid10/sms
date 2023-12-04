@@ -61,7 +61,7 @@ class GenerateBatchSessions
      */
     protected static function getNextWeekDates(): array
     {
-        $startOfWeek = now()->addWeek()->startOfWeek();
+        $startOfWeek = now()->startOfWeek();
         $endOfWeek = now()->addWeek()->endOfWeek();
 
         $dates = [];
@@ -78,7 +78,7 @@ class GenerateBatchSessions
 
     protected static function getNextMonthDates(): array
     {
-        $startOfMonth = now()->addMonth()->startOfMonth();
+        $startOfMonth = now()->startOfMonth();
         $endOfMonth = now()->addMonth()->endOfMonth();
 
         $dates = [];
