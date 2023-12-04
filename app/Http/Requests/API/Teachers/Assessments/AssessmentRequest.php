@@ -39,6 +39,7 @@ class AssessmentRequest extends Request
             'active' => 'nullable|boolean',
             'status' => 'nullable|array',
             'status.*' => 'in:completed,marking,published,scheduled,draft',
+            'batch_session_id' => 'nullable|integer|exists:batch_sessions,id',
         ];
     }
 }

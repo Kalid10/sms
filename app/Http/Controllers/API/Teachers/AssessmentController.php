@@ -13,10 +13,12 @@ use App\Http\Resources\Teachers\StudentAssessmentCollection;
 use App\Jobs\InsertStudentsAssessmentsJob;
 use App\Models\Assessment;
 use App\Models\AssessmentType;
+use App\Models\BatchSession;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\StudentAssessment;
+use App\Services\TeacherAssessmentService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
@@ -59,6 +61,11 @@ class AssessmentController extends Controller
                 Assessment::STATUS_MARKING,
                 Assessment::STATUS_COMPLETED,
             ]))
+            ->when($request->has('batch_session_id'), function ($query) use ($request) {
+                $batchSubject = BatchSession::find($request->input('batch_session_id'))->load('batchSchedule');
+
+                return $query->where('batch_subject_id', $batchSubject->batchSchedule->batch_subject_id);
+            })
             ->when($request->has('active'), function ($query) use ($request) {
 
                 if ($request->input('active')) {
@@ -263,5 +270,10 @@ class AssessmentController extends Controller
             'status' => true,
             'assessment_type_id' => $assessmentTypeId,
         ];
+    }
+
+    public function analytics(Assessment $assessment)
+    {
+        return TeacherAssessmentService::analytics(StudentAssessment::with('assessment', 'student.user')->where('assessment_id', $assessment->id)->get());
     }
 }
