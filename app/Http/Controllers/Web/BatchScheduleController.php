@@ -12,7 +12,7 @@ use App\Models\Level;
 use App\Models\SchoolPeriod;
 use App\Models\SchoolYear;
 use App\Models\Teacher;
-use Exception;
+use App\Services\BatchSubjectService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -68,7 +68,7 @@ class BatchScheduleController extends Controller
             'batchScheduleConfig' => $batchScheduleConfig,
             'batchSubjects' => $selectedBatch ? $this->getBatchSubjects($request->input('batch_id')) : null,
             'teachers' => Inertia::lazy(function () use ($request) {
-                return $this->searchTeachers($request);
+                return BatchSubjectService::searchTeachers($request);
             }),
             'teacher' => Inertia::lazy(function () use ($request) {
                 return $this->getTeacherSchedule($request);
