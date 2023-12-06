@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\BatchSchedule\SwapScheduleRequest;
+use App\Imports\BatchScheduleImport;
 use App\Jobs\GenerateBatchSchedulesJob;
 use App\Models\Batch;
 use App\Models\BatchSchedule;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BatchScheduleController extends Controller
 {
@@ -82,6 +84,18 @@ class BatchScheduleController extends Controller
         GenerateBatchSchedulesJob::dispatch();
 
         return redirect()->back()->with('success', 'Batch schedules are being generated. Please check the logs for more information.');
+    }
+
+    public function import(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        // Start the import queue
+        Excel::queueImport(new BatchScheduleImport(), $request->file('file'));
+
+        return redirect()->back()->with('success', 'Batch schedules imported successfully.');
     }
 
     public function checkSchedule(): void
