@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Web;
 
 use App\Imports\BatchScheduleImport;
 use App\Models\Batch;
+use App\Models\BatchSubject;
 use App\Models\Level;
 use App\Models\LevelCategory;
 use App\Models\SchoolPeriod;
 use App\Models\SchoolSchedule;
 use App\Models\SchoolYear;
 use App\Models\Subject;
+use App\Models\Teacher;
+use App\Services\BatchSubjectService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -44,7 +47,7 @@ class GettingStartedController extends Controller
         }
 
         $levelCategories = Inertia::lazy(fn () => LevelCategory::whereHas('levels.batches', function ($query) {
-            $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
+            $query->where('school_year_id', SchoolYear::getActiveSchoolYear()?->id);
         })->with(['levels' => function ($query) {
             $query->whereHas('batches', function ($query) {
                 $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
@@ -54,12 +57,15 @@ class GettingStartedController extends Controller
         return Inertia::render('Admin/GettingStarted/Index', [
             'step' => $step,
             'levels' => Level::with('batches', 'levelCategory')->get(),
-            'batches' => Inertia::lazy(fn () => Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->with('level.levelCategory', 'subjects.subject')->get()),
+            'batches' => Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()?->id)->with('level.levelCategory', 'subjects.subject')->get(),
             'subjects' => Inertia::lazy(fn () => Subject::all()),
             'level_categories' => $levelCategories,
             'school_periods' => SchoolPeriod::with('levelCategory')->get(),
             'school_schedule' => SchoolSchedule::all(),
-            'batchSubjects' => Inertia::lazy(fn () => $this->getBatchSubjects($request->input('batch_id'))),
+            'batchSubjects' => $request->input('batch_id') ? $this->getBatchSubjects($request->input('batch_id')) : [],
+            'teachers' => Inertia::lazy(function () use ($request) {
+                return BatchSubjectService::searchTeachers($request);
+            }),
         ]);
     }
 
@@ -89,7 +95,12 @@ class GettingStartedController extends Controller
         ]);
     }
 
-    public function finish()
+    public function batchSchedule(): Response
+    {
+        return Inertia::render('Admin/GettingStarted/BatchSchedule');
+    }
+
+    public function finish(): RedirectResponse
     {
         $schoolYear = SchoolYear::getActiveSchoolYear();
         $schoolYear->is_ready = true;
@@ -120,5 +131,10 @@ class GettingStartedController extends Controller
         $batch = Batch::find($batchId);
 
         return $batch->load('subjects.subject', 'subjects.teacher.user')->subjects->sortBy('priority');
+    }
+
+    public function updateBatchSubjects(Request $request): void
+    {
+        BatchSubjectService::update($request);
     }
 }
