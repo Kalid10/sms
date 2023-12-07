@@ -37,7 +37,7 @@ class MarkAssessmentRequest extends AssessmentRequest
         return [
             'points' => 'required|array',
             'points.*.student_id' => 'required|exists:students,id',
-            'points.*.point' => 'required|integer|min:0',
+            'points.*.point' => 'required|numeric|min:0',
             'points.*.comment' => 'nullable|string',
             'points.*.status' => 'nullable|string|in:'.implode(',', [
                 StudentAssessment::STATUS_VALID_REASSESSMENT,
@@ -53,7 +53,7 @@ class MarkAssessmentRequest extends AssessmentRequest
             'points.*.student_id.required' => 'Student ID is required.',
             'points.*.student_id.exists' => 'Student ID does not exist.',
             'points.*.point.required' => 'Point is required.',
-            'points.*.point.integer' => 'Point must be an integer.',
+            'points.*.point.integer' => 'Point must be a number.',
             'points.*.point.min' => 'Point must be at least 0.',
             'points.*.comment.string' => 'Comment must be a string.',
             'points.*.status.string' => 'Status must be a string.',
