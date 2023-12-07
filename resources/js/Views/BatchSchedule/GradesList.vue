@@ -1,19 +1,18 @@
 <template>
     <div
-        class="flex h-full w-56 flex-col items-center overflow-auto rounded-lg bg-brand-100 py-6"
+        class="flex h-fit w-44 flex-col items-center overflow-auto rounded-lg bg-brand-100 py-6"
     >
         <Heading class="pb-4 pl-2 !font-bold text-brand-text-50" size="lg"
             >Grades List
         </Heading>
 
-        <ul class="flex flex-col overflow-auto">
+        <ul class="flex w-full flex-col overflow-auto text-center">
             <li v-for="(level, l) in levels" :key="l" class="my-1">
                 <div
                     :class="{
-                        'rounded-md bg-brand-550 text-white ':
-                            level.id === activeLevelId,
+                        'bg-brand-550 text-white ': level.id === activeLevelId,
                     }"
-                    class="group flex cursor-pointer items-center justify-between p-3 text-center hover:rounded-md hover:bg-brand-550 hover:text-white"
+                    class="group flex cursor-pointer items-center justify-center py-3 text-center hover:bg-brand-550 hover:text-white"
                     @click="
                         $emit('batch-change', level['batches'][0]['id']);
                         loadBatchSchedule
