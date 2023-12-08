@@ -9,5 +9,6 @@ Route::controller(GettingStartedController::class)->prefix('getting-started/')->
     Route::get('school-period', 'schoolPeriod')->name('school-period');
     Route::get('class-schedule', 'classSchedule')->name('class-schedule');
     Route::get('finish', 'finish')->name('finish');
+    Route::get('batch-schedule', 'batchSchedule')->name('batch-schedule');
     Route::post('batch-schedule/import', 'batchScheduleImport')->name('batch-schedule.import');
 });
