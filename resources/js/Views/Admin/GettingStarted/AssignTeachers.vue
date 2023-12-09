@@ -6,16 +6,28 @@
             <span class="w-11/12 text-4xl font-semibold"
                 >Now Let Assign Teachers</span
             >
-            <PrimaryButton
-                title="Skip"
-                class="h-fit w-fit !bg-brand-100 !text-black"
-                @click="router.visit('/getting-started/school-period')"
-            />
+            <div class="flex space-x-5">
+                <PrimaryButton
+                    title="Back"
+                    class="h-fit w-fit !bg-brand-200 !text-black"
+                    @click="$emit('back')"
+                />
+                <PrimaryButton
+                    title="Skip"
+                    class="h-fit w-fit !bg-brand-100 !text-black"
+                    @click="router.visit('/getting-started/school-period')"
+                />
+            </div>
         </div>
 
-        <div class="flex h-5/6 w-full justify-between">
+        <div class="flex h-full w-full grow justify-between overflow-hidden">
             <div class="flex h-full w-10/12 flex-col rounded-lg bg-white p-3">
-                <BatchSubjects :batch="selectedBatch">
+                <BatchSubjects
+                    teacher-search-url="/getting-started"
+                    update-batch-subjects-url="/getting-started/batch-subjects/update"
+                    :batch="selectedBatch"
+                    :show-teacher-schedule="false"
+                >
                     <template #EmptySlot>
                         <PrimaryButton
                             title="Go Back Register Teachers"
@@ -26,7 +38,7 @@
             </div>
 
             <div
-                class="scrollbar-hide flex h-5/6 w-1/12 flex-col overflow-y-auto bg-brand-100"
+                class="scrollbar-hide mb-5 flex w-1/12 flex-col overflow-y-auto bg-brand-100"
             >
                 <div
                     v-for="(item, index) in batches"
@@ -74,7 +86,6 @@ const batches = computed(() => usePage().props.batches);
 const selectedBatch = ref(null);
 
 function loadBatchSubjects(batch) {
-    console.log(batch);
     selectedBatch.value = batch;
     router.get(
         "/getting-started",
