@@ -17,8 +17,6 @@ use App\Services\BatchSubjectService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Maatwebsite\Excel\Facades\Excel;
@@ -135,11 +133,6 @@ class BatchScheduleController extends Controller
                 $teacherConflicts[$teacher->id] = $teacherSchedules->toArray();
             }
         }
-
-        // Log over-scheduled subjects and teacher conflicts
-        $this->logOverScheduledSubjects($overScheduledSubjects);
-        $this->logTeacherConflicts($teacherConflicts);
-        $this->checkScheduleData();
     }
 
     public function swapSchedules(SwapScheduleRequest $request): RedirectResponse
@@ -157,91 +150,6 @@ class BatchScheduleController extends Controller
         $scheduleB->save();
 
         return redirect()->back()->with('success', 'Schedules swapped successfully.');
-    }
-
-    private function checkScheduleData(): void
-    {
-        // Get all batch schedules
-        $batchSchedules = BatchSchedule::with(['batchSubject.subject', 'batchSubject.teacher.user', 'batchSubject.batch.level', 'schoolPeriod', 'batch.level'])->get();
-
-        // Log teacher's schedules
-        Log::info("Teacher's Schedules:");
-        $teacherSchedules = $batchSchedules->filter(function ($schedule) {
-            if ($schedule->batchSubject) {
-                return $schedule->batchSubject->teacher_id == 1;
-            }
-
-            return false;
-        });
-
-        $teacherSchedules->each(function ($schedule) {
-            Log::info($schedule->day_of_week.' -  Period: '.$schedule->schoolPeriod->name.' - Subject: '.$schedule->batchSubject->subject->full_name.' - '.$schedule->batchSubject->teacher->user->name);
-        });
-
-        // Log teacher subjects
-        Log::info("Teacher's Subjects:");
-        $teacher = Teacher::with('batchSubjects.subject')->find(25);
-        $subjects = $teacher->batchSubjects->pluck('subject')->unique('id');
-
-        $subjects->each(function ($subject) {
-            Log::info($subject->full_name);
-        });
-
-        // Log subject's schedules
-        Log::info("Subject's Schedules:");
-        $subjectSchedules = $batchSchedules->filter(function ($schedule) {
-            if ($schedule->batchSubject) {
-                return $schedule->batchSubject->subject_id == 2;
-            }
-
-            return false;
-        });
-
-        $subjectSchedules->each(function ($schedule) {
-            Log::info('Batch id: '.$schedule->batchSubject->batch->id.' - '.$schedule->day_of_week.' -  Period: '.$schedule->schoolPeriod->name.' Grade: '.$schedule->batchSubject->batch->level->name.'-'.$schedule->batchSubject->batch->section.' - Subject: '.$schedule->batchSubject->subject->full_name.' Priority: '.$schedule->batchSubject->subject->priority.' - '.$schedule->batchSubject->teacher->user->name);
-        });
-
-        // Log the schedules for batch 40
-        Log::info("Now the schedules for batch 40 are: \n");
-        $batchSchedules = $batchSchedules->filter(function ($schedule) {
-            return $schedule->batch_id == 2;
-        });
-
-        $batchSchedules->each(function ($schedule) {
-            if ($schedule->batchSubject) {
-                Log::info('Batch id: '.$schedule->batch_id.' - '.$schedule->day_of_week.' -  Period: '.$schedule->schoolPeriod->name.' Grade: '.$schedule->batch->level->name.'-'.$schedule->batch->section.' - Subject: '.$schedule->batchSubject->subject->full_name.' Priority: '.$schedule->batchSubject->subject->priority.' - '.$schedule->batchSubject->teacher->user->name);
-            }
-        });
-    }
-
-    private function logOverScheduledSubjects(array $overScheduledSubjects): void
-    {
-        if (count($overScheduledSubjects) > 0) {
-            Log::info('The following batch subjects have been scheduled more often than their weekly frequency: total '.count($overScheduledSubjects)."\n");
-            foreach ($overScheduledSubjects as $batchSubjectId => $data) {
-                Log::info("Batch Subject ID: {$batchSubjectId} - Weekly Frequency: {$data['weekly_frequency']} - Scheduled Count: {$data['scheduled_count']}\n");
-            }
-        } else {
-            Log::info('All batch subjects have schedules according to their weekly frequency.');
-        }
-    }
-
-    private function logTeacherConflicts(array $teacherConflicts): void
-    {
-        if (count($teacherConflicts) > 0) {
-            Log::info("The following teachers have schedule conflicts:\n");
-            foreach ($teacherConflicts as $teacherId => $conflicts) {
-                Log::info("Teacher ID: {$teacherId}\n");
-                foreach ($conflicts as $key => $schedules) {
-                    Log::info("Conflict on school_period_id_day_of_week: {$key}\n");
-                    foreach ($schedules as $schedule) {
-                        Log::info("Batch ID: {$schedule->batch_id} - Batch Subject ID: {$schedule->batch_subject_id} - School Period ID: {$schedule->school_period_id} - Day of Week: {$schedule->day_of_week}\n");
-                    }
-                }
-            }
-        } else {
-            Log::info('No teacher schedule conflicts found.');
-        }
     }
 
     public function saveConfiguration(Request $request): RedirectResponse
@@ -283,24 +191,11 @@ class BatchScheduleController extends Controller
         return $batch->load('subjects.subject', 'subjects.teacher.user')->subjects->sortBy('priority');
     }
 
-    private function searchTeachers(Request $request)
-    {
-        $request->validate([
-            'search' => 'nullable|string',
-        ]);
-
-        return Teacher::whereHas('user', function ($query) use ($request) {
-            $query->where('name', 'like', "%{$request->input('search')}%");
-        })->with(['user', 'activeBatchSubjects'])->get()->take(7);
-    }
-
     private function getTeacherSchedule(Request $request)
     {
         $request->validate([
             'teacher_id' => 'nullable|exists:teachers,id',
         ]);
-
-        Log::info('teacher '.$request->input('teacher_id'));
 
         return Teacher::find($request->input('teacher_id'))->load([
             'activeBatchSubjects' => function ($query) {
@@ -314,51 +209,9 @@ class BatchScheduleController extends Controller
         return BatchSubject::whereIn('batch_id', Batch::active()->pluck('id')->toArray())->where('teacher_id', null)->count() === 0;
     }
 
-    public function updateBatchSubjects(Request $request): RedirectResponse
+    public function updateBatchSubjects(Request $request): void
     {
-        $request->validate([
-            'batch_subjects' => 'required|array',
-            'batch_subjects.*.id' => 'required|exists:batch_subjects,id',
-            'batch_subjects.*.teacher_id' => 'required|exists:teachers,id',
-            'batch_subjects.*.weekly_frequency' => 'required|integer',
-        ]);
-
-        DB::beginTransaction();
-
-        try {
-            foreach ($request->input('batch_subjects') as $batchSubject) {
-
-                // Get the teachers batch subjects for this school year and check if the teacher total weekly frequency is not exceeded from the batch_schedule_config table
-                $teacherBatchSubjects = BatchSubject::where('teacher_id', $batchSubject['teacher_id'])->with(['batch' => function ($query) {
-                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-                }])->get();
-
-                $teacherTotalWeeklyFrequency = $teacherBatchSubjects->sum('weekly_frequency');
-
-                $batchScheduleConfig = BatchScheduleConfig::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->first();
-
-                if ($teacherTotalWeeklyFrequency + $batchSubject['weekly_frequency'] > $batchScheduleConfig->max_periods_per_week) {
-                    DB::rollBack();
-
-                    return redirect()->back()->withErrors(['error', $batchSubject['teacher']['user']['name'].' has exceeded the weekly frequency limit of '.$batchScheduleConfig->max_periods_per_week.' periods per week.']);
-                }
-
-                $batchSubjectModel = BatchSubject::find($batchSubject['id']);
-                $batchSubjectModel->weekly_frequency = $batchSubject['weekly_frequency'];
-                $batchSubjectModel->teacher_id = $batchSubject['teacher_id'];
-                $batchSubjectModel->save();
-            }
-
-            DB::commit();
-
-            return redirect()->back()->with('success', 'Batch subjects updated successfully.');
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            DB::rollBack();
-
-            return redirect()->back()->with('error', 'An error occurred while updating batch subjects.');
-        }
-
+        BatchSubjectService::update($request);
     }
 
     public function generateBatchSchedules(): RedirectResponse
