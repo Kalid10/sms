@@ -10,22 +10,6 @@
                     >{{ selected["school_year"]["name"] }}
                 </Heading>
             </div>
-            <div class="flex w-3/12 items-center justify-end">
-                <SecondaryButton
-                    class="!h-fit !w-fit bg-brand-400 !font-medium text-white"
-                    :title="
-                        view === 'generated-schedule'
-                            ? 'Switch To Setup View'
-                            : 'Switch To Generated Schedule View'
-                    "
-                    @click="
-                        view =
-                            view === 'generated-schedule'
-                                ? 'setup'
-                                : 'generated-schedule'
-                    "
-                />
-            </div>
         </div>
 
         <TabElement
@@ -55,6 +39,7 @@
                 </div>
 
                 <BatchSubjects class="!overflow-y-auto" :batch="selected" />
+
                 <div
                     v-if="isReady"
                     class="flex w-7/12 flex-col items-center justify-center rounded-lg border-2 border-black bg-brand-400 p-5"
