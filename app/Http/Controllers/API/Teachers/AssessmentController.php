@@ -18,6 +18,7 @@ use App\Models\BatchSubject;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
 use App\Models\StudentAssessment;
+use App\Services\TeacherAssessmentService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
@@ -262,5 +263,10 @@ class AssessmentController extends Controller
             'status' => true,
             'assessment_type_id' => $assessmentTypeId,
         ];
+    }
+
+    public function analytics(Assessment $assessment)
+    {
+        return TeacherAssessmentService::analytics(StudentAssessment::with('assessment', 'student.user')->where('assessment_id', $assessment->id)->get());
     }
 }
