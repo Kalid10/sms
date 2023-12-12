@@ -20,7 +20,7 @@ enum BatchSubjectService
             'batch_subjects' => 'required|array',
             'batch_subjects.*.id' => 'required|exists:batch_subjects,id',
             'batch_subjects.*.teacher_id' => 'required|exists:teachers,id',
-            'batch_subjects.*.weekly_frequency' => 'required|integer',
+            'batch_subjects.*.weekly_frequency' => 'nullable|integer',
         ]);
 
         DB::beginTransaction();
@@ -33,18 +33,19 @@ enum BatchSubjectService
                     $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
                 }])->get();
 
-                $teacherTotalWeeklyFrequency = $teacherBatchSubjects->sum('weekly_frequency');
+                if ($request->input('weekly_frequency')) {
+                    $teacherTotalWeeklyFrequency = $teacherBatchSubjects->sum('weekly_frequency');
 
-                $batchScheduleConfig = BatchScheduleConfig::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->first();
+                    $batchScheduleConfig = BatchScheduleConfig::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)->first();
 
-                if ($teacherTotalWeeklyFrequency + $batchSubject['weekly_frequency'] > $batchScheduleConfig ? $batchScheduleConfig?->max_periods_per_week : 40) {
-                    DB::rollBack();
+                    if ($teacherTotalWeeklyFrequency + $batchSubject['weekly_frequency'] > $batchScheduleConfig ? $batchScheduleConfig?->max_periods_per_week : 40) {
+                        DB::rollBack();
 
-                    return redirect()->back()->withErrors(['error', $batchSubject['teacher']['user']['name'].' has exceeded the weekly frequency limit of '.$batchScheduleConfig?->max_periods_per_week.' periods per week.']);
+                        return redirect()->back()->withErrors(['error', $batchSubject['teacher']['user']['name'].' has exceeded the weekly frequency limit of '.$batchScheduleConfig?->max_periods_per_week.' periods per week.']);
+                    }
                 }
-
                 $batchSubjectModel = BatchSubject::find($batchSubject['id']);
-                $batchSubjectModel->weekly_frequency = $batchSubject['weekly_frequency'];
+                $batchSubjectModel->weekly_frequency = $batchSubject['weekly_frequency'] ?? $batchSubjectModel->weekly_frequency;
                 $batchSubjectModel->teacher_id = $batchSubject['teacher_id'];
                 $batchSubjectModel->save();
             }
