@@ -28,7 +28,7 @@ const steps = {
     },
     4: {
         component: defineAsyncComponent(() =>
-            import("@/Views/Admin/GettingStarted/Schedule/BatchSchedule.vue")
+            import("@/Views/Admin/GettingStarted/AssignSubjects.vue")
         ),
     },
     5: {
@@ -36,11 +36,7 @@ const steps = {
             import("@/Views/Admin/GettingStarted/BulkUserRegistration.vue")
         ),
     },
-    // 6: {
-    //     component: defineAsyncComponent(() =>
-    //         import("@/Views/Admin/GettingStarted/AssignTeachers.vue")
-    //     ),
-    // },
+
     6: {
         component: defineAsyncComponent(() =>
             import("@/Views/Admin/GettingStarted/AssignTeachers.vue")

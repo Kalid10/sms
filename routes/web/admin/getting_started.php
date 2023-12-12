@@ -11,4 +11,5 @@ Route::controller(GettingStartedController::class)->prefix('getting-started/')->
     Route::get('finish', 'finish')->name('finish');
     Route::get('batch-schedule', 'batchSchedule')->name('batch-schedule');
     Route::post('batch-schedule/import', 'batchScheduleImport')->name('batch-schedule.import');
+    Route::post('batch-subjects/update', 'updateBatchSubjects')->name('update.batch-subjects');
 });
