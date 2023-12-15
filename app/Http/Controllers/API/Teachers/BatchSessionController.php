@@ -31,9 +31,6 @@ class BatchSessionController extends Controller
      */
     public function index(BatchSessionRequest $request, ?BatchSession $batchSession): BatchSessionCollection|BatchSessionResource|EmptyResource
     {
-        Log::info('inside BatchSessionController@index');
-        Log::info('teachers active Batches '.json_encode(parent::teacher()->activeBatches->pluck('id')));
-
         parent::teacher()->activeBatches()->each(function ($batch) use ($request) {
             $batch->getSessions($request->input('force', false));
         });
@@ -77,7 +74,7 @@ class BatchSessionController extends Controller
             'batchSessions.batchSchedule.batchSubject.batch.level',
             'batchSessions.batchSchedule.batchSubject.batch.schoolYear',
             'batchSessions.batchSchedule.batchSubject.subject',
-        ])->batchSessions->sortBy('date');
+        ])->batchSessions?->sortBy('date');
 
         return new BatchSessionCollection($batchSessions);
     }
