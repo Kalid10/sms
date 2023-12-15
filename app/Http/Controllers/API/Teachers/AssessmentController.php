@@ -27,9 +27,7 @@ use Illuminate\Http\Response;
 class AssessmentController extends Controller
 {
     /**
-     * @return AssessmentResource|AssessmentCollection
-     *
-     * Return the authenticated teacher's assessments.
+     * Return Assessment(s).
      */
     public function index(AssessmentRequest $request, ?Assessment $assessment): AssessmentCollection|AssessmentResource
     {
@@ -87,9 +85,7 @@ class AssessmentController extends Controller
     }
 
     /**
-     * @return StudentAssessmentCollection
-     *
-     * Return the students of the given assessment.
+     * Return the Students of an Assessment.
      */
     public function students(AssessmentRequest $request, Assessment $assessment): StudentAssessmentCollection
     {
@@ -107,9 +103,7 @@ class AssessmentController extends Controller
     }
 
     /**
-     * @return Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
-     *
-     * Update the assessment's status.
+     * Create an Assessment.
      */
     public function create(CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
@@ -128,6 +122,9 @@ class AssessmentController extends Controller
         ], 201);
     }
 
+    /**
+     * Update an Assessment.
+     */
     public function updateAssessment(UpdateAssessmentRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
         $assessment->update($request->validated());
@@ -137,6 +134,9 @@ class AssessmentController extends Controller
         ], 200);
     }
 
+    /**
+     * Update an Assessment's status
+     */
     public function updateStatus(UpdateAssessmentStatusRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
         $assessment->status = $request->input('new_status');
@@ -148,9 +148,7 @@ class AssessmentController extends Controller
     }
 
     /**
-     * @return Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
-     *
-     * Insert the students' assessments.
+     * Post Students' Assessment marks.
      */
     public function mark(MarkAssessmentRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
@@ -162,17 +160,8 @@ class AssessmentController extends Controller
     }
 
     /**
-     * @return void
-     *
-     * Filter the active assessments.
+     * Create a "Classwork" Assessment.
      */
-    private function filterActiveAssessments($query): void
-    {
-        $query->whereHas('quarter', function ($query) {
-            $query->whereNull('end_date');
-        });
-    }
-
     public function createClassworkAssessment(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
         $batchSubjectId = $request->input('batch_subject_id');
@@ -197,6 +186,7 @@ class AssessmentController extends Controller
                 'created_by' => auth()->user()->id,
                 'assessment_type_id' => $assessmentTypeId,
                 'due_date' => $deadline,
+                'status' => 'scheduled',
             ]
         ));
 
@@ -205,6 +195,9 @@ class AssessmentController extends Controller
         ], $isAssessmentTypeValid['status'] ? 201 : 403);
     }
 
+    /**
+     * Create a "Homework" Assessment.
+     */
     public function createHomeworkAssessment(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
         $batchSubjectId = $request->input('batch_subject_id');
@@ -220,6 +213,7 @@ class AssessmentController extends Controller
             ['batch_subject_id' => $batchSubjectId],
             ['created_by' => auth()->user()->id],
             ['assessment_type_id' => $assessmentTypeId],
+            ['status' => 'scheduled'],
         ));
 
         return response([
@@ -227,6 +221,19 @@ class AssessmentController extends Controller
         ], $isAssessmentTypeValid['status'] ? 201 : 403);
     }
 
+    /**
+     * Filter the active Assessments.
+     */
+    private function filterActiveAssessments($query): void
+    {
+        $query->whereHas('quarter', function ($query) {
+            $query->whereNull('end_date');
+        });
+    }
+
+    /**
+     * Check if Assessment type is valid.
+     */
     private function isAssessmentTypeValid(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): array
     {
         $batchSubjectId = $request->input('batch_subject_id');

@@ -21,6 +21,7 @@ class BatchResource extends JsonResource
                 $this->section
             ),
             'level' => $this->level->name,
+            'level_category_id' => $this->level->level_category_id,
             'section' => $this->section,
             'school_year' => $this->schoolYear->name,
         ];
