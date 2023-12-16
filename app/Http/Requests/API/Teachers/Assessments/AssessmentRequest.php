@@ -40,6 +40,13 @@ class AssessmentRequest extends Request
             'status' => 'nullable|array',
             'status.*' => 'in:completed,marking,published,scheduled,draft',
             'batch_session_id' => 'nullable|integer|exists:batch_sessions,id',
+            'query' => 'nullable|string',
+            'from' => 'nullable|date',
+            'to' => 'nullable|date|after_or_equal:from',
+            'assessment_type_ids' => 'nullable|array',
+            'assessment_type_ids.*' => 'nullable|integer|exists:assessment_types,id',
+            'subject_ids' => 'nullable|array',
+            'subject_ids.*' => 'nullable|integer|exists:subjects,id',
         ];
     }
 }

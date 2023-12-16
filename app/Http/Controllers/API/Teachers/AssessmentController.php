@@ -32,7 +32,6 @@ class AssessmentController extends Controller
     public function index(AssessmentRequest $request, ?Assessment $assessment): AssessmentCollection|AssessmentResource
     {
         if ($assessment->exists) {
-
             return new AssessmentResource($assessment->load([
                 'quarter.semester',
                 'batchSubject.batch.schoolYear',
@@ -40,20 +39,11 @@ class AssessmentController extends Controller
                 'batchSubject.subject',
                 'assessmentType',
             ]));
-
         }
 
         $teacher = auth()->user()->load('teacher')->teacher;
 
-        $assessments = $teacher
-            ->load(
-                'assessments.quarter.semester',
-                'assessments.batchSubject.batch.schoolYear',
-                'assessments.batchSubject.batch.level.levelCategory',
-                'assessments.batchSubject.subject',
-                'assessments.assessmentType'
-            )
-            ->assessments
+        $query = $teacher->assessments()
             ->whereIn('status', $request->input('status', [
                 Assessment::STATUS_DRAFT,
                 Assessment::STATUS_SCHEDULED,
@@ -78,10 +68,46 @@ class AssessmentController extends Controller
                 $query->where(function ($query) {
                     $this->filterActiveAssessments($query);
                 });
-            });
+            })
+            ->when($request->filled('query'), function ($query) use ($request) {
+                $searchTerm = $request->input('query');
+
+                return $query->where('title', 'like', '%'.$searchTerm.'%');
+            })
+            ->when($request->filled('subject_ids'), function ($query) use ($request) {
+                $subjectIds = $request->input('subject_ids');
+
+                return $query->whereHas('batchSubject', function ($query) use ($subjectIds) {
+                    $query->whereIn('subject_id', $subjectIds);
+                });
+            })
+            ->when($request->filled('assessment_type_ids'), function ($query) use ($request) {
+                $assessmentTypeIds = $request->input('assessment_type_ids');
+
+                return $query->whereIn('assessment_type_id', $assessmentTypeIds);
+            })
+            ->when($request->filled('from'), function ($query) use ($request) {
+                $from = $request->input('from');
+                $to = $request->input('to');
+
+                if ($from && $to) {
+                    return $query->whereDate('due_date', '>=', $from)
+                        ->whereDate('due_date', '<=', $to);
+                } else {
+                    return $query->whereDate('due_date', '=', $from);
+                }
+            })
+            ->orderBy('due_date', 'asc');
+
+        $assessments = $query->get()->load([
+            'quarter.semester',
+            'batchSubject.batch.schoolYear',
+            'batchSubject.batch.level.levelCategory',
+            'batchSubject.subject',
+            'assessmentType',
+        ]);
 
         return new AssessmentCollection($assessments);
-
     }
 
     /**
