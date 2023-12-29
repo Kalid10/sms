@@ -350,7 +350,7 @@ Echo.private("mass-assessment").listen(".mass-assessment", (e) => {
 
     setTimeout(() => {
         uiStore.setResponse(null, null);
-    }, 5000);
+    }, 8000);
 });
 
 Echo.private("student-fee").listen(".student-fee", (e) => {
@@ -371,7 +371,7 @@ Echo.private("student-fee").listen(".student-fee", (e) => {
 
     setTimeout(() => {
         uiStore.setResponse(null, null);
-    }, 5000);
+    }, 8000);
 });
 
 Echo.private("batch-schedule").listen(".batch-schedule", (e) => {
@@ -392,7 +392,7 @@ Echo.private("batch-schedule").listen(".batch-schedule", (e) => {
 
     setTimeout(() => {
         uiStore.setResponse(null, null);
-    }, 5000);
+    }, 8000);
 });
 </script>
 

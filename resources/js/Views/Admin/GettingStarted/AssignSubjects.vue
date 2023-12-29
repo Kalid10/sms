@@ -6,15 +6,29 @@
         <div
             class="grid h-full grid-cols-12 grid-rows-[auto_1fr] overflow-auto"
         >
-            <div class="col-span-12 mb-4 flex h-fit flex-col">
-                <Heading>
-                    {{ $t("assignSubjects.assignSubjects") }}
-                </Heading>
-                <h3 class="text-brand-text-600 text-sm">
-                    {{ $t("assignSubjects.assignClassHint") }}
-                </h3>
-            </div>
+            <div class="col-span-12 flex w-full items-center justify-between">
+                <div class="mb-4 flex h-fit flex-col">
+                    <Heading>
+                        {{ $t("assignSubjects.assignSubjects") }}
+                    </Heading>
+                    <h3 class="text-brand-text-600 text-sm">
+                        {{ $t("assignSubjects.assignClassHint") }}
+                    </h3>
+                </div>
 
+                <div class="flex space-x-5">
+                    <PrimaryButton
+                        title="Back"
+                        class="h-fit w-fit !bg-brand-200 !font-medium !text-black"
+                        @click="$emit('back')"
+                    />
+                    <PrimaryButton
+                        title="Skip"
+                        class="h-fit w-fit !bg-brand-100 !text-black"
+                        @click="$emit('success')"
+                    />
+                </div>
+            </div>
             <div
                 class="relative col-span-12 flex h-full max-h-full flex-col gap-3 overflow-auto px-0.5 lg:col-span-3"
             >
@@ -635,7 +649,7 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits(["success"]);
+const emits = defineEmits(["success", "back"]);
 
 const subjects = computed(() => {
     if (usePage().props.subjects?.data) {
@@ -918,7 +932,7 @@ function saveBatches() {
         {
             onSuccess() {
                 showSectionsFor.value = null;
-                submitForm();
+                emits("success");
             },
             onError(error) {
                 showSectionsFor.value = null;

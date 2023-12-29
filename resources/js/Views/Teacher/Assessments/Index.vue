@@ -72,10 +72,18 @@
             "
         >
             <Detail
-                v-if="!isLoading"
+                v-if="
+                    !isLoading && selectedAssessment && !viewMarkableAssessments
+                "
                 ref="assessmentDetailsRef"
                 class="pb-4 pt-8"
                 :assessment="selectedAssessment"
+                @close="viewMarkableAssessments = true"
+            />
+
+            <MarkableAssessmentsComponent
+                v-else-if="!isLoading && markableAssessments.length"
+                class="w-full"
             />
         </div>
 
@@ -95,12 +103,17 @@ import { router, usePage } from "@inertiajs/vue3";
 import Loading from "@/Components/Loading.vue";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import MarkableAssessmentsComponent from "@/Views/Teacher/Views/Assessments/MarkableAssessments.vue";
 
 const showModal = ref(false);
 const selectedAssessment = computed(() => usePage().props.assessment);
 const isLoading = ref(false);
 
 const hasBatchSubjects = ref(!!usePage().props?.teacher?.batch_subjects);
+const markableAssessments = computed(() => {
+    return usePage().props?.markable_assessments;
+});
+const viewMarkableAssessments = ref(false);
 
 const props = defineProps({
     teacherId: {
@@ -132,6 +145,7 @@ onBeforeMount(() => {
 
 function loadDetail(assessment) {
     isLoading.value = true;
+    viewMarkableAssessments.value = false;
     router.get(
         "/teacher/assessments/" + assessment.id,
         {

@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
         $rules = [
             'name' => 'required|string|max:255',
             'type' => 'required|string|in:admin,student,teacher',
-            'email' => 'required_if:type,admin|email|unique:users',
+            'email' => 'required_if:type,admin|nullable|email|unique:users',
             'phone_number' => 'required_if:type,guardian,admin|regex:/(09)[0-9]{8}/|max:10|min:10|unique:users',
             'gender' => 'required|string|max:255',
             'date_of_birth' => 'required_if:type,student|date',
