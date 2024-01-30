@@ -1,31 +1,6 @@
 <template>
-    <div
-        v-if="showScheduleGenerating"
-        class="flex min-h-screen w-full items-center justify-between space-x-2"
-    >
-        <SchoolPeriodScheduleViewer class="!h-5/6 !w-8/12" />
-
-        <div
-            class="flex w-4/12 flex-col items-center justify-center space-y-5 px-4 text-center"
-        >
-            <div class="py-5 text-xl font-medium">
-                We are generating the class schedules, once we are done we will
-                notify you.If you wish to undertake a different task or take any
-                other action, please use the button below.
-            </div>
-
-            <PrimaryButton
-                title="Go to Home Page"
-                class="w-fit !rounded-2xl bg-brand-400 !px-10 py-2 text-white"
-                @click="router.visit('/admin')"
-            />
-        </div>
-    </div>
-
-    <div v-else class="w-11/12">
-        <Config v-if="!batchScheduleConfiguration" :levels="levels" />
-
-        <div v-else class="flex h-full w-full gap-4 overflow-hidden">
+    <div class="w-11/12">
+        <div class="flex h-full w-full items-center gap-4 overflow-hidden">
             <BatchesScheduleTab
                 v-if="!!selectedBatch"
                 :selected="selectedBatch"
@@ -57,11 +32,8 @@ import GradesList from "@/Views/BatchSchedule/GradesList.vue";
 import BatchesScheduleTab from "@/Views/BatchSchedule/BatchesScheduleTab.vue";
 import { computed, ref, watch } from "vue";
 import Heading from "@/Components/Heading.vue";
-import { router, usePage } from "@inertiajs/vue3";
-import Config from "@/Views/BatchSchedule/Setup/Config.vue";
-import SchoolPeriodScheduleViewer from "@/Views/Admin/GettingStarted/Schedule/SchoolPeriodScheduleViewer.vue";
+import { usePage } from "@inertiajs/vue3";
 import { useUIStore } from "@/Store/ui";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps({
     levels: {

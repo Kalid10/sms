@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\Admin;
+use App\Models\Batch;
 use App\Models\Guardian;
 use App\Models\Level;
 use App\Models\SchoolYear;
@@ -158,7 +159,15 @@ class UserController extends Controller
 
     public function teacher(): Response
     {
-        return Inertia::render('Admin/Users/Create/Teacher');
+        $batches = Batch::where('school_year_id', SchoolYear::getActiveSchoolYear()->id)
+            ->with('level')
+            ->with('subjects.subject')
+            ->with('teachers.user')
+            ->get();
+
+        return Inertia::render('Admin/Users/Create/Teacher', [
+            'batches' => $batches,
+        ]);
     }
 
     public function uploadImage(Request $request): RedirectResponse

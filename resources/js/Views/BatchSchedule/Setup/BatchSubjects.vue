@@ -1,10 +1,12 @@
 <template>
-    <div v-if="batchSubjects" class="flex h-3/5 w-full justify-between">
+    <div v-if="batchSubjects.length" class="flex h-3/5 w-full justify-between">
         <div
-            class="flex h-full w-7/12 flex-col items-center justify-evenly space-y-2 pr-5"
+            class="flex h-full flex-col items-center justify-evenly space-y-2 pr-5"
+            :class="showTeacherSchedule ? 'w-7/12' : 'w-11/12'"
         >
             <div class="py-2 text-center text-2xl font-semibold">
-                Assign Subject Teachers
+                Assign Subject Teachers for {{ batch?.level?.name }}
+                {{ batch?.section }}
             </div>
 
             <div
@@ -14,18 +16,18 @@
                 <div
                     v-for="(item, index) in displayBatchSubjects"
                     :key="index"
-                    class="flex w-2/12 min-w-fit cursor-pointer flex-col space-y-2 rounded-lg border-2 p-3 text-center hover:scale-105 hover:text-white"
+                    class="flex w-2/12 min-w-fit cursor-pointer flex-col space-y-2 rounded-lg border-2 p-3 text-center hover:scale-105"
                     :class="
                         item?.teacher_id
-                            ? 'bg-white text-black border-brand-500 hover:bg-brand-400'
-                            : 'bg-red-600 text-white border-gray-200'
+                            ? 'bg-brand-100 text-black border-brand-500 hover:bg-brand-400 hover:text-white'
+                            : ' text-black border-gray-700'
                     "
                     @click="
                         selectedBatchSubject = item;
                         showEditModal = true;
                     "
                 >
-                    <div class="text-xs font-bold uppercase">
+                    <div class="text-sm font-bold uppercase">
                         {{ item.subject.full_name }}
                     </div>
                     <div class="text-xs">
@@ -58,6 +60,7 @@
             </div>
         </div>
         <div
+            v-if="showTeacherSchedule"
             class="flex w-4/12 flex-col space-y-4 rounded-lg border-2 border-gray-600 px-3 py-5"
         >
             <div class="text-center text-xl font-light">
@@ -82,13 +85,17 @@
 
     <div
         v-else
-        class="flex w-full items-center justify-center py-10 text-2xl font-light"
+        class="flex w-full flex-col items-center justify-center space-y-5 py-10 text-2xl font-light"
     >
         <span class="w-11/12 text-center"
             >No grade selected, please select a grade from the list to your
             right to continue With the schedule setup process and generate a
             class schedule.
         </span>
+
+        <div>
+            <slot name="EmptySlot" />
+        </div>
     </div>
 
     <Modal v-model:view="showEditModal" @close="closeModals">
@@ -153,6 +160,18 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    showTeacherSchedule: {
+        type: Boolean,
+        default: true,
+    },
+    teacherSearchUrl: {
+        type: String,
+        default: "/admin/batch-schedules",
+    },
+    updateBatchSubjectsUrl: {
+        type: String,
+        default: "/admin/batch-schedules/batch-subjects/update",
+    },
 });
 
 const isLoading = ref(false);
@@ -169,10 +188,11 @@ const debouncedUpdate = debounce(() => {
     isLoading.value = true;
     viewTeacherList.value = true;
     router.get(
-        "/admin/batch-schedules",
+        props.teacherSearchUrl,
         {
             batch_id: props.batch.id,
             search: searchTeacherText.value,
+            page: props.page,
         },
         {
             only: ["teachers"],
@@ -235,7 +255,7 @@ const saveBatchSubjects = () => {
     });
 
     router.post(
-        "/admin/batch-schedules/batch-subjects/update",
+        props.updateBatchSubjectsUrl,
         {
             batch_subjects: data,
         },

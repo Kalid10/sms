@@ -85,11 +85,12 @@
                         />
                     </span>
                     <a
-                        class="rounded-md border border-black bg-brand-400 px-3 py-1.5 text-center text-xs text-white opacity-100 transition-opacity duration-150 disabled:opacity-50"
-                        href="/assets/admin_bulk_registration_sample.xlsx"
+                        class="flex items-center justify-center space-x-2 rounded-md border border-black bg-brand-400 px-3 py-1.5 text-center text-xs text-white opacity-100 transition-opacity duration-150 disabled:opacity-50"
+                        href="/assets/bulk_registration_samples/admin_bulk_registration_sample.xlsx"
                         download
                     >
-                        Download Sample
+                        <ArrowDownCircleIcon class="w-4" />
+                        <span> Download Sample </span>
                     </a>
                 </div>
 
@@ -130,11 +131,14 @@ import Heading from "@/Components/Heading.vue";
 import { router, useForm } from "@inertiajs/vue3";
 import AdminSelectInput from "@/Components/SelectInput.vue";
 import { useI18n } from "vue-i18n";
-import { QuestionMarkCircleIcon } from "@heroicons/vue/20/solid";
+import {
+    ArrowDownCircleIcon,
+    QuestionMarkCircleIcon,
+} from "@heroicons/vue/20/solid";
 import AdminSample from "@/Views/Admin/Users/Samples/Admin.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import GuardianFileInput from "@/Components/FileInput.vue";
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import Modal from "@/Components/Modal.vue";
 
 const { t } = useI18n();
@@ -147,11 +151,24 @@ const genderOptions = [
     { value: "female", label: t("common.female") },
 ];
 
+const showNotification = inject("showNotification");
 const handleFileUploaded = (file) => {
-    router.post("/register-bulk", {
-        user_file: file,
-        user_type: "admin",
-    });
+    router.post(
+        "/register-bulk",
+        {
+            user_file: file,
+            user_type: "admin",
+        },
+        {
+            onError: (error) => {
+                showNotification({
+                    type: "error",
+                    message: error.headers,
+                    position: "top-center",
+                });
+            },
+        }
+    );
 };
 
 const form = useForm({

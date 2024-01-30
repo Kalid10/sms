@@ -190,7 +190,7 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center justify-end gap-3">
             <PrimaryButton @click="submitSubjects"
                 >{{ $t("registerSubjects.finish") }}
             </PrimaryButton>
@@ -236,7 +236,10 @@
                     :options="categoryOptions"
                     required
                     :placeholder="
-                        $t('registerSubjects.subjectCategoryOptionsPlaceholder')
+                        $t(
+                            'registerSubjects.subjectCategoryOptionsPlacehold' +
+                                'er'
+                        )
                     "
                     :label="$t('registerSubjects.subjectCategoryOptionsLabel')"
                 />
@@ -256,7 +259,7 @@
 </template>
 
 <script setup>
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, inject, nextTick, ref, watch } from "vue";
 import { subjects as initialSubjects } from "@/fake.js";
 import { toHashTag } from "@/utils.js";
 import { PlusCircleIcon, PlusIcon, TrashIcon } from "@heroicons/vue/24/outline";
@@ -272,6 +275,7 @@ import TertiaryButton from "@/Components/TertiaryButton.vue";
 import { router } from "@inertiajs/vue3";
 
 const emits = defineEmits(["success"]);
+const showNotification = inject("showNotification");
 
 const subjects = computed(() => initialSubjects);
 const categories = computed(() => {
@@ -325,6 +329,13 @@ function submitSubjects() {
         {
             onSuccess: () => {
                 emits("success");
+            },
+            onError: (error) => {
+                showNotification({
+                    type: "error",
+                    message: error,
+                    position: "top-center",
+                });
             },
         }
     );
@@ -401,7 +412,7 @@ function resetSubjects() {
 
 function subjectIncludesLabel(subject) {
     if (filteredLabel.value === null) return true;
-    return subject.tags.includes(filteredLabel.value);
+    return subject?.tags.includes(filteredLabel.value);
 }
 
 const filteredLabel = ref(null);

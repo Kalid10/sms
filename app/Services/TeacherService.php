@@ -105,27 +105,6 @@ class TeacherService
         return StudentService::getBatchStudents($batchSubject->batch_id, $studentSearch, $batchSubjectId);
     }
 
-    //    public static function prepareBatchSubject(Request $request, $teacherId): BatchSubject
-    //    {
-    //        $request->validate([
-    //            'batch_subject_id' => 'nullable|integer|exists:batch_subjects,id',
-    //            'search' => 'nullable|string',
-    //        ]);
-    //
-    //        $batchSubjectId = $request->input('batch_subject_id');
-    //
-    //        if (!$batchSubjectId && !$teacherId) {
-    //            abort(403);
-    //        }
-    //
-    //        return $batchSubjectId ?
-    //            BatchSubject::find($request->input('batch_subject_id'))->load('subject', 'batch.level') :
-    //            BatchSubject::where('teacher_id', $teacherId)
-    //                ->whereHas('batch', function ($query) {
-    //                    $query->where('school_year_id', SchoolYear::getActiveSchoolYear()->id);
-    //                })->first()?->load('subject', 'batch.level');
-    //    }
-
     public static function prepareBatchSubject(Request $request, $teacherId): ?BatchSubject
     {
         $request->validate([

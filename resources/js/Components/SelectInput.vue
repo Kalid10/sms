@@ -11,7 +11,11 @@
             class="relative flex w-full border border-gray-200 bg-white"
             tabindex="0"
         >
-            <div class="flex h-full w-full" @click="toggleList">
+            <div
+                class="flex h-full w-full"
+                :class="[disabled ? 'opacity-25' : 'opacity-100']"
+                @click="toggleList"
+            >
                 <span class="flex grow flex-col justify-center px-3">
                     <span
                         v-if="labelLocation === 'inside'"
@@ -39,6 +43,7 @@
                 v-if="displayList"
                 ref="list"
                 :class="[
+                    disabled ? 'hidden' : 'opacit',
                     direction === 'down'
                         ? 'bottom-0 -mb-1 translate-y-full'
                         : 'top-0 -mt-1 -translate-y-full',

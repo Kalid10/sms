@@ -13,6 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -52,24 +53,26 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
         // Start db transaction
         DB::beginTransaction();
 
+        $guardianPhoneNumber = $row['mother_phone_number'] ?? $row['father_phone_number'] ?? $row['other_guardian_phone_number'];
+
         // Upsert guardian user
         DB::table('users')->updateOrInsert(
             [
-                'email' => $row['guardian_email'],
-                'phone_number' => $row['guardian_phone_number'],
+                'phone_number' => $guardianPhoneNumber,
                 'type' => User::TYPE_GUARDIAN,
             ],
             [
+                'email' => $row['guardian_email'],
                 'name' => $row['guardian_name'],
                 'password' => Hash::make('secret'),
-                'gender' => $row['guardian_gender'],
+                'gender' => strtolower($this->getGuardianGenderOrRelation($row)),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
         );
 
         // Get guardian user id
-        $guardianUser = DB::table('users')->where('email', $row['guardian_email'])->first();
+        $guardianUser = DB::table('users')->where('phone_number', $guardianPhoneNumber)->first();
 
         // Upsert guardian
         DB::table('guardians')->updateOrInsert(
@@ -109,7 +112,7 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
                 'name' => $row['name'],
                 'date_of_birth' => $dateOfBirth,
                 'password' => Hash::make('secret'),
-                'gender' => $row['gender'],
+                'gender' => strtolower($row['gender']),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
@@ -123,7 +126,7 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
             ['user_id' => $studentUser->id,
                 'guardian_id' => $guardian->id, ],
             [
-
+                'guardian_relation' => $this->getGuardianGenderOrRelation($row, false),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -164,9 +167,11 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
             'email' => 'nullable|email',
             'guardian_name' => 'required|string|max:255',
             'guardian_email' => 'nullable|email',
-            'guardian_phone_number' => 'required|max:20|regex:/(09)[0-9]{8}/|max:10|min:10',
+            'mother_phone_number' => 'nullable|max:20|regex:/(09)[0-9]{8}/|max:10|min:10',
+            'father_phone_number' => 'nullable|max:20|regex:/(09)[0-9]{8}/|max:10|min:10',
+            'other_guardian_phone_number' => ['required_if:father_phone_number,null|required_if:mother_phone_number,null', 'nullable', 'max:20', 'regex:/(09)[0-9]{8}/', 'max:10', 'min:10'],
             'username' => 'nullable|string|max:255',
-            'guardian_gender' => ['required', Rule::in(['male', 'female', 'Male', 'Female'])],
+            'other_guardian_gender' => ['required_if:other_guardian_phone_number,!=, null', 'nullable', Rule::in(['male', 'female', 'Male', 'Female'])],
         ];
     }
 
@@ -180,11 +185,25 @@ class StudentsRegistrationImport implements ToModel, WithBatchInserts, WithHeadi
             ImportFailed::class => function (ImportFailed $event) {
                 // Get validation exception
                 $validationException = $event->getException();
+                Log::error($validationException);
                 Event::dispatch(new UserImportEvent('error', $validationException->getMessage()));
             },
             AfterImport::class => function (AfterImport $event) {
                 Event::dispatch(new UserImportEvent('success', 'Student import completed successfully.'));
             },
         ];
+    }
+
+    private function getGuardianGenderOrRelation($row, $isGender = true)
+    {
+        if ($row['mother_phone_number']) {
+            return $isGender ? 'female' : 'mother';
+        }
+
+        if ($row['father_phone_number']) {
+            return $isGender ? 'male' : 'father';
+        }
+
+        return $isGender ? $row['other_guardian_gender'] : $row['other_guardian_relation'];
     }
 }

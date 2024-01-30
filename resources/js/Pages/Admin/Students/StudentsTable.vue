@@ -224,6 +224,7 @@
             <EmptyView v-else title="No absentees in the latest period" />
         </div>
     </Modal>
+    <Loading v-if="showLoading" is-full-screen />
 </template>
 <script setup>
 import TableElement from "@/Components/TableElement.vue";
@@ -243,6 +244,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Title from "@/Views/Teacher/Views/Title.vue";
 import EmptyView from "@/Views/EmptyView.vue";
 import { useI18n } from "vue-i18n";
+import Loading from "@/Components/Loading.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -350,8 +352,10 @@ function submit() {
 
 const searchKey = ref("");
 const perPage = ref(15);
+const showLoading = ref(false);
 
 const search = debounce(() => {
+    showLoading.value = true;
     router.get(
         props.url,
         {
@@ -362,6 +366,9 @@ const search = debounce(() => {
             only: ["students"],
             preserveState: true,
             replace: true,
+            onFinish: () => {
+                showLoading.value = false;
+            },
         }
     );
 }, 300);
