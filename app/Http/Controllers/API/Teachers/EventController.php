@@ -12,7 +12,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
@@ -38,8 +37,6 @@ class EventController extends Controller
                 })
                 ->get();
 
-            Log::info('School Schedule: '.$schoolSchedule);
-
             $teacher = Auth::user();
 
             $activeQuarter = Quarter::getActiveQuarter();
@@ -48,6 +45,8 @@ class EventController extends Controller
                 'teacher.batchSubjects.batch.level',
                 'teacher.batchSubjects.subject',
                 'teacher.batchSubjects.teacher.user',
+                'teacher.batchSubjects.assessments.assessmentType',
+                'teacher.batchSubjects.assessments.quarter',
                 'teacher.batchSubjects.assessments' => function ($query) use ($eventRequest, $activeQuarter) {
                     $query->where('quarter_id', $activeQuarter->id)
                         ->when($eventRequest->has('range'), function ($query) use ($eventRequest) {
@@ -64,8 +63,6 @@ class EventController extends Controller
                         });
                 },
             ])->teacher->batchSubjects->pluck('assessments')->flatten();
-
-            Log::info('Assessment: '.$assessments);
 
             // Get announcements with "teachers" target group based on the active school year id and range (month or day) and date and use expires_on for date
             $announcements = Announcement::whereJsonContains('target_group', 'teachers')
@@ -85,8 +82,6 @@ class EventController extends Controller
                 ->with('author.user')
                 ->get();
 
-            Log::info('Anno: '.$announcements);
-
             $schedule = $schoolSchedule->concat($assessments)
                 ->sortBy(function ($event) {
                     return $event->end_date ?? ($event->assessment ? $event->assessment->due_date : null);
@@ -98,8 +93,6 @@ class EventController extends Controller
             return new EventCollection($events);
 
         } catch (Exception $e) {
-
-            Log::info('In the catch: '.$e);
 
             // Handle exceptions (e.g., log the error, return an error response)
             return response()->json(['error' => 'An error occurred while fetching events.'], 500);
