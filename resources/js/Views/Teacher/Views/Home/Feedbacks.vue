@@ -20,7 +20,7 @@
                     </div>
                     <div>
                         <p
-                            class="mt-5 line-clamp-3 w-full text-sm leading-6 text-brand-text-350"
+                            class="line-clamp-3 mt-5 w-full text-sm leading-6 text-brand-text-350"
                         >
                             {{ item.feedback }}
                         </p>

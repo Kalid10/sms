@@ -74,6 +74,8 @@ class BatchSessionHelper
 
     /**
      * Fetch the Batch Session that could be in progress
+     *
+     * @return ?BatchSession
      */
     public static function findPotentiallyInProgressSession(Batch $batch): ?BatchSession
     {
@@ -90,13 +92,6 @@ class BatchSessionHelper
     {
         $batchSessionStartTime = $batchSession->load('batchSchedule.schoolPeriod')->date;
         $batchSessionEndTime = $batchSessionStartTime->copy()->addMinutes($batchSession->batchSchedule->schoolPeriod->duration);
-
-        if ($batchSession->batchSchedule->batch_id === 289) {
-            Log::info('Is Batch Session time overlapping? '.Carbon::now()->between($batchSessionStartTime, $batchSessionEndTime));
-        }
-
-        Log::info('Batch Session that should be set in progress: '.json_encode(BatchSession::find(93)->date));
-        Log::info('Current time: '.json_encode(Carbon::now()));
 
         return Carbon::now()->addSecond()->between($batchSessionStartTime, $batchSessionEndTime);
     }

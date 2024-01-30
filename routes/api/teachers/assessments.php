@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/teacher')->name('teacher.')->middleware('auth:sanctum')->group(function () {
     Route::controller(AssessmentController::class)->prefix('/assessments')->name('assessment.')->group(function () {
+        Route::get('/{assessment}/analytics', 'analytics')->name('analytics');
+        Route::post('/classwork', 'createClassworkAssessment')->name('createClasswork');
+        Route::post('/homework', 'createHomeworkAssessment')->name('createHomework');
         Route::get('/{assessment?}', 'index')->name('index');
         Route::get('/{assessment}/students', 'students')->name('students');
         Route::post('', 'create')->name('create');

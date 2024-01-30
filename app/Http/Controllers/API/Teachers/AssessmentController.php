@@ -12,9 +12,14 @@ use App\Http\Resources\Teachers\AssessmentResource;
 use App\Http\Resources\Teachers\StudentAssessmentCollection;
 use App\Jobs\InsertStudentsAssessmentsJob;
 use App\Models\Assessment;
+use App\Models\AssessmentType;
+use App\Models\BatchSession;
 use App\Models\BatchSubject;
 use App\Models\Quarter;
+use App\Models\SchoolYear;
 use App\Models\StudentAssessment;
+use App\Services\TeacherAssessmentService;
+use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
@@ -22,14 +27,11 @@ use Illuminate\Http\Response;
 class AssessmentController extends Controller
 {
     /**
-     * @return AssessmentResource|AssessmentCollection
-     *
-     * Return the authenticated teacher's assessments.
+     * Return Assessment(s).
      */
     public function index(AssessmentRequest $request, ?Assessment $assessment): AssessmentCollection|AssessmentResource
     {
         if ($assessment->exists) {
-
             return new AssessmentResource($assessment->load([
                 'quarter.semester',
                 'batchSubject.batch.schoolYear',
@@ -37,20 +39,11 @@ class AssessmentController extends Controller
                 'batchSubject.subject',
                 'assessmentType',
             ]));
-
         }
 
         $teacher = auth()->user()->load('teacher')->teacher;
 
-        $assessments = $teacher
-            ->load(
-                'assessments.quarter.semester',
-                'assessments.batchSubject.batch.schoolYear',
-                'assessments.batchSubject.batch.level.levelCategory',
-                'assessments.batchSubject.subject',
-                'assessments.assessmentType'
-            )
-            ->assessments
+        $query = $teacher->assessments()
             ->whereIn('status', $request->input('status', [
                 Assessment::STATUS_DRAFT,
                 Assessment::STATUS_SCHEDULED,
@@ -58,6 +51,11 @@ class AssessmentController extends Controller
                 Assessment::STATUS_MARKING,
                 Assessment::STATUS_COMPLETED,
             ]))
+            ->when($request->has('batch_session_id'), function ($query) use ($request) {
+                $batchSubject = BatchSession::find($request->input('batch_session_id'))->load('batchSchedule');
+
+                return $query->where('batch_subject_id', $batchSubject->batchSchedule->batch_subject_id);
+            })
             ->when($request->has('active'), function ($query) use ($request) {
 
                 if ($request->input('active')) {
@@ -70,16 +68,50 @@ class AssessmentController extends Controller
                 $query->where(function ($query) {
                     $this->filterActiveAssessments($query);
                 });
-            });
+            })
+            ->when($request->filled('query'), function ($query) use ($request) {
+                $searchTerm = $request->input('query');
+
+                return $query->where('title', 'like', '%'.$searchTerm.'%');
+            })
+            ->when($request->filled('subject_ids'), function ($query) use ($request) {
+                $subjectIds = $request->input('subject_ids');
+
+                return $query->whereHas('batchSubject', function ($query) use ($subjectIds) {
+                    $query->whereIn('subject_id', $subjectIds);
+                });
+            })
+            ->when($request->filled('assessment_type_ids'), function ($query) use ($request) {
+                $assessmentTypeIds = $request->input('assessment_type_ids');
+
+                return $query->whereIn('assessment_type_id', $assessmentTypeIds);
+            })
+            ->when($request->filled('from'), function ($query) use ($request) {
+                $from = $request->input('from');
+                $to = $request->input('to');
+
+                if ($from && $to) {
+                    return $query->whereDate('due_date', '>=', $from)
+                        ->whereDate('due_date', '<=', $to);
+                } else {
+                    return $query->whereDate('due_date', '=', $from);
+                }
+            })
+            ->orderBy('due_date', 'asc');
+
+        $assessments = $query->get()->load([
+            'quarter.semester',
+            'batchSubject.batch.schoolYear',
+            'batchSubject.batch.level.levelCategory',
+            'batchSubject.subject',
+            'assessmentType',
+        ]);
 
         return new AssessmentCollection($assessments);
-
     }
 
     /**
-     * @return StudentAssessmentCollection
-     *
-     * Return the students of the given assessment.
+     * Return the Students of an Assessment.
      */
     public function students(AssessmentRequest $request, Assessment $assessment): StudentAssessmentCollection
     {
@@ -97,14 +129,10 @@ class AssessmentController extends Controller
     }
 
     /**
-     * @return Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
-     *
-     * Update the assessment's status.
+     * Create an Assessment.
      */
     public function create(CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
-        $request->validated();
-
         foreach ($request->input('batch_subject_ids') as $batchSubjectId) {
             $batchSubject = BatchSubject::find($batchSubjectId);
             $batchSubject->assessments()->create(array_merge(
@@ -120,6 +148,9 @@ class AssessmentController extends Controller
         ], 201);
     }
 
+    /**
+     * Update an Assessment.
+     */
     public function updateAssessment(UpdateAssessmentRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
         $assessment->update($request->validated());
@@ -129,6 +160,9 @@ class AssessmentController extends Controller
         ], 200);
     }
 
+    /**
+     * Update an Assessment's status
+     */
     public function updateStatus(UpdateAssessmentStatusRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
         $assessment->status = $request->input('new_status');
@@ -140,9 +174,7 @@ class AssessmentController extends Controller
     }
 
     /**
-     * @return Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
-     *
-     * Insert the students' assessments.
+     * Post Students' Assessment marks.
      */
     public function mark(MarkAssessmentRequest $request, Assessment $assessment): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
@@ -154,14 +186,120 @@ class AssessmentController extends Controller
     }
 
     /**
-     * @return void
-     *
-     * Filter the active assessments.
+     * Create a "Classwork" Assessment.
+     */
+    public function createClassworkAssessment(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+    {
+        $batchSubjectId = $request->input('batch_subject_id');
+        $batchSubject = BatchSubject::find($batchSubjectId);
+        $type = $request->input('type');
+        $assessmentTypeId = $batchSubject->level->levelCategory->assessmentTypes->where('name', $type)->first()->id;
+        $isAssessmentTypeValid = $this->isAssessmentTypeValid($request);
+
+        $schoolPeriod = $batchSubject->load('inProgressSession.batchSchedule.schoolPeriod')
+            ->inProgressSession->batchSchedule->schoolPeriod;
+
+        [$hours, $minutes, $seconds] = explode(':', $schoolPeriod->start_time);
+
+        $deadline = Carbon::today()->setTime($hours, $minutes, $seconds);
+        $deadline->addMinutes($schoolPeriod->duration);
+
+        $batchSubject->assessments()->create(array_merge(
+            $request->validated(),
+            [
+                'quarter_id' => Quarter::getActiveQuarter()->id,
+                'batch_subject_id' => $batchSubjectId,
+                'created_by' => auth()->user()->id,
+                'assessment_type_id' => $assessmentTypeId,
+                'due_date' => $deadline,
+                'status' => 'scheduled',
+            ]
+        ));
+
+        return response([
+            'message' => 'Classwork Assessment successfully created.',
+        ], $isAssessmentTypeValid['status'] ? 201 : 403);
+    }
+
+    /**
+     * Create a "Homework" Assessment.
+     */
+    public function createHomeworkAssessment(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+    {
+        $batchSubjectId = $request->input('batch_subject_id');
+        $batchSubject = BatchSubject::find($batchSubjectId);
+        $type = $request->input('type');
+        $assessmentTypeId = $batchSubject->level->levelCategory->assessmentTypes->where('name', $type)->first()->id;
+
+        $isAssessmentTypeValid = $this->isAssessmentTypeValid($request);
+
+        $batchSubject->assessments()->create(array_merge(
+            $request->validated(),
+            ['quarter_id' => Quarter::getActiveQuarter()->id],
+            ['batch_subject_id' => $batchSubjectId],
+            ['created_by' => auth()->user()->id],
+            ['assessment_type_id' => $assessmentTypeId],
+            ['status' => 'scheduled'],
+        ));
+
+        return response([
+            'message' => 'Homework Assessment successfully created.',
+        ], $isAssessmentTypeValid['status'] ? 201 : 403);
+    }
+
+    /**
+     * Filter the active Assessments.
      */
     private function filterActiveAssessments($query): void
     {
         $query->whereHas('quarter', function ($query) {
             $query->whereNull('end_date');
         });
+    }
+
+    /**
+     * Check if Assessment type is valid.
+     */
+    private function isAssessmentTypeValid(\App\Http\Requests\API\Teachers\Assessments\CreateAssessmentRequest $request): array
+    {
+        $batchSubjectId = $request->input('batch_subject_id');
+        $batchSubject = BatchSubject::find($batchSubjectId);
+        $type = $request->input('type');
+        $assessmentTypeId = $batchSubject->level->levelCategory->assessmentTypes->where('name', $type)->first()->id;
+
+        // Check if assessment type is active
+        $assessmentType = AssessmentType::find($assessmentTypeId);
+        if ($assessmentType->school_year_id !== SchoolYear::getActiveSchoolYear()->id) {
+            return [
+                'status' => false,
+                'error' => 'Invalid assessment type.',
+            ];
+        }
+
+        // If assessment type is not customizable, check if it has reached its maximum count for this quarter
+        if (! $assessmentType->customizable) {
+            $assessments = Assessment::where([
+                ['assessment_type_id', $assessmentTypeId],
+                ['batch_subject_id', $batchSubjectId],
+                ['quarter_id', Quarter::getActiveQuarter()->id],
+            ]);
+
+            if ($assessments->count() >= $assessmentType->max_assessments) {
+                return [
+                    'status' => false,
+                    'error' => $assessmentType->name.' has reached its maximum count for this quarter.',
+                ];
+            }
+        }
+
+        return [
+            'status' => true,
+            'assessment_type_id' => $assessmentTypeId,
+        ];
+    }
+
+    public function analytics(Assessment $assessment)
+    {
+        return TeacherAssessmentService::analytics(StudentAssessment::with('assessment', 'student.user')->where('assessment_id', $assessment->id)->get());
     }
 }

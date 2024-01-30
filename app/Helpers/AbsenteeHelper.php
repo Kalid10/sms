@@ -185,7 +185,8 @@ class AbsenteeHelper
         foreach ($absentees as $absentee) {
             $inProgressSession = $absentee->batchSession->batchSchedule->batch->inProgressSession();
 
-            if ($inProgressSession->id !== $absentee->batch_session_id) {
+            if ($inProgressSession && $inProgressSession->id !== $absentee->batch_session_id) {
+
                 Absentee::updateOrCreate([
                     'user_id' => $absentee->user_id,
                     'batch_session_id' => $inProgressSession->id,

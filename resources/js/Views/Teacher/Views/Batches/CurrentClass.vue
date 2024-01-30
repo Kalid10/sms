@@ -73,7 +73,6 @@
 
             <Modal v-model:view="showModal">
                 <AddAbsentees @close="showModal = false" />
-                />
             </Modal>
         </div>
     </div>
